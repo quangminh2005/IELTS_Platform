@@ -1,0 +1,245 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// enum Role: teacher | student
+// enum Skill: listening | reading | writing | speaking
+// enum UnitType: listening_part | reading_passage | writing_task | speaking_part
+// enum AssignmentMode: homework | practice | mock_test
+// enum RecipientStatus: assigned | in_progress | submitted | reviewed
+// enum SubmitReason: manual | auto_timeout
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  googleId       String?         @unique
+  name           String?
+  passwordHash   String?
+  role           String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  teacherProfile TeacherProfile?
+  studentProfile StudentProfile?
+}
+
+model TeacherProfile {
+  id          String          @id @default(cuid())
+  userId      String          @unique
+  displayName String?
+  createdAt   DateTime        @default(now())
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classes     Class[]
+  materials   Material[]
+  assignments Assignment[]
+  reviews     TeacherReview[]
+}
+
+model StudentProfile {
+  id          String                @id @default(cuid())
+  userId      String?               @unique
+  email       String                @unique
+  displayName String
+  targetBand  Float?
+  createdAt   DateTime              @default(now())
+  user        User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  classes     ClassStudent[]
+  recipients  AssignmentRecipient[]
+  attempts    Attempt[]
+  answers     Answer[]
+  highlights  Highlight[]
+  reviews     TeacherReview[]
+}
+
+model Class {
+  id          String         @id @default(cuid())
+  teacherId   String
+  name        String
+  description String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  teacher     TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  students    ClassStudent[]
+  assignments Assignment[]
+}
+
+model ClassStudent {
+  id        String         @id @default(cuid())
+  classId   String
+  studentId String
+  joinedAt  DateTime       @default(now())
+  class     Class          @relation(fields: [classId], references: [id], onDelete: Cascade)
+  student   StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, studentId])
+}
+
+model Material {
+  id          String           @id @default(cuid())
+  teacherId   String
+  skill       String
+  title       String
+  description String?
+  sourceLabel String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  teacher     TeacherProfile   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  units       AssignableUnit[]
+}
+
+model AssignableUnit {
+  id                      String           @id @default(cuid())
+  materialId              String
+  skill                   String
+  unitType                String
+  unitNumber              Int
+  title                   String
+  instructions            String?
+  content                 String
+  audioUrl                String?
+  transcript              String?
+  defaultTimeLimitMinutes Int?
+  metadataJson            String?
+  createdAt               DateTime         @default(now())
+  material                Material         @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  questions               Question[]
+  assignmentUnits         AssignmentUnit[]
+  answers                 Answer[]
+  highlights              Highlight[]
+}
+
+model Question {
+  id                String         @id @default(cuid())
+  assignableUnitId  String
+  order             Int
+  questionType      String
+  prompt            String
+  optionsJson       String?
+  correctAnswerJson String?
+  explanation       String?
+  points            Int            @default(1)
+  assignableUnit    AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
+  answers           Answer[]
+}
+
+model Assignment {
+  id               String                @id @default(cuid())
+  teacherId        String
+  classId          String?
+  title            String
+  instructions     String?
+  deadline         DateTime?
+  timeLimitMinutes Int?
+  mode             String                @default("homework")
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  teacher          TeacherProfile        @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  class            Class?                @relation(fields: [classId], references: [id], onDelete: SetNull)
+  units            AssignmentUnit[]
+  recipients       AssignmentRecipient[]
+}
+
+model AssignmentUnit {
+  id                     String         @id @default(cuid())
+  assignmentId           String
+  assignableUnitId       String
+  order                  Int
+  customTimeLimitMinutes Int?
+  assignment             Assignment     @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  assignableUnit         AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
+
+  @@unique([assignmentId, assignableUnitId])
+}
+
+model AssignmentRecipient {
+  id           String         @id @default(cuid())
+  assignmentId String
+  studentId    String
+  status       String         @default("assigned")
+  assignedAt   DateTime       @default(now())
+  submittedAt  DateTime?
+  assignment   Assignment     @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  student      StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  attempts     Attempt[]
+
+  @@unique([assignmentId, studentId])
+}
+
+model Attempt {
+  id                    String              @id @default(cuid())
+  assignmentRecipientId String
+  studentId             String
+  startedAt             DateTime            @default(now())
+  submittedAt           DateTime?
+  status                String              @default("in_progress")
+  submitReason          String?
+  elapsedSeconds        Int                 @default(0)
+  tabSwitchCount        Int                 @default(0)
+  score                 Float?
+  scorePercent          Float?
+  autoGradedAt          DateTime?
+  assignmentRecipient   AssignmentRecipient @relation(fields: [assignmentRecipientId], references: [id], onDelete: Cascade)
+  student               StudentProfile      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  answers               Answer[]
+  highlights            Highlight[]
+  review                TeacherReview?
+}
+
+model Answer {
+  id                    String         @id @default(cuid())
+  attemptId             String
+  studentId             String
+  questionId            String?
+  assignableUnitId      String
+  value                 String
+  isCorrect             Boolean?
+  pointsAwarded         Float?
+  correctAnswerSnapshot String?
+  explanationSnapshot   String?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  attempt               Attempt        @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  student               StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  assignableUnit        AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
+  question              Question?      @relation(fields: [questionId], references: [id], onDelete: SetNull)
+}
+
+model Highlight {
+  id               String         @id @default(cuid())
+  attemptId        String
+  studentId        String
+  assignableUnitId String
+  sourceType       String
+  selectedText     String
+  startOffset      Int
+  endOffset        Int
+  color            String         @default("yellow")
+  note             String?
+  createdAt        DateTime       @default(now())
+  attempt          Attempt        @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  student          StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  assignableUnit   AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
+}
+
+model TeacherReview {
+  id                 String         @id @default(cuid())
+  attemptId          String
+  teacherId          String
+  studentId          String
+  overallBand        Float?
+  criteriaScoresJson String?
+  summaryFeedback    String?
+  detailedFeedback   String?
+  reviewedAt         DateTime       @default(now())
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  attempt            Attempt        @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  teacher            TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  student            StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId])
+}

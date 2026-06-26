@@ -47,6 +47,7 @@ const questionTypeOptions = [
   { value: "drag_drop_matching", label: "Drag/drop matching" },
   { value: "gap_fill", label: "Gap fill" },
   { value: "inline_gap_fill", label: "Inline gap fill" },
+  { value: "table_completion", label: "Table completion" },
   { value: "true_false_not_given", label: "True / False / Not Given" }
 ];
 

@@ -3,6 +3,11 @@ export type PromptSegment = {
   value: string;
 };
 
+export type MarkdownTable = {
+  headers: string[];
+  rows: string[][];
+};
+
 const dragDropTypes = new Set(["drag_drop_matching", "inline_gap_fill"]);
 
 export function parseQuestionOptions(value: string | null | undefined): string[] {
@@ -47,4 +52,42 @@ export function splitPromptIntoSegments(prompt: string): PromptSegment[] {
   }
 
   return segments.length > 0 ? segments : [{ type: "text", value: prompt }];
+}
+
+function parseTableRow(line: string) {
+  return line
+    .trim()
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split("|")
+    .map((cell) => cell.trim());
+}
+
+function isSeparatorRow(cells: string[]) {
+  return cells.every((cell) => /^:?-{3,}:?$/.test(cell));
+}
+
+export function parseMarkdownTable(content: string): MarkdownTable | null {
+  const lines = content
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.includes("|"));
+
+  if (lines.length < 2) {
+    return null;
+  }
+
+  const headers = parseTableRow(lines[0]);
+  const separator = parseTableRow(lines[1]);
+
+  if (headers.length < 2 || !isSeparatorRow(separator)) {
+    return null;
+  }
+
+  const rows = lines
+    .slice(2)
+    .map(parseTableRow)
+    .filter((row) => row.length === headers.length);
+
+  return rows.length > 0 ? { headers, rows } : null;
 }

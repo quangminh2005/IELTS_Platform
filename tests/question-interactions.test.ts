@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  parseMarkdownTable,
   parseQuestionOptions,
   splitPromptIntoSegments,
   usesDragDropAnswer
@@ -38,5 +39,28 @@ describe("splitPromptIntoSegments", () => {
       { type: "blank", value: "32" },
       { type: "text", value: "." }
     ]);
+  });
+});
+
+describe("parseMarkdownTable", () => {
+  it("parses pipe tables and preserves placeholders in cells", () => {
+    expect(
+      parseMarkdownTable(`
+| Name | Location |
+| --- | --- |
+| The Junction | Good for [[1]] |
+| Paloma | [[2]] food |
+`)
+    ).toEqual({
+      headers: ["Name", "Location"],
+      rows: [
+        ["The Junction", "Good for [[1]]"],
+        ["Paloma", "[[2]] food"]
+      ]
+    });
+  });
+
+  it("returns null for ordinary content", () => {
+    expect(parseMarkdownTable("No table here")).toBeNull();
   });
 });

@@ -4,6 +4,7 @@ import { type DragEvent, useEffect, useMemo, useRef, useState } from "react";
 import { saveHighlight, submitAttempt } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
 import {
+  parseMarkdownTable,
   parseQuestionOptions,
   splitPromptIntoSegments,
   usesDragDropAnswer
@@ -191,6 +192,96 @@ function DragDropQuestion({ question }: { question: Question }) {
   );
 }
 
+function TableCompletionCell({
+  value,
+  questionsByOrder
+}: {
+  value: string;
+  questionsByOrder: Map<number, Question>;
+}) {
+  const segments = splitPromptIntoSegments(value);
+
+  return (
+    <>
+      {segments.map((segment, index) => {
+        if (segment.type === "text") {
+          return <span key={`${segment.type}-${index}`}>{segment.value}</span>;
+        }
+
+        const question = questionsByOrder.get(Number(segment.value));
+
+        if (!question) {
+          return <span key={`${segment.type}-${segment.value}-${index}`}>[[{segment.value}]]</span>;
+        }
+
+        return (
+          <input
+            key={`${segment.type}-${segment.value}-${index}`}
+            name={`q_${question.id}`}
+            placeholder={segment.value}
+            autoComplete="off"
+            className="mx-1 inline-flex h-8 w-24 rounded-md border border-primary/50 bg-background/80 px-2 text-center text-sm font-medium outline-none ring-primary/40 focus:ring-2"
+          />
+        );
+      })}
+    </>
+  );
+}
+
+function TableCompletionQuestionSet({
+  content,
+  questions
+}: {
+  content: string;
+  questions: Question[];
+}) {
+  const table = parseMarkdownTable(content);
+  const questionsByOrder = new Map(questions.map((question) => [question.order, question]));
+
+  if (!table) {
+    return (
+      <div className="space-y-4">
+        {questions.map((question) => (
+          <article key={question.id} className="rounded-md border border-border bg-background/40 p-4">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Question {question.order}
+            </p>
+            <p className="mt-2 text-sm leading-6">{question.prompt}</p>
+            <QuestionInput question={question} />
+          </article>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="overflow-x-auto rounded-md border border-border bg-background/40">
+      <table className="min-w-full border-collapse text-sm">
+        <thead>
+          <tr className="bg-muted/60">
+            {table.headers.map((header) => (
+              <th key={header} className="border border-border px-3 py-2 text-left font-semibold">
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td key={`${rowIndex}-${cellIndex}`} className="border border-border px-3 py-3 align-top leading-7">
+                  <TableCompletionCell value={cell} questionsByOrder={questionsByOrder} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export function AttemptWorkspace({
   recipientId,
   attempt,
@@ -311,7 +402,13 @@ export function AttemptWorkspace({
 
       {assignment.units.map((assignmentUnit) => {
         const unit = assignmentUnit.assignableUnit;
-        const sourceText = unit.transcript || unit.content;
+        const tableCompletionQuestions = unit.questions.filter(
+          (question) => question.questionType === "table_completion"
+        );
+        const regularQuestions = unit.questions.filter(
+          (question) => question.questionType !== "table_completion"
+        );
+        const sourceText = unit.transcript || (tableCompletionQuestions.length > 0 ? "" : unit.content);
         const sourceType = unit.transcript ? "transcript" : "content";
         const unitHighlights = highlights.filter(
           (highlight) =>
@@ -337,16 +434,24 @@ export function AttemptWorkspace({
                     <track kind="captions" />
                   </audio>
                 ) : null}
-                <HighlightLayer
-                  text={sourceText}
-                  highlights={unitHighlights}
-                  onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
-                />
+                {sourceText ? (
+                  <HighlightLayer
+                    text={sourceText}
+                    highlights={unitHighlights}
+                    onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
+                  />
+                ) : null}
               </div>
 
               <div className="space-y-4">
-                {unit.questions.length > 0 ? (
-                  unit.questions.map((question) => {
+                {tableCompletionQuestions.length > 0 ? (
+                  <TableCompletionQuestionSet
+                    content={unit.content}
+                    questions={tableCompletionQuestions}
+                  />
+                ) : null}
+                {regularQuestions.length > 0 ? (
+                  regularQuestions.map((question) => {
                     const options = parseQuestionOptions(question.optionsJson);
                     const isDragDrop = usesDragDropAnswer(question.questionType, options);
 
@@ -369,11 +474,11 @@ export function AttemptWorkspace({
                       </article>
                     );
                   })
-                ) : (
+                ) : tableCompletionQuestions.length === 0 ? (
                   <p className="rounded-md border border-border bg-background/40 p-4 text-sm text-muted-foreground">
                     No auto-graded questions are attached to this unit.
                   </p>
-                )}
+                ) : null}
               </div>
             </div>
           </section>

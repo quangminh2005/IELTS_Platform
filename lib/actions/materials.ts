@@ -4,11 +4,23 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireTeacher } from "@/lib/actions/classes";
+import { normalizeAnswer } from "@/lib/grading";
 import { materialNoticePath } from "@/lib/material-notices";
 import { prisma } from "@/lib/prisma";
 
 const skills = ["listening", "reading", "writing", "speaking"] as const;
 const unitTypes = ["listening_part", "reading_passage", "writing_task", "speaking_part"] as const;
+const questionTypes = [
+  "multiple_choice",
+  "short_answer",
+  "matching",
+  "drag_drop_matching",
+  "gap_fill",
+  "inline_gap_fill",
+  "table_completion",
+  "note_completion",
+  "true_false_not_given"
+] as const;
 
 const materialSchema = z.object({
   title: z.string().trim().min(2, "Material title must be at least 2 characters."),
@@ -485,4 +497,223 @@ export async function deleteQuestion(formData: FormData) {
 
   revalidatePath("/teacher/materials");
   redirect(materialNoticePath("success", "Question deleted."));
+}
+
+const importScalar = z.union([z.string(), z.number(), z.boolean()]);
+
+const importQuestionSchema = z.object({
+  order: z.number().int().min(1),
+  questionType: z.enum(questionTypes),
+  prompt: z.string().trim().min(1),
+  options: z.array(importScalar).optional(),
+  answer: z.union([importScalar, z.array(importScalar)]).optional(),
+  explanation: z.string().trim().optional(),
+  points: z.number().int().min(1).default(1)
+});
+
+const importUnitSchema = z.object({
+  unitType: z.enum(unitTypes),
+  unitNumber: z.number().int().min(1),
+  title: z.string().trim().min(2),
+  instructions: z.string().trim().optional(),
+  content: z.string().min(1),
+  audioUrl: z.string().trim().optional(),
+  transcript: z.string().trim().optional(),
+  defaultTimeLimitMinutes: z.number().int().min(1).optional(),
+  metadata: z.unknown().optional(),
+  questions: z.array(importQuestionSchema).default([])
+});
+
+const importMaterialSchema = z.object({
+  title: z.string().trim().min(2),
+  skill: z.enum(skills),
+  sourceLabel: z.string().trim().optional(),
+  description: z.string().trim().optional(),
+  units: z.array(importUnitSchema).min(1, "Need at least one unit.")
+});
+
+type ImportMaterial = z.infer<typeof importMaterialSchema>;
+
+function placeholderNumbers(content: string) {
+  const numbers = new Set<number>();
+  const pattern = /\[\[(\d+)\]\]/g;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(content)) !== null) {
+    numbers.add(Number(match[1]));
+  }
+
+  return numbers;
+}
+
+function answersAsArray(answer: ImportMaterial["units"][number]["questions"][number]["answer"]) {
+  if (answer === undefined) {
+    return [];
+  }
+
+  return (Array.isArray(answer) ? answer : [answer]).map((value) => String(value));
+}
+
+// Types whose stored answer must equal one of the option labels.
+const optionRequiredTypes = new Set([
+  "multiple_choice",
+  "matching",
+  "drag_drop_matching",
+  "inline_gap_fill"
+]);
+
+// Types that place [[n]] blanks inside the unit content.
+const contentBlankTypes = new Set(["table_completion", "note_completion"]);
+
+function validateImport(data: ImportMaterial) {
+  const errors: string[] = [];
+
+  data.units.forEach((unit) => {
+    const where = `Phần "${unit.title}" (unit ${unit.unitNumber})`;
+    const orders = unit.questions.map((question) => question.order);
+    const duplicates = [...new Set(orders.filter((order, index) => orders.indexOf(order) !== index))];
+
+    if (duplicates.length > 0) {
+      errors.push(`${where}: trùng Order ${duplicates.join(", ")}.`);
+    }
+
+    const blanks = placeholderNumbers(unit.content);
+
+    unit.questions
+      .filter((question) => contentBlankTypes.has(question.questionType))
+      .forEach((question) => {
+        if (!blanks.has(question.order)) {
+          errors.push(
+            `${where} - câu ${question.order}: dạng điền chỗ trống nhưng Content thiếu [[${question.order}]].`
+          );
+        }
+      });
+
+    blanks.forEach((number) => {
+      if (!orders.includes(number)) {
+        errors.push(`${where}: Content có [[${number}]] nhưng không có câu hỏi Order ${number}.`);
+      }
+    });
+
+    unit.questions.forEach((question) => {
+      const qWhere = `${where} - câu ${question.order}`;
+      const options = (question.options ?? []).map((option) => String(option));
+      const answers = answersAsArray(question.answer);
+
+      if (optionRequiredTypes.has(question.questionType) && options.length === 0) {
+        errors.push(`${qWhere}: dạng "${question.questionType}" cần "options".`);
+      }
+
+      if (answers.length === 0) {
+        errors.push(`${qWhere}: thiếu "answer".`);
+      }
+
+      if (options.length > 0 && answers.length > 0) {
+        const normalizedOptions = options.map(normalizeAnswer);
+
+        answers.forEach((answer) => {
+          if (!normalizedOptions.includes(normalizeAnswer(answer))) {
+            errors.push(`${qWhere}: đáp án "${answer}" không nằm trong "options".`);
+          }
+        });
+      }
+    });
+  });
+
+  return errors;
+}
+
+export async function importMaterial(formData: FormData) {
+  const teacher = await requireTeacher();
+  const raw = String(formData.get("payload") ?? "").trim();
+
+  if (!raw) {
+    redirect(materialNoticePath("error", "Dán nội dung JSON trước khi import."));
+  }
+
+  let payload: unknown = null;
+  let jsonError = false;
+
+  try {
+    payload = JSON.parse(raw);
+  } catch {
+    jsonError = true;
+  }
+
+  if (jsonError) {
+    redirect(materialNoticePath("error", "JSON không hợp lệ — kiểm tra lại cú pháp."));
+  }
+
+  const parsed = importMaterialSchema.safeParse(payload);
+
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    const path = issue?.path.join(".");
+    redirect(
+      materialNoticePath(
+        "error",
+        `Sai cấu trúc${path ? ` tại "${path}"` : ""}: ${issue?.message ?? "dữ liệu không hợp lệ."}`
+      )
+    );
+  }
+
+  const data = parsed.data;
+  const semanticErrors = validateImport(data);
+
+  if (semanticErrors.length > 0) {
+    redirect(materialNoticePath("error", semanticErrors[0]));
+  }
+
+  const questionCount = data.units.reduce((sum, unit) => sum + unit.questions.length, 0);
+
+  await prisma.material.create({
+    data: {
+      teacherId: teacher.id,
+      skill: data.skill,
+      title: data.title,
+      sourceLabel: optionalText(data.sourceLabel),
+      description: optionalText(data.description),
+      units: {
+        create: data.units.map((unit) => ({
+          skill: data.skill,
+          unitType: unit.unitType,
+          unitNumber: unit.unitNumber,
+          title: unit.title,
+          instructions: optionalText(unit.instructions),
+          content: unit.content,
+          audioUrl: optionalText(unit.audioUrl),
+          transcript: optionalText(unit.transcript),
+          defaultTimeLimitMinutes: unit.defaultTimeLimitMinutes ?? null,
+          metadataJson:
+            unit.metadata === undefined || unit.metadata === null
+              ? null
+              : JSON.stringify(unit.metadata),
+          questions: {
+            create: unit.questions.map((question) => ({
+              order: question.order,
+              questionType: question.questionType,
+              prompt: question.prompt,
+              optionsJson:
+                question.options && question.options.length > 0
+                  ? JSON.stringify(question.options.map((option) => String(option)))
+                  : null,
+              correctAnswerJson:
+                question.answer === undefined ? null : JSON.stringify(question.answer),
+              explanation: optionalText(question.explanation),
+              points: question.points
+            }))
+          }
+        }))
+      }
+    }
+  });
+
+  revalidatePath("/teacher");
+  revalidatePath("/teacher/materials");
+  redirect(
+    materialNoticePath(
+      "success",
+      `Đã import "${data.title}": ${data.units.length} phần, ${questionCount} câu hỏi.`
+    )
+  );
 }

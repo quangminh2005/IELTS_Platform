@@ -1,4 +1,5 @@
 import { createMaterial, createQuestion, createUnit } from "@/lib/actions/materials";
+import { QuestionFields } from "@/components/question-fields";
 
 type MaterialEditorQuestion = {
   id: string;
@@ -40,22 +41,8 @@ const unitTypeOptions = [
   { value: "speaking_part", label: "Speaking part" }
 ];
 
-const questionTypeOptions = [
-  { value: "multiple_choice", label: "Multiple choice" },
-  { value: "short_answer", label: "Short answer" },
-  { value: "matching", label: "Matching" },
-  { value: "drag_drop_matching", label: "Drag/drop matching" },
-  { value: "gap_fill", label: "Gap fill" },
-  { value: "inline_gap_fill", label: "Inline gap fill" },
-  { value: "table_completion", label: "Table completion" },
-  { value: "true_false_not_given", label: "True / False / Not Given" }
-];
-
 const fieldClass =
   "mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2";
-
-const compactFieldClass =
-  "w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2";
 
 function labelFor(options: Array<{ value: string; label: string }>, value: string) {
   return options.find((option) => option.value === value)?.label ?? value;
@@ -212,90 +199,20 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
         </button>
       </form>
 
-      <form action={createQuestion} className="rounded-md border border-border bg-muted/45 p-5">
+      <div className="rounded-md border border-border bg-muted/45 p-5">
         <h3 className="text-lg font-semibold">Listening / Reading question</h3>
         <p className="mt-1 text-sm text-muted-foreground">Add auto-gradable prompts to content units.</p>
 
-        <label className="mt-4 block text-sm font-medium" htmlFor="assignableUnitId">
-          Unit
-        </label>
-        <select id="assignableUnitId" name="assignableUnitId" required className={fieldClass}>
-          <option value="">Choose listening or reading unit</option>
-          {questionUnits.map((unit) => (
-            <option key={unit.id} value={unit.id}>
-              {unit.materialTitle} - {unit.unitNumber}. {unit.title}
-            </option>
-          ))}
-        </select>
-
-        <div className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_5rem_5rem]">
-          <div>
-            <label className="block text-sm font-medium" htmlFor="questionType">
-              Type
-            </label>
-            <select id="questionType" name="questionType" required className={fieldClass}>
-              {questionTypeOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium" htmlFor="order">
-              Order
-            </label>
-            <input id="order" name="order" type="number" min={1} defaultValue={1} required className={fieldClass} />
-          </div>
-          <div>
-            <label className="block text-sm font-medium" htmlFor="points">
-              Points
-            </label>
-            <input id="points" name="points" type="number" min={1} defaultValue={1} required className={fieldClass} />
-          </div>
-        </div>
-
-        <label className="mt-4 block text-sm font-medium" htmlFor="prompt">
-          Prompt
-        </label>
-        <textarea id="prompt" name="prompt" rows={4} required className={fieldClass} />
-
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          <div>
-            <label className="block text-sm font-medium" htmlFor="optionsJson">
-              Options JSON
-            </label>
-            <textarea
-              id="optionsJson"
-              name="optionsJson"
-              rows={4}
-              placeholder='["A","B","C"]'
-              className={compactFieldClass}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium" htmlFor="correctAnswerJson">
-              Answer JSON
-            </label>
-            <textarea
-              id="correctAnswerJson"
-              name="correctAnswerJson"
-              rows={4}
-              placeholder='"A"'
-              className={compactFieldClass}
-            />
-          </div>
-        </div>
-
-        <label className="mt-4 block text-sm font-medium" htmlFor="explanation">
-          Explanation
-        </label>
-        <textarea id="explanation" name="explanation" rows={3} className={fieldClass} />
-
-        <button className="mt-4 w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
-          Create question
-        </button>
-      </form>
+        <QuestionFields
+          formAction={createQuestion}
+          submitLabel="Create question"
+          idPrefix="new-question"
+          units={questionUnits.map((unit) => ({
+            id: unit.id,
+            label: `${unit.materialTitle} - ${unit.unitNumber}. ${unit.title}`
+          }))}
+        />
+      </div>
     </div>
   );
 }

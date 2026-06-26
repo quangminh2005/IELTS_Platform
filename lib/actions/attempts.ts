@@ -131,6 +131,69 @@ export async function startAttempt(recipientId: string) {
   });
 }
 
+export async function saveAttemptDraft(formData: FormData) {
+  const student = await requireStudent();
+  const attemptId = String(formData.get("attemptId") ?? "").trim();
+
+  if (!attemptId) {
+    throw new Error("Attempt id is required.");
+  }
+
+  const attempt = await prisma.attempt.findFirst({
+    where: {
+      id: attemptId,
+      studentId: student.id,
+      status: "in_progress"
+    },
+    include: {
+      assignmentRecipient: {
+        include: {
+          assignment: {
+            include: {
+              units: {
+                include: {
+                  assignableUnit: {
+                    include: {
+                      questions: {
+                        select: { id: true }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+
+  if (!attempt) {
+    throw new Error("Attempt not found for this student.");
+  }
+
+  const draftRows = attempt.assignmentRecipient.assignment.units
+    .flatMap((assignmentUnit) =>
+      assignmentUnit.assignableUnit.questions.map((question) => ({
+        attemptId: attempt.id,
+        studentId: student.id,
+        questionId: question.id,
+        assignableUnitId: assignmentUnit.assignableUnitId,
+        value: String(formData.get(`q_${question.id}`) ?? "").trim()
+      }))
+    )
+    .filter((row) => row.value !== "");
+
+  await prisma.$transaction([
+    prisma.answer.deleteMany({
+      where: { attemptId: attempt.id }
+    }),
+    ...(draftRows.length > 0
+      ? [prisma.answer.createMany({ data: draftRows })]
+      : [])
+  ]);
+}
+
 export async function saveHighlight(formData: FormData) {
   const student = await requireStudent();
   const parsed = highlightSchema.safeParse({

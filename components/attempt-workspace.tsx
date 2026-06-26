@@ -1,7 +1,14 @@
 "use client";
 
-import { type DragEvent, useEffect, useMemo, useRef, useState } from "react";
-import { saveHighlight, submitAttempt } from "@/lib/actions/attempts";
+import {
+  type DragEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
+import { saveAttemptDraft, saveHighlight, submitAttempt } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
 import {
   parseMarkdownTable,
@@ -60,13 +67,26 @@ type AttemptWorkspaceProps = {
     units: AssignmentUnit[];
   };
   highlights: Highlight[];
+  savedAnswers: Record<string, string>;
 };
+
+type AnswerChange = (questionId: string, value: string) => void;
+
+type SaveState = "idle" | "saving" | "saved" | "error";
 
 function usesLongAnswer(questionType: string) {
   return questionType.includes("essay") || questionType.includes("writing");
 }
 
-function QuestionInput({ question }: { question: Question }) {
+function QuestionInput({
+  question,
+  initialValue,
+  onAnswerChange
+}: {
+  question: Question;
+  initialValue: string;
+  onAnswerChange: AnswerChange;
+}) {
   const options = parseQuestionOptions(question.optionsJson);
   const fieldName = `q_${question.id}`;
 
@@ -82,6 +102,8 @@ function QuestionInput({ question }: { question: Question }) {
               type="radio"
               name={fieldName}
               value={option}
+              defaultChecked={initialValue === option}
+              onChange={(event) => onAnswerChange(question.id, event.target.value)}
               className="h-4 w-4 accent-teal-400"
             />
             <span>{option}</span>
@@ -96,6 +118,8 @@ function QuestionInput({ question }: { question: Question }) {
       <textarea
         name={fieldName}
         rows={8}
+        defaultValue={initialValue}
+        onChange={(event) => onAnswerChange(question.id, event.target.value)}
         className="mt-3 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm outline-none focus:border-primary"
       />
     );
@@ -104,24 +128,39 @@ function QuestionInput({ question }: { question: Question }) {
   return (
     <input
       name={fieldName}
+      defaultValue={initialValue}
+      onChange={(event) => onAnswerChange(question.id, event.target.value)}
       className="mt-3 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm outline-none focus:border-primary"
       autoComplete="off"
     />
   );
 }
 
-function DragDropQuestion({ question }: { question: Question }) {
-  const [answer, setAnswer] = useState("");
+function DragDropQuestion({
+  question,
+  initialValue,
+  onAnswerChange
+}: {
+  question: Question;
+  initialValue: string;
+  onAnswerChange: AnswerChange;
+}) {
+  const [answer, setAnswer] = useState(initialValue);
   const options = parseQuestionOptions(question.optionsJson);
   const segments = splitPromptIntoSegments(question.prompt);
   const fieldName = `q_${question.id}`;
+
+  function applyAnswer(value: string) {
+    setAnswer(value);
+    onAnswerChange(question.id, value);
+  }
 
   function handleDrop(event: DragEvent<HTMLButtonElement>, option?: string) {
     event.preventDefault();
     const droppedOption = option ?? event.dataTransfer.getData("text/plain");
 
     if (droppedOption) {
-      setAnswer(droppedOption);
+      applyAnswer(droppedOption);
     }
   }
 
@@ -167,7 +206,7 @@ function DragDropQuestion({ question }: { question: Question }) {
             key={option}
             type="button"
             draggable
-            onClick={() => setAnswer(option)}
+            onClick={() => applyAnswer(option)}
             onDragStart={(event) => {
               event.dataTransfer.setData("text/plain", option);
               event.dataTransfer.effectAllowed = "move";
@@ -182,7 +221,7 @@ function DragDropQuestion({ question }: { question: Question }) {
       {answer ? (
         <button
           type="button"
-          onClick={() => setAnswer("")}
+          onClick={() => applyAnswer("")}
           className="text-xs font-medium text-muted-foreground underline underline-offset-4 hover:text-foreground"
         >
           Clear answer
@@ -194,10 +233,14 @@ function DragDropQuestion({ question }: { question: Question }) {
 
 function TableCompletionCell({
   value,
-  questionsByOrder
+  questionsByOrder,
+  savedAnswers,
+  onAnswerChange
 }: {
   value: string;
   questionsByOrder: Map<number, Question>;
+  savedAnswers: Record<string, string>;
+  onAnswerChange: AnswerChange;
 }) {
   const segments = splitPromptIntoSegments(value);
 
@@ -219,6 +262,8 @@ function TableCompletionCell({
             key={`${segment.type}-${segment.value}-${index}`}
             name={`q_${question.id}`}
             placeholder={segment.value}
+            defaultValue={savedAnswers[question.id] ?? ""}
+            onChange={(event) => onAnswerChange(question.id, event.target.value)}
             autoComplete="off"
             className="mx-1 inline-flex h-8 w-24 rounded-md border border-primary/50 bg-background/80 px-2 text-center text-sm font-medium outline-none ring-primary/40 focus:ring-2"
           />
@@ -230,10 +275,14 @@ function TableCompletionCell({
 
 function TableCompletionQuestionSet({
   content,
-  questions
+  questions,
+  savedAnswers,
+  onAnswerChange
 }: {
   content: string;
   questions: Question[];
+  savedAnswers: Record<string, string>;
+  onAnswerChange: AnswerChange;
 }) {
   const table = parseMarkdownTable(content);
   const questionsByOrder = new Map(questions.map((question) => [question.order, question]));
@@ -242,12 +291,20 @@ function TableCompletionQuestionSet({
     return (
       <div className="space-y-4">
         {questions.map((question) => (
-          <article key={question.id} className="rounded-md border border-border bg-background/40 p-4">
+          <article
+            key={question.id}
+            id={`question-${question.id}`}
+            className="scroll-mt-24 rounded-md border border-border bg-background/40 p-4"
+          >
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
               Question {question.order}
             </p>
             <p className="mt-2 text-sm leading-6">{question.prompt}</p>
-            <QuestionInput question={question} />
+            <QuestionInput
+              question={question}
+              initialValue={savedAnswers[question.id] ?? ""}
+              onAnswerChange={onAnswerChange}
+            />
           </article>
         ))}
       </div>
@@ -271,7 +328,12 @@ function TableCompletionQuestionSet({
             <tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td key={`${rowIndex}-${cellIndex}`} className="border border-border px-3 py-3 align-top leading-7">
-                  <TableCompletionCell value={cell} questionsByOrder={questionsByOrder} />
+                  <TableCompletionCell
+                    value={cell}
+                    questionsByOrder={questionsByOrder}
+                    savedAnswers={savedAnswers}
+                    onAnswerChange={onAnswerChange}
+                  />
                 </td>
               ))}
             </tr>
@@ -282,11 +344,187 @@ function TableCompletionQuestionSet({
   );
 }
 
+function NoteCompletionQuestionSet({
+  content,
+  questions,
+  savedAnswers,
+  onAnswerChange
+}: {
+  content: string;
+  questions: Question[];
+  savedAnswers: Record<string, string>;
+  onAnswerChange: AnswerChange;
+}) {
+  const questionsByOrder = new Map(questions.map((question) => [question.order, question]));
+  const segments = splitPromptIntoSegments(content);
+
+  return (
+    <div className="whitespace-pre-wrap rounded-md border border-border bg-background/40 p-4 text-sm leading-8">
+      {segments.map((segment, index) => {
+        if (segment.type === "text") {
+          return <span key={`text-${index}`}>{segment.value}</span>;
+        }
+
+        const question = questionsByOrder.get(Number(segment.value));
+
+        if (!question) {
+          return <span key={`missing-${segment.value}-${index}`}>[[{segment.value}]]</span>;
+        }
+
+        return (
+          <input
+            key={`blank-${segment.value}-${index}`}
+            name={`q_${question.id}`}
+            placeholder={segment.value}
+            defaultValue={savedAnswers[question.id] ?? ""}
+            onChange={(event) => onAnswerChange(question.id, event.target.value)}
+            autoComplete="off"
+            className="mx-1 inline-flex h-8 w-28 items-center rounded-md border border-primary/50 bg-background/80 px-2 text-center align-middle text-sm font-medium outline-none ring-primary/40 focus:ring-2"
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function MatchingQuestionSet({
+  questions,
+  savedAnswers,
+  onAnswerChange
+}: {
+  questions: Question[];
+  savedAnswers: Record<string, string>;
+  onAnswerChange: AnswerChange;
+}) {
+  const sharedOptions = useMemo(() => {
+    const seen = new Set<string>();
+    const pool: string[] = [];
+
+    questions.forEach((question) => {
+      parseQuestionOptions(question.optionsJson).forEach((option) => {
+        if (!seen.has(option)) {
+          seen.add(option);
+          pool.push(option);
+        }
+      });
+    });
+
+    return pool;
+  }, [questions]);
+
+  const [selections, setSelections] = useState<Record<string, string>>(() => {
+    const initial: Record<string, string> = {};
+
+    questions.forEach((question) => {
+      if (savedAnswers[question.id]) {
+        initial[question.id] = savedAnswers[question.id];
+      }
+    });
+
+    return initial;
+  });
+  const [activeOption, setActiveOption] = useState<string | null>(null);
+
+  function assign(questionId: string, value: string) {
+    setSelections((previous) => ({ ...previous, [questionId]: value }));
+    onAnswerChange(questionId, value);
+  }
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,0.85fr)]">
+      <div className="space-y-2">
+        {questions.map((question) => {
+          const value = selections[question.id] ?? "";
+
+          return (
+            <div
+              key={question.id}
+              id={`question-${question.id}`}
+              className="flex scroll-mt-24 items-center gap-3 rounded-md border border-border bg-background/40 px-3 py-2"
+            >
+              <input type="hidden" name={`q_${question.id}`} value={value} />
+              <span className="w-6 shrink-0 text-sm font-semibold text-muted-foreground">
+                {question.order}.
+              </span>
+              <span className="flex-1 text-sm">{question.prompt}</span>
+              <button
+                type="button"
+                onClick={() => {
+                  if (activeOption) {
+                    assign(question.id, activeOption);
+                  }
+                }}
+                onDragOver={(event) => event.preventDefault()}
+                onDrop={(event) => {
+                  event.preventDefault();
+                  const dropped = event.dataTransfer.getData("text/plain");
+                  if (dropped) {
+                    assign(question.id, dropped);
+                  }
+                }}
+                className="inline-flex min-h-9 min-w-28 items-center justify-center rounded-md border border-dashed border-primary/60 bg-primary/10 px-3 py-1 text-sm font-medium text-foreground transition hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+                aria-label={`Answer ${question.order}`}
+              >
+                {value || "—"}
+              </button>
+              {value ? (
+                <button
+                  type="button"
+                  onClick={() => assign(question.id, "")}
+                  className="shrink-0 text-xs font-medium text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                >
+                  Clear
+                </button>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="space-y-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Options (có thể dùng nhiều lần)
+        </p>
+        {sharedOptions.length > 0 ? (
+          sharedOptions.map((option) => (
+            <button
+              key={option}
+              type="button"
+              draggable
+              aria-pressed={activeOption === option}
+              onClick={() => setActiveOption((previous) => (previous === option ? null : option))}
+              onDragStart={(event) => {
+                event.dataTransfer.setData("text/plain", option);
+                event.dataTransfer.effectAllowed = "copy";
+              }}
+              className={
+                activeOption === option
+                  ? "block w-full cursor-grab rounded-md border border-primary bg-primary/15 px-3 py-2 text-left text-sm font-medium transition active:cursor-grabbing"
+                  : "block w-full cursor-grab rounded-md border border-border bg-background/60 px-3 py-2 text-left text-sm transition hover:border-primary hover:bg-primary/10 active:cursor-grabbing"
+              }
+            >
+              {option}
+            </button>
+          ))
+        ) : (
+          <p className="text-xs text-muted-foreground">No options provided.</p>
+        )}
+        {activeOption ? (
+          <p className="text-xs text-muted-foreground">
+            Đã chọn “{activeOption}” — bấm vào ô trống để điền.
+          </p>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 export function AttemptWorkspace({
   recipientId,
   attempt,
   assignment,
-  highlights
+  highlights,
+  savedAnswers
 }: AttemptWorkspaceProps) {
   const elapsedRef = useRef<HTMLInputElement>(null);
   const tabSwitchRef = useRef<HTMLInputElement>(null);
@@ -294,6 +532,75 @@ export function AttemptWorkspace({
   const formRef = useRef<HTMLFormElement>(null);
   const startedAtMs = useMemo(() => new Date(attempt.startedAt).getTime(), [attempt.startedAt]);
   const timeLimitMinutes = assignment.timeLimitMinutes;
+
+  const [answers, setAnswers] = useState<Record<string, string>>(savedAnswers);
+  const [flagged, setFlagged] = useState<Set<string>>(new Set());
+  const [saveState, setSaveState] = useState<SaveState>("idle");
+  const [activePart, setActivePart] = useState(0);
+
+  const goToPart = useCallback((partIndex: number) => {
+    setActivePart(partIndex);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
+
+  const handleAnswerChange = useCallback<AnswerChange>((questionId, value) => {
+    setAnswers((previous) => {
+      if (previous[questionId] === value) {
+        return previous;
+      }
+
+      return { ...previous, [questionId]: value };
+    });
+  }, []);
+
+  const toggleFlag = useCallback((questionId: string) => {
+    setFlagged((previous) => {
+      const next = new Set(previous);
+
+      if (next.has(questionId)) {
+        next.delete(questionId);
+      } else {
+        next.add(questionId);
+      }
+
+      return next;
+    });
+  }, []);
+
+  const persistDraft = useCallback(async () => {
+    setSaveState("saving");
+
+    try {
+      const formData = new FormData();
+      formData.set("attemptId", attempt.id);
+      Object.entries(answers).forEach(([questionId, value]) => {
+        formData.set(`q_${questionId}`, value);
+      });
+
+      await saveAttemptDraft(formData);
+      setSaveState("saved");
+    } catch {
+      setSaveState("error");
+    }
+  }, [answers, attempt.id]);
+
+  // Autosave answers shortly after they change.
+  const firstRenderRef = useRef(true);
+
+  useEffect(() => {
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false;
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      void persistDraft();
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [persistDraft]);
 
   useEffect(() => {
     function updateElapsed() {
@@ -314,17 +621,22 @@ export function AttemptWorkspace({
 
   useEffect(() => {
     function recordVisibilityChange() {
-      if (!document.hidden || !tabSwitchRef.current) {
+      if (!document.hidden) {
         return;
       }
 
-      tabSwitchRef.current.value = String(Number(tabSwitchRef.current.value || "0") + 1);
+      if (tabSwitchRef.current) {
+        tabSwitchRef.current.value = String(Number(tabSwitchRef.current.value || "0") + 1);
+      }
+
+      // Best-effort save when the student leaves the tab.
+      void persistDraft();
     }
 
     document.addEventListener("visibilitychange", recordVisibilityChange);
 
     return () => document.removeEventListener("visibilitychange", recordVisibilityChange);
-  }, []);
+  }, [persistDraft]);
 
   useEffect(() => {
     if (!timeLimitMinutes || timeLimitMinutes <= 0) {
@@ -368,8 +680,49 @@ export function AttemptWorkspace({
     await saveHighlight(formData);
   }
 
+  function scrollToQuestion(anchorId: string) {
+    const target = document.getElementById(anchorId);
+    target?.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    if (anchorId.startsWith("question-")) {
+      const input = target?.querySelector<HTMLElement>(
+        "input:not([type=hidden]), textarea, button"
+      );
+      input?.focus({ preventScroll: true });
+    }
+  }
+
+  const totalQuestions = assignment.units.reduce(
+    (sum, unit) => sum + unit.assignableUnit.questions.length,
+    0
+  );
+  const answeredCount = Object.values(answers).filter((value) => value.trim() !== "").length;
+
+  // Question palette grouped by unit ("Phần").
+  const parts = assignment.units.map((assignmentUnit) => {
+    const unit = assignmentUnit.assignableUnit;
+
+    return {
+      unitId: assignmentUnit.id,
+      order: assignmentUnit.order,
+      title: unit.title,
+      entries: [...unit.questions]
+        .sort((a, b) => a.order - b.order)
+        .map((question) => ({
+          id: question.id,
+          order: question.order,
+          anchorId:
+            question.questionType === "table_completion"
+              ? `tablesection-${assignmentUnit.id}`
+              : question.questionType === "note_completion"
+                ? `notesection-${assignmentUnit.id}`
+                : `question-${question.id}`
+        }))
+    };
+  });
+
   return (
-    <form ref={formRef} action={submitAttempt} className="space-y-8">
+    <form ref={formRef} action={submitAttempt} className="space-y-8 pb-28">
       <input type="hidden" name="attemptId" value={attempt.id} />
       <input ref={elapsedRef} type="hidden" name="elapsedSeconds" defaultValue={attempt.elapsedSeconds} />
       <input
@@ -400,15 +753,27 @@ export function AttemptWorkspace({
         </div>
       </section>
 
-      {assignment.units.map((assignmentUnit) => {
+      {assignment.units.map((assignmentUnit, partIndex) => {
         const unit = assignmentUnit.assignableUnit;
         const tableCompletionQuestions = unit.questions.filter(
           (question) => question.questionType === "table_completion"
         );
-        const regularQuestions = unit.questions.filter(
-          (question) => question.questionType !== "table_completion"
+        const noteCompletionQuestions = unit.questions.filter(
+          (question) => question.questionType === "note_completion"
         );
-        const sourceText = unit.transcript || (tableCompletionQuestions.length > 0 ? "" : unit.content);
+        const matchingQuestions = unit.questions.filter(
+          (question) => question.questionType === "matching"
+        );
+        const inlineCompletionConsumesContent =
+          tableCompletionQuestions.length > 0 || noteCompletionQuestions.length > 0;
+        const regularQuestions = unit.questions.filter(
+          (question) =>
+            question.questionType !== "table_completion" &&
+            question.questionType !== "note_completion" &&
+            question.questionType !== "matching"
+        );
+        const sourceText =
+          unit.transcript || (inlineCompletionConsumesContent ? "" : unit.content);
         const sourceType = unit.transcript ? "transcript" : "content";
         const unitHighlights = highlights.filter(
           (highlight) =>
@@ -416,10 +781,17 @@ export function AttemptWorkspace({
         );
 
         return (
-          <section key={assignmentUnit.id} className="rounded-md border border-border bg-muted/25">
+          <section
+            key={assignmentUnit.id}
+            className={
+              partIndex === activePart
+                ? "rounded-md border border-border bg-muted/25"
+                : "hidden"
+            }
+          >
             <div className="border-b border-border px-5 py-4">
               <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                Unit {assignmentUnit.order} | {unit.skill.replaceAll("_", " ")}
+                Phần {assignmentUnit.order} | {unit.skill.replaceAll("_", " ")}
               </p>
               <h3 className="mt-1 text-xl font-semibold">{unit.title}</h3>
               {unit.instructions ? (
@@ -445,9 +817,30 @@ export function AttemptWorkspace({
 
               <div className="space-y-4">
                 {tableCompletionQuestions.length > 0 ? (
-                  <TableCompletionQuestionSet
-                    content={unit.content}
-                    questions={tableCompletionQuestions}
+                  <div id={`tablesection-${assignmentUnit.id}`} className="scroll-mt-24">
+                    <TableCompletionQuestionSet
+                      content={unit.content}
+                      questions={tableCompletionQuestions}
+                      savedAnswers={answers}
+                      onAnswerChange={handleAnswerChange}
+                    />
+                  </div>
+                ) : null}
+                {noteCompletionQuestions.length > 0 ? (
+                  <div id={`notesection-${assignmentUnit.id}`} className="scroll-mt-24">
+                    <NoteCompletionQuestionSet
+                      content={unit.content}
+                      questions={noteCompletionQuestions}
+                      savedAnswers={answers}
+                      onAnswerChange={handleAnswerChange}
+                    />
+                  </div>
+                ) : null}
+                {matchingQuestions.length > 0 ? (
+                  <MatchingQuestionSet
+                    questions={matchingQuestions}
+                    savedAnswers={answers}
+                    onAnswerChange={handleAnswerChange}
                   />
                 ) : null}
                 {regularQuestions.length > 0 ? (
@@ -458,23 +851,48 @@ export function AttemptWorkspace({
                     return (
                       <article
                         key={question.id}
-                        className="rounded-md border border-border bg-background/40 p-4"
+                        id={`question-${question.id}`}
+                        className="scroll-mt-24 rounded-md border border-border bg-background/40 p-4"
                       >
-                        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                          Question {question.order}
-                        </p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                            Question {question.order}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => toggleFlag(question.id)}
+                            aria-pressed={flagged.has(question.id)}
+                            className={
+                              flagged.has(question.id)
+                                ? "rounded-md border border-amber-400/70 bg-amber-400/15 px-2 py-1 text-xs font-medium text-amber-600 dark:text-amber-300"
+                                : "rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground hover:border-primary"
+                            }
+                          >
+                            {flagged.has(question.id) ? "★ Flagged" : "☆ Flag"}
+                          </button>
+                        </div>
                         {isDragDrop ? (
-                          <DragDropQuestion question={question} />
+                          <DragDropQuestion
+                            question={question}
+                            initialValue={answers[question.id] ?? ""}
+                            onAnswerChange={handleAnswerChange}
+                          />
                         ) : (
                           <>
                             <p className="mt-2 text-sm leading-6">{question.prompt}</p>
-                            <QuestionInput question={question} />
+                            <QuestionInput
+                              question={question}
+                              initialValue={answers[question.id] ?? ""}
+                              onAnswerChange={handleAnswerChange}
+                            />
                           </>
                         )}
                       </article>
                     );
                   })
-                ) : tableCompletionQuestions.length === 0 ? (
+                ) : tableCompletionQuestions.length === 0 &&
+                  noteCompletionQuestions.length === 0 &&
+                  matchingQuestions.length === 0 ? (
                   <p className="rounded-md border border-border bg-background/40 p-4 text-sm text-muted-foreground">
                     No auto-graded questions are attached to this unit.
                   </p>
@@ -485,13 +903,116 @@ export function AttemptWorkspace({
         );
       })}
 
-      <div className="flex justify-end">
-        <button
-          type="submit"
-          className="rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
-        >
-          Submit attempt
-        </button>
+      <div
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
+      >
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3">
+          {parts.length > 1 ? (
+            <div className="flex flex-wrap items-center gap-2">
+              {parts.map((part, index) => {
+                const partAnswered = part.entries.filter(
+                  (entry) => (answers[entry.id] ?? "").trim() !== ""
+                ).length;
+
+                return (
+                  <button
+                    key={part.unitId}
+                    type="button"
+                    onClick={() => goToPart(index)}
+                    className={
+                      index === activePart
+                        ? "rounded-md border border-primary bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground"
+                        : "rounded-md border border-border bg-background px-3 py-1.5 text-xs font-semibold text-foreground hover:border-primary"
+                    }
+                  >
+                    Phần {part.order} ({partAnswered}/{part.entries.length})
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
+
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5 overflow-x-auto">
+              <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Phần {parts[activePart]?.order ?? 1}
+              </span>
+              {(parts[activePart]?.entries ?? []).map((entry) => {
+                const isAnswered = (answers[entry.id] ?? "").trim() !== "";
+                const isFlagged = flagged.has(entry.id);
+
+                return (
+                  <button
+                    key={entry.id}
+                    type="button"
+                    onClick={() => scrollToQuestion(entry.anchorId)}
+                    title={isFlagged ? "Flagged" : undefined}
+                    className={[
+                      "relative h-8 min-w-8 rounded-md border px-2 text-xs font-semibold transition",
+                      isAnswered
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-background text-foreground hover:border-primary",
+                      isFlagged ? "ring-2 ring-amber-400/70" : ""
+                    ].join(" ")}
+                  >
+                    {entry.order}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2">
+              <div className="mr-1 flex flex-col items-end text-xs text-muted-foreground">
+                <span className="font-medium text-foreground">
+                  {answeredCount}/{totalQuestions} answered
+                </span>
+                <span aria-live="polite">
+                  {saveState === "saving"
+                    ? "Saving…"
+                    : saveState === "saved"
+                      ? "All changes saved"
+                      : saveState === "error"
+                        ? "Save failed — retrying"
+                        : ""}
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => goToPart(activePart - 1)}
+                disabled={activePart === 0}
+                aria-label="Previous part"
+                className="rounded-md border border-border bg-background px-3 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                ‹
+              </button>
+              <span className="text-xs font-medium tabular-nums">
+                {activePart + 1}/{Math.max(parts.length, 1)}
+              </span>
+              <button
+                type="button"
+                onClick={() => goToPart(activePart + 1)}
+                disabled={activePart >= parts.length - 1}
+                aria-label="Next part"
+                className="rounded-md border border-border bg-background px-3 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                ›
+              </button>
+
+              <button
+                type="submit"
+                onClick={(event) => {
+                  if (!window.confirm("Nộp bài? Bạn sẽ không thể chỉnh sửa sau khi nộp.")) {
+                    event.preventDefault();
+                  }
+                }}
+                className="rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
+              >
+                Nộp bài
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   );

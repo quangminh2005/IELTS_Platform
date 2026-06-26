@@ -83,6 +83,18 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
     redirect(`/student/results/${activeAttempt.id}`);
   }
 
+  const savedAnswerRows = await prisma.answer.findMany({
+    where: { attemptId: activeAttempt.id },
+    select: { questionId: true, value: true }
+  });
+
+  const savedAnswers: Record<string, string> = {};
+  savedAnswerRows.forEach((row) => {
+    if (row.questionId) {
+      savedAnswers[row.questionId] = row.value;
+    }
+  });
+
   return (
     <div className="space-y-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -105,6 +117,7 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
         attempt={activeAttempt}
         assignment={recipient.assignment}
         highlights={activeAttempt.highlights}
+        savedAnswers={savedAnswers}
       />
     </div>
   );

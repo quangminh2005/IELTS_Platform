@@ -1,6 +1,8 @@
 import type { Prisma } from "@prisma/client";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { MaterialEditor } from "@/components/material-editor";
+import { MaterialImport } from "@/components/material-import";
+import { QuestionFields } from "@/components/question-fields";
 import { requireTeacher } from "@/lib/actions/classes";
 import {
   deleteMaterial,
@@ -51,22 +53,8 @@ const unitTypeOptions = [
   { value: "speaking_part", label: "Speaking part" }
 ];
 
-const questionTypeOptions = [
-  { value: "multiple_choice", label: "Multiple choice" },
-  { value: "short_answer", label: "Short answer" },
-  { value: "matching", label: "Matching" },
-  { value: "drag_drop_matching", label: "Drag/drop matching" },
-  { value: "gap_fill", label: "Gap fill" },
-  { value: "inline_gap_fill", label: "Inline gap fill" },
-  { value: "table_completion", label: "Table completion" },
-  { value: "true_false_not_given", label: "True / False / Not Given" }
-];
-
 const fieldClass =
   "mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2";
-
-const compactFieldClass =
-  "w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2";
 
 const secondaryButtonClass =
   "rounded-md border border-border bg-background px-3 py-2 text-sm font-semibold text-foreground hover:border-primary";
@@ -437,119 +425,24 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                               <summary className="cursor-pointer text-sm font-semibold">
                                 Edit Q{question.order} {formatValue(question.questionType)}
                               </summary>
-                              <form action={updateQuestion} className="mt-4 grid gap-3">
-                                <input type="hidden" name="questionId" value={question.id} />
-                                <input type="hidden" name="assignableUnitId" value={unit.id} />
-                                <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_5rem_5rem]">
-                                  <div>
-                                    <label className="text-sm font-medium" htmlFor={`question-type-${question.id}`}>
-                                      Type
-                                    </label>
-                                    <select
-                                      id={`question-type-${question.id}`}
-                                      name="questionType"
-                                      required
-                                      defaultValue={question.questionType}
-                                      className={fieldClass}
-                                    >
-                                      {questionTypeOptions.map((option) => (
-                                        <option key={option.value} value={option.value}>
-                                          {option.label}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                  <div>
-                                    <label className="text-sm font-medium" htmlFor={`question-order-${question.id}`}>
-                                      Order
-                                    </label>
-                                    <input
-                                      id={`question-order-${question.id}`}
-                                      name="order"
-                                      type="number"
-                                      min={1}
-                                      required
-                                      defaultValue={question.order}
-                                      className={fieldClass}
-                                    />
-                                  </div>
-                                  <div>
-                                    <label className="text-sm font-medium" htmlFor={`question-points-${question.id}`}>
-                                      Points
-                                    </label>
-                                    <input
-                                      id={`question-points-${question.id}`}
-                                      name="points"
-                                      type="number"
-                                      min={1}
-                                      required
-                                      defaultValue={question.points}
-                                      className={fieldClass}
-                                    />
-                                  </div>
-                                </div>
-                                <div>
-                                  <label className="text-sm font-medium" htmlFor={`question-prompt-${question.id}`}>
-                                    Prompt
-                                  </label>
-                                  <textarea
-                                    id={`question-prompt-${question.id}`}
-                                    name="prompt"
-                                    rows={3}
-                                    required
-                                    defaultValue={question.prompt}
-                                    className={fieldClass}
-                                  />
-                                </div>
-                                <div className="grid gap-3 md:grid-cols-2">
-                                  <div>
-                                    <label className="text-sm font-medium" htmlFor={`question-options-${question.id}`}>
-                                      Options JSON
-                                    </label>
-                                    <textarea
-                                      id={`question-options-${question.id}`}
-                                      name="optionsJson"
-                                      rows={3}
-                                      defaultValue={question.optionsJson ?? ""}
-                                      className={compactFieldClass}
-                                    />
-                                  </div>
-                                  <div>
-                                    <label className="text-sm font-medium" htmlFor={`question-answer-${question.id}`}>
-                                      Answer JSON
-                                    </label>
-                                    <textarea
-                                      id={`question-answer-${question.id}`}
-                                      name="correctAnswerJson"
-                                      rows={3}
-                                      defaultValue={question.correctAnswerJson ?? ""}
-                                      className={compactFieldClass}
-                                    />
-                                  </div>
-                                </div>
-                                <div>
-                                  <label className="text-sm font-medium" htmlFor={`question-explanation-${question.id}`}>
-                                    Explanation
-                                  </label>
-                                  <textarea
-                                    id={`question-explanation-${question.id}`}
-                                    name="explanation"
-                                    rows={2}
-                                    defaultValue={question.explanation ?? ""}
-                                    className={fieldClass}
-                                  />
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                  <button className={secondaryButtonClass}>Save question</button>
-                                  <ConfirmSubmitButton
-                                    formAction={deleteQuestion}
-                                    confirmMessage={`Delete question Q${question.order}? This cannot be undone.`}
-                                    className={dangerButtonClass}
-                                  >
-                                    Delete question
-                                  </ConfirmSubmitButton>
-                                </div>
-                              </form>
+                              <QuestionFields
+                                formAction={updateQuestion}
+                                submitLabel="Save question"
+                                idPrefix={`edit-${question.id}`}
+                                selectedUnitId={unit.id}
+                                hiddenFields={{ questionId: question.id }}
+                                defaults={{
+                                  questionType: question.questionType,
+                                  order: question.order,
+                                  points: question.points,
+                                  prompt: question.prompt,
+                                  optionsJson: question.optionsJson,
+                                  correctAnswerJson: question.correctAnswerJson,
+                                  explanation: question.explanation
+                                }}
+                                deleteAction={deleteQuestion}
+                                deleteConfirm={`Delete question Q${question.order}? This cannot be undone.`}
+                              />
                             </details>
                           ))}
                         </div>
@@ -573,6 +466,8 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
           </div>
         )}
       </section>
+
+      <MaterialImport />
 
       <MaterialEditor materials={materials} />
     </div>

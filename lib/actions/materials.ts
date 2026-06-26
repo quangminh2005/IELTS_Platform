@@ -1,8 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireTeacher } from "@/lib/actions/classes";
+import { materialNoticePath } from "@/lib/material-notices";
 import { prisma } from "@/lib/prisma";
 
 const skills = ["listening", "reading", "writing", "speaking"] as const;
@@ -157,7 +159,7 @@ export async function deleteMaterial(formData: FormData) {
   });
 
   if (!material) {
-    throw new Error("Material not found for this teacher.");
+    redirect(materialNoticePath("error", "Material not found for this teacher."));
   }
 
   const isUsed = material.units.some(
@@ -166,7 +168,12 @@ export async function deleteMaterial(formData: FormData) {
   );
 
   if (isUsed) {
-    throw new Error("Cannot delete a material that has assigned work or submitted answers.");
+    redirect(
+      materialNoticePath(
+        "error",
+        "Cannot delete this material because it has assigned work or submitted answers."
+      )
+    );
   }
 
   await prisma.material.delete({
@@ -175,6 +182,7 @@ export async function deleteMaterial(formData: FormData) {
 
   revalidatePath("/teacher");
   revalidatePath("/teacher/materials");
+  redirect(materialNoticePath("success", "Material deleted."));
 }
 
 export async function createUnit(formData: FormData) {
@@ -318,11 +326,16 @@ export async function deleteUnit(formData: FormData) {
   });
 
   if (!unit) {
-    throw new Error("Unit not found for this teacher.");
+    redirect(materialNoticePath("error", "Unit not found for this teacher."));
   }
 
   if (unit._count.assignmentUnits > 0 || unit._count.answers > 0 || unit._count.highlights > 0) {
-    throw new Error("Cannot delete a unit that has assigned work or submitted answers.");
+    redirect(
+      materialNoticePath(
+        "error",
+        "Cannot delete this unit because it has assigned work or submitted answers."
+      )
+    );
   }
 
   await prisma.assignableUnit.delete({
@@ -330,6 +343,7 @@ export async function deleteUnit(formData: FormData) {
   });
 
   revalidatePath("/teacher/materials");
+  redirect(materialNoticePath("success", "Unit deleted."));
 }
 
 export async function createQuestion(formData: FormData) {
@@ -462,7 +476,7 @@ export async function deleteQuestion(formData: FormData) {
   });
 
   if (!question) {
-    throw new Error("Question not found for this teacher.");
+    redirect(materialNoticePath("error", "Question not found for this teacher."));
   }
 
   await prisma.question.delete({
@@ -470,4 +484,5 @@ export async function deleteQuestion(formData: FormData) {
   });
 
   revalidatePath("/teacher/materials");
+  redirect(materialNoticePath("success", "Question deleted."));
 }

@@ -84,8 +84,17 @@ function formatValue(value: string) {
     .join(" ");
 }
 
-export default async function TeacherMaterialsPage() {
+type TeacherMaterialsPageProps = {
+  searchParams?: {
+    materialsMessage?: string;
+    materialsStatus?: string;
+  };
+};
+
+export default async function TeacherMaterialsPage({ searchParams }: TeacherMaterialsPageProps) {
   const teacher = await requireTeacher();
+  const materialsMessage = searchParams?.materialsMessage;
+  const materialsStatus = searchParams?.materialsStatus === "success" ? "success" : "error";
   const materials: TeacherMaterial[] = await prisma.material.findMany({
     where: { teacherId: teacher.id },
     orderBy: { createdAt: "desc" },
@@ -125,6 +134,18 @@ export default async function TeacherMaterialsPage() {
           </div>
         </div>
       </header>
+
+      {materialsMessage ? (
+        <div
+          className={
+            materialsStatus === "success"
+              ? "rounded-md border border-primary/40 bg-primary/10 px-4 py-3 text-sm font-medium text-primary"
+              : "rounded-md border border-red-400/60 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-700 dark:text-red-300"
+          }
+        >
+          {materialsMessage}
+        </div>
+      ) : null}
 
       <section className="space-y-4">
         {materials.length > 0 ? (

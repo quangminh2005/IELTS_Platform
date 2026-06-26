@@ -61,7 +61,9 @@ describe("auth options", () => {
       user: {
         id: "google-account-id",
         email: "student@example.com",
-        name: "Demo Student"
+        name: "Demo Student",
+        role: "student",
+        emailVerified: null
       },
       account: {
         provider: "google",
@@ -103,7 +105,9 @@ describe("auth options", () => {
       user: {
         id: "google-account-id",
         email: "new-student@example.com",
-        name: "New Student"
+        name: "New Student",
+        role: "student",
+        emailVerified: null
       },
       account: {
         provider: "google",
@@ -147,7 +151,8 @@ describe("auth options", () => {
       user: {
         id: "teacher-user-id",
         email: "teacher@example.com",
-        emailVerified: null
+        emailVerified: null,
+        role: "teacher"
       },
       newSession: undefined,
       trigger: "update"

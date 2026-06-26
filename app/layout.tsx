@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,8 +13,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  var saved = localStorage.getItem("ielts-platform-theme");
+                  var theme = saved === "light" || saved === "dark"
+                    ? saved
+                    : (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+                  document.documentElement.dataset.theme = theme;
+                  document.documentElement.style.colorScheme = theme;
+                } catch (_) {}
+              })();
+            `
+          }}
+        />
+        <ThemeToggle />
+        {children}
+      </body>
     </html>
   );
 }

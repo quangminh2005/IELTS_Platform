@@ -82,4 +82,11 @@ describe("foundation slice", () => {
     expect(readProjectFile("app/globals.css")).toContain("@tailwind base");
     expect(readProjectFile("lib/prisma.ts")).toContain("PrismaClient");
   });
+
+  it("does not prefill teacher credentials on the login page", () => {
+    const loginPage = readProjectFile("app/(auth)/login/page.tsx");
+
+    expect(loginPage).not.toContain('useState("teacher@example.com")');
+    expect(loginPage).not.toContain('useState("teacher123")');
+  });
 });

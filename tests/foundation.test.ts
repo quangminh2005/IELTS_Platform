@@ -89,4 +89,13 @@ describe("foundation slice", () => {
     expect(loginPage).not.toContain('useState("teacher@example.com")');
     expect(loginPage).not.toContain('useState("teacher123")');
   });
+
+  it("presents the remembered Google account with a branded Google logo", () => {
+    const loginPage = readProjectFile("app/(auth)/login/page.tsx");
+
+    expect(loginPage).toContain("LAST_GOOGLE_ACCOUNT_KEY");
+    expect(loginPage).toContain("GoogleLogo");
+    expect(loginPage).toContain("Continue as");
+    expect(loginPage).not.toContain(">G</span>");
+  });
 });

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RememberGoogleAccount } from "@/components/remember-google-account";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
@@ -31,6 +32,7 @@ export default function RootLayout({
             `
           }}
         />
+        <RememberGoogleAccount />
         <ThemeToggle />
         {children}
       </body>

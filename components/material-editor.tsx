@@ -1,4 +1,5 @@
 import { createMaterial, createQuestion, createUnit } from "@/lib/actions/materials";
+import { AudioUpload } from "@/components/audio-upload";
 import { QuestionFields } from "@/components/question-fields";
 
 type MaterialEditorQuestion = {
@@ -164,10 +165,10 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div>
-            <label className="block text-sm font-medium" htmlFor="audioUrl">
-              Audio URL
+            <label className="block text-sm font-medium" htmlFor="new-unit-audio">
+              Audio
             </label>
-            <input id="audioUrl" name="audioUrl" type="url" className={fieldClass} />
+            <AudioUpload id="new-unit-audio" />
           </div>
           <div>
             <label className="block text-sm font-medium" htmlFor="defaultTimeLimitMinutes">

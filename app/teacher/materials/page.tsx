@@ -1,4 +1,5 @@
 import type { Prisma } from "@prisma/client";
+import { AudioUpload } from "@/components/audio-upload";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { MaterialEditor } from "@/components/material-editor";
 import { MaterialImport } from "@/components/material-import";
@@ -353,14 +354,11 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_8rem]">
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-audio-${unit.id}`}>
-                                Audio URL
+                                Audio
                               </label>
-                              <input
+                              <AudioUpload
                                 id={`unit-audio-${unit.id}`}
-                                name="audioUrl"
-                                type="url"
                                 defaultValue={unit.audioUrl ?? ""}
-                                className={fieldClass}
                               />
                             </div>
                             <div>

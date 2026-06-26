@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client";
 import { AssignmentBuilder } from "@/components/assignment-builder";
+import { AssignmentList, type AssignmentItem } from "@/components/assignment-list";
 import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
 
@@ -34,16 +35,17 @@ const assignmentInclude = {
         }
       }
     }
+  },
+  recipients: {
+    select: {
+      studentId: true
+    }
   }
 } satisfies Prisma.AssignmentInclude;
 
 type TeacherMaterial = Prisma.MaterialGetPayload<{ include: typeof materialInclude }>;
 type TeacherClass = Prisma.ClassGetPayload<{ include: typeof classInclude }>;
 type RecentAssignment = Prisma.AssignmentGetPayload<{ include: typeof assignmentInclude }>;
-
-function countLabel(value: number, singular: string, plural = `${singular}s`) {
-  return `${value} ${value === 1 ? singular : plural}`;
-}
 
 function flattenStudents(classes: TeacherClass[]) {
   const students = new Map<
@@ -72,8 +74,17 @@ function flattenStudents(classes: TeacherClass[]) {
   return Array.from(students.values()).sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
 
-export default async function TeacherAssignmentsPage() {
+type TeacherAssignmentsPageProps = {
+  searchParams?: {
+    assignmentsMessage?: string;
+    assignmentsStatus?: string;
+  };
+};
+
+export default async function TeacherAssignmentsPage({ searchParams }: TeacherAssignmentsPageProps) {
   const teacher = await requireTeacher();
+  const assignmentsMessage = searchParams?.assignmentsMessage;
+  const assignmentsStatus = searchParams?.assignmentsStatus === "success" ? "success" : "error";
 
   const [materials, classes, assignments]: [TeacherMaterial[], TeacherClass[], RecentAssignment[]] =
     await Promise.all([
@@ -97,6 +108,20 @@ export default async function TeacherAssignmentsPage() {
 
   const students = flattenStudents(classes);
 
+  const assignmentItems: AssignmentItem[] = assignments.map((assignment) => ({
+    id: assignment.id,
+    title: assignment.title,
+    instructions: assignment.instructions,
+    deadline: assignment.deadline,
+    timeLimitMinutes: assignment.timeLimitMinutes,
+    mode: assignment.mode,
+    unitCount: assignment._count.units,
+    recipientCount: assignment._count.recipients,
+    unitIds: assignment.units.map((unit) => unit.assignableUnitId),
+    unitTitles: assignment.units.map((unit) => unit.assignableUnit.title),
+    studentIds: assignment.recipients.map((recipient) => recipient.studentId)
+  }));
+
   return (
     <div className="space-y-8">
       <header>
@@ -107,43 +132,20 @@ export default async function TeacherAssignmentsPage() {
         </p>
       </header>
 
-      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_25rem]">
-        <div className="rounded-md border border-border bg-muted/35">
-          <div className="border-b border-border px-5 py-4">
-            <h3 className="text-lg font-semibold">Recent assignments</h3>
-          </div>
-          <div className="divide-y divide-border">
-            {assignments.length > 0 ? (
-              assignments.map((assignment) => (
-                <article key={assignment.id} className="px-5 py-4">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <p className="font-medium">{assignment.title}</p>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {countLabel(assignment._count.units, "unit")} |{" "}
-                        {countLabel(assignment._count.recipients, "recipient")}
-                      </p>
-                    </div>
-                    <p className="text-sm capitalize text-muted-foreground">{assignment.mode}</p>
-                  </div>
-                  {assignment.units.length > 0 ? (
-                    <p className="mt-3 text-sm text-muted-foreground">
-                      {assignment.units
-                        .map((unit) => unit.assignableUnit.title)
-                        .slice(0, 3)
-                        .join(", ")}
-                      {assignment.units.length > 3 ? "..." : ""}
-                    </p>
-                  ) : null}
-                </article>
-              ))
-            ) : (
-              <p className="px-5 py-8 text-sm text-muted-foreground">
-                No assignments yet. Create homework from the builder.
-              </p>
-            )}
-          </div>
+      {assignmentsMessage ? (
+        <div
+          className={
+            assignmentsStatus === "success"
+              ? "rounded-md border border-primary/40 bg-primary/10 px-4 py-3 text-sm font-medium text-primary"
+              : "rounded-md border border-red-400/60 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-700 dark:text-red-300"
+          }
+        >
+          {assignmentsMessage}
         </div>
+      ) : null}
+
+      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_25rem]">
+        <AssignmentList assignments={assignmentItems} materials={materials} students={students} />
 
         <AssignmentBuilder materials={materials} students={students} />
       </section>

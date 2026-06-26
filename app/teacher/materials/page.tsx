@@ -1,4 +1,5 @@
 import type { Prisma } from "@prisma/client";
+import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { MaterialEditor } from "@/components/material-editor";
 import { requireTeacher } from "@/lib/actions/classes";
 import {
@@ -241,9 +242,13 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         </div>
                         <div className="flex flex-wrap gap-2">
                           <button className={secondaryButtonClass}>Save material</button>
-                          <button formAction={deleteMaterial} className={dangerButtonClass}>
+                          <ConfirmSubmitButton
+                            formAction={deleteMaterial}
+                            confirmMessage={`Delete material "${material.title}" and all its units and questions? This cannot be undone.`}
+                            className={dangerButtonClass}
+                          >
                             Delete material
-                          </button>
+                          </ConfirmSubmitButton>
                         </div>
                       </form>
                     </details>
@@ -412,9 +417,13 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           </div>
                           <div className="flex flex-wrap gap-2">
                             <button className={secondaryButtonClass}>Save unit</button>
-                            <button formAction={deleteUnit} className={dangerButtonClass}>
+                            <ConfirmSubmitButton
+                              formAction={deleteUnit}
+                              confirmMessage={`Delete unit "${unit.title}" and all its questions? This cannot be undone.`}
+                              className={dangerButtonClass}
+                            >
                               Delete unit
-                            </button>
+                            </ConfirmSubmitButton>
                           </div>
                         </form>
                       </details>
@@ -532,9 +541,13 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                                 </div>
                                 <div className="flex flex-wrap gap-2">
                                   <button className={secondaryButtonClass}>Save question</button>
-                                  <button formAction={deleteQuestion} className={dangerButtonClass}>
+                                  <ConfirmSubmitButton
+                                    formAction={deleteQuestion}
+                                    confirmMessage={`Delete question Q${question.order}? This cannot be undone.`}
+                                    className={dangerButtonClass}
+                                  >
                                     Delete question
-                                  </button>
+                                  </ConfirmSubmitButton>
                                 </div>
                               </form>
                             </details>

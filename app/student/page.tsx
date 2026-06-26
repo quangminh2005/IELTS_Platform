@@ -19,6 +19,18 @@ function formatStatus(status: string) {
   return status.replaceAll("_", " ");
 }
 
+function formatDeadline(value: Date | null) {
+  if (!value) {
+    return null;
+  }
+
+  return new Intl.DateTimeFormat("vi-VN", {
+    dateStyle: "short",
+    timeStyle: "short",
+    timeZone: "Asia/Ho_Chi_Minh"
+  }).format(value);
+}
+
 export default async function StudentDashboardPage() {
   const session = await auth();
 
@@ -90,6 +102,11 @@ export default async function StudentDashboardPage() {
                         ? ` | ${recipient.assignment.timeLimitMinutes} minutes`
                         : ""}
                     </p>
+                    {recipient.assignment.deadline ? (
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        Deadline: {formatDeadline(recipient.assignment.deadline)}
+                      </p>
+                    ) : null}
                     {latestAttempt ? (
                       <p className="mt-1 text-sm text-muted-foreground">
                         Latest attempt: {formatStatus(latestAttempt.status)}

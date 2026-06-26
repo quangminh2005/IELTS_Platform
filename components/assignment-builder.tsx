@@ -78,6 +78,35 @@ export function AssignmentBuilder({ materials, students }: AssignmentBuilderProp
         className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
       />
 
+      <fieldset className="mt-4">
+        <legend className="text-sm font-medium">Deadline</legend>
+        <div className="mt-2 grid gap-3 sm:grid-cols-2">
+          <div>
+            <label className="block text-xs font-medium text-muted-foreground" htmlFor="dueDate">
+              Due date
+            </label>
+            <input
+              id="dueDate"
+              name="dueDate"
+              type="date"
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-muted-foreground" htmlFor="dueTime">
+              Due time
+            </label>
+            <input
+              id="dueTime"
+              name="dueTime"
+              type="time"
+              defaultValue="23:59"
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
+            />
+          </div>
+        </div>
+      </fieldset>
+
       <fieldset className="mt-6">
         <legend className="text-sm font-semibold">Units</legend>
         <div className="mt-3 space-y-3">

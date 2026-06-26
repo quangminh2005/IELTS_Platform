@@ -44,7 +44,9 @@ const questionTypeOptions = [
   { value: "multiple_choice", label: "Multiple choice" },
   { value: "short_answer", label: "Short answer" },
   { value: "matching", label: "Matching" },
+  { value: "drag_drop_matching", label: "Drag/drop matching" },
   { value: "gap_fill", label: "Gap fill" },
+  { value: "inline_gap_fill", label: "Inline gap fill" },
   { value: "true_false_not_given", label: "True / False / Not Given" }
 ];
 

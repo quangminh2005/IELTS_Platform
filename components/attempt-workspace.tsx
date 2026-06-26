@@ -1,8 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { type DragEvent, useEffect, useMemo, useRef, useState } from "react";
 import { saveHighlight, submitAttempt } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
+import {
+  parseQuestionOptions,
+  splitPromptIntoSegments,
+  usesDragDropAnswer
+} from "@/lib/question-interactions";
 
 type Question = {
   id: string;
@@ -56,30 +61,12 @@ type AttemptWorkspaceProps = {
   highlights: Highlight[];
 };
 
-function parseOptions(value: string | null): string[] {
-  if (!value) {
-    return [];
-  }
-
-  try {
-    const parsed = JSON.parse(value);
-
-    if (Array.isArray(parsed)) {
-      return parsed.map((option) => String(option));
-    }
-  } catch {
-    return [];
-  }
-
-  return [];
-}
-
 function usesLongAnswer(questionType: string) {
   return questionType.includes("essay") || questionType.includes("writing");
 }
 
 function QuestionInput({ question }: { question: Question }) {
-  const options = parseOptions(question.optionsJson);
+  const options = parseQuestionOptions(question.optionsJson);
   const fieldName = `q_${question.id}`;
 
   if (options.length > 0) {
@@ -119,6 +106,88 @@ function QuestionInput({ question }: { question: Question }) {
       className="mt-3 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm outline-none focus:border-primary"
       autoComplete="off"
     />
+  );
+}
+
+function DragDropQuestion({ question }: { question: Question }) {
+  const [answer, setAnswer] = useState("");
+  const options = parseQuestionOptions(question.optionsJson);
+  const segments = splitPromptIntoSegments(question.prompt);
+  const fieldName = `q_${question.id}`;
+
+  function handleDrop(event: DragEvent<HTMLButtonElement>, option?: string) {
+    event.preventDefault();
+    const droppedOption = option ?? event.dataTransfer.getData("text/plain");
+
+    if (droppedOption) {
+      setAnswer(droppedOption);
+    }
+  }
+
+  function renderDropTarget(label: string) {
+    return (
+      <button
+        type="button"
+        onDragOver={(event) => event.preventDefault()}
+        onDrop={(event) => handleDrop(event)}
+        className="mx-1 inline-flex min-h-9 min-w-24 items-center justify-center rounded-md border border-dashed border-primary/60 bg-primary/10 px-3 py-1 text-sm font-medium text-foreground transition hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+        aria-label={`Answer ${label}`}
+      >
+        {answer || label}
+      </button>
+    );
+  }
+
+  return (
+    <div className="mt-3 space-y-4">
+      <input type="hidden" name={fieldName} value={answer} />
+
+      <div className="rounded-md border border-border bg-background/40 p-3 text-sm leading-7">
+        {segments.map((segment, index) =>
+          segment.type === "blank" ? (
+            <span key={`${segment.type}-${segment.value}-${index}`}>
+              {renderDropTarget(segment.value)}
+            </span>
+          ) : (
+            <span key={`${segment.type}-${index}`}>{segment.value}</span>
+          )
+        )}
+        {segments.every((segment) => segment.type === "text") ? (
+          <span className="ml-2">{renderDropTarget(String(question.order))}</span>
+        ) : null}
+      </div>
+
+      <div className="grid gap-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Options
+        </p>
+        {options.map((option) => (
+          <button
+            key={option}
+            type="button"
+            draggable
+            onClick={() => setAnswer(option)}
+            onDragStart={(event) => {
+              event.dataTransfer.setData("text/plain", option);
+              event.dataTransfer.effectAllowed = "move";
+            }}
+            className="cursor-grab rounded-md border border-border bg-background/60 px-3 py-2 text-left text-sm transition hover:border-primary hover:bg-primary/10 active:cursor-grabbing"
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+
+      {answer ? (
+        <button
+          type="button"
+          onClick={() => setAnswer("")}
+          className="text-xs font-medium text-muted-foreground underline underline-offset-4 hover:text-foreground"
+        >
+          Clear answer
+        </button>
+      ) : null}
+    </div>
   );
 }
 
@@ -277,18 +346,29 @@ export function AttemptWorkspace({
 
               <div className="space-y-4">
                 {unit.questions.length > 0 ? (
-                  unit.questions.map((question) => (
-                    <article
-                      key={question.id}
-                      className="rounded-md border border-border bg-background/40 p-4"
-                    >
-                      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                        Question {question.order}
-                      </p>
-                      <p className="mt-2 text-sm leading-6">{question.prompt}</p>
-                      <QuestionInput question={question} />
-                    </article>
-                  ))
+                  unit.questions.map((question) => {
+                    const options = parseQuestionOptions(question.optionsJson);
+                    const isDragDrop = usesDragDropAnswer(question.questionType, options);
+
+                    return (
+                      <article
+                        key={question.id}
+                        className="rounded-md border border-border bg-background/40 p-4"
+                      >
+                        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                          Question {question.order}
+                        </p>
+                        {isDragDrop ? (
+                          <DragDropQuestion question={question} />
+                        ) : (
+                          <>
+                            <p className="mt-2 text-sm leading-6">{question.prompt}</p>
+                            <QuestionInput question={question} />
+                          </>
+                        )}
+                      </article>
+                    );
+                  })
                 ) : (
                   <p className="rounded-md border border-border bg-background/40 p-4 text-sm text-muted-foreground">
                     No auto-graded questions are attached to this unit.

@@ -42,6 +42,8 @@ const questionSchema = z.object({
   points: z.coerce.number().int().min(1, "Points must be at least 1.")
 });
 
+const idSchema = z.string().trim().min(1);
+
 function optionalText(value?: string) {
   return value ? value : null;
 }
@@ -79,6 +81,96 @@ export async function createMaterial(formData: FormData) {
       sourceLabel: optionalText(parsed.data.sourceLabel),
       description: optionalText(parsed.data.description)
     }
+  });
+
+  revalidatePath("/teacher");
+  revalidatePath("/teacher/materials");
+}
+
+export async function updateMaterial(formData: FormData) {
+  const teacher = await requireTeacher();
+  const id = idSchema.parse(formData.get("materialId"));
+  const parsed = materialSchema.safeParse({
+    title: formData.get("title"),
+    skill: formData.get("skill"),
+    sourceLabel: formData.get("sourceLabel"),
+    description: formData.get("description")
+  });
+
+  if (!parsed.success) {
+    throw new Error(parsed.error.issues[0]?.message ?? "Invalid material details.");
+  }
+
+  const result = await prisma.material.updateMany({
+    where: {
+      id,
+      teacherId: teacher.id
+    },
+    data: {
+      skill: parsed.data.skill,
+      title: parsed.data.title,
+      sourceLabel: optionalText(parsed.data.sourceLabel),
+      description: optionalText(parsed.data.description)
+    }
+  });
+
+  if (result.count === 0) {
+    throw new Error("Material not found for this teacher.");
+  }
+
+  await prisma.assignableUnit.updateMany({
+    where: {
+      materialId: id
+    },
+    data: {
+      skill: parsed.data.skill
+    }
+  });
+
+  revalidatePath("/teacher");
+  revalidatePath("/teacher/materials");
+}
+
+export async function deleteMaterial(formData: FormData) {
+  const teacher = await requireTeacher();
+  const id = idSchema.parse(formData.get("materialId"));
+
+  const material = await prisma.material.findFirst({
+    where: {
+      id,
+      teacherId: teacher.id
+    },
+    select: {
+      id: true,
+      units: {
+        select: {
+          _count: {
+            select: {
+              assignmentUnits: true,
+              answers: true,
+              highlights: true
+            }
+          }
+        }
+      }
+    }
+  });
+
+  if (!material) {
+    throw new Error("Material not found for this teacher.");
+  }
+
+  const isUsed = material.units.some(
+    (unit) =>
+      unit._count.assignmentUnits > 0 || unit._count.answers > 0 || unit._count.highlights > 0
+  );
+
+  if (isUsed) {
+    throw new Error("Cannot delete a material that has assigned work or submitted answers.");
+  }
+
+  await prisma.material.delete({
+    where: { id: material.id }
   });
 
   revalidatePath("/teacher");
@@ -138,6 +230,108 @@ export async function createUnit(formData: FormData) {
   revalidatePath("/teacher/materials");
 }
 
+export async function updateUnit(formData: FormData) {
+  const teacher = await requireTeacher();
+  const id = idSchema.parse(formData.get("unitId"));
+  const parsed = unitSchema.safeParse({
+    materialId: formData.get("materialId"),
+    unitType: formData.get("unitType"),
+    unitNumber: formData.get("unitNumber"),
+    title: formData.get("title"),
+    instructions: formData.get("instructions"),
+    content: formData.get("content"),
+    audioUrl: formData.get("audioUrl"),
+    transcript: formData.get("transcript"),
+    defaultTimeLimitMinutes: formData.get("defaultTimeLimitMinutes"),
+    metadataJson: formData.get("metadataJson")
+  });
+
+  if (!parsed.success) {
+    throw new Error(parsed.error.issues[0]?.message ?? "Invalid unit details.");
+  }
+
+  const material = await prisma.material.findFirst({
+    where: {
+      id: parsed.data.materialId,
+      teacherId: teacher.id
+    },
+    select: {
+      id: true,
+      skill: true
+    }
+  });
+
+  if (!material) {
+    throw new Error("Material not found for this teacher.");
+  }
+
+  const result = await prisma.assignableUnit.updateMany({
+    where: {
+      id,
+      material: {
+        teacherId: teacher.id
+      }
+    },
+    data: {
+      materialId: material.id,
+      skill: material.skill,
+      unitType: parsed.data.unitType,
+      unitNumber: parsed.data.unitNumber,
+      title: parsed.data.title,
+      instructions: optionalText(parsed.data.instructions),
+      content: parsed.data.content,
+      audioUrl: optionalText(parsed.data.audioUrl),
+      transcript: optionalText(parsed.data.transcript),
+      defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
+      metadataJson: optionalJson(parsed.data.metadataJson, "Metadata JSON")
+    }
+  });
+
+  if (result.count === 0) {
+    throw new Error("Unit not found for this teacher.");
+  }
+
+  revalidatePath("/teacher/materials");
+}
+
+export async function deleteUnit(formData: FormData) {
+  const teacher = await requireTeacher();
+  const id = idSchema.parse(formData.get("unitId"));
+
+  const unit = await prisma.assignableUnit.findFirst({
+    where: {
+      id,
+      material: {
+        teacherId: teacher.id
+      }
+    },
+    select: {
+      id: true,
+      _count: {
+        select: {
+          assignmentUnits: true,
+          answers: true,
+          highlights: true
+        }
+      }
+    }
+  });
+
+  if (!unit) {
+    throw new Error("Unit not found for this teacher.");
+  }
+
+  if (unit._count.assignmentUnits > 0 || unit._count.answers > 0 || unit._count.highlights > 0) {
+    throw new Error("Cannot delete a unit that has assigned work or submitted answers.");
+  }
+
+  await prisma.assignableUnit.delete({
+    where: { id: unit.id }
+  });
+
+  revalidatePath("/teacher/materials");
+}
+
 export async function createQuestion(formData: FormData) {
   const teacher = await requireTeacher();
   const parsed = questionSchema.safeParse({
@@ -182,6 +376,97 @@ export async function createQuestion(formData: FormData) {
       explanation: optionalText(parsed.data.explanation),
       points: parsed.data.points
     }
+  });
+
+  revalidatePath("/teacher/materials");
+}
+
+export async function updateQuestion(formData: FormData) {
+  const teacher = await requireTeacher();
+  const id = idSchema.parse(formData.get("questionId"));
+  const parsed = questionSchema.safeParse({
+    assignableUnitId: formData.get("assignableUnitId"),
+    order: formData.get("order"),
+    questionType: formData.get("questionType"),
+    prompt: formData.get("prompt"),
+    optionsJson: formData.get("optionsJson"),
+    correctAnswerJson: formData.get("correctAnswerJson"),
+    explanation: formData.get("explanation"),
+    points: formData.get("points")
+  });
+
+  if (!parsed.success) {
+    throw new Error(parsed.error.issues[0]?.message ?? "Invalid question details.");
+  }
+
+  const unit = await prisma.assignableUnit.findFirst({
+    where: {
+      id: parsed.data.assignableUnitId,
+      material: {
+        teacherId: teacher.id
+      }
+    },
+    select: {
+      id: true
+    }
+  });
+
+  if (!unit) {
+    throw new Error("Unit not found for this teacher.");
+  }
+
+  const result = await prisma.question.updateMany({
+    where: {
+      id,
+      assignableUnit: {
+        material: {
+          teacherId: teacher.id
+        }
+      }
+    },
+    data: {
+      assignableUnitId: unit.id,
+      order: parsed.data.order,
+      questionType: parsed.data.questionType,
+      prompt: parsed.data.prompt,
+      optionsJson: optionalJson(parsed.data.optionsJson, "Options JSON"),
+      correctAnswerJson: optionalJson(parsed.data.correctAnswerJson, "Correct answer JSON"),
+      explanation: optionalText(parsed.data.explanation),
+      points: parsed.data.points
+    }
+  });
+
+  if (result.count === 0) {
+    throw new Error("Question not found for this teacher.");
+  }
+
+  revalidatePath("/teacher/materials");
+}
+
+export async function deleteQuestion(formData: FormData) {
+  const teacher = await requireTeacher();
+  const id = idSchema.parse(formData.get("questionId"));
+
+  const question = await prisma.question.findFirst({
+    where: {
+      id,
+      assignableUnit: {
+        material: {
+          teacherId: teacher.id
+        }
+      }
+    },
+    select: {
+      id: true
+    }
+  });
+
+  if (!question) {
+    throw new Error("Question not found for this teacher.");
+  }
+
+  await prisma.question.delete({
+    where: { id: question.id }
   });
 
   revalidatePath("/teacher/materials");

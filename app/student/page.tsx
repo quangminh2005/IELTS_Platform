@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -106,7 +107,12 @@ export default async function StudentDashboardPage() {
                     >
                       {formatStatus(recipient.status)}
                     </span>
-                    <span className="text-sm text-muted-foreground">Practice page pending</span>
+                    <Link
+                      href={`/student/assignments/${recipient.id}`}
+                      className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                    >
+                      Làm bài
+                    </Link>
                   </div>
                 </article>
               );

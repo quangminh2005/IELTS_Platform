@@ -98,4 +98,11 @@ describe("foundation slice", () => {
     expect(loginPage).toContain("Continue as");
     expect(loginPage).not.toContain(">G</span>");
   });
+
+  it("links assigned student work to the practice workspace", () => {
+    const studentDashboard = readProjectFile("app/student/page.tsx");
+
+    expect(studentDashboard).toContain('href={`/student/assignments/${recipient.id}`}');
+    expect(studentDashboard).not.toContain("Practice page pending");
+  });
 });

@@ -125,10 +125,10 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
   return (
     <div className="space-y-8">
       <header>
-        <p className="text-sm font-medium uppercase tracking-wide text-primary">Homework</p>
-        <h2 className="mt-2 text-3xl font-semibold">Assignments</h2>
+        <p className="text-sm font-semibold text-primary">Bài tập về nhà</p>
+        <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Giao bài</h2>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          Build homework from existing material units and send it to students in your classes.
+          Tạo bài tập từ các phần tài liệu có sẵn rồi gửi cho học viên trong lớp của bạn.
         </p>
       </header>
 

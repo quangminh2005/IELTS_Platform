@@ -65,12 +65,15 @@ export default async function StudentRankingPage() {
     return (
       <div className="space-y-8">
         <header>
-          <p className="text-sm font-medium uppercase tracking-wide text-primary">Class ranking</p>
-          <h2 className="mt-2 text-3xl font-semibold">Ranking</h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            Join a class to compare your progress with classmates.
-          </p>
+          <p className="text-sm font-semibold text-primary">Bảng xếp hạng lớp</p>
+          <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Xếp hạng</h2>
         </header>
+        <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
+          <p className="text-sm font-medium">Bạn chưa thuộc lớp nào</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Tham gia một lớp để so sánh tiến độ với các bạn cùng lớp.
+          </p>
+        </div>
       </div>
     );
   }
@@ -125,25 +128,27 @@ export default async function StudentRankingPage() {
     })
     .sort((a, b) => b.rankingScore - a.rankingScore || a.displayName.localeCompare(b.displayName));
 
+  const medals = ["🥇", "🥈", "🥉"];
+
   return (
     <div className="space-y-8">
       <header>
-        <p className="text-sm font-medium uppercase tracking-wide text-primary">Class ranking</p>
-        <h2 className="mt-2 text-3xl font-semibold">Ranking</h2>
+        <p className="text-sm font-semibold text-primary">Bảng xếp hạng lớp</p>
+        <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Xếp hạng</h2>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          Compare progress in {membership.class.name}. Ranking combines score average, completion,
-          and recent activity.
+          So sánh tiến độ trong lớp <span className="font-medium text-foreground">{membership.class.name}</span>.
+          Điểm xếp hạng kết hợp điểm trung bình, mức độ hoàn thành và hoạt động gần đây.
         </p>
       </header>
 
-      <section className="rounded-md border border-border bg-muted/35">
-        <div className="grid grid-cols-[4rem_minmax(0,1fr)] gap-3 border-b border-border px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground md:grid-cols-[4rem_minmax(0,1fr)_7rem_7rem_7rem_7rem]">
-          <span>Rank</span>
-          <span>Student</span>
-          <span className="hidden md:block">Score</span>
-          <span className="hidden md:block">Complete</span>
-          <span className="hidden md:block">Recent</span>
-          <span className="hidden md:block">Total</span>
+      <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+        <div className="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-3 border-b border-border bg-muted/50 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground md:grid-cols-[3.5rem_minmax(0,1fr)_6rem_6rem_6rem_6rem]">
+          <span>Hạng</span>
+          <span>Học viên</span>
+          <span className="hidden md:block">Điểm TB</span>
+          <span className="hidden md:block">Hoàn thành</span>
+          <span className="hidden md:block">Gần đây</span>
+          <span className="hidden md:block">Tổng</span>
         </div>
         <div className="divide-y divide-border">
           {rankedStudents.map((rankedStudent, index) => {
@@ -152,29 +157,43 @@ export default async function StudentRankingPage() {
             return (
               <article
                 key={rankedStudent.id}
-                className={`grid grid-cols-[4rem_minmax(0,1fr)] gap-3 px-5 py-4 md:grid-cols-[4rem_minmax(0,1fr)_7rem_7rem_7rem_7rem] ${
+                className={`grid grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-3 px-5 py-4 md:grid-cols-[3.5rem_minmax(0,1fr)_6rem_6rem_6rem_6rem] ${
                   isCurrentStudent ? "bg-primary/10" : ""
                 }`}
               >
-                <p className="font-semibold">#{index + 1}</p>
-                <div>
-                  <p className="font-medium">
+                <p className="text-lg font-bold tabular-nums">
+                  {index < 3 ? medals[index] : <span className="text-base text-muted-foreground">{index + 1}</span>}
+                </p>
+                <div className="min-w-0">
+                  <p className="truncate font-semibold">
                     {rankedStudent.displayName}
-                    {isCurrentStudent ? " (You)" : ""}
+                    {isCurrentStudent ? (
+                      <span className="ml-2 rounded-full bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">
+                        Bạn
+                      </span>
+                    ) : null}
                   </p>
                   <p className="mt-2 grid gap-1 text-sm text-muted-foreground md:hidden">
-                    <span>Score: {Math.round(rankedStudent.averageScorePercent)}%</span>
-                    <span>Completion: {Math.round(rankedStudent.completionRate)}%</span>
-                    <span>Recent: {rankedStudent.recentActivityPercent}%</span>
-                    <span>Total: {rankedStudent.rankingScore}</span>
+                    <span>Điểm TB: {Math.round(rankedStudent.averageScorePercent)}%</span>
+                    <span>Hoàn thành: {Math.round(rankedStudent.completionRate)}%</span>
+                    <span>Gần đây: {rankedStudent.recentActivityPercent}%</span>
+                    <span className="font-semibold text-foreground">
+                      Tổng: {rankedStudent.rankingScore}
+                    </span>
                   </p>
                 </div>
-                <p className="hidden text-sm md:block">
+                <p className="hidden text-sm tabular-nums md:block">
                   {Math.round(rankedStudent.averageScorePercent)}%
                 </p>
-                <p className="hidden text-sm md:block">{Math.round(rankedStudent.completionRate)}%</p>
-                <p className="hidden text-sm md:block">{rankedStudent.recentActivityPercent}%</p>
-                <p className="hidden font-semibold md:block">{rankedStudent.rankingScore}</p>
+                <p className="hidden text-sm tabular-nums md:block">
+                  {Math.round(rankedStudent.completionRate)}%
+                </p>
+                <p className="hidden text-sm tabular-nums md:block">
+                  {rankedStudent.recentActivityPercent}%
+                </p>
+                <p className="hidden font-semibold tabular-nums text-primary md:block">
+                  {rankedStudent.rankingScore}
+                </p>
               </article>
             );
           })}

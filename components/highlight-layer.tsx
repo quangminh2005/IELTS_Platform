@@ -100,9 +100,9 @@ export function HighlightLayer({ text, highlights = [], onHighlight }: Highlight
         setSelection(null);
         setNote("");
         window.getSelection()?.removeAllRanges();
-        setMessage("Highlight saved.");
+        setMessage("Đã lưu đánh dấu.");
       } catch {
-        setMessage("Could not save highlight.");
+        setMessage("Không lưu được đánh dấu.");
       }
     });
   }
@@ -119,8 +119,8 @@ export function HighlightLayer({ text, highlights = [], onHighlight }: Highlight
       </div>
 
       {selection ? (
-        <div className="flex flex-wrap items-center gap-2 rounded-md border border-border bg-muted/50 p-3">
-          <span className="text-xs font-medium text-muted-foreground">Save highlight</span>
+        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-muted/60 p-3">
+          <span className="text-xs font-medium text-muted-foreground">Lưu đánh dấu</span>
           {colors.map((color) => (
             <button
               key={color.value}
@@ -136,8 +136,8 @@ export function HighlightLayer({ text, highlights = [], onHighlight }: Highlight
           <input
             value={note}
             onChange={(event) => setNote(event.target.value)}
-            placeholder="Optional note"
-            className="min-w-0 flex-1 rounded-md border border-border bg-background/70 px-3 py-2 text-xs outline-none focus:border-primary"
+            placeholder="Ghi chú (tuỳ chọn)"
+            className="min-w-0 flex-1 rounded-lg border border-border bg-background px-3 py-2 text-xs outline-none focus:border-primary"
           />
         </div>
       ) : null}

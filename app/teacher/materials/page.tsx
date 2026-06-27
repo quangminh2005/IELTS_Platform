@@ -63,10 +63,6 @@ const secondaryButtonClass =
 const dangerButtonClass =
   "rounded-md border border-red-400/60 bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-500/15 dark:text-red-300";
 
-function countLabel(value: number, singular: string, plural = `${singular}s`) {
-  return `${value} ${value === 1 ? singular : plural}`;
-}
-
 function formatValue(value: string) {
   return value
     .split("_")
@@ -102,25 +98,24 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
     <div className="space-y-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-primary">Material bank</p>
-          <h2 className="mt-2 text-3xl font-semibold">IELTS content library</h2>
+          <p className="text-sm font-semibold text-primary">Kho tài liệu</p>
+          <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Thư viện nội dung IELTS</h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            Build teacher-owned source materials, assignable units, and listening or reading
-            questions.
+            Tạo tài liệu nguồn, các phần có thể giao và câu hỏi Listening hay Reading.
           </p>
         </div>
         <div className="grid grid-cols-3 gap-2 text-center text-sm">
-          <div className="rounded-md border border-border bg-muted/45 px-3 py-2">
-            <p className="text-lg font-semibold">{materials.length}</p>
-            <p className="text-xs text-muted-foreground">Materials</p>
+          <div className="rounded-xl border border-border bg-card px-3 py-2.5 shadow-card">
+            <p className="text-lg font-bold tabular-nums">{materials.length}</p>
+            <p className="text-xs text-muted-foreground">Tài liệu</p>
           </div>
-          <div className="rounded-md border border-border bg-muted/45 px-3 py-2">
-            <p className="text-lg font-semibold">{totalUnits}</p>
-            <p className="text-xs text-muted-foreground">Units</p>
+          <div className="rounded-xl border border-border bg-card px-3 py-2.5 shadow-card">
+            <p className="text-lg font-bold tabular-nums">{totalUnits}</p>
+            <p className="text-xs text-muted-foreground">Phần</p>
           </div>
-          <div className="rounded-md border border-border bg-muted/45 px-3 py-2">
-            <p className="text-lg font-semibold">{totalQuestions}</p>
-            <p className="text-xs text-muted-foreground">Questions</p>
+          <div className="rounded-xl border border-border bg-card px-3 py-2.5 shadow-card">
+            <p className="text-lg font-bold tabular-nums">{totalQuestions}</p>
+            <p className="text-xs text-muted-foreground">Câu hỏi</p>
           </div>
         </div>
       </header>
@@ -140,24 +135,27 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
       <section className="space-y-4">
         {materials.length > 0 ? (
           materials.map((material) => (
-            <article key={material.id} className="rounded-md border border-border bg-muted/35">
+            <article
+              key={material.id}
+              className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
+            >
               <div className="border-b border-border px-5 py-4">
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-lg font-semibold">{material.title}</h3>
-                      <span className="rounded-full border border-primary/40 px-2.5 py-1 text-xs font-medium text-primary">
+                      <h3 className="text-base font-semibold">{material.title}</h3>
+                      <span className="rounded-full border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
                         {formatValue(material.skill)}
                       </span>
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">
                       {[
                         material.sourceLabel,
-                        countLabel(material._count.units, "unit"),
-                        countLabel(
-                          material.units.reduce((sum, unit) => sum + unit._count.questions, 0),
-                          "question"
-                        )
+                        `${material._count.units} phần`,
+                        `${material.units.reduce(
+                          (sum, unit) => sum + unit._count.questions,
+                          0
+                        )} câu hỏi`
                       ]
                         .filter(Boolean)
                         .join(" · ")}
@@ -167,14 +165,14 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         {material.description}
                       </p>
                     ) : null}
-                    <details className="mt-4 rounded-md border border-border bg-background/45 p-4">
-                      <summary className="cursor-pointer text-sm font-semibold">Edit material</summary>
+                    <details className="mt-4 rounded-lg border border-border bg-muted/60 p-4">
+                      <summary className="cursor-pointer text-sm font-semibold">Sửa tài liệu</summary>
                       <form action={updateMaterial} className="mt-4 grid gap-3">
                         <input type="hidden" name="materialId" value={material.id} />
                         <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_12rem]">
                           <div>
                             <label className="text-sm font-medium" htmlFor={`material-title-${material.id}`}>
-                              Title
+                              Tiêu đề
                             </label>
                             <input
                               id={`material-title-${material.id}`}
@@ -187,7 +185,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           </div>
                           <div>
                             <label className="text-sm font-medium" htmlFor={`material-skill-${material.id}`}>
-                              Skill
+                              Kỹ năng
                             </label>
                             <select
                               id={`material-skill-${material.id}`}
@@ -207,7 +205,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         <div className="grid gap-3 md:grid-cols-2">
                           <div>
                             <label className="text-sm font-medium" htmlFor={`material-source-${material.id}`}>
-                              Source
+                              Nguồn
                             </label>
                             <input
                               id={`material-source-${material.id}`}
@@ -218,7 +216,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           </div>
                           <div>
                             <label className="text-sm font-medium" htmlFor={`material-description-${material.id}`}>
-                              Description
+                              Mô tả
                             </label>
                             <textarea
                               id={`material-description-${material.id}`}
@@ -230,13 +228,13 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           </div>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                          <button className={secondaryButtonClass}>Save material</button>
+                          <button className={secondaryButtonClass}>Lưu tài liệu</button>
                           <ConfirmSubmitButton
                             formAction={deleteMaterial}
-                            confirmMessage={`Delete material "${material.title}" and all its units and questions? This cannot be undone.`}
+                            confirmMessage={`Xoá tài liệu "${material.title}" cùng toàn bộ phần và câu hỏi? Không thể hoàn tác.`}
                             className={dangerButtonClass}
                           >
-                            Delete material
+                            Xoá tài liệu
                           </ConfirmSubmitButton>
                         </div>
                       </form>
@@ -254,7 +252,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           {unit.unitNumber}. {unit.title}
                         </p>
                         <p className="mt-1 text-sm text-muted-foreground">
-                          {formatValue(unit.unitType)} · {countLabel(unit._count.questions, "question")}
+                          {formatValue(unit.unitType)} · {unit._count.questions} câu hỏi
                         </p>
                       </div>
                       <div className="mt-3 flex flex-wrap gap-2">
@@ -272,15 +270,15 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           </span>
                         ) : null}
                       </div>
-                      <details className="mt-3 rounded-md border border-border bg-background/45 p-4">
-                        <summary className="cursor-pointer text-sm font-semibold">Edit unit</summary>
+                      <details className="mt-3 rounded-lg border border-border bg-muted/60 p-4">
+                        <summary className="cursor-pointer text-sm font-semibold">Sửa phần</summary>
                         <form action={updateUnit} className="mt-4 grid gap-3">
                           <input type="hidden" name="unitId" value={unit.id} />
                           <input type="hidden" name="materialId" value={material.id} />
                           <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_12rem_6rem]">
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-title-${unit.id}`}>
-                                Title
+                                Tiêu đề
                               </label>
                               <input
                                 id={`unit-title-${unit.id}`}
@@ -293,7 +291,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                             </div>
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-type-${unit.id}`}>
-                                Unit type
+                                Loại phần
                               </label>
                               <select
                                 id={`unit-type-${unit.id}`}
@@ -311,7 +309,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                             </div>
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-number-${unit.id}`}>
-                                Number
+                                Số thứ tự
                               </label>
                               <input
                                 id={`unit-number-${unit.id}`}
@@ -327,7 +325,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           <div className="grid gap-3 md:grid-cols-2">
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-instructions-${unit.id}`}>
-                                Instructions
+                                Hướng dẫn
                               </label>
                               <textarea
                                 id={`unit-instructions-${unit.id}`}
@@ -339,7 +337,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                             </div>
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-content-${unit.id}`}>
-                                Content
+                                Nội dung
                               </label>
                               <textarea
                                 id={`unit-content-${unit.id}`}
@@ -354,7 +352,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_8rem]">
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-audio-${unit.id}`}>
-                                Audio
+                                Âm thanh
                               </label>
                               <AudioUpload
                                 id={`unit-audio-${unit.id}`}
@@ -363,7 +361,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                             </div>
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-time-${unit.id}`}>
-                                Time limit
+                                Thời gian (phút)
                               </label>
                               <input
                                 id={`unit-time-${unit.id}`}
@@ -378,7 +376,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           <div className="grid gap-3 md:grid-cols-2">
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-transcript-${unit.id}`}>
-                                Transcript
+                                Lời thoại (transcript)
                               </label>
                               <textarea
                                 id={`unit-transcript-${unit.id}`}
@@ -390,7 +388,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                             </div>
                             <div>
                               <label className="text-sm font-medium" htmlFor={`unit-metadata-${unit.id}`}>
-                                Metadata JSON
+                                Metadata (JSON)
                               </label>
                               <textarea
                                 id={`unit-metadata-${unit.id}`}
@@ -402,13 +400,13 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                             </div>
                           </div>
                           <div className="flex flex-wrap gap-2">
-                            <button className={secondaryButtonClass}>Save unit</button>
+                            <button className={secondaryButtonClass}>Lưu phần</button>
                             <ConfirmSubmitButton
                               formAction={deleteUnit}
-                              confirmMessage={`Delete unit "${unit.title}" and all its questions? This cannot be undone.`}
+                              confirmMessage={`Xoá phần "${unit.title}" cùng toàn bộ câu hỏi? Không thể hoàn tác.`}
                               className={dangerButtonClass}
                             >
-                              Delete unit
+                              Xoá phần
                             </ConfirmSubmitButton>
                           </div>
                         </form>
@@ -421,11 +419,11 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                               className="rounded-md border border-border bg-background/45 p-4"
                             >
                               <summary className="cursor-pointer text-sm font-semibold">
-                                Edit Q{question.order} {formatValue(question.questionType)}
+                                Sửa câu {question.order} · {formatValue(question.questionType)}
                               </summary>
                               <QuestionFields
                                 formAction={updateQuestion}
-                                submitLabel="Save question"
+                                submitLabel="Lưu câu hỏi"
                                 idPrefix={`edit-${question.id}`}
                                 selectedUnitId={unit.id}
                                 hiddenFields={{ questionId: question.id }}
@@ -439,7 +437,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                                   explanation: question.explanation
                                 }}
                                 deleteAction={deleteQuestion}
-                                deleteConfirm={`Delete question Q${question.order}? This cannot be undone.`}
+                                deleteConfirm={`Xoá câu ${question.order}? Không thể hoàn tác.`}
                               />
                             </details>
                           ))}
@@ -449,17 +447,17 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                   ))
                 ) : (
                   <p className="px-5 py-6 text-sm text-muted-foreground">
-                    No units yet. Add the first unit below.
+                    Chưa có phần nào. Thêm phần đầu tiên ở bên dưới.
                   </p>
                 )}
               </div>
             </article>
           ))
         ) : (
-          <div className="rounded-md border border-border bg-muted/35 px-5 py-8">
-            <p className="font-medium">No materials yet</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Create a material, then add assignable units and questions.
+          <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
+            <p className="font-semibold">Chưa có tài liệu nào</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Tạo tài liệu, sau đó thêm các phần và câu hỏi có thể giao.
             </p>
           </div>
         )}

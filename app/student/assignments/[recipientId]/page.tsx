@@ -99,16 +99,19 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
     <div className="space-y-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-primary">
-            Student workspace
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold">{recipient.assignment.title}</h1>
+          <p className="text-sm font-semibold text-primary">Phòng làm bài</p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
+            {recipient.assignment.title}
+          </h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            Work through the assigned units, save highlights, and submit when you are ready.
+            Làm lần lượt các phần, tô đánh dấu đoạn quan trọng và nộp bài khi bạn đã sẵn sàng.
           </p>
         </div>
-        <Link href="/student" className="text-sm font-medium text-primary">
-          Back to dashboard
+        <Link
+          href="/student"
+          className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+        >
+          ← Về trang chủ
         </Link>
       </header>
 

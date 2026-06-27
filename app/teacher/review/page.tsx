@@ -42,8 +42,13 @@ const attemptInclude = {
 
 type ReviewAttempt = Prisma.AttemptGetPayload<{ include: typeof attemptInclude }>;
 
+const STATUS_LABELS: Record<string, string> = {
+  reviewed: "Đã chấm",
+  submitted: "Đã nộp"
+};
+
 function formatStatus(status: string) {
-  return status.replaceAll("_", " ");
+  return STATUS_LABELS[status] ?? status.replaceAll("_", " ");
 }
 
 function formatSkillList(attempt: ReviewAttempt) {
@@ -58,12 +63,12 @@ function formatSkillList(attempt: ReviewAttempt) {
 
 function formatDate(value: Date | null) {
   if (!value) {
-    return "Not reviewed";
+    return "Chưa chấm";
   }
 
-  return new Intl.DateTimeFormat("en", {
-    month: "short",
+  return new Intl.DateTimeFormat("vi-VN", {
     day: "numeric",
+    month: "short",
     year: "numeric"
   }).format(value);
 }
@@ -93,18 +98,20 @@ export default async function TeacherReviewPage() {
   return (
     <div className="space-y-8">
       <header>
-        <p className="text-sm font-medium uppercase tracking-wide text-primary">Manual review</p>
-        <h2 className="mt-2 text-3xl font-semibold">Writing and Speaking reviews</h2>
+        <p className="text-sm font-semibold text-primary">Chấm thủ công</p>
+        <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Chấm Writing & Speaking</h2>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          Score submitted Writing and Speaking attempts, or update feedback that has already been
-          sent back to students.
+          Chấm điểm các bài Writing và Speaking đã nộp, hoặc cập nhật nhận xét đã gửi cho học viên.
         </p>
       </header>
 
       <section className="space-y-5">
         {attempts.length > 0 ? (
           attempts.map((attempt) => (
-            <article key={attempt.id} className="rounded-md border border-border bg-muted/35">
+            <article
+              key={attempt.id}
+              className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
+            >
               <div className="border-b border-border px-5 py-4">
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                   <div>
@@ -134,9 +141,9 @@ export default async function TeacherReviewPage() {
             </article>
           ))
         ) : (
-          <div className="rounded-md border border-border bg-muted/35 px-5 py-8">
+          <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
             <p className="text-sm text-muted-foreground">
-              No submitted Writing or Speaking attempts are waiting for review.
+              Hiện không có bài Writing hay Speaking nào đang chờ chấm.
             </p>
           </div>
         )}

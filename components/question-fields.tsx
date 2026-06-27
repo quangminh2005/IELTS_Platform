@@ -157,8 +157,8 @@ function QuestionPreview({
     "mx-1 inline-flex h-7 min-w-20 items-center justify-center rounded-md border border-primary/50 bg-primary/10 px-2 text-xs font-medium align-middle";
 
   return (
-    <div className="rounded-md border border-dashed border-border bg-background/50 p-3">
-      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Preview</p>
+    <div className="rounded-lg border border-dashed border-border bg-muted/60 p-3">
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Xem trước</p>
 
       {!optionsLookValid ? (
         <p className="mt-2 text-xs text-red-600 dark:text-red-300">
@@ -205,7 +205,7 @@ function QuestionPreview({
 
             return (
               <label key={option} className="flex items-center gap-2 text-sm">
-                <input type="radio" disabled className="h-3.5 w-3.5 accent-teal-400" />
+                <input type="radio" disabled className="h-3.5 w-3.5 accent-primary" />
                 <span className={isAnswer ? "font-semibold text-primary" : ""}>{option}</span>
                 {isAnswer ? <span className="text-xs text-primary">(đáp án)</span> : null}
               </label>
@@ -252,10 +252,10 @@ export function QuestionFields({
       {units ? (
         <div>
           <label className="text-sm font-medium" htmlFor={`${idPrefix}-unit`}>
-            Unit
+            Phần
           </label>
           <select id={`${idPrefix}-unit`} name="assignableUnitId" required className={fieldClass}>
-            <option value="">Choose listening or reading unit</option>
+            <option value="">Chọn phần Listening hoặc Reading</option>
             {units.map((unit) => (
               <option key={unit.id} value={unit.id}>
                 {unit.label}
@@ -268,7 +268,7 @@ export function QuestionFields({
       <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_5rem_5rem]">
         <div>
           <label className="text-sm font-medium" htmlFor={`${idPrefix}-type`}>
-            Type
+            Dạng câu
           </label>
           <select
             id={`${idPrefix}-type`}
@@ -287,7 +287,7 @@ export function QuestionFields({
         </div>
         <div>
           <label className="text-sm font-medium" htmlFor={`${idPrefix}-order`}>
-            Order
+            Thứ tự
           </label>
           <input
             id={`${idPrefix}-order`}
@@ -301,7 +301,7 @@ export function QuestionFields({
         </div>
         <div>
           <label className="text-sm font-medium" htmlFor={`${idPrefix}-points`}>
-            Points
+            Điểm
           </label>
           <input
             id={`${idPrefix}-points`}
@@ -328,7 +328,7 @@ export function QuestionFields({
 
       <div>
         <label className="text-sm font-medium" htmlFor={`${idPrefix}-prompt`}>
-          Prompt {meta?.blankIn === "content" ? "(nhãn ngắn cho ô)" : ""}
+          Đề bài {meta?.blankIn === "content" ? "(nhãn ngắn cho ô)" : ""}
         </label>
         <textarea
           id={`${idPrefix}-prompt`}
@@ -344,7 +344,7 @@ export function QuestionFields({
       {meta?.showOptions ? (
         <div>
           <label className="text-sm font-medium" htmlFor={`${idPrefix}-options`}>
-            Options JSON
+            Lựa chọn (JSON)
           </label>
           {meta.optionsHint ? (
             <p className="text-xs text-muted-foreground">{meta.optionsHint}</p>
@@ -365,7 +365,7 @@ export function QuestionFields({
 
       <div>
         <label className="text-sm font-medium" htmlFor={`${idPrefix}-answer`}>
-          Answer JSON
+          Đáp án (JSON)
         </label>
         {meta?.answerHint ? (
           <p className="text-xs text-muted-foreground">{meta.answerHint}</p>
@@ -383,7 +383,7 @@ export function QuestionFields({
 
       <div>
         <label className="text-sm font-medium" htmlFor={`${idPrefix}-explanation`}>
-          Explanation
+          Giải thích
         </label>
         <textarea
           id={`${idPrefix}-explanation`}
@@ -401,10 +401,10 @@ export function QuestionFields({
         {deleteAction ? (
           <ConfirmSubmitButton
             formAction={deleteAction}
-            confirmMessage={deleteConfirm ?? "Delete this question? This cannot be undone."}
+            confirmMessage={deleteConfirm ?? "Xoá câu hỏi này? Không thể hoàn tác."}
             className={dangerButtonClass}
           >
-            Delete question
+            Xoá câu hỏi
           </ConfirmSubmitButton>
         ) : null}
       </div>

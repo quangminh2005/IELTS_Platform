@@ -79,16 +79,19 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
     <div className="space-y-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-primary">Result</p>
-          <h2 className="mt-2 text-3xl font-semibold">
+          <p className="text-sm font-semibold text-primary">Kết quả</p>
+          <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
             {attempt.assignmentRecipient.assignment.title}
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            Review your answers, scoring snapshot, explanations, and saved highlights.
+            Xem lại đáp án của bạn, điểm số, lời giải thích và các đoạn đã tô.
           </p>
         </div>
-        <Link href="/student/history" className="text-sm font-medium text-primary">
-          Back to history
+        <Link
+          href="/student/history"
+          className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+        >
+          ← Về lịch sử
         </Link>
       </header>
 

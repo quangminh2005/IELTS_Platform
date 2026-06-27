@@ -11,14 +11,26 @@ type StudentPageProps = {
 
 function formatDate(value: Date | null) {
   if (!value) {
-    return "Not submitted";
+    return "Chưa nộp";
   }
 
-  return new Intl.DateTimeFormat("en", {
-    month: "short",
+  return new Intl.DateTimeFormat("vi-VN", {
     day: "numeric",
+    month: "short",
     year: "numeric"
   }).format(value);
+}
+
+const STATUS_LABELS: Record<string, string> = {
+  reviewed: "Đã chấm",
+  submitted: "Đã nộp",
+  in_progress: "Đang làm",
+  not_started: "Chưa làm",
+  assigned: "Chưa làm"
+};
+
+function statusLabel(status: string) {
+  return STATUS_LABELS[status] ?? status.replaceAll("_", " ");
 }
 
 export default async function TeacherStudentPage({ params }: StudentPageProps) {
@@ -77,37 +89,40 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
     <div className="space-y-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <Link href="/teacher/classes" className="text-sm font-medium text-primary">
-            Back to classes
+          <Link
+            href="/teacher/classes"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition hover:underline"
+          >
+            ← Về danh sách lớp
           </Link>
-          <h2 className="mt-3 text-3xl font-semibold">{student.displayName}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">{student.email}</p>
+          <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">{student.displayName}</h2>
+          <p className="mt-1 text-sm text-muted-foreground">{student.email}</p>
         </div>
-        <div className="rounded-md border border-border bg-muted/45 px-4 py-3">
-          <p className="text-xs uppercase tracking-wide text-muted-foreground">Classes</p>
-          <p className="mt-1 text-xl font-semibold">{student.classes.length}</p>
+        <div className="rounded-xl border border-border bg-card px-5 py-3 text-center shadow-card">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Số lớp</p>
+          <p className="mt-1 text-2xl font-bold tabular-nums text-primary">{student.classes.length}</p>
         </div>
       </header>
 
-      <section className="rounded-md border border-border bg-muted/35">
+      <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="border-b border-border px-5 py-4">
-          <h3 className="text-lg font-semibold">Class memberships</h3>
+          <h3 className="text-base font-semibold">Lớp đang tham gia</h3>
         </div>
         <div className="divide-y divide-border">
           {student.classes.map((membership: (typeof student.classes)[number]) => (
             <div key={membership.id} className="px-5 py-4">
-              <p className="font-medium">{membership.class.name}</p>
+              <p className="font-semibold">{membership.class.name}</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Joined {formatDate(membership.joinedAt)}
+                Tham gia ngày {formatDate(membership.joinedAt)}
               </p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="rounded-md border border-border bg-muted/35">
+      <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="border-b border-border px-5 py-4">
-          <h3 className="text-lg font-semibold">Assignments and attempts</h3>
+          <h3 className="text-base font-semibold">Bài tập & lần làm bài</h3>
         </div>
         <div className="divide-y divide-border">
           {student.recipients.length > 0 ? (
@@ -115,38 +130,40 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
               <article key={recipient.id} className="px-5 py-4">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="font-medium">{recipient.assignment.title}</p>
+                    <p className="font-semibold">{recipient.assignment.title}</p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Status: {recipient.status}
+                      Trạng thái: {statusLabel(recipient.status)}
                     </p>
                   </div>
-                  <p className="text-sm text-muted-foreground">{recipient.attempts.length} attempts</p>
+                  <span className="inline-flex w-fit rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+                    {recipient.attempts.length} lần làm
+                  </span>
                 </div>
                 {recipient.attempts.length > 0 ? (
                   <div className="mt-4 grid gap-3">
                     {recipient.attempts.map((attempt: (typeof recipient.attempts)[number]) => (
-                      <div key={attempt.id} className="rounded-md border border-border bg-background/70 p-3">
-                        <p className="text-sm font-medium">
-                          Attempt status: {attempt.status}
+                      <div key={attempt.id} className="rounded-lg border border-border bg-muted/60 p-3">
+                        <p className="text-sm font-semibold">
+                          {statusLabel(attempt.status)}
                           {typeof attempt.scorePercent === "number"
-                            ? ` - ${attempt.scorePercent.toFixed(1)}%`
+                            ? ` · ${attempt.scorePercent.toFixed(1)}%`
                             : ""}
                         </p>
                         <p className="mt-1 text-sm text-muted-foreground">
-                          Started {formatDate(attempt.startedAt)} - {attempt.elapsedSeconds}s elapsed -{" "}
-                          {attempt.tabSwitchCount} tab switches
+                          Bắt đầu {formatDate(attempt.startedAt)} · {attempt.elapsedSeconds}s ·{" "}
+                          {attempt.tabSwitchCount} lần chuyển tab
                         </p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="mt-3 text-sm text-muted-foreground">No attempts recorded yet.</p>
+                  <p className="mt-3 text-sm text-muted-foreground">Chưa có lần làm bài nào.</p>
                 )}
               </article>
             ))
           ) : (
             <p className="px-5 py-8 text-sm text-muted-foreground">
-              No assignment recipients found for this student yet.
+              Học viên này chưa được giao bài nào.
             </p>
           )}
         </div>

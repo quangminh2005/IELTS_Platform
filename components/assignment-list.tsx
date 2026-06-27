@@ -57,10 +57,6 @@ function formatLabel(value: string) {
   return value.replaceAll("_", " ");
 }
 
-function countLabel(value: number, singular: string, plural = `${singular}s`) {
-  return `${value} ${value === 1 ? singular : plural}`;
-}
-
 function formatDeadline(value: Date | null) {
   if (!value) {
     return null;
@@ -101,9 +97,9 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
   const hasUnits = materials.some((material) => material.units.length > 0);
 
   return (
-    <div className="rounded-md border border-border bg-muted/35">
+    <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
       <div className="border-b border-border px-5 py-4">
-        <h3 className="text-lg font-semibold">Recent assignments</h3>
+        <h3 className="text-base font-semibold">Bài đã giao gần đây</h3>
       </div>
       <div className="divide-y divide-border">
         {assignments.length > 0 ? (
@@ -116,14 +112,13 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
               <article key={assignment.id} className="px-5 py-4">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="font-medium">{assignment.title}</p>
+                    <p className="font-semibold">{assignment.title}</p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      {countLabel(assignment.unitCount, "unit")} |{" "}
-                      {countLabel(assignment.recipientCount, "recipient")}
+                      {assignment.unitCount} phần · {assignment.recipientCount} học viên
                     </p>
                     {assignment.deadline ? (
                       <p className="mt-1 text-sm text-muted-foreground">
-                        Deadline: {formatDeadline(assignment.deadline)}
+                        Hạn nộp: {formatDeadline(assignment.deadline)}
                       </p>
                     ) : null}
                   </div>
@@ -137,15 +132,15 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                   </p>
                 ) : null}
 
-                <details className="mt-3 rounded-md border border-border bg-background/45 p-4">
-                  <summary className="cursor-pointer text-sm font-semibold">Edit assignment</summary>
+                <details className="mt-3 rounded-lg border border-border bg-muted/60 p-4">
+                  <summary className="cursor-pointer text-sm font-semibold">Sửa bài giao</summary>
                   <form action={updateAssignment} className="mt-4 grid gap-4">
                     <input type="hidden" name="assignmentId" value={assignment.id} />
 
                     <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_10rem]">
                       <div>
                         <label className="text-sm font-medium" htmlFor={`assignment-title-${assignment.id}`}>
-                          Title
+                          Tiêu đề
                         </label>
                         <input
                           id={`assignment-title-${assignment.id}`}
@@ -161,14 +156,14 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                           className="text-sm font-medium"
                           htmlFor={`assignment-time-${assignment.id}`}
                         >
-                          Time limit
+                          Thời gian
                         </label>
                         <input
                           id={`assignment-time-${assignment.id}`}
                           name="timeLimitMinutes"
                           type="number"
                           min={1}
-                          placeholder="Optional minutes"
+                          placeholder="Số phút (tuỳ chọn)"
                           defaultValue={assignment.timeLimitMinutes ?? ""}
                           className={fieldClass}
                         />
@@ -180,7 +175,7 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                         className="text-sm font-medium"
                         htmlFor={`assignment-instructions-${assignment.id}`}
                       >
-                        Instructions
+                        Hướng dẫn
                       </label>
                       <textarea
                         id={`assignment-instructions-${assignment.id}`}
@@ -197,7 +192,7 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                           className="text-sm font-medium"
                           htmlFor={`assignment-date-${assignment.id}`}
                         >
-                          Due date
+                          Ngày hết hạn
                         </label>
                         <input
                           id={`assignment-date-${assignment.id}`}
@@ -212,7 +207,7 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                           className="text-sm font-medium"
                           htmlFor={`assignment-duetime-${assignment.id}`}
                         >
-                          Due time
+                          Giờ hết hạn
                         </label>
                         <input
                           id={`assignment-duetime-${assignment.id}`}
@@ -225,7 +220,7 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                     </div>
 
                     <fieldset>
-                      <legend className="text-sm font-semibold">Units</legend>
+                      <legend className="text-sm font-semibold">Các phần</legend>
                       <div className="mt-2 space-y-3">
                         {hasUnits ? (
                           materials.map((material) =>
@@ -253,7 +248,7 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                                       <span>
                                         <span className="block font-medium">{unit.title}</span>
                                         <span className="mt-1 block text-xs capitalize text-muted-foreground">
-                                          Unit {unit.unitNumber} | {formatLabel(unit.unitType)}
+                                          Phần {unit.unitNumber} · {formatLabel(unit.unitType)}
                                         </span>
                                       </span>
                                     </label>
@@ -263,15 +258,15 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                             ) : null
                           )
                         ) : (
-                          <p className="rounded-md border border-border bg-background/40 px-4 py-3 text-sm text-muted-foreground">
-                            No units available.
+                          <p className="rounded-lg border border-border bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
+                            Chưa có phần nào.
                           </p>
                         )}
                       </div>
                     </fieldset>
 
                     <fieldset>
-                      <legend className="text-sm font-semibold">Students</legend>
+                      <legend className="text-sm font-semibold">Học viên</legend>
                       <div className="mt-2 divide-y divide-border rounded-md border border-border bg-background/40">
                         {students.length > 0 ? (
                           students.map((student) => (
@@ -293,19 +288,19 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                             </label>
                           ))
                         ) : (
-                          <p className="px-4 py-3 text-sm text-muted-foreground">No students available.</p>
+                          <p className="px-4 py-3 text-sm text-muted-foreground">Chưa có học viên nào.</p>
                         )}
                       </div>
                     </fieldset>
 
                     <div className="flex flex-wrap gap-2">
-                      <button className={secondaryButtonClass}>Save assignment</button>
+                      <button className={secondaryButtonClass}>Lưu bài giao</button>
                       <ConfirmSubmitButton
                         formAction={deleteAssignment}
-                        confirmMessage={`Delete assignment "${assignment.title}"? This cannot be undone.`}
+                        confirmMessage={`Xoá bài giao "${assignment.title}"? Không thể hoàn tác.`}
                         className={dangerButtonClass}
                       >
-                        Delete assignment
+                        Xoá bài giao
                       </ConfirmSubmitButton>
                     </div>
                   </form>
@@ -315,7 +310,7 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
           })
         ) : (
           <p className="px-5 py-8 text-sm text-muted-foreground">
-            No assignments yet. Create homework from the builder.
+            Chưa có bài giao nào. Hãy tạo bài tập ở khung bên cạnh.
           </p>
         )}
       </div>

@@ -104,7 +104,7 @@ function QuestionInput({
               value={option}
               defaultChecked={initialValue === option}
               onChange={(event) => onAnswerChange(question.id, event.target.value)}
-              className="h-4 w-4 accent-teal-400"
+              className="h-4 w-4 accent-primary"
             />
             <span>{option}</span>
           </label>
@@ -199,7 +199,7 @@ function DragDropQuestion({
 
       <div className="grid gap-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Options
+          Lựa chọn
         </p>
         {options.map((option) => (
           <button
@@ -224,7 +224,7 @@ function DragDropQuestion({
           onClick={() => applyAnswer("")}
           className="text-xs font-medium text-muted-foreground underline underline-offset-4 hover:text-foreground"
         >
-          Clear answer
+          Xoá đáp án
         </button>
       ) : null}
     </div>
@@ -297,7 +297,7 @@ function TableCompletionQuestionSet({
             className="scroll-mt-24 rounded-md border border-border bg-background/40 p-4"
           >
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              Question {question.order}
+              Câu {question.order}
             </p>
             <p className="mt-2 text-sm leading-6">{question.prompt}</p>
             <QuestionInput
@@ -473,7 +473,7 @@ function MatchingQuestionSet({
                   onClick={() => assign(question.id, "")}
                   className="shrink-0 text-xs font-medium text-muted-foreground underline underline-offset-4 hover:text-foreground"
                 >
-                  Clear
+                  Xoá
                 </button>
               ) : null}
             </div>
@@ -483,7 +483,7 @@ function MatchingQuestionSet({
 
       <div className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Options (có thể dùng nhiều lần)
+          Lựa chọn (có thể dùng nhiều lần)
         </p>
         {sharedOptions.length > 0 ? (
           sharedOptions.map((option) => (
@@ -507,7 +507,7 @@ function MatchingQuestionSet({
             </button>
           ))
         ) : (
-          <p className="text-xs text-muted-foreground">No options provided.</p>
+          <p className="text-xs text-muted-foreground">Chưa có lựa chọn.</p>
         )}
         {activeOption ? (
           <p className="text-xs text-muted-foreground">
@@ -734,11 +734,11 @@ export function AttemptWorkspace({
       <input ref={submitReasonRef} type="hidden" name="submitReason" defaultValue="manual" />
       <input type="hidden" name="recipientId" value={recipientId} />
 
-      <section className="rounded-md border border-border bg-muted/35 p-5">
+      <section className="rounded-xl border border-border bg-card p-5 shadow-card">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-sm font-medium uppercase tracking-wide text-primary">Attempt</p>
-            <h2 className="mt-2 text-3xl font-semibold">{assignment.title}</h2>
+            <p className="text-sm font-semibold text-primary">Bài làm</p>
+            <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">{assignment.title}</h2>
             {assignment.instructions ? (
               <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
                 {assignment.instructions}
@@ -746,8 +746,12 @@ export function AttemptWorkspace({
             ) : null}
           </div>
           {timeLimitMinutes ? (
-            <div className="rounded-md border border-border bg-background/50 px-3 py-2 text-sm text-muted-foreground">
-              {timeLimitMinutes} minutes
+            <div className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 text-sm font-semibold text-accent-foreground dark:text-accent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" strokeLinecap="round" />
+              </svg>
+              {timeLimitMinutes} phút
             </div>
           ) : null}
         </div>
@@ -785,13 +789,13 @@ export function AttemptWorkspace({
             key={assignmentUnit.id}
             className={
               partIndex === activePart
-                ? "rounded-md border border-border bg-muted/25"
+                ? "overflow-hidden rounded-xl border border-border bg-card shadow-card"
                 : "hidden"
             }
           >
-            <div className="border-b border-border px-5 py-4">
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                Phần {assignmentUnit.order} | {unit.skill.replaceAll("_", " ")}
+            <div className="border-b border-border bg-muted/50 px-5 py-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+                Phần {assignmentUnit.order} · {unit.skill.replaceAll("_", " ")}
               </p>
               <h3 className="mt-1 text-xl font-semibold">{unit.title}</h3>
               {unit.instructions ? (
@@ -856,7 +860,7 @@ export function AttemptWorkspace({
                       >
                         <div className="flex items-center justify-between">
                           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                            Question {question.order}
+                            Câu {question.order}
                           </p>
                           <button
                             type="button"
@@ -868,7 +872,7 @@ export function AttemptWorkspace({
                                 : "rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground hover:border-primary"
                             }
                           >
-                            {flagged.has(question.id) ? "★ Flagged" : "☆ Flag"}
+                            {flagged.has(question.id) ? "★ Đã đánh dấu" : "☆ Đánh dấu"}
                           </button>
                         </div>
                         {isDragDrop ? (
@@ -893,8 +897,8 @@ export function AttemptWorkspace({
                 ) : tableCompletionQuestions.length === 0 &&
                   noteCompletionQuestions.length === 0 &&
                   matchingQuestions.length === 0 ? (
-                  <p className="rounded-md border border-border bg-background/40 p-4 text-sm text-muted-foreground">
-                    No auto-graded questions are attached to this unit.
+                  <p className="rounded-md border border-border bg-muted/60 p-4 text-sm text-muted-foreground">
+                    Phần này không có câu hỏi tự động chấm.
                   </p>
                 ) : null}
               </div>
@@ -963,16 +967,16 @@ export function AttemptWorkspace({
 
             <div className="flex shrink-0 items-center gap-2">
               <div className="mr-1 flex flex-col items-end text-xs text-muted-foreground">
-                <span className="font-medium text-foreground">
-                  {answeredCount}/{totalQuestions} answered
+                <span className="font-semibold text-foreground">
+                  Đã trả lời {answeredCount}/{totalQuestions}
                 </span>
                 <span aria-live="polite">
                   {saveState === "saving"
-                    ? "Saving…"
+                    ? "Đang lưu…"
                     : saveState === "saved"
-                      ? "All changes saved"
+                      ? "Đã lưu tất cả"
                       : saveState === "error"
-                        ? "Save failed — retrying"
+                        ? "Lưu lỗi — đang thử lại"
                         : ""}
                 </span>
               </div>
@@ -981,7 +985,7 @@ export function AttemptWorkspace({
                 type="button"
                 onClick={() => goToPart(activePart - 1)}
                 disabled={activePart === 0}
-                aria-label="Previous part"
+                aria-label="Phần trước"
                 className="rounded-md border border-border bg-background px-3 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40"
               >
                 ‹
@@ -993,7 +997,7 @@ export function AttemptWorkspace({
                 type="button"
                 onClick={() => goToPart(activePart + 1)}
                 disabled={activePart >= parts.length - 1}
-                aria-label="Next part"
+                aria-label="Phần sau"
                 className="rounded-md border border-border bg-background px-3 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40"
               >
                 ›

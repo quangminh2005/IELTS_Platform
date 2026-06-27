@@ -35,55 +35,62 @@ type ResultReviewProps = {
 
 function correctnessLabel(value: boolean | null) {
   if (value === true) {
-    return "Correct";
+    return "Đúng";
   }
 
   if (value === false) {
-    return "Incorrect";
+    return "Sai";
   }
 
-  return "Pending review";
+  return "Chờ chấm";
 }
 
 function correctnessClass(value: boolean | null) {
   if (value === true) {
-    return "border-primary/50 bg-primary/10 text-primary";
+    return "border-emerald-400/50 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300";
   }
 
   if (value === false) {
-    return "border-red-400/50 bg-red-500/10 text-red-200";
+    return "border-red-400/50 bg-red-500/10 text-red-600 dark:text-red-300";
   }
 
-  return "border-accent/50 bg-accent/10 text-accent";
+  return "border-accent/50 bg-accent/10 text-accent-foreground dark:text-accent";
 }
+
+const STATUS_LABELS: Record<string, string> = {
+  reviewed: "Đã chấm",
+  submitted: "Đã nộp",
+  in_progress: "Đang làm",
+  not_started: "Chưa làm"
+};
 
 export function ResultReview({ attempt }: ResultReviewProps) {
   const percentage =
-    attempt.scorePercent !== null ? `${Math.round(attempt.scorePercent)}%` : "Pending";
-  const score = attempt.score !== null ? attempt.score : "Pending";
+    attempt.scorePercent !== null ? `${Math.round(attempt.scorePercent)}%` : "—";
+  const score = attempt.score !== null ? attempt.score : "—";
+  const statusLabel =
+    STATUS_LABELS[attempt.status] ?? attempt.status.replaceAll("_", " ");
 
   return (
     <div className="space-y-6">
       <section className="grid gap-4 sm:grid-cols-3">
-        <article className="rounded-md border border-border bg-muted/50 p-5">
-          <p className="text-sm text-muted-foreground">Score</p>
-          <p className="mt-3 text-3xl font-semibold">{score}</p>
+        <article className="rounded-xl border border-border bg-card p-5 shadow-card">
+          <p className="text-sm text-muted-foreground">Điểm</p>
+          <p className="mt-2 text-3xl font-bold tabular-nums">{score}</p>
         </article>
-        <article className="rounded-md border border-border bg-muted/50 p-5">
-          <p className="text-sm text-muted-foreground">Percentage</p>
-          <p className="mt-3 text-3xl font-semibold">{percentage}</p>
+        <article className="rounded-xl border border-border bg-card p-5 shadow-card">
+          <p className="text-sm text-muted-foreground">Tỷ lệ đúng</p>
+          <p className="mt-2 text-3xl font-bold tabular-nums text-primary">{percentage}</p>
         </article>
-        <article className="rounded-md border border-border bg-muted/50 p-5">
-          <p className="text-sm text-muted-foreground">Status</p>
-          <p className="mt-3 text-3xl font-semibold capitalize">
-            {attempt.status.replaceAll("_", " ")}
-          </p>
+        <article className="rounded-xl border border-border bg-card p-5 shadow-card">
+          <p className="text-sm text-muted-foreground">Trạng thái</p>
+          <p className="mt-2 text-3xl font-bold">{statusLabel}</p>
         </article>
       </section>
 
-      <section className="rounded-md border border-border bg-muted/35">
+      <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="border-b border-border px-5 py-4">
-          <h3 className="text-lg font-semibold">Answers</h3>
+          <h3 className="text-base font-semibold">Đáp án</h3>
         </div>
         <div className="divide-y divide-border">
           {attempt.answers.length > 0 ? (
@@ -93,7 +100,7 @@ export function ResultReview({ attempt }: ResultReviewProps) {
                   <div>
                     <p className="text-sm text-muted-foreground">{answer.assignableUnit.title}</p>
                     <h4 className="mt-1 font-semibold">
-                      {answer.question ? `Question ${answer.question.order}` : "Unlinked question"}
+                      {answer.question ? `Câu ${answer.question.order}` : "Câu chưa liên kết"}
                     </h4>
                     {answer.question ? (
                       <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -111,47 +118,49 @@ export function ResultReview({ attempt }: ResultReviewProps) {
                 </div>
 
                 <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
-                  <div className="rounded-md border border-border bg-background/40 p-3">
-                    <dt className="text-xs uppercase tracking-wide text-muted-foreground">Answer</dt>
-                    <dd className="mt-2 whitespace-pre-wrap">{answer.value || "No answer"}</dd>
+                  <div className="rounded-lg border border-border bg-muted/60 p-3">
+                    <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                      Bạn trả lời
+                    </dt>
+                    <dd className="mt-2 whitespace-pre-wrap">{answer.value || "Bỏ trống"}</dd>
                   </div>
-                  <div className="rounded-md border border-border bg-background/40 p-3">
-                    <dt className="text-xs uppercase tracking-wide text-muted-foreground">
-                      Correct answer
+                  <div className="rounded-lg border border-emerald-400/30 bg-emerald-500/5 p-3">
+                    <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                      Đáp án đúng
                     </dt>
                     <dd className="mt-2 whitespace-pre-wrap">
-                      {answer.correctAnswerSnapshot || "Not available"}
+                      {answer.correctAnswerSnapshot || "Không có"}
                     </dd>
                   </div>
                 </dl>
 
                 {answer.explanationSnapshot ? (
-                  <div className="mt-3 rounded-md border border-border bg-background/40 p-3 text-sm">
-                    <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                      Explanation
+                  <div className="mt-3 rounded-lg border border-border bg-muted/60 p-3 text-sm">
+                    <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                      Giải thích
                     </p>
                     <p className="mt-2 leading-6">{answer.explanationSnapshot}</p>
                   </div>
                 ) : null}
 
                 <p className="mt-3 text-sm text-muted-foreground">
-                  Points: {answer.pointsAwarded ?? 0}
+                  Điểm: {answer.pointsAwarded ?? 0}
                   {answer.question ? ` / ${answer.question.points}` : ""}
                 </p>
               </article>
             ))
           ) : (
             <p className="px-5 py-8 text-sm text-muted-foreground">
-              No answers are attached to this attempt yet.
+              Chưa có đáp án nào cho lần làm bài này.
             </p>
           )}
         </div>
       </section>
 
       {attempt.highlights.length > 0 ? (
-        <section className="rounded-md border border-border bg-muted/35">
+        <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
           <div className="border-b border-border px-5 py-4">
-            <h3 className="text-lg font-semibold">Highlights</h3>
+            <h3 className="text-base font-semibold">Đoạn đã tô</h3>
           </div>
           <div className="divide-y divide-border">
             {attempt.highlights.map((highlight) => (

@@ -8,7 +8,7 @@ const storageKey = "ielts-platform-theme";
 
 function getPreferredTheme(): Theme {
   if (typeof window === "undefined") {
-    return "dark";
+    return "light";
   }
 
   const saved = window.localStorage.getItem(storageKey);
@@ -17,7 +17,7 @@ function getPreferredTheme(): Theme {
     return saved;
   }
 
-  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function applyTheme(theme: Theme) {
@@ -25,13 +25,45 @@ function applyTheme(theme: Theme) {
   document.documentElement.style.colorScheme = theme;
 }
 
-export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("dark");
+function SunIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" fill="currentColor" />
+      <g stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+      </g>
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+      <path
+        d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+type ThemeToggleProps = {
+  /** Bỏ qua để dùng nút nổi mặc định (góc trên phải). Truyền className để nhúng trong thanh điều hướng. */
+  className?: string;
+};
+
+const floatingClass =
+  "fixed right-4 top-4 z-50 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-card backdrop-blur transition hover:border-primary hover:text-primary";
+
+export function ThemeToggle({ className }: ThemeToggleProps) {
+  const [theme, setTheme] = useState<Theme>("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const preferredTheme = getPreferredTheme();
     setTheme(preferredTheme);
     applyTheme(preferredTheme);
+    setMounted(true);
   }, []);
 
   function toggleTheme() {
@@ -41,15 +73,17 @@ export function ThemeToggle() {
     applyTheme(nextTheme);
   }
 
+  const isDark = theme === "dark";
+
   return (
     <button
       type="button"
       onClick={toggleTheme}
-      className="fixed right-5 top-5 z-50 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-muted/90 text-lg text-foreground shadow-lg shadow-black/10 backdrop-blur transition hover:border-primary hover:bg-primary/15"
-      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-      title={theme === "dark" ? "Light mode" : "Dark mode"}
+      className={className ?? floatingClass}
+      aria-label={isDark ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối"}
+      title={isDark ? "Chế độ sáng" : "Chế độ tối"}
     >
-      {theme === "dark" ? "☀" : "☾"}
+      <span suppressHydrationWarning>{mounted && isDark ? <SunIcon /> : <MoonIcon />}</span>
     </button>
   );
 }

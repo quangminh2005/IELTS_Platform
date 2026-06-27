@@ -37,78 +37,78 @@ export function AssignmentBuilder({ materials, students }: AssignmentBuilderProp
   const canCreate = hasUnits && students.length > 0;
 
   return (
-    <form action={createAssignment} className="rounded-md border border-border bg-muted/45 p-5">
+    <form action={createAssignment} className="rounded-xl border border-border bg-card p-5 shadow-card">
       <div>
-        <h3 className="text-lg font-semibold">Create assignment</h3>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          Choose units and students, then publish homework for the selected roster.
+        <h3 className="text-base font-semibold">Tạo bài giao</h3>
+        <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
+          Chọn phần và học viên, sau đó xuất bản bài tập cho danh sách đã chọn.
         </p>
       </div>
 
       <label className="mt-5 block text-sm font-medium" htmlFor="title">
-        Title
+        Tiêu đề
       </label>
       <input
         id="title"
         name="title"
         minLength={2}
         required
-        className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
+        className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
       />
 
       <label className="mt-4 block text-sm font-medium" htmlFor="instructions">
-        Instructions
+        Hướng dẫn
       </label>
       <textarea
         id="instructions"
         name="instructions"
         rows={4}
-        className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
+        className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
       />
 
       <label className="mt-4 block text-sm font-medium" htmlFor="timeLimitMinutes">
-        Time limit
+        Thời gian làm bài
       </label>
       <input
         id="timeLimitMinutes"
         name="timeLimitMinutes"
         type="number"
         min={1}
-        placeholder="Optional minutes"
-        className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
+        placeholder="Số phút (không bắt buộc)"
+        className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
       />
 
       <fieldset className="mt-4">
-        <legend className="text-sm font-medium">Deadline</legend>
+        <legend className="text-sm font-medium">Hạn nộp</legend>
         <div className="mt-2 grid gap-3 sm:grid-cols-2">
           <div>
             <label className="block text-xs font-medium text-muted-foreground" htmlFor="dueDate">
-              Due date
+              Ngày
             </label>
             <input
               id="dueDate"
               name="dueDate"
               type="date"
-              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
+              className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
             />
           </div>
           <div>
             <label className="block text-xs font-medium text-muted-foreground" htmlFor="dueTime">
-              Due time
+              Giờ
             </label>
             <input
               id="dueTime"
               name="dueTime"
               type="time"
               defaultValue="23:59"
-              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
+              className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
             />
           </div>
         </div>
       </fieldset>
 
       <fieldset className="mt-6">
-        <legend className="text-sm font-semibold">Units</legend>
+        <legend className="text-sm font-semibold">Các phần</legend>
         <div className="mt-3 space-y-3">
           {hasUnits ? (
             materials.map((material) =>
@@ -132,9 +132,9 @@ export function AssignmentBuilder({ materials, students }: AssignmentBuilderProp
                         <span>
                           <span className="block font-medium">{unit.title}</span>
                           <span className="mt-1 block text-xs capitalize text-muted-foreground">
-                            Unit {unit.unitNumber} | {formatLabel(unit.unitType)}
+                            Phần {unit.unitNumber} · {formatLabel(unit.unitType)}
                             {unit.defaultTimeLimitMinutes
-                              ? ` | ${unit.defaultTimeLimitMinutes} min default`
+                              ? ` · ${unit.defaultTimeLimitMinutes} phút`
                               : ""}
                           </span>
                         </span>
@@ -145,15 +145,15 @@ export function AssignmentBuilder({ materials, students }: AssignmentBuilderProp
               ) : null
             )
           ) : (
-            <p className="rounded-md border border-border bg-background/40 px-4 py-5 text-sm text-muted-foreground">
-              Add material units before creating an assignment.
+            <p className="rounded-lg border border-border bg-muted/60 px-4 py-5 text-sm text-muted-foreground">
+              Hãy thêm phần tài liệu trước khi tạo bài giao.
             </p>
           )}
         </div>
       </fieldset>
 
       <fieldset className="mt-6">
-        <legend className="text-sm font-semibold">Students</legend>
+        <legend className="text-sm font-semibold">Học viên</legend>
         <div className="mt-3 divide-y divide-border rounded-md border border-border bg-background/40">
           {students.length > 0 ? (
             students.map((student) => (
@@ -175,7 +175,7 @@ export function AssignmentBuilder({ materials, students }: AssignmentBuilderProp
             ))
           ) : (
             <p className="px-4 py-5 text-sm text-muted-foreground">
-              Add students to a class before assigning work.
+              Hãy thêm học viên vào lớp trước khi giao bài.
             </p>
           )}
         </div>
@@ -183,9 +183,9 @@ export function AssignmentBuilder({ materials, students }: AssignmentBuilderProp
 
       <button
         disabled={!canCreate}
-        className="mt-6 w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-50"
+        className="mt-6 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Create homework
+        Tạo bài tập
       </button>
     </form>
   );

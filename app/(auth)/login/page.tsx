@@ -7,6 +7,7 @@ import {
   LAST_GOOGLE_ACCOUNT_KEY,
   type RememberedGoogleAccount
 } from "@/lib/google-account-memory";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function GoogleLogo() {
   return (
@@ -76,7 +77,7 @@ export default function LoginPage() {
     setIsSubmitting(false);
 
     if (result?.error) {
-      setError("Email or password is incorrect.");
+      setError("Email hoặc mật khẩu không đúng.");
       return;
     }
 
@@ -85,69 +86,91 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <section className="mx-auto grid min-h-screen w-full max-w-6xl items-center gap-10 px-6 py-10 lg:grid-cols-[1fr_420px]">
+    <main className="relative min-h-screen text-foreground">
+      <ThemeToggle />
+      <section className="mx-auto grid min-h-screen w-full max-w-6xl items-center gap-10 px-5 py-12 lg:grid-cols-[1fr_440px] lg:gap-16">
         <div className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary">IELTS Platform</p>
-          <h1 className="mt-5 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
-            Run teacher-led IELTS practice from one focused workspace.
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-sm font-semibold text-primary shadow-card">
+            <span className="flex h-5 w-5 items-center justify-center rounded bg-primary text-[10px] font-bold text-primary-foreground">
+              IE
+            </span>
+            IELTS Platform
+          </span>
+          <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
+            Luyện thi IELTS cùng giáo viên trong một không gian gọn gàng.
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">
-            Sign in as a teacher with demo credentials, or join as a student with the Google email your teacher added.
+            Giáo viên đăng nhập bằng tài khoản được cấp. Học viên đăng nhập bằng đúng email Google mà
+            giáo viên đã thêm vào lớp.
           </p>
           <div className="mt-8 grid max-w-xl gap-3 sm:grid-cols-3">
-            {["Assign", "Practice", "Review"].map((label) => (
-              <div key={label} className="border border-border bg-muted/45 px-4 py-3">
-                <span className="text-sm font-medium text-foreground">{label}</span>
+            {[
+              { title: "Giao bài", desc: "Tạo đề từ kho tài liệu" },
+              { title: "Làm bài", desc: "Trải nghiệm như thi thật" },
+              { title: "Chấm chữa", desc: "Phản hồi chi tiết" }
+            ].map((feature) => (
+              <div key={feature.title} className="rounded-xl border border-border bg-card p-4 shadow-card">
+                <span className="block text-sm font-semibold text-foreground">{feature.title}</span>
+                <span className="mt-1 block text-xs text-muted-foreground">{feature.desc}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="border border-border bg-muted/70 p-6 shadow-2xl shadow-black/30 backdrop-blur">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-pop sm:p-7">
           <div>
-            <p className="text-sm font-medium uppercase tracking-wide text-accent">Secure access</p>
-            <h2 className="mt-2 text-2xl font-semibold text-foreground">Welcome back</h2>
+            <p className="text-sm font-semibold text-accent">Đăng nhập an toàn</p>
+            <h2 className="mt-1.5 text-2xl font-bold text-foreground">Chào mừng trở lại</h2>
           </div>
 
           <form className="mt-6 space-y-4" onSubmit={handleCredentialsSignIn}>
             <label className="block">
-              <span className="text-sm font-medium text-muted-foreground">Email</span>
+              <span className="text-sm font-medium text-foreground">Email</span>
               <input
-                className="mt-2 w-full border border-border bg-background px-3 py-3 text-sm text-foreground outline-none transition focus:border-primary"
+                className="mt-2 w-full rounded-lg border border-border bg-background px-3.5 py-3 text-sm text-foreground outline-none ring-primary/40 transition focus:border-primary focus:ring-2"
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 autoComplete="email"
+                placeholder="ban@example.com"
               />
             </label>
 
             <label className="block">
-              <span className="text-sm font-medium text-muted-foreground">Password</span>
+              <span className="text-sm font-medium text-foreground">Mật khẩu</span>
               <input
-                className="mt-2 w-full border border-border bg-background px-3 py-3 text-sm text-foreground outline-none transition focus:border-primary"
+                className="mt-2 w-full rounded-lg border border-border bg-background px-3.5 py-3 text-sm text-foreground outline-none ring-primary/40 transition focus:border-primary focus:ring-2"
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="current-password"
+                placeholder="••••••••"
               />
             </label>
 
-            {error ? <p className="text-sm text-red-300">{error}</p> : null}
+            {error ? (
+              <p className="rounded-lg border border-red-400/50 bg-red-500/10 px-3 py-2 text-sm font-medium text-red-600 dark:text-red-300">
+                {error}
+              </p>
+            ) : null}
 
             <button
-              className="w-full bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
               type="submit"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Signing in..." : "Sign in as teacher"}
+              {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập (giáo viên)"}
             </button>
           </form>
 
-          <div className="my-6 h-px bg-border" />
+          <div className="my-6 flex items-center gap-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            <span className="h-px flex-1 bg-border" />
+            hoặc
+            <span className="h-px flex-1 bg-border" />
+          </div>
 
           <button
-            className="flex w-full items-center justify-between gap-3 border border-border bg-background px-4 py-3 text-left text-sm font-semibold text-foreground transition hover:border-primary"
+            className="flex w-full items-center justify-between gap-3 rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-semibold text-foreground transition hover:border-primary hover:bg-muted"
             type="button"
             onClick={() => signIn("google", { callbackUrl: "/" })}
           >
@@ -172,7 +195,7 @@ export default function LoginPage() {
               )}
               <span className="min-w-0">
                 <span className="block truncate">
-                  {googleAccount ? `Continue as ${googleAccount.name}` : "Continue with Google"}
+                  {googleAccount ? `Tiếp tục với ${googleAccount.name}` : "Tiếp tục với Google"}
                 </span>
                 {googleAccount ? (
                   <span className="mt-0.5 block truncate text-xs font-medium text-muted-foreground">

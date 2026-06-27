@@ -56,8 +56,8 @@ const fieldClass =
 
 export function MaterialImport() {
   return (
-    <section className="rounded-md border border-border bg-muted/45 p-5">
-      <h3 className="text-lg font-semibold">Import cả đề bằng JSON</h3>
+    <section className="rounded-xl border border-border bg-card p-5 shadow-card">
+      <h3 className="text-base font-semibold">Nhập cả đề bằng JSON</h3>
       <p className="mt-1 text-sm leading-6 text-muted-foreground">
         Dán một object JSON để tạo material kèm toàn bộ phần (units) và câu hỏi trong một lần. Hệ
         thống sẽ kiểm tra `[[n]]` khớp Order, options bắt buộc, và đáp án có nằm trong options không.
@@ -71,12 +71,12 @@ export function MaterialImport() {
           placeholder='{"title": "...", "skill": "listening", "units": [ ... ]}'
           className={fieldClass}
         />
-        <button className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
-          Import material
+        <button className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
+          Nhập tài liệu
         </button>
       </form>
 
-      <details className="mt-4 rounded-md border border-border bg-background/45 p-4">
+      <details className="mt-4 rounded-lg border border-border bg-muted/60 p-4">
         <summary className="cursor-pointer text-sm font-semibold">Xem cấu trúc JSON mẫu</summary>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-xs text-muted-foreground">
           <li>

@@ -61,20 +61,20 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
 
   return (
     <div className="grid gap-5 xl:grid-cols-3">
-      <form action={createMaterial} className="rounded-md border border-border bg-muted/45 p-5">
-        <h3 className="text-lg font-semibold">New material</h3>
-        <p className="mt-1 text-sm text-muted-foreground">Start a bank item by skill and source.</p>
+      <form action={createMaterial} className="rounded-xl border border-border bg-card p-5 shadow-card">
+        <h3 className="text-base font-semibold">Tài liệu mới</h3>
+        <p className="mt-1 text-sm text-muted-foreground">Tạo mục mới theo kỹ năng và nguồn.</p>
 
         <label className="mt-4 block text-sm font-medium" htmlFor="material-title">
-          Title
+          Tiêu đề
         </label>
         <input id="material-title" name="title" minLength={2} required className={fieldClass} />
 
         <label className="mt-4 block text-sm font-medium" htmlFor="material-skill">
-          Skill
+          Kỹ năng
         </label>
         <select id="material-skill" name="skill" required className={fieldClass}>
-          <option value="">Choose skill</option>
+          <option value="">Chọn kỹ năng</option>
           {skillOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -83,34 +83,34 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
         </select>
 
         <label className="mt-4 block text-sm font-medium" htmlFor="sourceLabel">
-          Source
+          Nguồn
         </label>
         <input
           id="sourceLabel"
           name="sourceLabel"
-          placeholder="Cambridge 18, internal mock, web article"
+          placeholder="Cambridge 18, đề thi thử, bài báo..."
           className={fieldClass}
         />
 
         <label className="mt-4 block text-sm font-medium" htmlFor="material-description">
-          Description
+          Mô tả
         </label>
         <textarea id="material-description" name="description" rows={3} className={fieldClass} />
 
-        <button className="mt-4 w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
-          Create material
+        <button className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
+          Tạo tài liệu
         </button>
       </form>
 
-      <form action={createUnit} className="rounded-md border border-border bg-muted/45 p-5">
-        <h3 className="text-lg font-semibold">New unit</h3>
-        <p className="mt-1 text-sm text-muted-foreground">Units inherit the selected material skill.</p>
+      <form action={createUnit} className="rounded-xl border border-border bg-card p-5 shadow-card">
+        <h3 className="text-base font-semibold">Phần mới</h3>
+        <p className="mt-1 text-sm text-muted-foreground">Phần sẽ kế thừa kỹ năng của tài liệu đã chọn.</p>
 
         <label className="mt-4 block text-sm font-medium" htmlFor="materialId">
-          Material
+          Tài liệu
         </label>
         <select id="materialId" name="materialId" required className={fieldClass}>
-          <option value="">Choose material</option>
+          <option value="">Chọn tài liệu</option>
           {materials.map((material) => (
             <option key={material.id} value={material.id}>
               {material.title} ({labelFor(skillOptions, material.skill)})
@@ -121,10 +121,10 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
         <div className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_6rem]">
           <div>
             <label className="block text-sm font-medium" htmlFor="unitType">
-              Unit type
+              Loại phần
             </label>
             <select id="unitType" name="unitType" required className={fieldClass}>
-              <option value="">Choose type</option>
+              <option value="">Chọn loại</option>
               {unitTypeOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
@@ -134,7 +134,7 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
           </div>
           <div>
             <label className="block text-sm font-medium" htmlFor="unitNumber">
-              Number
+              Số TT
             </label>
             <input
               id="unitNumber"
@@ -149,64 +149,64 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
         </div>
 
         <label className="mt-4 block text-sm font-medium" htmlFor="unit-title">
-          Title
+          Tiêu đề
         </label>
         <input id="unit-title" name="title" minLength={2} required className={fieldClass} />
 
         <label className="mt-4 block text-sm font-medium" htmlFor="instructions">
-          Instructions
+          Hướng dẫn
         </label>
         <textarea id="instructions" name="instructions" rows={2} className={fieldClass} />
 
         <label className="mt-4 block text-sm font-medium" htmlFor="content">
-          Content
+          Nội dung
         </label>
         <textarea id="content" name="content" rows={5} required className={fieldClass} />
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div>
             <label className="block text-sm font-medium" htmlFor="new-unit-audio">
-              Audio
+              Âm thanh
             </label>
             <AudioUpload id="new-unit-audio" />
           </div>
           <div>
             <label className="block text-sm font-medium" htmlFor="defaultTimeLimitMinutes">
-              Time limit
+              Thời gian
             </label>
             <input
               id="defaultTimeLimitMinutes"
               name="defaultTimeLimitMinutes"
               type="number"
               min={1}
-              placeholder="Minutes"
+              placeholder="Số phút"
               className={fieldClass}
             />
           </div>
         </div>
 
         <label className="mt-4 block text-sm font-medium" htmlFor="transcript">
-          Transcript
+          Lời thoại (transcript)
         </label>
         <textarea id="transcript" name="transcript" rows={3} className={fieldClass} />
 
         <label className="mt-4 block text-sm font-medium" htmlFor="metadataJson">
-          Metadata JSON
+          Metadata (JSON)
         </label>
         <textarea id="metadataJson" name="metadataJson" rows={2} placeholder='{"part":1}' className={fieldClass} />
 
-        <button className="mt-4 w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
-          Create unit
+        <button className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
+          Tạo phần
         </button>
       </form>
 
-      <div className="rounded-md border border-border bg-muted/45 p-5">
-        <h3 className="text-lg font-semibold">Listening / Reading question</h3>
-        <p className="mt-1 text-sm text-muted-foreground">Add auto-gradable prompts to content units.</p>
+      <div className="rounded-xl border border-border bg-card p-5 shadow-card">
+        <h3 className="text-base font-semibold">Câu hỏi Listening / Reading</h3>
+        <p className="mt-1 text-sm text-muted-foreground">Thêm câu hỏi tự động chấm cho các phần nội dung.</p>
 
         <QuestionFields
           formAction={createQuestion}
-          submitLabel="Create question"
+          submitLabel="Tạo câu hỏi"
           idPrefix="new-question"
           units={questionUnits.map((unit) => ({
             id: unit.id,

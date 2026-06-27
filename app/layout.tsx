@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { RememberGoogleAccount } from "@/components/remember-google-account";
-import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "IELTS Platform",
-  description: "Teacher-led IELTS practice workspace"
+  title: "IELTS Platform — Luyện thi IELTS cùng giáo viên",
+  description: "Không gian luyện thi IELTS do giáo viên dẫn dắt: giao bài, làm bài, chấm chữa."
 };
 
 export default function RootLayout({
@@ -14,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="vi" suppressHydrationWarning>
       <body>
         <script
           dangerouslySetInnerHTML={{
@@ -24,7 +23,7 @@ export default function RootLayout({
                   var saved = localStorage.getItem("ielts-platform-theme");
                   var theme = saved === "light" || saved === "dark"
                     ? saved
-                    : (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+                    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
                   document.documentElement.dataset.theme = theme;
                   document.documentElement.style.colorScheme = theme;
                 } catch (_) {}
@@ -33,7 +32,6 @@ export default function RootLayout({
           }}
         />
         <RememberGoogleAccount />
-        <ThemeToggle />
         {children}
       </body>
     </html>

@@ -9,6 +9,7 @@ import {
   useRef,
   useState
 } from "react";
+import { createPortal } from "react-dom";
 import { saveAttemptDraft, saveHighlight, submitAttempt } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
@@ -583,6 +584,14 @@ export function AttemptWorkspace({
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [activePart, setActivePart] = useState(0);
+  // Render the full-screen test room through a portal so it escapes any
+  // transformed ancestor (the app shell's fade-in wrapper) that would otherwise
+  // trap `position: fixed` and collapse the layout.
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const goToPart = useCallback((partIndex: number) => {
     setActivePart(partIndex);
@@ -776,7 +785,7 @@ export function AttemptWorkspace({
     };
   });
 
-  return (
+  const content = (
     <form ref={formRef} action={submitAttempt} className="fixed inset-0 z-50 flex flex-col bg-background">
       <input type="hidden" name="attemptId" value={attempt.id} />
       <input ref={elapsedRef} type="hidden" name="elapsedSeconds" defaultValue={attempt.elapsedSeconds} />
@@ -1073,4 +1082,10 @@ export function AttemptWorkspace({
       </div>
     </form>
   );
+
+  if (!mounted) {
+    return null;
+  }
+
+  return createPortal(content, document.body);
 }

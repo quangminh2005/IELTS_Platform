@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   type DragEvent,
   useCallback,
@@ -10,6 +11,7 @@ import {
 } from "react";
 import { saveAttemptDraft, saveHighlight, submitAttempt } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
+import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
   parseMarkdownTable,
   parseQuestionOptions,
@@ -519,6 +521,50 @@ function MatchingQuestionSet({
   );
 }
 
+function CountdownTimer({
+  startedAtMs,
+  timeLimitMinutes
+}: {
+  startedAtMs: number;
+  timeLimitMinutes: number;
+}) {
+  const endMs = startedAtMs + timeLimitMinutes * 60 * 1000;
+  const [remaining, setRemaining] = useState(() => Math.max(0, endMs - Date.now()));
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setRemaining(Math.max(0, endMs - Date.now()));
+    }, 1000);
+
+    return () => window.clearInterval(id);
+  }, [endMs]);
+
+  const totalSeconds = Math.floor(remaining / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const low = totalSeconds <= 60;
+
+  return (
+    <div
+      className={[
+        "inline-flex shrink-0 items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold tabular-nums",
+        low
+          ? "border-red-400/60 bg-red-500/10 text-red-600 dark:text-red-300"
+          : "border-accent/40 bg-accent/10 text-accent-foreground dark:text-accent"
+      ].join(" ")}
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" strokeLinecap="round" />
+      </svg>
+      <span className="hidden text-[11px] font-medium uppercase tracking-wide opacity-80 sm:inline">
+        Còn lại
+      </span>
+      {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
+    </div>
+  );
+}
+
 export function AttemptWorkspace({
   recipientId,
   attempt,
@@ -585,6 +631,15 @@ export function AttemptWorkspace({
       setSaveState("error");
     }
   }, [answers, attempt.id]);
+
+  // Khoá cuộn nền khi đang ở chế độ làm bài toàn màn hình.
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   // Autosave answers shortly after they change.
   const firstRenderRef = useRef(true);
@@ -722,7 +777,7 @@ export function AttemptWorkspace({
   });
 
   return (
-    <form ref={formRef} action={submitAttempt} className="space-y-8 pb-28">
+    <form ref={formRef} action={submitAttempt} className="fixed inset-0 z-50 flex flex-col bg-background">
       <input type="hidden" name="attemptId" value={attempt.id} />
       <input ref={elapsedRef} type="hidden" name="elapsedSeconds" defaultValue={attempt.elapsedSeconds} />
       <input
@@ -734,29 +789,28 @@ export function AttemptWorkspace({
       <input ref={submitReasonRef} type="hidden" name="submitReason" defaultValue="manual" />
       <input type="hidden" name="recipientId" value={recipientId} />
 
-      <section className="rounded-xl border border-border bg-card p-5 shadow-card">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold text-primary">Bài làm</p>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">{assignment.title}</h2>
-            {assignment.instructions ? (
-              <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-                {assignment.instructions}
-              </p>
-            ) : null}
+      <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-4 py-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <Link
+            href="/student"
+            className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+          >
+            ‹ Bảng điều khiển
+          </Link>
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">Phòng làm bài</p>
+            <h2 className="truncate text-base font-bold tracking-tight sm:text-lg">{assignment.title}</h2>
           </div>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <AnimatedThemeToggle />
           {timeLimitMinutes ? (
-            <div className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 text-sm font-semibold text-accent-foreground dark:text-accent">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4" aria-hidden="true">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 7v5l3 2" strokeLinecap="round" />
-              </svg>
-              {timeLimitMinutes} phút
-            </div>
+            <CountdownTimer startedAtMs={startedAtMs} timeLimitMinutes={timeLimitMinutes} />
           ) : null}
         </div>
-      </section>
+      </header>
 
+      <div className="min-h-0 flex-1 overflow-hidden">
       {assignment.units.map((assignmentUnit, partIndex) => {
         const unit = assignmentUnit.assignableUnit;
         const tableCompletionQuestions = unit.questions.filter(
@@ -789,22 +843,22 @@ export function AttemptWorkspace({
             key={assignmentUnit.id}
             className={
               partIndex === activePart
-                ? "overflow-hidden rounded-xl border border-border bg-card shadow-card"
+                ? "flex h-full flex-col bg-card"
                 : "hidden"
             }
           >
-            <div className="border-b border-border bg-muted/50 px-5 py-4">
+            <div className="shrink-0 border-b border-border bg-muted/50 px-5 py-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-primary">
                 Phần {assignmentUnit.order} · {unit.skill.replaceAll("_", " ")}
               </p>
-              <h3 className="mt-1 text-xl font-semibold">{unit.title}</h3>
+              <h3 className="mt-0.5 text-lg font-semibold">{unit.title}</h3>
               {unit.instructions ? (
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{unit.instructions}</p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">{unit.instructions}</p>
               ) : null}
             </div>
 
-            <div className="grid gap-5 p-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)]">
-              <div className="space-y-4">
+            <div className="grid min-h-0 flex-1 gap-0 overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)] lg:overflow-hidden">
+              <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto lg:border-r lg:border-border">
                 {unit.audioUrl ? (
                   <audio controls src={unit.audioUrl} className="w-full">
                     <track kind="captions" />
@@ -819,7 +873,7 @@ export function AttemptWorkspace({
                 ) : null}
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto">
                 {tableCompletionQuestions.length > 0 ? (
                   <div id={`tablesection-${assignmentUnit.id}`} className="scroll-mt-24">
                     <TableCompletionQuestionSet
@@ -906,11 +960,10 @@ export function AttemptWorkspace({
           </section>
         );
       })}
+      </div>
 
-      <div
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
-      >
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3">
+      <div className="shrink-0 border-t border-border bg-card">
+        <div className="flex w-full flex-col gap-2 px-4 py-3">
           {parts.length > 1 ? (
             <div className="flex flex-wrap items-center gap-2">
               {parts.map((part, index) => {

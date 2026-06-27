@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { AttemptWorkspace } from "@/components/attempt-workspace";
 import { startAttempt } from "@/lib/actions/attempts";
@@ -96,32 +95,12 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
   });
 
   return (
-    <div className="space-y-8">
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-sm font-semibold text-primary">Phòng làm bài</p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-            {recipient.assignment.title}
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            Làm lần lượt các phần, tô đánh dấu đoạn quan trọng và nộp bài khi bạn đã sẵn sàng.
-          </p>
-        </div>
-        <Link
-          href="/student"
-          className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
-        >
-          ← Về trang chủ
-        </Link>
-      </header>
-
-      <AttemptWorkspace
-        recipientId={recipient.id}
-        attempt={activeAttempt}
-        assignment={recipient.assignment}
-        highlights={activeAttempt.highlights}
-        savedAnswers={savedAnswers}
-      />
-    </div>
+    <AttemptWorkspace
+      recipientId={recipient.id}
+      attempt={activeAttempt}
+      assignment={recipient.assignment}
+      highlights={activeAttempt.highlights}
+      savedAnswers={savedAnswers}
+    />
   );
 }

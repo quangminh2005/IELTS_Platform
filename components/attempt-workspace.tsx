@@ -594,13 +594,14 @@ function CountdownTimer({
   const totalSeconds = Math.floor(remaining / 1000);
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
+  const expired = totalSeconds <= 0;
   const low = totalSeconds <= 60;
 
   return (
     <div
       className={[
         "inline-flex shrink-0 items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold tabular-nums",
-        low
+        expired || low
           ? "border-red-400/60 bg-red-500/10 text-red-600 dark:text-red-300"
           : "border-accent/40 bg-accent/10 text-accent-foreground dark:text-accent"
       ].join(" ")}
@@ -609,10 +610,16 @@ function CountdownTimer({
         <circle cx="12" cy="12" r="9" />
         <path d="M12 7v5l3 2" strokeLinecap="round" />
       </svg>
-      <span className="hidden text-[11px] font-medium uppercase tracking-wide opacity-80 sm:inline">
-        Còn lại
-      </span>
-      {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
+      {expired ? (
+        <span className="font-semibold uppercase tracking-wide">Hết giờ</span>
+      ) : (
+        <>
+          <span className="hidden text-[11px] font-medium uppercase tracking-wide opacity-80 sm:inline">
+            Còn lại
+          </span>
+          {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
+        </>
+      )}
     </div>
   );
 }
@@ -753,29 +760,8 @@ export function AttemptWorkspace({
     return () => document.removeEventListener("visibilitychange", recordVisibilityChange);
   }, [persistDraft]);
 
-  useEffect(() => {
-    if (!timeLimitMinutes || timeLimitMinutes <= 0) {
-      return;
-    }
-
-    const timeoutMs = timeLimitMinutes * 60 * 1000 - (Date.now() - startedAtMs);
-
-    if (timeoutMs <= 0) {
-      submitReasonRef.current!.value = "auto_timeout";
-      formRef.current?.requestSubmit();
-      return;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      if (submitReasonRef.current) {
-        submitReasonRef.current.value = "auto_timeout";
-      }
-
-      formRef.current?.requestSubmit();
-    }, timeoutMs);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [startedAtMs, timeLimitMinutes]);
+  // Lưu ý: KHÔNG tự động nộp khi hết giờ. Đồng hồ chỉ đếm ngược và báo "Hết giờ";
+  // học sinh tự bấm "Nộp bài". (Tránh việc mở lại bài quá giờ bị nộp ngay.)
 
   async function createHighlight(
     assignableUnitId: string,

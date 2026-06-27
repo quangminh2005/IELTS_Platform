@@ -244,7 +244,7 @@ export async function saveHighlight(formData: FormData) {
     throw new Error("Highlight offsets are invalid.");
   }
 
-  await prisma.highlight.create({
+  const created = await prisma.highlight.create({
     data: {
       attemptId: attempt.id,
       studentId: student.id,
@@ -255,10 +255,30 @@ export async function saveHighlight(formData: FormData) {
       endOffset: parsed.data.endOffset,
       color: parsed.data.color,
       note: optionalText(parsed.data.note)
-    }
+    },
+    select: { id: true }
   });
 
-  revalidatePath(`/student/assignments/${attempt.assignmentRecipientId}`);
+  // Không revalidate ở đây: phòng làm bài quản lý highlight phía client để tô
+  // màu ngay lập tức, tránh refresh server giữa lúc đang làm bài.
+  return { id: created.id };
+}
+
+export async function deleteHighlight(formData: FormData) {
+  const student = await requireStudent();
+  const highlightId = String(formData.get("highlightId") ?? "").trim();
+
+  if (!highlightId) {
+    throw new Error("Missing highlight id.");
+  }
+
+  await prisma.highlight.deleteMany({
+    where: {
+      id: highlightId,
+      studentId: student.id,
+      attempt: { status: "in_progress" }
+    }
+  });
 }
 
 export async function submitAttempt(formData: FormData) {

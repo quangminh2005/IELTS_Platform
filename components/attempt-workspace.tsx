@@ -10,7 +10,12 @@ import {
   useState
 } from "react";
 import { createPortal } from "react-dom";
-import { saveAttemptDraft, saveHighlight, submitAttempt } from "@/lib/actions/attempts";
+import {
+  deleteHighlight,
+  saveAttemptDraft,
+  saveHighlight,
+  submitAttempt
+} from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
@@ -37,6 +42,8 @@ type Highlight = {
   color: string;
   note: string | null;
   sourceType: string;
+  startOffset: number;
+  endOffset: number;
 };
 
 type AssignmentUnit = {
@@ -774,7 +781,7 @@ export function AttemptWorkspace({
     assignableUnitId: string,
     sourceType: string,
     payload: HighlightPayload
-  ) {
+  ): Promise<string> {
     const formData = new FormData();
     formData.set("attemptId", attempt.id);
     formData.set("assignableUnitId", assignableUnitId);
@@ -785,7 +792,15 @@ export function AttemptWorkspace({
     formData.set("color", payload.color);
     formData.set("note", payload.note);
 
-    await saveHighlight(formData);
+    const result = await saveHighlight(formData);
+    return result.id;
+  }
+
+  async function removeHighlight(highlightId: string) {
+    const formData = new FormData();
+    formData.set("highlightId", highlightId);
+
+    await deleteHighlight(formData);
   }
 
   function scrollToQuestion(anchorId: string) {
@@ -922,6 +937,7 @@ export function AttemptWorkspace({
                     text={sourceText}
                     highlights={unitHighlights}
                     onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
+                    onRemoveHighlight={removeHighlight}
                   />
                 ) : null}
               </div>

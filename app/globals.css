@@ -17,6 +17,11 @@
   --accent: 38 92% 50%;
   --accent-foreground: 28 80% 18%;
   --border: 214 28% 88%;
+  --input: 214 28% 88%;
+  --secondary: 214 32% 94%;
+  --secondary-foreground: 222 47% 12%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
   --ring: 221 83% 53%;
   --card: 0 0% 100%;
   --radius: 0.75rem;
@@ -38,6 +43,11 @@ html[data-theme="dark"] {
   --accent: 38 95% 56%;
   --accent-foreground: 33 80% 12%;
   --border: 217 22% 24%;
+  --input: 217 20% 30%;
+  --secondary: 217 33% 20%;
+  --secondary-foreground: 210 40% 96%;
+  --destructive: 0 63% 50%;
+  --destructive-foreground: 0 0% 100%;
   --ring: 217 91% 62%;
   --card: 217 33% 15%;
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 30px -16px rgb(0 0 0 / 0.6);

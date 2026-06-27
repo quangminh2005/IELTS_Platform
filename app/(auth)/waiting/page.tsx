@@ -1,9 +1,9 @@
-import { ThemeToggle } from "@/components/theme-toggle";
+import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 
 export default function WaitingPage() {
   return (
     <main className="relative min-h-screen text-foreground">
-      <ThemeToggle />
+      <AnimatedThemeToggle className="fixed right-4 top-4 z-50 shadow-card" />
       <section className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-5 py-16">
         <div className="rounded-2xl border border-border bg-card p-8 shadow-pop sm:p-10">
           <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/15 text-accent">

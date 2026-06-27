@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { LogoutButton } from "@/components/logout-button";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 
 type AppShellRole = "teacher" | "student";
 
@@ -176,9 +176,6 @@ function NavLinks({
   );
 }
 
-const themeToggleClass =
-  "inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground transition hover:border-primary hover:text-primary";
-
 export function AppShell({ children, role }: { children: ReactNode; role: AppShellRole }) {
   const navItems = navByRole[role];
   const rootHref = role === "teacher" ? "/teacher" : "/student";
@@ -211,7 +208,7 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
           <Icon name="menu" />
         </button>
         <Brand role={role} />
-        <ThemeToggle className={themeToggleClass} />
+        <AnimatedThemeToggle />
       </header>
 
       <div className="mx-auto flex w-full max-w-7xl">
@@ -219,7 +216,7 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
         <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col border-r border-border bg-card/60 px-4 py-5 backdrop-blur lg:flex">
           <div className="flex items-center justify-between gap-2">
             <Brand role={role} />
-            <ThemeToggle className={themeToggleClass} />
+            <AnimatedThemeToggle />
           </div>
 
           <span className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold capitalize text-primary">

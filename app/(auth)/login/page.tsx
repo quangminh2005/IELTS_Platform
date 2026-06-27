@@ -7,7 +7,7 @@ import {
   LAST_GOOGLE_ACCOUNT_KEY,
   type RememberedGoogleAccount
 } from "@/lib/google-account-memory";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 
 function GoogleLogo() {
   return (
@@ -87,7 +87,7 @@ export default function LoginPage() {
 
   return (
     <main className="relative min-h-screen text-foreground">
-      <ThemeToggle />
+      <AnimatedThemeToggle className="fixed right-4 top-4 z-50 shadow-card" />
       <section className="mx-auto grid min-h-screen w-full max-w-6xl items-center gap-10 px-5 py-12 lg:grid-cols-[1fr_440px] lg:gap-16">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-sm font-semibold text-primary shadow-card">

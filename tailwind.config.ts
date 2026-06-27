@@ -14,7 +14,12 @@ const config: Config = {
         "primary-foreground": "hsl(var(--primary-foreground))",
         accent: "hsl(var(--accent))",
         "accent-foreground": "hsl(var(--accent-foreground))",
+        secondary: "hsl(var(--secondary))",
+        "secondary-foreground": "hsl(var(--secondary-foreground))",
+        destructive: "hsl(var(--destructive))",
+        "destructive-foreground": "hsl(var(--destructive-foreground))",
         border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
         card: "hsl(var(--card))",
         ring: "hsl(var(--ring))"
       },

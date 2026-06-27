@@ -16,6 +16,8 @@ import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
   parseMarkdownTable,
   parseQuestionOptions,
+  promptHasGap,
+  splitPromptIntoGapSegments,
   splitPromptIntoSegments,
   usesDragDropAnswer
 } from "@/lib/question-interactions";
@@ -136,6 +138,48 @@ function QuestionInput({
       className="mt-3 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm outline-none focus:border-primary"
       autoComplete="off"
     />
+  );
+}
+
+function InlineGapQuestion({
+  question,
+  initialValue,
+  onAnswerChange
+}: {
+  question: Question;
+  initialValue: string;
+  onAnswerChange: AnswerChange;
+}) {
+  const fieldName = `q_${question.id}`;
+  const segments = splitPromptIntoGapSegments(question.prompt);
+  let inputPlaced = false;
+
+  return (
+    <p className="mt-2 text-sm leading-9">
+      {segments.map((segment, index) => {
+        if (segment.type === "text") {
+          return <span key={`text-${index}`}>{segment.value}</span>;
+        }
+
+        // Chỉ ô trống đầu tiên là input; câu điền từ thường chỉ có một chỗ trống.
+        if (!inputPlaced) {
+          inputPlaced = true;
+
+          return (
+            <input
+              key={`blank-${index}`}
+              name={fieldName}
+              defaultValue={initialValue}
+              onChange={(event) => onAnswerChange(question.id, event.target.value)}
+              autoComplete="off"
+              className="mx-1 inline-flex h-8 w-40 rounded-md border border-primary/50 bg-background/80 px-2 text-center align-middle text-sm font-medium outline-none ring-primary/40 focus:ring-2"
+            />
+          );
+        }
+
+        return <span key={`blank-${index}`}>_____</span>;
+      })}
+    </p>
   );
 }
 
@@ -914,6 +958,11 @@ export function AttemptWorkspace({
                   regularQuestions.map((question) => {
                     const options = parseQuestionOptions(question.optionsJson);
                     const isDragDrop = usesDragDropAnswer(question.questionType, options);
+                    const isInlineGap =
+                      !isDragDrop &&
+                      options.length === 0 &&
+                      !usesLongAnswer(question.questionType) &&
+                      promptHasGap(question.prompt);
 
                     return (
                       <article
@@ -940,6 +989,12 @@ export function AttemptWorkspace({
                         </div>
                         {isDragDrop ? (
                           <DragDropQuestion
+                            question={question}
+                            initialValue={answers[question.id] ?? ""}
+                            onAnswerChange={handleAnswerChange}
+                          />
+                        ) : isInlineGap ? (
+                          <InlineGapQuestion
                             question={question}
                             initialValue={answers[question.id] ?? ""}
                             onAnswerChange={handleAnswerChange}

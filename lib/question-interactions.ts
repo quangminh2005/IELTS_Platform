@@ -54,6 +54,37 @@ export function splitPromptIntoSegments(prompt: string): PromptSegment[] {
   return segments.length > 0 ? segments : [{ type: "text", value: prompt }];
 }
 
+// Matches an authored blank: either the `[[n]]` placeholder convention or a run
+// of 2+ underscores (how short-answer / sentence-completion prompts are written).
+const gapPattern = /\[\[(\d+)\]\]|_{2,}/g;
+
+export function promptHasGap(prompt: string): boolean {
+  return /\[\[\d+\]\]|_{2,}/.test(prompt);
+}
+
+export function splitPromptIntoGapSegments(prompt: string): PromptSegment[] {
+  const segments: PromptSegment[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  gapPattern.lastIndex = 0;
+
+  while ((match = gapPattern.exec(prompt)) !== null) {
+    if (match.index > lastIndex) {
+      segments.push({ type: "text", value: prompt.slice(lastIndex, match.index) });
+    }
+
+    segments.push({ type: "blank", value: match[1] ?? "" });
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < prompt.length) {
+    segments.push({ type: "text", value: prompt.slice(lastIndex) });
+  }
+
+  return segments.length > 0 ? segments : [{ type: "text", value: prompt }];
+}
+
 function parseTableRow(line: string) {
   return line
     .trim()

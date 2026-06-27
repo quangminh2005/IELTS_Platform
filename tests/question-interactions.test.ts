@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   parseMarkdownTable,
   parseQuestionOptions,
+  promptHasGap,
+  splitPromptIntoGapSegments,
   splitPromptIntoSegments,
   usesDragDropAnswer
 } from "../lib/question-interactions";
@@ -38,6 +40,46 @@ describe("splitPromptIntoSegments", () => {
       { type: "text", value: " and " },
       { type: "blank", value: "32" },
       { type: "text", value: "." }
+    ]);
+  });
+});
+
+describe("promptHasGap", () => {
+  it("detects underscore blanks and [[n]] placeholders", () => {
+    expect(promptHasGap("Diet consists of fern fronds and _____.")).toBe(true);
+    expect(promptHasGap("The answer is [[24]].")).toBe(true);
+  });
+
+  it("is false for prompts without a blank", () => {
+    expect(promptHasGap("Which TWO statements are true?")).toBe(false);
+    expect(promptHasGap("[Arrival of settlers] context only")).toBe(false);
+  });
+});
+
+describe("splitPromptIntoGapSegments", () => {
+  it("splits short-answer prompts around underscore blanks", () => {
+    expect(
+      splitPromptIntoGapSegments(
+        "[Notes] Diet consists of fern fronds, parts of a tree and _____."
+      )
+    ).toEqual([
+      { type: "text", value: "[Notes] Diet consists of fern fronds, parts of a tree and " },
+      { type: "blank", value: "" },
+      { type: "text", value: "." }
+    ]);
+  });
+
+  it("still handles [[n]] placeholders", () => {
+    expect(splitPromptIntoGapSegments("Corals have a number of [[24]] which they use.")).toEqual([
+      { type: "text", value: "Corals have a number of " },
+      { type: "blank", value: "24" },
+      { type: "text", value: " which they use." }
+    ]);
+  });
+
+  it("returns the whole prompt as text when there is no blank", () => {
+    expect(splitPromptIntoGapSegments("No blank here")).toEqual([
+      { type: "text", value: "No blank here" }
     ]);
   });
 });

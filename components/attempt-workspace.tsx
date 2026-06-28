@@ -990,7 +990,20 @@ export function AttemptWorkspace({
   });
 
   const content = (
-    <form ref={formRef} action={submitAttempt} className="fixed inset-0 z-50 flex flex-col bg-background">
+    <form
+      ref={formRef}
+      action={submitAttempt}
+      onKeyDown={(event) => {
+        // Tránh nộp bài ngoài ý muốn: theo mặc định, bấm Enter trong ô <input>
+        // sẽ submit form. Chặn Enter trong input (vẫn cho Enter xuống dòng trong
+        // textarea của bài viết). Bài chỉ nộp khi bấm nút "Nộp bài".
+        const target = event.target as HTMLElement;
+        if (event.key === "Enter" && target.tagName === "INPUT") {
+          event.preventDefault();
+        }
+      }}
+      className="fixed inset-0 z-50 flex flex-col bg-background"
+    >
       <input type="hidden" name="attemptId" value={attempt.id} />
       <input ref={elapsedRef} type="hidden" name="elapsedSeconds" defaultValue={attempt.elapsedSeconds} />
       <input ref={submitReasonRef} type="hidden" name="submitReason" defaultValue="manual" />

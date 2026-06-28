@@ -26,19 +26,18 @@ export function AudioUpload({ id, name = "audioUrl", defaultValue = "" }: AudioU
     }
 
     setStatus("uploading");
-    setMessage(`Đang tải "${file.name}"…`);
+    setMessage(`Đang tải "${file.name}"… 0%`);
 
-    // Không để treo vô hạn: nếu sau 2 phút chưa xong thì báo lỗi (thường do
-    // chưa bật kho lưu trữ Vercel Blob / thiếu BLOB_READ_WRITE_TOKEN).
+    // Không để treo vô hạn: nếu sau 5 phút chưa xong thì báo lỗi.
     const timeout = new Promise<never>((_, reject) =>
       window.setTimeout(
         () =>
           reject(
             new Error(
-              "Quá thời gian tải lên. Kiểm tra đã bật Vercel Blob (Storage) cho dự án chưa, hoặc dán trực tiếp link audio vào ô bên trên."
+              "Quá thời gian tải lên. Nếu % không nhúc nhích: kiểm tra đã Redeploy sau khi tạo kho Vercel Blob chưa, hoặc dán trực tiếp link audio vào ô bên trên."
             )
           ),
-        120_000
+        300_000
       )
     );
 
@@ -46,7 +45,13 @@ export function AudioUpload({ id, name = "audioUrl", defaultValue = "" }: AudioU
       const blob = await Promise.race([
         upload(file.name, file, {
           access: "public",
-          handleUploadUrl: "/api/audio/upload"
+          handleUploadUrl: "/api/audio/upload",
+          // Tải theo nhiều phần: ổn định hơn với file audio lớn, tránh treo
+          // do một kết nối đơn lẻ bị nghẽn.
+          multipart: true,
+          onUploadProgress: (event) => {
+            setMessage(`Đang tải "${file.name}"… ${Math.round(event.percentage)}%`);
+          }
         }),
         timeout
       ]);

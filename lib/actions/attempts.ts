@@ -295,6 +295,14 @@ export async function submitAttempt(formData: FormData) {
     throw new Error(parsed.error.issues[0]?.message ?? "Invalid attempt submission.");
   }
 
+  // LÁ CHẮN: từ chối mọi yêu cầu tự động nộp khi hết giờ. Tính năng auto-nộp đã
+  // bị gỡ ở client, nhưng các tab cũ còn cache code cũ vẫn có thể gửi
+  // submitReason="auto_timeout" khi đồng hồ về 0. Bỏ qua chúng — bài chỉ được nộp
+  // khi học sinh tự bấm "Nộp bài" (submitReason="manual").
+  if (parsed.data.submitReason === "auto_timeout") {
+    return;
+  }
+
   const attempt = await prisma.attempt.findFirst({
     where: {
       id: parsed.data.attemptId,

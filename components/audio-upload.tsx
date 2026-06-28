@@ -28,11 +28,28 @@ export function AudioUpload({ id, name = "audioUrl", defaultValue = "" }: AudioU
     setStatus("uploading");
     setMessage(`Đang tải "${file.name}"…`);
 
+    // Không để treo vô hạn: nếu sau 2 phút chưa xong thì báo lỗi (thường do
+    // chưa bật kho lưu trữ Vercel Blob / thiếu BLOB_READ_WRITE_TOKEN).
+    const timeout = new Promise<never>((_, reject) =>
+      window.setTimeout(
+        () =>
+          reject(
+            new Error(
+              "Quá thời gian tải lên. Kiểm tra đã bật Vercel Blob (Storage) cho dự án chưa, hoặc dán trực tiếp link audio vào ô bên trên."
+            )
+          ),
+        120_000
+      )
+    );
+
     try {
-      const blob = await upload(file.name, file, {
-        access: "public",
-        handleUploadUrl: "/api/audio/upload"
-      });
+      const blob = await Promise.race([
+        upload(file.name, file, {
+          access: "public",
+          handleUploadUrl: "/api/audio/upload"
+        }),
+        timeout
+      ]);
 
       setUrl(blob.url);
       setStatus("idle");

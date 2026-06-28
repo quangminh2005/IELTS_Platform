@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { deleteStudent, requireTeacher } from "@/lib/actions/classes";
+import { resetRecipientAttempts } from "@/lib/actions/attempts";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { prisma } from "@/lib/prisma";
@@ -158,9 +159,22 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                       Trạng thái: {statusLabel(recipient.status)}
                     </p>
                   </div>
-                  <span className="inline-flex w-fit rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-                    {recipient.attempts.length} lần làm
-                  </span>
+                  <div className="flex shrink-0 items-center gap-2">
+                    <span className="inline-flex w-fit rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+                      {recipient.attempts.length} lần làm
+                    </span>
+                    {recipient.attempts.length > 0 ? (
+                      <form action={resetRecipientAttempts}>
+                        <input type="hidden" name="recipientId" value={recipient.id} />
+                        <ConfirmSubmitButton
+                          confirmMessage={`Cho học sinh làm lại "${recipient.assignment.title}"? Các lần làm hiện tại (kèm đáp án) sẽ bị xoá để bắt đầu lại từ đầu.`}
+                          className="inline-flex items-center rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-semibold text-primary transition hover:border-primary"
+                        >
+                          Cho làm lại
+                        </ConfirmSubmitButton>
+                      </form>
+                    ) : null}
+                  </div>
                 </div>
                 {recipient.attempts.length > 0 ? (
                   <div className="mt-4 grid gap-3">

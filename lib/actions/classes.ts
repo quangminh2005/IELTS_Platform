@@ -25,10 +25,18 @@ export async function requireTeacher() {
     throw new Error("Teacher access required.");
   }
 
-  return prisma.teacherProfile.upsert({
-    where: { userId: user.id },
-    update: {},
-    create: {
+  // Đọc trước (rẻ); chỉ ghi khi hồ sơ chưa tồn tại (lần đầu) để mỗi lần
+  // điều hướng không phát sinh một lệnh ghi DB không cần thiết.
+  const existing = await prisma.teacherProfile.findUnique({
+    where: { userId: user.id }
+  });
+
+  if (existing) {
+    return existing;
+  }
+
+  return prisma.teacherProfile.create({
+    data: {
       userId: user.id,
       displayName: "Teacher"
     }

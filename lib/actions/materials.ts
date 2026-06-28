@@ -19,7 +19,8 @@ const questionTypes = [
   "inline_gap_fill",
   "table_completion",
   "note_completion",
-  "true_false_not_given"
+  "true_false_not_given",
+  "writing_task"
 ] as const;
 
 const materialSchema = z.object({
@@ -42,7 +43,8 @@ const unitSchema = z.object({
     (value) => (value === "" || value === null ? undefined : value),
     z.coerce.number().int().min(1, "Time limit must be at least 1 minute.").optional()
   ),
-  metadataJson: z.string().trim().optional()
+  metadataJson: z.string().trim().optional(),
+  imageUrlsJson: z.string().trim().optional()
 });
 
 const questionSchema = z.object({
@@ -72,6 +74,46 @@ function optionalJson(value: string | undefined, label: string) {
   } catch {
     throw new Error(`${label} must be valid JSON.`);
   }
+}
+
+// Gộp danh sách ảnh (từ ImageUpload) vào metadata JSON của phần. Ảnh lưu ở
+// metadata.images = [url, ...] nên không cần thêm cột DB (tránh migration).
+function buildUnitMetadata(
+  metadataJson: string | undefined,
+  imageUrlsJson: string | undefined
+): string | null {
+  let meta: Record<string, unknown> = {};
+
+  if (metadataJson) {
+    try {
+      const parsed = JSON.parse(metadataJson);
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        meta = parsed as Record<string, unknown>;
+      }
+    } catch {
+      throw new Error("Metadata JSON must be valid JSON.");
+    }
+  }
+
+  if (imageUrlsJson !== undefined) {
+    let images: string[] = [];
+    try {
+      const parsed = JSON.parse(imageUrlsJson);
+      if (Array.isArray(parsed)) {
+        images = parsed.map((url) => String(url)).filter((url) => url.trim().length > 0);
+      }
+    } catch {
+      // Bỏ qua: coi như không có ảnh.
+    }
+
+    if (images.length > 0) {
+      meta.images = images;
+    } else {
+      delete meta.images;
+    }
+  }
+
+  return Object.keys(meta).length > 0 ? JSON.stringify(meta) : null;
 }
 
 export async function createMaterial(formData: FormData) {
@@ -209,7 +251,8 @@ export async function createUnit(formData: FormData) {
     audioUrl: formData.get("audioUrl"),
     transcript: formData.get("transcript"),
     defaultTimeLimitMinutes: formData.get("defaultTimeLimitMinutes"),
-    metadataJson: formData.get("metadataJson")
+    metadataJson: formData.get("metadataJson"),
+    imageUrlsJson: formData.get("imageUrlsJson")
   });
 
   if (!parsed.success) {
@@ -243,7 +286,7 @@ export async function createUnit(formData: FormData) {
       audioUrl: optionalText(parsed.data.audioUrl),
       transcript: optionalText(parsed.data.transcript),
       defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
-      metadataJson: optionalJson(parsed.data.metadataJson, "Metadata JSON")
+      metadataJson: buildUnitMetadata(parsed.data.metadataJson, parsed.data.imageUrlsJson)
     }
   });
 
@@ -263,7 +306,8 @@ export async function updateUnit(formData: FormData) {
     audioUrl: formData.get("audioUrl"),
     transcript: formData.get("transcript"),
     defaultTimeLimitMinutes: formData.get("defaultTimeLimitMinutes"),
-    metadataJson: formData.get("metadataJson")
+    metadataJson: formData.get("metadataJson"),
+    imageUrlsJson: formData.get("imageUrlsJson")
   });
 
   if (!parsed.success) {
@@ -303,7 +347,7 @@ export async function updateUnit(formData: FormData) {
       audioUrl: optionalText(parsed.data.audioUrl),
       transcript: optionalText(parsed.data.transcript),
       defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
-      metadataJson: optionalJson(parsed.data.metadataJson, "Metadata JSON")
+      metadataJson: buildUnitMetadata(parsed.data.metadataJson, parsed.data.imageUrlsJson)
     }
   });
 
@@ -604,7 +648,7 @@ function validateImport(data: ImportMaterial) {
         errors.push(`${qWhere}: dạng "${question.questionType}" cần "options".`);
       }
 
-      if (answers.length === 0) {
+      if (answers.length === 0 && question.questionType !== "writing_task") {
         errors.push(`${qWhere}: thiếu "answer".`);
       }
 

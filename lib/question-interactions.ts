@@ -32,6 +32,25 @@ export function usesDragDropAnswer(questionType: string, options: string[]) {
   return dragDropTypes.has(questionType) && options.length > 0;
 }
 
+// Lấy danh sách ảnh đề bài từ metadata JSON của phần (metadata.images = [url, ...]).
+export function parseUnitImages(metadataJson: string | null | undefined): string[] {
+  if (!metadataJson) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(metadataJson);
+    const images = (parsed as { images?: unknown })?.images;
+    if (Array.isArray(images)) {
+      return images.map((url) => String(url)).filter((url) => url.trim().length > 0);
+    }
+  } catch {
+    return [];
+  }
+
+  return [];
+}
+
 export function splitPromptIntoSegments(prompt: string): PromptSegment[] {
   const segments: PromptSegment[] = [];
   const placeholderPattern = /\[\[(\d+)\]\]/g;

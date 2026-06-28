@@ -1,5 +1,6 @@
 import { createMaterial, createQuestion, createUnit } from "@/lib/actions/materials";
 import { AudioUpload } from "@/components/audio-upload";
+import { ImageUpload } from "@/components/image-upload";
 import { QuestionFields } from "@/components/question-fields";
 
 type MaterialEditorQuestion = {
@@ -183,6 +184,13 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
               className={fieldClass}
             />
           </div>
+        </div>
+
+        <label className="mt-4 block text-sm font-medium" htmlFor="new-unit-image">
+          Hình ảnh (biểu đồ/bản đồ Writing Task 1, ...)
+        </label>
+        <div className="mt-2">
+          <ImageUpload id="new-unit-image" />
         </div>
 
         <label className="mt-4 block text-sm font-medium" htmlFor="transcript">

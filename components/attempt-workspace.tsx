@@ -21,6 +21,7 @@ import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
   parseMarkdownTable,
   parseQuestionOptions,
+  parseUnitImages,
   promptHasGap,
   splitPromptIntoGapSegments,
   splitPromptIntoSegments,
@@ -60,6 +61,7 @@ type AssignmentUnit = {
     audioUrl: string | null;
     transcript: string | null;
     defaultTimeLimitMinutes: number | null;
+    metadataJson: string | null;
     questions: Question[];
   };
 };
@@ -87,6 +89,112 @@ type SaveState = "idle" | "saving" | "saved" | "error";
 
 function usesLongAnswer(questionType: string) {
   return questionType.includes("essay") || questionType.includes("writing");
+}
+
+function countWords(value: string) {
+  const trimmed = value.trim();
+  return trimmed ? trimmed.split(/\s+/).length : 0;
+}
+
+// Render nội dung đề có thể chứa bảng markdown (Writing Task 1). Mỗi khối bảng
+// liên tiếp (các dòng có "|") được dựng thành <table>; phần còn lại giữ nguyên text.
+function SourceContent({ content }: { content: string }) {
+  const lines = content.split(/\r?\n/);
+  const blocks: Array<{ type: "text"; value: string } | { type: "table"; value: string }> = [];
+  let buffer: string[] = [];
+  let bufferIsTable = false;
+
+  const flush = () => {
+    if (buffer.length === 0) {
+      return;
+    }
+    blocks.push({ type: bufferIsTable ? "table" : "text", value: buffer.join("\n") });
+    buffer = [];
+  };
+
+  lines.forEach((line) => {
+    const looksTable = line.includes("|");
+    if (looksTable !== bufferIsTable) {
+      flush();
+      bufferIsTable = looksTable;
+    }
+    buffer.push(line);
+  });
+  flush();
+
+  return (
+    <div className="space-y-3 text-sm leading-7 text-foreground">
+      {blocks.map((block, index) => {
+        if (block.type === "table") {
+          const table = parseMarkdownTable(block.value);
+          if (table) {
+            return (
+              <div key={index} className="overflow-x-auto rounded-md border border-border">
+                <table className="min-w-full border-collapse text-sm">
+                  <thead>
+                    <tr className="bg-muted/60">
+                      {table.headers.map((header, hi) => (
+                        <th key={hi} className="border border-border px-3 py-2 text-left font-semibold">
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {table.rows.map((row, ri) => (
+                      <tr key={ri}>
+                        {row.map((cell, ci) => (
+                          <td key={ci} className="border border-border px-3 py-2 align-top">
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
+          }
+        }
+        return (
+          <p key={index} className="whitespace-pre-wrap">
+            {block.value}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
+function LongAnswerInput({
+  question,
+  initialValue,
+  onAnswerChange
+}: {
+  question: Question;
+  initialValue: string;
+  onAnswerChange: AnswerChange;
+}) {
+  const [value, setValue] = useState(initialValue);
+  const fieldName = `q_${question.id}`;
+
+  return (
+    <div className="mt-3 flex h-full min-h-[16rem] flex-col">
+      <textarea
+        name={fieldName}
+        value={value}
+        onChange={(event) => {
+          setValue(event.target.value);
+          onAnswerChange(question.id, event.target.value);
+        }}
+        placeholder="Nhập bài viết của bạn tại đây…"
+        className="min-h-[16rem] w-full flex-1 resize-y rounded-md border border-border bg-background/60 px-3 py-2 text-sm leading-7 outline-none focus:border-primary"
+      />
+      <div className="mt-1 text-right text-xs font-medium text-muted-foreground">
+        {countWords(value)} từ
+      </div>
+    </div>
+  );
 }
 
 function QuestionInput({
@@ -126,12 +234,10 @@ function QuestionInput({
 
   if (usesLongAnswer(question.questionType)) {
     return (
-      <textarea
-        name={fieldName}
-        rows={8}
-        defaultValue={initialValue}
-        onChange={(event) => onAnswerChange(question.id, event.target.value)}
-        className="mt-3 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm outline-none focus:border-primary"
+      <LongAnswerInput
+        question={question}
+        initialValue={initialValue}
+        onAnswerChange={onAnswerChange}
       />
     );
   }
@@ -862,9 +968,11 @@ export function AttemptWorkspace({
         // Không hiện transcript khi đang làm bài (tránh lộ đáp án nghe). Đoạn văn
         // để tô màu chỉ áp dụng cho Reading: là nội dung bài đọc (khi không bị
         // bảng/ghi chú "ăn" mất content).
+        const isWriting = unit.unitType === "writing_task" || unit.skill === "writing";
         const sourceText = inlineCompletionConsumesContent ? "" : unit.content;
         const sourceType = "content";
-        const hasPassage = !isListening && Boolean(sourceText);
+        const images = parseUnitImages(unit.metadataJson);
+        const hasPassage = !isListening && (Boolean(sourceText) || images.length > 0);
         const unitHighlights = highlights.filter(
           (highlight) =>
             highlight.assignableUnitId === unit.id && highlight.sourceType === sourceType
@@ -1006,13 +1114,30 @@ export function AttemptWorkspace({
             {hasPassage ? (
               <div className="grid min-h-0 flex-1 gap-0 overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)] lg:overflow-hidden">
                 <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto lg:border-r lg:border-border">
+                  {images.length > 0 ? (
+                    <div className="space-y-3">
+                      {images.map((src, index) => (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          key={`${src}-${index}`}
+                          src={src}
+                          alt={`Hình ${index + 1}`}
+                          className="w-full rounded-md border border-border bg-white"
+                        />
+                      ))}
+                    </div>
+                  ) : null}
                   {sourceText ? (
-                    <HighlightLayer
-                      text={sourceText}
-                      highlights={unitHighlights}
-                      onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
-                      onRemoveHighlight={removeHighlight}
-                    />
+                    isWriting ? (
+                      <SourceContent content={sourceText} />
+                    ) : (
+                      <HighlightLayer
+                        text={sourceText}
+                        highlights={unitHighlights}
+                        onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
+                        onRemoveHighlight={removeHighlight}
+                      />
+                    )
                   ) : null}
                 </div>
                 <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto">{questionsContent}</div>

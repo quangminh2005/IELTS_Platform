@@ -1,10 +1,12 @@
 import type { Prisma } from "@prisma/client";
 import { AudioUpload } from "@/components/audio-upload";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
+import { ImageUpload } from "@/components/image-upload";
 import { MaterialEditor } from "@/components/material-editor";
 import { MaterialImport } from "@/components/material-import";
 import { QuestionFields } from "@/components/question-fields";
 import { requireTeacher } from "@/lib/actions/classes";
+import { parseUnitImages } from "@/lib/question-interactions";
 import {
   deleteMaterial,
   deleteQuestion,
@@ -370,6 +372,17 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                                 min={1}
                                 defaultValue={unit.defaultTimeLimitMinutes ?? ""}
                                 className={fieldClass}
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium" htmlFor={`unit-image-${unit.id}`}>
+                              Hình ảnh (biểu đồ/bản đồ Writing Task 1, ...)
+                            </label>
+                            <div className="mt-2">
+                              <ImageUpload
+                                id={`unit-image-${unit.id}`}
+                                defaultValue={parseUnitImages(unit.metadataJson)}
                               />
                             </div>
                           </div>

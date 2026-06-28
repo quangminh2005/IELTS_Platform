@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireTeacher } from "@/lib/actions/classes";
+import { deleteStudent, requireTeacher } from "@/lib/actions/classes";
+import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { prisma } from "@/lib/prisma";
 
 type StudentPageProps = {
@@ -98,9 +99,20 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">{student.displayName}</h2>
           <p className="mt-1 text-sm text-muted-foreground">{student.email}</p>
         </div>
-        <div className="rounded-xl border border-border bg-card px-5 py-3 text-center shadow-card">
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Số lớp</p>
-          <p className="mt-1 text-2xl font-bold tabular-nums text-primary">{student.classes.length}</p>
+        <div className="flex flex-col items-stretch gap-3 sm:items-end">
+          <div className="rounded-xl border border-border bg-card px-5 py-3 text-center shadow-card">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Số lớp</p>
+            <p className="mt-1 text-2xl font-bold tabular-nums text-primary">{student.classes.length}</p>
+          </div>
+          <form action={deleteStudent}>
+            <input type="hidden" name="studentId" value={student.id} />
+            <ConfirmSubmitButton
+              confirmMessage={`Xoá hẳn học sinh ${student.displayName}? Toàn bộ hồ sơ, bài làm, điểm và lịch sử sẽ bị xoá vĩnh viễn và KHÔNG thể khôi phục.`}
+              className="w-full rounded-lg border border-red-400/60 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-500/20 dark:text-red-400 sm:w-auto"
+            >
+              Xoá hẳn học sinh
+            </ConfirmSubmitButton>
+          </form>
         </div>
       </header>
 

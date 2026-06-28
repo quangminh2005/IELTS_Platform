@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -109,4 +110,84 @@ export async function addStudent(formData: FormData) {
   revalidatePath("/teacher");
   revalidatePath("/teacher/classes");
   revalidatePath(`/teacher/students/${student.id}`);
+}
+
+export async function deleteClass(formData: FormData) {
+  const teacher = await requireTeacher();
+  const classId = String(formData.get("classId") ?? "").trim();
+
+  if (!classId) {
+    throw new Error("Missing class id.");
+  }
+
+  // Xoá lớp: liên kết học viên–lớp (ClassStudent) tự xoá theo cascade; bài tập đã
+  // giao cho lớp được giữ lại (Assignment.classId set null). Hồ sơ học viên KHÔNG bị xoá.
+  const result = await prisma.class.deleteMany({
+    where: { id: classId, teacherId: teacher.id }
+  });
+
+  if (result.count === 0) {
+    throw new Error("Class not found for this teacher.");
+  }
+
+  revalidatePath("/teacher");
+  revalidatePath("/teacher/classes");
+}
+
+export async function removeStudentFromClass(formData: FormData) {
+  const teacher = await requireTeacher();
+  const classId = String(formData.get("classId") ?? "").trim();
+  const studentId = String(formData.get("studentId") ?? "").trim();
+
+  if (!classId || !studentId) {
+    throw new Error("Missing class or student id.");
+  }
+
+  // Chỉ gỡ liên kết học viên khỏi lớp; hồ sơ, bài làm, lịch sử vẫn còn.
+  await prisma.classStudent.deleteMany({
+    where: {
+      classId,
+      studentId,
+      class: { teacherId: teacher.id }
+    }
+  });
+
+  revalidatePath("/teacher");
+  revalidatePath("/teacher/classes");
+}
+
+export async function deleteStudent(formData: FormData) {
+  const teacher = await requireTeacher();
+  const studentId = String(formData.get("studentId") ?? "").trim();
+
+  if (!studentId) {
+    throw new Error("Missing student id.");
+  }
+
+  // Chỉ cho phép xoá học sinh thuộc một lớp của chính giáo viên này.
+  const membership = await prisma.classStudent.findFirst({
+    where: { studentId, class: { teacherId: teacher.id } },
+    select: { id: true }
+  });
+
+  if (!membership) {
+    throw new Error("Student not found for this teacher.");
+  }
+
+  const student = await prisma.studentProfile.findUnique({
+    where: { id: studentId },
+    select: { userId: true }
+  });
+
+  // Xoá hồ sơ học sinh: bài làm, đáp án, highlight, kết quả... tự xoá theo cascade.
+  await prisma.studentProfile.delete({ where: { id: studentId } });
+
+  // Xoá luôn tài khoản đăng nhập liên kết (nếu có) để học sinh không còn đăng nhập được.
+  if (student?.userId) {
+    await prisma.user.delete({ where: { id: student.userId } }).catch(() => undefined);
+  }
+
+  revalidatePath("/teacher");
+  revalidatePath("/teacher/classes");
+  redirect("/teacher/classes");
 }

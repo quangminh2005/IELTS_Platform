@@ -1,6 +1,13 @@
 import Link from "next/link";
 import type { Prisma } from "@prisma/client";
-import { addStudent, createClass, requireTeacher } from "@/lib/actions/classes";
+import {
+  addStudent,
+  createClass,
+  deleteClass,
+  removeStudentFromClass,
+  requireTeacher
+} from "@/lib/actions/classes";
+import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { prisma } from "@/lib/prisma";
 
 const classInclude = {
@@ -55,9 +62,20 @@ export default async function TeacherClassesPage() {
                         <p className="mt-1 text-sm text-muted-foreground">{classItem.description}</p>
                       ) : null}
                     </div>
-                    <span className="inline-flex w-fit rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-                      {classItem.students.length} học viên
-                    </span>
+                    <div className="flex shrink-0 items-center gap-2">
+                      <span className="inline-flex w-fit rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+                        {classItem.students.length} học viên
+                      </span>
+                      <form action={deleteClass}>
+                        <input type="hidden" name="classId" value={classItem.id} />
+                        <ConfirmSubmitButton
+                          confirmMessage={`Xoá lớp "${classItem.name}"? Học viên sẽ bị gỡ khỏi lớp nhưng hồ sơ và bài làm của họ vẫn được giữ lại.`}
+                          className="inline-flex items-center gap-1 rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-semibold text-red-600 transition hover:border-red-400 hover:bg-red-500/10 dark:text-red-400"
+                        >
+                          Xoá lớp
+                        </ConfirmSubmitButton>
+                      </form>
+                    </div>
                   </div>
                 </div>
 
@@ -79,12 +97,24 @@ export default async function TeacherClassesPage() {
                             </p>
                           </div>
                         </div>
-                        <Link
-                          href={`/teacher/students/${membership.student.id}`}
-                          className="shrink-0 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
-                        >
-                          Xem hồ sơ
-                        </Link>
+                        <div className="flex shrink-0 items-center gap-2">
+                          <Link
+                            href={`/teacher/students/${membership.student.id}`}
+                            className="rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+                          >
+                            Xem hồ sơ
+                          </Link>
+                          <form action={removeStudentFromClass}>
+                            <input type="hidden" name="classId" value={classItem.id} />
+                            <input type="hidden" name="studentId" value={membership.student.id} />
+                            <ConfirmSubmitButton
+                              confirmMessage={`Gỡ ${membership.student.displayName} khỏi lớp "${classItem.name}"? Hồ sơ và bài làm của học viên vẫn được giữ lại.`}
+                              className="rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-muted-foreground transition hover:border-red-400 hover:text-red-600 dark:hover:text-red-400"
+                            >
+                              Gỡ
+                            </ConfirmSubmitButton>
+                          </form>
+                        </div>
                       </div>
                     ))
                   ) : (

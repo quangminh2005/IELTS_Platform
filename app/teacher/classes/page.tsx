@@ -4,6 +4,7 @@ import {
   addStudent,
   createClass,
   deleteClass,
+  deleteStudent,
   removeStudentFromClass,
   requireTeacher
 } from "@/lib/actions/classes";
@@ -112,6 +113,15 @@ export default async function TeacherClassesPage() {
                               className="rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-muted-foreground transition hover:border-red-400 hover:text-red-600 dark:hover:text-red-400"
                             >
                               Gỡ
+                            </ConfirmSubmitButton>
+                          </form>
+                          <form action={deleteStudent}>
+                            <input type="hidden" name="studentId" value={membership.student.id} />
+                            <ConfirmSubmitButton
+                              confirmMessage={`Xoá hẳn học sinh ${membership.student.displayName}? Toàn bộ hồ sơ, bài làm, điểm và lịch sử sẽ bị xoá vĩnh viễn và KHÔNG thể khôi phục.`}
+                              className="rounded-lg border border-red-400/60 bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-500/20 dark:text-red-400"
+                            >
+                              Xoá hẳn
                             </ConfirmSubmitButton>
                           </form>
                         </div>

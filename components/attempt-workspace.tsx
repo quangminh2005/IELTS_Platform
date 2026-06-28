@@ -884,12 +884,129 @@ export function AttemptWorkspace({
             question.questionType !== "note_completion" &&
             question.questionType !== "matching"
         );
-        const sourceText =
-          unit.transcript || (inlineCompletionConsumesContent ? "" : unit.content);
-        const sourceType = unit.transcript ? "transcript" : "content";
+        const isListening =
+          unit.unitType === "listening_part" || unit.skill === "listening";
+        // Không hiện transcript khi đang làm bài (tránh lộ đáp án nghe). Đoạn văn
+        // để tô màu chỉ áp dụng cho Reading: là nội dung bài đọc (khi không bị
+        // bảng/ghi chú "ăn" mất content).
+        const sourceText = inlineCompletionConsumesContent ? "" : unit.content;
+        const sourceType = "content";
+        const hasPassage = !isListening && Boolean(sourceText);
         const unitHighlights = highlights.filter(
           (highlight) =>
             highlight.assignableUnitId === unit.id && highlight.sourceType === sourceType
+        );
+
+        const audioSection = unit.audioUrl ? (
+          <div className="shrink-0 border-b border-border bg-muted/30 px-5 py-3">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary">
+              Bài nghe
+            </p>
+            <audio controls src={unit.audioUrl} className="w-full" controlsList="nodownload">
+              <track kind="captions" />
+            </audio>
+          </div>
+        ) : isListening ? (
+          <div className="shrink-0 border-b border-border bg-amber-500/10 px-5 py-3 text-sm font-medium text-amber-700 dark:text-amber-300">
+            Chưa có file nghe cho phần này. Vui lòng báo giáo viên bổ sung audio.
+          </div>
+        ) : null;
+
+        const questionsContent = (
+          <>
+            {tableCompletionQuestions.length > 0 ? (
+              <div id={`tablesection-${assignmentUnit.id}`} className="scroll-mt-24">
+                <TableCompletionQuestionSet
+                  content={unit.content}
+                  questions={tableCompletionQuestions}
+                  savedAnswers={answers}
+                  onAnswerChange={handleAnswerChange}
+                />
+              </div>
+            ) : null}
+            {noteCompletionQuestions.length > 0 ? (
+              <div id={`notesection-${assignmentUnit.id}`} className="scroll-mt-24">
+                <NoteCompletionQuestionSet
+                  content={unit.content}
+                  questions={noteCompletionQuestions}
+                  savedAnswers={answers}
+                  onAnswerChange={handleAnswerChange}
+                />
+              </div>
+            ) : null}
+            {matchingQuestions.length > 0 ? (
+              <MatchingQuestionSet
+                questions={matchingQuestions}
+                savedAnswers={answers}
+                onAnswerChange={handleAnswerChange}
+              />
+            ) : null}
+            {regularQuestions.length > 0 ? (
+              regularQuestions.map((question) => {
+                const options = parseQuestionOptions(question.optionsJson);
+                const isDragDrop = usesDragDropAnswer(question.questionType, options);
+                const isInlineGap =
+                  !isDragDrop &&
+                  options.length === 0 &&
+                  !usesLongAnswer(question.questionType) &&
+                  promptHasGap(question.prompt);
+
+                return (
+                  <article
+                    key={question.id}
+                    id={`question-${question.id}`}
+                    className="scroll-mt-24 rounded-md border border-border bg-background/40 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                        Câu {question.order}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => toggleFlag(question.id)}
+                        aria-pressed={flagged.has(question.id)}
+                        className={
+                          flagged.has(question.id)
+                            ? "rounded-md border border-amber-400/70 bg-amber-400/15 px-2 py-1 text-xs font-medium text-amber-600 dark:text-amber-300"
+                            : "rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground hover:border-primary"
+                        }
+                      >
+                        {flagged.has(question.id) ? "★ Đã đánh dấu" : "☆ Đánh dấu"}
+                      </button>
+                    </div>
+                    {isDragDrop ? (
+                      <DragDropQuestion
+                        question={question}
+                        initialValue={answers[question.id] ?? ""}
+                        onAnswerChange={handleAnswerChange}
+                      />
+                    ) : isInlineGap ? (
+                      <InlineGapQuestion
+                        question={question}
+                        initialValue={answers[question.id] ?? ""}
+                        onAnswerChange={handleAnswerChange}
+                      />
+                    ) : (
+                      <>
+                        <p className="mt-2 text-sm leading-6">{question.prompt}</p>
+                        <QuestionInput
+                          question={question}
+                          initialValue={answers[question.id] ?? ""}
+                          onAnswerChange={handleAnswerChange}
+                        />
+                      </>
+                    )}
+                  </article>
+                );
+              })
+            ) : tableCompletionQuestions.length === 0 &&
+              noteCompletionQuestions.length === 0 &&
+              matchingQuestions.length === 0 ? (
+              <p className="rounded-md border border-border bg-muted/60 p-4 text-sm text-muted-foreground">
+                Phần này không có câu hỏi tự động chấm.
+              </p>
+            ) : null}
+          </>
         );
 
         return (
@@ -911,118 +1028,27 @@ export function AttemptWorkspace({
               ) : null}
             </div>
 
-            <div className="grid min-h-0 flex-1 gap-0 overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)] lg:overflow-hidden">
-              <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto lg:border-r lg:border-border">
-                {unit.audioUrl ? (
-                  <audio controls src={unit.audioUrl} className="w-full">
-                    <track kind="captions" />
-                  </audio>
-                ) : null}
-                {sourceText ? (
-                  <HighlightLayer
-                    text={sourceText}
-                    highlights={unitHighlights}
-                    onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
-                    onRemoveHighlight={removeHighlight}
-                  />
-                ) : null}
-              </div>
+            {audioSection}
 
-              <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto">
-                {tableCompletionQuestions.length > 0 ? (
-                  <div id={`tablesection-${assignmentUnit.id}`} className="scroll-mt-24">
-                    <TableCompletionQuestionSet
-                      content={unit.content}
-                      questions={tableCompletionQuestions}
-                      savedAnswers={answers}
-                      onAnswerChange={handleAnswerChange}
+            {hasPassage ? (
+              <div className="grid min-h-0 flex-1 gap-0 overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)] lg:overflow-hidden">
+                <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto lg:border-r lg:border-border">
+                  {sourceText ? (
+                    <HighlightLayer
+                      text={sourceText}
+                      highlights={unitHighlights}
+                      onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
+                      onRemoveHighlight={removeHighlight}
                     />
-                  </div>
-                ) : null}
-                {noteCompletionQuestions.length > 0 ? (
-                  <div id={`notesection-${assignmentUnit.id}`} className="scroll-mt-24">
-                    <NoteCompletionQuestionSet
-                      content={unit.content}
-                      questions={noteCompletionQuestions}
-                      savedAnswers={answers}
-                      onAnswerChange={handleAnswerChange}
-                    />
-                  </div>
-                ) : null}
-                {matchingQuestions.length > 0 ? (
-                  <MatchingQuestionSet
-                    questions={matchingQuestions}
-                    savedAnswers={answers}
-                    onAnswerChange={handleAnswerChange}
-                  />
-                ) : null}
-                {regularQuestions.length > 0 ? (
-                  regularQuestions.map((question) => {
-                    const options = parseQuestionOptions(question.optionsJson);
-                    const isDragDrop = usesDragDropAnswer(question.questionType, options);
-                    const isInlineGap =
-                      !isDragDrop &&
-                      options.length === 0 &&
-                      !usesLongAnswer(question.questionType) &&
-                      promptHasGap(question.prompt);
-
-                    return (
-                      <article
-                        key={question.id}
-                        id={`question-${question.id}`}
-                        className="scroll-mt-24 rounded-md border border-border bg-background/40 p-4"
-                      >
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                            Câu {question.order}
-                          </p>
-                          <button
-                            type="button"
-                            onClick={() => toggleFlag(question.id)}
-                            aria-pressed={flagged.has(question.id)}
-                            className={
-                              flagged.has(question.id)
-                                ? "rounded-md border border-amber-400/70 bg-amber-400/15 px-2 py-1 text-xs font-medium text-amber-600 dark:text-amber-300"
-                                : "rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground hover:border-primary"
-                            }
-                          >
-                            {flagged.has(question.id) ? "★ Đã đánh dấu" : "☆ Đánh dấu"}
-                          </button>
-                        </div>
-                        {isDragDrop ? (
-                          <DragDropQuestion
-                            question={question}
-                            initialValue={answers[question.id] ?? ""}
-                            onAnswerChange={handleAnswerChange}
-                          />
-                        ) : isInlineGap ? (
-                          <InlineGapQuestion
-                            question={question}
-                            initialValue={answers[question.id] ?? ""}
-                            onAnswerChange={handleAnswerChange}
-                          />
-                        ) : (
-                          <>
-                            <p className="mt-2 text-sm leading-6">{question.prompt}</p>
-                            <QuestionInput
-                              question={question}
-                              initialValue={answers[question.id] ?? ""}
-                              onAnswerChange={handleAnswerChange}
-                            />
-                          </>
-                        )}
-                      </article>
-                    );
-                  })
-                ) : tableCompletionQuestions.length === 0 &&
-                  noteCompletionQuestions.length === 0 &&
-                  matchingQuestions.length === 0 ? (
-                  <p className="rounded-md border border-border bg-muted/60 p-4 text-sm text-muted-foreground">
-                    Phần này không có câu hỏi tự động chấm.
-                  </p>
-                ) : null}
+                  ) : null}
+                </div>
+                <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto">{questionsContent}</div>
               </div>
-            </div>
+            ) : (
+              <div className="min-h-0 flex-1 overflow-y-auto">
+                <div className="mx-auto max-w-4xl space-y-4 p-5">{questionsContent}</div>
+              </div>
+            )}
           </section>
         );
       })}

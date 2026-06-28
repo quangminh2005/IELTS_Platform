@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { deleteStudent, requireTeacher } from "@/lib/actions/classes";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
+import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { prisma } from "@/lib/prisma";
 
 type StudentPageProps = {
@@ -72,6 +73,16 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           attempts: {
             orderBy: {
               startedAt: "desc"
+            },
+            include: {
+              answers: {
+                select: {
+                  isCorrect: true,
+                  assignableUnit: {
+                    select: { skill: true }
+                  }
+                }
+              }
             }
           }
         },
@@ -153,19 +164,43 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                 </div>
                 {recipient.attempts.length > 0 ? (
                   <div className="mt-4 grid gap-3">
-                    {recipient.attempts.map((attempt: (typeof recipient.attempts)[number]) => (
-                      <div key={attempt.id} className="rounded-lg border border-border bg-muted/60 p-3">
-                        <p className="text-sm font-semibold">
-                          {statusLabel(attempt.status)}
-                          {typeof attempt.scorePercent === "number"
-                            ? ` · ${attempt.scorePercent.toFixed(1)}%`
-                            : ""}
-                        </p>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          Bắt đầu {formatDate(attempt.startedAt)} · {attempt.elapsedSeconds}s
-                        </p>
-                      </div>
-                    ))}
+                    {recipient.attempts.map((attempt: (typeof recipient.attempts)[number]) => {
+                      const bands = bandsBySkill(
+                        attempt.answers.map((answer) => ({
+                          isCorrect: answer.isCorrect,
+                          skill: answer.assignableUnit.skill
+                        }))
+                      );
+
+                      return (
+                        <div key={attempt.id} className="rounded-lg border border-border bg-muted/60 p-3">
+                          <p className="text-sm font-semibold">
+                            {statusLabel(attempt.status)}
+                            {typeof attempt.scorePercent === "number"
+                              ? ` · ${attempt.scorePercent.toFixed(1)}%`
+                              : ""}
+                          </p>
+                          {bands.length > 0 ? (
+                            <div className="mt-2 flex flex-wrap gap-2">
+                              {bands.map((row) => (
+                                <span
+                                  key={row.skill}
+                                  className="inline-flex items-center gap-1 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary"
+                                >
+                                  {SKILL_SHORT_LABELS[row.skill] ?? row.skill}: Band {formatBand(row.band)}
+                                  <span className="font-normal text-muted-foreground">
+                                    ({row.correct}/{row.total})
+                                  </span>
+                                </span>
+                              ))}
+                            </div>
+                          ) : null}
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            Bắt đầu {formatDate(attempt.startedAt)} · {attempt.elapsedSeconds}s
+                          </p>
+                        </div>
+                      );
+                    })}
                   </div>
                 ) : (
                   <p className="mt-3 text-sm text-muted-foreground">Chưa có lần làm bài nào.</p>

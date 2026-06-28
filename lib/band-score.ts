@@ -82,3 +82,43 @@ export function isBandSkill(skill: string): boolean {
 export function formatBand(band: number | null): string {
   return band === null ? "—" : band.toFixed(1);
 }
+
+export type SkillBand = {
+  skill: string;
+  correct: number;
+  total: number;
+  band: number | null;
+};
+
+// Gộp các câu đã chấm tự động theo kỹ năng (Nghe/Đọc) rồi quy đổi band.
+// Dùng chung cho trang kết quả của học sinh và khu vực giáo viên.
+export function bandsBySkill(
+  answers: Array<{ isCorrect: boolean | null; skill: string }>
+): SkillBand[] {
+  const bySkill = new Map<string, { correct: number; total: number }>();
+
+  for (const answer of answers) {
+    if (!isBandSkill(answer.skill) || answer.isCorrect === null) {
+      continue;
+    }
+
+    const current = bySkill.get(answer.skill) ?? { correct: 0, total: 0 };
+    current.total += 1;
+    if (answer.isCorrect) {
+      current.correct += 1;
+    }
+    bySkill.set(answer.skill, current);
+  }
+
+  return [...bySkill.entries()].map(([skill, { correct, total }]) => ({
+    skill,
+    correct,
+    total,
+    band: bandScore(skill, correct, total)
+  }));
+}
+
+export const SKILL_SHORT_LABELS: Record<string, string> = {
+  listening: "Nghe",
+  reading: "Đọc"
+};

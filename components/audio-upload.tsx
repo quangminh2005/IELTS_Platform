@@ -1,13 +1,61 @@
 "use client";
 
 import { type ChangeEvent, useRef, useState } from "react";
-import { upload } from "@vercel/blob/client";
 
 type AudioUploadProps = {
   id: string;
   name?: string;
   defaultValue?: string;
 };
+
+// Tải file lên qua route server của chính web (server đẩy lên Vercel Blob).
+// Dùng XHR để hiển thị % tiến trình và bắt được lỗi file quá lớn (413).
+function uploadViaServer(file: File, onProgress: (percent: number) => void): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api/audio/direct-upload");
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        onProgress(Math.round((event.loaded / event.total) * 100));
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          resolve(JSON.parse(xhr.responseText).url as string);
+        } catch {
+          reject(new Error("Phản hồi không hợp lệ từ máy chủ."));
+        }
+        return;
+      }
+
+      if (xhr.status === 413) {
+        reject(
+          new Error(
+            "File quá lớn để tải thẳng (giới hạn ~4.5MB). Hãy nén MP3 nhẹ hơn (vd 64kbps) hoặc dán link audio vào ô bên trên."
+          )
+        );
+        return;
+      }
+
+      let message = `Lỗi ${xhr.status}`;
+      try {
+        message = JSON.parse(xhr.responseText).error || message;
+      } catch {
+        // giữ message mặc định
+      }
+      reject(new Error(message));
+    };
+
+    xhr.onerror = () => reject(new Error("Lỗi mạng khi tải lên."));
+
+    const formData = new FormData();
+    formData.append("file", file);
+    xhr.send(formData);
+  });
+}
 
 const inputClass =
   "mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2";
@@ -28,35 +76,12 @@ export function AudioUpload({ id, name = "audioUrl", defaultValue = "" }: AudioU
     setStatus("uploading");
     setMessage(`Đang tải "${file.name}"… 0%`);
 
-    // Không để treo vô hạn: nếu sau 5 phút chưa xong thì báo lỗi.
-    const timeout = new Promise<never>((_, reject) =>
-      window.setTimeout(
-        () =>
-          reject(
-            new Error(
-              "Quá thời gian tải lên. Nếu % không nhúc nhích: kiểm tra đã Redeploy sau khi tạo kho Vercel Blob chưa, hoặc dán trực tiếp link audio vào ô bên trên."
-            )
-          ),
-        300_000
-      )
-    );
-
     try {
-      const blob = await Promise.race([
-        upload(file.name, file, {
-          access: "public",
-          handleUploadUrl: "/api/audio/upload",
-          // Tải theo nhiều phần: ổn định hơn với file audio lớn, tránh treo
-          // do một kết nối đơn lẻ bị nghẽn.
-          multipart: true,
-          onUploadProgress: (event) => {
-            setMessage(`Đang tải "${file.name}"… ${Math.round(event.percentage)}%`);
-          }
-        }),
-        timeout
-      ]);
+      const blobUrl = await uploadViaServer(file, (percent) => {
+        setMessage(`Đang tải "${file.name}"… ${percent}%`);
+      });
 
-      setUrl(blob.url);
+      setUrl(blobUrl);
       setStatus("idle");
       setMessage("Tải lên thành công.");
     } catch (error) {

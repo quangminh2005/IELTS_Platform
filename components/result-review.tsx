@@ -1,3 +1,5 @@
+import { bandScore, formatBand, isBandSkill } from "@/lib/band-score";
+
 type Highlight = {
   id: string;
   selectedText: string;
@@ -20,8 +22,42 @@ type Answer = {
   } | null;
   assignableUnit: {
     title: string;
+    skill: string;
   };
 };
+
+const SKILL_LABELS: Record<string, string> = {
+  listening: "Nghe (Listening)",
+  reading: "Đọc (Reading)"
+};
+
+// Gộp các câu đã chấm tự động theo kỹ năng để quy đổi band IELTS.
+function computeBands(answers: Answer[]) {
+  const bySkill = new Map<string, { correct: number; total: number }>();
+
+  for (const answer of answers) {
+    const skill = answer.assignableUnit.skill;
+
+    // Chỉ tính band cho Nghe/Đọc, và chỉ với câu đã chấm tự động (isCorrect khác null).
+    if (!isBandSkill(skill) || answer.isCorrect === null) {
+      continue;
+    }
+
+    const current = bySkill.get(skill) ?? { correct: 0, total: 0 };
+    current.total += 1;
+    if (answer.isCorrect) {
+      current.correct += 1;
+    }
+    bySkill.set(skill, current);
+  }
+
+  return [...bySkill.entries()].map(([skill, { correct, total }]) => ({
+    skill,
+    correct,
+    total,
+    band: bandScore(skill, correct, total)
+  }));
+}
 
 type ResultReviewProps = {
   attempt: {
@@ -70,9 +106,32 @@ export function ResultReview({ attempt }: ResultReviewProps) {
   const score = attempt.score !== null ? attempt.score : "—";
   const statusLabel =
     STATUS_LABELS[attempt.status] ?? attempt.status.replaceAll("_", " ");
+  const bands = computeBands(attempt.answers);
 
   return (
     <div className="space-y-6">
+      {bands.length > 0 ? (
+        <section className="grid gap-4 sm:grid-cols-2">
+          {bands.map((row) => (
+            <article
+              key={row.skill}
+              className="rounded-xl border border-primary/30 bg-primary/5 p-5 shadow-card"
+            >
+              <p className="text-sm font-semibold text-primary">
+                Band {SKILL_LABELS[row.skill] ?? row.skill}
+              </p>
+              <p className="mt-2 text-4xl font-bold tabular-nums text-primary">
+                {formatBand(row.band)}
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {row.correct}/{row.total} câu đúng
+                {row.total !== 40 ? ` · quy đổi từ ${row.total} câu về thang 40` : ""}
+              </p>
+            </article>
+          ))}
+        </section>
+      ) : null}
+
       <section className="grid gap-4 sm:grid-cols-3">
         <article className="rounded-xl border border-border bg-card p-5 shadow-card">
           <p className="text-sm text-muted-foreground">Điểm</p>

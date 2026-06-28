@@ -53,7 +53,8 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
           },
           assignableUnit: {
             select: {
-              title: true
+              title: true,
+              skill: true
             }
           }
         }

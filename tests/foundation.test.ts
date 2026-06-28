@@ -102,7 +102,9 @@ describe("foundation slice", () => {
   it("links assigned student work to the practice workspace", () => {
     const studentDashboard = readProjectFile("app/student/page.tsx");
 
-    expect(studentDashboard).toContain('href={`/student/assignments/${recipient.id}`}');
+    // Bài chưa làm xong -> mở phòng làm bài; bài đã nộp -> xem kết quả (làm một lần).
+    expect(studentDashboard).toContain("/student/assignments/${recipient.id}");
+    expect(studentDashboard).toContain("/student/results/${latestAttempt.id}");
     expect(studentDashboard).not.toContain("Practice page pending");
   });
 });

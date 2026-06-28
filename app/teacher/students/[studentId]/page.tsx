@@ -162,8 +162,7 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                             : ""}
                         </p>
                         <p className="mt-1 text-sm text-muted-foreground">
-                          Bắt đầu {formatDate(attempt.startedAt)} · {attempt.elapsedSeconds}s ·{" "}
-                          {attempt.tabSwitchCount} lần chuyển tab
+                          Bắt đầu {formatDate(attempt.startedAt)} · {attempt.elapsedSeconds}s
                         </p>
                       </div>
                     ))}

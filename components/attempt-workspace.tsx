@@ -70,7 +70,6 @@ type AttemptWorkspaceProps = {
     id: string;
     startedAt: Date | string;
     elapsedSeconds: number;
-    tabSwitchCount: number;
   };
   assignment: {
     title: string;
@@ -632,7 +631,6 @@ export function AttemptWorkspace({
   savedAnswers
 }: AttemptWorkspaceProps) {
   const elapsedRef = useRef<HTMLInputElement>(null);
-  const tabSwitchRef = useRef<HTMLInputElement>(null);
   const submitReasonRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const startedAtMs = useMemo(() => new Date(attempt.startedAt).getTime(), [attempt.startedAt]);
@@ -741,25 +739,6 @@ export function AttemptWorkspace({
     return () => window.clearInterval(intervalId);
   }, [startedAtMs]);
 
-  useEffect(() => {
-    function recordVisibilityChange() {
-      if (!document.hidden) {
-        return;
-      }
-
-      if (tabSwitchRef.current) {
-        tabSwitchRef.current.value = String(Number(tabSwitchRef.current.value || "0") + 1);
-      }
-
-      // Best-effort save when the student leaves the tab.
-      void persistDraft();
-    }
-
-    document.addEventListener("visibilitychange", recordVisibilityChange);
-
-    return () => document.removeEventListener("visibilitychange", recordVisibilityChange);
-  }, [persistDraft]);
-
   // Lưu ý: KHÔNG tự động nộp khi hết giờ. Đồng hồ chỉ đếm ngược và báo "Hết giờ";
   // học sinh tự bấm "Nộp bài". (Tránh việc mở lại bài quá giờ bị nộp ngay.)
 
@@ -834,12 +813,6 @@ export function AttemptWorkspace({
     <form ref={formRef} action={submitAttempt} className="fixed inset-0 z-50 flex flex-col bg-background">
       <input type="hidden" name="attemptId" value={attempt.id} />
       <input ref={elapsedRef} type="hidden" name="elapsedSeconds" defaultValue={attempt.elapsedSeconds} />
-      <input
-        ref={tabSwitchRef}
-        type="hidden"
-        name="tabSwitchCount"
-        defaultValue={attempt.tabSwitchCount}
-      />
       <input ref={submitReasonRef} type="hidden" name="submitReason" defaultValue="manual" />
       <input type="hidden" name="recipientId" value={recipientId} />
 

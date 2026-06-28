@@ -21,8 +21,7 @@ const highlightSchema = z.object({
 const submitSchema = z.object({
   attemptId: z.string().trim().min(1),
   submitReason: z.enum(["manual", "auto_timeout"]).default("manual"),
-  elapsedSeconds: z.coerce.number().int().min(0).default(0),
-  tabSwitchCount: z.coerce.number().int().min(0).default(0)
+  elapsedSeconds: z.coerce.number().int().min(0).default(0)
 });
 
 export async function requireStudent() {
@@ -93,24 +92,26 @@ export async function startAttempt(recipientId: string) {
     throw new Error("Assignment not found for this student.");
   }
 
-  const existingAttempt = await prisma.attempt.findFirst({
+  // Mỗi bài chỉ làm MỘT lần: nếu đã có lần làm nào (đang làm hoặc đã nộp) thì
+  // trả về lần đó — KHÔNG tạo lần làm mới. Lần đang làm thì tiếp tục; lần đã nộp
+  // thì trang sẽ tự chuyển sang xem kết quả (không cho làm lại).
+  const latestAttempt = await prisma.attempt.findFirst({
     where: {
       assignmentRecipientId: recipient.id,
-      studentId: student.id,
-      status: "in_progress"
+      studentId: student.id
     },
     orderBy: { startedAt: "desc" }
   });
 
-  if (existingAttempt) {
-    if (recipient.status !== "in_progress") {
+  if (latestAttempt) {
+    if (latestAttempt.status === "in_progress" && recipient.status !== "in_progress") {
       await prisma.assignmentRecipient.update({
         where: { id: recipient.id },
         data: { status: "in_progress" }
       });
     }
 
-    return existingAttempt;
+    return latestAttempt;
   }
 
   return prisma.$transaction(async (tx) => {
@@ -286,8 +287,7 @@ export async function submitAttempt(formData: FormData) {
   const parsed = submitSchema.safeParse({
     attemptId: formData.get("attemptId"),
     submitReason: formData.get("submitReason") ?? "manual",
-    elapsedSeconds: formData.get("elapsedSeconds") ?? 0,
-    tabSwitchCount: formData.get("tabSwitchCount") ?? 0
+    elapsedSeconds: formData.get("elapsedSeconds") ?? 0
   });
 
   if (!parsed.success) {
@@ -381,7 +381,6 @@ export async function submitAttempt(formData: FormData) {
         submittedAt,
         submitReason: parsed.data.submitReason,
         elapsedSeconds: parsed.data.elapsedSeconds,
-        tabSwitchCount: parsed.data.tabSwitchCount,
         score: attemptGrade.score,
         scorePercent: attemptGrade.scorePercent,
         autoGradedAt: submittedAt

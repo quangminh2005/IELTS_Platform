@@ -151,7 +151,11 @@ export default async function StudentDashboardPage() {
                       {formatStatus(recipient.status)}
                     </span>
                     <Link
-                      href={`/student/assignments/${recipient.id}`}
+                      href={
+                        done && latestAttempt
+                          ? `/student/results/${latestAttempt.id}`
+                          : `/student/assignments/${recipient.id}`
+                      }
                       className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
                     >
                       {done ? "Xem lại" : "Làm bài"}

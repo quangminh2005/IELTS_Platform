@@ -729,6 +729,80 @@ function CountdownTimer({
   );
 }
 
+// Bố cục 2 cột có thanh chia KÉO ĐƯỢC để chỉnh độ rộng (giống IELTSITY/chin).
+// Trên màn lớn: hai cột cạnh nhau, kéo thanh giữa để đổi tỉ lệ. Màn nhỏ: xếp dọc.
+function SplitPane({ left, right }: { left: React.ReactNode; right: React.ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const draggingRef = useRef(false);
+  const [leftPct, setLeftPct] = useState(58);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    function onMove(event: PointerEvent) {
+      if (!draggingRef.current || !containerRef.current) {
+        return;
+      }
+      const rect = containerRef.current.getBoundingClientRect();
+      const pct = ((event.clientX - rect.left) / rect.width) * 100;
+      setLeftPct(Math.min(80, Math.max(25, pct)));
+    }
+    function onUp() {
+      if (!draggingRef.current) {
+        return;
+      }
+      draggingRef.current = false;
+      document.body.style.userSelect = "";
+      document.body.style.cursor = "";
+    }
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row lg:overflow-hidden"
+    >
+      <div
+        className="space-y-4 p-5 lg:h-full lg:overflow-y-auto"
+        style={isDesktop ? { width: `${leftPct}%`, flex: "none" } : undefined}
+      >
+        {left}
+      </div>
+
+      <div
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Kéo để chỉnh độ rộng"
+        onPointerDown={() => {
+          draggingRef.current = true;
+          document.body.style.userSelect = "none";
+          document.body.style.cursor = "col-resize";
+        }}
+        onDoubleClick={() => setLeftPct(58)}
+        title="Kéo để chỉnh độ rộng · nhấp đúp để đặt lại"
+        className="hidden shrink-0 cursor-col-resize items-center justify-center border-x border-border bg-muted/60 transition hover:bg-primary/30 lg:flex lg:w-2"
+      >
+        <div className="h-10 w-0.5 rounded-full bg-muted-foreground/50" />
+      </div>
+
+      <div className="space-y-4 p-5 lg:h-full lg:flex-1 lg:overflow-y-auto">{right}</div>
+    </div>
+  );
+}
+
 export function AttemptWorkspace({
   recipientId,
   attempt,
@@ -1112,36 +1186,38 @@ export function AttemptWorkspace({
             {audioSection}
 
             {hasPassage ? (
-              <div className="grid min-h-0 flex-1 gap-0 overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)] lg:overflow-hidden">
-                <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto lg:border-r lg:border-border">
-                  {images.length > 0 ? (
-                    <div className="space-y-3">
-                      {images.map((src, index) => (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          key={`${src}-${index}`}
-                          src={src}
-                          alt={`Hình ${index + 1}`}
-                          className="w-full rounded-md border border-border bg-white"
+              <SplitPane
+                left={
+                  <>
+                    {images.length > 0 ? (
+                      <div className="space-y-3">
+                        {images.map((src, index) => (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            key={`${src}-${index}`}
+                            src={src}
+                            alt={`Hình ${index + 1}`}
+                            className="w-full rounded-md border border-border bg-white"
+                          />
+                        ))}
+                      </div>
+                    ) : null}
+                    {sourceText ? (
+                      isWriting ? (
+                        <SourceContent content={sourceText} />
+                      ) : (
+                        <HighlightLayer
+                          text={sourceText}
+                          highlights={unitHighlights}
+                          onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
+                          onRemoveHighlight={removeHighlight}
                         />
-                      ))}
-                    </div>
-                  ) : null}
-                  {sourceText ? (
-                    isWriting ? (
-                      <SourceContent content={sourceText} />
-                    ) : (
-                      <HighlightLayer
-                        text={sourceText}
-                        highlights={unitHighlights}
-                        onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
-                        onRemoveHighlight={removeHighlight}
-                      />
-                    )
-                  ) : null}
-                </div>
-                <div className="space-y-4 p-5 lg:h-full lg:overflow-y-auto">{questionsContent}</div>
-              </div>
+                      )
+                    ) : null}
+                  </>
+                }
+                right={questionsContent}
+              />
             ) : (
               <div className="min-h-0 flex-1 overflow-y-auto">
                 <div className="mx-auto max-w-4xl space-y-4 p-5">{questionsContent}</div>

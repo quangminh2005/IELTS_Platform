@@ -137,37 +137,18 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                   <form action={updateAssignment} className="mt-4 grid gap-4">
                     <input type="hidden" name="assignmentId" value={assignment.id} />
 
-                    <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_10rem]">
-                      <div>
-                        <label className="text-sm font-medium" htmlFor={`assignment-title-${assignment.id}`}>
-                          Tiêu đề
-                        </label>
-                        <input
-                          id={`assignment-title-${assignment.id}`}
-                          name="title"
-                          minLength={2}
-                          required
-                          defaultValue={assignment.title}
-                          className={fieldClass}
-                        />
-                      </div>
-                      <div>
-                        <label
-                          className="text-sm font-medium"
-                          htmlFor={`assignment-time-${assignment.id}`}
-                        >
-                          Thời gian
-                        </label>
-                        <input
-                          id={`assignment-time-${assignment.id}`}
-                          name="timeLimitMinutes"
-                          type="number"
-                          min={1}
-                          placeholder="Số phút (tuỳ chọn)"
-                          defaultValue={assignment.timeLimitMinutes ?? ""}
-                          className={fieldClass}
-                        />
-                      </div>
+                    <div>
+                      <label className="text-sm font-medium" htmlFor={`assignment-title-${assignment.id}`}>
+                        Tiêu đề
+                      </label>
+                      <input
+                        id={`assignment-title-${assignment.id}`}
+                        name="title"
+                        minLength={2}
+                        required
+                        defaultValue={assignment.title}
+                        className={fieldClass}
+                      />
                     </div>
 
                     <div>

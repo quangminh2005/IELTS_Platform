@@ -66,18 +66,6 @@ export function AssignmentBuilder({ materials, students }: AssignmentBuilderProp
         className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
       />
 
-      <label className="mt-4 block text-sm font-medium" htmlFor="timeLimitMinutes">
-        Thời gian làm bài
-      </label>
-      <input
-        id="timeLimitMinutes"
-        name="timeLimitMinutes"
-        type="number"
-        min={1}
-        placeholder="Số phút (không bắt buộc)"
-        className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
-      />
-
       <fieldset className="mt-4">
         <legend className="text-sm font-medium">Hạn nộp</legend>
         <div className="mt-2 grid gap-3 sm:grid-cols-2">

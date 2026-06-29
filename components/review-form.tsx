@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { CommentBank, type Snippet } from "@/components/comment-bank";
 import { saveTeacherReview } from "@/lib/actions/reviews";
 
 type ReviewFormProps = {
@@ -8,6 +9,7 @@ type ReviewFormProps = {
   skill: string;
   // Khi có bài kế tiếp chưa chấm, hiện thêm nút "Lưu & chấm bài tiếp".
   nextAttemptId?: string | null;
+  snippets?: Snippet[];
   review?: {
     overallBand: number | null;
     criteriaScoresJson: string | null;
@@ -70,8 +72,19 @@ function roundToHalf(value: number): number {
   return Math.round(value * 2) / 2;
 }
 
-export function ReviewForm({ attemptId, skill, nextAttemptId, review }: ReviewFormProps) {
+export function ReviewForm({
+  attemptId,
+  skill,
+  nextAttemptId,
+  snippets = [],
+  review
+}: ReviewFormProps) {
   const criteria = criteriaForSkill(skill);
+  const [detailed, setDetailed] = useState(review?.detailedFeedback ?? "");
+
+  function insertSnippet(text: string) {
+    setDetailed((current) => (current.trim() ? `${current}\n${text}` : text));
+  }
   const initialScores = useMemo(
     () => parseCriteria(review?.criteriaScoresJson ?? null),
     [review?.criteriaScoresJson]
@@ -114,7 +127,8 @@ export function ReviewForm({ attemptId, skill, nextAttemptId, review }: ReviewFo
   }
 
   return (
-    <form action={saveTeacherReview} className="grid gap-5">
+    <div className="grid gap-5">
+      <form action={saveTeacherReview} className="grid gap-5">
       <input type="hidden" name="attemptId" value={attemptId} />
       <input type="hidden" name="criteriaScoresJson" value={criteriaJson} />
       {nextAttemptId ? (
@@ -189,7 +203,8 @@ export function ReviewForm({ attemptId, skill, nextAttemptId, review }: ReviewFo
         <textarea
           name="detailedFeedback"
           rows={5}
-          defaultValue={review?.detailedFeedback ?? ""}
+          value={detailed}
+          onChange={(event) => setDetailed(event.target.value)}
           className="resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
         />
       </label>
@@ -212,6 +227,9 @@ export function ReviewForm({ attemptId, skill, nextAttemptId, review }: ReviewFo
           </button>
         ) : null}
       </div>
-    </form>
+      </form>
+
+      <CommentBank snippets={snippets} attemptId={attemptId} onInsert={insertSnippet} />
+    </div>
   );
 }

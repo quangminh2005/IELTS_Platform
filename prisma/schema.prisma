@@ -28,15 +28,16 @@ model User {
 }
 
 model TeacherProfile {
-  id          String          @id @default(cuid())
-  userId      String          @unique
-  displayName String?
-  createdAt   DateTime        @default(now())
-  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  classes     Class[]
-  materials   Material[]
-  assignments Assignment[]
-  reviews     TeacherReview[]
+  id              String           @id @default(cuid())
+  userId          String           @unique
+  displayName     String?
+  createdAt       DateTime         @default(now())
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classes         Class[]
+  materials       Material[]
+  assignments     Assignment[]
+  reviews         TeacherReview[]
+  commentSnippets CommentSnippet[]
 }
 
 model StudentProfile {
@@ -242,4 +243,16 @@ model TeacherReview {
   student            StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([attemptId])
+}
+
+// Ngân hàng nhận xét mẫu của giáo viên: các câu nhận xét dùng lại nhiều lần khi
+// chấm (vd lỗi ngữ pháp, từ vựng hay gặp). Giáo viên tự thêm/xoá, click chèn nhanh.
+model CommentSnippet {
+  id        String         @id @default(cuid())
+  teacherId String
+  text      String
+  createdAt DateTime       @default(now())
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@index([teacherId])
 }

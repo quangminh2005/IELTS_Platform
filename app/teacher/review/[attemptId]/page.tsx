@@ -99,6 +99,12 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
   );
   const skill = reviewSkill(skills);
 
+  const snippets = await prisma.commentSnippet.findMany({
+    where: { teacherId: teacher.id },
+    orderBy: { createdAt: "desc" },
+    select: { id: true, text: true }
+  });
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -215,6 +221,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                 attemptId={attempt.id}
                 skill={skill}
                 nextAttemptId={nextUngraded?.id ?? null}
+                snippets={snippets}
                 review={attempt.review}
               />
             </div>

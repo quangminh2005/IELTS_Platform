@@ -76,6 +76,11 @@ function optionalText(value?: string) {
   return value ? value : null;
 }
 
+// Writing và Speaking do giáo viên chấm tay (không có đáp án đúng để so khớp).
+function isManualGradedSkill(skill: string): boolean {
+  return skill === "writing" || skill === "speaking";
+}
+
 export async function startAttempt(recipientId: string) {
   const student = await requireStudent();
   const recipient = await prisma.assignmentRecipient.findFirst({
@@ -343,6 +348,28 @@ export async function submitAttempt(formData: FormData) {
   const gradedAnswers = attempt.assignmentRecipient.assignment.units.flatMap((assignmentUnit) =>
     assignmentUnit.assignableUnit.questions.map((question) => {
       const value = String(formData.get(`q_${question.id}`) ?? "").trim();
+      // Writing/Speaking do giáo viên chấm tay: KHÔNG tự động chấm. Đánh dấu
+      // isCorrect = null ("Chờ chấm"), không có điểm và không cộng vào điểm tự
+      // động — tránh hiển thị "Sai" và kéo điểm tổng xuống 0.
+      const isManualSkill = isManualGradedSkill(assignmentUnit.assignableUnit.skill);
+
+      if (isManualSkill) {
+        return {
+          answerRow: {
+            attemptId: attempt.id,
+            studentId: student.id,
+            questionId: question.id,
+            assignableUnitId: assignmentUnit.assignableUnitId,
+            value,
+            isCorrect: null,
+            pointsAwarded: null,
+            correctAnswerSnapshot: null,
+            explanationSnapshot: question.explanation
+          },
+          gradeItem: null
+        };
+      }
+
       const correctAnswers = parseCorrectAnswers(question.correctAnswerJson);
       const grade = gradeAnswer(value, correctAnswers, question.points);
 
@@ -368,7 +395,11 @@ export async function submitAttempt(formData: FormData) {
   );
   const answerRows = gradedAnswers.map((answer) => answer.answerRow);
 
-  const attemptGrade = gradeAttempt(gradedAnswers.map((answer) => answer.gradeItem));
+  const attemptGrade = gradeAttempt(
+    gradedAnswers
+      .map((answer) => answer.gradeItem)
+      .filter((item): item is NonNullable<typeof item> => item !== null)
+  );
 
   const submittedAt = new Date();
 

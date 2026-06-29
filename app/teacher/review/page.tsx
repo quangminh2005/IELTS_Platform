@@ -10,6 +10,29 @@ const attemptInclude = {
       email: true
     }
   },
+  answers: {
+    where: {
+      assignableUnit: {
+        skill: { in: ["writing", "speaking"] }
+      }
+    },
+    orderBy: { createdAt: "asc" },
+    include: {
+      question: {
+        select: {
+          order: true,
+          prompt: true,
+          points: true
+        }
+      },
+      assignableUnit: {
+        select: {
+          title: true,
+          skill: true
+        }
+      }
+    }
+  },
   review: {
     select: {
       overallBand: true,
@@ -59,6 +82,12 @@ function formatSkillList(attempt: ReviewAttempt) {
   return Array.from(skills)
     .map((skill) => skill.charAt(0).toUpperCase() + skill.slice(1))
     .join(", ");
+}
+
+function countWords(text: string): number {
+  const trimmed = text.trim();
+
+  return trimmed ? trimmed.split(/\s+/).length : 0;
 }
 
 function formatDate(value: Date | null) {
@@ -135,8 +164,53 @@ export default async function TeacherReviewPage() {
                   </div>
                 </div>
               </div>
-              <div className="px-5 py-5">
-                <ReviewForm attemptId={attempt.id} review={attempt.review} />
+              <div className="grid gap-6 px-5 py-5 lg:grid-cols-2">
+                <div className="space-y-4">
+                  <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                    Bài làm của học viên
+                  </h3>
+                  {attempt.answers.length > 0 ? (
+                    attempt.answers.map((answer) => (
+                      <article
+                        key={answer.id}
+                        className="rounded-lg border border-border bg-muted/40 p-4"
+                      >
+                        <p className="text-xs font-medium text-muted-foreground">
+                          {answer.assignableUnit.title}
+                          {answer.question ? ` · Câu ${answer.question.order}` : ""}
+                        </p>
+                        {answer.question ? (
+                          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                            {answer.question.prompt}
+                          </p>
+                        ) : null}
+                        <div className="mt-3 rounded-md border border-border bg-background p-3">
+                          {answer.value ? (
+                            <>
+                              <p className="whitespace-pre-wrap text-sm leading-7">
+                                {answer.value}
+                              </p>
+                              <p className="mt-3 text-xs text-muted-foreground">
+                                {countWords(answer.value)} từ
+                              </p>
+                            </>
+                          ) : (
+                            <p className="text-sm italic text-muted-foreground">
+                              Học viên bỏ trống câu này.
+                            </p>
+                          )}
+                        </div>
+                      </article>
+                    ))
+                  ) : (
+                    <p className="rounded-lg border border-dashed border-border bg-muted/40 p-4 text-sm text-muted-foreground">
+                      Không tìm thấy bài làm Writing/Speaking cho lần nộp này.
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <ReviewForm attemptId={attempt.id} review={attempt.review} />
+                </div>
               </div>
             </article>
           ))

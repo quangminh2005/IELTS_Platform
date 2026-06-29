@@ -180,8 +180,14 @@ export function ResultReview({ attempt }: ResultReviewProps) {
                 ) : null}
 
                 <p className="mt-3 text-sm text-muted-foreground">
-                  Điểm: {answer.pointsAwarded ?? 0}
-                  {answer.question ? ` / ${answer.question.points}` : ""}
+                  {answer.isCorrect === null ? (
+                    "Chờ giáo viên chấm"
+                  ) : (
+                    <>
+                      Điểm: {answer.pointsAwarded ?? 0}
+                      {answer.question ? ` / ${answer.question.points}` : ""}
+                    </>
+                  )}
                 </p>
               </article>
             ))

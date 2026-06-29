@@ -17,6 +17,7 @@ import {
   submitAttempt
 } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
+import { AudioPlayer } from "@/components/audio-player";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
   parseMarkdownTable,
@@ -1070,9 +1071,7 @@ export function AttemptWorkspace({
             <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary">
               Bài nghe
             </p>
-            <audio controls src={unit.audioUrl} className="w-full" controlsList="nodownload">
-              <track kind="captions" />
-            </audio>
+            <AudioPlayer src={unit.audioUrl} />
           </div>
         ) : isListening ? (
           <div className="shrink-0 border-b border-border bg-amber-500/10 px-5 py-3 text-sm font-medium text-amber-700 dark:text-amber-300">

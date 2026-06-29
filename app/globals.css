@@ -119,3 +119,69 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Thanh trượt audio (tiến trình + âm lượng) tùy biến */
+.audio-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border-radius: 9999px;
+}
+
+.audio-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary)) var(--audio-progress, 0%),
+    hsl(var(--border)) var(--audio-progress, 0%),
+    hsl(var(--border)) 100%
+  );
+}
+
+.audio-range::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: hsl(var(--border));
+}
+
+.audio-range::-moz-range-progress {
+  height: 6px;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+}
+
+.audio-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -4px;
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  border: 2px solid hsl(var(--background));
+  box-shadow: 0 1px 3px hsl(var(--foreground) / 0.25);
+  transition: transform 0.15s ease;
+}
+
+.audio-range::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  border: 2px solid hsl(var(--background));
+  box-shadow: 0 1px 3px hsl(var(--foreground) / 0.25);
+}
+
+.audio-range:hover::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+.audio-range:focus-visible {
+  outline: none;
+}
+
+.audio-range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.35);
+}

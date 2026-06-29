@@ -6,6 +6,8 @@ import { saveTeacherReview } from "@/lib/actions/reviews";
 type ReviewFormProps = {
   attemptId: string;
   skill: string;
+  // Khi có bài kế tiếp chưa chấm, hiện thêm nút "Lưu & chấm bài tiếp".
+  nextAttemptId?: string | null;
   review?: {
     overallBand: number | null;
     criteriaScoresJson: string | null;
@@ -68,7 +70,7 @@ function roundToHalf(value: number): number {
   return Math.round(value * 2) / 2;
 }
 
-export function ReviewForm({ attemptId, skill, review }: ReviewFormProps) {
+export function ReviewForm({ attemptId, skill, nextAttemptId, review }: ReviewFormProps) {
   const criteria = criteriaForSkill(skill);
   const initialScores = useMemo(
     () => parseCriteria(review?.criteriaScoresJson ?? null),
@@ -115,6 +117,9 @@ export function ReviewForm({ attemptId, skill, review }: ReviewFormProps) {
     <form action={saveTeacherReview} className="grid gap-5">
       <input type="hidden" name="attemptId" value={attemptId} />
       <input type="hidden" name="criteriaScoresJson" value={criteriaJson} />
+      {nextAttemptId ? (
+        <input type="hidden" name="nextAttemptId" value={nextAttemptId} />
+      ) : null}
 
       <fieldset className="grid gap-3">
         <legend className="text-sm font-medium">Điểm từng tiêu chí</legend>
@@ -189,12 +194,24 @@ export function ReviewForm({ attemptId, skill, review }: ReviewFormProps) {
         />
       </label>
 
-      <button
-        type="submit"
-        className="inline-flex w-fit rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
-      >
-        Lưu nhận xét
-      </button>
+      <div className="flex flex-wrap gap-3">
+        <button
+          type="submit"
+          className="inline-flex rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+        >
+          Lưu nhận xét
+        </button>
+        {nextAttemptId ? (
+          <button
+            type="submit"
+            name="goNext"
+            value="1"
+            className="inline-flex rounded-lg border border-primary px-4 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground"
+          >
+            Lưu &amp; chấm bài tiếp →
+          </button>
+        ) : null}
+      </div>
     </form>
   );
 }

@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
@@ -108,8 +109,18 @@ export async function saveTeacherReview(formData: FormData) {
 
   revalidatePath("/teacher");
   revalidatePath("/teacher/review");
+  revalidatePath(`/teacher/review/${attempt.id}`);
   revalidatePath("/student");
   revalidatePath("/student/history");
   revalidatePath("/student/ranking");
   revalidatePath(`/student/results/${attempt.id}`);
+
+  // "Lưu & chấm bài tiếp": sau khi lưu xong thì nhảy thẳng sang bài kế tiếp
+  // trong hàng đợi (do trang chi tiết truyền vào), giúp chấm liên tục.
+  const goNext = String(formData.get("goNext") ?? "");
+  const nextAttemptId = String(formData.get("nextAttemptId") ?? "").trim();
+
+  if (goNext === "1" && nextAttemptId) {
+    redirect(`/teacher/review/${nextAttemptId}`);
+  }
 }

@@ -84,6 +84,15 @@ function formatSkillList(attempt: ReviewAttempt) {
     .join(", ");
 }
 
+// Kỹ năng chính của lần nộp để chọn bộ tiêu chí chấm (ưu tiên Speaking nếu có).
+function reviewSkill(attempt: ReviewAttempt): string {
+  const skills = attempt.assignmentRecipient.assignment.units.map(
+    (unit) => unit.assignableUnit.skill
+  );
+
+  return skills.includes("speaking") ? "speaking" : "writing";
+}
+
 function countWords(text: string): number {
   const trimmed = text.trim();
 
@@ -209,7 +218,11 @@ export default async function TeacherReviewPage() {
                   )}
                 </div>
                 <div>
-                  <ReviewForm attemptId={attempt.id} review={attempt.review} />
+                  <ReviewForm
+                    attemptId={attempt.id}
+                    skill={reviewSkill(attempt)}
+                    review={attempt.review}
+                  />
                 </div>
               </div>
             </article>

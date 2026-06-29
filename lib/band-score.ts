@@ -59,20 +59,20 @@ function lookupBand(table: BandRow[], correctOutOf40: number): number | null {
 
 /**
  * Quy đổi sang band cho một kỹ năng (listening / reading).
- * Bảng IELTS dựa trên 40 câu; nếu bài có số câu khác 40 thì quy đổi tỉ lệ về 40
- * rồi tra bảng (ước tính). Trả về null nếu không áp dụng được (kỹ năng khác, hoặc
- * điểm thấp hơn ngưỡng thấp nhất của bảng).
+ * Band IELTS chỉ có ý nghĩa với bài THI ĐỦ 40 câu, nên chỉ quy đổi khi tổng số
+ * câu đúng bằng 40 (không tự "phóng" số câu ít lên thang 40). Bài lẻ (vd 10 câu)
+ * trả về null — phía hiển thị sẽ bỏ qua band, chỉ giữ % và số câu đúng.
  */
+const FULL_TEST_QUESTIONS = 40;
+
 export function bandScore(skill: string, correct: number, total: number): number | null {
   const table = tableForSkill(skill);
 
-  if (!table || total <= 0) {
+  if (!table || total !== FULL_TEST_QUESTIONS) {
     return null;
   }
 
-  const scaledToForty = Math.round((Math.max(0, correct) / total) * 40);
-
-  return lookupBand(table, scaledToForty);
+  return lookupBand(table, Math.max(0, correct));
 }
 
 export function isBandSkill(skill: string): boolean {

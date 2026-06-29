@@ -80,12 +80,13 @@ export function ResultReview({ attempt }: ResultReviewProps) {
   const score = attempt.score !== null ? attempt.score : "—";
   const statusLabel =
     STATUS_LABELS[attempt.status] ?? attempt.status.replaceAll("_", " ");
+  // Chỉ hiện band cho bài thi đủ 40 câu (band null = không đủ điều kiện quy đổi).
   const bands = bandsBySkill(
     attempt.answers.map((answer) => ({
       isCorrect: answer.isCorrect,
       skill: answer.assignableUnit.skill
     }))
-  );
+  ).filter((row) => row.band !== null);
 
   return (
     <div className="space-y-6">
@@ -104,7 +105,6 @@ export function ResultReview({ attempt }: ResultReviewProps) {
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
                 {row.correct}/{row.total} câu đúng
-                {row.total !== 40 ? ` · quy đổi từ ${row.total} câu về thang 40` : ""}
               </p>
             </article>
           ))}

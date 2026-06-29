@@ -41,14 +41,15 @@ describe("bandScore - Reading (Academic)", () => {
 });
 
 describe("bandScore - scaling and edge cases", () => {
-  it("scales partial tests to the 40-question scale", () => {
-    // 8/10 = 80% -> 32/40 -> Reading band 7
-    expect(bandScore("reading", 8, 10)).toBe(7);
-    // 9/10 = 90% -> 36/40 -> Listening band 8
-    expect(bandScore("listening", 9, 10)).toBe(8);
+  it("does NOT scale partial tests — only full 40-question tests get a band", () => {
+    // Bài lẻ (không đủ 40 câu) -> null, không tự quy đổi lên thang 40.
+    expect(bandScore("reading", 8, 10)).toBeNull();
+    expect(bandScore("listening", 9, 10)).toBeNull();
+    expect(bandScore("listening", 7, 10)).toBeNull();
+    expect(bandScore("reading", 30, 38)).toBeNull();
   });
 
-  it("returns null for non-band skills and empty tests", () => {
+  it("returns null for non-band skills and non-40 tests", () => {
     expect(bandScore("writing", 40, 40)).toBeNull();
     expect(bandScore("speaking", 40, 40)).toBeNull();
     expect(bandScore("listening", 5, 0)).toBeNull();

@@ -184,7 +184,7 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                           isCorrect: answer.isCorrect,
                           skill: answer.assignableUnit.skill
                         }))
-                      );
+                      ).filter((row) => row.band !== null);
 
                       return (
                         <div key={attempt.id} className="rounded-lg border border-border bg-muted/60 p-3">

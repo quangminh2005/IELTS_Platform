@@ -38,7 +38,8 @@ const assignmentInclude = {
   },
   recipients: {
     select: {
-      studentId: true
+      studentId: true,
+      status: true
     }
   }
 } satisfies Prisma.AssignmentInclude;
@@ -50,7 +51,7 @@ type RecentAssignment = Prisma.AssignmentGetPayload<{ include: typeof assignment
 function flattenStudents(classes: TeacherClass[]) {
   const students = new Map<
     string,
-    { id: string; displayName: string; email: string; classes: string[] }
+    { id: string; displayName: string; email: string; classNames: string[]; classIds: string[] }
   >();
 
   classes.forEach((classItem) => {
@@ -58,7 +59,8 @@ function flattenStudents(classes: TeacherClass[]) {
       const existing = students.get(membership.student.id);
 
       if (existing) {
-        existing.classes.push(classItem.name);
+        existing.classNames.push(classItem.name);
+        existing.classIds.push(classItem.id);
         return;
       }
 
@@ -66,13 +68,16 @@ function flattenStudents(classes: TeacherClass[]) {
         id: membership.student.id,
         displayName: membership.student.displayName,
         email: membership.student.email,
-        classes: [classItem.name]
+        classNames: [classItem.name],
+        classIds: [classItem.id]
       });
     });
   });
 
   return Array.from(students.values()).sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
+
+const SUBMITTED_STATUSES = new Set(["submitted", "reviewed"]);
 
 type TeacherAssignmentsPageProps = {
   searchParams?: {
@@ -107,6 +112,7 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
     ]);
 
   const students = flattenStudents(classes);
+  const classOptions = classes.map((classItem) => ({ id: classItem.id, name: classItem.name }));
 
   const assignmentItems: AssignmentItem[] = assignments.map((assignment) => ({
     id: assignment.id,
@@ -117,6 +123,9 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
     mode: assignment.mode,
     unitCount: assignment._count.units,
     recipientCount: assignment._count.recipients,
+    submittedCount: assignment.recipients.filter((recipient) =>
+      SUBMITTED_STATUSES.has(recipient.status)
+    ).length,
     unitIds: assignment.units.map((unit) => unit.assignableUnitId),
     unitTitles: assignment.units.map((unit) => unit.assignableUnit.title),
     studentIds: assignment.recipients.map((recipient) => recipient.studentId)
@@ -145,9 +154,18 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
       ) : null}
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_25rem]">
-        <AssignmentList assignments={assignmentItems} materials={materials} students={students} />
+        <AssignmentList
+          assignments={assignmentItems}
+          materials={materials}
+          students={students}
+          classOptions={classOptions}
+        />
 
-        <AssignmentBuilder materials={materials} students={students} />
+        <AssignmentBuilder
+          materials={materials}
+          students={students}
+          classOptions={classOptions}
+        />
       </section>
     </div>
   );

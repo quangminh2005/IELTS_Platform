@@ -1,28 +1,12 @@
 import { deleteAssignment, updateAssignment } from "@/lib/actions/assignments";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
-
-type UnitOption = {
-  id: string;
-  title: string;
-  skill: string;
-  unitType: string;
-  unitNumber: number;
-  defaultTimeLimitMinutes: number | null;
-};
-
-type MaterialGroup = {
-  id: string;
-  title: string;
-  skill: string;
-  units: UnitOption[];
-};
-
-type StudentOption = {
-  id: string;
-  displayName: string;
-  email: string;
-  classes: string[];
-};
+import { DueDateField } from "@/components/due-date-field";
+import {
+  StudentPicker,
+  type StudentPickerClass,
+  type StudentPickerStudent
+} from "@/components/student-picker";
+import { UnitPicker, type UnitPickerMaterial } from "@/components/unit-picker";
 
 export type AssignmentItem = {
   id: string;
@@ -33,6 +17,7 @@ export type AssignmentItem = {
   mode: string;
   unitCount: number;
   recipientCount: number;
+  submittedCount: number;
   unitIds: string[];
   unitTitles: string[];
   studentIds: string[];
@@ -40,8 +25,9 @@ export type AssignmentItem = {
 
 type AssignmentListProps = {
   assignments: AssignmentItem[];
-  materials: MaterialGroup[];
-  students: StudentOption[];
+  materials: UnitPickerMaterial[];
+  students: StudentPickerStudent[];
+  classOptions: StudentPickerClass[];
 };
 
 const fieldClass =
@@ -69,10 +55,6 @@ function PencilIcon({ className }: { className?: string }) {
       <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" />
     </svg>
   );
-}
-
-function formatLabel(value: string) {
-  return value.replaceAll("_", " ");
 }
 
 function formatDeadline(value: Date | null) {
@@ -111,9 +93,12 @@ function deadlineToParts(value: Date | null) {
   };
 }
 
-export function AssignmentList({ assignments, materials, students }: AssignmentListProps) {
-  const hasUnits = materials.some((material) => material.units.length > 0);
-
+export function AssignmentList({
+  assignments,
+  materials,
+  students,
+  classOptions
+}: AssignmentListProps) {
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
       <div className="border-b border-border px-5 py-4">
@@ -123,8 +108,9 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
         {assignments.length > 0 ? (
           assignments.map((assignment) => {
             const deadlineParts = deadlineToParts(assignment.deadline);
-            const selectedUnits = new Set(assignment.unitIds);
-            const selectedStudents = new Set(assignment.studentIds);
+            const fullySubmitted =
+              assignment.recipientCount > 0 &&
+              assignment.submittedCount >= assignment.recipientCount;
 
             return (
               <article key={assignment.id} className="px-5 py-4">
@@ -140,7 +126,18 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                       </p>
                     ) : null}
                   </div>
-                  <p className="text-sm capitalize text-muted-foreground">{assignment.mode}</p>
+                  <div className="flex flex-col items-start gap-1.5 sm:items-end">
+                    <span
+                      className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${
+                        fullySubmitted
+                          ? "border-emerald-400/50 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300"
+                          : "border-amber-400/50 bg-amber-500/10 text-amber-600 dark:text-amber-300"
+                      }`}
+                    >
+                      Đã nộp: {assignment.submittedCount}/{assignment.recipientCount}
+                    </span>
+                    <span className="text-xs capitalize text-muted-foreground">{assignment.mode}</span>
+                  </div>
                 </div>
 
                 {assignment.unitTitles.length > 0 ? (
@@ -196,12 +193,10 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                         >
                           Ngày hết hạn
                         </label>
-                        <input
+                        <DueDateField
                           id={`assignment-date-${assignment.id}`}
                           name="dueDate"
-                          type="date"
                           defaultValue={deadlineParts.date}
-                          className={fieldClass}
                         />
                       </div>
                       <div>
@@ -223,75 +218,24 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
 
                     <fieldset>
                       <legend className="text-sm font-semibold">Các phần</legend>
-                      <div className="mt-2 space-y-3">
-                        {hasUnits ? (
-                          materials.map((material) =>
-                            material.units.length > 0 ? (
-                              <section
-                                key={material.id}
-                                className="rounded-md border border-border bg-background/40"
-                              >
-                                <div className="border-b border-border px-4 py-2">
-                                  <p className="text-sm font-medium">{material.title}</p>
-                                  <p className="mt-1 text-xs capitalize text-muted-foreground">
-                                    {formatLabel(material.skill)}
-                                  </p>
-                                </div>
-                                <div className="divide-y divide-border">
-                                  {material.units.map((unit) => (
-                                    <label key={unit.id} className="flex gap-3 px-4 py-2 text-sm">
-                                      <input
-                                        name="unitIds"
-                                        value={unit.id}
-                                        type="checkbox"
-                                        defaultChecked={selectedUnits.has(unit.id)}
-                                        className="mt-1 h-4 w-4 rounded border-border accent-primary"
-                                      />
-                                      <span>
-                                        <span className="block font-medium">{unit.title}</span>
-                                        <span className="mt-1 block text-xs capitalize text-muted-foreground">
-                                          Phần {unit.unitNumber} · {formatLabel(unit.unitType)}
-                                        </span>
-                                      </span>
-                                    </label>
-                                  ))}
-                                </div>
-                              </section>
-                            ) : null
-                          )
-                        ) : (
-                          <p className="rounded-lg border border-border bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
-                            Chưa có phần nào.
-                          </p>
-                        )}
+                      <div className="mt-2">
+                        <UnitPicker
+                          materials={materials}
+                          selectedUnitIds={assignment.unitIds}
+                          compact
+                        />
                       </div>
                     </fieldset>
 
                     <fieldset>
                       <legend className="text-sm font-semibold">Học viên</legend>
-                      <div className="mt-2 divide-y divide-border rounded-md border border-border bg-background/40">
-                        {students.length > 0 ? (
-                          students.map((student) => (
-                            <label key={student.id} className="flex gap-3 px-4 py-2 text-sm">
-                              <input
-                                name="studentIds"
-                                value={student.id}
-                                type="checkbox"
-                                defaultChecked={selectedStudents.has(student.id)}
-                                className="mt-1 h-4 w-4 rounded border-border accent-primary"
-                              />
-                              <span>
-                                <span className="block font-medium">{student.displayName}</span>
-                                <span className="mt-1 block text-xs text-muted-foreground">
-                                  {student.email}
-                                  {student.classes.length > 0 ? ` | ${student.classes.join(", ")}` : ""}
-                                </span>
-                              </span>
-                            </label>
-                          ))
-                        ) : (
-                          <p className="px-4 py-3 text-sm text-muted-foreground">Chưa có học viên nào.</p>
-                        )}
+                      <div className="mt-2">
+                        <StudentPicker
+                          students={students}
+                          classOptions={classOptions}
+                          selectedStudentIds={assignment.studentIds}
+                          compact
+                        />
                       </div>
                     </fieldset>
 

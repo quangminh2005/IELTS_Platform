@@ -16,8 +16,8 @@
   --primary-foreground: 0 0% 100%;
   --accent: 38 92% 50%;
   --accent-foreground: 28 80% 18%;
-  --border: 214 28% 88%;
-  --input: 214 28% 88%;
+  --border: 214 26% 84%;
+  --input: 214 26% 84%;
   --secondary: 214 32% 94%;
   --secondary-foreground: 222 47% 12%;
   --destructive: 0 72% 51%;
@@ -34,27 +34,27 @@
 
 html[data-theme="dark"] {
   color-scheme: dark;
-  --background: 222 47% 10%;
+  --background: 222 47% 9%;
   --foreground: 210 40% 96%;
-  --muted: 217 33% 16%;
+  --muted: 217 30% 18%;
   --muted-foreground: 215 20% 66%;
   --primary: 217 91% 62%;
   --primary-foreground: 222 47% 9%;
   --accent: 38 95% 56%;
   --accent-foreground: 33 80% 12%;
-  --border: 217 22% 24%;
-  --input: 217 20% 30%;
+  --border: 216 19% 32%;
+  --input: 217 18% 34%;
   --secondary: 217 33% 20%;
   --secondary-foreground: 210 40% 96%;
   --destructive: 0 63% 50%;
   --destructive-foreground: 0 0% 100%;
   --ring: 217 91% 62%;
-  --card: 217 33% 15%;
+  --card: 217 30% 17%;
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 30px -16px rgb(0 0 0 / 0.6);
   --shadow-pop: 0 18px 50px -16px rgb(0 0 0 / 0.7);
   --body-radial: radial-gradient(60rem 40rem at 100% -10%, hsl(217 91% 60% / 0.12), transparent 70%),
     radial-gradient(50rem 40rem at -10% 0%, hsl(199 89% 48% / 0.1), transparent 70%);
-  --body-gradient: linear-gradient(180deg, hsl(222 47% 11%), hsl(224 45% 8%));
+  --body-gradient: linear-gradient(180deg, hsl(222 47% 10%), hsl(224 45% 7%));
 }
 
 * {

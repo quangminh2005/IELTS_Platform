@@ -1,4 +1,22 @@
-import { importMaterial } from "@/lib/actions/materials";
+"use client";
+
+import { useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { importMaterial, type ImportMaterialState } from "@/lib/actions/materials";
+
+const initialState: ImportMaterialState = { status: "idle", message: "" };
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      disabled={pending}
+      className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+    >
+      {pending ? "Đang nhập…" : "Nhập tài liệu"}
+    </button>
+  );
+}
 
 const sampleJson = `{
   "title": "Cambridge 19 Listening Test 4",
@@ -55,6 +73,9 @@ const fieldClass =
   "mt-2 w-full rounded-md border border-border bg-background px-3 py-2 font-mono text-xs leading-5 outline-none ring-primary/40 focus:ring-2";
 
 export function MaterialImport() {
+  const [state, formAction] = useFormState(importMaterial, initialState);
+  const [payload, setPayload] = useState("");
+
   return (
     <section className="rounded-xl border border-border bg-card p-5 shadow-card">
       <h3 className="text-base font-semibold">Nhập cả đề bằng JSON</h3>
@@ -63,17 +84,23 @@ export function MaterialImport() {
         thống sẽ kiểm tra `[[n]]` khớp Order, options bắt buộc, và đáp án có nằm trong options không.
       </p>
 
-      <form action={importMaterial} className="mt-4 space-y-3">
+      {state.status === "error" ? (
+        <div className="mt-4 rounded-md border border-red-400/60 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-700 dark:text-red-300">
+          {state.message}
+        </div>
+      ) : null}
+
+      <form action={formAction} className="mt-4 space-y-3">
         <textarea
           name="payload"
           rows={10}
           required
+          value={payload}
+          onChange={(event) => setPayload(event.target.value)}
           placeholder='{"title": "...", "skill": "listening", "units": [ ... ]}'
           className={fieldClass}
         />
-        <button className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
-          Nhập tài liệu
-        </button>
+        <SubmitButton />
       </form>
 
       <details className="mt-4 rounded-lg border border-border bg-muted/60 p-4">

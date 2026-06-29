@@ -667,12 +667,26 @@ function validateImport(data: ImportMaterial) {
   return errors;
 }
 
-export async function importMaterial(formData: FormData) {
+// Trạng thái trả về cho useFormState ở khối Nhập JSON. Khi lỗi: KHÔNG chuyển
+// trang (ở lại trang nhập, giữ nguyên nội dung), chỉ trả thông báo để hiện tại chỗ.
+export type ImportMaterialState = {
+  status: "idle" | "error";
+  message: string;
+};
+
+function importError(message: string): ImportMaterialState {
+  return { status: "error", message };
+}
+
+export async function importMaterial(
+  _prevState: ImportMaterialState,
+  formData: FormData
+): Promise<ImportMaterialState> {
   const teacher = await requireTeacher();
   const raw = String(formData.get("payload") ?? "").trim();
 
   if (!raw) {
-    redirect(materialNoticePath("error", "Dán nội dung JSON trước khi import."));
+    return importError("Dán nội dung JSON trước khi import.");
   }
 
   let payload: unknown = null;
@@ -685,7 +699,7 @@ export async function importMaterial(formData: FormData) {
   }
 
   if (jsonError) {
-    redirect(materialNoticePath("error", "JSON không hợp lệ — kiểm tra lại cú pháp."));
+    return importError("JSON không hợp lệ — kiểm tra lại cú pháp.");
   }
 
   const parsed = importMaterialSchema.safeParse(payload);
@@ -693,11 +707,8 @@ export async function importMaterial(formData: FormData) {
   if (!parsed.success) {
     const issue = parsed.error.issues[0];
     const path = issue?.path.join(".");
-    redirect(
-      materialNoticePath(
-        "error",
-        `Sai cấu trúc${path ? ` tại "${path}"` : ""}: ${issue?.message ?? "dữ liệu không hợp lệ."}`
-      )
+    return importError(
+      `Sai cấu trúc${path ? ` tại "${path}"` : ""}: ${issue?.message ?? "dữ liệu không hợp lệ."}`
     );
   }
 
@@ -705,7 +716,7 @@ export async function importMaterial(formData: FormData) {
   const semanticErrors = validateImport(data);
 
   if (semanticErrors.length > 0) {
-    redirect(materialNoticePath("error", semanticErrors[0]));
+    return importError(semanticErrors[0]);
   }
 
   const questionCount = data.units.reduce((sum, unit) => sum + unit.questions.length, 0);

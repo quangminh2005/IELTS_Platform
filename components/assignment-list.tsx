@@ -53,6 +53,24 @@ const secondaryButtonClass =
 const dangerButtonClass =
   "rounded-md border border-red-400/60 bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-500/15 dark:text-red-300";
 
+function PencilIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" />
+    </svg>
+  );
+}
+
 function formatLabel(value: string) {
   return value.replaceAll("_", " ");
 }
@@ -132,8 +150,11 @@ export function AssignmentList({ assignments, materials, students }: AssignmentL
                   </p>
                 ) : null}
 
-                <details className="mt-3 rounded-lg border border-border bg-muted/60 p-4">
-                  <summary className="cursor-pointer text-sm font-semibold">Sửa bài giao</summary>
+                <details className="mt-3 rounded-lg border border-border bg-muted/60 p-4 transition-colors hover:border-primary/40 hover:bg-muted">
+                  <summary className="cursor-pointer text-sm font-semibold">
+                    <PencilIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
+                    Sửa bài giao
+                  </summary>
                   <form action={updateAssignment} className="mt-4 grid gap-4">
                     <input type="hidden" name="assignmentId" value={assignment.id} />
 

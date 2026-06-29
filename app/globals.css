@@ -11,7 +11,7 @@
   --background: 214 42% 97%;
   --foreground: 222 47% 12%;
   --muted: 0 0% 100%;
-  --muted-foreground: 215 16% 47%;
+  --muted-foreground: 215 19% 42%;
   --primary: 221 83% 53%;
   --primary-foreground: 0 0% 100%;
   --accent: 38 92% 50%;
@@ -37,7 +37,7 @@ html[data-theme="dark"] {
   --background: 222 47% 9%;
   --foreground: 210 40% 96%;
   --muted: 217 30% 18%;
-  --muted-foreground: 215 20% 66%;
+  --muted-foreground: 214 22% 73%;
   --primary: 217 91% 62%;
   --primary-foreground: 222 47% 9%;
   --accent: 38 95% 56%;

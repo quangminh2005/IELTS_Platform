@@ -65,6 +65,59 @@ const secondaryButtonClass =
 const dangerButtonClass =
   "rounded-md border border-red-400/60 bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-500/15 dark:text-red-300";
 
+function PencilIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" />
+    </svg>
+  );
+}
+
+function EyeIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
+
+function ListIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+    </svg>
+  );
+}
+
 function formatValue(value: string) {
   return value
     .split("_")
@@ -169,8 +222,11 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         {material.description}
                       </p>
                     ) : null}
-                    <details className="mt-4 rounded-lg border border-border bg-muted/60 p-4">
-                      <summary className="cursor-pointer text-sm font-semibold">Sửa tài liệu</summary>
+                    <details className="mt-4 rounded-lg border border-border bg-muted/60 p-4 transition-colors hover:border-primary/40 hover:bg-muted">
+                      <summary className="cursor-pointer text-sm font-semibold">
+                        <PencilIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
+                        Sửa tài liệu
+                      </summary>
                       <form action={updateMaterial} className="mt-4 grid gap-3">
                         <input type="hidden" name="materialId" value={material.id} />
                         <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_12rem]">
@@ -249,12 +305,14 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
 
               {material.units.length > 0 ? (
                 <details>
-                  <summary className="cursor-pointer px-5 py-3 text-sm font-semibold hover:bg-muted/40">
+                  <summary className="cursor-pointer px-5 py-3 text-sm font-semibold transition-colors hover:bg-muted/50">
+                    <EyeIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
                     Xem {material._count.units} phần · {materialQuestions} câu hỏi
                   </summary>
-                  <div className="divide-y divide-border border-t border-border">
+                  <div className="border-t border-border py-2 pl-4 pr-2 sm:pl-6">
+                    <div className="divide-y divide-border border-l-2 border-primary/25 pl-3 sm:pl-4">
                     {material.units.map((unit) => (
-                    <div key={unit.id} className="px-5 py-4">
+                    <div key={unit.id} className="py-4 pr-3">
                       <div>
                         <p className="font-medium">
                           {unit.unitNumber}. {unit.title}
@@ -278,8 +336,11 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           </span>
                         ) : null}
                       </div>
-                      <details className="mt-3 rounded-lg border border-border bg-muted/60 p-4">
-                        <summary className="cursor-pointer text-sm font-semibold">Sửa phần</summary>
+                      <details className="mt-3 rounded-lg border border-border bg-muted/60 p-4 transition-colors hover:border-primary/40 hover:bg-muted">
+                        <summary className="cursor-pointer text-sm font-semibold">
+                          <PencilIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
+                          Sửa phần
+                        </summary>
                         <form action={updateUnit} className="mt-4 grid gap-3">
                           <input type="hidden" name="unitId" value={unit.id} />
                           <input type="hidden" name="materialId" value={material.id} />
@@ -432,16 +493,18 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                       </details>
                       {unit.questions.length > 0 ? (
                         <details className="mt-3">
-                          <summary className="cursor-pointer text-sm font-semibold text-muted-foreground hover:text-foreground">
+                          <summary className="cursor-pointer text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+                            <ListIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle" />
                             Danh sách câu hỏi ({unit.questions.length})
                           </summary>
                           <div className="mt-3 space-y-3">
                           {unit.questions.map((question) => (
                             <details
                               key={question.id}
-                              className="rounded-md border border-border bg-background/45 p-4"
+                              className="rounded-md border border-border bg-background/45 p-4 transition-colors hover:border-primary/40"
                             >
                               <summary className="cursor-pointer text-sm font-semibold">
+                                <PencilIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
                                 Sửa câu {question.order} · {formatValue(question.questionType)}
                               </summary>
                               <QuestionFields
@@ -469,6 +532,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                       ) : null}
                     </div>
                     ))}
+                    </div>
                   </div>
                 </details>
               ) : (

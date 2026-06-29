@@ -99,11 +99,19 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
   );
   const skill = reviewSkill(skills);
 
-  const snippets = await prisma.commentSnippet.findMany({
-    where: { teacherId: teacher.id },
-    orderBy: { createdAt: "desc" },
-    select: { id: true, text: true }
-  });
+  // Comment Bank không được phép làm sập trang chấm: nếu bảng/cột chưa có trên DB
+  // (vd production chưa chạy migration) thì coi như danh sách rỗng.
+  let snippets: Array<{ id: string; text: string }> = [];
+  try {
+    snippets = await prisma.commentSnippet.findMany({
+      where: { teacherId: teacher.id },
+      orderBy: { createdAt: "desc" },
+      select: { id: true, text: true }
+    });
+  } catch (error) {
+    console.error("commentSnippet query failed (bảng chưa tồn tại?):", error);
+    snippets = [];
+  }
 
   return (
     <div className="space-y-6">

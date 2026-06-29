@@ -117,6 +117,7 @@ export async function addStudent(formData: FormData) {
 
   revalidatePath("/teacher");
   revalidatePath("/teacher/classes");
+  revalidatePath(`/teacher/classes/${targetClass.id}`);
   revalidatePath(`/teacher/students/${student.id}`);
 }
 
@@ -140,6 +141,8 @@ export async function deleteClass(formData: FormData) {
 
   revalidatePath("/teacher");
   revalidatePath("/teacher/classes");
+  // "Xoá lớp" có thể bấm từ trang chi tiết lớp (trang đó sẽ không còn) → quay về danh sách.
+  redirect("/teacher/classes");
 }
 
 export async function removeStudentFromClass(formData: FormData) {
@@ -162,6 +165,7 @@ export async function removeStudentFromClass(formData: FormData) {
 
   revalidatePath("/teacher");
   revalidatePath("/teacher/classes");
+  revalidatePath(`/teacher/classes/${classId}`);
 }
 
 export async function deleteStudent(formData: FormData) {

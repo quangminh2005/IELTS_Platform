@@ -1,0 +1,43 @@
+{
+  "title": "Cambridge IELTS 20 – Test 1 (Writing)",
+  "skill": "writing",
+  "sourceLabel": "Cambridge IELTS 20 (Academic) – Test 1",
+  "description": "Writing Test 1: Task 1 (mô tả bảng, 150 từ, 20 phút) + Task 2 (opinion essay, 250 từ, 40 phút). Bài làm cần giáo viên chấm tay.",
+  "units": [
+    {
+      "unitType": "writing_task",
+      "unitNumber": 1,
+      "title": "Writing Task 1 – New York City population (1800–2000)",
+      "instructions": "Bạn nên dành khoảng 20 phút cho phần này. Viết ít nhất 150 từ. Tóm tắt thông tin từ các bảng và đưa ra so sánh khi phù hợp.",
+      "content": "The first table below shows changes in the total population of New York City from 1800 to 2000. The second and third tables show changes in the population of the five districts of the city (Manhattan, Brooklyn, Bronx, Queens, Staten Island) over the same period.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\n**New York City (all five districts)**\n\n| Year | Population |\n| --- | --- |\n| 1800 | 79,216 |\n| 1900 | 3,437,202 |\n| 2000 | 8,009,185 |\n\n**Manhattan**\n\n| Year | Population | As percentage (%) of total population |\n| --- | --- | --- |\n| 1800 | 60,515 | 76% |\n| 1900 | 1,850,093 | 54% |\n| 2000 | 1,538,096 | 19% |\n\n**Other districts (Brooklyn, Bronx, Queens, Staten Island)**\n\n| Year | Population | As percentage (%) of total population |\n| --- | --- | --- |\n| 1800 | 18,701 | 24% |\n| 1900 | 1,587,109 | 46% |\n| 2000 | 6,471,089 | 81% |",
+      "defaultTimeLimitMinutes": 20,
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "writing_task",
+          "prompt": "Viết bài Task 1 vào ô bên dưới (tối thiểu 150 từ). Tóm tắt thông tin chính từ ba bảng dữ liệu và so sánh khi phù hợp.",
+          "points": 9
+        }
+      ],
+      "metadata": {
+        "images": []
+      }
+    },
+    {
+      "unitType": "writing_task",
+      "unitNumber": 2,
+      "title": "Writing Task 2 – Free water supply (Agree / Disagree)",
+      "instructions": "Bạn nên dành khoảng 40 phút cho phần này. Viết ít nhất 250 từ, đưa ra lý do và ví dụ phù hợp.",
+      "content": "You should spend about 40 minutes on this task.\n\nWrite about the following topic:\n\n> Access to clean water is a basic human right. Therefore every home should have a water supply that is provided free of charge.\n>\n> Do you agree or disagree?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+      "defaultTimeLimitMinutes": 40,
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "writing_task",
+          "prompt": "Viết bài Task 2 vào ô bên dưới (tối thiểu 250 từ). Bạn đồng ý hay không đồng ý với quan điểm trên? Đưa ra lý do và ví dụ từ kiến thức/kinh nghiệm cá nhân.",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

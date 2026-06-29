@@ -136,7 +136,12 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
 
       <section className="space-y-4">
         {materials.length > 0 ? (
-          materials.map((material) => (
+          materials.map((material) => {
+            const materialQuestions = material.units.reduce(
+              (sum, unit) => sum + unit._count.questions,
+              0
+            );
+            return (
             <article
               key={material.id}
               className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
@@ -154,10 +159,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                       {[
                         material.sourceLabel,
                         `${material._count.units} phần`,
-                        `${material.units.reduce(
-                          (sum, unit) => sum + unit._count.questions,
-                          0
-                        )} câu hỏi`
+                        `${materialQuestions} câu hỏi`
                       ]
                         .filter(Boolean)
                         .join(" · ")}
@@ -245,9 +247,13 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                 </div>
               </div>
 
-              <div className="divide-y divide-border">
-                {material.units.length > 0 ? (
-                  material.units.map((unit) => (
+              {material.units.length > 0 ? (
+                <details>
+                  <summary className="cursor-pointer px-5 py-3 text-sm font-semibold hover:bg-muted/40">
+                    Xem {material._count.units} phần · {materialQuestions} câu hỏi
+                  </summary>
+                  <div className="divide-y divide-border border-t border-border">
+                    {material.units.map((unit) => (
                     <div key={unit.id} className="px-5 py-4">
                       <div>
                         <p className="font-medium">
@@ -425,7 +431,11 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         </form>
                       </details>
                       {unit.questions.length > 0 ? (
-                        <div className="mt-3 space-y-3">
+                        <details className="mt-3">
+                          <summary className="cursor-pointer text-sm font-semibold text-muted-foreground hover:text-foreground">
+                            Danh sách câu hỏi ({unit.questions.length})
+                          </summary>
+                          <div className="mt-3 space-y-3">
                           {unit.questions.map((question) => (
                             <details
                               key={question.id}
@@ -454,18 +464,21 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                               />
                             </details>
                           ))}
-                        </div>
+                          </div>
+                        </details>
                       ) : null}
                     </div>
-                  ))
-                ) : (
-                  <p className="px-5 py-6 text-sm text-muted-foreground">
-                    Chưa có phần nào. Thêm phần đầu tiên ở bên dưới.
-                  </p>
-                )}
-              </div>
+                    ))}
+                  </div>
+                </details>
+              ) : (
+                <p className="px-5 py-6 text-sm text-muted-foreground">
+                  Chưa có phần nào. Thêm phần đầu tiên ở bên dưới.
+                </p>
+              )}
             </article>
-          ))
+            );
+          })
         ) : (
           <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
             <p className="font-semibold">Chưa có tài liệu nào</p>

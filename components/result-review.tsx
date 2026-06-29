@@ -1,3 +1,4 @@
+import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
 import { bandsBySkill, formatBand } from "@/lib/band-score";
 
 type Highlight = {
@@ -15,6 +16,7 @@ type Answer = {
   pointsAwarded: number | null;
   correctAnswerSnapshot: string | null;
   explanationSnapshot: string | null;
+  annotations: Annotation[];
   question: {
     order: number;
     prompt: string;
@@ -158,7 +160,13 @@ export function ResultReview({ attempt }: ResultReviewProps) {
                     <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                       Bạn trả lời
                     </dt>
-                    <dd className="mt-2 whitespace-pre-wrap">{answer.value || "Bỏ trống"}</dd>
+                    <dd className="mt-2">
+                      {answer.value ? (
+                        <AnnotatedAnswer text={answer.value} annotations={answer.annotations} />
+                      ) : (
+                        <span className="whitespace-pre-wrap">Bỏ trống</span>
+                      )}
+                    </dd>
                   </div>
                   <div className="rounded-lg border border-emerald-400/30 bg-emerald-500/5 p-3">
                     <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">

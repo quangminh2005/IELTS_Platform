@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AnnotatedAnswer } from "@/components/annotated-answer";
 import { ReviewForm } from "@/components/review-form";
 import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
@@ -58,7 +59,17 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
         orderBy: { createdAt: "asc" },
         include: {
           question: { select: { order: true, prompt: true } },
-          assignableUnit: { select: { title: true, skill: true } }
+          assignableUnit: { select: { title: true, skill: true } },
+          annotations: {
+            orderBy: { startOffset: "asc" },
+            select: {
+              id: true,
+              startOffset: true,
+              endOffset: true,
+              quote: true,
+              note: true
+            }
+          }
         }
       }
     }
@@ -203,9 +214,13 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                     <div className="mt-3 rounded-md border border-border bg-background p-4">
                       {answer.value ? (
                         <>
-                          <p className="whitespace-pre-wrap text-[15px] leading-[1.7]">
-                            {answer.value}
-                          </p>
+                          <AnnotatedAnswer
+                            text={answer.value}
+                            annotations={answer.annotations}
+                            editable
+                            answerId={answer.id}
+                            attemptId={attempt.id}
+                          />
                           <p className="mt-4 text-xs text-muted-foreground">
                             {countWords(answer.value)} từ
                           </p>

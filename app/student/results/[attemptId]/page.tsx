@@ -56,6 +56,16 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
               title: true,
               skill: true
             }
+          },
+          annotations: {
+            orderBy: { startOffset: "asc" },
+            select: {
+              id: true,
+              startOffset: true,
+              endOffset: true,
+              quote: true,
+              note: true
+            }
           }
         }
       },

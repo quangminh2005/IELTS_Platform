@@ -28,16 +28,17 @@ model User {
 }
 
 model TeacherProfile {
-  id              String           @id @default(cuid())
-  userId          String           @unique
-  displayName     String?
-  createdAt       DateTime         @default(now())
-  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  classes         Class[]
-  materials       Material[]
-  assignments     Assignment[]
-  reviews         TeacherReview[]
-  commentSnippets CommentSnippet[]
+  id                String             @id @default(cuid())
+  userId            String             @unique
+  displayName       String?
+  createdAt         DateTime           @default(now())
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classes           Class[]
+  materials         Material[]
+  assignments       Assignment[]
+  reviews           TeacherReview[]
+  commentSnippets   CommentSnippet[]
+  answerAnnotations AnswerAnnotation[]
 }
 
 model StudentProfile {
@@ -191,7 +192,7 @@ model Attempt {
 }
 
 model Answer {
-  id                    String         @id @default(cuid())
+  id                    String             @id @default(cuid())
   attemptId             String
   studentId             String
   questionId            String?
@@ -201,12 +202,30 @@ model Answer {
   pointsAwarded         Float?
   correctAnswerSnapshot String?
   explanationSnapshot   String?
-  createdAt             DateTime       @default(now())
-  updatedAt             DateTime       @updatedAt
-  attempt               Attempt        @relation(fields: [attemptId], references: [id], onDelete: Cascade)
-  student               StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  assignableUnit        AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
-  question              Question?      @relation(fields: [questionId], references: [id], onDelete: SetNull)
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  attempt               Attempt            @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  student               StudentProfile     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  assignableUnit        AssignableUnit     @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
+  question              Question?          @relation(fields: [questionId], references: [id], onDelete: SetNull)
+  annotations           AnswerAnnotation[]
+}
+
+// Ghi chú inline của giáo viên trên bài làm của học sinh: bôi đen một đoạn
+// (startOffset..endOffset trong Answer.value) và gắn một note lỗi tại đó.
+model AnswerAnnotation {
+  id          String         @id @default(cuid())
+  answerId    String
+  teacherId   String
+  startOffset Int
+  endOffset   Int
+  quote       String
+  note        String
+  createdAt   DateTime       @default(now())
+  answer      Answer         @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  teacher     TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@index([answerId])
 }
 
 model Highlight {

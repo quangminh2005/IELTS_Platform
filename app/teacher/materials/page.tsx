@@ -1,9 +1,8 @@
 import type { Prisma } from "@prisma/client";
+import Link from "next/link";
 import { AudioUpload } from "@/components/audio-upload";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { ImageUpload } from "@/components/image-upload";
-import { MaterialEditor } from "@/components/material-editor";
-import { MaterialImport } from "@/components/material-import";
 import { QuestionFields } from "@/components/question-fields";
 import { requireTeacher } from "@/lib/actions/classes";
 import { parseUnitImages } from "@/lib/question-interactions";
@@ -159,19 +158,27 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
             Tạo tài liệu nguồn, các phần có thể giao và câu hỏi Listening hay Reading.
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-2 text-center text-sm">
-          <div className="rounded-xl border border-border bg-card px-3 py-2.5 shadow-card">
-            <p className="text-lg font-bold tabular-nums">{materials.length}</p>
-            <p className="text-xs text-muted-foreground">Tài liệu</p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
+          <div className="grid grid-cols-3 gap-2 text-center text-sm">
+            <div className="rounded-xl border border-border bg-card px-3 py-2.5 shadow-card">
+              <p className="text-lg font-bold tabular-nums">{materials.length}</p>
+              <p className="text-xs text-muted-foreground">Tài liệu</p>
+            </div>
+            <div className="rounded-xl border border-border bg-card px-3 py-2.5 shadow-card">
+              <p className="text-lg font-bold tabular-nums">{totalUnits}</p>
+              <p className="text-xs text-muted-foreground">Phần</p>
+            </div>
+            <div className="rounded-xl border border-border bg-card px-3 py-2.5 shadow-card">
+              <p className="text-lg font-bold tabular-nums">{totalQuestions}</p>
+              <p className="text-xs text-muted-foreground">Câu hỏi</p>
+            </div>
           </div>
-          <div className="rounded-xl border border-border bg-card px-3 py-2.5 shadow-card">
-            <p className="text-lg font-bold tabular-nums">{totalUnits}</p>
-            <p className="text-xs text-muted-foreground">Phần</p>
-          </div>
-          <div className="rounded-xl border border-border bg-card px-3 py-2.5 shadow-card">
-            <p className="text-lg font-bold tabular-nums">{totalQuestions}</p>
-            <p className="text-xs text-muted-foreground">Câu hỏi</p>
-          </div>
+          <Link
+            href="/teacher/materials/create"
+            className="inline-flex h-fit items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+          >
+            <span className="text-base leading-none">+</span> Tạo / Nhập tài liệu
+          </Link>
         </div>
       </header>
 
@@ -537,7 +544,11 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                 </details>
               ) : (
                 <p className="px-5 py-6 text-sm text-muted-foreground">
-                  Chưa có phần nào. Thêm phần đầu tiên ở bên dưới.
+                  Chưa có phần nào. Bấm{" "}
+                  <Link href="/teacher/materials/create" className="font-semibold text-primary hover:underline">
+                    Tạo / Nhập tài liệu
+                  </Link>{" "}
+                  để thêm phần.
                 </p>
               )}
             </article>
@@ -549,13 +560,15 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
             <p className="mt-1 text-sm text-muted-foreground">
               Tạo tài liệu, sau đó thêm các phần và câu hỏi có thể giao.
             </p>
+            <Link
+              href="/teacher/materials/create"
+              className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+            >
+              <span className="text-base leading-none">+</span> Tạo / Nhập tài liệu
+            </Link>
           </div>
         )}
       </section>
-
-      <MaterialImport />
-
-      <MaterialEditor materials={materials} />
     </div>
   );
 }

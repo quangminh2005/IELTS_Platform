@@ -32,6 +32,36 @@ export function usesDragDropAnswer(questionType: string, options: string[]) {
   return dragDropTypes.has(questionType) && options.length > 0;
 }
 
+// Hướng dẫn cho từng NHÓM câu (vd "Câu 14–18: ...") lưu trong
+// metadata.groupInstructions = { "<order câu đầu nhóm>": "nội dung hướng dẫn" }.
+// Hiển thị thành khung đỏ phía trên nhóm câu khi làm bài.
+export function parseGroupInstructions(
+  metadataJson: string | null | undefined
+): Record<number, string> {
+  if (!metadataJson) {
+    return {};
+  }
+
+  try {
+    const parsed = JSON.parse(metadataJson);
+    const raw = (parsed as { groupInstructions?: unknown })?.groupInstructions;
+    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+      const result: Record<number, string> = {};
+      for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
+        const order = Number(key);
+        if (Number.isInteger(order) && typeof value === "string" && value.trim()) {
+          result[order] = value;
+        }
+      }
+      return result;
+    }
+  } catch {
+    return {};
+  }
+
+  return {};
+}
+
 // Lấy danh sách ảnh đề bài từ metadata JSON của phần (metadata.images = [url, ...]).
 export function parseUnitImages(metadataJson: string | null | undefined): string[] {
   if (!metadataJson) {

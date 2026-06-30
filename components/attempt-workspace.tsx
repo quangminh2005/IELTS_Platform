@@ -20,6 +20,7 @@ import { HighlightLayer, type HighlightPayload } from "@/components/highlight-la
 import { AudioPlayer } from "@/components/audio-player";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
+  parseGroupInstructions,
   parseMarkdownTable,
   parseQuestionOptions,
   parseUnitImages,
@@ -679,6 +680,17 @@ function MatchingQuestionSet({
   );
 }
 
+// Khung hướng dẫn cho một nhóm câu (kiểu chin.edu.vn): tiêu đề "Câu X–Y" + nội
+// dung yêu cầu, viền đỏ nổi bật phía trên nhóm.
+function GroupInstructionBox({ rangeLabel, text }: { rangeLabel: string; text: string }) {
+  return (
+    <div className="rounded-md border border-rose-400/60 bg-rose-500/10 px-4 py-3 dark:border-rose-400/40">
+      <p className="text-sm font-bold text-rose-700 dark:text-rose-300">{rangeLabel}</p>
+      <p className="mt-1 whitespace-pre-line text-sm leading-6 text-foreground">{text}</p>
+    </div>
+  );
+}
+
 // Bỏ phần nhãn dẫn ("Đoạn nào (A–G) chứa thông tin sau: ...") để bảng chỉ hiện
 // nội dung cần ghép, gọn như đề gốc. Chỉ cắt khi nhãn ngắn (<= 60 ký tự).
 function stripGridPrefix(prompt: string) {
@@ -1153,6 +1165,23 @@ export function AttemptWorkspace({
         const sourceText = inlineCompletionConsumesContent ? "" : unit.content;
         const sourceType = "content";
         const images = parseUnitImages(unit.metadataJson);
+        const groupInstructions = parseGroupInstructions(unit.metadataJson);
+        // Khung hướng dẫn cho nhóm câu: hiện phía trên nhóm có order câu đầu khớp
+        // một key trong metadata.groupInstructions. Nhãn "Câu X–Y" tự suy từ nhóm.
+        const groupBox = (groupQuestions: Question[]) => {
+          if (groupQuestions.length === 0) {
+            return null;
+          }
+          const orders = groupQuestions.map((question) => question.order);
+          const minOrder = Math.min(...orders);
+          const text = groupInstructions[minOrder];
+          if (!text) {
+            return null;
+          }
+          const maxOrder = Math.max(...orders);
+          const rangeLabel = minOrder === maxOrder ? `Câu ${minOrder}` : `Câu ${minOrder}–${maxOrder}`;
+          return <GroupInstructionBox rangeLabel={rangeLabel} text={text} />;
+        };
         const hasPassage = !isListening && (Boolean(sourceText) || images.length > 0);
         const unitHighlights = highlights.filter(
           (highlight) =>
@@ -1279,7 +1308,8 @@ export function AttemptWorkspace({
         const questionsContent = (
           <>
             {tableCompletionQuestions.length > 0 ? (
-              <div id={`tablesection-${assignmentUnit.id}`} className="scroll-mt-24">
+              <div id={`tablesection-${assignmentUnit.id}`} className="scroll-mt-24 space-y-3">
+                {groupBox(tableCompletionQuestions)}
                 <TableCompletionQuestionSet
                   content={unit.content}
                   questions={tableCompletionQuestions}
@@ -1289,7 +1319,8 @@ export function AttemptWorkspace({
               </div>
             ) : null}
             {noteCompletionQuestions.length > 0 ? (
-              <div id={`notesection-${assignmentUnit.id}`} className="scroll-mt-24">
+              <div id={`notesection-${assignmentUnit.id}`} className="scroll-mt-24 space-y-3">
+                {groupBox(noteCompletionQuestions)}
                 <NoteCompletionQuestionSet
                   content={unit.content}
                   questions={noteCompletionQuestions}
@@ -1299,28 +1330,37 @@ export function AttemptWorkspace({
               </div>
             ) : null}
             {matchingQuestions.length > 0 ? (
-              <MatchingQuestionSet
-                questions={matchingQuestions}
-                savedAnswers={answers}
-                onAnswerChange={handleAnswerChange}
-              />
+              <div className="space-y-3">
+                {groupBox(matchingQuestions)}
+                <MatchingQuestionSet
+                  questions={matchingQuestions}
+                  savedAnswers={answers}
+                  onAnswerChange={handleAnswerChange}
+                />
+              </div>
             ) : null}
             {regularRenderItems.length > 0 ? (
-              regularRenderItems.map((item) =>
-                item.kind === "grid" ? (
-                  <MatchingGridQuestionSet
-                    key={item.key}
-                    questions={item.questions}
-                    options={item.options}
-                    savedAnswers={answers}
-                    onAnswerChange={handleAnswerChange}
-                    flagged={flagged}
-                    onToggleFlag={toggleFlag}
-                  />
-                ) : (
-                  renderSingleQuestion(item.question)
-                )
-              )
+              regularRenderItems.map((item) => {
+                const groupQuestions = item.kind === "grid" ? item.questions : [item.question];
+                const box = groupBox(groupQuestions);
+                return (
+                  <div key={item.key} className="space-y-3">
+                    {box}
+                    {item.kind === "grid" ? (
+                      <MatchingGridQuestionSet
+                        questions={item.questions}
+                        options={item.options}
+                        savedAnswers={answers}
+                        onAnswerChange={handleAnswerChange}
+                        flagged={flagged}
+                        onToggleFlag={toggleFlag}
+                      />
+                    ) : (
+                      renderSingleQuestion(item.question)
+                    )}
+                  </div>
+                );
+              })
             ) : tableCompletionQuestions.length === 0 &&
               noteCompletionQuestions.length === 0 &&
               matchingQuestions.length === 0 ? (

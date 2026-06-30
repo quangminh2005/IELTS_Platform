@@ -679,6 +679,99 @@ function MatchingQuestionSet({
   );
 }
 
+// Bỏ phần nhãn dẫn ("Đoạn nào (A–G) chứa thông tin sau: ...") để bảng chỉ hiện
+// nội dung cần ghép, gọn như đề gốc. Chỉ cắt khi nhãn ngắn (<= 60 ký tự).
+function stripGridPrefix(prompt: string) {
+  const idx = prompt.indexOf(": ");
+  if (idx > 0 && idx <= 60) {
+    return prompt.slice(idx + 2);
+  }
+  return prompt;
+}
+
+// Dạng "ghép thông tin với đoạn A–G": nhiều câu cùng bộ lựa chọn chữ cái hiển
+// thị thành một bảng — hàng là câu hỏi, cột là các chữ cái, học sinh tick 1 ô.
+function MatchingGridQuestionSet({
+  questions,
+  options,
+  savedAnswers,
+  onAnswerChange,
+  flagged,
+  onToggleFlag
+}: {
+  questions: Question[];
+  options: string[];
+  savedAnswers: Record<string, string>;
+  onAnswerChange: AnswerChange;
+  flagged: Set<string>;
+  onToggleFlag: (questionId: string) => void;
+}) {
+  return (
+    <div className="overflow-x-auto rounded-md border border-border bg-background/40">
+      <table className="min-w-full border-collapse text-sm">
+        <thead>
+          <tr className="bg-muted/60">
+            <th className="border border-border px-3 py-2 text-left font-semibold">Thông tin</th>
+            {options.map((option) => (
+              <th
+                key={option}
+                className="border border-border px-2 py-2 text-center font-semibold"
+              >
+                {option}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {questions.map((question) => {
+            const value = savedAnswers[question.id] ?? "";
+            const isFlagged = flagged.has(question.id);
+
+            return (
+              <tr key={question.id} id={`question-${question.id}`} className="scroll-mt-24">
+                <td className="border border-border px-3 py-2 align-top leading-6">
+                  <div className="flex items-start justify-between gap-2">
+                    <span>
+                      <span className="font-semibold">{question.order}.</span>{" "}
+                      {stripGridPrefix(question.prompt)}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => onToggleFlag(question.id)}
+                      aria-pressed={isFlagged}
+                      title={isFlagged ? "Bỏ đánh dấu" : "Đánh dấu"}
+                      className={
+                        isFlagged
+                          ? "shrink-0 text-amber-500"
+                          : "shrink-0 text-muted-foreground hover:text-amber-500"
+                      }
+                    >
+                      {isFlagged ? "★" : "☆"}
+                    </button>
+                  </div>
+                </td>
+                {options.map((option) => (
+                  <td key={option} className="border border-border px-2 py-2 text-center align-middle">
+                    <input
+                      type="radio"
+                      name={`q_${question.id}`}
+                      value={option}
+                      checked={value === option}
+                      onChange={() => onAnswerChange(question.id, option)}
+                      className="h-4 w-4 accent-primary"
+                      aria-label={`Câu ${question.order} — ${option}`}
+                    />
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function CountdownTimer({
   startedAtMs,
   timeLimitMinutes
@@ -1079,6 +1172,110 @@ export function AttemptWorkspace({
           </div>
         ) : null;
 
+        // Gom các câu multiple_choice liên tiếp có cùng bộ lựa chọn chữ cái
+        // (vd A–G) thành một bảng "ghép thông tin"; còn lại render từng thẻ.
+        type RegularItem =
+          | { kind: "grid"; key: string; questions: Question[]; options: string[] }
+          | { kind: "single"; key: string; question: Question };
+        const regularRenderItems: RegularItem[] = [];
+        for (let i = 0; i < regularQuestions.length; i += 1) {
+          const question = regularQuestions[i];
+          const options = parseQuestionOptions(question.optionsJson);
+          const isLetterMc =
+            question.questionType === "multiple_choice" &&
+            options.length >= 3 &&
+            options.every((option) => option.trim().length <= 2);
+
+          if (isLetterMc) {
+            const group = [question];
+            let j = i + 1;
+            while (j < regularQuestions.length) {
+              const next = regularQuestions[j];
+              const nextOptions = parseQuestionOptions(next.optionsJson);
+              const sameOptions =
+                next.questionType === "multiple_choice" &&
+                nextOptions.length === options.length &&
+                nextOptions.every((option, k) => option === options[k]);
+              if (!sameOptions) {
+                break;
+              }
+              group.push(next);
+              j += 1;
+            }
+
+            if (group.length >= 2) {
+              regularRenderItems.push({
+                kind: "grid",
+                key: `grid-${question.id}`,
+                questions: group,
+                options
+              });
+              i = j - 1;
+              continue;
+            }
+          }
+
+          regularRenderItems.push({ kind: "single", key: question.id, question });
+        }
+
+        const renderSingleQuestion = (question: Question) => {
+          const options = parseQuestionOptions(question.optionsJson);
+          const isDragDrop = usesDragDropAnswer(question.questionType, options);
+          const isInlineGap =
+            !isDragDrop &&
+            options.length === 0 &&
+            !usesLongAnswer(question.questionType) &&
+            promptHasGap(question.prompt);
+
+          return (
+            <article
+              key={question.id}
+              id={`question-${question.id}`}
+              className="scroll-mt-24 rounded-md border border-border bg-background/40 p-4"
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  Câu {question.order}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => toggleFlag(question.id)}
+                  aria-pressed={flagged.has(question.id)}
+                  className={
+                    flagged.has(question.id)
+                      ? "rounded-md border border-amber-400/70 bg-amber-400/15 px-2 py-1 text-xs font-medium text-amber-600 dark:text-amber-300"
+                      : "rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground hover:border-primary"
+                  }
+                >
+                  {flagged.has(question.id) ? "★ Đã đánh dấu" : "☆ Đánh dấu"}
+                </button>
+              </div>
+              {isDragDrop ? (
+                <DragDropQuestion
+                  question={question}
+                  initialValue={answers[question.id] ?? ""}
+                  onAnswerChange={handleAnswerChange}
+                />
+              ) : isInlineGap ? (
+                <InlineGapQuestion
+                  question={question}
+                  initialValue={answers[question.id] ?? ""}
+                  onAnswerChange={handleAnswerChange}
+                />
+              ) : (
+                <>
+                  <p className="mt-2 text-sm leading-6">{question.prompt}</p>
+                  <QuestionInput
+                    question={question}
+                    initialValue={answers[question.id] ?? ""}
+                    onAnswerChange={handleAnswerChange}
+                  />
+                </>
+              )}
+            </article>
+          );
+        };
+
         const questionsContent = (
           <>
             {tableCompletionQuestions.length > 0 ? (
@@ -1108,64 +1305,22 @@ export function AttemptWorkspace({
                 onAnswerChange={handleAnswerChange}
               />
             ) : null}
-            {regularQuestions.length > 0 ? (
-              regularQuestions.map((question) => {
-                const options = parseQuestionOptions(question.optionsJson);
-                const isDragDrop = usesDragDropAnswer(question.questionType, options);
-                const isInlineGap =
-                  !isDragDrop &&
-                  options.length === 0 &&
-                  !usesLongAnswer(question.questionType) &&
-                  promptHasGap(question.prompt);
-
-                return (
-                  <article
-                    key={question.id}
-                    id={`question-${question.id}`}
-                    className="scroll-mt-24 rounded-md border border-border bg-background/40 p-4"
-                  >
-                    <div className="flex items-center justify-between">
-                      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                        Câu {question.order}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => toggleFlag(question.id)}
-                        aria-pressed={flagged.has(question.id)}
-                        className={
-                          flagged.has(question.id)
-                            ? "rounded-md border border-amber-400/70 bg-amber-400/15 px-2 py-1 text-xs font-medium text-amber-600 dark:text-amber-300"
-                            : "rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground hover:border-primary"
-                        }
-                      >
-                        {flagged.has(question.id) ? "★ Đã đánh dấu" : "☆ Đánh dấu"}
-                      </button>
-                    </div>
-                    {isDragDrop ? (
-                      <DragDropQuestion
-                        question={question}
-                        initialValue={answers[question.id] ?? ""}
-                        onAnswerChange={handleAnswerChange}
-                      />
-                    ) : isInlineGap ? (
-                      <InlineGapQuestion
-                        question={question}
-                        initialValue={answers[question.id] ?? ""}
-                        onAnswerChange={handleAnswerChange}
-                      />
-                    ) : (
-                      <>
-                        <p className="mt-2 text-sm leading-6">{question.prompt}</p>
-                        <QuestionInput
-                          question={question}
-                          initialValue={answers[question.id] ?? ""}
-                          onAnswerChange={handleAnswerChange}
-                        />
-                      </>
-                    )}
-                  </article>
-                );
-              })
+            {regularRenderItems.length > 0 ? (
+              regularRenderItems.map((item) =>
+                item.kind === "grid" ? (
+                  <MatchingGridQuestionSet
+                    key={item.key}
+                    questions={item.questions}
+                    options={item.options}
+                    savedAnswers={answers}
+                    onAnswerChange={handleAnswerChange}
+                    flagged={flagged}
+                    onToggleFlag={toggleFlag}
+                  />
+                ) : (
+                  renderSingleQuestion(item.question)
+                )
+              )
             ) : tableCompletionQuestions.length === 0 &&
               noteCompletionQuestions.length === 0 &&
               matchingQuestions.length === 0 ? (

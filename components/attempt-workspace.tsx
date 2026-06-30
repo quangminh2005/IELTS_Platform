@@ -1287,21 +1287,39 @@ export function AttemptWorkspace({
         const sourceType = "content";
         const images = parseUnitImages(unit.metadataJson);
         const groupInstructions = parseGroupInstructions(unit.metadataJson);
-        // Khung hướng dẫn cho nhóm câu: hiện phía trên nhóm có order câu đầu khớp
-        // một key trong metadata.groupInstructions. Nhãn "Câu X–Y" tự suy từ nhóm.
+        // Dải câu của mỗi nhóm = từ key (câu đầu nhóm) tới ngay trước key kế tiếp,
+        // hoặc tới câu cuối của phần. Nhờ vậy nhãn hiện đúng "Câu 7–13" dù nhóm gồm
+        // nhiều thẻ câu riêng lẻ.
+        const groupKeys = Object.keys(groupInstructions)
+          .map(Number)
+          .sort((a, b) => a - b);
+        const maxUnitOrder = unit.questions.reduce(
+          (max, question) => Math.max(max, question.order),
+          0
+        );
+        const groupRangeLabel: Record<number, string> = {};
+        groupKeys.forEach((key, index) => {
+          const nextKey = groupKeys[index + 1];
+          const end = nextKey ? nextKey - 1 : maxUnitOrder;
+          groupRangeLabel[key] = end > key ? `Câu ${key}–${end}` : `Câu ${key}`;
+        });
+
+        // Khung hướng dẫn: hiện một lần phía trên nhóm có câu đầu khớp một key.
         const groupBox = (groupQuestions: Question[]) => {
           if (groupQuestions.length === 0) {
             return null;
           }
-          const orders = groupQuestions.map((question) => question.order);
-          const minOrder = Math.min(...orders);
-          const text = groupInstructions[minOrder];
+          const startOrder = Math.min(...groupQuestions.map((question) => question.order));
+          const text = groupInstructions[startOrder];
           if (!text) {
             return null;
           }
-          const maxOrder = Math.max(...orders);
-          const rangeLabel = minOrder === maxOrder ? `Câu ${minOrder}` : `Câu ${minOrder}–${maxOrder}`;
-          return <GroupInstructionBox rangeLabel={rangeLabel} text={text} />;
+          return (
+            <GroupInstructionBox
+              rangeLabel={groupRangeLabel[startOrder] ?? `Câu ${startOrder}`}
+              text={text}
+            />
+          );
         };
         const hasPassage = !isListening && (Boolean(sourceText) || images.length > 0);
         const unitHighlights = highlights.filter(

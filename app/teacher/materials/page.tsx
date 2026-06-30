@@ -298,7 +298,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           <button className={secondaryButtonClass}>Lưu tài liệu</button>
                           <ConfirmSubmitButton
                             formAction={deleteMaterial}
-                            confirmMessage={`Xoá tài liệu "${material.title}" cùng toàn bộ phần và câu hỏi? Không thể hoàn tác.`}
+                            confirmMessage={`Xoá tài liệu "${material.title}"?\n\nSẽ xoá toàn bộ phần, câu hỏi VÀ CẢ BÀI LÀM/ĐÁP ÁN của học sinh thuộc tài liệu này. Các bài tập đã giao có dùng tài liệu này sẽ bị gỡ phần đó. KHÔNG THỂ HOÀN TÁC.`}
                             className={dangerButtonClass}
                           >
                             Xoá tài liệu

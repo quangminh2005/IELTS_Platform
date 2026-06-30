@@ -216,19 +216,14 @@ export async function deleteMaterial(formData: FormData) {
     redirect(materialNoticePath("error", "Material not found for this teacher."));
   }
 
-  const isUsed = material.units.some(
-    (unit) =>
-      unit._count.assignmentUnits > 0 || unit._count.answers > 0 || unit._count.highlights > 0
+  // Cho phép xoá kể cả khi đã giao bài / có bài làm. Xoá tài liệu sẽ kéo theo
+  // (cascade ở DB) các phần, câu hỏi, câu trả lời và đánh dấu liên quan; các
+  // bài tập đã giao có thể còn lại nhưng mất phần dùng tài liệu này.
+  const answerCount = material.units.reduce((sum, unit) => sum + unit._count.answers, 0);
+  const assignedCount = material.units.reduce(
+    (sum, unit) => sum + unit._count.assignmentUnits,
+    0
   );
-
-  if (isUsed) {
-    redirect(
-      materialNoticePath(
-        "error",
-        "Cannot delete this material because it has assigned work or submitted answers."
-      )
-    );
-  }
 
   await prisma.material.delete({
     where: { id: material.id }
@@ -236,7 +231,16 @@ export async function deleteMaterial(formData: FormData) {
 
   revalidatePath("/teacher");
   revalidatePath("/teacher/materials");
-  redirect(materialNoticePath("success", "Material deleted."));
+  redirect(
+    materialNoticePath(
+      "success",
+      answerCount > 0 || assignedCount > 0
+        ? `Đã xoá tài liệu (kèm ${answerCount} câu trả lời của học sinh${
+            assignedCount > 0 ? `, gỡ khỏi ${assignedCount} lượt giao bài` : ""
+          }).`
+        : "Đã xoá tài liệu."
+    )
+  );
 }
 
 export async function createUnit(formData: FormData) {

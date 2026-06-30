@@ -784,6 +784,75 @@ function MatchingGridQuestionSet({
   );
 }
 
+// Dạng TRUE/FALSE/NOT GIVEN (và YES/NO/NOT GIVEN): nhiều câu xếp lưới 2 cột,
+// mỗi câu là một ô gọn với 3 lựa chọn nằm ngang — đỡ phải cuộn nhiều.
+function TfngGridQuestionSet({
+  questions,
+  options,
+  savedAnswers,
+  onAnswerChange,
+  flagged,
+  onToggleFlag
+}: {
+  questions: Question[];
+  options: string[];
+  savedAnswers: Record<string, string>;
+  onAnswerChange: AnswerChange;
+  flagged: Set<string>;
+  onToggleFlag: (questionId: string) => void;
+}) {
+  return (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {questions.map((question) => {
+        const value = savedAnswers[question.id] ?? "";
+        const isFlagged = flagged.has(question.id);
+
+        return (
+          <div
+            key={question.id}
+            id={`question-${question.id}`}
+            className="flex scroll-mt-24 flex-col rounded-md border border-border bg-background/40 p-3"
+          >
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-sm leading-6">
+                <span className="font-semibold">{question.order}.</span> {question.prompt}
+              </p>
+              <button
+                type="button"
+                onClick={() => onToggleFlag(question.id)}
+                aria-pressed={isFlagged}
+                title={isFlagged ? "Bỏ đánh dấu" : "Đánh dấu"}
+                className={
+                  isFlagged
+                    ? "shrink-0 text-amber-500"
+                    : "shrink-0 text-muted-foreground hover:text-amber-500"
+                }
+              >
+                {isFlagged ? "★" : "☆"}
+              </button>
+            </div>
+            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5">
+              {options.map((option) => (
+                <label key={option} className="inline-flex cursor-pointer items-center gap-1.5 text-sm">
+                  <input
+                    type="radio"
+                    name={`q_${question.id}`}
+                    value={option}
+                    checked={value === option}
+                    onChange={() => onAnswerChange(question.id, option)}
+                    className="h-4 w-4 accent-primary"
+                  />
+                  <span>{option}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function CountdownTimer({
   startedAtMs,
   timeLimitMinutes
@@ -837,11 +906,20 @@ function CountdownTimer({
 
 // Bố cục 2 cột có thanh chia KÉO ĐƯỢC để chỉnh độ rộng (giống IELTSITY/chin).
 // Trên màn lớn: hai cột cạnh nhau, kéo thanh giữa để đổi tỉ lệ. Màn nhỏ: xếp dọc.
-function SplitPane({ left, right }: { left: React.ReactNode; right: React.ReactNode }) {
+function SplitPane({
+  left,
+  right,
+  fontScale
+}: {
+  left: React.ReactNode;
+  right: React.ReactNode;
+  fontScale: number;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef(false);
   const [leftPct, setLeftPct] = useState(58);
   const [isDesktop, setIsDesktop] = useState(false);
+  const zoomStyle = { zoom: fontScale } as React.CSSProperties;
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -885,7 +963,9 @@ function SplitPane({ left, right }: { left: React.ReactNode; right: React.ReactN
         className="space-y-4 p-5 lg:h-full lg:overflow-y-auto"
         style={isDesktop ? { width: `${leftPct}%`, flex: "none" } : undefined}
       >
-        {left}
+        <div style={zoomStyle} className="space-y-4">
+          {left}
+        </div>
       </div>
 
       <div
@@ -904,7 +984,11 @@ function SplitPane({ left, right }: { left: React.ReactNode; right: React.ReactN
         <div className="h-10 w-0.5 rounded-full bg-muted-foreground/50" />
       </div>
 
-      <div className="space-y-4 p-5 lg:h-full lg:flex-1 lg:overflow-y-auto">{right}</div>
+      <div className="space-y-4 p-5 lg:h-full lg:flex-1 lg:overflow-y-auto">
+        <div style={zoomStyle} className="space-y-4">
+          {right}
+        </div>
+      </div>
     </div>
   );
 }
@@ -926,6 +1010,8 @@ export function AttemptWorkspace({
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [activePart, setActivePart] = useState(0);
+  // Cỡ chữ vùng nội dung (đề + câu hỏi) cho học sinh tự chỉnh; lưu localStorage.
+  const [fontScale, setFontScale] = useState(1.1);
   // Render the full-screen test room through a portal so it escapes any
   // transformed ancestor (the app shell's fade-in wrapper) that would otherwise
   // trap `position: fixed` and collapse the layout.
@@ -933,6 +1019,18 @@ export function AttemptWorkspace({
 
   useEffect(() => {
     setMounted(true);
+    const saved = Number(window.localStorage.getItem("attemptFontScale"));
+    if (saved >= 0.9 && saved <= 1.6) {
+      setFontScale(saved);
+    }
+  }, []);
+
+  const adjustFontScale = useCallback((delta: number) => {
+    setFontScale((previous) => {
+      const next = Math.min(1.6, Math.max(0.9, Math.round((previous + delta) * 100) / 100));
+      window.localStorage.setItem("attemptFontScale", String(next));
+      return next;
+    });
   }, []);
 
   const goToPart = useCallback((partIndex: number) => {
@@ -1129,6 +1227,29 @@ export function AttemptWorkspace({
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
+          <div className="flex items-center overflow-hidden rounded-lg border border-border" title="Cỡ chữ">
+            <button
+              type="button"
+              onClick={() => adjustFontScale(-0.1)}
+              disabled={fontScale <= 0.9}
+              aria-label="Giảm cỡ chữ"
+              className="px-2.5 py-2 text-xs font-bold text-foreground hover:bg-muted disabled:opacity-40"
+            >
+              A−
+            </button>
+            <span className="border-x border-border px-2 py-2 text-[11px] font-semibold tabular-nums text-muted-foreground">
+              {Math.round(fontScale * 100)}%
+            </span>
+            <button
+              type="button"
+              onClick={() => adjustFontScale(0.1)}
+              disabled={fontScale >= 1.6}
+              aria-label="Tăng cỡ chữ"
+              className="px-2.5 py-2 text-sm font-bold text-foreground hover:bg-muted disabled:opacity-40"
+            >
+              A+
+            </button>
+          </div>
           <AnimatedThemeToggle />
           {timeLimitMinutes ? (
             <CountdownTimer startedAtMs={startedAtMs} timeLimitMinutes={timeLimitMinutes} />
@@ -1201,12 +1322,37 @@ export function AttemptWorkspace({
           </div>
         ) : null;
 
-        // Gom các câu multiple_choice liên tiếp có cùng bộ lựa chọn chữ cái
-        // (vd A–G) thành một bảng "ghép thông tin"; còn lại render từng thẻ.
+        // Gom các câu liên tiếp cùng bộ lựa chọn thành nhóm gọn:
+        // - "grid": multiple_choice với lựa chọn là chữ cái đơn (vd A–G) → bảng ghép.
+        // - "tfng": TRUE/FALSE/NOT GIVEN, YES/NO/NOT GIVEN → lưới 2 cột.
+        // Còn lại render từng thẻ ("single").
         type RegularItem =
           | { kind: "grid"; key: string; questions: Question[]; options: string[] }
+          | { kind: "tfng"; key: string; questions: Question[]; options: string[] }
           | { kind: "single"; key: string; question: Question };
         const regularRenderItems: RegularItem[] = [];
+        // Gom các câu liên tiếp có cùng bộ lựa chọn, bắt đầu từ startIndex.
+        const sameOptionsRun = (startIndex: number, options: string[]) => {
+          const run = [regularQuestions[startIndex]];
+          let j = startIndex + 1;
+          while (j < regularQuestions.length) {
+            const next = regularQuestions[j];
+            if (next.questionType !== regularQuestions[startIndex].questionType) {
+              break;
+            }
+            const nextOptions = parseQuestionOptions(next.optionsJson);
+            const sameOptions =
+              nextOptions.length === options.length &&
+              nextOptions.every((option, k) => option === options[k]);
+            if (!sameOptions) {
+              break;
+            }
+            run.push(next);
+            j += 1;
+          }
+          return run;
+        };
+
         for (let i = 0; i < regularQuestions.length; i += 1) {
           const question = regularQuestions[i];
           const options = parseQuestionOptions(question.optionsJson);
@@ -1214,32 +1360,19 @@ export function AttemptWorkspace({
             question.questionType === "multiple_choice" &&
             options.length >= 3 &&
             options.every((option) => option.trim().length <= 2);
+          const isTfng =
+            question.questionType === "true_false_not_given" && options.length >= 2;
 
-          if (isLetterMc) {
-            const group = [question];
-            let j = i + 1;
-            while (j < regularQuestions.length) {
-              const next = regularQuestions[j];
-              const nextOptions = parseQuestionOptions(next.optionsJson);
-              const sameOptions =
-                next.questionType === "multiple_choice" &&
-                nextOptions.length === options.length &&
-                nextOptions.every((option, k) => option === options[k]);
-              if (!sameOptions) {
-                break;
-              }
-              group.push(next);
-              j += 1;
-            }
-
-            if (group.length >= 2) {
+          if (isLetterMc || isTfng) {
+            const run = sameOptionsRun(i, options);
+            if (run.length >= 2) {
               regularRenderItems.push({
-                kind: "grid",
-                key: `grid-${question.id}`,
-                questions: group,
+                kind: isLetterMc ? "grid" : "tfng",
+                key: `${isLetterMc ? "grid" : "tfng"}-${question.id}`,
+                questions: run,
                 options
               });
-              i = j - 1;
+              i += run.length - 1;
               continue;
             }
           }
@@ -1341,13 +1474,22 @@ export function AttemptWorkspace({
             ) : null}
             {regularRenderItems.length > 0 ? (
               regularRenderItems.map((item) => {
-                const groupQuestions = item.kind === "grid" ? item.questions : [item.question];
+                const groupQuestions = item.kind === "single" ? [item.question] : item.questions;
                 const box = groupBox(groupQuestions);
                 return (
                   <div key={item.key} className="space-y-3">
                     {box}
                     {item.kind === "grid" ? (
                       <MatchingGridQuestionSet
+                        questions={item.questions}
+                        options={item.options}
+                        savedAnswers={answers}
+                        onAnswerChange={handleAnswerChange}
+                        flagged={flagged}
+                        onToggleFlag={toggleFlag}
+                      />
+                    ) : item.kind === "tfng" ? (
+                      <TfngGridQuestionSet
                         questions={item.questions}
                         options={item.options}
                         savedAnswers={answers}
@@ -1424,10 +1566,16 @@ export function AttemptWorkspace({
                   </>
                 }
                 right={questionsContent}
+                fontScale={fontScale}
               />
             ) : (
               <div className="min-h-0 flex-1 overflow-y-auto">
-                <div className="mx-auto max-w-4xl space-y-4 p-5">{questionsContent}</div>
+                <div
+                  className="mx-auto max-w-4xl space-y-4 p-5"
+                  style={{ zoom: fontScale } as React.CSSProperties}
+                >
+                  {questionsContent}
+                </div>
               </div>
             )}
           </section>

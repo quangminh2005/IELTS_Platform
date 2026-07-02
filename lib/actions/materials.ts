@@ -20,7 +20,8 @@ const questionTypes = [
   "table_completion",
   "note_completion",
   "true_false_not_given",
-  "writing_task"
+  "writing_task",
+  "speaking_task"
 ] as const;
 
 const materialSchema = z.object({
@@ -661,7 +662,9 @@ function validateImport(data: ImportMaterial) {
         errors.push(`${qWhere}: dạng "${question.questionType}" cần "options".`);
       }
 
-      if (answers.length === 0 && question.questionType !== "writing_task") {
+      const noAnswerNeeded =
+        question.questionType === "writing_task" || question.questionType === "speaking_task";
+      if (answers.length === 0 && !noAnswerNeeded) {
         errors.push(`${qWhere}: thiếu "answer".`);
       }
 

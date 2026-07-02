@@ -91,7 +91,11 @@ type AnswerChange = (questionId: string, value: string) => void;
 type SaveState = "idle" | "saving" | "saved" | "error";
 
 function usesLongAnswer(questionType: string) {
-  return questionType.includes("essay") || questionType.includes("writing");
+  return (
+    questionType.includes("essay") ||
+    questionType.includes("writing") ||
+    questionType.includes("speaking")
+  );
 }
 
 function countWords(value: string) {

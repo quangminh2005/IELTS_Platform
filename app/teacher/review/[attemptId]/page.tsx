@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AnnotatedAnswer } from "@/components/annotated-answer";
 import { ReviewForm } from "@/components/review-form";
+import { TranscribeButton } from "@/components/transcribe-button";
 import { requireTeacher } from "@/lib/actions/classes";
 import { isAudioUrl } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
@@ -228,6 +229,10 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                             >
                               Mở/tải file trong tab mới
                             </a>
+                            <TranscribeButton
+                              answerId={answer.id}
+                              initialTranscript={answer.transcript}
+                            />
                           </div>
                         ) : (
                           <>

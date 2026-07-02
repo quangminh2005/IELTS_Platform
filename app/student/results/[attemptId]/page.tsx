@@ -41,6 +41,14 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
           }
         }
       },
+      review: {
+        select: {
+          overallBand: true,
+          criteriaScoresJson: true,
+          summaryFeedback: true,
+          detailedFeedback: true
+        }
+      },
       answers: {
         orderBy: { createdAt: "asc" },
         include: {

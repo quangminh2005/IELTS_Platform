@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { AnnotatedAnswer } from "@/components/annotated-answer";
 import { ReviewForm } from "@/components/review-form";
 import { requireTeacher } from "@/lib/actions/classes";
+import { isAudioUrl } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
 
 type DetailPageProps = {
@@ -213,18 +214,35 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                     ) : null}
                     <div className="mt-3 rounded-md border border-border bg-background p-4">
                       {answer.value ? (
-                        <>
-                          <AnnotatedAnswer
-                            text={answer.value}
-                            annotations={answer.annotations}
-                            editable
-                            answerId={answer.id}
-                            attemptId={attempt.id}
-                          />
-                          <p className="mt-4 text-xs text-muted-foreground">
-                            {countWords(answer.value)} từ
-                          </p>
-                        </>
+                        isAudioUrl(answer.value) ? (
+                          <div className="space-y-2">
+                            <p className="text-xs font-medium text-primary">Bài ghi âm của học viên</p>
+                            <audio controls src={answer.value} className="w-full" preload="metadata">
+                              <track kind="captions" />
+                            </audio>
+                            <a
+                              href={answer.value}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground"
+                            >
+                              Mở/tải file trong tab mới
+                            </a>
+                          </div>
+                        ) : (
+                          <>
+                            <AnnotatedAnswer
+                              text={answer.value}
+                              annotations={answer.annotations}
+                              editable
+                              answerId={answer.id}
+                              attemptId={attempt.id}
+                            />
+                            <p className="mt-4 text-xs text-muted-foreground">
+                              {countWords(answer.value)} từ
+                            </p>
+                          </>
+                        )
                       ) : (
                         <p className="text-sm italic text-muted-foreground">
                           Học viên bỏ trống câu này.

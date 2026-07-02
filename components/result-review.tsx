@@ -1,5 +1,6 @@
 import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
 import { bandsBySkill, formatBand } from "@/lib/band-score";
+import { isAudioUrl } from "@/lib/question-interactions";
 
 type Highlight = {
   id: string;
@@ -33,6 +34,13 @@ const SKILL_LABELS: Record<string, string> = {
   reading: "Đọc (Reading)"
 };
 
+type TeacherReview = {
+  overallBand: number | null;
+  criteriaScoresJson: string | null;
+  summaryFeedback: string | null;
+  detailedFeedback: string | null;
+} | null;
+
 type ResultReviewProps = {
   attempt: {
     score: number | null;
@@ -40,8 +48,32 @@ type ResultReviewProps = {
     status: string;
     answers: Answer[];
     highlights: Highlight[];
+    review?: TeacherReview;
   };
 };
+
+const CRITERIA_LABELS: Record<string, string> = {
+  taskAchievement: "Task Achievement / Response",
+  coherence: "Coherence & Cohesion",
+  fluency: "Fluency & Coherence",
+  lexicalResource: "Lexical Resource",
+  grammar: "Grammatical Range & Accuracy",
+  pronunciation: "Pronunciation"
+};
+
+function parseCriteria(json: string | null): Array<{ label: string; value: number }> {
+  if (!json) {
+    return [];
+  }
+  try {
+    const parsed = JSON.parse(json) as Record<string, unknown>;
+    return Object.entries(parsed)
+      .map(([key, value]) => ({ label: CRITERIA_LABELS[key] ?? key, value: Number(value) }))
+      .filter((row) => Number.isFinite(row.value));
+  } catch {
+    return [];
+  }
+}
 
 function correctnessLabel(value: boolean | null) {
   if (value === true) {
@@ -88,8 +120,56 @@ export function ResultReview({ attempt }: ResultReviewProps) {
     }))
   ).filter((row) => row.band !== null);
 
+  const review = attempt.review;
+  const criteriaRows = parseCriteria(review?.criteriaScoresJson ?? null);
+
   return (
     <div className="space-y-6">
+      {review ? (
+        <section className="rounded-xl border border-primary/30 bg-primary/5 p-5 shadow-card">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h3 className="text-base font-semibold text-primary">Nhận xét của giáo viên</h3>
+            {review.overallBand !== null ? (
+              <span className="rounded-lg bg-primary px-3 py-1.5 text-lg font-bold tabular-nums text-primary-foreground">
+                Band {formatBand(review.overallBand)}
+              </span>
+            ) : null}
+          </div>
+
+          {criteriaRows.length > 0 ? (
+            <dl className="mt-4 grid gap-2 sm:grid-cols-2">
+              {criteriaRows.map((row) => (
+                <div
+                  key={row.label}
+                  className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2 text-sm"
+                >
+                  <dt className="text-muted-foreground">{row.label}</dt>
+                  <dd className="font-semibold tabular-nums">{row.value.toFixed(1)}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
+
+          {review.summaryFeedback ? (
+            <div className="mt-4">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Nhận xét tổng quan
+              </p>
+              <p className="mt-1 whitespace-pre-wrap text-sm leading-6">{review.summaryFeedback}</p>
+            </div>
+          ) : null}
+
+          {review.detailedFeedback ? (
+            <div className="mt-4">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Nhận xét chi tiết
+              </p>
+              <p className="mt-1 whitespace-pre-wrap text-sm leading-6">{review.detailedFeedback}</p>
+            </div>
+          ) : null}
+        </section>
+      ) : null}
+
       {bands.length > 0 ? (
         <section className="grid gap-4 sm:grid-cols-2">
           {bands.map((row) => (
@@ -162,7 +242,13 @@ export function ResultReview({ attempt }: ResultReviewProps) {
                     </dt>
                     <dd className="mt-2">
                       {answer.value ? (
-                        <AnnotatedAnswer text={answer.value} annotations={answer.annotations} />
+                        isAudioUrl(answer.value) ? (
+                          <audio controls src={answer.value} className="w-full" preload="metadata">
+                            <track kind="captions" />
+                          </audio>
+                        ) : (
+                          <AnnotatedAnswer text={answer.value} annotations={answer.annotations} />
+                        )
                       ) : (
                         <span className="whitespace-pre-wrap">Bỏ trống</span>
                       )}

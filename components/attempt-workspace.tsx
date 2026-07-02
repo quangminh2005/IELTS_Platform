@@ -18,6 +18,7 @@ import {
 } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
 import { AudioPlayer } from "@/components/audio-player";
+import { AudioRecorderAnswer } from "@/components/audio-recorder-answer";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
   parseGroupInstructions,
@@ -1452,6 +1453,7 @@ export function AttemptWorkspace({
         const renderSingleQuestion = (question: Question) => {
           const options = parseQuestionOptions(question.optionsJson);
           const isDragDrop = usesDragDropAnswer(question.questionType, options);
+          const isSpeaking = question.questionType.includes("speaking");
           const isInlineGap =
             !isDragDrop &&
             options.length === 0 &&
@@ -1481,7 +1483,16 @@ export function AttemptWorkspace({
                   {flagged.has(question.id) ? "★ Đã đánh dấu" : "☆ Đánh dấu"}
                 </button>
               </div>
-              {isDragDrop ? (
+              {isSpeaking ? (
+                <>
+                  <p className="mt-2 text-sm leading-6">{question.prompt}</p>
+                  <AudioRecorderAnswer
+                    questionId={question.id}
+                    initialValue={answers[question.id] ?? ""}
+                    onAnswerChange={handleAnswerChange}
+                  />
+                </>
+              ) : isDragDrop ? (
                 <DragDropQuestion
                   question={question}
                   initialValue={answers[question.id] ?? ""}

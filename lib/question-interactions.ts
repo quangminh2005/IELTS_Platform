@@ -62,6 +62,21 @@ export function parseGroupInstructions(
   return {};
 }
 
+// Giá trị câu trả lời là một file audio (bài Speaking ghi âm) hay không.
+// Dùng để hiển thị trình phát audio thay vì text ở trang chấm/kết quả.
+export function isAudioUrl(value: string | null | undefined): boolean {
+  if (!value) {
+    return false;
+  }
+  if (!/^https?:\/\//i.test(value)) {
+    return false;
+  }
+  return (
+    value.includes("blob.vercel-storage.com") ||
+    /\.(webm|ogg|mp3|m4a|mp4|wav|aac)(\?|#|$)/i.test(value)
+  );
+}
+
 // Đọc một chuỗi trong metadata JSON của phần (vd metadata.noteBody / tableBody):
 // thân bài ghi chú/bảng có [[n]], TÁCH RIÊNG khỏi passage để passage vẫn hiển thị.
 export function parseUnitMetaString(

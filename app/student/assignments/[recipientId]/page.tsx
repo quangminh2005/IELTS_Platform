@@ -2,6 +2,8 @@ import { notFound, redirect } from "next/navigation";
 import { AttemptWorkspace } from "@/components/attempt-workspace";
 import { startAttempt } from "@/lib/actions/attempts";
 import { auth } from "@/lib/auth";
+import { detectMultiSelectGroups } from "@/lib/multi-select";
+import { parseQuestionOptions } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
 
 type AssignmentAttemptPageProps = {
@@ -94,6 +96,19 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
     }
   });
 
+  // Nhận diện các nhóm "Choose N" để client gộp thành một khối tick nhiều ô.
+  // Tính ở server (chỉ truyền id + số lượng, không lộ đáp án cho client).
+  const multiSelectGroups = recipient.assignment.units.flatMap((unit) =>
+    detectMultiSelectGroups(
+      unit.assignableUnit.questions.map((question) => ({
+        id: question.id,
+        questionType: question.questionType,
+        options: parseQuestionOptions(question.optionsJson),
+        correctAnswers: parseQuestionOptions(question.correctAnswerJson)
+      }))
+    )
+  );
+
   return (
     <AttemptWorkspace
       recipientId={recipient.id}
@@ -101,6 +116,7 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
       assignment={recipient.assignment}
       highlights={activeAttempt.highlights}
       savedAnswers={savedAnswers}
+      multiSelectGroups={multiSelectGroups}
     />
   );
 }

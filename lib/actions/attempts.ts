@@ -6,6 +6,8 @@ import { z } from "zod";
 import { requireTeacher } from "@/lib/actions/classes";
 import { auth } from "@/lib/auth";
 import { gradeAnswer, gradeAttempt } from "@/lib/grading";
+import { detectMultiSelectGroups, gradeMultiSelectGroup } from "@/lib/multi-select";
+import { parseQuestionOptions } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
 
 const highlightSchema = z.object({
@@ -345,13 +347,46 @@ export async function submitAttempt(formData: FormData) {
     redirect(`/student/results/${attempt.id}`);
   }
 
-  const gradedAnswers = attempt.assignmentRecipient.assignment.units.flatMap((assignmentUnit) =>
-    assignmentUnit.assignableUnit.questions.map((question) => {
+  const gradedAnswers = attempt.assignmentRecipient.assignment.units.flatMap((assignmentUnit) => {
+    const questions = assignmentUnit.assignableUnit.questions;
+    // Writing/Speaking do giáo viên chấm tay: KHÔNG tự động chấm. Đánh dấu
+    // isCorrect = null ("Chờ chấm"), không có điểm và không cộng vào điểm tự
+    // động — tránh hiển thị "Sai" và kéo điểm tổng xuống 0.
+    const isManualSkill = isManualGradedSkill(assignmentUnit.assignableUnit.skill);
+
+    // Nhóm "Choose N" (vd chọn 2 đáp án): chấm theo tập — mỗi chữ đúng phân biệt
+    // = 1 điểm, loại trùng. Kết quả từng câu lưu vào groupResult để dùng bên dưới.
+    const groupResult = new Map<string, { isCorrect: boolean; pointsAwarded: number }>();
+    if (!isManualSkill) {
+      const groups = detectMultiSelectGroups(
+        questions.map((question) => ({
+          id: question.id,
+          questionType: question.questionType,
+          options: parseQuestionOptions(question.optionsJson),
+          correctAnswers: parseCorrectAnswers(question.correctAnswerJson)
+        }))
+      );
+
+      for (const group of groups) {
+        const slotValues = group.questionIds.map((id) =>
+          String(formData.get(`q_${id}`) ?? "").trim()
+        );
+        const firstMember = questions.find((question) => question.id === group.questionIds[0]);
+        const correctSet = parseCorrectAnswers(firstMember?.correctAnswerJson ?? null);
+        const marks = gradeMultiSelectGroup(slotValues, correctSet);
+
+        group.questionIds.forEach((id, index) => {
+          const points = questions.find((question) => question.id === id)?.points ?? 1;
+          groupResult.set(id, {
+            isCorrect: marks[index],
+            pointsAwarded: marks[index] ? points : 0
+          });
+        });
+      }
+    }
+
+    return questions.map((question) => {
       const value = String(formData.get(`q_${question.id}`) ?? "").trim();
-      // Writing/Speaking do giáo viên chấm tay: KHÔNG tự động chấm. Đánh dấu
-      // isCorrect = null ("Chờ chấm"), không có điểm và không cộng vào điểm tự
-      // động — tránh hiển thị "Sai" và kéo điểm tổng xuống 0.
-      const isManualSkill = isManualGradedSkill(assignmentUnit.assignableUnit.skill);
 
       if (isManualSkill) {
         return {
@@ -371,7 +406,8 @@ export async function submitAttempt(formData: FormData) {
       }
 
       const correctAnswers = parseCorrectAnswers(question.correctAnswerJson);
-      const grade = gradeAnswer(value, correctAnswers, question.points);
+      const group = groupResult.get(question.id);
+      const grade = group ?? gradeAnswer(value, correctAnswers, question.points);
 
       return {
         answerRow: {
@@ -385,14 +421,21 @@ export async function submitAttempt(formData: FormData) {
           correctAnswerSnapshot: answerSnapshot(question.correctAnswerJson),
           explanationSnapshot: question.explanation
         },
-        gradeItem: {
-          value,
-          correctAnswers,
-          points: question.points
-        }
+        // Với câu trong nhóm, ép gradeAttempt cho ra đúng số điểm đã chấm theo tập.
+        gradeItem: group
+          ? {
+              value: group.isCorrect ? value || "1" : "",
+              correctAnswers: group.isCorrect ? [value || "1"] : [],
+              points: question.points
+            }
+          : {
+              value,
+              correctAnswers,
+              points: question.points
+            }
       };
-    })
-  );
+    });
+  });
   const answerRows = gradedAnswers.map((answer) => answer.answerRow);
 
   const attemptGrade = gradeAttempt(

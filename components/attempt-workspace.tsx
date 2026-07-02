@@ -31,6 +31,7 @@ import {
   splitPromptIntoSegments,
   usesDragDropAnswer
 } from "@/lib/question-interactions";
+import type { MultiSelectGroup } from "@/lib/multi-select";
 
 type Question = {
   id: string;
@@ -85,6 +86,7 @@ type AttemptWorkspaceProps = {
   };
   highlights: Highlight[];
   savedAnswers: Record<string, string>;
+  multiSelectGroups: MultiSelectGroup[];
 };
 
 type AnswerChange = (questionId: string, value: string) => void;
@@ -827,6 +829,122 @@ function MatchingGridQuestionSet({
   );
 }
 
+// Dạng "Choose N letters" (vd chọn 2 đáp án): N câu liên tiếp cùng bộ lựa chọn
+// được gộp thành MỘT khối checkbox. Học sinh tick tối đa N; N chữ đã chọn gán vào
+// N ô ẩn q_<id> để nộp/chấm như các dạng khác. Xem lib/multi-select.ts.
+function MultiSelectQuestionSet({
+  questions,
+  options,
+  selectCount,
+  savedAnswers,
+  onAnswerChange,
+  flagged,
+  onToggleFlag
+}: {
+  questions: Question[];
+  options: string[];
+  selectCount: number;
+  savedAnswers: Record<string, string>;
+  onAnswerChange: AnswerChange;
+  flagged: Set<string>;
+  onToggleFlag: (questionId: string) => void;
+}) {
+  const selected = questions
+    .map((question) => savedAnswers[question.id] ?? "")
+    .filter((value) => value.length > 0);
+  const selectedSet = new Set(selected);
+  const atLimit = selected.length >= selectCount;
+  const firstQuestion = questions[0];
+  const isFlagged = flagged.has(firstQuestion.id);
+
+  // Gán lại danh sách chữ đã chọn vào N ô theo thứ tự (ô thừa để trống).
+  const assignSlots = (letters: string[]) => {
+    questions.forEach((question, index) => {
+      const next = letters[index] ?? "";
+      if ((savedAnswers[question.id] ?? "") !== next) {
+        onAnswerChange(question.id, next);
+      }
+    });
+  };
+
+  const toggle = (option: string) => {
+    if (selectedSet.has(option)) {
+      assignSlots(selected.filter((value) => value !== option));
+    } else if (!atLimit) {
+      assignSlots([...selected, option]);
+    }
+  };
+
+  return (
+    <div
+      id={`question-${firstQuestion.id}`}
+      className="scroll-mt-24 rounded-md border border-border bg-background/40 p-4"
+    >
+      {/* Neo cuộn cho từng số câu để thanh điều hướng (vd 17, 18) đều nhảy tới khối. */}
+      {questions.slice(1).map((question) => (
+        <span key={question.id} id={`question-${question.id}`} className="sr-only" />
+      ))}
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          Chọn {selectCount} đáp án{" "}
+          <span className={selected.length === selectCount ? "text-primary" : ""}>
+            ({selected.length}/{selectCount})
+          </span>
+        </p>
+        <button
+          type="button"
+          onClick={() => onToggleFlag(firstQuestion.id)}
+          aria-pressed={isFlagged}
+          className={
+            isFlagged
+              ? "rounded-md border border-amber-400/70 bg-amber-400/15 px-2 py-1 text-xs font-medium text-amber-600 dark:text-amber-300"
+              : "rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground hover:border-primary"
+          }
+        >
+          {isFlagged ? "★ Đã đánh dấu" : "☆ Đánh dấu"}
+        </button>
+      </div>
+      <div className="mt-3 space-y-2">
+        {options.map((option) => {
+          const checked = selectedSet.has(option);
+          const disabled = !checked && atLimit;
+
+          return (
+            <label
+              key={option}
+              className={`flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-sm transition ${
+                checked
+                  ? "border-primary bg-primary/5"
+                  : disabled
+                    ? "border-border opacity-50"
+                    : "border-border hover:border-primary/50"
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={checked}
+                disabled={disabled}
+                onChange={() => toggle(option)}
+                className="h-4 w-4 accent-primary"
+              />
+              <span>{option}</span>
+            </label>
+          );
+        })}
+      </div>
+      {/* Ô ẩn để nộp bài: mỗi câu một chữ đã chọn (hoặc rỗng). */}
+      {questions.map((question) => (
+        <input
+          key={question.id}
+          type="hidden"
+          name={`q_${question.id}`}
+          value={savedAnswers[question.id] ?? ""}
+        />
+      ))}
+    </div>
+  );
+}
+
 // Dạng TRUE/FALSE/NOT GIVEN (và YES/NO/NOT GIVEN): nhiều câu xếp lưới 2 cột,
 // mỗi câu là một ô gọn với 3 lựa chọn nằm ngang — đỡ phải cuộn nhiều.
 function TfngGridQuestionSet({
@@ -1041,13 +1159,26 @@ export function AttemptWorkspace({
   attempt,
   assignment,
   highlights,
-  savedAnswers
+  savedAnswers,
+  multiSelectGroups
 }: AttemptWorkspaceProps) {
   const elapsedRef = useRef<HTMLInputElement>(null);
   const submitReasonRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const startedAtMs = useMemo(() => new Date(attempt.startedAt).getTime(), [attempt.startedAt]);
   const timeLimitMinutes = assignment.timeLimitMinutes;
+
+  // Tra cứu nhóm "Choose N": theo câu MỞ ĐẦU nhóm, và tập id mọi thành viên nhóm.
+  const multiSelectByFirstId = useMemo(() => {
+    const map = new Map<string, MultiSelectGroup>();
+    multiSelectGroups.forEach((group) => map.set(group.questionIds[0], group));
+    return map;
+  }, [multiSelectGroups]);
+  const multiSelectMemberIds = useMemo(() => {
+    const set = new Set<string>();
+    multiSelectGroups.forEach((group) => group.questionIds.forEach((id) => set.add(id)));
+    return set;
+  }, [multiSelectGroups]);
 
   const [answers, setAnswers] = useState<Record<string, string>>(savedAnswers);
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
@@ -1399,6 +1530,13 @@ export function AttemptWorkspace({
         type RegularItem =
           | { kind: "grid"; key: string; questions: Question[]; options: string[] }
           | { kind: "tfng"; key: string; questions: Question[]; options: string[] }
+          | {
+              kind: "multiselect";
+              key: string;
+              questions: Question[];
+              options: string[];
+              selectCount: number;
+            }
           | { kind: "single"; key: string; question: Question };
         const regularRenderItems: RegularItem[] = [];
         // Gom các câu liên tiếp có cùng bộ lựa chọn, bắt đầu từ startIndex.
@@ -1426,6 +1564,31 @@ export function AttemptWorkspace({
         for (let i = 0; i < regularQuestions.length; i += 1) {
           const question = regularQuestions[i];
           const options = parseQuestionOptions(question.optionsJson);
+
+          // Nhóm "Choose N" ưu tiên trước grid/single: gộp N câu thành một khối
+          // checkbox. Câu thành viên (không phải câu đầu) đã được nuốt → bỏ qua.
+          if (multiSelectMemberIds.has(question.id)) {
+            const group = multiSelectByFirstId.get(question.id);
+            if (group) {
+              const groupQuestions = group.questionIds
+                .map((id) => regularQuestions.find((item) => item.id === id))
+                .filter((item): item is Question => Boolean(item));
+              if (groupQuestions.length === group.questionIds.length) {
+                regularRenderItems.push({
+                  kind: "multiselect",
+                  key: `ms-${question.id}`,
+                  questions: groupQuestions,
+                  options,
+                  selectCount: group.selectCount
+                });
+                i += groupQuestions.length - 1;
+                continue;
+              }
+            } else {
+              continue;
+            }
+          }
+
           const isLetterMc =
             question.questionType === "multiple_choice" &&
             options.length >= 3 &&
@@ -1572,6 +1735,16 @@ export function AttemptWorkspace({
                       <TfngGridQuestionSet
                         questions={item.questions}
                         options={item.options}
+                        savedAnswers={answers}
+                        onAnswerChange={handleAnswerChange}
+                        flagged={flagged}
+                        onToggleFlag={toggleFlag}
+                      />
+                    ) : item.kind === "multiselect" ? (
+                      <MultiSelectQuestionSet
+                        questions={item.questions}
+                        options={item.options}
+                        selectCount={item.selectCount}
                         savedAnswers={answers}
                         onAnswerChange={handleAnswerChange}
                         flagged={flagged}

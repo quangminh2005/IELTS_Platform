@@ -95,7 +95,7 @@ describe("foundation slice", () => {
 
     expect(loginPage).toContain("LAST_GOOGLE_ACCOUNT_KEY");
     expect(loginPage).toContain("GoogleLogo");
-    expect(loginPage).toContain("Continue as");
+    expect(loginPage).toContain("Tiếp tục với");
     expect(loginPage).not.toContain(">G</span>");
   });
 

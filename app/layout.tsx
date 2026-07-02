@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { RememberGoogleAccount } from "@/components/remember-google-account";
+import { Preloader } from "@/components/ui/preloader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default function RootLayout({
             `
           }}
         />
+        <Preloader />
         <RememberGoogleAccount />
         {children}
       </body>

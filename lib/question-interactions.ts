@@ -62,6 +62,29 @@ export function parseGroupInstructions(
   return {};
 }
 
+// Đọc một chuỗi trong metadata JSON của phần (vd metadata.noteBody / tableBody):
+// thân bài ghi chú/bảng có [[n]], TÁCH RIÊNG khỏi passage để passage vẫn hiển thị.
+export function parseUnitMetaString(
+  metadataJson: string | null | undefined,
+  key: string
+): string | null {
+  if (!metadataJson) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(metadataJson);
+    const value = (parsed as Record<string, unknown>)?.[key];
+    if (typeof value === "string" && value.trim()) {
+      return value;
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
 // Lấy danh sách ảnh đề bài từ metadata JSON của phần (metadata.images = [url, ...]).
 export function parseUnitImages(metadataJson: string | null | undefined): string[] {
   if (!metadataJson) {

@@ -24,6 +24,7 @@ import {
   parseMarkdownTable,
   parseQuestionOptions,
   parseUnitImages,
+  parseUnitMetaString,
   promptHasGap,
   splitPromptIntoGapSegments,
   splitPromptIntoSegments,
@@ -517,33 +518,70 @@ function NoteCompletionQuestionSet({
   onAnswerChange: AnswerChange;
 }) {
   const questionsByOrder = new Map(questions.map((question) => [question.order, question]));
-  const segments = splitPromptIntoSegments(content);
+
+  // Ô trống inline (dùng chung cho từng dòng ghi chú).
+  const renderBlank = (order: string, key: string) => {
+    const question = questionsByOrder.get(Number(order));
+    if (!question) {
+      return <span key={key}>[[{order}]]</span>;
+    }
+    return (
+      <input
+        key={key}
+        name={`q_${question.id}`}
+        placeholder={order}
+        defaultValue={savedAnswers[question.id] ?? ""}
+        onChange={(event) => onAnswerChange(question.id, event.target.value)}
+        autoComplete="off"
+        className="mx-1 inline-flex h-8 w-28 items-center rounded-md border border-primary/60 bg-background px-2 text-center align-middle text-sm font-semibold outline-none ring-primary/40 focus:ring-2"
+      />
+    );
+  };
+
+  const renderLineContent = (text: string, lineKey: string) =>
+    splitPromptIntoSegments(text).map((segment, index) =>
+      segment.type === "blank" ? (
+        renderBlank(segment.value, `${lineKey}-b-${index}`)
+      ) : (
+        <span key={`${lineKey}-t-${index}`}>{segment.value}</span>
+      )
+    );
+
+  // Ghi chú kiểu chin.edu.vn: dòng "# " = tiêu đề canh giữa; "## " = tiểu mục
+  // in đậm; dòng trống = khoảng cách; còn lại là dòng nội dung có ô trống inline.
+  const lines = content.split(/\r?\n/);
 
   return (
-    <div className="whitespace-pre-wrap rounded-md border border-border bg-background/40 p-4 text-sm leading-8">
-      {segments.map((segment, index) => {
-        if (segment.type === "text") {
-          return <span key={`text-${index}`}>{segment.value}</span>;
-        }
+    <div className="overflow-hidden rounded-lg border border-primary/20 bg-primary/5">
+      <div className="space-y-2 px-5 py-4 text-sm leading-8">
+        {lines.map((line, index) => {
+          const key = `line-${index}`;
+          const trimmed = line.trim();
 
-        const question = questionsByOrder.get(Number(segment.value));
-
-        if (!question) {
-          return <span key={`missing-${segment.value}-${index}`}>[[{segment.value}]]</span>;
-        }
-
-        return (
-          <input
-            key={`blank-${segment.value}-${index}`}
-            name={`q_${question.id}`}
-            placeholder={segment.value}
-            defaultValue={savedAnswers[question.id] ?? ""}
-            onChange={(event) => onAnswerChange(question.id, event.target.value)}
-            autoComplete="off"
-            className="mx-1 inline-flex h-8 w-28 items-center rounded-md border border-primary/50 bg-background/80 px-2 text-center align-middle text-sm font-medium outline-none ring-primary/40 focus:ring-2"
-          />
-        );
-      })}
+          if (trimmed === "") {
+            return <div key={key} className="h-2" />;
+          }
+          if (trimmed.startsWith("# ")) {
+            return (
+              <p key={key} className="text-center text-base font-bold">
+                {trimmed.slice(2)}
+              </p>
+            );
+          }
+          if (trimmed.startsWith("## ")) {
+            return (
+              <p key={key} className="pt-1 font-bold">
+                {trimmed.slice(3)}
+              </p>
+            );
+          }
+          return (
+            <p key={key} className="leading-8">
+              {renderLineContent(line, key)}
+            </p>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -1269,8 +1307,17 @@ export function AttemptWorkspace({
         const matchingQuestions = unit.questions.filter(
           (question) => question.questionType === "matching"
         );
+        // Thân bài ghi chú/bảng có thể tách riêng khỏi passage qua metadata
+        // (noteBody/tableBody). Khi có → passage vẫn hiện bên trái, khối điền
+        // chỗ trống dùng thân riêng này. Khi không → dùng unit.content như cũ.
+        const noteBody = parseUnitMetaString(unit.metadataJson, "noteBody");
+        const tableBody = parseUnitMetaString(unit.metadataJson, "tableBody");
+        const noteBodyContent = noteBody ?? unit.content;
+        const tableBodyContent = tableBody ?? unit.content;
+        // Chỉ "ăn" mất passage khi có câu điền chỗ trống MÀ dùng chính unit.content.
         const inlineCompletionConsumesContent =
-          tableCompletionQuestions.length > 0 || noteCompletionQuestions.length > 0;
+          (tableCompletionQuestions.length > 0 && !tableBody) ||
+          (noteCompletionQuestions.length > 0 && !noteBody);
         const regularQuestions = unit.questions.filter(
           (question) =>
             question.questionType !== "table_completion" &&
@@ -1462,7 +1509,7 @@ export function AttemptWorkspace({
               <div id={`tablesection-${assignmentUnit.id}`} className="scroll-mt-24 space-y-3">
                 {groupBox(tableCompletionQuestions)}
                 <TableCompletionQuestionSet
-                  content={unit.content}
+                  content={tableBodyContent}
                   questions={tableCompletionQuestions}
                   savedAnswers={answers}
                   onAnswerChange={handleAnswerChange}
@@ -1473,7 +1520,7 @@ export function AttemptWorkspace({
               <div id={`notesection-${assignmentUnit.id}`} className="scroll-mt-24 space-y-3">
                 {groupBox(noteCompletionQuestions)}
                 <NoteCompletionQuestionSet
-                  content={unit.content}
+                  content={noteBodyContent}
                   questions={noteCompletionQuestions}
                   savedAnswers={answers}
                   onAnswerChange={handleAnswerChange}

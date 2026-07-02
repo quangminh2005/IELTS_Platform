@@ -625,7 +625,16 @@ function validateImport(data: ImportMaterial) {
       errors.push(`${where}: trùng Order ${duplicates.join(", ")}.`);
     }
 
-    const blanks = placeholderNumbers(unit.content);
+    // Blank [[n]] có thể nằm trong Content HOẶC trong thân tách riêng
+    // (metadata.noteBody / tableBody) — gộp tất cả để kiểm tra.
+    const meta =
+      unit.metadata && typeof unit.metadata === "object" && !Array.isArray(unit.metadata)
+        ? (unit.metadata as Record<string, unknown>)
+        : {};
+    const blankSources = [unit.content, meta.noteBody, meta.tableBody]
+      .filter((value): value is string => typeof value === "string")
+      .join("\n");
+    const blanks = placeholderNumbers(blankSources);
 
     unit.questions
       .filter((question) => contentBlankTypes.has(question.questionType))

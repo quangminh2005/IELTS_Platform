@@ -122,6 +122,9 @@ export default async function StudentRankingPage() {
     include: {
       student: {
         include: {
+          user: {
+            select: { image: true }
+          },
           attempts: {
             select: {
               scorePercent: true,
@@ -181,6 +184,7 @@ export default async function StudentRankingPage() {
       return {
         id: classmate.student.id,
         displayName: classmate.student.displayName,
+        avatarUrl: classmate.student.user?.image ?? null,
         averageScorePercent,
         averageBandValue,
         completionRate: completion,
@@ -227,14 +231,24 @@ export default async function StudentRankingPage() {
                   {index < 3 ? medals[index] : <span className="text-base text-muted-foreground">{index + 1}</span>}
                 </p>
                 <div className="flex min-w-0 items-center gap-3">
-                  <span
-                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white ${avatarColor(
-                      rankedStudent.displayName
-                    )}`}
-                    aria-hidden="true"
-                  >
-                    {initials(rankedStudent.displayName)}
-                  </span>
+                  {rankedStudent.avatarUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={rankedStudent.avatarUrl}
+                      alt=""
+                      referrerPolicy="no-referrer"
+                      className="h-9 w-9 shrink-0 rounded-full object-cover"
+                    />
+                  ) : (
+                    <span
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white ${avatarColor(
+                        rankedStudent.displayName
+                      )}`}
+                      aria-hidden="true"
+                    >
+                      {initials(rankedStudent.displayName)}
+                    </span>
+                  )}
                   <div className="min-w-0">
                     <p className="truncate font-semibold">
                       {rankedStudent.displayName}

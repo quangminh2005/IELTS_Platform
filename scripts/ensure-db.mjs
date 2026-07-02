@@ -5,7 +5,8 @@
 import { PrismaClient } from "@prisma/client";
 
 const statements = [
-  'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "transcript" TEXT;'
+  'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "transcript" TEXT;',
+  'ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "image" TEXT;'
 ];
 
 const prisma = new PrismaClient();

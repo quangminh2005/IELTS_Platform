@@ -90,17 +90,23 @@ export const authOptions: NextAuthOptions = {
         return "/waiting";
       }
 
+      // Ảnh đại diện Google (nếu có) để hiển thị avatar học viên. Chỉ ghi đè khi
+      // Google trả về ảnh, tránh xoá ảnh cũ nếu lần này không có.
+      const googleImage = user.image ?? undefined;
+
       const appUser = await prisma.user.upsert({
         where: { email },
         update: {
           googleId: account.providerAccountId,
           name: user.name ?? studentProfile.displayName,
+          image: googleImage,
           role: "student"
         },
         create: {
           email,
           googleId: account.providerAccountId,
           name: user.name ?? studentProfile.displayName,
+          image: googleImage,
           role: "student"
         }
       });

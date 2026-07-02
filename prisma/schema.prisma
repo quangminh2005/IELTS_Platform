@@ -19,6 +19,7 @@ model User {
   email          String          @unique
   googleId       String?         @unique
   name           String?
+  image          String?
   passwordHash   String?
   role           String
   createdAt      DateTime        @default(now())

@@ -1,5 +1,6 @@
 import { ReviewQueue } from "@/components/review-queue";
 import { requireTeacher } from "@/lib/actions/classes";
+import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
 
 export default async function TeacherReviewPage() {
@@ -75,7 +76,9 @@ export default async function TeacherReviewPage() {
       reviewedAt: attempt.review?.reviewedAt
         ? attempt.review.reviewedAt.toISOString()
         : null,
-      isLate
+      isLate,
+      durationLabel: formatDuration(attempt.elapsedSeconds),
+      durationSuspect: durationExceedsLimit(attempt.elapsedSeconds, assignment.timeLimitMinutes)
     };
   });
 

@@ -15,6 +15,8 @@ export type QueueRow = {
   status: string;
   reviewedAt: string | null;
   isLate: boolean;
+  durationLabel: string;
+  durationSuspect: boolean;
 };
 
 type ReviewQueueProps = {
@@ -165,6 +167,7 @@ export function ReviewQueue({ rows }: ReviewQueueProps) {
                 <th className="px-4 py-3 font-medium">Bài tập</th>
                 <th className="px-4 py-3 font-medium">Kỹ năng</th>
                 <th className="px-4 py-3 font-medium">Thời gian nộp</th>
+                <th className="px-4 py-3 font-medium">Thời gian làm</th>
                 <th className="px-4 py-3 font-medium">Trạng thái</th>
                 <th className="px-4 py-3 font-medium" />
               </tr>
@@ -186,6 +189,17 @@ export function ReviewQueue({ rows }: ReviewQueueProps) {
                     <td className="px-4 py-3 text-muted-foreground">{row.skills || "—"}</td>
                     <td className="px-4 py-3 text-muted-foreground">
                       {formatDateTime(row.submittedAt)}
+                    </td>
+                    <td className="px-4 py-3 text-muted-foreground">
+                      <span className="whitespace-nowrap">⏱ {row.durationLabel}</span>
+                      {row.durationSuspect ? (
+                        <span
+                          className="ml-1 cursor-help"
+                          title="Vượt quá giới hạn giờ — học sinh có thể đã tạm dừng rồi quay lại nộp"
+                        >
+                          ⚠️
+                        </span>
+                      ) : null}
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex flex-wrap items-center gap-1.5">
@@ -217,7 +231,7 @@ export function ReviewQueue({ rows }: ReviewQueueProps) {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="px-4 py-12 text-center text-muted-foreground">
+                  <td colSpan={7} className="px-4 py-12 text-center text-muted-foreground">
                     Không có bài nào khớp bộ lọc hiện tại.
                   </td>
                 </tr>

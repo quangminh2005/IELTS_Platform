@@ -4,6 +4,7 @@ import { deleteStudent, requireTeacher } from "@/lib/actions/classes";
 import { resetRecipientAttempts } from "@/lib/actions/attempts";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
+import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
 
 type StudentPageProps = {
@@ -210,7 +211,19 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                             </div>
                           ) : null}
                           <p className="mt-1 text-sm text-muted-foreground">
-                            Bắt đầu {formatDate(attempt.startedAt)} · {attempt.elapsedSeconds}s
+                            Bắt đầu {formatDate(attempt.startedAt)}
+                            {attempt.status === "submitted" || attempt.status === "reviewed" ? (
+                              <>
+                                {" · ⏱ "}
+                                {formatDuration(attempt.elapsedSeconds)}
+                                {durationExceedsLimit(
+                                  attempt.elapsedSeconds,
+                                  recipient.assignment.timeLimitMinutes
+                                )
+                                  ? " (có thể đã tạm dừng)"
+                                  : ""}
+                              </>
+                            ) : null}
                           </p>
                         </div>
                       );

@@ -5,6 +5,7 @@ import { ReviewForm } from "@/components/review-form";
 import { TranscribeButton } from "@/components/transcribe-button";
 import { requireTeacher } from "@/lib/actions/classes";
 import { isAudioUrl } from "@/lib/question-interactions";
+import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
 
 type DetailPageProps = {
@@ -50,7 +51,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
       assignmentRecipient: {
         include: {
           assignment: {
-            select: { id: true, title: true }
+            select: { id: true, title: true, timeLimitMinutes: true }
           }
         }
       },
@@ -177,6 +178,15 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
               {attempt.student.displayName} ({attempt.student.email})
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              ⏱ Thời gian làm bài: {formatDuration(attempt.elapsedSeconds)}
+              {durationExceedsLimit(
+                attempt.elapsedSeconds,
+                attempt.assignmentRecipient.assignment.timeLimitMinutes
+              ) ? (
+                <span className="ml-1 italic opacity-70">(có thể đã tạm dừng)</span>
+              ) : null}
             </p>
           </div>
           <span

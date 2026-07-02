@@ -2,6 +2,44 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { calculateRankingScore } from "@/lib/ranking";
+import { attemptBand, averageBand, formatBand } from "@/lib/band-score";
+
+// Chữ cái viết tắt cho avatar (tối đa 2 ký tự, lấy từ đầu các từ trong tên).
+function initials(name: string) {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+
+  if (words.length === 0) {
+    return "?";
+  }
+
+  if (words.length === 1) {
+    return words[0].slice(0, 2).toUpperCase();
+  }
+
+  return (words[0][0] + words[words.length - 1][0]).toUpperCase();
+}
+
+// Màu nền avatar suy ra từ tên để mỗi học viên có một màu ổn định, dễ phân biệt.
+const AVATAR_COLORS = [
+  "bg-rose-500",
+  "bg-orange-500",
+  "bg-amber-500",
+  "bg-emerald-500",
+  "bg-teal-500",
+  "bg-sky-500",
+  "bg-indigo-500",
+  "bg-violet-500",
+  "bg-fuchsia-500"
+];
+
+function avatarColor(name: string) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i += 1) {
+    hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+  }
+
+  return AVATAR_COLORS[hash % AVATAR_COLORS.length];
+}
 
 function average(values: number[]) {
   if (values.length === 0) {
@@ -88,7 +126,16 @@ export default async function StudentRankingPage() {
             select: {
               scorePercent: true,
               startedAt: true,
-              submittedAt: true
+              submittedAt: true,
+              review: {
+                select: { overallBand: true }
+              },
+              answers: {
+                select: {
+                  isCorrect: true,
+                  assignableUnit: { select: { skill: true } }
+                }
+              }
             }
           },
           recipients: {
@@ -107,6 +154,20 @@ export default async function StudentRankingPage() {
         .map((attempt) => attempt.scorePercent)
         .filter((scorePercent): scorePercent is number => scorePercent !== null);
       const averageScorePercent = average(scoredAttempts);
+      // Band trung bình: gộp band của từng lần làm (band giáo viên chấm hoặc
+      // band tự động bài đủ 40 câu). Không có band nào -> null (hiển thị % thay thế).
+      const attemptBands = classmate.student.attempts
+        .map((attempt) =>
+          attemptBand(
+            attempt.review?.overallBand ?? null,
+            attempt.answers.map((answer) => ({
+              isCorrect: answer.isCorrect,
+              skill: answer.assignableUnit.skill
+            }))
+          )
+        )
+        .filter((band): band is number => band !== null);
+      const averageBandValue = averageBand(attemptBands);
       const completion = completionRate(
         classmate.student.recipients.map((recipient) => recipient.status)
       );
@@ -121,6 +182,7 @@ export default async function StudentRankingPage() {
         id: classmate.student.id,
         displayName: classmate.student.displayName,
         averageScorePercent,
+        averageBandValue,
         completionRate: completion,
         recentActivityPercent,
         rankingScore
@@ -164,26 +226,43 @@ export default async function StudentRankingPage() {
                 <p className="text-lg font-bold tabular-nums">
                   {index < 3 ? medals[index] : <span className="text-base text-muted-foreground">{index + 1}</span>}
                 </p>
-                <div className="min-w-0">
-                  <p className="truncate font-semibold">
-                    {rankedStudent.displayName}
-                    {isCurrentStudent ? (
-                      <span className="ml-2 rounded-full bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">
-                        Bạn
+                <div className="flex min-w-0 items-center gap-3">
+                  <span
+                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white ${avatarColor(
+                      rankedStudent.displayName
+                    )}`}
+                    aria-hidden="true"
+                  >
+                    {initials(rankedStudent.displayName)}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold">
+                      {rankedStudent.displayName}
+                      {isCurrentStudent ? (
+                        <span className="ml-2 rounded-full bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">
+                          Bạn
+                        </span>
+                      ) : null}
+                    </p>
+                    <p className="mt-2 grid gap-1 text-sm text-muted-foreground md:hidden">
+                      <span>
+                        Điểm TB:{" "}
+                        {rankedStudent.averageBandValue !== null
+                          ? `Band ${formatBand(rankedStudent.averageBandValue)}`
+                          : `${Math.round(rankedStudent.averageScorePercent)}%`}
                       </span>
-                    ) : null}
-                  </p>
-                  <p className="mt-2 grid gap-1 text-sm text-muted-foreground md:hidden">
-                    <span>Điểm TB: {Math.round(rankedStudent.averageScorePercent)}%</span>
-                    <span>Hoàn thành: {Math.round(rankedStudent.completionRate)}%</span>
-                    <span>Gần đây: {rankedStudent.recentActivityPercent}%</span>
-                    <span className="font-semibold text-foreground">
-                      Tổng: {rankedStudent.rankingScore}
-                    </span>
-                  </p>
+                      <span>Hoàn thành: {Math.round(rankedStudent.completionRate)}%</span>
+                      <span>Gần đây: {rankedStudent.recentActivityPercent}%</span>
+                      <span className="font-semibold text-foreground">
+                        Tổng: {rankedStudent.rankingScore}
+                      </span>
+                    </p>
+                  </div>
                 </div>
                 <p className="hidden text-sm tabular-nums md:block">
-                  {Math.round(rankedStudent.averageScorePercent)}%
+                  {rankedStudent.averageBandValue !== null
+                    ? `Band ${formatBand(rankedStudent.averageBandValue)}`
+                    : `${Math.round(rankedStudent.averageScorePercent)}%`}
                 </p>
                 <p className="hidden text-sm tabular-nums md:block">
                   {Math.round(rankedStudent.completionRate)}%

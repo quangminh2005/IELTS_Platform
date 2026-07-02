@@ -122,3 +122,35 @@ export const SKILL_SHORT_LABELS: Record<string, string> = {
   listening: "Nghe",
   reading: "Đọc"
 };
+
+// Làm tròn về nửa band gần nhất (thang IELTS: 0.5), giống cách tính band tổng.
+export function roundHalfBand(value: number): number {
+  return Math.round(value * 2) / 2;
+}
+
+// Trung bình các band (làm tròn nửa band). Danh sách rỗng -> null.
+export function averageBand(bands: number[]): number | null {
+  if (bands.length === 0) {
+    return null;
+  }
+
+  return roundHalfBand(bands.reduce((total, band) => total + band, 0) / bands.length);
+}
+
+// Band đại diện cho MỘT lần làm bài, dùng cho trang Lịch sử & Xếp hạng.
+// Ưu tiên band do giáo viên chấm (Nói/Viết), sau đó tới band tự động của bài
+// Nghe/Đọc đủ 40 câu. Không đủ điều kiện quy đổi -> null (phía hiển thị giữ %).
+export function attemptBand(
+  overallBand: number | null,
+  answers: Array<{ isCorrect: boolean | null; skill: string }>
+): number | null {
+  if (overallBand !== null) {
+    return overallBand;
+  }
+
+  const skillBands = bandsBySkill(answers)
+    .map((row) => row.band)
+    .filter((band): band is number => band !== null);
+
+  return averageBand(skillBands);
+}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { attemptBand, formatBand } from "@/lib/band-score";
 
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
@@ -54,8 +55,13 @@ export default async function StudentHistoryPage() {
     redirect("/waiting");
   }
 
+  // Lịch sử chỉ hiển thị bài ĐÃ NỘP / ĐÃ CHẤM — ẩn bài đang làm dở (đã có ở
+  // trang Tổng quan) để hai trang không bị trùng lặp danh sách.
   const attempts = await prisma.attempt.findMany({
-    where: { studentId: student.id },
+    where: {
+      studentId: student.id,
+      status: { in: ["submitted", "reviewed"] }
+    },
     orderBy: { startedAt: "desc" },
     include: {
       assignmentRecipient: {
@@ -65,6 +71,15 @@ export default async function StudentHistoryPage() {
               title: true
             }
           }
+        }
+      },
+      review: {
+        select: { overallBand: true }
+      },
+      answers: {
+        select: {
+          isCorrect: true,
+          assignableUnit: { select: { skill: true } }
         }
       }
     }
@@ -76,14 +91,23 @@ export default async function StudentHistoryPage() {
         <p className="text-sm font-semibold text-primary">Nhật ký luyện tập</p>
         <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Lịch sử làm bài</h2>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          Các bài đã nộp và đang làm dở được lưu tại đây để bạn xem lại.
+          Các bài đã nộp và đã chấm được lưu tại đây để bạn xem lại.
         </p>
       </header>
 
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="divide-y divide-border">
           {attempts.length > 0 ? (
-            attempts.map((attempt) => (
+            attempts.map((attempt) => {
+              const band = attemptBand(
+                attempt.review?.overallBand ?? null,
+                attempt.answers.map((answer) => ({
+                  isCorrect: answer.isCorrect,
+                  skill: answer.assignableUnit.skill
+                }))
+              );
+
+              return (
               <article
                 key={attempt.id}
                 className="flex flex-col gap-3 px-5 py-4 transition hover:bg-muted/60 sm:flex-row sm:items-center sm:justify-between"
@@ -100,7 +124,9 @@ export default async function StudentHistoryPage() {
                 </div>
                 <div className="flex shrink-0 items-center gap-4">
                   <span className="text-sm font-semibold tabular-nums text-foreground">
-                    {formatScore(attempt.score, attempt.scorePercent)}
+                    {band !== null
+                      ? `Band ${formatBand(band)}`
+                      : formatScore(attempt.score, attempt.scorePercent)}
                   </span>
                   <Link
                     href={`/student/results/${attempt.id}`}
@@ -110,7 +136,8 @@ export default async function StudentHistoryPage() {
                   </Link>
                 </div>
               </article>
-            ))
+              );
+            })
           ) : (
             <div className="px-5 py-12 text-center">
               <p className="text-sm font-medium">Chưa có lần làm bài nào</p>

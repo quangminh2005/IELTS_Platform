@@ -4,20 +4,16 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { formatDuration } from "@/lib/format-duration";
 import {
-  bucketAssignmentsByDay,
-  buildMonthGrid,
   formatAttemptResult,
+  groupAssignmentsByDayDescending,
   isSubmissionLate,
   studentsGroupedByClass,
-  vnDayKey,
   type CalendarAssignment,
   type CalendarClass,
   type CalendarMode,
   type CalendarRecipient
 } from "@/lib/assignment-calendar";
 
-const WEEKDAYS = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
-const MONTH_LABEL = (year: number, month: number) => `Tháng ${month + 1}, ${year}`;
 const SUBMITTED = new Set(["submitted", "reviewed"]);
 
 type Props = {
@@ -25,15 +21,18 @@ type Props = {
   classes: CalendarClass[];
 };
 
-function fmtDate(iso: string) {
-  return new Date(iso).toLocaleDateString("vi-VN", {
-    day: "2-digit",
-    month: "2-digit",
+// dayKey 'YYYY-MM-DD' (giờ VN). Dựng mốc giữa trưa VN để tránh lệch ngày do múi giờ.
+function fmtDayHeading(dayKey: string) {
+  return new Date(`${dayKey}T12:00:00+07:00`).toLocaleDateString("vi-VN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
     timeZone: "Asia/Ho_Chi_Minh"
   });
 }
 
-function fmtDateTime(iso: string) {
+function fmtDeadline(iso: string) {
   return new Date(iso).toLocaleString("vi-VN", {
     day: "2-digit",
     month: "2-digit",
@@ -58,13 +57,9 @@ function initials(name: string) {
 }
 
 export function AssignmentCalendar({ assignments, classes }: Props) {
-  const todayKey = vnDayKey(new Date().toISOString());
-  const [todayYear, todayMonth] = todayKey.split("-").map(Number);
-
-  const [cursor, setCursor] = useState({ year: todayYear, month: todayMonth - 1 });
   const [mode, setMode] = useState<CalendarMode>("assigned");
   const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
 
   const filtered = useMemo(() => {
     if (!selectedClassId) {
@@ -75,184 +70,150 @@ export function AssignmentCalendar({ assignments, classes }: Props) {
     );
   }, [assignments, selectedClassId]);
 
-  const buckets = useMemo(() => bucketAssignmentsByDay(filtered, mode), [filtered, mode]);
-  const grid = useMemo(() => buildMonthGrid(cursor.year, cursor.month), [cursor]);
+  const days = useMemo(
+    () => groupAssignmentsByDayDescending(filtered, mode),
+    [filtered, mode]
+  );
 
   const noDeadlineCount = useMemo(
     () => (mode === "deadline" ? filtered.filter((a) => !a.deadline).length : 0),
     [filtered, mode]
   );
 
-  const selected = useMemo(
-    () => assignments.find((a) => a.id === selectedId) ?? null,
-    [assignments, selectedId]
-  );
+  const toggle = (id: string) =>
+    setOpenIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
 
   const visibleRecipients = (assignment: CalendarAssignment) =>
     selectedClassId
       ? assignment.recipients.filter((r) => r.classIds.includes(selectedClassId))
       : assignment.recipients;
 
-  const shiftMonth = (delta: number) => {
-    setCursor((prev) => {
-      const next = new Date(Date.UTC(prev.year, prev.month + delta, 1));
-      return { year: next.getUTCFullYear(), month: next.getUTCMonth() };
-    });
-  };
-
   return (
-    <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_28rem]">
-      <div className="space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex overflow-hidden rounded-lg border border-border text-sm">
-            <button
-              type="button"
-              onClick={() => setMode("assigned")}
-              className={
-                mode === "assigned"
-                  ? "bg-primary px-3 py-1.5 font-semibold text-primary-foreground"
-                  : "px-3 py-1.5 text-muted-foreground"
-              }
-            >
-              Theo ngày giao
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode("deadline")}
-              className={
-                mode === "deadline"
-                  ? "bg-primary px-3 py-1.5 font-semibold text-primary-foreground"
-                  : "px-3 py-1.5 text-muted-foreground"
-              }
-            >
-              Theo hạn nộp
-            </button>
-          </div>
-
-          <select
-            value={selectedClassId ?? ""}
-            onChange={(event) => setSelectedClassId(event.target.value || null)}
-            className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm"
+    <section className="space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="inline-flex overflow-hidden rounded-lg border border-border text-sm">
+          <button
+            type="button"
+            onClick={() => setMode("assigned")}
+            className={
+              mode === "assigned"
+                ? "bg-primary px-3 py-1.5 font-semibold text-primary-foreground"
+                : "px-3 py-1.5 text-muted-foreground"
+            }
           >
-            <option value="">Tất cả lớp</option>
-            {classes.map((cls) => (
-              <option key={cls.id} value={cls.id}>
-                {cls.name}
-              </option>
-            ))}
-          </select>
+            Theo ngày giao
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("deadline")}
+            className={
+              mode === "deadline"
+                ? "bg-primary px-3 py-1.5 font-semibold text-primary-foreground"
+                : "px-3 py-1.5 text-muted-foreground"
+            }
+          >
+            Theo hạn nộp
+          </button>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-4 shadow-card">
-          <div className="mb-3 flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => shiftMonth(-1)}
-              className="rounded-md border border-border px-2 py-1 text-sm hover:border-primary"
-              aria-label="Tháng trước"
-            >
-              ‹
-            </button>
-            <span className="text-sm font-semibold">{MONTH_LABEL(cursor.year, cursor.month)}</span>
-            <button
-              type="button"
-              onClick={() => shiftMonth(1)}
-              className="rounded-md border border-border px-2 py-1 text-sm hover:border-primary"
-              aria-label="Tháng sau"
-            >
-              ›
-            </button>
-          </div>
+        <select
+          value={selectedClassId ?? ""}
+          onChange={(event) => setSelectedClassId(event.target.value || null)}
+          className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm"
+        >
+          <option value="">Tất cả lớp</option>
+          {classes.map((cls) => (
+            <option key={cls.id} value={cls.id}>
+              {cls.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
-          <div className="grid grid-cols-7 gap-1 text-center text-xs text-muted-foreground">
-            {WEEKDAYS.map((day) => (
-              <span key={day} className="py-1">
-                {day}
-              </span>
-            ))}
-          </div>
+      {noDeadlineCount > 0 ? (
+        <p className="text-xs text-muted-foreground">
+          {noDeadlineCount} bài chưa đặt hạn nên không hiển thị ở chế độ này.
+        </p>
+      ) : null}
 
-          <div className="mt-1 grid grid-cols-7 gap-1">
-            {grid.map((key, index) => {
-              if (!key) {
-                return <div key={`blank-${index}`} className="min-h-[64px]" />;
-              }
-              const dayItems = buckets.get(key) ?? [];
-              const dayNumber = Number(key.slice(8, 10));
-              const isToday = key === todayKey;
-
-              return (
-                <div
-                  key={key}
-                  className="min-h-[64px] rounded-md border border-border p-1"
-                >
-                  <div
-                    className={
-                      isToday
-                        ? "mb-1 flex h-5 w-5 items-center justify-center rounded-full border border-primary text-[11px] font-semibold text-primary"
-                        : "mb-1 text-[11px] text-muted-foreground"
-                    }
-                  >
-                    {dayNumber}
-                  </div>
-                  <div className="space-y-1">
-                    {dayItems.slice(0, 2).map((assignment) => {
-                      const shown = visibleRecipients(assignment);
-                      const submitted = shown.filter((r) => SUBMITTED.has(r.status)).length;
-                      const active = assignment.id === selectedId;
-                      return (
-                        <button
-                          key={assignment.id}
-                          type="button"
-                          onClick={() => setSelectedId(assignment.id)}
-                          title={assignment.title}
-                          className={
-                            active
-                              ? "block w-full truncate rounded bg-primary px-1 py-0.5 text-left text-[11px] font-semibold text-primary-foreground"
-                              : "block w-full truncate rounded bg-primary/10 px-1 py-0.5 text-left text-[11px] text-primary"
-                          }
-                        >
-                          {submitted}/{shown.length} · {assignment.title}
-                        </button>
-                      );
-                    })}
-                    {dayItems.length > 2 ? (
-                      <span className="block px-1 text-[10px] text-muted-foreground">
-                        +{dayItems.length - 2} bài
-                      </span>
-                    ) : null}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {noDeadlineCount > 0 ? (
-            <p className="mt-3 text-xs text-muted-foreground">
-              {noDeadlineCount} bài chưa đặt hạn nên không hiển thị ở chế độ này.
-            </p>
-          ) : null}
+      {days.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border bg-card px-5 py-12 text-center text-sm text-muted-foreground">
+          Chưa có bài nào để hiển thị.
         </div>
-      </div>
-
-      <div className="rounded-xl border border-border bg-card p-4 shadow-card">
-        {selected ? (
-          <DetailPanel
-            assignment={selected}
-            classes={classes}
-            selectedClassId={selectedClassId}
-          />
-        ) : (
-          <div className="flex h-full min-h-[200px] items-center justify-center text-center text-sm text-muted-foreground">
-            Chọn một bài trên lịch để xem ai đã nộp, đúng/trễ hạn, thời gian làm và kết quả.
-          </div>
-        )}
-      </div>
+      ) : (
+        <div className="space-y-6">
+          {days.map((day) => (
+            <div key={day.dayKey} className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold">{fmtDayHeading(day.dayKey)}</span>
+                <span className="text-xs text-muted-foreground">· {day.assignments.length} bài</span>
+              </div>
+              <div className="space-y-2">
+                {day.assignments.map((assignment) => {
+                  const shown = visibleRecipients(assignment);
+                  const submitted = shown.filter((r) => SUBMITTED.has(r.status)).length;
+                  const open = openIds.has(assignment.id);
+                  return (
+                    <div
+                      key={assignment.id}
+                      className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => toggle(assignment.id)}
+                        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-muted/40"
+                      >
+                        <div className="flex min-w-0 items-center gap-2.5">
+                          <span
+                            className={`text-muted-foreground transition-transform ${open ? "rotate-90" : ""}`}
+                            aria-hidden
+                          >
+                            ›
+                          </span>
+                          <div className="min-w-0">
+                            <p className="truncate font-semibold">{assignment.title}</p>
+                            <p className="mt-0.5 text-xs text-muted-foreground">
+                              {assignment.deadline
+                                ? `Hạn nộp ${fmtDeadline(assignment.deadline)}`
+                                : "Không đặt hạn"}{" "}
+                              · {assignment.unitCount} phần
+                            </p>
+                          </div>
+                        </div>
+                        <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+                          {submitted}/{shown.length} đã nộp
+                        </span>
+                      </button>
+                      {open ? (
+                        <div className="border-t border-border px-4 py-3">
+                          <AssignmentDetail
+                            assignment={assignment}
+                            classes={classes}
+                            selectedClassId={selectedClassId}
+                          />
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
 
-function DetailPanel({
+function AssignmentDetail({
   assignment,
   classes,
   selectedClassId
@@ -261,30 +222,14 @@ function DetailPanel({
   classes: CalendarClass[];
   selectedClassId: string | null;
 }) {
-  const shown = selectedClassId
-    ? assignment.recipients.filter((r) => r.classIds.includes(selectedClassId))
-    : assignment.recipients;
-  const submitted = shown.filter((r) => SUBMITTED.has(r.status)).length;
   const groups = studentsGroupedByClass(assignment.recipients, classes, selectedClassId);
+
+  if (groups.length === 0) {
+    return <p className="text-sm text-muted-foreground">Không có học viên nào trong lớp đã chọn.</p>;
+  }
 
   return (
     <div className="space-y-4">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h3 className="truncate font-semibold">{assignment.title}</h3>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Giao {fmtDate(assignment.createdAt)} ·{" "}
-            {assignment.deadline
-              ? `Hạn nộp ${fmtDateTime(assignment.deadline)}`
-              : "Không đặt hạn"}{" "}
-            · {assignment.unitCount} phần
-          </p>
-        </div>
-        <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
-          {submitted}/{shown.length} đã nộp
-        </span>
-      </div>
-
       {groups.map((group) => (
         <div key={group.classId ?? "none"} className="space-y-2">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
@@ -324,7 +269,7 @@ function StudentRow({
         </div>
         {done && attempt ? (
           <Link
-            href={`/teacher/review/${attempt.id}`}
+            href={`/teacher/results/${attempt.id}`}
             className="shrink-0 text-xs font-semibold text-primary hover:underline"
           >
             Xem bài →

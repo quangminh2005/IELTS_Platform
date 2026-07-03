@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   vnDayKey,
   bucketAssignmentsByDay,
-  buildMonthGrid,
   groupAssignmentsByDayDescending,
   type CalendarAssignment
 } from "../lib/assignment-calendar";
@@ -35,16 +34,6 @@ describe("bucketAssignmentsByDay", () => {
     const map = bucketAssignmentsByDay([a, b], "deadline");
     expect(map.get("2026-07-05")?.map((x) => x.id)).toEqual(["a"]);
     expect([...map.values()].flat().map((x) => x.id)).toEqual(["a"]);
-  });
-});
-
-describe("buildMonthGrid", () => {
-  it("chèn ô trống đầu tháng theo tuần bắt đầu Thứ Hai", () => {
-    // Tháng 7/2026: ngày 1 là Thứ Tư => 2 ô trống đầu
-    const cells = buildMonthGrid(2026, 6);
-    expect(cells.slice(0, 4)).toEqual([null, null, "2026-07-01", "2026-07-02"]);
-    expect(cells).toContain("2026-07-31");
-    expect(cells.length % 7).toBe(0);
   });
 });
 

@@ -72,27 +72,6 @@ export function bucketAssignmentsByDay(
   return map;
 }
 
-// Lưới ô cho lịch tháng, tuần bắt đầu Thứ Hai. month 0-indexed.
-export function buildMonthGrid(year: number, month: number): (string | null)[] {
-  const firstDow = new Date(Date.UTC(year, month, 1)).getUTCDay(); // 0=CN..6=T7
-  const daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
-  const leading = (firstDow + 6) % 7; // số ô trống trước ngày 1 (Thứ Hai = 0)
-
-  const cells: (string | null)[] = [];
-  for (let i = 0; i < leading; i += 1) {
-    cells.push(null);
-  }
-  for (let day = 1; day <= daysInMonth; day += 1) {
-    const key = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    cells.push(key);
-  }
-  while (cells.length % 7 !== 0) {
-    cells.push(null);
-  }
-
-  return cells;
-}
-
 // Nộp trễ hạn? Chỉ đúng khi có cả mốc nộp lẫn hạn và nộp sau hạn.
 export function isSubmissionLate(
   submittedAt: string | Date | null,

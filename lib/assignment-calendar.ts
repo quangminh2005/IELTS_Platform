@@ -188,3 +188,16 @@ export function formatAttemptResult(attempt: {
   }
   return "Chờ chấm";
 }
+
+// Gom bài theo ngày rồi trả về danh sách ngày sắp xếp giảm dần (mới nhất trước),
+// dùng cho màn danh sách bài theo ngày của giáo viên.
+export function groupAssignmentsByDayDescending(
+  assignments: CalendarAssignment[],
+  mode: CalendarMode
+): Array<{ dayKey: string; assignments: CalendarAssignment[] }> {
+  const map = bucketAssignmentsByDay(assignments, mode);
+
+  return [...map.keys()]
+    .sort((a, b) => b.localeCompare(a))
+    .map((dayKey) => ({ dayKey, assignments: map.get(dayKey) ?? [] }));
+}

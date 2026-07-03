@@ -3,6 +3,7 @@ import {
   vnDayKey,
   bucketAssignmentsByDay,
   buildMonthGrid,
+  groupAssignmentsByDayDescending,
   type CalendarAssignment
 } from "../lib/assignment-calendar";
 
@@ -134,5 +135,36 @@ describe("formatAttemptResult", () => {
     expect(
       formatAttemptResult({ ...base, band: 7, correct: 30, total: 40, hasPendingManual: true })
     ).toBe("7.0 · 30/40 · Chờ chấm");
+  });
+});
+
+describe("groupAssignmentsByDayDescending", () => {
+  const a = {
+    id: "a",
+    title: "a",
+    createdAt: "2026-07-02T18:00:00.000Z", // 03/07 giờ VN
+    deadline: "2026-07-05T16:59:00.000Z",
+    unitCount: 1,
+    recipients: []
+  };
+  const b = {
+    id: "b",
+    title: "b",
+    createdAt: "2026-07-03T20:00:00.000Z", // 04/07 giờ VN
+    deadline: null,
+    unitCount: 1,
+    recipients: []
+  };
+
+  it("gom theo ngày giao và sắp xếp ngày giảm dần", () => {
+    const days = groupAssignmentsByDayDescending([a, b], "assigned");
+    expect(days.map((d) => d.dayKey)).toEqual(["2026-07-04", "2026-07-03"]);
+    expect(days[1].assignments.map((x) => x.id)).toEqual(["a"]);
+  });
+
+  it("chế độ hạn nộp bỏ bài không có hạn", () => {
+    const days = groupAssignmentsByDayDescending([a, b], "deadline");
+    expect(days.map((d) => d.dayKey)).toEqual(["2026-07-05"]);
+    expect(days[0].assignments.map((x) => x.id)).toEqual(["a"]);
   });
 });

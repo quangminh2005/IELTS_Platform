@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const root = process.cwd();
@@ -11,5 +11,9 @@ describe("teacher calendar wiring", () => {
     expect(shell).toContain('href: "/teacher/calendar"');
     expect(shell).toContain("Lịch giao bài");
     expect(shell).toContain('case "calendar"');
+  });
+
+  it("có route server component cho lịch", () => {
+    expect(existsSync(join(root, "app/teacher/calendar/page.tsx"))).toBe(true);
   });
 });

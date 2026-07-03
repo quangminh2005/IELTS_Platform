@@ -16,6 +16,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
     { href: "/teacher/classes", label: "Lớp học", hint: "Quản lý học viên", icon: "users" },
     { href: "/teacher/materials", label: "Tài liệu", hint: "Kho đề & bài", icon: "book" },
     { href: "/teacher/assignments", label: "Giao bài", hint: "Bài tập về nhà", icon: "clipboard" },
+    { href: "/teacher/calendar", label: "Lịch giao bài", hint: "Theo dõi nộp bài", icon: "calendar" },
     { href: "/teacher/review", label: "Chấm bài", hint: "Writing & Speaking", icon: "check" }
   ],
   student: [
@@ -25,7 +26,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
   ]
 };
 
-type IconName = "home" | "users" | "book" | "clipboard" | "check" | "clock" | "trophy" | "menu" | "close";
+type IconName = "home" | "users" | "book" | "clipboard" | "check" | "clock" | "trophy" | "menu" | "close" | "calendar";
 
 function Icon({ name }: { name: IconName }) {
   const common = {
@@ -89,6 +90,13 @@ function Icon({ name }: { name: IconName }) {
           <path d="M7 4h10v4a5 5 0 0 1-10 0Z" />
           <path d="M7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3" />
           <path d="M12 13v4M9 21h6M10 17h4" />
+        </svg>
+      );
+    case "calendar":
+      return (
+        <svg {...common} aria-hidden="true">
+          <rect x="3.5" y="5" width="17" height="15" rx="2" />
+          <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" />
         </svg>
       );
     case "menu":

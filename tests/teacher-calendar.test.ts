@@ -16,4 +16,8 @@ describe("teacher calendar wiring", () => {
   it("có route server component cho lịch", () => {
     expect(existsSync(join(root, "app/teacher/calendar/page.tsx"))).toBe(true);
   });
+
+  it("có route xem kết quả chi tiết cho giáo viên", () => {
+    expect(existsSync(join(root, "app/teacher/results/[attemptId]/page.tsx"))).toBe(true);
+  });
 });

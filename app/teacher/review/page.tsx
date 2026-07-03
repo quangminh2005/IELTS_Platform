@@ -1,5 +1,6 @@
 import { ReviewQueue } from "@/components/review-queue";
 import { requireTeacher } from "@/lib/actions/classes";
+import { isSubmissionLate } from "@/lib/assignment-calendar";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
 
@@ -57,11 +58,7 @@ export default async function TeacherReviewPage() {
       .map((skill) => skill.charAt(0).toUpperCase() + skill.slice(1))
       .join(", ");
 
-    const isLate = Boolean(
-      attempt.submittedAt &&
-        assignment.deadline &&
-        attempt.submittedAt.getTime() > assignment.deadline.getTime()
-    );
+    const isLate = isSubmissionLate(attempt.submittedAt, assignment.deadline);
 
     return {
       id: attempt.id,

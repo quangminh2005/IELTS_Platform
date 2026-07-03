@@ -2,6 +2,8 @@
 // Toàn bộ ở đây không phụ thuộc Prisma/React để test được và dùng chung
 // cho cả server component lẫn client component.
 
+import { formatBand } from "@/lib/band-score";
+
 export type CalendarClass = { id: string; name: string };
 
 export type CalendarAttempt = {
@@ -89,4 +91,100 @@ export function buildMonthGrid(year: number, month: number): (string | null)[] {
   }
 
   return cells;
+}
+
+// Nộp trễ hạn? Chỉ đúng khi có cả mốc nộp lẫn hạn và nộp sau hạn.
+export function isSubmissionLate(
+  submittedAt: string | Date | null,
+  deadline: string | Date | null
+): boolean {
+  if (!submittedAt || !deadline) {
+    return false;
+  }
+  return new Date(submittedAt).getTime() > new Date(deadline).getTime();
+}
+
+// Đếm câu đã chấm tự động (Nghe/Đọc). Bỏ câu Writing/Speaking (isCorrect null).
+export function countGradedAnswers(
+  answers: Array<{ isCorrect: boolean | null }>
+): { correct: number; total: number } {
+  let correct = 0;
+  let total = 0;
+
+  for (const answer of answers) {
+    if (answer.isCorrect === null) {
+      continue;
+    }
+    total += 1;
+    if (answer.isCorrect) {
+      correct += 1;
+    }
+  }
+
+  return { correct, total };
+}
+
+// Gom học viên theo lớp. Lọc theo 1 lớp -> chỉ lớp đó. "Tất cả" -> mỗi lớp có
+// học viên nhận bài là một nhóm; học viên không thuộc lớp nào vào "Chưa xếp lớp".
+// Học viên thuộc nhiều lớp sẽ xuất hiện ở mỗi nhóm lớp của họ (phản ánh đúng "theo lớp").
+export function studentsGroupedByClass(
+  recipients: CalendarRecipient[],
+  classes: CalendarClass[],
+  selectedClassId: string | null
+): ClassGroup[] {
+  if (selectedClassId) {
+    const cls = classes.find((item) => item.id === selectedClassId);
+    const students = recipients.filter((r) => r.classIds.includes(selectedClassId));
+    return students.length > 0
+      ? [{ classId: selectedClassId, className: cls?.name ?? "Lớp", students }]
+      : [];
+  }
+
+  const groups: ClassGroup[] = [];
+  for (const cls of classes) {
+    const students = recipients.filter((r) => r.classIds.includes(cls.id));
+    if (students.length > 0) {
+      groups.push({ classId: cls.id, className: cls.name, students });
+    }
+  }
+
+  const unassigned = recipients.filter(
+    (r) => !classes.some((cls) => r.classIds.includes(cls.id))
+  );
+  if (unassigned.length > 0) {
+    groups.push({ classId: null, className: "Chưa xếp lớp", students: unassigned });
+  }
+
+  return groups;
+}
+
+// Chuỗi "kết quả" hiển thị: band (hoặc %) + số câu đúng; kèm/hiện "Chờ chấm" cho
+// phần chấm tay. Chỉ dùng cho attempt đã nộp/đã chấm.
+export function formatAttemptResult(attempt: {
+  band: number | null;
+  correct: number;
+  total: number;
+  scorePercent: number | null;
+  hasPendingManual: boolean;
+  status: string;
+}): string {
+  if (attempt.status !== "submitted" && attempt.status !== "reviewed") {
+    return "—";
+  }
+
+  if (attempt.total > 0) {
+    const head =
+      attempt.band !== null
+        ? formatBand(attempt.band)
+        : attempt.scorePercent !== null
+          ? `${Math.round(attempt.scorePercent)}%`
+          : "—";
+    const body = `${head} · ${attempt.correct}/${attempt.total}`;
+    return attempt.hasPendingManual ? `${body} · Chờ chấm` : body;
+  }
+
+  if (attempt.band !== null) {
+    return formatBand(attempt.band);
+  }
+  return "Chờ chấm";
 }

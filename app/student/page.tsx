@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { SkillTags } from "@/components/skill-tags";
 
 function statusClasses(status: string) {
   if (status === "reviewed") {
@@ -68,6 +69,11 @@ export default async function StudentDashboardPage() {
         include: {
           _count: {
             select: { units: true }
+          },
+          units: {
+            select: {
+              assignableUnit: { select: { skill: true } }
+            }
           }
         }
       },
@@ -141,6 +147,13 @@ export default async function StudentDashboardPage() {
                           : ""}
                       </p>
                     ) : null}
+                    <div className="mt-2">
+                      <SkillTags
+                        skills={recipient.assignment.units.map(
+                          (unit) => unit.assignableUnit.skill
+                        )}
+                      />
+                    </div>
                   </div>
                   <div className="flex shrink-0 flex-wrap items-center gap-3">
                     <span

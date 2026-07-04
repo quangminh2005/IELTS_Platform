@@ -634,7 +634,15 @@ function MatchingQuestionSet({
   function assign(questionId: string, value: string) {
     setSelections((previous) => ({ ...previous, [questionId]: value }));
     onAnswerChange(questionId, value);
+    setActiveOption(null);
   }
+
+  // Mỗi lựa chọn chỉ dùng một lần: đáp án đã gán cho một câu sẽ biến mất khỏi
+  // hộp (giống chin.edu.vn). Xoá đáp án ở một câu thì lựa chọn quay lại hộp.
+  const usedOptions = new Set(
+    Object.values(selections).filter((value) => value.length > 0)
+  );
+  const availableOptions = sharedOptions.filter((option) => !usedOptions.has(option));
 
   return (
     <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,0.85fr)]">
@@ -689,10 +697,12 @@ function MatchingQuestionSet({
 
       <div className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Lựa chọn (có thể dùng nhiều lần)
+          Lựa chọn (kéo vào ô trống)
         </p>
-        {sharedOptions.length > 0 ? (
-          sharedOptions.map((option) => (
+        {sharedOptions.length === 0 ? (
+          <p className="text-xs text-muted-foreground">Chưa có lựa chọn.</p>
+        ) : availableOptions.length > 0 ? (
+          availableOptions.map((option) => (
             <button
               key={option}
               type="button"
@@ -713,7 +723,7 @@ function MatchingQuestionSet({
             </button>
           ))
         ) : (
-          <p className="text-xs text-muted-foreground">Chưa có lựa chọn.</p>
+          <p className="text-xs text-muted-foreground">Đã điền hết lựa chọn.</p>
         )}
         {activeOption ? (
           <p className="text-xs text-muted-foreground">

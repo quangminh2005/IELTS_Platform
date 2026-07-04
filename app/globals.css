@@ -360,3 +360,18 @@ body {
 .audio-range:focus-visible::-webkit-slider-thumb {
   box-shadow: 0 0 0 3px hsl(var(--primary) / 0.35);
 }
+
+/* Hiệu ứng lấp lánh cho avatar hạng 1 trên bục vinh quang. */
+@keyframes podium-shine {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(250, 204, 21, 0);
+  }
+  50% {
+    box-shadow: 0 0 18px 4px rgba(250, 204, 21, 0.55);
+  }
+}
+
+.animate-podium-shine {
+  animation: podium-shine 2s ease-in-out infinite;
+}

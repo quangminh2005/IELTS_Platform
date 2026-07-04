@@ -196,6 +196,19 @@ export default async function StudentRankingPage() {
 
   const medals = ["🥇", "🥈", "🥉"];
 
+  const topThree = rankedStudents.slice(0, 3);
+  const rest = rankedStudents.slice(3);
+
+  // Thứ tự hiển thị trực quan: hạng 2 (trái) - hạng 1 (giữa) - hạng 3 (phải).
+  // Chỉ lấy các vị trí thực sự có học viên (lớp ít người sẽ có 1-2 bục).
+  const podiumOrder = [1, 0, 2].filter((rankIndex) => topThree[rankIndex]);
+
+  const podiumStyle = [
+    { ring: "ring-yellow-400", pedestal: "h-24 bg-yellow-400/20", size: "h-20 w-20", shine: "animate-podium-shine" },
+    { ring: "ring-slate-300", pedestal: "h-16 bg-slate-300/20", size: "h-16 w-16", shine: "" },
+    { ring: "ring-amber-600", pedestal: "h-12 bg-amber-600/20", size: "h-16 w-16", shine: "" }
+  ];
+
   return (
     <div className="space-y-8">
       <header>
@@ -207,6 +220,59 @@ export default async function StudentRankingPage() {
         </p>
       </header>
 
+      <section className="rounded-xl border border-border bg-card px-4 py-6 shadow-card">
+        <div className="flex items-end justify-center gap-3 sm:gap-6">
+          {podiumOrder.map((rankIndex) => {
+            const rankedStudent = topThree[rankIndex];
+            const style = podiumStyle[rankIndex];
+            const isCurrentStudent = rankedStudent.id === student.id;
+
+            return (
+              <div key={rankedStudent.id} className="flex w-24 flex-col items-center sm:w-28">
+                <span className="mb-1 text-2xl">{medals[rankIndex]}</span>
+                {rankedStudent.avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={rankedStudent.avatarUrl}
+                    alt=""
+                    referrerPolicy="no-referrer"
+                    className={`${style.size} rounded-full object-cover ring-4 ${style.ring} ${style.shine}`}
+                  />
+                ) : (
+                  <span
+                    className={`flex ${style.size} items-center justify-center rounded-full text-lg font-bold text-white ring-4 ${style.ring} ${style.shine} ${avatarColor(
+                      rankedStudent.displayName
+                    )}`}
+                    aria-hidden="true"
+                  >
+                    {initials(rankedStudent.displayName)}
+                  </span>
+                )}
+                <p className="mt-2 max-w-full truncate text-center text-sm font-semibold">
+                  {rankedStudent.displayName}
+                  {isCurrentStudent ? (
+                    <span className="ml-1 rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
+                      Bạn
+                    </span>
+                  ) : null}
+                </p>
+                <p className="text-xs font-semibold tabular-nums text-primary">
+                  {rankedStudent.rankingScore} điểm
+                </p>
+                <div
+                  className={`mt-2 flex w-full items-start justify-center rounded-t-lg ${style.pedestal}`}
+                >
+                  <span className="mt-1 text-sm font-bold tabular-nums text-foreground">
+                    {rankIndex + 1}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {rest.length > 0 ? (
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-3 border-b border-border bg-muted/50 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground md:grid-cols-[3.5rem_minmax(0,1fr)_6rem_6rem_6rem_6rem]">
           <span>Hạng</span>
@@ -217,7 +283,7 @@ export default async function StudentRankingPage() {
           <span className="hidden md:block">Tổng</span>
         </div>
         <div className="divide-y divide-border">
-          {rankedStudents.map((rankedStudent, index) => {
+          {rest.map((rankedStudent, index) => {
             const isCurrentStudent = rankedStudent.id === student.id;
 
             return (
@@ -228,7 +294,7 @@ export default async function StudentRankingPage() {
                 }`}
               >
                 <p className="text-lg font-bold tabular-nums">
-                  {index < 3 ? medals[index] : <span className="text-base text-muted-foreground">{index + 1}</span>}
+                  <span className="text-base text-muted-foreground">{index + 4}</span>
                 </p>
                 <div className="flex min-w-0 items-center gap-3">
                   {rankedStudent.avatarUrl ? (
@@ -292,6 +358,7 @@ export default async function StudentRankingPage() {
           })}
         </div>
       </section>
+      ) : null}
     </div>
   );
 }

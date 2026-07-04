@@ -1,0 +1,53 @@
+{
+  "title": "Cambridge IELTS 20 – Test 2 (Speaking)",
+  "skill": "speaking",
+  "sourceLabel": "Cambridge IELTS 20 (Academic) – Test 2",
+  "description": "Speaking Test 2: Part 1 (phỏng vấn), Part 2 (nói dài theo cue card), Part 3 (thảo luận). Bài chấm tay theo tiêu chí IELTS Speaking.",
+  "units": [
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 1,
+      "title": "Speaking Part 1 – Fruit",
+      "instructions": "Bài Nói: bấm \"Bắt đầu ghi âm\" ở ô bên phải để thu câu trả lời, rồi \"Dừng & nộp\". Giáo viên sẽ nghe và chấm.",
+      "content": "Part 1 — Interview (4–5 phút)\n\nGiám khảo hỏi về chủ đề quen thuộc (trái cây):\n\n1. What's your favourite fruit?\n2. Are there any kinds of fruit that you don't like eating?\n3. Do you like eating cooked food that has fruit in it?\n4. Where's the best place to buy fruit where you live?",
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "speaking_task",
+          "prompt": "Ghi âm phần trả lời của bạn cho Part 1 — trả lời lần lượt 4 câu hỏi ở trên.",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 2,
+      "title": "Speaking Part 2 – Cue card (changing a plan)",
+      "instructions": "Bài Nói: bấm \"Bắt đầu ghi âm\" ở ô bên phải để thu câu trả lời, rồi \"Dừng & nộp\". Giáo viên sẽ nghe và chấm.",
+      "content": "Part 2 — Individual long turn (3–4 phút)\n\nDescribe a time when you changed a plan you had made.\n\nYou should say:\n· what your original plan was\n· why you changed it\n· what new plan you made\n\nand explain how you felt about changing your plan.\n\n(Bạn có 1 phút chuẩn bị và ghi chú, sau đó nói 1–2 phút.)",
+      "questions": [
+        {
+          "order": 2,
+          "questionType": "speaking_task",
+          "prompt": "Ghi âm phần nói Part 2 — nói liên tục 1–2 phút theo gợi ý ở trên (có 1 phút chuẩn bị).",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 3,
+      "title": "Speaking Part 3 – Making plans & choosing a career",
+      "instructions": "Bài Nói: bấm \"Bắt đầu ghi âm\" ở ô bên phải để thu câu trả lời, rồi \"Dừng & nộp\". Giáo viên sẽ nghe và chấm.",
+      "content": "Part 3 — Discussion (4–5 phút)\n\nMaking plans with other people\n1. What kinds of plans do friends make together?\n2. Do you think it's better to discuss future plans with friends or with family?\n3. When making plans for the future, is it important not to copy friends?\n\nChoosing a career\n4. When people are choosing what to study, how important is it that their course should lead directly to a career?\n5. Why is it a good idea to get some work experience before deciding on a future career?\n6. How easy do you think it is for people to change from one career to another?",
+      "questions": [
+        {
+          "order": 3,
+          "questionType": "speaking_task",
+          "prompt": "Ghi âm phần trả lời của bạn cho Part 3 — trả lời lần lượt 6 câu hỏi ở trên.",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

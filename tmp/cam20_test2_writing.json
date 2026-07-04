@@ -1,0 +1,43 @@
+{
+  "title": "Cambridge IELTS 20 – Test 2 (Writing)",
+  "skill": "writing",
+  "sourceLabel": "Cambridge IELTS 20 (Academic) – Test 2",
+  "description": "Writing Test 2: Task 1 (mô tả sơ đồ/bản đồ, 150 từ, 20 phút) + Task 2 (essay, 250 từ, 40 phút). Bài làm cần giáo viên chấm tay. LƯU Ý: Task 1 là bản đồ 'Beechwood Farm' — cần upload ảnh sau khi import.",
+  "units": [
+    {
+      "unitType": "writing_task",
+      "unitNumber": 1,
+      "title": "Writing Task 1 – Beechwood Farm (1950 vs today)",
+      "instructions": "Bạn nên dành khoảng 20 phút cho phần này. Viết ít nhất 150 từ. Tóm tắt thông tin từ hai sơ đồ và đưa ra so sánh khi phù hợp.",
+      "content": "The plans below show the site of a farm (Beechwood Farm) in 1950 and the same site today.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.\n\n(Hai sơ đồ 'Beechwood Farm' — năm 1950 và hiện nay — sẽ được chèn bằng ảnh. Giáo viên upload ảnh cho unit này sau khi import.)",
+      "defaultTimeLimitMinutes": 20,
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "writing_task",
+          "prompt": "Viết bài Task 1 vào ô bên dưới (tối thiểu 150 từ). Mô tả những thay đổi chính của Beechwood Farm từ năm 1950 đến hiện nay và so sánh khi phù hợp.",
+          "points": 9
+        }
+      ],
+      "metadata": {
+        "images": []
+      }
+    },
+    {
+      "unitType": "writing_task",
+      "unitNumber": 2,
+      "title": "Writing Task 2 – Long school holidays",
+      "instructions": "Bạn nên dành khoảng 40 phút cho phần này. Viết ít nhất 250 từ, đưa ra lý do và ví dụ phù hợp.",
+      "content": "You should spend about 40 minutes on this task.\n\nWrite about the following topic:\n\n> In many countries, primary and secondary schools close for two months or more in the summer holidays.\n>\n> What is the value of long school holidays?\n>\n> What are the arguments in favour of shorter school holidays?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+      "defaultTimeLimitMinutes": 40,
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "writing_task",
+          "prompt": "Viết bài Task 2 vào ô bên dưới (tối thiểu 250 từ). Trình bày giá trị của kỳ nghỉ hè dài và các lý lẽ ủng hộ kỳ nghỉ ngắn hơn; đưa ra lý do và ví dụ từ kiến thức/kinh nghiệm cá nhân.",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

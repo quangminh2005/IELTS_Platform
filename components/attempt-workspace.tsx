@@ -1014,6 +1014,83 @@ function TfngGridQuestionSet({
   );
 }
 
+// Dạng "Choose the correct letter, A/B/C(/D)" với lựa chọn là câu đầy đủ: nhiều
+// câu liên tiếp xếp lưới 2 cột, mỗi câu một thẻ gọn — đỡ phải cuộn nhiều
+// (giống chin.edu.vn hiển thị 17|18, 19|20 cạnh nhau).
+function ChoiceGridQuestionSet({
+  questions,
+  savedAnswers,
+  onAnswerChange,
+  flagged,
+  onToggleFlag
+}: {
+  questions: Question[];
+  savedAnswers: Record<string, string>;
+  onAnswerChange: AnswerChange;
+  flagged: Set<string>;
+  onToggleFlag: (questionId: string) => void;
+}) {
+  return (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {questions.map((question) => {
+        const options = parseQuestionOptions(question.optionsJson);
+        const value = savedAnswers[question.id] ?? "";
+        const isFlagged = flagged.has(question.id);
+
+        return (
+          <div
+            key={question.id}
+            id={`question-${question.id}`}
+            className="flex scroll-mt-24 flex-col rounded-md border border-border bg-background/40 p-3"
+          >
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-sm font-medium leading-6">
+                <span className="font-semibold text-muted-foreground">{question.order}.</span>{" "}
+                {question.prompt}
+              </p>
+              <button
+                type="button"
+                onClick={() => onToggleFlag(question.id)}
+                aria-pressed={isFlagged}
+                title={isFlagged ? "Bỏ đánh dấu" : "Đánh dấu"}
+                className={
+                  isFlagged
+                    ? "shrink-0 text-amber-500"
+                    : "shrink-0 text-muted-foreground hover:text-amber-500"
+                }
+              >
+                {isFlagged ? "★" : "☆"}
+              </button>
+            </div>
+            <div className="mt-2 space-y-1">
+              {options.map((option) => (
+                <label
+                  key={option}
+                  className={`flex cursor-pointer items-start gap-2 rounded-md border px-2.5 py-1.5 text-sm transition ${
+                    value === option
+                      ? "border-primary bg-primary/5"
+                      : "border-transparent hover:border-primary/40 hover:bg-primary/5"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name={`q_${question.id}`}
+                    value={option}
+                    checked={value === option}
+                    onChange={() => onAnswerChange(question.id, option)}
+                    className="mt-0.5 h-4 w-4 accent-primary"
+                  />
+                  <span>{option}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function CountdownTimer({
   startedAtMs,
   timeLimitMinutes
@@ -1537,6 +1614,7 @@ export function AttemptWorkspace({
               options: string[];
               selectCount: number;
             }
+          | { kind: "choicegrid"; key: string; questions: Question[] }
           | { kind: "single"; key: string; question: Question };
         const regularRenderItems: RegularItem[] = [];
         // Gom các câu liên tiếp có cùng bộ lựa chọn, bắt đầu từ startIndex.
@@ -1604,6 +1682,48 @@ export function AttemptWorkspace({
                 key: `${isLetterMc ? "grid" : "tfng"}-${question.id}`,
                 questions: run,
                 options
+              });
+              i += run.length - 1;
+              continue;
+            }
+          }
+
+          // "Choose the correct letter" với lựa chọn là câu đầy đủ (không phải chữ
+          // cái đơn): gộp các câu multiple_choice liên tiếp thành lưới 2 cột. Mỗi
+          // câu giữ bộ lựa chọn riêng, nên KHÔNG yêu cầu trùng options.
+          const isStandardMc =
+            question.questionType === "multiple_choice" &&
+            options.length >= 2 &&
+            !options.every((option) => option.trim().length <= 2);
+          if (isStandardMc) {
+            const run = [question];
+            let j = i + 1;
+            while (j < regularQuestions.length) {
+              const next = regularQuestions[j];
+              if (multiSelectMemberIds.has(next.id)) {
+                break;
+              }
+              // Không gộp qua ranh giới nhóm hướng dẫn khác (vd tóm tắt 33–37 và
+              // trắc nghiệm 38–40): giữ khung hướng dẫn của từng nhóm.
+              if (groupKeys.includes(next.order)) {
+                break;
+              }
+              const nextOptions = parseQuestionOptions(next.optionsJson);
+              const nextIsStandardMc =
+                next.questionType === "multiple_choice" &&
+                nextOptions.length >= 2 &&
+                !nextOptions.every((option) => option.trim().length <= 2);
+              if (!nextIsStandardMc) {
+                break;
+              }
+              run.push(next);
+              j += 1;
+            }
+            if (run.length >= 2) {
+              regularRenderItems.push({
+                kind: "choicegrid",
+                key: `mc-${question.id}`,
+                questions: run
               });
               i += run.length - 1;
               continue;
@@ -1745,6 +1865,14 @@ export function AttemptWorkspace({
                         questions={item.questions}
                         options={item.options}
                         selectCount={item.selectCount}
+                        savedAnswers={answers}
+                        onAnswerChange={handleAnswerChange}
+                        flagged={flagged}
+                        onToggleFlag={toggleFlag}
+                      />
+                    ) : item.kind === "choicegrid" ? (
+                      <ChoiceGridQuestionSet
+                        questions={item.questions}
                         savedAnswers={answers}
                         onAnswerChange={handleAnswerChange}
                         flagged={flagged}

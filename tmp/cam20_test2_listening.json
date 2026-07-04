@@ -1,0 +1,519 @@
+{
+  "title": "Cambridge IELTS 20 – Test 2 (Listening)",
+  "skill": "listening",
+  "sourceLabel": "Cambridge IELTS 20 (Academic) – Test 2",
+  "description": "Listening Test 2: 4 part, 40 câu. Nhớ upload 4 file audio MP3 cho từng part sau khi import.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 – Support for carers of elderly people",
+      "instructions": "Nghe và hoàn thành ghi chú. Mỗi chỗ trống điền MỘT TỪ VÀ/HOẶC MỘT SỐ.",
+      "content": "Local councils can arrange practical support to help those caring for elderly people at home.\n\nThis can give the carer:\n- time for other responsibilities\n- a [[1]]\n\nAssessment of mother's needs\nThis may include discussion of:\n- how much [[2]] the caring involves\n- what types of tasks are involved, e.g.\n  - help with dressing\n  - helping her have a [[3]]\n  - shopping\n  - helping with meals\n  - dealing with [[4]]\n- any aspects of caring that are especially difficult, e.g.\n  - loss of [[5]]\n  - [[6]] her\n  - preventing a [[7]]\n\nTypes of support that may be offered to carers\n- transport costs, e.g. cost of a [[8]]\n- car-related costs, e.g. fuel and [[9]]\n- help with housework\n- help to reduce [[10]]",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": "break",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": "time",
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Câu 3",
+          "answer": "shower",
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": "money",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Câu 5",
+          "answer": "memory",
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Câu 6",
+          "answer": "lifting",
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Câu 7",
+          "answer": "fall",
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Câu 8",
+          "answer": "taxi",
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Câu 9",
+          "answer": "insurance",
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Câu 10",
+          "answer": "stress",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the notes below.\nWrite ONE WORD AND/OR A NUMBER for each answer."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 – Volunteering for the local council",
+      "instructions": "Nghe và trả lời. Câu 11–16: ghép mỗi hoạt động với vai trò phù hợp (chọn từ hộp A–I). Câu 17–20: chọn A, B hoặc C.",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "matching",
+          "prompt": "walking around the town centre",
+          "options": [
+            "A. providing entertainment",
+            "B. providing publicity about a council service",
+            "C. contacting local businesses",
+            "D. giving advice to visitors",
+            "E. collecting feedback on events",
+            "F. selling tickets",
+            "G. introducing guest speakers at an event",
+            "H. encouraging cooperation between local organisations",
+            "I. helping people find their seats"
+          ],
+          "answer": "D. giving advice to visitors",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "matching",
+          "prompt": "helping at concerts",
+          "options": [
+            "A. providing entertainment",
+            "B. providing publicity about a council service",
+            "C. contacting local businesses",
+            "D. giving advice to visitors",
+            "E. collecting feedback on events",
+            "F. selling tickets",
+            "G. introducing guest speakers at an event",
+            "H. encouraging cooperation between local organisations",
+            "I. helping people find their seats"
+          ],
+          "answer": "I. helping people find their seats",
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "matching",
+          "prompt": "getting involved with community groups",
+          "options": [
+            "A. providing entertainment",
+            "B. providing publicity about a council service",
+            "C. contacting local businesses",
+            "D. giving advice to visitors",
+            "E. collecting feedback on events",
+            "F. selling tickets",
+            "G. introducing guest speakers at an event",
+            "H. encouraging cooperation between local organisations",
+            "I. helping people find their seats"
+          ],
+          "answer": "H. encouraging cooperation between local organisations",
+          "points": 1
+        },
+        {
+          "order": 14,
+          "questionType": "matching",
+          "prompt": "helping with a magazine",
+          "options": [
+            "A. providing entertainment",
+            "B. providing publicity about a council service",
+            "C. contacting local businesses",
+            "D. giving advice to visitors",
+            "E. collecting feedback on events",
+            "F. selling tickets",
+            "G. introducing guest speakers at an event",
+            "H. encouraging cooperation between local organisations",
+            "I. helping people find their seats"
+          ],
+          "answer": "E. collecting feedback on events",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "matching",
+          "prompt": "participating at lunches for retired people",
+          "options": [
+            "A. providing entertainment",
+            "B. providing publicity about a council service",
+            "C. contacting local businesses",
+            "D. giving advice to visitors",
+            "E. collecting feedback on events",
+            "F. selling tickets",
+            "G. introducing guest speakers at an event",
+            "H. encouraging cooperation between local organisations",
+            "I. helping people find their seats"
+          ],
+          "answer": "A. providing entertainment",
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "helping with the website",
+          "options": [
+            "A. providing entertainment",
+            "B. providing publicity about a council service",
+            "C. contacting local businesses",
+            "D. giving advice to visitors",
+            "E. collecting feedback on events",
+            "F. selling tickets",
+            "G. introducing guest speakers at an event",
+            "H. encouraging cooperation between local organisations",
+            "I. helping people find their seats"
+          ],
+          "answer": "B. providing publicity about a council service",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "multiple_choice",
+          "prompt": "Which event requires the largest number of volunteers?",
+          "options": [
+            "A. the music festival",
+            "B. the science festival",
+            "C. the book festival"
+          ],
+          "answer": "B. the science festival",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "multiple_choice",
+          "prompt": "What is the most important requirement for volunteers at the festivals?",
+          "options": [
+            "A. interpersonal skills",
+            "B. personal interest in the event",
+            "C. flexibility"
+          ],
+          "answer": "A. interpersonal skills",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "multiple_choice",
+          "prompt": "New volunteers will start working in the week beginning",
+          "options": [
+            "A. 2 September.",
+            "B. 9 September.",
+            "C. 23 September."
+          ],
+          "answer": "B. 9 September.",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "multiple_choice",
+          "prompt": "What is the next annual event for volunteers?",
+          "options": [
+            "A. a boat trip",
+            "B. a barbecue",
+            "C. a party"
+          ],
+          "answer": "A. a boat trip",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupInstructions": {
+          "11": "What is the role of the volunteers in each of the following activities?\nChoose SIX answers from the box and write the correct letter, A–I, next to Questions 11–16.",
+          "17": "Choose the correct letter, A, B or C."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 – Human geography project",
+      "instructions": "Nghe đoạn thảo luận giữa hai sinh viên. Câu 21–25: ghép mỗi khía cạnh với ý kiến phù hợp (chọn từ hộp A–G). Câu 26–30: chọn A, B hoặc C.",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "matching",
+          "prompt": "Population",
+          "options": [
+            "A. The information given about this was too vague.",
+            "B. This may not be relevant to their course.",
+            "C. This will involve only a small number of statistics.",
+            "D. It will be easy to find facts about this.",
+            "E. The facts about this may not be reliable.",
+            "F. No useful research has been done on this.",
+            "G. The information provided about this was interesting."
+          ],
+          "answer": "D. It will be easy to find facts about this.",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "matching",
+          "prompt": "Health",
+          "options": [
+            "A. The information given about this was too vague.",
+            "B. This may not be relevant to their course.",
+            "C. This will involve only a small number of statistics.",
+            "D. It will be easy to find facts about this.",
+            "E. The facts about this may not be reliable.",
+            "F. No useful research has been done on this.",
+            "G. The information provided about this was interesting."
+          ],
+          "answer": "G. The information provided about this was interesting.",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "matching",
+          "prompt": "Economies",
+          "options": [
+            "A. The information given about this was too vague.",
+            "B. This may not be relevant to their course.",
+            "C. This will involve only a small number of statistics.",
+            "D. It will be easy to find facts about this.",
+            "E. The facts about this may not be reliable.",
+            "F. No useful research has been done on this.",
+            "G. The information provided about this was interesting."
+          ],
+          "answer": "B. This may not be relevant to their course.",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "matching",
+          "prompt": "Culture",
+          "options": [
+            "A. The information given about this was too vague.",
+            "B. This may not be relevant to their course.",
+            "C. This will involve only a small number of statistics.",
+            "D. It will be easy to find facts about this.",
+            "E. The facts about this may not be reliable.",
+            "F. No useful research has been done on this.",
+            "G. The information provided about this was interesting."
+          ],
+          "answer": "A. The information given about this was too vague.",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "matching",
+          "prompt": "Poverty",
+          "options": [
+            "A. The information given about this was too vague.",
+            "B. This may not be relevant to their course.",
+            "C. This will involve only a small number of statistics.",
+            "D. It will be easy to find facts about this.",
+            "E. The facts about this may not be reliable.",
+            "F. No useful research has been done on this.",
+            "G. The information provided about this was interesting."
+          ],
+          "answer": "E. The facts about this may not be reliable.",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "multiple_choice",
+          "prompt": "Rosie says that in her own city the main problem is",
+          "options": [
+            "A. crime.",
+            "B. housing.",
+            "C. unemployment."
+          ],
+          "answer": "C. unemployment.",
+          "points": 1
+        },
+        {
+          "order": 27,
+          "questionType": "multiple_choice",
+          "prompt": "What recent additions to the outskirts of their cities are both students happy about?",
+          "options": [
+            "A. conference centres",
+            "B. sports centres",
+            "C. retail centres"
+          ],
+          "answer": "A. conference centres",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "multiple_choice",
+          "prompt": "The students agree that developing disused industrial sites may",
+          "options": [
+            "A. have unexpected costs.",
+            "B. damage the urban environment.",
+            "C. destroy valuable historical buildings."
+          ],
+          "answer": "A. have unexpected costs.",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "multiple_choice",
+          "prompt": "The students will mention Masdar City as an example of an attempt to achieve",
+          "options": [
+            "A. daily collections for waste recycling.",
+            "B. sustainable energy use.",
+            "C. free transport for everyone."
+          ],
+          "answer": "B. sustainable energy use.",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "multiple_choice",
+          "prompt": "When discussing the ecotown of Greenhill Abbots, Colin is uncertain about",
+          "options": [
+            "A. what its objectives were.",
+            "B. why there was opposition to it.",
+            "C. how much of it has actually been built."
+          ],
+          "answer": "C. how much of it has actually been built.",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupInstructions": {
+          "21": "What is Rosie and Colin's opinion about each of the following aspects of human geography?\nChoose FIVE answers from the box and write the correct letter, A–G, next to Questions 21–25.",
+          "26": "Choose the correct letter, A, B or C."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 – Developing food trends",
+      "instructions": "Nghe và hoàn thành ghi chú. Chọn MỘT TỪ cho mỗi chỗ trống.",
+      "content": "Developing food trends\n\n- The growth in interest in food fashions started with [[31]] of food being shared on social media.\n- The UK food industry is constantly developing products which are new or different.\n- Influencers on social media become 'ambassadors' for a brand.\n  - Sales of [[32]] food brands have grown rapidly this way.\n- Supermarkets track demand for ingredients on social media.\n  - Famous [[33]] are influential.\n\nMarketing campaigns\n- The avocado:\n  - [[34]] were invited to visit growers in South Africa.\n  - Advertising focused on its [[35]] benefits.\n- Oat milk:\n  - A Swedish brand's media campaign received publicity by upsetting competitors.\n  - Promotion in the USA through [[36]] shops reduced the need for advertising.\n  - It appealed to consumers who are concerned about the [[37]].\n- Norwegian skrei:\n  - has helped strengthen the [[38]] of Norwegian seafood.\n\nEthical concerns\n- Quinoa:\n  - Its success led to an increase in its [[39]].\n  - Overuse of resources resulted in poor quality [[40]].",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Câu 31",
+          "answer": [
+            "photos",
+            "photographs",
+            "pictures"
+          ],
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "prompt": "Câu 32",
+          "answer": "vegan",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Câu 33",
+          "answer": [
+            "chefs",
+            "cooks"
+          ],
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": [
+            "journalists",
+            "reporters"
+          ],
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": "health",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": "coffee",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": "environment",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": "reputation",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": [
+            "price",
+            "cost"
+          ],
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": "soil",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupInstructions": {
+          "31": "Complete the notes below.\nWrite ONE WORD ONLY for each answer."
+        }
+      }
+    }
+  ]
+}

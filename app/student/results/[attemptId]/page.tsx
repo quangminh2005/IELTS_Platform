@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ResultReview } from "@/components/result-review";
+import { SubmitCelebration } from "@/components/submit-celebration";
 import { auth } from "@/lib/auth";
+import { pickDominantSkill } from "@/lib/celebration";
 import { prisma } from "@/lib/prisma";
 
 type ResultPageProps = {
@@ -94,8 +96,20 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
     notFound();
   }
 
+  // Các câu đã chấm tự động (Nghe/Đọc) có isCorrect khác null; Viết/Nói = null.
+  const autoSkills = attempt.answers
+    .filter((answer) => answer.isCorrect !== null)
+    .map((answer) => answer.assignableUnit.skill);
+  const isManualOnly = autoSkills.length === 0;
+  const dominantSkill = pickDominantSkill(autoSkills);
+
   return (
     <div className="space-y-8">
+      <SubmitCelebration
+        scorePercent={attempt.scorePercent}
+        isManualOnly={isManualOnly}
+        dominantSkill={dominantSkill}
+      />
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-sm font-semibold text-primary">Kết quả</p>

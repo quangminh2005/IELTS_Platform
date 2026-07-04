@@ -482,7 +482,7 @@ export async function submitAttempt(formData: FormData) {
   revalidatePath("/student");
   revalidatePath("/student/history");
   revalidatePath(`/student/assignments/${attempt.assignmentRecipientId}`);
-  redirect(`/student/results/${attempt.id}`);
+  redirect(`/student/results/${attempt.id}?submitted=1`);
 }
 
 // Giáo viên cho học sinh làm lại một bài: xoá các lần làm của bài đó (kèm đáp án,

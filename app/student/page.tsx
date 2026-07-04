@@ -3,6 +3,7 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { SkillTags } from "@/components/skill-tags";
+import { ProgressRing } from "@/components/progress-ring";
 
 function statusClasses(status: string) {
   if (status === "reviewed") {
@@ -93,6 +94,10 @@ export default async function StudentDashboardPage() {
     (recipient) => recipient.status !== "submitted" && recipient.status !== "reviewed"
   ).length;
 
+  const completedCount = recipients.filter(
+    (recipient) => recipient.status === "submitted" || recipient.status === "reviewed"
+  ).length;
+
   return (
     <div className="space-y-8">
       <header>
@@ -108,6 +113,8 @@ export default async function StudentDashboardPage() {
             : "Hiện chưa có bài tập nào được giao. Hãy quay lại sau nhé."}
         </p>
       </header>
+
+      <ProgressRing completed={completedCount} total={recipients.length} />
 
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="flex items-center justify-between border-b border-border px-5 py-4">

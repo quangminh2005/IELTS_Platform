@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { attemptBand, formatBand } from "@/lib/band-score";
+import { SkillTags } from "@/components/skill-tags";
 
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
@@ -68,7 +69,12 @@ export default async function StudentHistoryPage() {
         include: {
           assignment: {
             select: {
-              title: true
+              title: true,
+              units: {
+                select: {
+                  assignableUnit: { select: { skill: true } }
+                }
+              }
             }
           }
         }
@@ -114,6 +120,13 @@ export default async function StudentHistoryPage() {
               >
                 <div className="min-w-0">
                   <p className="font-semibold">{attempt.assignmentRecipient.assignment.title}</p>
+                  <div className="mt-2">
+                    <SkillTags
+                      skills={attempt.assignmentRecipient.assignment.units.map(
+                        (unit) => unit.assignableUnit.skill
+                      )}
+                    />
+                  </div>
                   <span
                     className={`mt-2 inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${statusClasses(
                       attempt.status

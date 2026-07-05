@@ -4,6 +4,11 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { SkillTags } from "@/components/skill-tags";
 import { ProgressRing } from "@/components/progress-ring";
+import { calculateWeekStreak } from "@/lib/streak";
+import { studentRankingScore } from "@/lib/student-score";
+import { getTierProgress } from "@/lib/rank-tier";
+import { StreakBadge } from "@/components/streak-badge";
+import { RankTierBadge } from "@/components/rank-tier-badge";
 
 function statusClasses(status: string) {
   if (status === "reviewed") {
@@ -98,6 +103,45 @@ export default async function StudentDashboardPage() {
     (recipient) => recipient.status === "submitted" || recipient.status === "reviewed"
   ).length;
 
+  const attempts = await prisma.attempt.findMany({
+    where: { studentId: student.id },
+    select: { scorePercent: true, startedAt: true, submittedAt: true, status: true }
+  });
+
+  const membership = await prisma.classStudent.findFirst({
+    where: { studentId: student.id },
+    orderBy: { joinedAt: "desc" },
+    include: { class: { select: { weeklyGoal: true } } }
+  });
+
+  const weeklyGoal = membership?.class.weeklyGoal ?? 3;
+
+  const now = new Date();
+
+  const submittedDates = attempts
+    .filter(
+      (attempt) =>
+        (attempt.status === "submitted" || attempt.status === "reviewed") &&
+        attempt.submittedAt !== null
+    )
+    .map((attempt) => attempt.submittedAt as Date);
+
+  const streak = calculateWeekStreak({ submittedAt: submittedDates, weeklyGoal, now });
+
+  const score = studentRankingScore({
+    scorePercents: attempts
+      .map((attempt) => attempt.scorePercent)
+      .filter((value): value is number => value !== null),
+    statuses: recipients.map((recipient) => recipient.status),
+    attemptTimes: attempts.map((attempt) => ({
+      startedAt: attempt.startedAt,
+      submittedAt: attempt.submittedAt
+    })),
+    now
+  });
+
+  const tierProgress = getTierProgress(score.rankingScore);
+
   return (
     <div className="space-y-8">
       <header>
@@ -113,6 +157,28 @@ export default async function StudentDashboardPage() {
             : "Hiện chưa có bài tập nào được giao. Hãy quay lại sau nhé."}
         </p>
       </header>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <StreakBadge
+          weeks={streak.weeks}
+          currentWeekCount={streak.currentWeekCount}
+          weeklyGoal={streak.weeklyGoal}
+          atRisk={streak.atRisk}
+        />
+        <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-card">
+          <span className="text-3xl" aria-hidden="true">
+            {tierProgress.tier.icon}
+          </span>
+          <div className="min-w-0">
+            <p className="text-base font-semibold">Hạng {tierProgress.tier.label}</p>
+            <p className="mt-0.5 text-sm text-muted-foreground">
+              {tierProgress.next
+                ? `Còn ${tierProgress.pointsToNext} điểm nữa lên ${tierProgress.next.label}`
+                : "Bạn đang ở đỉnh cao nhất! 💎"}
+            </p>
+          </div>
+        </div>
+      </div>
 
       <ProgressRing completed={completedCount} total={recipients.length} />
 

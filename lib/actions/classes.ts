@@ -17,6 +17,11 @@ const studentSchema = z.object({
   displayName: z.string().trim().min(1, "Student name is required.")
 });
 
+const weeklyGoalSchema = z.object({
+  classId: z.string().min(1),
+  weeklyGoal: z.coerce.number().int().min(1).max(50)
+});
+
 export async function requireTeacher() {
   const session = await auth();
   const user = session?.user;
@@ -63,6 +68,25 @@ export async function createClass(formData: FormData) {
   });
 
   revalidatePath("/teacher");
+  revalidatePath("/teacher/classes");
+}
+
+export async function updateClassWeeklyGoal(formData: FormData) {
+  const teacher = await requireTeacher();
+  const parsed = weeklyGoalSchema.safeParse({
+    classId: formData.get("classId"),
+    weeklyGoal: formData.get("weeklyGoal")
+  });
+
+  if (!parsed.success) {
+    throw new Error(parsed.error.issues[0]?.message ?? "Chỉ tiêu tuần không hợp lệ.");
+  }
+
+  await prisma.class.updateMany({
+    where: { id: parsed.data.classId, teacherId: teacher.id },
+    data: { weeklyGoal: parsed.data.weeklyGoal }
+  });
+
   revalidatePath("/teacher/classes");
 }
 

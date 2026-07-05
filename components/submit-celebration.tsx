@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getCelebration } from "@/lib/celebration";
 
 const CONFETTI_COLORS = ["#f59e0b", "#10b981", "#3b82f6", "#8b5cf6", "#ef4444", "#eab308"];
 
-function confettiCount(level: "none" | "medium" | "big") {
-  if (level === "big") return 80;
-  if (level === "medium") return 40;
+function confettiCount(level: "none" | "small" | "medium" | "big") {
+  if (level === "big") return 90;
+  if (level === "medium") return 55;
+  if (level === "small") return 28;
   return 0;
 }
 
@@ -29,8 +31,11 @@ export function SubmitCelebration({
   // Khởi tạo trạng thái mở từ lần render đầu; state giữ nguyên kể cả khi ta
   // xóa query bên dưới, nên pop-up không tự tắt khi param biến mất.
   const [open, setOpen] = useState(justSubmitted);
+  // Chỉ portal sau khi mount (tránh lệch hydration khi SSR không có document).
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (justSubmitted) {
       // Xóa dấu hiệu để refresh trang không bật lại pop-up.
       router.replace(pathname, { scroll: false });
@@ -54,12 +59,16 @@ export function SubmitCelebration({
     }));
   }, [celebration.confetti]);
 
-  if (!open) {
+  if (!open || !mounted) {
     return null;
   }
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+  // Portal ra <body>: khung nội dung của AppShell có `transform` (animate-fade-in)
+  // biến nó thành containing block cho `position: fixed`, khiến overlay bị canh
+  // giữa theo trang kết quả rất dài (phải cuộn mới thấy). Portal ra body giúp
+  // overlay `fixed inset-0` bám đúng theo màn hình, hiện ngay giữa viewport.
+  const overlay = (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4">
       {pieces.length > 0 ? (
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           {pieces.map((piece, index) => (
@@ -98,4 +107,6 @@ export function SubmitCelebration({
       </div>
     </div>
   );
+
+  return createPortal(overlay, document.body);
 }

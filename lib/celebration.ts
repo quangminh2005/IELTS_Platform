@@ -12,7 +12,7 @@ export type Celebration = {
   tier: CelebrationTier;
   title: string;
   message: string;
-  confetti: "none" | "medium" | "big";
+  confetti: "none" | "small" | "medium" | "big";
 };
 
 // Danh hiệu vui khi đạt điểm cao, theo kỹ năng chiếm ưu thế của bài.
@@ -24,14 +24,15 @@ const GREAT_TITLES: Record<string, string> = {
 };
 
 // Quyết định nội dung + độ mạnh pháo hoa của pop-up chúc mừng.
-// Bài chấm tay (Viết/Nói) hoặc chưa có điểm -> biến thể "chờ chấm", không pháo hoa.
+// LUÔN có pháo hoa (owner chọn "luôn bắn, cường độ theo điểm"): nhẹ khi điểm
+// thấp / bài chấm tay, mạnh dần khi điểm cao.
 export function getCelebration(input: CelebrationInput): Celebration {
   if (input.isManualOnly || input.scorePercent === null) {
     return {
       tier: "manual",
       title: "Đã nộp bài!",
       message: "Bài của bạn đang chờ giáo viên chấm.",
-      confetti: "none",
+      confetti: "small",
     };
   }
 
@@ -40,7 +41,7 @@ export function getCelebration(input: CelebrationInput): Celebration {
       tier: "encourage",
       title: "Đã nộp!",
       message: "Lần sau bùng nổ hơn nhé 💪",
-      confetti: "none",
+      confetti: "small",
     };
   }
 

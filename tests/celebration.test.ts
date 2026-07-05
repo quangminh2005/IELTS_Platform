@@ -2,16 +2,16 @@ import { describe, expect, it } from "vitest";
 import { getCelebration, pickDominantSkill } from "../lib/celebration";
 
 describe("getCelebration", () => {
-  it("bài chấm tay -> không pháo hoa, chờ chấm", () => {
+  it("bài chấm tay -> pháo hoa nhẹ, chờ chấm", () => {
     const c = getCelebration({ scorePercent: null, isManualOnly: true, dominantSkill: null });
     expect(c.tier).toBe("manual");
-    expect(c.confetti).toBe("none");
+    expect(c.confetti).toBe("small");
   });
 
-  it("điểm < 50 -> động viên, không pháo hoa", () => {
+  it("điểm < 50 -> động viên, pháo hoa nhẹ (luôn bắn)", () => {
     const c = getCelebration({ scorePercent: 49, isManualOnly: false, dominantSkill: "reading" });
     expect(c.tier).toBe("encourage");
-    expect(c.confetti).toBe("none");
+    expect(c.confetti).toBe("small");
   });
 
   it("điểm 50 -> bậc good, pháo hoa vừa", () => {

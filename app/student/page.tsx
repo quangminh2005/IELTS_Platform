@@ -8,7 +8,6 @@ import { calculateWeekStreak } from "@/lib/streak";
 import { studentRankingScore } from "@/lib/student-score";
 import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
-import { RankTierBadge } from "@/components/rank-tier-badge";
 
 function statusClasses(status: string) {
   if (status === "reviewed") {

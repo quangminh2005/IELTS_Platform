@@ -16,7 +16,7 @@ try {
   for (const sql of statements) {
     await prisma.$executeRawUnsafe(sql);
   }
-  console.log("[ensure-db] OK: cột transcript đã sẵn sàng.");
+  console.log("[ensure-db] OK: các cột bổ sung đã sẵn sàng.");
 } catch (error) {
   console.warn(
     "[ensure-db] Bỏ qua (DB chưa kết nối được lúc build?):",

@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { attemptBand, averageBand, formatBand } from "@/lib/band-score";
 import { studentRankingScore } from "@/lib/student-score";
+import { RankTierBadge } from "@/components/rank-tier-badge";
 
 // Chữ cái viết tắt cho avatar (tối đa 2 ký tự, lấy từ đầu các từ trong tên).
 function initials(name: string) {
@@ -228,6 +229,9 @@ export default async function StudentRankingPage() {
                 <p className="text-xs font-semibold tabular-nums text-primary">
                   {rankedStudent.rankingScore} điểm
                 </p>
+                <div className="mt-1">
+                  <RankTierBadge score={rankedStudent.rankingScore} />
+                </div>
                 <div
                   className={`mt-2 flex w-full items-start justify-center rounded-t-lg ${style.pedestal}`}
                 >
@@ -293,6 +297,9 @@ export default async function StudentRankingPage() {
                         </span>
                       ) : null}
                     </p>
+                    <div className="mt-1">
+                      <RankTierBadge score={rankedStudent.rankingScore} />
+                    </div>
                     <p className="mt-2 grid gap-1 text-sm text-muted-foreground md:hidden">
                       <span>
                         Điểm TB:{" "}

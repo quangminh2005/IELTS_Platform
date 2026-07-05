@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { calculateRankingScore } from "@/lib/ranking";
 import { attemptBand, averageBand, formatBand } from "@/lib/band-score";
+import { studentRankingScore } from "@/lib/student-score";
 
 // Chữ cái viết tắt cho avatar (tối đa 2 ký tự, lấy từ đầu các từ trong tên).
 function initials(name: string) {
@@ -39,35 +39,6 @@ function avatarColor(name: string) {
   }
 
   return AVATAR_COLORS[hash % AVATAR_COLORS.length];
-}
-
-function average(values: number[]) {
-  if (values.length === 0) {
-    return 0;
-  }
-
-  return values.reduce((total, value) => total + value, 0) / values.length;
-}
-
-function completionRate(statuses: string[]) {
-  if (statuses.length === 0) {
-    return 0;
-  }
-
-  const completed = statuses.filter((status) => status === "submitted" || status === "reviewed");
-
-  return (completed.length / statuses.length) * 100;
-}
-
-function hasRecentAttempt(attempts: Array<{ startedAt: Date; submittedAt: Date | null }>) {
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
-  return attempts.some(
-    (attempt) =>
-      attempt.startedAt >= sevenDaysAgo ||
-      (attempt.submittedAt !== null && attempt.submittedAt >= sevenDaysAgo)
-  );
 }
 
 export default async function StudentRankingPage() {
@@ -156,7 +127,6 @@ export default async function StudentRankingPage() {
       const scoredAttempts = classmate.student.attempts
         .map((attempt) => attempt.scorePercent)
         .filter((scorePercent): scorePercent is number => scorePercent !== null);
-      const averageScorePercent = average(scoredAttempts);
       // Band trung bình: gộp band của từng lần làm (band giáo viên chấm hoặc
       // band tự động bài đủ 40 câu). Không có band nào -> null (hiển thị % thay thế).
       const attemptBands = classmate.student.attempts
@@ -171,25 +141,24 @@ export default async function StudentRankingPage() {
         )
         .filter((band): band is number => band !== null);
       const averageBandValue = averageBand(attemptBands);
-      const completion = completionRate(
-        classmate.student.recipients.map((recipient) => recipient.status)
-      );
-      const recentActivityPercent = hasRecentAttempt(classmate.student.attempts) ? 100 : 0;
-      const rankingScore = calculateRankingScore({
-        averageScorePercent,
-        completionRate: completion,
-        recentActivityPercent
+      const score = studentRankingScore({
+        scorePercents: scoredAttempts,
+        statuses: classmate.student.recipients.map((recipient) => recipient.status),
+        attemptTimes: classmate.student.attempts.map((attempt) => ({
+          startedAt: attempt.startedAt,
+          submittedAt: attempt.submittedAt
+        }))
       });
 
       return {
         id: classmate.student.id,
         displayName: classmate.student.displayName,
         avatarUrl: classmate.student.user?.image ?? null,
-        averageScorePercent,
+        averageScorePercent: score.averageScorePercent,
         averageBandValue,
-        completionRate: completion,
-        recentActivityPercent,
-        rankingScore
+        completionRate: score.completionRate,
+        recentActivityPercent: score.recentActivityPercent,
+        rankingScore: score.rankingScore
       };
     })
     .sort((a, b) => b.rankingScore - a.rankingScore || a.displayName.localeCompare(b.displayName));

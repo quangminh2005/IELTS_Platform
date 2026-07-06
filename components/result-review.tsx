@@ -109,7 +109,6 @@ const STATUS_LABELS: Record<string, string> = {
 export function ResultReview({ attempt }: ResultReviewProps) {
   const percentage =
     attempt.scorePercent !== null ? `${Math.round(attempt.scorePercent)}%` : "—";
-  const score = attempt.score !== null ? attempt.score : "—";
   const statusLabel =
     STATUS_LABELS[attempt.status] ?? attempt.status.replaceAll("_", " ");
   // Chỉ hiện band cho bài thi đủ 40 câu (band null = không đủ điều kiện quy đổi).
@@ -119,6 +118,13 @@ export function ResultReview({ attempt }: ResultReviewProps) {
       skill: answer.assignableUnit.skill
     }))
   ).filter((row) => row.band !== null);
+
+  // Số câu đúng / tổng số câu chấm tự động (Nghe/Đọc). Câu chờ chấm (Viết/Nói)
+  // có isCorrect = null nên không tính vào đây.
+  const gradedAnswers = attempt.answers.filter((answer) => answer.isCorrect !== null);
+  const correctCount = gradedAnswers.filter((answer) => answer.isCorrect === true).length;
+  const gradedTotal = gradedAnswers.length;
+  const correctLabel = gradedTotal > 0 ? `${correctCount}/${gradedTotal}` : "—";
 
   const review = attempt.review;
   const criteriaRows = parseCriteria(review?.criteriaScoresJson ?? null);
@@ -193,8 +199,8 @@ export function ResultReview({ attempt }: ResultReviewProps) {
 
       <section className="grid gap-4 sm:grid-cols-3">
         <article className="rounded-xl border border-border bg-card p-5 shadow-card">
-          <p className="text-sm text-muted-foreground">Điểm</p>
-          <p className="mt-2 text-3xl font-bold tabular-nums">{score}</p>
+          <p className="text-sm text-muted-foreground">Số câu đúng</p>
+          <p className="mt-2 text-3xl font-bold tabular-nums">{correctLabel}</p>
         </article>
         <article className="rounded-xl border border-border bg-card p-5 shadow-card">
           <p className="text-sm text-muted-foreground">Tỷ lệ đúng</p>

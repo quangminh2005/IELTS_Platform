@@ -88,7 +88,9 @@ export async function createAssignment(formData: FormData) {
   });
 
   if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid assignment details.");
+    redirect(
+      assignmentNoticePath("error", parsed.error.issues[0]?.message ?? "Thông tin bài tập chưa hợp lệ.")
+    );
   }
 
   const unitIds = uniqueInOrder(parsed.data.unitIds);
@@ -121,6 +123,7 @@ export async function createAssignment(formData: FormData) {
   });
 
   revalidateAssignmentPaths();
+  redirect(assignmentNoticePath("success", "Đã giao bài thành công!"));
 }
 
 function revalidateAssignmentPaths() {

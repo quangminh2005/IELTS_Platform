@@ -1,6 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import { AssignmentBuilder } from "@/components/assignment-builder";
 import { AssignmentList, type AssignmentItem } from "@/components/assignment-list";
+import { NoticeToast } from "@/components/notice-toast";
 import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
 
@@ -141,17 +142,8 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
         </p>
       </header>
 
-      {assignmentsMessage ? (
-        <div
-          className={
-            assignmentsStatus === "success"
-              ? "rounded-md border border-primary/40 bg-primary/10 px-4 py-3 text-sm font-medium text-primary"
-              : "rounded-md border border-red-400/60 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-700 dark:text-red-300"
-          }
-        >
-          {assignmentsMessage}
-        </div>
-      ) : null}
+      <NoticeToast message={assignmentsMessage} status={assignmentsStatus} />
+
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_25rem]">
         <AssignmentList

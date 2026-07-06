@@ -187,10 +187,20 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                         }))
                       ).filter((row) => row.band !== null);
 
+                      // Số câu đúng / tổng số câu chấm tự động (Nghe/Đọc).
+                      const gradedAnswers = attempt.answers.filter(
+                        (answer) => answer.isCorrect !== null
+                      );
+                      const correctCount = gradedAnswers.filter(
+                        (answer) => answer.isCorrect === true
+                      ).length;
+                      const gradedTotal = gradedAnswers.length;
+
                       return (
                         <div key={attempt.id} className="rounded-lg border border-border bg-muted/60 p-3">
                           <p className="text-sm font-semibold">
                             {statusLabel(attempt.status)}
+                            {gradedTotal > 0 ? ` · ${correctCount}/${gradedTotal} câu đúng` : ""}
                             {typeof attempt.scorePercent === "number"
                               ? ` · ${attempt.scorePercent.toFixed(1)}%`
                               : ""}

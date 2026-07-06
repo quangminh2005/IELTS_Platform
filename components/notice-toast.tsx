@@ -51,8 +51,8 @@ export function NoticeToast({ message, status }: NoticeToastProps) {
         className={[
           "pointer-events-auto flex max-w-md items-start gap-3 rounded-xl border px-4 py-3 shadow-pop animate-fade-in",
           isSuccess
-            ? "border-emerald-400/50 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300"
-            : "border-red-400/60 bg-red-500/15 text-red-700 dark:text-red-300"
+            ? "border-emerald-400/60 bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200"
+            : "border-red-400/60 bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200"
         ].join(" ")}
       >
         <span className="mt-0.5 shrink-0">
@@ -68,7 +68,7 @@ export function NoticeToast({ message, status }: NoticeToastProps) {
             </svg>
           )}
         </span>
-        <p className="text-sm font-semibold leading-6">{toast.message}</p>
+        <p className="min-w-0 flex-1 break-words text-sm font-semibold leading-6">{toast.message}</p>
         <button
           type="button"
           onClick={() => setToast(null)}

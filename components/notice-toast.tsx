@@ -10,27 +10,33 @@ type NoticeToastProps = {
 type ToastState = { message: string; status: "success" | "error" };
 
 // Popup nổi (toast) hiển thị thông báo thành công/lỗi, tự ẩn sau vài giây.
-// Thông báo được lưu vào state CỤC BỘ ngay lần render đầu (từ query param do
-// server action redirect kèm theo). Sau đó effect dọn query khỏi URL — thao tác
-// này khiến Next re-render với searchParams rỗng, nhưng toast vẫn còn vì đã nằm
-// trong state cục bộ, không phụ thuộc prop nữa.
+// Thông báo đến từ query param (do server action redirect kèm theo). Dùng
+// useEffect phản ứng khi prop `message` đổi để bắt được cả điều hướng MỀM
+// (server action redirect không mount lại trang), rồi lưu vào state cục bộ nên
+// việc dọn query khỏi URL (gây re-render với searchParams rỗng) không làm toast
+// biến mất.
 export function NoticeToast({ message, status }: NoticeToastProps) {
-  const [toast, setToast] = useState<ToastState | null>(
-    message ? { message, status } : null
-  );
+  const [toast, setToast] = useState<ToastState | null>(null);
 
+  useEffect(() => {
+    if (!message) {
+      return;
+    }
+
+    setToast({ message, status });
+    window.history.replaceState(null, "", window.location.pathname);
+  }, [message, status]);
+
+  // Đặt hẹn giờ tự ẩn riêng, để việc dọn URL re-render không huỷ mất timer.
   useEffect(() => {
     if (!toast) {
       return;
     }
 
-    window.history.replaceState(null, "", window.location.pathname);
     const timer = window.setTimeout(() => setToast(null), 4000);
 
     return () => window.clearTimeout(timer);
-    // Chỉ chạy một lần khi mount — toast đã được lấy từ lần render đầu.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [toast]);
 
   if (!toast) {
     return null;

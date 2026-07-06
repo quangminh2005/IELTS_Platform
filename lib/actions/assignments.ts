@@ -9,16 +9,16 @@ import { assignmentNoticePath } from "@/lib/assignment-notices";
 import { prisma } from "@/lib/prisma";
 
 const assignmentSchema = z.object({
-  title: z.string().trim().min(2, "Assignment title must be at least 2 characters."),
+  title: z.string().trim().min(2, "Tiêu đề bài tập phải có ít nhất 2 ký tự."),
   instructions: z.string().trim().optional(),
   timeLimitMinutes: z.preprocess(
     (value) => (value === "" || value === null ? undefined : value),
-    z.coerce.number().int().min(1, "Time limit must be at least 1 minute.").optional()
+    z.coerce.number().int().min(1, "Thời gian làm bài phải ít nhất 1 phút.").optional()
   ),
   dueDate: z.string().trim().optional(),
   dueTime: z.string().trim().optional(),
-  unitIds: z.array(z.string().trim().min(1)).min(1, "Choose at least one unit."),
-  studentIds: z.array(z.string().trim().min(1)).min(1, "Choose at least one student.")
+  unitIds: z.array(z.string().trim().min(1)).min(1, "Hãy chọn ít nhất một phần."),
+  studentIds: z.array(z.string().trim().min(1)).min(1, "Hãy chọn ít nhất một học viên.")
 });
 
 const idSchema = z.string().trim().min(1);
@@ -50,11 +50,11 @@ async function verifyUnitsAndStudents(
   ]);
 
   if (units.length !== unitIds.length) {
-    throw new Error("One or more selected units are not available to this teacher.");
+    throw new Error("Một số phần đã chọn không thuộc quyền của giáo viên này.");
   }
 
   if (students.length !== studentIds.length) {
-    throw new Error("One or more selected students are not in this teacher's classes.");
+    throw new Error("Một số học viên đã chọn không thuộc lớp của giáo viên này.");
   }
 }
 
@@ -148,7 +148,7 @@ export async function updateAssignment(formData: FormData) {
 
   if (!parsed.success) {
     redirect(
-      assignmentNoticePath("error", parsed.error.issues[0]?.message ?? "Invalid assignment details.")
+      assignmentNoticePath("error", parsed.error.issues[0]?.message ?? "Thông tin bài tập chưa hợp lệ.")
     );
   }
 
@@ -173,7 +173,7 @@ export async function updateAssignment(formData: FormData) {
   });
 
   if (!assignment) {
-    redirect(assignmentNoticePath("error", "Assignment not found for this teacher."));
+    redirect(assignmentNoticePath("error", "Không tìm thấy bài tập này."));
   }
 
   await verifyUnitsAndStudents(teacher.id, unitIds, studentIds);
@@ -188,7 +188,7 @@ export async function updateAssignment(formData: FormData) {
     redirect(
       assignmentNoticePath(
         "error",
-        "Cannot remove students who have already started or submitted this assignment."
+        "Không thể gỡ học viên đã bắt đầu làm hoặc đã nộp bài này."
       )
     );
   }
@@ -232,7 +232,7 @@ export async function updateAssignment(formData: FormData) {
   ]);
 
   revalidateAssignmentPaths();
-  redirect(assignmentNoticePath("success", "Assignment updated."));
+  redirect(assignmentNoticePath("success", "Đã cập nhật bài tập thành công!"));
 }
 
 export async function deleteAssignment(formData: FormData) {
@@ -255,7 +255,7 @@ export async function deleteAssignment(formData: FormData) {
   });
 
   if (!assignment) {
-    redirect(assignmentNoticePath("error", "Assignment not found for this teacher."));
+    redirect(assignmentNoticePath("error", "Không tìm thấy bài tập này."));
   }
 
   const hasAttempts = assignment.recipients.some((recipient) => recipient._count.attempts > 0);
@@ -264,7 +264,7 @@ export async function deleteAssignment(formData: FormData) {
     redirect(
       assignmentNoticePath(
         "error",
-        "Cannot delete this assignment because students have already started or submitted it."
+        "Không thể xoá bài này vì đã có học viên bắt đầu làm hoặc đã nộp."
       )
     );
   }
@@ -274,5 +274,5 @@ export async function deleteAssignment(formData: FormData) {
   });
 
   revalidateAssignmentPaths();
-  redirect(assignmentNoticePath("success", "Assignment deleted."));
+  redirect(assignmentNoticePath("success", "Đã xoá bài tập thành công!"));
 }

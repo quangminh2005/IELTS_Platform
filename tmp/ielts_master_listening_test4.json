@@ -1,0 +1,479 @@
+{
+  "title": "IELTS Master – Listening Test 4",
+  "skill": "listening",
+  "sourceLabel": "IELTS Master – Listening Test 4",
+  "description": "Listening Test 4: 4 part, 40 câu. Nhớ upload 4 file audio MP3 cho từng part. Part 4 có sơ đồ Atacama — có thể upload ảnh sơ đồ vào phần này.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 – New Potential Staff (Mark)",
+      "instructions": "Nghe và hoàn thành ghi chú (1–5) và các câu (6–10).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": "Castle",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": [
+            "30",
+            "30th"
+          ],
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Câu 3",
+          "answer": "Australia",
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": "443",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Câu 5",
+          "answer": [
+            "2 hours",
+            "two hours"
+          ],
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Câu 6",
+          "answer": [
+            "Scans",
+            "Scan"
+          ],
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Câu 7",
+          "answer": "Train",
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Câu 8",
+          "answer": [
+            "Part-time",
+            "Part time"
+          ],
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Câu 9",
+          "answer": [
+            "Relationships",
+            "Relationship"
+          ],
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Câu 10",
+          "answer": "Commission",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "noteBody": "# People Central – New Potential Staff\nType of job desired: Accountancy\nName: Mark [[1]]\nAddress: 13 Wellington Street, South Brisbane, Queensland\nPostcode: 4101\nDate of birth: [[2]] May 1988\nEmail address: markc@[[3]]now.com\nTelephone: Home – 0735547671, Cell – 0469153 [[4]]\nPreferred work area: The Brisbane area, within a drive of approximately [[5]] from home\n\n## Complete the sentences below (Câu 6–10). Write NO MORE THAN TWO WORDS.\nMark will send [[6]] of his professional certificates to Sarah.\nMark could happily travel to Gold Coast Printing by [[7]] as well as by car.\nThe [[8]] nature of the job at the import export company is a problem for Mark.\nMark is worried about [[9]] at a smaller company like the fishing company Barracuda.\nMark will not need to pay a [[10]] for any job placement.",
+        "groupInstructions": {
+          "1": "Complete the notes below. Write NO MORE THAN THREE WORDS OR A NUMBER."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 – Sway Road Health Centre",
+      "instructions": "Nghe và hoàn thành ghi chú (11–17), rồi trả lời câu hỏi (18–20).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "note_completion",
+          "prompt": "Câu 11",
+          "answer": [
+            "7000",
+            "7,000"
+          ],
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "note_completion",
+          "prompt": "Câu 12",
+          "answer": [
+            "Photo ID",
+            "Photo I.D."
+          ],
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "note_completion",
+          "prompt": "Câu 13",
+          "answer": "Blood sample",
+          "points": 1
+        },
+        {
+          "order": 14,
+          "questionType": "note_completion",
+          "prompt": "Câu 14",
+          "answer": "Email",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "note_completion",
+          "prompt": "Câu 15",
+          "answer": [
+            "8",
+            "8am",
+            "eight"
+          ],
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "note_completion",
+          "prompt": "Câu 16",
+          "answer": "Public holidays",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "note_completion",
+          "prompt": "Câu 17",
+          "answer": "Travel form",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "short_answer",
+          "prompt": "Where is the suggestion box found at the health centre?",
+          "answer": "Reception",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "short_answer",
+          "prompt": "Who will deal with any complaints made?",
+          "answer": [
+            "practice manager",
+            "manager"
+          ],
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "short_answer",
+          "prompt": "What area is closed off during the open morning?",
+          "answer": [
+            "practice offices",
+            "offices"
+          ],
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "noteBody": "# Sway Road Health Centre\n- Six full time doctors\n- Just over [[11]] patients\n- 2 centres – Sway Road and Church Road\n\n## Registering\nCome during opening hours; bring a [[12]], proof of address (dated within 3 months of application) and medical card (or fill out a registration form). Staff will ask for your medical history and organize a [[13]] to be taken.\n\n## Appointments\nContact only by phone and not by [[14]]. Call only during opening hours.\n\n## Opening hours\n- [[15]] am – 1 pm and 2 pm – 7 pm Monday to Friday\n- Call only between 1 pm and 2 pm in an emergency\n- Closed weekends and [[16]]\n\nThe best option for emergencies is to go to hospital or call an ambulance.\n\n## Travel service\nLots of vaccinations available. Complete a [[17]] at reception – available from reception or the website.",
+        "groupInstructions": {
+          "11": "Complete the notes below. Write NO MORE THAN THREE WORDS AND/OR A NUMBER for each answer.",
+          "18": "Answer the questions below. Write NO MORE THAN THREE WORDS for each answer."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 – Kevin's training / weekend",
+      "instructions": "Nghe và ghép mức hài lòng (21–25) và ghép vấn đề với cách giải quyết (26–30).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "The hostel accommodation",
+          "options": [
+            "A. Not satisfied",
+            "B. Quite satisfied",
+            "C. Very satisfied"
+          ],
+          "answer": "B. Quite satisfied",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "Directions to the training",
+          "options": [
+            "A. Not satisfied",
+            "B. Quite satisfied",
+            "C. Very satisfied"
+          ],
+          "answer": "A. Not satisfied",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "multiple_choice",
+          "prompt": "The trainer",
+          "options": [
+            "A. Not satisfied",
+            "B. Quite satisfied",
+            "C. Very satisfied"
+          ],
+          "answer": "C. Very satisfied",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "multiple_choice",
+          "prompt": "Conference centre facilities",
+          "options": [
+            "A. Not satisfied",
+            "B. Quite satisfied",
+            "C. Very satisfied"
+          ],
+          "answer": "B. Quite satisfied",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "multiple_choice",
+          "prompt": "The other trainees",
+          "options": [
+            "A. Not satisfied",
+            "B. Quite satisfied",
+            "C. Very satisfied"
+          ],
+          "answer": "C. Very satisfied",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "matching",
+          "prompt": "Kevin had to spend some of his off-work time at the office.",
+          "options": [
+            "A. Kevin bought replacement computers",
+            "B. More antivirus protection was needed",
+            "C. Fixed by the company's antivirus protection",
+            "D. Kevin gave a password to the security firm",
+            "E. Kevin's boss sorted the problem out",
+            "F. Kevin received some extra holiday time",
+            "G. Kevin hired a consultant",
+            "H. Kevin ran an update",
+            "I. Kevin called a friend from the training",
+            "J. Kevin was paid a good bonus"
+          ],
+          "answer": "F. Kevin received some extra holiday time",
+          "points": 1
+        },
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "The office systems were out of date.",
+          "options": [
+            "A. Kevin bought replacement computers",
+            "B. More antivirus protection was needed",
+            "C. Fixed by the company's antivirus protection",
+            "D. Kevin gave a password to the security firm",
+            "E. Kevin's boss sorted the problem out",
+            "F. Kevin received some extra holiday time",
+            "G. Kevin hired a consultant",
+            "H. Kevin ran an update",
+            "I. Kevin called a friend from the training",
+            "J. Kevin was paid a good bonus"
+          ],
+          "answer": "H. Kevin ran an update",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "The office systems initially would not accept the new software.",
+          "options": [
+            "A. Kevin bought replacement computers",
+            "B. More antivirus protection was needed",
+            "C. Fixed by the company's antivirus protection",
+            "D. Kevin gave a password to the security firm",
+            "E. Kevin's boss sorted the problem out",
+            "F. Kevin received some extra holiday time",
+            "G. Kevin hired a consultant",
+            "H. Kevin ran an update",
+            "I. Kevin called a friend from the training",
+            "J. Kevin was paid a good bonus"
+          ],
+          "answer": "I. Kevin called a friend from the training",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "A bug got into the company's computer systems.",
+          "options": [
+            "A. Kevin bought replacement computers",
+            "B. More antivirus protection was needed",
+            "C. Fixed by the company's antivirus protection",
+            "D. Kevin gave a password to the security firm",
+            "E. Kevin's boss sorted the problem out",
+            "F. Kevin received some extra holiday time",
+            "G. Kevin hired a consultant",
+            "H. Kevin ran an update",
+            "I. Kevin called a friend from the training",
+            "J. Kevin was paid a good bonus"
+          ],
+          "answer": "B. More antivirus protection was needed",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "The burglar alarm went off in the offices.",
+          "options": [
+            "A. Kevin bought replacement computers",
+            "B. More antivirus protection was needed",
+            "C. Fixed by the company's antivirus protection",
+            "D. Kevin gave a password to the security firm",
+            "E. Kevin's boss sorted the problem out",
+            "F. Kevin received some extra holiday time",
+            "G. Kevin hired a consultant",
+            "H. Kevin ran an update",
+            "I. Kevin called a friend from the training",
+            "J. Kevin was paid a good bonus"
+          ],
+          "answer": "E. Kevin's boss sorted the problem out",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupInstructions": {
+          "21": "Match Kevin's level of satisfaction (A–C) with the things related to his training days.\nA = Not satisfied    B = Quite satisfied    C = Very satisfied\n(Có thể dùng một chữ cái nhiều lần.)",
+          "26": "Match Kevin's problems over the weekend (A–J) with the solutions to the problems.\nChọn đáp án từ hộp và điền chữ cái A–J."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 – Atacama Desert & Rain Shadow",
+      "instructions": "Nghe và dán nhãn sơ đồ (31–32) và hoàn thành ghi chú (33–40).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Câu 31",
+          "answer": "Condensation",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "prompt": "Câu 32",
+          "answer": "Cool",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Câu 33",
+          "answer": "Formation",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": [
+            "barren hills",
+            "hills"
+          ],
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": "Medical purposes",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": "Monopoly",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": "Copper",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": "Scientists",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": [
+            "delicate balance",
+            "balance"
+          ],
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": [
+            "Growth cycles",
+            "Growth",
+            "growth cycle"
+          ],
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "noteBody": "## Label the diagram (Câu 31–32)\nMoisture from the Atlantic creates clouds and then [[31]] creates rain.\nWind coming off the Pacific too [[32]] to carry moisture.\n\n## The Atacama Large Millimetre Array\nIts high resolution images will allow study of the earliest galaxies and the [[33]] of our galaxy's planets.\n\n## The Atacama Desert\nBarrier of [[34]] in the west and the Andes in the east.\n\n## Flora and Fauna\nSome life exists – local populations use some plants for [[35]].\n\n## Natural resources and agriculture\nChile possessed a [[36]] on the nitrate trade.\nOther minerals are mined in the Atacama – 30% of world's [[37]] is mined in the Atacama.\n\n## Tourism\nVolcanoes, geysers, lagoons etc. attract holiday-makers and [[38]].\nVisitors need education to understand the [[39]] of the environment.\nSome farming of natural plants of the Atacama is done, interrupting their [[40]].",
+        "groupInstructions": {
+          "31": "Câu 31–32: Label the diagram. Write NO MORE THAN ONE WORD.\nCâu 33–35: NO MORE THAN TWO WORDS.\nCâu 36–40: NO MORE THAN THREE WORDS AND/OR A NUMBER."
+        }
+      }
+    }
+  ]
+}

@@ -518,12 +518,14 @@ function NoteCompletionQuestionSet({
   content,
   questions,
   savedAnswers,
-  onAnswerChange
+  onAnswerChange,
+  images = []
 }: {
   content: string;
   questions: Question[];
   savedAnswers: Record<string, string>;
   onAnswerChange: AnswerChange;
+  images?: string[];
 }) {
   const questionsByOrder = new Map(questions.map((question) => [question.order, question]));
 
@@ -561,6 +563,19 @@ function NoteCompletionQuestionSet({
 
   return (
     <div className="overflow-hidden rounded-lg border border-primary/20 bg-primary/5">
+      {images.length > 0 ? (
+        <div className="space-y-3 border-b border-primary/20 bg-white p-3">
+          {images.map((src, index) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={`${src}-${index}`}
+              src={src}
+              alt={`Sơ đồ ${index + 1}`}
+              className="mx-auto w-full max-w-2xl rounded-md border border-border"
+            />
+          ))}
+        </div>
+      ) : null}
       <div className="space-y-2 px-5 py-4 text-sm leading-8">
         {lines.map((line, index) => {
           const key = `line-${index}`;
@@ -1832,10 +1847,22 @@ export function AttemptWorkspace({
           );
         };
 
-        const questionsContent = (
-          <>
-            {tableCompletionQuestions.length > 0 ? (
-              <div id={`tablesection-${assignmentUnit.id}`} className="scroll-mt-24 space-y-3">
+        // Gom tất cả khối câu hỏi (bảng / ghi chú / ghép / các câu thường) rồi
+        // sắp theo SỐ THỨ TỰ câu nhỏ nhất của khối — để thứ tự hiển thị đúng như
+        // đề gốc (vd ghi chú 23–26 nằm SAU trắc nghiệm 14–22, không nhảy lên trên).
+        const minOrder = (qs: Question[]) =>
+          qs.reduce((min, q) => Math.min(min, q.order), Number.POSITIVE_INFINITY);
+        const orderedSections: { order: number; node: React.ReactNode }[] = [];
+
+        if (tableCompletionQuestions.length > 0) {
+          orderedSections.push({
+            order: minOrder(tableCompletionQuestions),
+            node: (
+              <div
+                key="table-section"
+                id={`tablesection-${assignmentUnit.id}`}
+                className="scroll-mt-24 space-y-3"
+              >
                 {groupBox(tableCompletionQuestions)}
                 <TableCompletionQuestionSet
                   content={tableBodyContent}
@@ -1844,20 +1871,35 @@ export function AttemptWorkspace({
                   onAnswerChange={handleAnswerChange}
                 />
               </div>
-            ) : null}
-            {noteCompletionQuestions.length > 0 ? (
-              <div id={`notesection-${assignmentUnit.id}`} className="scroll-mt-24 space-y-3">
+            )
+          });
+        }
+        if (noteCompletionQuestions.length > 0) {
+          orderedSections.push({
+            order: minOrder(noteCompletionQuestions),
+            node: (
+              <div
+                key="note-section"
+                id={`notesection-${assignmentUnit.id}`}
+                className="scroll-mt-24 space-y-3"
+              >
                 {groupBox(noteCompletionQuestions)}
                 <NoteCompletionQuestionSet
                   content={noteBodyContent}
                   questions={noteCompletionQuestions}
                   savedAnswers={answers}
                   onAnswerChange={handleAnswerChange}
+                  images={images}
                 />
               </div>
-            ) : null}
-            {matchingQuestions.length > 0 ? (
-              <div className="space-y-3">
+            )
+          });
+        }
+        if (matchingQuestions.length > 0) {
+          orderedSections.push({
+            order: minOrder(matchingQuestions),
+            node: (
+              <div key="matching-section" className="space-y-3">
                 {groupBox(matchingQuestions)}
                 <MatchingQuestionSet
                   questions={matchingQuestions}
@@ -1865,63 +1907,71 @@ export function AttemptWorkspace({
                   onAnswerChange={handleAnswerChange}
                 />
               </div>
-            ) : null}
-            {regularRenderItems.length > 0 ? (
-              regularRenderItems.map((item) => {
-                const groupQuestions = item.kind === "single" ? [item.question] : item.questions;
-                const box = groupBox(groupQuestions);
-                return (
-                  <div key={item.key} className="space-y-3">
-                    {box}
-                    {item.kind === "grid" ? (
-                      <MatchingGridQuestionSet
-                        questions={item.questions}
-                        options={item.options}
-                        savedAnswers={answers}
-                        onAnswerChange={handleAnswerChange}
-                        flagged={flagged}
-                        onToggleFlag={toggleFlag}
-                      />
-                    ) : item.kind === "tfng" ? (
-                      <TfngGridQuestionSet
-                        questions={item.questions}
-                        options={item.options}
-                        savedAnswers={answers}
-                        onAnswerChange={handleAnswerChange}
-                        flagged={flagged}
-                        onToggleFlag={toggleFlag}
-                      />
-                    ) : item.kind === "multiselect" ? (
-                      <MultiSelectQuestionSet
-                        questions={item.questions}
-                        options={item.options}
-                        selectCount={item.selectCount}
-                        savedAnswers={answers}
-                        onAnswerChange={handleAnswerChange}
-                        flagged={flagged}
-                        onToggleFlag={toggleFlag}
-                      />
-                    ) : item.kind === "choicegrid" ? (
-                      <ChoiceGridQuestionSet
-                        questions={item.questions}
-                        savedAnswers={answers}
-                        onAnswerChange={handleAnswerChange}
-                        flagged={flagged}
-                        onToggleFlag={toggleFlag}
-                      />
-                    ) : (
-                      renderSingleQuestion(item.question)
-                    )}
-                  </div>
-                );
-              })
-            ) : tableCompletionQuestions.length === 0 &&
-              noteCompletionQuestions.length === 0 &&
-              matchingQuestions.length === 0 ? (
+            )
+          });
+        }
+        regularRenderItems.forEach((item) => {
+          const groupQuestions = item.kind === "single" ? [item.question] : item.questions;
+          const box = groupBox(groupQuestions);
+          orderedSections.push({
+            order: minOrder(groupQuestions),
+            node: (
+              <div key={item.key} className="space-y-3">
+                {box}
+                {item.kind === "grid" ? (
+                  <MatchingGridQuestionSet
+                    questions={item.questions}
+                    options={item.options}
+                    savedAnswers={answers}
+                    onAnswerChange={handleAnswerChange}
+                    flagged={flagged}
+                    onToggleFlag={toggleFlag}
+                  />
+                ) : item.kind === "tfng" ? (
+                  <TfngGridQuestionSet
+                    questions={item.questions}
+                    options={item.options}
+                    savedAnswers={answers}
+                    onAnswerChange={handleAnswerChange}
+                    flagged={flagged}
+                    onToggleFlag={toggleFlag}
+                  />
+                ) : item.kind === "multiselect" ? (
+                  <MultiSelectQuestionSet
+                    questions={item.questions}
+                    options={item.options}
+                    selectCount={item.selectCount}
+                    savedAnswers={answers}
+                    onAnswerChange={handleAnswerChange}
+                    flagged={flagged}
+                    onToggleFlag={toggleFlag}
+                  />
+                ) : item.kind === "choicegrid" ? (
+                  <ChoiceGridQuestionSet
+                    questions={item.questions}
+                    savedAnswers={answers}
+                    onAnswerChange={handleAnswerChange}
+                    flagged={flagged}
+                    onToggleFlag={toggleFlag}
+                  />
+                ) : (
+                  renderSingleQuestion(item.question)
+                )}
+              </div>
+            )
+          });
+        });
+        orderedSections.sort((a, b) => a.order - b.order);
+
+        const questionsContent = (
+          <>
+            {orderedSections.length > 0 ? (
+              orderedSections.map((section) => section.node)
+            ) : (
               <p className="rounded-md border border-border bg-muted/60 p-4 text-sm text-muted-foreground">
                 Phần này không có câu hỏi tự động chấm.
               </p>
-            ) : null}
+            )}
           </>
         );
 
@@ -1950,7 +2000,11 @@ export function AttemptWorkspace({
               <SplitPane
                 left={
                   <>
-                    {images.length > 0 ? (
+                    {/* Ảnh sơ đồ của phần điền-chỗ-trống hiển thị TRONG khối note
+                        (bên phải, ngay trên các dòng nhãn) giống chin.edu.vn, nên
+                        không lặp lại ở cột trái. Ảnh biểu đồ Writing/Reading khác
+                        vẫn hiện bên trái như cũ. */}
+                    {images.length > 0 && noteCompletionQuestions.length === 0 ? (
                       <div className="space-y-3">
                         {images.map((src, index) => (
                           // eslint-disable-next-line @next/next/no-img-element

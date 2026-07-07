@@ -81,6 +81,24 @@ QUY TẮC CHỌN questionType:
     • answer = phần tử đúng trong options (vd "E. local animals").
     • Câu dẫn ("Which feature is related to…") + "Choose SIX…" đặt vào groupInstructions.
   TUYỆT ĐỐI KHÔNG dùng "multiple_choice" cho dạng có HỘP chung này (sẽ ra radio A–I lặp lại, sai layout).
+
+SƠ ĐỒ trong note_completion (flow-chart / diagram có khung + mũi tên): dựng bằng chữ trong
+content/noteBody, bọc trong "fence" để hệ thống vẽ khung + mũi tên, ô trống [[n]] nằm inline:
+- Flow-chart dọc (các bước nối bằng mũi tên ↓): bọc giữa dòng ":::flow" và ":::". Mỗi dòng = một khung.
+    :::flow
+    Decide on [[21]] you like.
+    Focus on [[22]] area of interest.
+    :::
+- Sơ đồ nhánh (khung nhãn bên trái → gạch đầu dòng bên phải): bọc giữa ":::branch" và ":::".
+  Dòng "= Nhãn" mở một nhóm (khung trái); các dòng sau là các gạch đầu dòng bên phải.
+    :::branch
+    = Nicolaus Copernicus
+    started the Copernican [[34]]
+    his book published the year he [[35]]
+    = Other scientists
+    [[37]] was killed.
+    :::
+  (Văn bản thường / summary để NGOÀI fence, vẫn là dòng "#", "##", hoặc dòng có [[n]] như cũ.)
 - TRUE/FALSE/NOT GIVEN hoặc YES/NO/NOT GIVEN → "true_false_not_given",
   options = ["TRUE","FALSE","NOT GIVEN"] hoặc ["YES","NO","NOT GIVEN"], answer khớp y hệt.
 - "Choose TWO letters" (chọn 2 đáp án cho 1 nhóm) → TÁCH thành 2 câu multiple_choice liên tiếp

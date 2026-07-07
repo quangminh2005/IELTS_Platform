@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {
   type DragEvent,
+  Fragment,
   useCallback,
   useEffect,
   useMemo,
@@ -626,9 +627,120 @@ function NoteCompletionQuestionSet({
       )
     );
 
-  // Ghi chú kiểu chin.edu.vn: dòng "# " = tiêu đề canh giữa; "## " = tiểu mục
-  // in đậm; dòng trống = khoảng cách; còn lại là dòng nội dung có ô trống inline.
-  const lines = content.split(/\r?\n/);
+  // Một dòng văn bản thường: "# " = tiêu đề canh giữa; "## " = tiểu mục in đậm;
+  // dòng trống = khoảng cách; còn lại là dòng có ô trống inline.
+  const renderPlainLine = (line: string, key: string) => {
+    const trimmed = line.trim();
+    if (trimmed === "") {
+      return <div key={key} className="h-2" />;
+    }
+    if (trimmed.startsWith("# ")) {
+      return (
+        <p key={key} className="text-center text-base font-bold">
+          {trimmed.slice(2)}
+        </p>
+      );
+    }
+    if (trimmed.startsWith("## ")) {
+      return (
+        <p key={key} className="pt-1 font-bold">
+          {trimmed.slice(3)}
+        </p>
+      );
+    }
+    return (
+      <p key={key} className="leading-8">
+        {renderLineContent(line, key)}
+      </p>
+    );
+  };
+
+  // Flow-chart dọc (Part 3 kiểu "Foundation for Essay Writing"): mỗi dòng là một
+  // khung, có mũi tên ↓ nối giữa các khung. Ô trống nằm inline trong khung.
+  const renderFlowBlock = (blockLines: string[], key: string) => {
+    const boxes = blockLines.filter((line) => line.trim() !== "");
+    return (
+      <div key={key} className="mx-auto flex max-w-xl flex-col items-center py-1">
+        {boxes.map((line, index) => (
+          <Fragment key={`${key}-b-${index}`}>
+            <div className="w-full rounded-md border-2 border-primary/50 bg-background px-4 py-3 text-center leading-7">
+              {renderLineContent(line, `${key}-box-${index}`)}
+            </div>
+            {index < boxes.length - 1 ? (
+              <div className="my-1 text-2xl leading-none text-primary/70">↓</div>
+            ) : null}
+          </Fragment>
+        ))}
+      </div>
+    );
+  };
+
+  // Sơ đồ nhánh (Part 4): mỗi nhóm "= Nhãn" là một khung bên trái, mũi tên → sang
+  // danh sách gạch đầu dòng bên phải (có ô trống inline).
+  const renderBranchBlock = (blockLines: string[], key: string) => {
+    const groups: { label: string; items: string[] }[] = [];
+    blockLines.forEach((line) => {
+      const trimmed = line.trim();
+      if (trimmed === "") {
+        return;
+      }
+      if (trimmed.startsWith("= ")) {
+        groups.push({ label: trimmed.slice(2), items: [] });
+      } else if (groups.length > 0) {
+        groups[groups.length - 1].items.push(line);
+      } else {
+        groups.push({ label: "", items: [line] });
+      }
+    });
+    return (
+      <div key={key} className="space-y-3 py-1">
+        {groups.map((group, gi) => (
+          <div key={`${key}-g-${gi}`} className="flex items-stretch gap-2">
+            <div className="flex w-32 shrink-0 items-center justify-center rounded-md border-2 border-primary/50 bg-background px-2 py-2 text-center text-sm font-semibold">
+              {group.label}
+            </div>
+            <div className="flex shrink-0 items-center text-2xl text-primary/70">→</div>
+            <ul className="flex-1 space-y-1">
+              {group.items.map((item, ii) => (
+                <li key={`${key}-g-${gi}-i-${ii}`} className="flex gap-2 leading-7">
+                  <span className="text-primary/70">•</span>
+                  <span className="flex-1">{renderLineContent(item, `${key}-item-${gi}-${ii}`)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // Tách nội dung thành các khối: văn bản thường, flow-chart (:::flow ... :::),
+  // sơ đồ nhánh (:::branch ... :::).
+  type NoteBlock = { kind: "plain" | "flow" | "branch"; lines: string[] };
+  const blocks: NoteBlock[] = [];
+  let openFence: "flow" | "branch" | null = null;
+  content.split(/\r?\n/).forEach((line) => {
+    const trimmed = line.trim();
+    if (trimmed === ":::flow" || trimmed === ":::branch") {
+      openFence = trimmed === ":::flow" ? "flow" : "branch";
+      blocks.push({ kind: openFence, lines: [] });
+      return;
+    }
+    if (trimmed === ":::") {
+      openFence = null;
+      return;
+    }
+    if (openFence) {
+      blocks[blocks.length - 1].lines.push(line);
+      return;
+    }
+    const last = blocks[blocks.length - 1];
+    if (last && last.kind === "plain") {
+      last.lines.push(line);
+    } else {
+      blocks.push({ kind: "plain", lines: [line] });
+    }
+  });
 
   return (
     <div className="overflow-hidden rounded-lg border border-primary/20 bg-primary/5">
@@ -646,31 +758,20 @@ function NoteCompletionQuestionSet({
         </div>
       ) : null}
       <div className="space-y-2 px-5 py-4 text-sm leading-8">
-        {lines.map((line, index) => {
-          const key = `line-${index}`;
-          const trimmed = line.trim();
-
-          if (trimmed === "") {
-            return <div key={key} className="h-2" />;
+        {blocks.map((block, blockIndex) => {
+          const key = `block-${blockIndex}`;
+          if (block.kind === "flow") {
+            return renderFlowBlock(block.lines, key);
           }
-          if (trimmed.startsWith("# ")) {
-            return (
-              <p key={key} className="text-center text-base font-bold">
-                {trimmed.slice(2)}
-              </p>
-            );
-          }
-          if (trimmed.startsWith("## ")) {
-            return (
-              <p key={key} className="pt-1 font-bold">
-                {trimmed.slice(3)}
-              </p>
-            );
+          if (block.kind === "branch") {
+            return renderBranchBlock(block.lines, key);
           }
           return (
-            <p key={key} className="leading-8">
-              {renderLineContent(line, key)}
-            </p>
+            <div key={key} className="space-y-2">
+              {block.lines.map((line, lineIndex) =>
+                renderPlainLine(line, `${key}-line-${lineIndex}`)
+              )}
+            </div>
           );
         })}
       </div>

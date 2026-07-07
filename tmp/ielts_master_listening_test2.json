@@ -1,0 +1,440 @@
+{
+  "title": "IELTS Master – Listening Test 2",
+  "skill": "listening",
+  "sourceLabel": "IELTS Master – Listening Test 2",
+  "description": "Listening Test 2: 4 part, 40 câu. Nhớ upload 4 file audio MP3 cho từng part sau khi import.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 – Diet plan (Peter & Mary)",
+      "instructions": "Nghe và hoàn thành các câu (1–5) và bảng (6–10).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": "Practical",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": [
+            "Pizzas",
+            "Pizza"
+          ],
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Câu 3",
+          "answer": [
+            "walking",
+            "light walking"
+          ],
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": "Pine park",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Câu 5",
+          "answer": "Fruit juice",
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "table_completion",
+          "prompt": "Câu 6",
+          "answer": [
+            "B",
+            "Biscuits"
+          ],
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "table_completion",
+          "prompt": "Câu 7",
+          "answer": [
+            "I",
+            "Ice-cream",
+            "Ice cream"
+          ],
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "table_completion",
+          "prompt": "Câu 8",
+          "answer": [
+            "C",
+            "Chocolate"
+          ],
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "table_completion",
+          "prompt": "Câu 9",
+          "answer": [
+            "B",
+            "Biscuits"
+          ],
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "table_completion",
+          "prompt": "Câu 10",
+          "answer": [
+            "I",
+            "Ice-cream",
+            "Ice cream"
+          ],
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "noteBody": "## Complete the sentences below\nPeter and Mary's diet will be both sensible and [[1]].\nEvery two months, they can eat [[2]].\nOn Saturdays, they will go [[3]].\nThis coming Saturday, they will go to [[4]].\nIn every meal, there will be [[5]].",
+        "tableBody": "| | Tuesday | Thursday | Sunday |\n| --- | --- | --- | --- |\n| Peter's choice | B | [[7]] | [[9]] |\n| Mary's choice | [[6]] | [[8]] | [[10]] |",
+        "groupInstructions": {
+          "1": "Complete the sentences below. Write NO MORE THAN TWO WORDS for each answer.",
+          "6": "Choose the correct letter C, I or B.\nC = Chocolate    I = Ice-cream    B = Biscuits"
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 – Stanfield Childcare Centre",
+      "instructions": "Nghe và hoàn thành bảng (11–16) và trả lời câu 17–20.",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "table_completion",
+          "prompt": "Câu 11",
+          "answer": "Padded",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "table_completion",
+          "prompt": "Câu 12",
+          "answer": [
+            "Corners",
+            "Corner"
+          ],
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "table_completion",
+          "prompt": "Câu 13",
+          "answer": "Special skill",
+          "points": 1
+        },
+        {
+          "order": 14,
+          "questionType": "table_completion",
+          "prompt": "Câu 14",
+          "answer": "Learning toys",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "table_completion",
+          "prompt": "Câu 15",
+          "answer": "Disinfect",
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "table_completion",
+          "prompt": "Câu 16",
+          "answer": [
+            "Germs",
+            "Germ"
+          ],
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "multiple_choice",
+          "prompt": "has her own children?",
+          "options": [
+            "A. Andrea",
+            "B. Bella",
+            "C. Cathy"
+          ],
+          "answer": "C. Cathy",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "multiple_choice",
+          "prompt": "often sleeps at the centre?",
+          "options": [
+            "A. Andrea",
+            "B. Bella",
+            "C. Cathy"
+          ],
+          "answer": "A. Andrea",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "multiple_choice",
+          "prompt": "is good with shy children?",
+          "options": [
+            "A. Andrea",
+            "B. Bella",
+            "C. Cathy"
+          ],
+          "answer": "C. Cathy",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "multiple_choice",
+          "prompt": "is a good cook?",
+          "options": [
+            "A. Andrea",
+            "B. Bella",
+            "C. Cathy"
+          ],
+          "answer": "B. Bella",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "tableBody": "| | 1 | 2 | 3 |\n| --- | --- | --- | --- |\n| Detail | Walls are [[11]] | Teachers are able to teach a [[13]] | They [[15]] surfaces daily |\n| Another detail | Includes the [[12]] | There are many special [[14]] | Procedures to limit the spread of [[16]] |",
+        "groupTitles": {
+          "11": "Advantages of Stanfield Childcare Centre"
+        },
+        "groupInstructions": {
+          "11": "Complete the table below. Write NO MORE THAN TWO WORDS for each answer.",
+          "17": "Choose the correct letter A, B or C.\nNB Bạn có thể dùng một chữ cái nhiều lần.\nWhich childcare worker?"
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 – Foundation for Essay Writing",
+      "instructions": "Nghe và hoàn thành sơ đồ (21–25) và đoạn tóm tắt (26–30).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "note_completion",
+          "prompt": "Câu 21",
+          "answer": "Topic",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "note_completion",
+          "prompt": "Câu 22",
+          "answer": "Current",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "note_completion",
+          "prompt": "Câu 23",
+          "answer": "Thesis",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "note_completion",
+          "prompt": "Câu 24",
+          "answer": "Outline",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "note_completion",
+          "prompt": "Câu 25",
+          "answer": "Progresses",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "note_completion",
+          "prompt": "Câu 26",
+          "answer": [
+            "Aspects",
+            "Aspect"
+          ],
+          "points": 1
+        },
+        {
+          "order": 27,
+          "questionType": "note_completion",
+          "prompt": "Câu 27",
+          "answer": [
+            "Real-life",
+            "Real life"
+          ],
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "note_completion",
+          "prompt": "Câu 28",
+          "answer": "Necessary",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "note_completion",
+          "prompt": "Câu 29",
+          "answer": [
+            "Style-guide",
+            "Style guide"
+          ],
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "note_completion",
+          "prompt": "Câu 30",
+          "answer": [
+            "10%",
+            "10 percent",
+            "10 per cent"
+          ],
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "noteBody": "# Foundation for Essay Writing\n:::flow\nDecide on [[21]] you like.\nFocus on [[22]] area of interest.\nWrite [[23]] statement.\nCreate [[24]].\nEnsure this [[25]] clearly.\n:::\n\n## Complete the summary below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER.\nThere are several [[26]] involved in producing a good essay. The writer must think independently, and give [[27]] examples as support, each one with a reference (which is academically [[28]]). The formatting must follow the [[29]] issued by the university, as well as the word count decided by the lecturer, although it can vary by [[30]].",
+        "groupInstructions": {
+          "21": "Complete the flow chart below. Write ONE WORD only for each answer."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 – Geocentrism",
+      "instructions": "Nghe và trả lời câu 31–33, rồi hoàn thành ghi chú (34–40).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "multiple_choice",
+          "prompt": "Geocentrism",
+          "options": [
+            "A. has a long history",
+            "B. is similar to heliocentrism",
+            "C. took some time to be deduced"
+          ],
+          "answer": "A. has a long history",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "multiple_choice",
+          "prompt": "Heliocentrism",
+          "options": [
+            "A. was realized only recently",
+            "B. was not generally accepted",
+            "C. fitted the views of the church"
+          ],
+          "answer": "B. was not generally accepted",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "multiple_choice",
+          "prompt": "The night sky",
+          "options": [
+            "A. is relatively simple",
+            "B. remains basically the same",
+            "C. was once used for navigation"
+          ],
+          "answer": "C. was once used for navigation",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": "Revolution",
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": "Died",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": "Attention",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": "Bruno",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": "Motion",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": "Bible",
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": [
+            "20%",
+            "20 percent",
+            "20 per cent"
+          ],
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "noteBody": ":::branch\n= Nicolaus Copernicus\nstarted the Copernican [[34]]\nhis book published the year he [[35]]\nThis book generated little [[36]].\n= Other scientists\nGalileo was persecuted.\n[[37]] was killed.\neven the sun believed to be in [[38]]\n= Modern geocentrism\nbased on the [[39]]\nBelievers also support creationism.\n[[40]] of Americans believe in this.\n:::",
+        "groupInstructions": {
+          "31": "Choose the correct letter, A, B or C.",
+          "34": "Complete the notes below. Write ONE WORD OR A NUMBER for each answer."
+        }
+      }
+    }
+  ]
+}

@@ -89,6 +89,9 @@ type AttemptWorkspaceProps = {
   highlights: Highlight[];
   savedAnswers: Record<string, string>;
   multiSelectGroups: MultiSelectGroup[];
+  // Chế độ giáo viên xem trước giao diện làm bài: KHÔNG lưu nháp, KHÔNG ghi
+  // highlight vào DB, nút "Nộp bài" chỉ đóng lại (không chấm điểm).
+  previewMode?: boolean;
 };
 
 type AnswerChange = (questionId: string, value: string) => void;
@@ -1450,7 +1453,8 @@ export function AttemptWorkspace({
   assignment,
   highlights,
   savedAnswers,
-  multiSelectGroups
+  multiSelectGroups,
+  previewMode = false
 }: AttemptWorkspaceProps) {
   const elapsedRef = useRef<HTMLInputElement>(null);
   const submitReasonRef = useRef<HTMLInputElement>(null);
@@ -1558,6 +1562,11 @@ export function AttemptWorkspace({
   const firstRenderRef = useRef(true);
 
   useEffect(() => {
+    // Xem trước: không lưu nháp lên server.
+    if (previewMode) {
+      return;
+    }
+
     if (firstRenderRef.current) {
       firstRenderRef.current = false;
       return;
@@ -1568,7 +1577,7 @@ export function AttemptWorkspace({
     }, 1200);
 
     return () => window.clearTimeout(timeoutId);
-  }, [persistDraft]);
+  }, [persistDraft, previewMode]);
 
   useEffect(() => {
     function updateElapsed() {
@@ -1595,6 +1604,11 @@ export function AttemptWorkspace({
     sourceType: string,
     payload: HighlightPayload
   ): Promise<string> {
+    // Xem trước: tô màu chỉ hiển thị tại chỗ, không ghi vào DB.
+    if (previewMode) {
+      return `preview-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    }
+
     const formData = new FormData();
     formData.set("attemptId", attempt.id);
     formData.set("assignableUnitId", assignableUnitId);
@@ -1610,6 +1624,10 @@ export function AttemptWorkspace({
   }
 
   async function removeHighlight(highlightId: string) {
+    if (previewMode) {
+      return;
+    }
+
     const formData = new FormData();
     formData.set("highlightId", highlightId);
 
@@ -1660,7 +1678,8 @@ export function AttemptWorkspace({
   const content = (
     <form
       ref={formRef}
-      action={submitAttempt}
+      action={previewMode ? undefined : submitAttempt}
+      onSubmit={previewMode ? (event) => event.preventDefault() : undefined}
       onKeyDown={(event) => {
         // Tránh nộp bài ngoài ý muốn: theo mặc định, bấm Enter trong ô <input>
         // sẽ submit form. Chặn Enter trong input (vẫn cho Enter xuống dòng trong
@@ -1680,13 +1699,20 @@ export function AttemptWorkspace({
       <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-4 py-3">
         <div className="flex min-w-0 items-center gap-3">
           <Link
-            href="/student"
+            href={previewMode ? "/teacher/materials" : "/student"}
             className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
           >
-            ‹ Bảng điều khiển
+            {previewMode ? "‹ Kho tài liệu" : "‹ Bảng điều khiển"}
           </Link>
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">Phòng làm bài</p>
+            <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-primary">
+              {previewMode ? "Phòng làm bài" : "Phòng làm bài"}
+              {previewMode ? (
+                <span className="rounded-full border border-amber-400/60 bg-amber-400/15 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-300">
+                  Xem trước
+                </span>
+              ) : null}
+            </p>
             <h2 className="truncate text-base font-bold tracking-tight sm:text-lg">{assignment.title}</h2>
           </div>
         </div>
@@ -2314,15 +2340,25 @@ export function AttemptWorkspace({
               </button>
 
               <button
-                type="submit"
+                type={previewMode ? "button" : "submit"}
                 onClick={(event) => {
+                  if (previewMode) {
+                    if (
+                      window.confirm(
+                        "Đây là bản xem trước — không có bài nào được nộp hay chấm điểm. Thoát về Kho tài liệu?"
+                      )
+                    ) {
+                      window.location.href = "/teacher/materials";
+                    }
+                    return;
+                  }
                   if (!window.confirm("Nộp bài? Bạn sẽ không thể chỉnh sửa sau khi nộp.")) {
                     event.preventDefault();
                   }
                 }}
                 className="rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
               >
-                Nộp bài
+                {previewMode ? "Thoát xem trước" : "Nộp bài"}
               </button>
             </div>
           </div>

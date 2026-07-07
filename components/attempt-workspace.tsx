@@ -749,16 +749,16 @@ function GroupInstructionBox({
 }) {
   return (
     <div className="space-y-2">
-      {title ? (
-        <p className="text-center text-base font-bold uppercase tracking-wide text-foreground">
-          {title}
-        </p>
-      ) : null}
       {text ? (
         <div className="rounded-md border border-rose-400/60 bg-rose-500/10 px-4 py-3 dark:border-rose-400/40">
           <p className="text-sm font-bold text-rose-700 dark:text-rose-300">{rangeLabel}</p>
           <p className="mt-1 whitespace-pre-line text-sm leading-6 text-foreground">{text}</p>
         </div>
+      ) : null}
+      {title ? (
+        <p className="text-center text-base font-bold uppercase tracking-wide text-foreground">
+          {title}
+        </p>
       ) : null}
     </div>
   );

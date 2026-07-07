@@ -99,6 +99,16 @@ content/noteBody, bọc trong "fence" để hệ thống vẽ khung + mũi tên,
     [[37]] was killed.
     :::
   (Văn bản thường / summary để NGOÀI fence, vẫn là dòng "#", "##", hoặc dòng có [[n]] như cũ.)
+- Label-the-MAP (bản đồ, điền chữ cái A–H theo vị trí): bọc các dòng địa điểm giữa ":::map" và ":::".
+  Ảnh bản đồ upload vào part (giáo viên tự thêm) sẽ hiện TRÊN ĐẦU khối này; mỗi địa điểm có một ô,
+  answer = CHỮ CÁI (vd "B", "H"). questionType vẫn là "note_completion".
+    :::map
+    Eastern Towers [[8]]
+    Granby Mansions [[9]]
+    :::
+- ":::break" (đứng riêng một dòng): NGẮT sang khối note mới. Dùng khi một nhóm note nằm SAU một
+  bảng/câu loại khác về số thứ tự (vd fact-sheet câu 38–40 nằm sau bảng câu 35–37) để các khối hiển
+  thị ĐÚNG THỨ TỰ số câu.
 - TRUE/FALSE/NOT GIVEN hoặc YES/NO/NOT GIVEN → "true_false_not_given",
   options = ["TRUE","FALSE","NOT GIVEN"] hoặc ["YES","NO","NOT GIVEN"], answer khớp y hệt.
 - "Choose TWO letters" (chọn 2 đáp án cho 1 nhóm) → TÁCH thành 2 câu multiple_choice liên tiếp

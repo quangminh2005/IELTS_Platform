@@ -1,0 +1,487 @@
+{
+  "title": "IELTS Master – Listening Test 5",
+  "skill": "listening",
+  "sourceLabel": "IELTS Master – Listening Test 5",
+  "description": "Listening Test 5: 4 part, 40 câu. Nhớ upload 4 file audio MP3. Part 1 (câu 8–10) và Part 2 (câu 17–20) là label-the-map — upload ảnh bản đồ tương ứng vào từng part.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 – Easylet properties",
+      "instructions": "Nghe và hoàn thành ghi chú (1–4), chọn BA đáp án (5–7) và dán nhãn bản đồ (8–10).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": "90",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": "8 months",
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Câu 3",
+          "answer": [
+            "4 pm",
+            "4pm",
+            "4 p.m."
+          ],
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": "Internet",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "multiple_choice",
+          "prompt": "Which THREE things are included for free with every property? (Câu 5)",
+          "options": [
+            "A. heating bills",
+            "B. kitchen equipment",
+            "C. plates and glasses",
+            "D. sheets and towels",
+            "E. telephone",
+            "F. television",
+            "G. water bill"
+          ],
+          "answer": [
+            "B. kitchen equipment",
+            "F. television",
+            "G. water bill"
+          ],
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "multiple_choice",
+          "prompt": "Which THREE things are included for free with every property? (Câu 6)",
+          "options": [
+            "A. heating bills",
+            "B. kitchen equipment",
+            "C. plates and glasses",
+            "D. sheets and towels",
+            "E. telephone",
+            "F. television",
+            "G. water bill"
+          ],
+          "answer": [
+            "B. kitchen equipment",
+            "F. television",
+            "G. water bill"
+          ],
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "multiple_choice",
+          "prompt": "Which THREE things are included for free with every property? (Câu 7)",
+          "options": [
+            "A. heating bills",
+            "B. kitchen equipment",
+            "C. plates and glasses",
+            "D. sheets and towels",
+            "E. telephone",
+            "F. television",
+            "G. water bill"
+          ],
+          "answer": [
+            "B. kitchen equipment",
+            "F. television",
+            "G. water bill"
+          ],
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Câu 8",
+          "answer": "B",
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Câu 9",
+          "answer": "H",
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Câu 10",
+          "answer": "E",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "noteBody": "Cheapest properties: £[[1]] per week\nMinimum period of contract [[2]]\nOffice open Saturdays until [[3]]\nList of properties available on [[4]]\n:::map\nEastern Towers [[8]]\nGranby Mansions [[9]]\nBusby Garden [[10]]\n:::",
+        "groupInstructions": {
+          "1": "Complete the notes below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+          "5": "Choose THREE letters, A–G.\nWhich THREE things are included for free with every property for rent from Easylet?",
+          "8": "Label the map below. Write the correct letter A–H next to questions 8–10.\nWhere are the following blocks of flats situated?"
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 – Hotel & town map",
+      "instructions": "Nghe và hoàn thành câu (11–16), rồi dán nhãn bản đồ (17–20).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "note_completion",
+          "prompt": "Câu 11",
+          "answer": "Breakfast",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "note_completion",
+          "prompt": "Câu 12",
+          "answer": "Paintings",
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "note_completion",
+          "prompt": "Câu 13",
+          "answer": "Castle",
+          "points": 1
+        },
+        {
+          "order": 14,
+          "questionType": "note_completion",
+          "prompt": "Câu 14",
+          "answer": "Famous people",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "note_completion",
+          "prompt": "Câu 15",
+          "answer": [
+            "Antiques show",
+            "antique show"
+          ],
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "note_completion",
+          "prompt": "Câu 16",
+          "answer": "Old postcards",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "note_completion",
+          "prompt": "Câu 17",
+          "answer": "E",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "note_completion",
+          "prompt": "Câu 18",
+          "answer": "F",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "note_completion",
+          "prompt": "Câu 19",
+          "answer": "A",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "note_completion",
+          "prompt": "Câu 20",
+          "answer": "D",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "noteBody": "## The Hotel\nYou must book [[11]] in advance.\nThere are some interesting [[12]] in the lounge.\n## Activities\nThe visit to the [[13]] has been cancelled.\nThere will be a talk about [[14]] from the area on Saturday.\nThe visit to the [[15]] will take place on Saturday.\nThere is a collection of [[16]] in the art gallery.\n:::map\nPark Hotel [[17]]\nInternet Cafe [[18]]\nTourist Information Office [[19]]\nRoyal House Restaurant [[20]]\n:::",
+        "groupInstructions": {
+          "11": "Complete the sentences below. Write NO MORE THAN TWO WORDS for each answer.",
+          "17": "Label the map below. Write the correct letter A–I next to questions 17–20.\nWhere are the following places situated?"
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 – Nursing program",
+      "instructions": "Nghe và trả lời câu 21–24 (chọn A/B/C), rồi ghép gợi ý (25–30).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "How old are the students of the nursing program?",
+          "options": [
+            "A. they are teenagers",
+            "B. they are in their twenties",
+            "C. they belong to different age groups"
+          ],
+          "answer": "C. they belong to different age groups",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "What do the speakers say about the group project?",
+          "options": [
+            "A. it helps to improve relationship among different classmates",
+            "B. it helps to develop problem solving skills",
+            "C. it provides supportive learning environment"
+          ],
+          "answer": "A. it helps to improve relationship among different classmates",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "multiple_choice",
+          "prompt": "Which part of the program surprised Paul?",
+          "options": [
+            "A. there is a number of essay to write",
+            "B. there is a lot of practical work",
+            "C. there is internship provided"
+          ],
+          "answer": "A. there is a number of essay to write",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "multiple_choice",
+          "prompt": "What do they feel about learning law?",
+          "options": [
+            "A. it is essential training",
+            "B. it is too theoretical",
+            "C. it takes up too much time"
+          ],
+          "answer": "A. it is essential training",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "matching",
+          "prompt": "Essays",
+          "options": [
+            "A. get feedback from teaching staff",
+            "B. do more reading",
+            "C. get help from school supporting staff",
+            "D. get help for nursing problems",
+            "E. manage time properly",
+            "F. be well prepared",
+            "G. review the notes regularly",
+            "H. do not set unrealistic goals"
+          ],
+          "answer": "E. manage time properly",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "matching",
+          "prompt": "Lectures",
+          "options": [
+            "A. get feedback from teaching staff",
+            "B. do more reading",
+            "C. get help from school supporting staff",
+            "D. get help for nursing problems",
+            "E. manage time properly",
+            "F. be well prepared",
+            "G. review the notes regularly",
+            "H. do not set unrealistic goals"
+          ],
+          "answer": "G. review the notes regularly",
+          "points": 1
+        },
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "Research",
+          "options": [
+            "A. get feedback from teaching staff",
+            "B. do more reading",
+            "C. get help from school supporting staff",
+            "D. get help for nursing problems",
+            "E. manage time properly",
+            "F. be well prepared",
+            "G. review the notes regularly",
+            "H. do not set unrealistic goals"
+          ],
+          "answer": "C. get help from school supporting staff",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "Online forum",
+          "options": [
+            "A. get feedback from teaching staff",
+            "B. do more reading",
+            "C. get help from school supporting staff",
+            "D. get help for nursing problems",
+            "E. manage time properly",
+            "F. be well prepared",
+            "G. review the notes regularly",
+            "H. do not set unrealistic goals"
+          ],
+          "answer": "A. get feedback from teaching staff",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "Placement tests",
+          "options": [
+            "A. get feedback from teaching staff",
+            "B. do more reading",
+            "C. get help from school supporting staff",
+            "D. get help for nursing problems",
+            "E. manage time properly",
+            "F. be well prepared",
+            "G. review the notes regularly",
+            "H. do not set unrealistic goals"
+          ],
+          "answer": "B. do more reading",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "Freshmen",
+          "options": [
+            "A. get feedback from teaching staff",
+            "B. do more reading",
+            "C. get help from school supporting staff",
+            "D. get help for nursing problems",
+            "E. manage time properly",
+            "F. be well prepared",
+            "G. review the notes regularly",
+            "H. do not set unrealistic goals"
+          ],
+          "answer": "H. do not set unrealistic goals",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupInstructions": {
+          "21": "Choose the correct letter, A, B or C.",
+          "25": "What are the suggestions offered by the speakers?\nChoose SIX answers from the list and write the correct letter A–H next to questions 25–30."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 – Wild rice",
+      "instructions": "Nghe và hoàn thành ghi chú (31–34), bảng (35–37) và fact sheet (38–40).",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Câu 31",
+          "answer": "Cultivated",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "prompt": "Câu 32",
+          "answer": "Fresh",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Câu 33",
+          "answer": "Explorers",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": "Strength and hardiness",
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "table_completion",
+          "prompt": "Câu 35",
+          "answer": "Blown",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "table_completion",
+          "prompt": "Câu 36",
+          "answer": "Too green",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "table_completion",
+          "prompt": "Câu 37",
+          "answer": "Fall off",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": [
+            "Three",
+            "3"
+          ],
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": "Hand",
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": "airboat",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "noteBody": "Although it is called wild, most varieties of wild rice are [[31]].\nWild rice is mostly found in lakes that have [[32]] water.\nWild rice was gathered by Indians before any [[33]] ever arrived.\nEarly visitors thought that wild rice had greatly increased the [[34]] and [[34]] of the Indians.\n:::break\n# Buying wild rice: Fact Sheet\nYou need to harvest [[38]] pounds of seed to yield 1 pound of wild rice.\nWild rice on the market that is harvested by [[39]] is slowly being pushed.\n'Indian harvested' or 'organic': Hybridized and gathered in [[40]].\n'Hand harvested, organic, from the Great Lakes': Of superior flavour and aroma.",
+        "tableBody": "| Cause | Effect |\n| --- | --- |\n| Heavy windstorm | Seeds [[35]] into water |\n| Grains [[36]] | Difficult to beat |\n| Grains left on too long | [[37]] into the water |",
+        "groupInstructions": {
+          "31": "Complete the notes below. Write NO MORE THAN THREE WORDS for each answer.",
+          "35": "Complete the table below. Write NO MORE THAN THREE WORDS for each answer.",
+          "38": "Complete the fact sheet below. Write NO MORE THAN THREE WORDS for each answer."
+        }
+      }
+    }
+  ]
+}

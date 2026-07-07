@@ -518,6 +518,55 @@ function TableCompletionQuestionSet({
   );
 }
 
+// Tách noteBody thành các đoạn (segment) ở cấp cao để mỗi nhóm note hiển thị
+// đúng thứ tự dù bị chen bởi câu loại khác (bảng/trắc nghiệm...):
+//  - ":::map ... :::"  = đoạn bản đồ (hiện ẢNH + các dòng địa điểm có ô điền chữ cái).
+//  - ":::break"        = ngắt sang đoạn note mới (vd fact-sheet nằm sau một bảng).
+//  - :::flow / :::branch vẫn nằm TRONG đoạn plain và do NoteCompletionQuestionSet tự vẽ.
+type NoteSegment = { kind: "plain" | "map"; text: string };
+function splitNoteSegments(content: string): NoteSegment[] {
+  const segments: NoteSegment[] = [];
+  let inMap = false;
+  content.split(/\r?\n/).forEach((line) => {
+    const trimmed = line.trim();
+    if (trimmed === ":::map") {
+      inMap = true;
+      segments.push({ kind: "map", text: "" });
+      return;
+    }
+    if (trimmed === ":::" && inMap) {
+      inMap = false;
+      return;
+    }
+    if (trimmed === ":::break" && !inMap) {
+      segments.push({ kind: "plain", text: "" });
+      return;
+    }
+    if (inMap) {
+      const seg = segments[segments.length - 1];
+      seg.text += seg.text ? `\n${line}` : line;
+      return;
+    }
+    const last = segments[segments.length - 1];
+    if (last && last.kind === "plain") {
+      last.text += `\n${line}`;
+    } else {
+      segments.push({ kind: "plain", text: line });
+    }
+  });
+  return segments.filter((seg) => seg.text.trim() !== "");
+}
+
+function placeholderOrdersIn(text: string): Set<number> {
+  const orders = new Set<number>();
+  const pattern = /\[\[(\d+)\]\]/g;
+  let match: RegExpExecArray | null;
+  while ((match = pattern.exec(text)) !== null) {
+    orders.add(Number(match[1]));
+  }
+  return orders;
+}
+
 function NoteCompletionQuestionSet({
   content,
   questions,
@@ -2071,24 +2120,45 @@ export function AttemptWorkspace({
           });
         }
         if (noteCompletionQuestions.length > 0) {
-          orderedSections.push({
-            order: minOrder(noteCompletionQuestions),
-            node: (
-              <div
-                key="note-section"
-                id={`notesection-${assignmentUnit.id}`}
-                className="scroll-mt-24 space-y-3"
-              >
-                {groupBox(noteCompletionQuestions)}
-                <NoteCompletionQuestionSet
-                  content={noteBodyContent}
-                  questions={noteCompletionQuestions}
-                  savedAnswers={answers}
-                  onAnswerChange={handleAnswerChange}
-                  images={images}
-                />
-              </div>
-            )
+          const noteSegments = splitNoteSegments(noteBodyContent);
+          const hasMapSegment = noteSegments.some((seg) => seg.kind === "map");
+          let mapImageIndex = 0;
+          let plainImagesAssigned = false;
+          noteSegments.forEach((seg, segIndex) => {
+            const segOrders = placeholderOrdersIn(seg.text);
+            const segQuestions = noteCompletionQuestions.filter((q) => segOrders.has(q.order));
+            if (segQuestions.length === 0) {
+              return;
+            }
+            // Ảnh: đoạn bản đồ lấy ảnh theo thứ tự; nếu không có bản đồ thì đoạn
+            // note đầu tiên giữ ảnh (hành vi cũ cho label-the-diagram).
+            let segImages: string[] = [];
+            if (seg.kind === "map") {
+              segImages = images[mapImageIndex] ? [images[mapImageIndex]] : [];
+              mapImageIndex += 1;
+            } else if (!hasMapSegment && !plainImagesAssigned) {
+              segImages = images;
+              plainImagesAssigned = true;
+            }
+            orderedSections.push({
+              order: minOrder(segQuestions),
+              node: (
+                <div
+                  key={`note-section-${segIndex}`}
+                  id={segIndex === 0 ? `notesection-${assignmentUnit.id}` : undefined}
+                  className="scroll-mt-24 space-y-3"
+                >
+                  {groupBox(segQuestions)}
+                  <NoteCompletionQuestionSet
+                    content={seg.text}
+                    questions={segQuestions}
+                    savedAnswers={answers}
+                    onAnswerChange={handleAnswerChange}
+                    images={segImages}
+                  />
+                </div>
+              )
+            });
           });
         }
         if (matchingQuestions.length > 0) {

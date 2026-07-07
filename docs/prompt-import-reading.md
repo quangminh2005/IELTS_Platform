@@ -31,6 +31,11 @@ SCHEMA:
       "instructions": "Hướng dẫn ngắn bằng tiếng Việt",
       "content": "<TOÀN BỘ passage 1, giữ nguyên xuống dòng giữa các đoạn>",
       "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupTitles": { "<order câu đầu nhóm>": "<TIÊU ĐỀ in giữa của nhóm nếu đề gốc có>" },
+        "groupInstructions": { "<order câu đầu nhóm>": "<hướng dẫn nguyên văn của nhóm>" },
+        "noteBody": "<CHỈ khi có summary/note/sentence completion — xem quy tắc bên dưới>"
+      },
       "questions": [ ... 13–14 câu ... ]
     },
     { "unitNumber": 2, ... },
@@ -41,12 +46,15 @@ SCHEMA:
 MỖI CÂU HỎI:
 {
   "order": <số thứ tự câu 1..40, KHÔNG reset giữa các passage>,
-  "questionType": "<một trong: multiple_choice | short_answer | true_false_not_given>",
-  "prompt": "<đề câu hỏi>",
-  "options": ["A", "B", ...],   // bỏ trường này nếu là short_answer
+  "questionType": "<một trong: multiple_choice | true_false_not_given | note_completion | short_answer>",
+  "prompt": "<đề câu hỏi — với note_completion chỉ ghi ngắn 'Câu N'>",
+  "options": ["A", "B", ...],   // chỉ cho multiple_choice / true_false_not_given
   "answer": "<đáp án>",
   "points": 1
 }
+
+TIÊU ĐỀ NHÓM: nếu đề gốc có tiêu đề in đậm/canh giữa phía trên một nhóm câu, chép nguyên văn
+vào metadata.groupTitles với key = order câu đầu nhóm. KHÔNG bỏ sót tiêu đề.
 
 QUY TẮC CHỌN questionType:
 - TRUE/FALSE/NOT GIVEN hoặc YES/NO/NOT GIVEN  → "true_false_not_given",
@@ -54,16 +62,30 @@ QUY TẮC CHỌN questionType:
 - Multiple choice A/B/C/D, Matching headings (A–G), Matching người (A/B/C), Matching endings (A–G)
   → "multiple_choice". options là danh sách đầy đủ, answer là phần tử trong options.
   Ví dụ matching headings: options = ["A","B","C","D","E","F","G"], answer = "C".
-- Gap-fill / Note completion / Summary completion / Sentence completion (điền từ vào chỗ trống)
-  → "short_answer". KHÔNG có options. answer là từ/số chính xác từ bài đọc.
-  Prompt viết lại thành 1 câu kèm "______" tại chỗ cần điền
-  (ví dụ: "Nests are created in ______, where the eggs are laid.").
+- Summary / Note / Sentence completion, Flow-chart / Table completion (điền TỪ vào một đoạn văn/ghi chú cho sẵn)
+  → "note_completion". KHÔNG có options. Đây là dạng hiển thị thành MỘT đoạn liền mạch,
+  ô trống nằm ngay trong dòng chữ (giống chin.edu.vn) — TUYỆT ĐỐI KHÔNG tách mỗi chỗ trống
+  thành một "short_answer" riêng.
+  Cách làm:
+    • Gom cả cụm (vd câu 17–22) vào metadata.noteBody của phần: chép NGUYÊN VĂN đoạn tóm tắt/
+      ghi chú, đặt "[[order]]" tại mỗi chỗ trống (vd "...result of [[17]]. Others believe...").
+    • Trong noteBody dùng quy ước: dòng "# Tiêu đề" = tiêu đề canh giữa; "## Tiểu mục" = tiểu mục
+      in đậm; dòng trống = ngắt đoạn. Summary = các câu chảy liền trong đoạn; Note/Sentence
+      completion = mỗi ý/câu một dòng (có thể mở đầu bằng "• ").
+    • Mỗi chỗ trống vẫn là MỘT câu hỏi trong "questions": questionType = "note_completion",
+      prompt = "Câu N", answer = từ/số chính xác từ bài đọc (KHÔNG lặp lại câu văn trong prompt).
+    • Đặt hướng dẫn nhóm ("Complete the summary below. Choose ONE WORD ONLY...") vào
+      metadata.groupInstructions với key là order câu đầu nhóm.
+- Short answer THẬT SỰ (câu hỏi có dấu "?" trả lời trong vài từ, KHÔNG phải điền vào đoạn)
+  → "short_answer". prompt là câu hỏi đầy đủ, answer là từ/số.
 
 KIỂM TRA TRƯỚC KHI XUẤT:
 1. Tổng 40 câu, order chạy 1→40 không trùng.
 2. Mọi câu multiple_choice / true_false_not_given: answer phải nằm trong options
    (so sánh không phân biệt hoa thường, khoảng trắng).
-3. JSON parse được, không có ký tự lạ.
+3. Mọi câu note_completion: phải có đúng một "[[order]]" tương ứng trong metadata.noteBody
+   (và mọi "[[n]]" trong noteBody đều có câu hỏi order n).
+4. JSON parse được, không có ký tự lạ.
 ```
 
 ---

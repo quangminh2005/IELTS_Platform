@@ -32,11 +32,10 @@ export function usesDragDropAnswer(questionType: string, options: string[]) {
   return dragDropTypes.has(questionType) && options.length > 0;
 }
 
-// Hướng dẫn cho từng NHÓM câu (vd "Câu 14–18: ...") lưu trong
-// metadata.groupInstructions = { "<order câu đầu nhóm>": "nội dung hướng dẫn" }.
-// Hiển thị thành khung đỏ phía trên nhóm câu khi làm bài.
-export function parseGroupInstructions(
-  metadataJson: string | null | undefined
+// Đọc một map { "<order câu đầu nhóm>": "chuỗi" } từ một field trong metadata.
+function parseOrderStringMap(
+  metadataJson: string | null | undefined,
+  field: string
 ): Record<number, string> {
   if (!metadataJson) {
     return {};
@@ -44,7 +43,7 @@ export function parseGroupInstructions(
 
   try {
     const parsed = JSON.parse(metadataJson);
-    const raw = (parsed as { groupInstructions?: unknown })?.groupInstructions;
+    const raw = (parsed as Record<string, unknown>)?.[field];
     if (raw && typeof raw === "object" && !Array.isArray(raw)) {
       const result: Record<number, string> = {};
       for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
@@ -60,6 +59,24 @@ export function parseGroupInstructions(
   }
 
   return {};
+}
+
+// Hướng dẫn cho từng NHÓM câu (vd "Câu 14–18: ...") lưu trong
+// metadata.groupInstructions = { "<order câu đầu nhóm>": "nội dung hướng dẫn" }.
+// Hiển thị thành khung đỏ phía trên nhóm câu khi làm bài.
+export function parseGroupInstructions(
+  metadataJson: string | null | undefined
+): Record<number, string> {
+  return parseOrderStringMap(metadataJson, "groupInstructions");
+}
+
+// Tiêu đề của từng NHÓM câu (vd "New city developments", "Transport Survey") lưu
+// trong metadata.groupTitles = { "<order câu đầu nhóm>": "Tiêu đề" }. Hiển thị
+// canh giữa, in đậm phía trên khung hướng dẫn — giống tiêu đề đề gốc.
+export function parseGroupTitles(
+  metadataJson: string | null | undefined
+): Record<number, string> {
+  return parseOrderStringMap(metadataJson, "groupTitles");
 }
 
 // Giá trị câu trả lời là một file audio (bài Speaking ghi âm) hay không.

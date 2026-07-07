@@ -22,6 +22,7 @@ import { AudioRecorderAnswer } from "@/components/audio-recorder-answer";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
   parseGroupInstructions,
+  parseGroupTitles,
   parseMarkdownTable,
   parseQuestionOptions,
   parseUnitImages,
@@ -737,11 +738,28 @@ function MatchingQuestionSet({
 
 // Khung hướng dẫn cho một nhóm câu (kiểu chin.edu.vn): tiêu đề "Câu X–Y" + nội
 // dung yêu cầu, viền đỏ nổi bật phía trên nhóm.
-function GroupInstructionBox({ rangeLabel, text }: { rangeLabel: string; text: string }) {
+function GroupInstructionBox({
+  rangeLabel,
+  text,
+  title
+}: {
+  rangeLabel: string;
+  text: string;
+  title?: string;
+}) {
   return (
-    <div className="rounded-md border border-rose-400/60 bg-rose-500/10 px-4 py-3 dark:border-rose-400/40">
-      <p className="text-sm font-bold text-rose-700 dark:text-rose-300">{rangeLabel}</p>
-      <p className="mt-1 whitespace-pre-line text-sm leading-6 text-foreground">{text}</p>
+    <div className="space-y-2">
+      {title ? (
+        <p className="text-center text-base font-bold uppercase tracking-wide text-foreground">
+          {title}
+        </p>
+      ) : null}
+      {text ? (
+        <div className="rounded-md border border-rose-400/60 bg-rose-500/10 px-4 py-3 dark:border-rose-400/40">
+          <p className="text-sm font-bold text-rose-700 dark:text-rose-300">{rangeLabel}</p>
+          <p className="mt-1 whitespace-pre-line text-sm leading-6 text-foreground">{text}</p>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -1557,6 +1575,7 @@ export function AttemptWorkspace({
         const sourceType = "content";
         const images = parseUnitImages(unit.metadataJson);
         const groupInstructions = parseGroupInstructions(unit.metadataJson);
+        const groupTitles = parseGroupTitles(unit.metadataJson);
         // Dải câu của mỗi nhóm = từ key (câu đầu nhóm) tới ngay trước key kế tiếp,
         // hoặc tới câu cuối của phần. Nhờ vậy nhãn hiện đúng "Câu 7–13" dù nhóm gồm
         // nhiều thẻ câu riêng lẻ.
@@ -1581,13 +1600,15 @@ export function AttemptWorkspace({
           }
           const startOrder = Math.min(...groupQuestions.map((question) => question.order));
           const text = groupInstructions[startOrder];
-          if (!text) {
+          const title = groupTitles[startOrder];
+          if (!text && !title) {
             return null;
           }
           return (
             <GroupInstructionBox
               rangeLabel={groupRangeLabel[startOrder] ?? `Câu ${startOrder}`}
-              text={text}
+              text={text ?? ""}
+              title={title}
             />
           );
         };

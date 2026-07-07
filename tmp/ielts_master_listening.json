@@ -1,0 +1,257 @@
+{
+  "title": "IELTS Master – Listening (Transport Survey / Thor Heyerdahl)",
+  "skill": "listening",
+  "sourceLabel": "IELTS Master – Listening",
+  "description": "Listening: 4 part, 40 câu. Nhớ upload 4 file audio MP3 cho từng part sau khi import.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 – Transport Survey",
+      "instructions": "Nghe và hoàn thành ghi chú. Mỗi chỗ trống điền MỘT TỪ HOẶC MỘT SỐ.",
+      "content": "Transport Survey\n\nTravelled to town today: by bus\nName: Lusia [[1]]\nAddress: [[2]] White Stone Road\nArea: Bradfield\nPostcode: [[3]]\nOccupation: [[4]]\nReason for visit to town: to go to the [[5]]\nSuggestions for improvement:\n- better [[6]]\n- Have more footpaths\n- More frequent [[7]]\n\nThings that would encourage cycling to work:\n- Having [[8]] parking places for bicycles\n- Being able to use a [[9]] at work\n- The opportunity to have cycling [[10]] on busy roads",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        { "order": 1, "questionType": "note_completion", "prompt": "Câu 1", "answer": "Hardie", "points": 1 },
+        { "order": 2, "questionType": "note_completion", "prompt": "Câu 2", "answer": "19", "points": 1 },
+        { "order": 3, "questionType": "note_completion", "prompt": "Câu 3", "answer": "GT82LC", "points": 1 },
+        { "order": 4, "questionType": "note_completion", "prompt": "Câu 4", "answer": "hairdresser", "points": 1 },
+        { "order": 5, "questionType": "note_completion", "prompt": "Câu 5", "answer": "dentist", "points": 1 },
+        { "order": 6, "questionType": "note_completion", "prompt": "Câu 6", "answer": "lighting", "points": 1 },
+        { "order": 7, "questionType": "note_completion", "prompt": "Câu 7", "answer": "trains", "points": 1 },
+        { "order": 8, "questionType": "note_completion", "prompt": "Câu 8", "answer": "safe", "points": 1 },
+        { "order": 9, "questionType": "note_completion", "prompt": "Câu 9", "answer": "shower", "points": 1 },
+        { "order": 10, "questionType": "note_completion", "prompt": "Câu 10", "answer": "training", "points": 1 }
+      ],
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the notes below.\nWrite ONE WORD OR A NUMBER."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 – New city developments",
+      "instructions": "Nghe và trả lời. Câu 11–14: chọn A, B hoặc C. Câu 15–20: chọn đáp án A–I cho mỗi khu vực.",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "The idea for the two new developments in the city came from",
+          "options": ["A. local people", "B. the City Council", "C. the SWRDC"],
+          "answer": "A. local people",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "multiple_choice",
+          "prompt": "What is unusual about Brackenside pool?",
+          "options": ["A. its architectural style", "B. its heating system", "C. its method of water treatment"],
+          "answer": "C. its method of water treatment",
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "multiple_choice",
+          "prompt": "Local newspapers have raised worries about",
+          "options": ["A. the late opening date", "B. the post of the project", "C. the size of the facilities"],
+          "answer": "C. the size of the facilities",
+          "points": 1
+        },
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "What decision has not yet been made about the pool?",
+          "options": ["A. whose statue will be at the door", "B. the exact opening times", "C. who will open it"],
+          "answer": "A. whose statue will be at the door",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "multiple_choice",
+          "prompt": "Which feature is related to Asia?",
+          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "answer": "E. local animals",
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "multiple_choice",
+          "prompt": "Which feature is related to Antarctica?",
+          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "answer": "F. mountains",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "multiple_choice",
+          "prompt": "Which feature is related to South America?",
+          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "answer": "D. jewels",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "multiple_choice",
+          "prompt": "Which feature is related to North America?",
+          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "answer": "H. space travel",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "multiple_choice",
+          "prompt": "Which feature is related to Europe?",
+          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "answer": "A. ancient forts",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "multiple_choice",
+          "prompt": "Which feature is related to Africa?",
+          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "answer": "B. waterways",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupTitles": {
+          "11": "New city developments"
+        },
+        "groupInstructions": {
+          "11": "Choose the correct letter, A, B or C.",
+          "15": "Which feature is related to each of the following areas of the world represented in the playground?\nChoose SIX answers from the box and write the correct letter, A–I, next to questions 15–20."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 – Thor Heyerdahl",
+      "instructions": "Nghe đoạn thảo luận. Câu 21–22 và 23–24: mỗi cặp chọn HAI đáp án (tách thành 2 câu, mỗi câu đúng 1 trong 2). Câu 25–30: chọn A, B hoặc C.",
+      "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO hobbies was Thor Heyerdahl very interested in as a youth? (Câu 21 — chọn 1 trong 2 đáp án đúng)",
+          "options": ["A. camping", "B. climbing", "C. collecting", "D. hunting", "E. reading"],
+          "answer": ["B. climbing", "C. collecting"],
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO hobbies was Thor Heyerdahl very interested in as a youth? (Câu 22 — chọn đáp án đúng còn lại)",
+          "options": ["A. camping", "B. climbing", "C. collecting", "D. hunting", "E. reading"],
+          "answer": ["B. climbing", "C. collecting"],
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "multiple_choice",
+          "prompt": "Which do the speakers say are the TWO reasons why Heyerdahl went to live on an island? (Câu 23 — chọn 1 trong 2 đáp án đúng)",
+          "options": ["A. to examine ancient carvings", "B. to experience an isolated place", "C. to formulate a new theory", "D. to learn survival skills", "E. to study the impact of an extreme environment"],
+          "answer": ["B. to experience an isolated place", "E. to study the impact of an extreme environment"],
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "multiple_choice",
+          "prompt": "Which do the speakers say are the TWO reasons why Heyerdahl went to live on an island? (Câu 24 — chọn đáp án đúng còn lại)",
+          "options": ["A. to examine ancient carvings", "B. to experience an isolated place", "C. to formulate a new theory", "D. to learn survival skills", "E. to study the impact of an extreme environment"],
+          "answer": ["B. to experience an isolated place", "E. to study the impact of an extreme environment"],
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "multiple_choice",
+          "prompt": "According to Victor and Olivia, academics thought that Polynesian migration from the east was impossible due to",
+          "options": ["A. the fact that Eastern countries were far away", "B. the lack of materials for boat building", "C. the direction of the winds and currents"],
+          "answer": "A. the fact that Eastern countries were far away",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "multiple_choice",
+          "prompt": "Which do the speakers agree was the main reason for Heyerdahl's raft journey?",
+          "options": ["A. to overcome a research setback", "B. to demonstrate a personal quality", "C. to test a new theory"],
+          "answer": "C. to test a new theory",
+          "points": 1
+        },
+        {
+          "order": 27,
+          "questionType": "multiple_choice",
+          "prompt": "What was most important to Heyerdahl about his raft journey?",
+          "options": ["A. the fact that he was the first person to do it", "B. the speed of crossing the Pacific", "C. the use of authentic construction methods"],
+          "answer": "C. the use of authentic construction methods",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "multiple_choice",
+          "prompt": "Why did Heyerdahl go to Easter Island?",
+          "options": ["A. to build a stone statue", "B. to sail a reed boat", "C. to learn the local language"],
+          "answer": "A. to build a stone statue",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "multiple_choice",
+          "prompt": "In Olivia's opinion, Heyerdahl's greatest influence was on",
+          "options": ["A. theories about Polynesian origins", "B. the development of archaeological methodology", "C. establishing archaeology as an academic subject"],
+          "answer": "B. the development of archaeological methodology",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "multiple_choice",
+          "prompt": "Which criticism do the speakers make of William Oliver's textbook?",
+          "options": ["A. Its style is out of date", "B. Its content is over-simplified", "C. Its methodology is flawed"],
+          "answer": "A. Its style is out of date",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupTitles": {
+          "25": "The later life of Thor Heyerdahl"
+        },
+        "groupInstructions": {
+          "21": "Choose TWO letters, A–E.\nWhich TWO hobbies was Thor Heyerdahl very interested in as a youth?",
+          "23": "Choose TWO letters, A–E.\nWhich do the speakers say are the TWO reasons why Heyerdahl went to live on an island?",
+          "25": "Choose the correct letter, A, B or C."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 – The future of management",
+      "instructions": "Nghe và hoàn thành ghi chú. Chọn MỘT TỪ cho mỗi chỗ trống.",
+      "content": "THE FUTURE OF MANAGEMENT\n\nBusiness markets\n- greater [[31]] among companies\n- increase in power of large [[32]] companies\n- rising [[33]] in certain countries\n\nExternal influences on businesses\n- more discussion with [[34]] before making business decisions\n- environmental concerns which may lead to more [[35]]\n\nBusiness structures\n- more teams will be formed to work on a particular [[36]]\n- businesses may need to offer hours that are [[37]], or the chance to work remotely\n\nManagement styles\n- increasing need for managers to provide good [[38]]\n- changes influenced by [[39]] taking senior roles\n\nChanges in the economy\n- service sector continues to be important\n- increasing value of intellectual property\n- more and more [[40]] workers",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        { "order": 31, "questionType": "note_completion", "prompt": "Câu 31", "answer": "competition", "points": 1 },
+        { "order": 32, "questionType": "note_completion", "prompt": "Câu 32", "answer": "global", "points": 1 },
+        { "order": 33, "questionType": "note_completion", "prompt": "Câu 33", "answer": "demand", "points": 1 },
+        { "order": 34, "questionType": "note_completion", "prompt": "Câu 34", "answer": "customers", "points": 1 },
+        { "order": 35, "questionType": "note_completion", "prompt": "Câu 35", "answer": "regulation", "points": 1 },
+        { "order": 36, "questionType": "note_completion", "prompt": "Câu 36", "answer": "project", "points": 1 },
+        { "order": 37, "questionType": "note_completion", "prompt": "Câu 37", "answer": "flexible", "points": 1 },
+        { "order": 38, "questionType": "note_completion", "prompt": "Câu 38", "answer": "leadership", "points": 1 },
+        { "order": 39, "questionType": "note_completion", "prompt": "Câu 39", "answer": "women", "points": 1 },
+        { "order": 40, "questionType": "note_completion", "prompt": "Câu 40", "answer": "self-employed", "points": 1 }
+      ],
+      "metadata": {
+        "groupInstructions": {
+          "31": "Complete the notes below.\nWrite ONE WORD ONLY for each answer."
+        }
+      }
+    }
+  ]
+}

@@ -111,9 +111,13 @@ content/noteBody, bọc trong "fence" để hệ thống vẽ khung + mũi tên,
   thị ĐÚNG THỨ TỰ số câu.
 - TRUE/FALSE/NOT GIVEN hoặc YES/NO/NOT GIVEN → "true_false_not_given",
   options = ["TRUE","FALSE","NOT GIVEN"] hoặc ["YES","NO","NOT GIVEN"], answer khớp y hệt.
-- "Choose TWO letters" (chọn 2 đáp án cho 1 nhóm) → TÁCH thành 2 câu multiple_choice liên tiếp
-  (vd order 21 và 22). CẢ HAI câu: options giống nhau, answer = MẢNG gồm CẢ HAI đáp án đúng.
-  (Hệ thống chấm đúng nếu học sinh chọn 1 trong 2 cho mỗi ô.)
+- "Choose TWO/THREE/… letters" (chọn N đáp án cho 1 nhóm) → TÁCH thành N câu multiple_choice liên
+  tiếp. CẢ N câu: options GIỐNG NHAU, answer = MẢNG gồm CẢ N đáp án đúng (KHÔNG để mỗi câu một đáp
+  án lẻ — sẽ chấm sai theo thứ tự). Hệ thống gộp thành một khối chọn-N, chấm theo TẬP.
+- DẤU NGOẶC trong answer key: đáp án kiểu "crowd (noise)", "invisible (disabilities)", "(barren) hills"
+  nghĩa là phần trong ngoặc KHÔNG bắt buộc → import thành MẢNG chấp nhận cả hai:
+  ["crowd","crowd noise"], ["invisible","invisible disabilities"], ["hills","barren hills"].
+  TUYỆT ĐỐI không để nguyên chuỗi có "()" làm answer (học sinh gõ không bao giờ khớp).
 - Summary / Note / Table / Flow-chart / Sentence completion (điền TỪ vào đoạn văn/bảng cho sẵn)
   → "note_completion" (dạng ghi chú/đoạn) hoặc "table_completion" (dạng bảng).
   KHÔNG có options. Đây là MỘT đoạn liền mạch, ô trống nằm trong dòng chữ (giống chin.edu.vn):

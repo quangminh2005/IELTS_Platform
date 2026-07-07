@@ -71,48 +71,48 @@
         },
         {
           "order": 15,
-          "questionType": "multiple_choice",
-          "prompt": "Which feature is related to Asia?",
+          "questionType": "matching",
+          "prompt": "Asia",
           "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
           "answer": "E. local animals",
           "points": 1
         },
         {
           "order": 16,
-          "questionType": "multiple_choice",
-          "prompt": "Which feature is related to Antarctica?",
+          "questionType": "matching",
+          "prompt": "Antarctica",
           "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
           "answer": "F. mountains",
           "points": 1
         },
         {
           "order": 17,
-          "questionType": "multiple_choice",
-          "prompt": "Which feature is related to South America?",
+          "questionType": "matching",
+          "prompt": "South America",
           "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
           "answer": "D. jewels",
           "points": 1
         },
         {
           "order": 18,
-          "questionType": "multiple_choice",
-          "prompt": "Which feature is related to North America?",
+          "questionType": "matching",
+          "prompt": "North America",
           "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
           "answer": "H. space travel",
           "points": 1
         },
         {
           "order": 19,
-          "questionType": "multiple_choice",
-          "prompt": "Which feature is related to Europe?",
+          "questionType": "matching",
+          "prompt": "Europe",
           "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
           "answer": "A. ancient forts",
           "points": 1
         },
         {
           "order": 20,
-          "questionType": "multiple_choice",
-          "prompt": "Which feature is related to Africa?",
+          "questionType": "matching",
+          "prompt": "Africa",
           "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
           "answer": "B. waterways",
           "points": 1

@@ -59,9 +59,16 @@ vào metadata.groupTitles với key = order câu đầu nhóm. KHÔNG bỏ sót 
 QUY TẮC CHỌN questionType:
 - TRUE/FALSE/NOT GIVEN hoặc YES/NO/NOT GIVEN  → "true_false_not_given",
   options = ["TRUE","FALSE","NOT GIVEN"] hoặc ["YES","NO","NOT GIVEN"], answer phải khớp y hệt.
-- Multiple choice A/B/C/D, Matching headings (A–G), Matching người (A/B/C), Matching endings (A–G)
+- Multiple choice A/B/C/D, Matching headings (A–G), Matching endings (A–G)
   → "multiple_choice". options là danh sách đầy đủ, answer là phần tử trong options.
   Ví dụ matching headings: options = ["A","B","C","D","E","F","G"], answer = "C".
+- GHÉP TỪ MỘT HỘP DÙNG CHUNG (vd "Choose SIX answers from the box, write letter A–I"; ghép
+  người/nơi/năm với danh sách cho sẵn trong hộp) → "matching". Hệ thống hiện 2 cột: câu bên trái
+  (ô trống), hộp lựa chọn dùng chung bên phải (kéo/điền) — giống đề gốc.
+    • prompt = chỉ tên mục cần ghép (vd tên người, "Asia"…), KHÔNG viết lại cả câu.
+    • options = toàn bộ hộp, giống nhau cho mọi câu, dạng "A. nội dung"…; answer = phần tử đúng.
+    • Câu dẫn + "Choose SIX…" đặt vào groupInstructions.
+  KHÔNG dùng "multiple_choice" cho dạng có hộp chung này (sẽ ra radio lặp lại, sai layout).
 - Summary / Note / Sentence completion, Flow-chart / Table completion (điền TỪ vào một đoạn văn/ghi chú cho sẵn)
   → "note_completion". KHÔNG có options. Đây là dạng hiển thị thành MỘT đoạn liền mạch,
   ô trống nằm ngay trong dòng chữ (giống chin.edu.vn) — TUYỆT ĐỐI KHÔNG tách mỗi chỗ trống

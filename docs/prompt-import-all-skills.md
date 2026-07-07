@@ -70,9 +70,17 @@ BẢNG questionType hợp lệ (dùng đúng chuỗi này):
   short_answer | matching | writing_task | speaking_task
 
 QUY TẮC CHỌN questionType:
-- MC A/B/C/D, Matching headings (A–G), Matching người/nơi, Matching features từ hộp (A–I)
-  → "multiple_choice".
+- MC A/B/C/D (mỗi câu có bộ lựa chọn riêng), Matching headings (A–G) → "multiple_choice".
   options = danh sách ĐẦY ĐỦ dạng "A. nội dung", "B. nội dung"...; answer là MỘT phần tử y hệt trong options.
+- GHÉP TỪ MỘT HỘP DÙNG CHUNG (dạng "Choose SIX answers from the box and write the correct letter
+  A–I next to questions 15–20", vd "Areas of the world" ↔ hộp "Features"; hoặc ghép người/nơi/năm…)
+  → "matching". Hệ thống hiện 2 CỘT: danh sách câu bên trái (mỗi câu có ô trống), HỘP lựa chọn dùng
+  chung bên phải để học sinh kéo/điền chữ cái vào ô trống — GIỐNG HỆT đề gốc.
+    • prompt = CHỈ tên mục cần ghép (vd "Asia", "Antarctica"…), KHÔNG viết lại cả câu hỏi.
+    • options = TOÀN BỘ hộp, giống nhau cho mọi câu trong nhóm, dạng "A. ancient forts", "B. waterways"…
+    • answer = phần tử đúng trong options (vd "E. local animals").
+    • Câu dẫn ("Which feature is related to…") + "Choose SIX…" đặt vào groupInstructions.
+  TUYỆT ĐỐI KHÔNG dùng "multiple_choice" cho dạng có HỘP chung này (sẽ ra radio A–I lặp lại, sai layout).
 - TRUE/FALSE/NOT GIVEN hoặc YES/NO/NOT GIVEN → "true_false_not_given",
   options = ["TRUE","FALSE","NOT GIVEN"] hoặc ["YES","NO","NOT GIVEN"], answer khớp y hệt.
 - "Choose TWO letters" (chọn 2 đáp án cho 1 nhóm) → TÁCH thành 2 câu multiple_choice liên tiếp

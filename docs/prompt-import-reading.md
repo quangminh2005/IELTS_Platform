@@ -56,6 +56,11 @@ MỖI CÂU HỎI:
 TIÊU ĐỀ NHÓM: nếu đề gốc có tiêu đề in đậm/canh giữa phía trên một nhóm câu, chép nguyên văn
 vào metadata.groupTitles với key = order câu đầu nhóm. KHÔNG bỏ sót tiêu đề.
 
+Ô GHÉP "both ___ and ___": nếu một chỗ điền in thành HAI ô nhưng answer key chỉ đánh MỘT số
+(vd note "pictures of both (33)...... and ......", đáp án "33 Jupiter and Saturn") → đặt [[n]]
+HAI LẦN trong noteBody: "both [[33]] and [[33]]". Hệ thống hiện 2 ô, chỉ tính ĐÚNG khi CẢ HAI
+ô đúng. answer của câu đó = cụm đầy đủ nối bằng " and " ("Jupiter and Saturn"). Giữ tổng 40 câu.
+
 QUY TẮC CHỌN questionType:
 - TRUE/FALSE/NOT GIVEN hoặc YES/NO/NOT GIVEN  → "true_false_not_given",
   options = ["TRUE","FALSE","NOT GIVEN"] hoặc ["YES","NO","NOT GIVEN"], answer phải khớp y hệt.

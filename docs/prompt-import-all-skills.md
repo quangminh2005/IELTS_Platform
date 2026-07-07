@@ -98,6 +98,10 @@ QUY TẮC CHỌN questionType:
       key = order câu đầu nhóm.
 - Short answer THẬT (câu có "?" trả lời vài từ, KHÔNG điền vào đoạn) → "short_answer".
   prompt = câu hỏi đầy đủ, answer = từ/số.
+- Ô GHÉP "both ___ and ___": nếu một chỗ điền in thành HAI ô nhưng answer key chỉ đánh MỘT số
+  (vd "pictures of both (33)...... and ......", đáp án "33 Jupiter and Saturn") → đặt [[n]] HAI LẦN
+  trong content/noteBody: "both [[33]] and [[33]]". Hệ thống hiện 2 ô, chỉ ĐÚNG khi cả hai ô đúng;
+  answer = cụm đầy đủ nối bằng " and " ("Jupiter and Saturn"). Giữ nguyên tổng số câu.
 
 ============================================================
 PHẦN RIÊNG THEO KỸ NĂNG — chỉ giữ lại phần đúng với kỹ năng đang làm:

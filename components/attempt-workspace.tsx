@@ -529,22 +529,91 @@ function NoteCompletionQuestionSet({
 }) {
   const questionsByOrder = new Map(questions.map((question) => [question.order, question]));
 
+  // "Ô ghép": một câu hỏi mà đề in thành nhiều chỗ trống ("both ___ and ___").
+  // Đếm số lần mỗi order xuất hiện trong nội dung — >1 nghĩa là ô ghép.
+  const partCounts = useMemo(() => {
+    const counts: Record<number, number> = {};
+    const pattern = /\[\[(\d+)\]\]/g;
+    let match: RegExpExecArray | null;
+    while ((match = pattern.exec(content)) !== null) {
+      const order = Number(match[1]);
+      counts[order] = (counts[order] ?? 0) + 1;
+    }
+    return counts;
+  }, [content]);
+
+  // Đáp án ô ghép = các phần nối bằng " and " (khớp chữ "and" giữa các ô, giống
+  // đề). Chỉ tính đúng khi TẤT CẢ các phần đúng (server so khớp cả cụm). Nếu mọi
+  // phần đều trống thì coi như chưa trả lời.
+  const splitParts = (value: string, count: number) => {
+    const raw = value ? value.split(" and ") : [];
+    return Array.from({ length: count }, (_, index) => raw[index] ?? "");
+  };
+  const combineParts = (parts: string[]) =>
+    parts.every((part) => !part.trim()) ? "" : parts.join(" and ");
+
+  const [compositeParts, setCompositeParts] = useState<Record<string, string[]>>(() => {
+    const initial: Record<string, string[]> = {};
+    questions.forEach((question) => {
+      const count = partCounts[question.order] ?? 1;
+      if (count > 1) {
+        initial[question.id] = splitParts(savedAnswers[question.id] ?? "", count);
+      }
+    });
+    return initial;
+  });
+
+  // Đếm lần xuất hiện của mỗi order trong MỘT lượt render để biết đây là phần thứ mấy.
+  const seen: Record<number, number> = {};
+  const blankClass =
+    "mx-1 inline-flex h-8 w-28 items-center rounded-md border border-primary/60 bg-background px-2 text-center align-middle text-sm font-semibold outline-none ring-primary/40 focus:ring-2";
+
   // Ô trống inline (dùng chung cho từng dòng ghi chú).
   const renderBlank = (order: string, key: string) => {
     const question = questionsByOrder.get(Number(order));
     if (!question) {
       return <span key={key}>[[{order}]]</span>;
     }
+    const count = partCounts[Number(order)] ?? 1;
+    const partIndex = seen[Number(order)] ?? 0;
+    seen[Number(order)] = partIndex + 1;
+
+    // Ô đơn (một chỗ trống cho một câu) — như cũ.
+    if (count <= 1) {
+      return (
+        <input
+          key={key}
+          name={`q_${question.id}`}
+          placeholder={order}
+          defaultValue={savedAnswers[question.id] ?? ""}
+          onChange={(event) => onAnswerChange(question.id, event.target.value)}
+          autoComplete="off"
+          className={blankClass}
+        />
+      );
+    }
+
+    // Ô ghép: nhiều ô cho cùng một câu. Ô ẩn q_<id> mang cả cụm để nộp/chấm.
+    const parts = compositeParts[question.id] ?? Array.from({ length: count }, () => "");
+    const handleChange = (value: string) => {
+      const next = [...(compositeParts[question.id] ?? Array.from({ length: count }, () => ""))];
+      next[partIndex] = value;
+      setCompositeParts((previous) => ({ ...previous, [question.id]: next }));
+      onAnswerChange(question.id, combineParts(next));
+    };
     return (
-      <input
-        key={key}
-        name={`q_${question.id}`}
-        placeholder={order}
-        defaultValue={savedAnswers[question.id] ?? ""}
-        onChange={(event) => onAnswerChange(question.id, event.target.value)}
-        autoComplete="off"
-        className="mx-1 inline-flex h-8 w-28 items-center rounded-md border border-primary/60 bg-background px-2 text-center align-middle text-sm font-semibold outline-none ring-primary/40 focus:ring-2"
-      />
+      <span key={key} className="inline-flex align-middle">
+        {partIndex === 0 ? (
+          <input type="hidden" name={`q_${question.id}`} value={combineParts(parts)} readOnly />
+        ) : null}
+        <input
+          value={parts[partIndex] ?? ""}
+          placeholder={partIndex === 0 ? order : ""}
+          onChange={(event) => handleChange(event.target.value)}
+          autoComplete="off"
+          className={blankClass}
+        />
+      </span>
     );
   };
 

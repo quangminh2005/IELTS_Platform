@@ -165,7 +165,7 @@
       "metadata": {
         "noteBody": "# The language debate\n\nAccording to [[9]] there is only one correct form of language. Linguists who take this approach to language place great importance on grammatical [[10]]. Conversely, the view of [[11]], such as Joseph Priestley, is that grammar should be based on [[12]].\n\n## Danh sách từ (A–I)\nA descriptivists\nB language experts\nC popular speech\nD formal language\nE evaluation\nF rules\nG modern linguists\nH prescriptivists\nI change",
         "groupInstructions": {
-          "1": "Do the following statements agree with the claims of the writer in Reading Passage 1?\nYES nếu đúng với quan điểm người viết\nNO nếu trái với quan điểm người viết\nNOT GIVEN nếu không thể xác định người viết nghĩ gì.",
+          "1": "Do the following statements agree with the claims of the writer in Reading Passage 1?\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
           "9": "Complete the summary using the list of words, A–I, below.\nWrite the correct letter, A–I. (Điền CHỮ CÁI A–I vào ô trống.)",
           "13": "Choose the correct letter A, B, C or D."
         }
@@ -242,7 +242,7 @@
         {
           "order": 18,
           "questionType": "multiple_choice",
-          "prompt": "Which FIVE claims about tidal power are made by the writer? (Câu 18 — chọn đủ 5 đáp án đúng)",
+          "prompt": "Which FIVE of the following claims about tidal power are made by the writer? (Question 18)",
           "options": [
             "A. It is a more reliable source of energy than wind power.",
             "B. It would replace all other forms of energy in Britain.",
@@ -267,7 +267,7 @@
         {
           "order": 19,
           "questionType": "multiple_choice",
-          "prompt": "Which FIVE claims about tidal power are made by the writer? (Câu 19 — chọn đủ 5 đáp án đúng)",
+          "prompt": "Which FIVE of the following claims about tidal power are made by the writer? (Question 19)",
           "options": [
             "A. It is a more reliable source of energy than wind power.",
             "B. It would replace all other forms of energy in Britain.",
@@ -292,7 +292,7 @@
         {
           "order": 20,
           "questionType": "multiple_choice",
-          "prompt": "Which FIVE claims about tidal power are made by the writer? (Câu 20 — chọn đủ 5 đáp án đúng)",
+          "prompt": "Which FIVE of the following claims about tidal power are made by the writer? (Question 20)",
           "options": [
             "A. It is a more reliable source of energy than wind power.",
             "B. It would replace all other forms of energy in Britain.",
@@ -317,7 +317,7 @@
         {
           "order": 21,
           "questionType": "multiple_choice",
-          "prompt": "Which FIVE claims about tidal power are made by the writer? (Câu 21 — chọn đủ 5 đáp án đúng)",
+          "prompt": "Which FIVE of the following claims about tidal power are made by the writer? (Question 21)",
           "options": [
             "A. It is a more reliable source of energy than wind power.",
             "B. It would replace all other forms of energy in Britain.",
@@ -342,7 +342,7 @@
         {
           "order": 22,
           "questionType": "multiple_choice",
-          "prompt": "Which FIVE claims about tidal power are made by the writer? (Câu 22 — chọn đủ 5 đáp án đúng)",
+          "prompt": "Which FIVE of the following claims about tidal power are made by the writer? (Question 22)",
           "options": [
             "A. It is a more reliable source of energy than wind power.",
             "B. It would replace all other forms of energy in Britain.",
@@ -400,7 +400,7 @@
       "metadata": {
         "noteBody": "# An Undersea Turbine\n\nWhole tower can be raised for [[23]] and the extraction of seaweed from the blades.\n\nSea life not in danger due to the fact that blades are comparatively [[24]].\n\nAir bubbles result from the [[25]] behind blades. This is known as [[26]].",
         "groupInstructions": {
-          "14": "Reading Passage 2 has six paragraphs, A–F. Which paragraph contains the following information?\nNB Bạn có thể dùng một chữ cái nhiều lần.",
+          "14": "Reading Passage 2 has six paragraphs, A–F. Which paragraph contains the following information?\nNB You may use any letter more than once.",
           "18": "Choose FIVE letters, A–J.\nWhich FIVE of the following claims about tidal power are made by the writer?",
           "23": "Label the diagram below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer."
         }
@@ -586,7 +586,7 @@
         "groupInstructions": {
           "27": "Reading Passage 3 has six paragraphs, A–F. Which paragraph contains the following information?",
           "33": "Complete the notes below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.",
-          "38": "Do the following statements agree with the information given in Reading Passage 3?\nTRUE nếu đúng với thông tin\nFALSE nếu trái với thông tin\nNOT GIVEN nếu không có thông tin."
+          "38": "Do the following statements agree with the information given in Reading Passage 3?\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this."
         }
       }
     }

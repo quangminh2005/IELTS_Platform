@@ -164,7 +164,7 @@
         {
           "order": 11,
           "questionType": "multiple_choice",
-          "prompt": "Which TWO factors contributing to classroom noise are mentioned by the writer? (Câu 11)",
+          "prompt": "Which TWO factors contributing to classroom noise are mentioned by the writer? (Question 11)",
           "options": [
             "A. current teaching methods",
             "B. echoing corridors",
@@ -182,7 +182,7 @@
         {
           "order": 12,
           "questionType": "multiple_choice",
-          "prompt": "Which TWO factors contributing to classroom noise are mentioned by the writer? (Câu 12)",
+          "prompt": "Which TWO factors contributing to classroom noise are mentioned by the writer? (Question 12)",
           "options": [
             "A. current teaching methods",
             "B. echoing corridors",
@@ -409,7 +409,7 @@
         "groupInstructions": {
           "14": "Reading Passage 2 has seven paragraphs, A–G. Which paragraph contains the following information?",
           "18": "Match each statement (18–21) with the correct person, A, B, C or D.",
-          "22": "Do the following statements agree with the information given in Reading Passage 2?\nTRUE nếu đúng với thông tin\nFALSE nếu trái với thông tin\nNOT GIVEN nếu không có thông tin."
+          "22": "Do the following statements agree with the information given in Reading Passage 2?\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this."
         }
       }
     },
@@ -604,7 +604,7 @@
       "metadata": {
         "groupInstructions": {
           "27": "Choose the correct letter, A, B, C or D.",
-          "32": "Do the following statements agree with the claims of the writer in Reading Passage 3?\nYES nếu đúng với quan điểm người viết\nNO nếu trái với quan điểm người viết\nNOT GIVEN nếu không thể xác định.",
+          "32": "Do the following statements agree with the claims of the writer in Reading Passage 3?\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
           "38": "Complete each sentence with the correct ending, A–E, below."
         }
       }

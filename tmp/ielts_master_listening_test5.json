@@ -47,7 +47,7 @@
         {
           "order": 5,
           "questionType": "multiple_choice",
-          "prompt": "Which THREE things are included for free with every property? (Câu 5)",
+          "prompt": "Which THREE things are included for free with every property? (Question 5)",
           "options": [
             "A. heating bills",
             "B. kitchen equipment",
@@ -67,7 +67,7 @@
         {
           "order": 6,
           "questionType": "multiple_choice",
-          "prompt": "Which THREE things are included for free with every property? (Câu 6)",
+          "prompt": "Which THREE things are included for free with every property? (Question 6)",
           "options": [
             "A. heating bills",
             "B. kitchen equipment",
@@ -87,7 +87,7 @@
         {
           "order": 7,
           "questionType": "multiple_choice",
-          "prompt": "Which THREE things are included for free with every property? (Câu 7)",
+          "prompt": "Which THREE things are included for free with every property? (Question 7)",
           "options": [
             "A. heating bills",
             "B. kitchen equipment",

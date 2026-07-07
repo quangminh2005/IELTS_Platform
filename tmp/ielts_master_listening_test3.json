@@ -345,7 +345,7 @@
         "tableBody": "| Project number | Materials needed | Procedure |\n| --- | --- | --- |\n| Project 1 | Scissors, markers, stiff paper and pieces of [[21]] | Cut out holes for eyes and nose. Then [[22]] in the mask |\n| Project 2 | Shoebox, Styrofoam and other materials | Students can make a [[23]] scene or somewhere they have been before |\n| Project 3 | Egg cartons and pipe cleaners, which are flexible lengths of [[24]] that are furry | Stick pipe cleaners into egg cartons to make animals |\n| Project 4 | White or brown bags, markers and pieces of felt | Students can decorate the [[25]] of the paper bag |\n| Project 5 | Paper mache, made by tearing up newspapers into strips and dipping them into starch | Can cover any [[26]] with the strips, like a blown-up balloon |",
         "groupInstructions": {
           "21": "Complete the table below. Write NO MORE THAN TWO WORDS for each answer.",
-          "27": "What problems do Jimi and Janis identify for each art project?\nChoose your answers from the box and write the letters A–G next to questions 27–30.\n(Project 3 = Ví dụ E)"
+          "27": "What problems do Jimi and Janis identify for each art project?\nChoose your answers from the box and write the letters A–G next to questions 27–30.\n(Project 3 = Example E)"
         }
       }
     },
@@ -431,7 +431,7 @@
         {
           "order": 39,
           "questionType": "multiple_choice",
-          "prompt": "What are TWO results of the wolf reintroduction program in Yellowstone Park? (Câu 39 — chọn 1 trong 2 đáp án đúng)",
+          "prompt": "What are TWO results of the wolf reintroduction program in Yellowstone Park? (Question 39 — choose one of the two correct answers)",
           "options": [
             "A. ranchers have become angry",
             "B. there are fewer tourists in Yellowstone",
@@ -449,7 +449,7 @@
         {
           "order": 40,
           "questionType": "multiple_choice",
-          "prompt": "What are TWO results of the wolf reintroduction program in Yellowstone Park? (Câu 40 — chọn đáp án đúng còn lại)",
+          "prompt": "What are TWO results of the wolf reintroduction program in Yellowstone Park? (Question 40 — choose the remaining correct answer)",
           "options": [
             "A. ranchers have become angry",
             "B. there are fewer tourists in Yellowstone",

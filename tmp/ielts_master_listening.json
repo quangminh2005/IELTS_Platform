@@ -12,16 +12,76 @@
       "content": "Transport Survey\n\nTravelled to town today: by bus\nName: Lusia [[1]]\nAddress: [[2]] White Stone Road\nArea: Bradfield\nPostcode: [[3]]\nOccupation: [[4]]\nReason for visit to town: to go to the [[5]]\nSuggestions for improvement:\n- better [[6]]\n- Have more footpaths\n- More frequent [[7]]\n\nThings that would encourage cycling to work:\n- Having [[8]] parking places for bicycles\n- Being able to use a [[9]] at work\n- The opportunity to have cycling [[10]] on busy roads",
       "defaultTimeLimitMinutes": 10,
       "questions": [
-        { "order": 1, "questionType": "note_completion", "prompt": "Câu 1", "answer": "Hardie", "points": 1 },
-        { "order": 2, "questionType": "note_completion", "prompt": "Câu 2", "answer": "19", "points": 1 },
-        { "order": 3, "questionType": "note_completion", "prompt": "Câu 3", "answer": "GT82LC", "points": 1 },
-        { "order": 4, "questionType": "note_completion", "prompt": "Câu 4", "answer": "hairdresser", "points": 1 },
-        { "order": 5, "questionType": "note_completion", "prompt": "Câu 5", "answer": "dentist", "points": 1 },
-        { "order": 6, "questionType": "note_completion", "prompt": "Câu 6", "answer": "lighting", "points": 1 },
-        { "order": 7, "questionType": "note_completion", "prompt": "Câu 7", "answer": "trains", "points": 1 },
-        { "order": 8, "questionType": "note_completion", "prompt": "Câu 8", "answer": "safe", "points": 1 },
-        { "order": 9, "questionType": "note_completion", "prompt": "Câu 9", "answer": "shower", "points": 1 },
-        { "order": 10, "questionType": "note_completion", "prompt": "Câu 10", "answer": "training", "points": 1 }
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": "Hardie",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": "19",
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Câu 3",
+          "answer": "GT82LC",
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": "hairdresser",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Câu 5",
+          "answer": "dentist",
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Câu 6",
+          "answer": "lighting",
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Câu 7",
+          "answer": "trains",
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Câu 8",
+          "answer": "safe",
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Câu 9",
+          "answer": "shower",
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Câu 10",
+          "answer": "training",
+          "points": 1
+        }
       ],
       "metadata": {
         "groupInstructions": {
@@ -41,7 +101,11 @@
           "order": 11,
           "questionType": "multiple_choice",
           "prompt": "The idea for the two new developments in the city came from",
-          "options": ["A. local people", "B. the City Council", "C. the SWRDC"],
+          "options": [
+            "A. local people",
+            "B. the City Council",
+            "C. the SWRDC"
+          ],
           "answer": "A. local people",
           "points": 1
         },
@@ -49,7 +113,11 @@
           "order": 12,
           "questionType": "multiple_choice",
           "prompt": "What is unusual about Brackenside pool?",
-          "options": ["A. its architectural style", "B. its heating system", "C. its method of water treatment"],
+          "options": [
+            "A. its architectural style",
+            "B. its heating system",
+            "C. its method of water treatment"
+          ],
           "answer": "C. its method of water treatment",
           "points": 1
         },
@@ -57,7 +125,11 @@
           "order": 13,
           "questionType": "multiple_choice",
           "prompt": "Local newspapers have raised worries about",
-          "options": ["A. the late opening date", "B. the post of the project", "C. the size of the facilities"],
+          "options": [
+            "A. the late opening date",
+            "B. the post of the project",
+            "C. the size of the facilities"
+          ],
           "answer": "C. the size of the facilities",
           "points": 1
         },
@@ -65,7 +137,11 @@
           "order": 14,
           "questionType": "multiple_choice",
           "prompt": "What decision has not yet been made about the pool?",
-          "options": ["A. whose statue will be at the door", "B. the exact opening times", "C. who will open it"],
+          "options": [
+            "A. whose statue will be at the door",
+            "B. the exact opening times",
+            "C. who will open it"
+          ],
           "answer": "A. whose statue will be at the door",
           "points": 1
         },
@@ -73,7 +149,17 @@
           "order": 15,
           "questionType": "matching",
           "prompt": "Asia",
-          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "options": [
+            "A. ancient forts",
+            "B. waterways",
+            "C. ice and snow",
+            "D. jewels",
+            "E. local animals",
+            "F. mountains",
+            "G. music and film",
+            "H. space travel",
+            "I. volcanoes"
+          ],
           "answer": "E. local animals",
           "points": 1
         },
@@ -81,7 +167,17 @@
           "order": 16,
           "questionType": "matching",
           "prompt": "Antarctica",
-          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "options": [
+            "A. ancient forts",
+            "B. waterways",
+            "C. ice and snow",
+            "D. jewels",
+            "E. local animals",
+            "F. mountains",
+            "G. music and film",
+            "H. space travel",
+            "I. volcanoes"
+          ],
           "answer": "F. mountains",
           "points": 1
         },
@@ -89,7 +185,17 @@
           "order": 17,
           "questionType": "matching",
           "prompt": "South America",
-          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "options": [
+            "A. ancient forts",
+            "B. waterways",
+            "C. ice and snow",
+            "D. jewels",
+            "E. local animals",
+            "F. mountains",
+            "G. music and film",
+            "H. space travel",
+            "I. volcanoes"
+          ],
           "answer": "D. jewels",
           "points": 1
         },
@@ -97,7 +203,17 @@
           "order": 18,
           "questionType": "matching",
           "prompt": "North America",
-          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "options": [
+            "A. ancient forts",
+            "B. waterways",
+            "C. ice and snow",
+            "D. jewels",
+            "E. local animals",
+            "F. mountains",
+            "G. music and film",
+            "H. space travel",
+            "I. volcanoes"
+          ],
           "answer": "H. space travel",
           "points": 1
         },
@@ -105,7 +221,17 @@
           "order": 19,
           "questionType": "matching",
           "prompt": "Europe",
-          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "options": [
+            "A. ancient forts",
+            "B. waterways",
+            "C. ice and snow",
+            "D. jewels",
+            "E. local animals",
+            "F. mountains",
+            "G. music and film",
+            "H. space travel",
+            "I. volcanoes"
+          ],
           "answer": "A. ancient forts",
           "points": 1
         },
@@ -113,7 +239,17 @@
           "order": 20,
           "questionType": "matching",
           "prompt": "Africa",
-          "options": ["A. ancient forts", "B. waterways", "C. ice and snow", "D. jewels", "E. local animals", "F. mountains", "G. music and film", "H. space travel", "I. volcanoes"],
+          "options": [
+            "A. ancient forts",
+            "B. waterways",
+            "C. ice and snow",
+            "D. jewels",
+            "E. local animals",
+            "F. mountains",
+            "G. music and film",
+            "H. space travel",
+            "I. volcanoes"
+          ],
           "answer": "B. waterways",
           "points": 1
         }
@@ -139,40 +275,80 @@
         {
           "order": 21,
           "questionType": "multiple_choice",
-          "prompt": "Which TWO hobbies was Thor Heyerdahl very interested in as a youth? (Câu 21 — chọn 1 trong 2 đáp án đúng)",
-          "options": ["A. camping", "B. climbing", "C. collecting", "D. hunting", "E. reading"],
-          "answer": ["B. climbing", "C. collecting"],
+          "prompt": "Which TWO hobbies was Thor Heyerdahl very interested in as a youth? (Question 21 — choose one of the two correct answers)",
+          "options": [
+            "A. camping",
+            "B. climbing",
+            "C. collecting",
+            "D. hunting",
+            "E. reading"
+          ],
+          "answer": [
+            "B. climbing",
+            "C. collecting"
+          ],
           "points": 1
         },
         {
           "order": 22,
           "questionType": "multiple_choice",
-          "prompt": "Which TWO hobbies was Thor Heyerdahl very interested in as a youth? (Câu 22 — chọn đáp án đúng còn lại)",
-          "options": ["A. camping", "B. climbing", "C. collecting", "D. hunting", "E. reading"],
-          "answer": ["B. climbing", "C. collecting"],
+          "prompt": "Which TWO hobbies was Thor Heyerdahl very interested in as a youth? (Question 22 — choose the remaining correct answer)",
+          "options": [
+            "A. camping",
+            "B. climbing",
+            "C. collecting",
+            "D. hunting",
+            "E. reading"
+          ],
+          "answer": [
+            "B. climbing",
+            "C. collecting"
+          ],
           "points": 1
         },
         {
           "order": 23,
           "questionType": "multiple_choice",
-          "prompt": "Which do the speakers say are the TWO reasons why Heyerdahl went to live on an island? (Câu 23 — chọn 1 trong 2 đáp án đúng)",
-          "options": ["A. to examine ancient carvings", "B. to experience an isolated place", "C. to formulate a new theory", "D. to learn survival skills", "E. to study the impact of an extreme environment"],
-          "answer": ["B. to experience an isolated place", "E. to study the impact of an extreme environment"],
+          "prompt": "Which do the speakers say are the TWO reasons why Heyerdahl went to live on an island? (Question 23 — choose one of the two correct answers)",
+          "options": [
+            "A. to examine ancient carvings",
+            "B. to experience an isolated place",
+            "C. to formulate a new theory",
+            "D. to learn survival skills",
+            "E. to study the impact of an extreme environment"
+          ],
+          "answer": [
+            "B. to experience an isolated place",
+            "E. to study the impact of an extreme environment"
+          ],
           "points": 1
         },
         {
           "order": 24,
           "questionType": "multiple_choice",
-          "prompt": "Which do the speakers say are the TWO reasons why Heyerdahl went to live on an island? (Câu 24 — chọn đáp án đúng còn lại)",
-          "options": ["A. to examine ancient carvings", "B. to experience an isolated place", "C. to formulate a new theory", "D. to learn survival skills", "E. to study the impact of an extreme environment"],
-          "answer": ["B. to experience an isolated place", "E. to study the impact of an extreme environment"],
+          "prompt": "Which do the speakers say are the TWO reasons why Heyerdahl went to live on an island? (Question 24 — choose the remaining correct answer)",
+          "options": [
+            "A. to examine ancient carvings",
+            "B. to experience an isolated place",
+            "C. to formulate a new theory",
+            "D. to learn survival skills",
+            "E. to study the impact of an extreme environment"
+          ],
+          "answer": [
+            "B. to experience an isolated place",
+            "E. to study the impact of an extreme environment"
+          ],
           "points": 1
         },
         {
           "order": 25,
           "questionType": "multiple_choice",
           "prompt": "According to Victor and Olivia, academics thought that Polynesian migration from the east was impossible due to",
-          "options": ["A. the fact that Eastern countries were far away", "B. the lack of materials for boat building", "C. the direction of the winds and currents"],
+          "options": [
+            "A. the fact that Eastern countries were far away",
+            "B. the lack of materials for boat building",
+            "C. the direction of the winds and currents"
+          ],
           "answer": "A. the fact that Eastern countries were far away",
           "points": 1
         },
@@ -180,7 +356,11 @@
           "order": 26,
           "questionType": "multiple_choice",
           "prompt": "Which do the speakers agree was the main reason for Heyerdahl's raft journey?",
-          "options": ["A. to overcome a research setback", "B. to demonstrate a personal quality", "C. to test a new theory"],
+          "options": [
+            "A. to overcome a research setback",
+            "B. to demonstrate a personal quality",
+            "C. to test a new theory"
+          ],
           "answer": "C. to test a new theory",
           "points": 1
         },
@@ -188,7 +368,11 @@
           "order": 27,
           "questionType": "multiple_choice",
           "prompt": "What was most important to Heyerdahl about his raft journey?",
-          "options": ["A. the fact that he was the first person to do it", "B. the speed of crossing the Pacific", "C. the use of authentic construction methods"],
+          "options": [
+            "A. the fact that he was the first person to do it",
+            "B. the speed of crossing the Pacific",
+            "C. the use of authentic construction methods"
+          ],
           "answer": "C. the use of authentic construction methods",
           "points": 1
         },
@@ -196,7 +380,11 @@
           "order": 28,
           "questionType": "multiple_choice",
           "prompt": "Why did Heyerdahl go to Easter Island?",
-          "options": ["A. to build a stone statue", "B. to sail a reed boat", "C. to learn the local language"],
+          "options": [
+            "A. to build a stone statue",
+            "B. to sail a reed boat",
+            "C. to learn the local language"
+          ],
           "answer": "A. to build a stone statue",
           "points": 1
         },
@@ -204,7 +392,11 @@
           "order": 29,
           "questionType": "multiple_choice",
           "prompt": "In Olivia's opinion, Heyerdahl's greatest influence was on",
-          "options": ["A. theories about Polynesian origins", "B. the development of archaeological methodology", "C. establishing archaeology as an academic subject"],
+          "options": [
+            "A. theories about Polynesian origins",
+            "B. the development of archaeological methodology",
+            "C. establishing archaeology as an academic subject"
+          ],
           "answer": "B. the development of archaeological methodology",
           "points": 1
         },
@@ -212,7 +404,11 @@
           "order": 30,
           "questionType": "multiple_choice",
           "prompt": "Which criticism do the speakers make of William Oliver's textbook?",
-          "options": ["A. Its style is out of date", "B. Its content is over-simplified", "C. Its methodology is flawed"],
+          "options": [
+            "A. Its style is out of date",
+            "B. Its content is over-simplified",
+            "C. Its methodology is flawed"
+          ],
           "answer": "A. Its style is out of date",
           "points": 1
         }
@@ -236,16 +432,76 @@
       "content": "THE FUTURE OF MANAGEMENT\n\nBusiness markets\n- greater [[31]] among companies\n- increase in power of large [[32]] companies\n- rising [[33]] in certain countries\n\nExternal influences on businesses\n- more discussion with [[34]] before making business decisions\n- environmental concerns which may lead to more [[35]]\n\nBusiness structures\n- more teams will be formed to work on a particular [[36]]\n- businesses may need to offer hours that are [[37]], or the chance to work remotely\n\nManagement styles\n- increasing need for managers to provide good [[38]]\n- changes influenced by [[39]] taking senior roles\n\nChanges in the economy\n- service sector continues to be important\n- increasing value of intellectual property\n- more and more [[40]] workers",
       "defaultTimeLimitMinutes": 10,
       "questions": [
-        { "order": 31, "questionType": "note_completion", "prompt": "Câu 31", "answer": "competition", "points": 1 },
-        { "order": 32, "questionType": "note_completion", "prompt": "Câu 32", "answer": "global", "points": 1 },
-        { "order": 33, "questionType": "note_completion", "prompt": "Câu 33", "answer": "demand", "points": 1 },
-        { "order": 34, "questionType": "note_completion", "prompt": "Câu 34", "answer": "customers", "points": 1 },
-        { "order": 35, "questionType": "note_completion", "prompt": "Câu 35", "answer": "regulation", "points": 1 },
-        { "order": 36, "questionType": "note_completion", "prompt": "Câu 36", "answer": "project", "points": 1 },
-        { "order": 37, "questionType": "note_completion", "prompt": "Câu 37", "answer": "flexible", "points": 1 },
-        { "order": 38, "questionType": "note_completion", "prompt": "Câu 38", "answer": "leadership", "points": 1 },
-        { "order": 39, "questionType": "note_completion", "prompt": "Câu 39", "answer": "women", "points": 1 },
-        { "order": 40, "questionType": "note_completion", "prompt": "Câu 40", "answer": "self-employed", "points": 1 }
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Câu 31",
+          "answer": "competition",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "prompt": "Câu 32",
+          "answer": "global",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Câu 33",
+          "answer": "demand",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": "customers",
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": "regulation",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": "project",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": "flexible",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": "leadership",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": "women",
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": "self-employed",
+          "points": 1
+        }
       ],
       "metadata": {
         "groupInstructions": {

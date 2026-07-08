@@ -51,6 +51,7 @@ export const AnimatedThemeToggle = ({ className }: { className?: string }) => {
 
   return (
     <Button
+      type="button"
       onClick={toggle}
       className={cn("px-2.5 hover:bg-muted hover:text-primary", className)}
       variant="outline"

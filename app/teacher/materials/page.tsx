@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AudioUpload } from "@/components/audio-upload";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { ImageUpload } from "@/components/image-upload";
+import { MaterialsBrowser, type MaterialBrowserItem } from "@/components/materials-browser";
 import { QuestionFields } from "@/components/question-fields";
 import { requireTeacher } from "@/lib/actions/classes";
 import { parseUnitImages } from "@/lib/question-interactions";
@@ -14,6 +15,11 @@ import {
   updateQuestion,
   updateUnit
 } from "@/lib/actions/materials";
+import {
+  computeStatus,
+  deriveSeries,
+  type MaterialStatusFlags
+} from "@/lib/materials-filter";
 import { prisma } from "@/lib/prisma";
 
 const materialInclude = {
@@ -124,6 +130,28 @@ function formatValue(value: string) {
     .join(" ");
 }
 
+const amberTagClass =
+  "rounded-full border border-amber-400/50 bg-amber-400/10 px-2.5 py-0.5 text-xs font-semibold text-amber-700 dark:text-amber-300";
+
+function StatusTags({ status }: { status: MaterialStatusFlags }) {
+  return (
+    <>
+      {status.isEmpty ? (
+        <span className="rounded-full border border-border bg-muted px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+          Chưa có phần
+        </span>
+      ) : null}
+      {status.missingAudio ? <span className={amberTagClass}>Thiếu audio</span> : null}
+      {status.missingQuestions ? <span className={amberTagClass}>Thiếu câu hỏi</span> : null}
+      {status.isComplete ? (
+        <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+          Đã hoàn chỉnh
+        </span>
+      ) : null}
+    </>
+  );
+}
+
 type TeacherMaterialsPageProps = {
   searchParams?: {
     materialsMessage?: string;
@@ -147,6 +175,24 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
       sum + material.units.reduce((unitSum, unit) => unitSum + unit._count.questions, 0),
     0
   );
+
+  // Ngày "giao gần nhất" mỗi tài liệu — dùng cho sắp xếp "Giao gần đây".
+  const assignmentUnits = await prisma.assignmentUnit.findMany({
+    where: { assignment: { teacherId: teacher.id } },
+    select: {
+      assignableUnit: { select: { materialId: true } },
+      assignment: { select: { createdAt: true } }
+    }
+  });
+  const lastAssignedByMaterial = new Map<string, number>();
+  for (const link of assignmentUnits) {
+    const materialId = link.assignableUnit.materialId;
+    const assignedAt = link.assignment.createdAt.getTime();
+    const current = lastAssignedByMaterial.get(materialId);
+    if (current === undefined || assignedAt > current) {
+      lastAssignedByMaterial.set(materialId, assignedAt);
+    }
+  }
 
   return (
     <div className="space-y-8">
@@ -196,12 +242,34 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
 
       <section className="space-y-4">
         {materials.length > 0 ? (
-          materials.map((material) => {
-            const materialQuestions = material.units.reduce(
-              (sum, unit) => sum + unit._count.questions,
-              0
-            );
-            return (
+          <MaterialsBrowser
+            items={materials.map((material): MaterialBrowserItem => {
+              const materialQuestions = material.units.reduce(
+                (sum, unit) => sum + unit._count.questions,
+                0
+              );
+              const status = computeStatus(
+                material.skill,
+                material.units.map((unit) => ({
+                  hasAudio: Boolean(unit.audioUrl),
+                  questionCount: unit._count.questions
+                }))
+              );
+              const meta = {
+                id: material.id,
+                title: material.title,
+                skill: material.skill,
+                series: deriveSeries(material.sourceLabel, material.title),
+                unitCount: material._count.units,
+                questionCount: materialQuestions,
+                createdAtMs: material.createdAt.getTime(),
+                lastAssignedAtMs: lastAssignedByMaterial.get(material.id) ?? null,
+                status,
+                searchText: `${material.title} ${material.sourceLabel ?? ""}`.toLowerCase()
+              };
+              return {
+                meta,
+                card: (
             <article
               key={material.id}
               className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
@@ -214,6 +282,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                       <span className="rounded-full border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
                         {formatValue(material.skill)}
                       </span>
+                      <StatusTags status={status} />
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">
                       {[
@@ -562,8 +631,10 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                 </p>
               )}
             </article>
-            );
-          })
+                )
+              };
+            })}
+          />
         ) : (
           <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
             <p className="font-semibold">Chưa có tài liệu nào</p>

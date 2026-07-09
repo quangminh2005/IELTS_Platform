@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 type NoticeToastProps = {
   message?: string;
@@ -15,8 +16,20 @@ type ToastState = { message: string; status: "success" | "error" };
 // (server action redirect không mount lại trang), rồi lưu vào state cục bộ nên
 // việc dọn query khỏi URL (gây re-render với searchParams rỗng) không làm toast
 // biến mất.
+//
+// Toast được render qua portal thẳng vào <body>: layout bọc nội dung trong một
+// div có `animate-fade-in` (transform: translateY) — mà một transform khác
+// `none` sẽ biến div đó thành "containing block" cho phần tử `position: fixed`.
+// Nếu để toast bên trong, nó bị ghim theo cột nội dung (đè lên tiêu đề) thay vì
+// nằm ở góc màn hình. Portal ra ngoài giúp `fixed` bám đúng viewport.
 export function NoticeToast({ message, status }: NoticeToastProps) {
   const [toast, setToast] = useState<ToastState | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  // Chỉ dựng portal sau khi mount ở client (document.body đã sẵn sàng).
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!message) {
@@ -38,13 +51,13 @@ export function NoticeToast({ message, status }: NoticeToastProps) {
     return () => window.clearTimeout(timer);
   }, [toast]);
 
-  if (!toast) {
+  if (!mounted || !toast) {
     return null;
   }
 
   const isSuccess = toast.status === "success";
 
-  return (
+  return createPortal(
     <div className="fixed inset-x-0 top-4 z-[100] flex justify-center px-4 sm:justify-end sm:pr-6">
       <div
         role="status"
@@ -80,6 +93,7 @@ export function NoticeToast({ message, status }: NoticeToastProps) {
           </svg>
         </button>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

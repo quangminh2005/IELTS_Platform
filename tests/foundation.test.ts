@@ -19,6 +19,8 @@ describe("foundation slice", () => {
     expect(schema).toMatch(/status\s+String\s+@default\("assigned"\)/);
     expect(schema).toContain('status                String              @default("in_progress")');
     expect(schema).toContain("submitReason          String?");
+    expect(schema).toContain("answerEvidence    String?");
+    expect(schema).toContain("evidenceSnapshot      String?");
 
     for (const modelName of [
       "User",

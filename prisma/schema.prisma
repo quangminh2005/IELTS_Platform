@@ -125,6 +125,7 @@ model Question {
   optionsJson       String?
   correctAnswerJson String?
   explanation       String?
+  answerEvidence    String?
   points            Int            @default(1)
   assignableUnit    AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
   answers           Answer[]
@@ -229,6 +230,7 @@ model Answer {
   pointsAwarded         Float?
   correctAnswerSnapshot String?
   explanationSnapshot   String?
+  evidenceSnapshot      String?
   transcript            String?
   createdAt             DateTime           @default(now())
   updatedAt             DateTime           @updatedAt

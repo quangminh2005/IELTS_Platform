@@ -7,6 +7,7 @@ import { requireTeacher } from "@/lib/actions/classes";
 import { auth } from "@/lib/auth";
 import { gradeAttempt } from "@/lib/grading";
 import { gradeUnits } from "@/lib/attempt-grading";
+import { allSkillsSubmitted, orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
 import { sanitizePartTimesJson } from "@/lib/skill-times";
 import { prisma } from "@/lib/prisma";
 
@@ -107,6 +108,226 @@ export async function startAttempt(recipientId: string) {
 
     return attempt;
   });
+}
+
+// Tạo các dòng AttemptSkill còn thiếu cho mọi kỹ năng của bài. Idempotent — gọi
+// mỗi lần mở phòng làm bài để bài cũ (tạo trước tính năng) cũng có bản ghi kỹ năng.
+export async function ensureAttemptSkills(attemptId: string): Promise<void> {
+  const attempt = await prisma.attempt.findUnique({
+    where: { id: attemptId },
+    select: {
+      status: true,
+      skills: { select: { skill: true } },
+      assignmentRecipient: {
+        select: {
+          assignment: {
+            select: { units: { select: { assignableUnit: { select: { skill: true } } } } }
+          }
+        }
+      }
+    }
+  });
+  if (!attempt) return;
+
+  const skills = orderedSkillsOfAssignment(attempt.assignmentRecipient.assignment.units);
+  const existing = new Set(attempt.skills.map((s) => s.skill));
+  const missing = skills.filter((s) => !existing.has(s));
+  if (missing.length === 0) return;
+
+  await prisma.attemptSkill.createMany({
+    data: missing.map((skill) => ({
+      attemptId,
+      skill,
+      status: attempt.status === "submitted" ? "submitted" : "not_started"
+    })),
+    skipDuplicates: true
+  });
+}
+
+const skillSessionSchema = z.object({
+  attemptId: z.string().trim().min(1),
+  skill: z.enum(["listening", "reading", "writing", "speaking"])
+});
+
+// Học sinh mở một kỹ năng trong phòng làm bài: đánh dấu "đang làm" + lưu thời
+// điểm bắt đầu (chỉ lần đầu). Bỏ qua nếu kỹ năng đã bị khoá (đã nộp).
+export async function startSkillSession(formData: FormData) {
+  const student = await requireStudent();
+  const parsed = skillSessionSchema.safeParse({
+    attemptId: formData.get("attemptId"),
+    skill: formData.get("skill")
+  });
+  if (!parsed.success) {
+    throw new Error(parsed.error.issues[0]?.message ?? "Kỹ năng không hợp lệ.");
+  }
+
+  const attempt = await prisma.attempt.findFirst({
+    where: { id: parsed.data.attemptId, studentId: student.id, status: "in_progress" },
+    select: { id: true }
+  });
+  if (!attempt) {
+    throw new Error("Không tìm thấy lần làm bài đang mở.");
+  }
+
+  await ensureAttemptSkills(attempt.id);
+
+  const skillRow = await prisma.attemptSkill.findUnique({
+    where: { attemptId_skill: { attemptId: attempt.id, skill: parsed.data.skill } }
+  });
+  if (!skillRow || skillRow.status === "submitted") {
+    return; // đã khoá hoặc không thuộc bài — không làm gì.
+  }
+
+  if (skillRow.status === "not_started") {
+    await prisma.attemptSkill.update({
+      where: { id: skillRow.id },
+      data: { status: "in_progress", startedAt: new Date() }
+    });
+  }
+}
+
+const submitSkillSchema = z.object({
+  attemptId: z.string().trim().min(1),
+  skill: z.enum(["listening", "reading", "writing", "speaking"]),
+  submitReason: z.enum(["manual", "auto_timeout"]).default("manual"),
+  elapsedSeconds: z.coerce.number().int().min(0).default(0)
+});
+
+// Học sinh nộp riêng một kỹ năng: chấm + ghi Answer của các unit thuộc kỹ năng
+// đó, khoá AttemptSkill. Nếu đây là kỹ năng cuối cùng còn lại thì finalize luôn
+// cả Attempt (tính điểm tổng từ Answer đã lưu, không lệ thuộc formData của lần
+// nộp này vì formData chỉ chứa dữ liệu kỹ năng vừa nộp).
+export async function submitSkill(formData: FormData) {
+  const student = await requireStudent();
+  const parsed = submitSkillSchema.safeParse({
+    attemptId: formData.get("attemptId"),
+    skill: formData.get("skill"),
+    submitReason: formData.get("submitReason") ?? "manual",
+    elapsedSeconds: formData.get("elapsedSeconds") ?? 0
+  });
+  if (!parsed.success) {
+    throw new Error(parsed.error.issues[0]?.message ?? "Dữ liệu nộp không hợp lệ.");
+  }
+  // Giữ chính sách: bỏ qua auto-timeout.
+  if (parsed.data.submitReason === "auto_timeout") {
+    return;
+  }
+
+  const attempt = await prisma.attempt.findFirst({
+    where: { id: parsed.data.attemptId, studentId: student.id },
+    include: {
+      skills: true,
+      assignmentRecipient: {
+        include: {
+          assignment: {
+            include: {
+              units: {
+                orderBy: { order: "asc" },
+                include: {
+                  assignableUnit: {
+                    include: { questions: { orderBy: { order: "asc" } } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+  if (!attempt) {
+    throw new Error("Không tìm thấy lần làm bài.");
+  }
+
+  await ensureAttemptSkills(attempt.id);
+
+  const skillRow =
+    attempt.skills.find((s) => s.skill === parsed.data.skill) ??
+    (await prisma.attemptSkill.findUnique({
+      where: { attemptId_skill: { attemptId: attempt.id, skill: parsed.data.skill } }
+    }));
+  if (skillRow?.status === "submitted") {
+    redirect(`/student/results/${attempt.id}?skill=${parsed.data.skill}`);
+  }
+
+  const allUnits = attempt.assignmentRecipient.assignment.units;
+  const skillUnits = unitsForSkill(allUnits, parsed.data.skill);
+  const skillUnitIds = skillUnits.map((u) => u.assignableUnitId);
+
+  const graded = gradeUnits(
+    skillUnits.map((au) => ({
+      assignableUnitId: au.assignableUnitId,
+      skill: au.assignableUnit.skill,
+      questions: au.assignableUnit.questions
+    })),
+    (questionId) => String(formData.get(`q_${questionId}`) ?? "")
+  );
+  const answerRows = graded.answerRows.map((row) => ({
+    ...row,
+    attemptId: attempt.id,
+    studentId: student.id
+  }));
+  const skillGrade = gradeAttempt(graded.gradeItems);
+
+  const submittedAt = new Date();
+
+  await prisma.$transaction(async (tx) => {
+    // Chỉ xoá đáp án của các unit thuộc kỹ năng này — không đụng kỹ năng khác.
+    await tx.answer.deleteMany({
+      where: { attemptId: attempt.id, assignableUnitId: { in: skillUnitIds } }
+    });
+    if (answerRows.length > 0) {
+      await tx.answer.createMany({ data: answerRows });
+    }
+    await tx.attemptSkill.update({
+      where: { attemptId_skill: { attemptId: attempt.id, skill: parsed.data.skill } },
+      data: {
+        status: "submitted",
+        submittedAt,
+        elapsedSeconds: parsed.data.elapsedSeconds,
+        score: skillGrade.score,
+        scorePercent: skillGrade.scorePercent
+      }
+    });
+
+    // Kiểm tra đã nộp hết chưa (đọc lại trong transaction cho chắc).
+    const skills = await tx.attemptSkill.findMany({ where: { attemptId: attempt.id } });
+    if (allSkillsSubmitted(skills)) {
+      // Điểm tổng lấy từ toàn bộ Answer đã lưu (mọi kỹ năng đã nộp) — không dùng
+      // formData vì formData chỉ có dữ liệu của kỹ năng vừa nộp. Join Question để
+      // lấy đúng số điểm mỗi câu (không giả định points = 1).
+      const savedAnswers = await tx.answer.findMany({
+        where: { attemptId: attempt.id },
+        select: { pointsAwarded: true, isCorrect: true, question: { select: { points: true } } }
+      });
+      // Chỉ tính các câu tự chấm (Nghe/Đọc); Viết/Nói isCorrect = null → bỏ.
+      const autoGraded = savedAnswers.filter((a) => a.isCorrect !== null);
+      const totalScore = autoGraded.reduce((sum, a) => sum + (a.pointsAwarded ?? 0), 0);
+      const maxScore = autoGraded.reduce((sum, a) => sum + (a.question?.points ?? 1), 0);
+      const scorePercent = maxScore === 0 ? 0 : Math.round((totalScore / maxScore) * 100);
+
+      await tx.attempt.update({
+        where: { id: attempt.id },
+        data: {
+          status: "submitted",
+          submittedAt,
+          submitReason: "manual",
+          score: totalScore,
+          scorePercent,
+          autoGradedAt: submittedAt
+        }
+      });
+      await tx.assignmentRecipient.update({
+        where: { id: attempt.assignmentRecipientId },
+        data: { status: "submitted", submittedAt }
+      });
+    }
+  });
+
+  revalidatePath("/student");
+  revalidatePath("/student/history");
+  revalidatePath(`/student/assignments/${attempt.assignmentRecipientId}`);
+  redirect(`/student/results/${attempt.id}?skill=${parsed.data.skill}`);
 }
 
 export async function saveAttemptDraft(formData: FormData) {

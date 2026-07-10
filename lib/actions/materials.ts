@@ -31,22 +31,36 @@ const materialSchema = z.object({
   description: z.string().trim().optional()
 });
 
-const unitSchema = z.object({
-  materialId: z.string().trim().min(1, "Choose a material."),
-  unitType: z.enum(unitTypes, "Choose a valid unit type."),
-  unitNumber: z.coerce.number().int().min(1, "Unit number must be at least 1."),
-  title: z.string().trim().min(2, "Unit title must be at least 2 characters."),
-  instructions: z.string().trim().optional(),
-  content: z.string().trim().min(1, "Unit content is required."),
-  audioUrl: z.string().trim().optional(),
-  transcript: z.string().trim().optional(),
-  defaultTimeLimitMinutes: z.preprocess(
-    (value) => (value === "" || value === null ? undefined : value),
-    z.coerce.number().int().min(1, "Time limit must be at least 1 minute.").optional()
-  ),
-  metadataJson: z.string().trim().optional(),
-  imageUrlsJson: z.string().trim().optional()
-});
+const unitSchema = z
+  .object({
+    materialId: z.string().trim().min(1, "Choose a material."),
+    unitType: z.enum(unitTypes, "Choose a valid unit type."),
+    unitNumber: z.coerce.number().int().min(1, "Unit number must be at least 1."),
+    title: z.string().trim().min(2, "Unit title must be at least 2 characters."),
+    instructions: z.string().trim().optional(),
+    // Reading/Writing cần Nội dung (bài đọc/đề bài); Listening/Speaking lấy
+    // nguồn từ audio nên có thể để trống — kiểm tra ở superRefine bên dưới.
+    content: z.string().trim().optional(),
+    audioUrl: z.string().trim().optional(),
+    transcript: z.string().trim().optional(),
+    defaultTimeLimitMinutes: z.preprocess(
+      (value) => (value === "" || value === null ? undefined : value),
+      z.coerce.number().int().min(1, "Time limit must be at least 1 minute.").optional()
+    ),
+    metadataJson: z.string().trim().optional(),
+    imageUrlsJson: z.string().trim().optional()
+  })
+  .superRefine((data, ctx) => {
+    const needsContent =
+      data.unitType === "reading_passage" || data.unitType === "writing_task";
+    if (needsContent && !data.content) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["content"],
+        message: "Phần đọc/viết cần có Nội dung."
+      });
+    }
+  });
 
 const questionSchema = z.object({
   assignableUnitId: z.string().trim().min(1, "Choose a unit."),
@@ -261,7 +275,9 @@ export async function createUnit(formData: FormData) {
   });
 
   if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid unit details.");
+    redirect(
+      materialNoticePath("error", parsed.error.issues[0]?.message ?? "Thông tin phần chưa hợp lệ.")
+    );
   }
 
   const material = await prisma.material.findFirst({
@@ -276,7 +292,7 @@ export async function createUnit(formData: FormData) {
   });
 
   if (!material) {
-    throw new Error("Material not found for this teacher.");
+    redirect(materialNoticePath("error", "Không tìm thấy tài liệu của giáo viên này."));
   }
 
   await prisma.assignableUnit.create({
@@ -287,7 +303,7 @@ export async function createUnit(formData: FormData) {
       unitNumber: parsed.data.unitNumber,
       title: parsed.data.title,
       instructions: optionalText(parsed.data.instructions),
-      content: parsed.data.content,
+      content: parsed.data.content ?? "",
       audioUrl: optionalText(parsed.data.audioUrl),
       transcript: optionalText(parsed.data.transcript),
       defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
@@ -316,7 +332,9 @@ export async function updateUnit(formData: FormData) {
   });
 
   if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid unit details.");
+    redirect(
+      materialNoticePath("error", parsed.error.issues[0]?.message ?? "Thông tin phần chưa hợp lệ.")
+    );
   }
 
   const material = await prisma.material.findFirst({
@@ -331,7 +349,7 @@ export async function updateUnit(formData: FormData) {
   });
 
   if (!material) {
-    throw new Error("Material not found for this teacher.");
+    redirect(materialNoticePath("error", "Không tìm thấy tài liệu của giáo viên này."));
   }
 
   const result = await prisma.assignableUnit.updateMany({
@@ -348,7 +366,7 @@ export async function updateUnit(formData: FormData) {
       unitNumber: parsed.data.unitNumber,
       title: parsed.data.title,
       instructions: optionalText(parsed.data.instructions),
-      content: parsed.data.content,
+      content: parsed.data.content ?? "",
       audioUrl: optionalText(parsed.data.audioUrl),
       transcript: optionalText(parsed.data.transcript),
       defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,

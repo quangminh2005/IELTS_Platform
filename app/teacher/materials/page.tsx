@@ -498,7 +498,6 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                                 id={`unit-content-${unit.id}`}
                                 name="content"
                                 rows={5}
-                                required
                                 defaultValue={unit.content}
                                 className={fieldClass}
                               />

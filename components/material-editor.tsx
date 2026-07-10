@@ -160,9 +160,9 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
         <textarea id="instructions" name="instructions" rows={2} className={fieldClass} />
 
         <label className="mt-4 block text-sm font-medium" htmlFor="content">
-          Nội dung
+          Nội dung <span className="text-muted-foreground">(Listening/Speaking có thể để trống)</span>
         </label>
-        <textarea id="content" name="content" rows={5} required className={fieldClass} />
+        <textarea id="content" name="content" rows={5} className={fieldClass} />
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div>

@@ -114,10 +114,22 @@ model AttemptSkill {
 }
 ```
 
-- [ ] **Step 5: Tạo migration + generate client**
+- [ ] **Step 5: Đồng bộ schema (dự án dùng `db push`, KHÔNG có migrations)**
 
-Run: `pnpm prisma:migrate -- --name per_skill_sessions`
-Expected: migration tạo bảng `AttemptSkill` + cột `skillTimeLimitsJson`; `prisma generate` chạy xong không lỗi.
+Repo này không có thư mục `prisma/migrations` — đồng bộ schema bằng `db push`, và prod
+đồng bộ qua `scripts/ensure-db.mjs` (chỉ file này chạy khi deploy, không chạy `db push`).
+
+1. Local: `npx prisma db push` (thêm cột nullable + bảng mới là additive — không được
+   hỏi reset/không mất dữ liệu; nếu bị cảnh báo mất dữ liệu thì DỪNG).
+2. Prod parity: thêm vào mảng `statements` của `scripts/ensure-db.mjs` (idempotent):
+   `ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "skillTimeLimitsJson" TEXT;`, một
+   `CREATE TABLE IF NOT EXISTS "AttemptSkill" (...)` (đủ cột + `AttemptSkill_pkey`), một
+   `CREATE UNIQUE INDEX IF NOT EXISTS "AttemptSkill_attemptId_skill_key"`, và một khối
+   `DO $$ ... $$` thêm FK `AttemptSkill_attemptId_fkey → Attempt(id) ON DELETE CASCADE`
+   có kiểm tra `pg_constraint` để không trùng.
+3. Chạy `node scripts/ensure-db.mjs` một lần để xác nhận idempotent (in dòng OK).
+Expected: bảng `AttemptSkill` + cột `skillTimeLimitsJson` có trên DB local; `ensure-db.mjs`
+chạy sạch lỗi.
 
 - [ ] **Step 6: Chạy lại test cấu trúc (xanh)**
 
@@ -127,7 +139,7 @@ Expected: PASS.
 - [ ] **Step 7: Commit**
 
 ```bash
-git add prisma/schema.prisma prisma/migrations tests/foundation.test.ts
+git add prisma/schema.prisma scripts/ensure-db.mjs tests/foundation.test.ts
 git commit -m "feat: schema AttemptSkill + Assignment.skillTimeLimitsJson"
 ```
 

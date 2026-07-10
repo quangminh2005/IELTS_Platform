@@ -605,7 +605,8 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                                   prompt: question.prompt,
                                   optionsJson: question.optionsJson,
                                   correctAnswerJson: question.correctAnswerJson,
-                                  explanation: question.explanation
+                                  explanation: question.explanation,
+                                  answerEvidence: question.answerEvidence
                                 }}
                                 deleteAction={deleteQuestion}
                                 deleteConfirm={`Xoá câu ${question.order}? Không thể hoàn tác.`}

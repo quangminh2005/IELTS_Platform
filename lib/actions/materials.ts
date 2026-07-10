@@ -70,6 +70,7 @@ const questionSchema = z.object({
   optionsJson: z.string().trim().optional(),
   correctAnswerJson: z.string().trim().optional(),
   explanation: z.string().trim().optional(),
+  answerEvidence: z.string().trim().optional(),
   points: z.coerce.number().int().min(1, "Points must be at least 1.")
 });
 
@@ -435,6 +436,7 @@ export async function createQuestion(formData: FormData) {
     optionsJson: formData.get("optionsJson"),
     correctAnswerJson: formData.get("correctAnswerJson"),
     explanation: formData.get("explanation"),
+    answerEvidence: formData.get("answerEvidence"),
     points: formData.get("points")
   });
 
@@ -467,6 +469,7 @@ export async function createQuestion(formData: FormData) {
       optionsJson: optionalJson(parsed.data.optionsJson, "Options JSON"),
       correctAnswerJson: optionalJson(parsed.data.correctAnswerJson, "Correct answer JSON"),
       explanation: optionalText(parsed.data.explanation),
+      answerEvidence: optionalText(parsed.data.answerEvidence),
       points: parsed.data.points
     }
   });
@@ -485,6 +488,7 @@ export async function updateQuestion(formData: FormData) {
     optionsJson: formData.get("optionsJson"),
     correctAnswerJson: formData.get("correctAnswerJson"),
     explanation: formData.get("explanation"),
+    answerEvidence: formData.get("answerEvidence"),
     points: formData.get("points")
   });
 
@@ -525,6 +529,7 @@ export async function updateQuestion(formData: FormData) {
       optionsJson: optionalJson(parsed.data.optionsJson, "Options JSON"),
       correctAnswerJson: optionalJson(parsed.data.correctAnswerJson, "Correct answer JSON"),
       explanation: optionalText(parsed.data.explanation),
+      answerEvidence: optionalText(parsed.data.answerEvidence),
       points: parsed.data.points
     }
   });

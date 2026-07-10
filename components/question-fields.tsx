@@ -17,6 +17,7 @@ type QuestionDefaults = {
   optionsJson?: string | null;
   correctAnswerJson?: string | null;
   explanation?: string | null;
+  answerEvidence?: string | null;
 };
 
 type QuestionFieldsProps = {
@@ -390,6 +391,19 @@ export function QuestionFields({
           name="explanation"
           rows={2}
           defaultValue={defaults?.explanation ?? ""}
+          className={fieldClass}
+        />
+      </div>
+
+      <div>
+        <label className="text-sm font-medium" htmlFor={`${idPrefix}-answerEvidence`}>
+          Dẫn chứng (đoạn chứa đáp án)
+        </label>
+        <textarea
+          id={`${idPrefix}-answerEvidence`}
+          name="answerEvidence"
+          rows={2}
+          defaultValue={defaults?.answerEvidence ?? ""}
           className={fieldClass}
         />
       </div>

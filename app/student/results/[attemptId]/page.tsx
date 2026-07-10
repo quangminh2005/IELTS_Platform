@@ -69,7 +69,8 @@ export default async function StudentResultPage({ params, searchParams }: Result
           assignableUnit: {
             select: {
               title: true,
-              skill: true
+              skill: true,
+              transcript: true
             }
           },
           annotations: {

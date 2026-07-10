@@ -1,4 +1,5 @@
 import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
+import { splitByAnswerMatches } from "@/lib/answer-evidence";
 import { bandsBySkill, formatBand } from "@/lib/band-score";
 import { formatDuration } from "@/lib/format-duration";
 import { isAudioUrl } from "@/lib/question-interactions";
@@ -18,6 +19,7 @@ type Answer = {
   pointsAwarded: number | null;
   correctAnswerSnapshot: string | null;
   explanationSnapshot: string | null;
+  evidenceSnapshot: string | null;
   annotations: Annotation[];
   question: {
     order: number;
@@ -27,6 +29,7 @@ type Answer = {
   assignableUnit: {
     title: string;
     skill: string;
+    transcript?: string | null;
   };
 };
 
@@ -108,6 +111,24 @@ const STATUS_LABELS: Record<string, string> = {
   in_progress: "Đang làm",
   not_started: "Chưa làm"
 };
+
+// Hiển thị text và gạch chân phần trùng đáp án nguyên văn.
+function UnderlinedEvidence({ text, answers }: { text: string; answers: string[] }) {
+  const parts = splitByAnswerMatches(text, answers);
+  return (
+    <>
+      {parts.map((part, index) =>
+        part.match ? (
+          <u key={index} className="font-semibold decoration-emerald-500 decoration-2">
+            {part.text}
+          </u>
+        ) : (
+          <span key={index}>{part.text}</span>
+        )
+      )}
+    </>
+  );
+}
 
 export function ResultReview({ attempt, skillTimes }: ResultReviewProps) {
   const percentage =
@@ -288,6 +309,24 @@ export function ResultReview({ attempt, skillTimes }: ResultReviewProps) {
                   </div>
                 ) : null}
 
+                {answer.evidenceSnapshot ? (
+                  <div className="mt-3 rounded-lg border border-emerald-400/30 bg-emerald-500/5 p-3 text-sm">
+                    <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                      Dẫn chứng (đoạn chứa đáp án)
+                    </p>
+                    <p className="mt-2 leading-6">
+                      <UnderlinedEvidence
+                        text={answer.evidenceSnapshot}
+                        answers={
+                          answer.correctAnswerSnapshot
+                            ? answer.correctAnswerSnapshot.split(" | ")
+                            : []
+                        }
+                      />
+                    </p>
+                  </div>
+                ) : null}
+
                 <p className="mt-3 text-sm text-muted-foreground">
                   {answer.isCorrect === null ? (
                     "Chờ giáo viên chấm"
@@ -307,6 +346,55 @@ export function ResultReview({ attempt, skillTimes }: ResultReviewProps) {
           )}
         </div>
       </section>
+
+      {(() => {
+        // Gom transcript theo từng part Listening (unit có transcript). Mỗi part
+        // hiện 1 lần, gạch chân các đáp án nguyên văn trong toàn bộ transcript.
+        const listeningUnits = new Map<
+          string,
+          { title: string; transcript: string; answers: string[] }
+        >();
+        attempt.answers.forEach((answer) => {
+          if (answer.assignableUnit.skill !== "listening" || !answer.assignableUnit.transcript) {
+            return;
+          }
+          const key = answer.assignableUnit.title;
+          const entry =
+            listeningUnits.get(key) ??
+            {
+              title: answer.assignableUnit.title,
+              transcript: answer.assignableUnit.transcript,
+              answers: []
+            };
+          if (answer.correctAnswerSnapshot) {
+            entry.answers.push(...answer.correctAnswerSnapshot.split(" | "));
+          }
+          listeningUnits.set(key, entry);
+        });
+        const units = [...listeningUnits.values()];
+        if (units.length === 0) {
+          return null;
+        }
+        return (
+          <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+            <div className="border-b border-border px-5 py-4">
+              <h3 className="text-base font-semibold">Transcript</h3>
+            </div>
+            <div className="divide-y divide-border">
+              {units.map((unit) => (
+                <details key={unit.title} className="px-5 py-4">
+                  <summary className="cursor-pointer text-sm font-semibold text-primary">
+                    Xem full transcript — {unit.title}
+                  </summary>
+                  <p className="mt-3 whitespace-pre-wrap text-sm leading-7">
+                    <UnderlinedEvidence text={unit.transcript} answers={unit.answers} />
+                  </p>
+                </details>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
 
       {attempt.highlights.length > 0 ? (
         <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">

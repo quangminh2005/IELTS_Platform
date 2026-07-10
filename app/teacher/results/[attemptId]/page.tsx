@@ -48,7 +48,7 @@ export default async function TeacherResultPage({ params }: ResultPageProps) {
             select: { order: true, prompt: true, points: true }
           },
           assignableUnit: {
-            select: { title: true, skill: true }
+            select: { title: true, skill: true, transcript: true }
           },
           annotations: {
             orderBy: { startOffset: "asc" },

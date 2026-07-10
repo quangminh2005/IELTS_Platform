@@ -33,6 +33,7 @@ describe("foundation slice", () => {
       "AssignmentUnit",
       "AssignmentRecipient",
       "Attempt",
+      "AttemptSkill",
       "Answer",
       "Highlight",
       "TeacherReview",
@@ -50,6 +51,7 @@ describe("foundation slice", () => {
       "elapsedSeconds",
       "tabSwitchCount",
       "criteriaScoresJson",
+      "skillTimeLimitsJson",
       "@@unique([attemptId])",
     ]) {
       expect(schema).toContain(fieldName);

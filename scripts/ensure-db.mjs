@@ -8,7 +8,28 @@ const statements = [
   'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "transcript" TEXT;',
   'ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "image" TEXT;',
   'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "weeklyGoal" INTEGER;',
-  'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "partTimesJson" TEXT;'
+  'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "partTimesJson" TEXT;',
+  // Phiên làm bài theo kỹ năng: cột thời gian + bảng AttemptSkill
+  'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "skillTimeLimitsJson" TEXT;',
+  `CREATE TABLE IF NOT EXISTS "AttemptSkill" (
+    "id" TEXT NOT NULL,
+    "attemptId" TEXT NOT NULL,
+    "skill" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'not_started',
+    "startedAt" TIMESTAMP(3),
+    "submittedAt" TIMESTAMP(3),
+    "elapsedSeconds" INTEGER NOT NULL DEFAULT 0,
+    "score" DOUBLE PRECISION,
+    "scorePercent" DOUBLE PRECISION,
+    CONSTRAINT "AttemptSkill_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "AttemptSkill_attemptId_skill_key" ON "AttemptSkill"("attemptId", "skill");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'AttemptSkill_attemptId_fkey') THEN
+      ALTER TABLE "AttemptSkill" ADD CONSTRAINT "AttemptSkill_attemptId_fkey"
+      FOREIGN KEY ("attemptId") REFERENCES "Attempt"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`
 ];
 
 const prisma = new PrismaClient();

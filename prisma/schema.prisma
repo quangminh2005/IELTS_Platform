@@ -138,6 +138,9 @@ model Assignment {
   instructions     String?
   deadline         DateTime?
   timeLimitMinutes Int?
+  // Thời gian làm bài theo từng kỹ năng: JSON { "listening": 30, "reading": 60 } (phút).
+  // Kỹ năng không có khóa = không đếm ngược. timeLimitMinutes giữ làm fallback/1 kỹ năng.
+  skillTimeLimitsJson String?
   mode             String                @default("homework")
   createdAt        DateTime              @default(now())
   updatedAt        DateTime              @updatedAt
@@ -193,7 +196,26 @@ model Attempt {
   student               StudentProfile      @relation(fields: [studentId], references: [id], onDelete: Cascade)
   answers               Answer[]
   highlights            Highlight[]
+  skills                AttemptSkill[]
   review                TeacherReview?
+}
+
+// Trạng thái làm bài theo từng kỹ năng trong một Attempt. Mỗi kỹ năng là một phiên
+// riêng: đồng hồ riêng (startedAt + giới hạn), khoá khi nộp, điểm tức thời của kỹ năng.
+// status: "not_started" | "in_progress" | "submitted".
+model AttemptSkill {
+  id             String    @id @default(cuid())
+  attemptId      String
+  skill          String
+  status         String    @default("not_started")
+  startedAt      DateTime?
+  submittedAt    DateTime?
+  elapsedSeconds Int       @default(0)
+  score          Float?
+  scorePercent   Float?
+  attempt        Attempt   @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId, skill])
 }
 
 model Answer {

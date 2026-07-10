@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { AttemptWorkspace } from "@/components/attempt-workspace";
-import { startAttempt } from "@/lib/actions/attempts";
+import { ensureAttemptSkills, startAttempt } from "@/lib/actions/attempts";
 import { auth } from "@/lib/auth";
 import { detectMultiSelectGroups } from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
@@ -41,6 +41,9 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
   }
 
   const attempt = await startAttempt(params.recipientId);
+  // Đảm bảo có đủ hàng AttemptSkill (một hàng mỗi kỹ năng) trước khi nạp để dựng
+  // màn chọn kỹ năng + đồng hồ theo kỹ năng.
+  await ensureAttemptSkills(attempt.id);
   const recipient = await prisma.assignmentRecipient.findFirst({
     where: {
       id: params.recipientId,
@@ -68,7 +71,8 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
         include: {
           highlights: {
             orderBy: { createdAt: "desc" }
-          }
+          },
+          skills: true
         }
       }
     }
@@ -117,6 +121,7 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
       highlights={activeAttempt.highlights}
       savedAnswers={savedAnswers}
       multiSelectGroups={multiSelectGroups}
+      attemptSkills={activeAttempt.skills}
     />
   );
 }

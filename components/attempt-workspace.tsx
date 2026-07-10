@@ -15,10 +15,14 @@ import {
   deleteHighlight,
   saveAttemptDraft,
   saveHighlight,
-  submitAttempt
+  startSkillSession,
+  submitSkill
 } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
-import { parsePartTimes } from "@/lib/skill-times";
+import { SkillPicker } from "@/components/skill-picker";
+import { orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
+import { parseSkillTimeLimits } from "@/lib/skill-parse";
+import { parsePartTimes, SKILL_TIME_LABELS } from "@/lib/skill-times";
 import { AudioPlayer } from "@/components/audio-player";
 import { AudioRecorderAnswer } from "@/components/audio-recorder-answer";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
@@ -86,11 +90,15 @@ type AttemptWorkspaceProps = {
     title: string;
     instructions: string | null;
     timeLimitMinutes: number | null;
+    skillTimeLimitsJson?: string | null;
     units: AssignmentUnit[];
   };
   highlights: Highlight[];
   savedAnswers: Record<string, string>;
   multiSelectGroups: MultiSelectGroup[];
+  // Hàng AttemptSkill (kỹ năng + trạng thái + mốc bắt đầu) để dựng màn chọn kỹ
+  // năng và đồng hồ theo kỹ năng. Rỗng ở chế độ xem trước của giáo viên.
+  attemptSkills?: Array<{ skill: string; status: string; startedAt: string | Date | null }>;
   // Chế độ giáo viên xem trước giao diện làm bài: KHÔNG lưu nháp, KHÔNG ghi
   // highlight vào DB, nút "Nộp bài" chỉ đóng lại (không chấm điểm).
   previewMode?: boolean;
@@ -1505,6 +1513,7 @@ export function AttemptWorkspace({
   highlights,
   savedAnswers,
   multiSelectGroups,
+  attemptSkills = [],
   previewMode = false
 }: AttemptWorkspaceProps) {
   const elapsedRef = useRef<HTMLInputElement>(null);
@@ -1514,13 +1523,47 @@ export function AttemptWorkspace({
   const startedAtMs = useMemo(() => new Date(attempt.startedAt).getTime(), [attempt.startedAt]);
   const timeLimitMinutes = assignment.timeLimitMinutes;
 
+  // Danh sách kỹ năng của bài (theo thứ tự IELTS) + giới hạn phút mỗi kỹ năng.
+  const skillOrder = useMemo(
+    () => orderedSkillsOfAssignment(assignment.units),
+    [assignment.units]
+  );
+  const isMultiSkill = skillOrder.length > 1;
+  const skillLimits = useMemo(
+    () => parseSkillTimeLimits(assignment.skillTimeLimitsJson ?? null),
+    [assignment.skillTimeLimitsJson]
+  );
+
+  // Kỹ năng đang mở phiên; null = đang ở màn chọn kỹ năng. Bài 1 kỹ năng (và mọi
+  // bài khi xem trước KHÔNG multi-skill) tự mở luôn để giữ hành vi cũ; bài nhiều
+  // kỹ năng bắt đầu ở màn chọn (trừ xem trước — xem trước hiện tất cả phần).
+  const [activeSkill, setActiveSkill] = useState<string | null>(() =>
+    !isMultiSkill && !previewMode ? skillOrder[0] ?? null : null
+  );
+  // Mốc bắt đầu cục bộ cho kỹ năng vừa khởi động trong phiên này (server action
+  // startSkillSession ghi startedAt vào DB nhưng prop attemptSkills chưa cập nhật
+  // ngay, nên giữ mốc client để đồng hồ chạy đúng từ lúc bấm "Bắt đầu").
+  const [skillStartOverrides, setSkillStartOverrides] = useState<Record<string, number>>({});
+
+  // Các phần đang hiển thị = phần của kỹ năng đang mở. Xem trước: hiện TẤT CẢ phần
+  // (như trước đây) để giáo viên xem toàn bộ đề trong một phiên.
+  const activeUnits = useMemo(() => {
+    if (previewMode) {
+      return assignment.units;
+    }
+    if (!activeSkill) {
+      return [];
+    }
+    return unitsForSkill(assignment.units, activeSkill);
+  }, [previewMode, activeSkill, assignment.units]);
+
   // Bấm giờ theo phần: mỗi phần gắn với một assignableUnitId. `committedPartTimesRef`
   // giữ số giây đã chốt cho từng phần (khởi tạo từ dữ liệu đã lưu để resume không
   // mất giờ); `activeUnitIdRef`/`activePartSinceRef` theo dõi phần đang mở để cộng
   // thêm phần thời gian đang trôi khi cần chụp nhanh (snapshot).
   const partUnitIds = useMemo(
-    () => assignment.units.map((assignmentUnit) => assignmentUnit.assignableUnit.id),
-    [assignment.units]
+    () => activeUnits.map((assignmentUnit) => assignmentUnit.assignableUnit.id),
+    [activeUnits]
   );
   const committedPartTimesRef = useRef<Record<string, number>>(
     parsePartTimes(attempt.partTimesJson)
@@ -1610,6 +1653,34 @@ export function AttemptWorkspace({
     });
   }, []);
 
+  // Đồng hồ theo kỹ năng: mốc bắt đầu ưu tiên mốc client (vừa bấm "Bắt đầu"),
+  // rồi tới startedAt trong DB (khi mở lại bài dở), cuối cùng lùi về mốc của cả
+  // lần làm bài. Giới hạn = phút cấu hình cho kỹ năng đó; bài 1 kỹ năng không có
+  // cấu hình riêng thì dùng thời gian chung của bài (giữ hành vi cũ).
+  const activeSkillRow = attemptSkills.find((row) => row.skill === activeSkill);
+  const skillStartOverrideMs = activeSkill ? skillStartOverrides[activeSkill] : undefined;
+  const skillStartedAtMs =
+    skillStartOverrideMs ??
+    (activeSkillRow?.startedAt ? new Date(activeSkillRow.startedAt).getTime() : startedAtMs);
+  const activeSkillLimit = activeSkill
+    ? skillLimits[activeSkill] ?? (isMultiSkill ? null : timeLimitMinutes)
+    : timeLimitMinutes;
+
+  // Mở một kỹ năng từ màn chọn: đánh dấu "đang làm" trên server (bỏ qua khi xem
+  // trước) rồi vào phiên. Ghi mốc bắt đầu client để đồng hồ chạy ngay.
+  async function openSkill(skill: string) {
+    if (!previewMode) {
+      const formData = new FormData();
+      formData.set("attemptId", attempt.id);
+      formData.set("skill", skill);
+      await startSkillSession(formData);
+      setSkillStartOverrides((previous) =>
+        previous[skill] ? previous : { ...previous, [skill]: Date.now() }
+      );
+    }
+    setActiveSkill(skill);
+  }
+
   const persistDraft = useCallback(async () => {
     setSaveState("saving");
 
@@ -1672,11 +1743,18 @@ export function AttemptWorkspace({
     activePartSinceRef.current = now;
   }, [activePart, partUnitIds]);
 
+  // Đổi kỹ năng thì quay về phần đầu tiên của kỹ năng mới (tránh activePart trỏ
+  // ra ngoài danh sách phần của kỹ năng vừa mở).
+  useEffect(() => {
+    setActivePart(0);
+  }, [activeSkill]);
+
   useEffect(() => {
     function updateElapsed() {
       if (elapsedRef.current) {
+        // elapsedSeconds nộp kèm kỹ năng: đếm từ mốc bắt đầu của kỹ năng đang mở.
         elapsedRef.current.value = String(
-          Math.max(0, Math.floor((Date.now() - startedAtMs) / 1000))
+          Math.max(0, Math.floor((Date.now() - skillStartedAtMs) / 1000))
         );
       }
       if (partTimesInputRef.current) {
@@ -1688,7 +1766,7 @@ export function AttemptWorkspace({
     const intervalId = window.setInterval(updateElapsed, 1000);
 
     return () => window.clearInterval(intervalId);
-  }, [startedAtMs, snapshotPartTimes]);
+  }, [skillStartedAtMs, snapshotPartTimes]);
 
   // Lưu ý: KHÔNG tự động nộp khi hết giờ. Đồng hồ chỉ đếm ngược và báo "Hết giờ";
   // học sinh tự bấm "Nộp bài". (Tránh việc mở lại bài quá giờ bị nộp ngay.)
@@ -1740,14 +1818,18 @@ export function AttemptWorkspace({
     }
   }
 
-  const totalQuestions = assignment.units.reduce(
-    (sum, unit) => sum + unit.assignableUnit.questions.length,
-    0
+  const activeQuestionIds = activeUnits.flatMap((unit) =>
+    unit.assignableUnit.questions.map((question) => question.id)
   );
-  const answeredCount = Object.values(answers).filter((value) => value.trim() !== "").length;
+  const totalQuestions = activeQuestionIds.length;
+  // Chỉ đếm câu đã trả lời THUỘC kỹ năng đang mở (state `answers` giữ đáp án của
+  // mọi kỹ năng đã đụng tới, nên không lọc sẽ vượt quá tổng số câu của kỹ năng).
+  const answeredCount = activeQuestionIds.filter(
+    (id) => (answers[id] ?? "").trim() !== ""
+  ).length;
 
   // Question palette grouped by unit ("Phần").
-  const parts = assignment.units.map((assignmentUnit) => {
+  const parts = activeUnits.map((assignmentUnit) => {
     const unit = assignmentUnit.assignableUnit;
 
     return {
@@ -1772,7 +1854,7 @@ export function AttemptWorkspace({
   const content = (
     <form
       ref={formRef}
-      action={previewMode ? undefined : submitAttempt}
+      action={previewMode ? undefined : submitSkill}
       onSubmit={previewMode ? (event) => event.preventDefault() : undefined}
       onKeyDown={(event) => {
         // Tránh nộp bài ngoài ý muốn: theo mặc định, bấm Enter trong ô <input>
@@ -1786,6 +1868,7 @@ export function AttemptWorkspace({
       className="fixed inset-0 z-50 flex flex-col bg-background"
     >
       <input type="hidden" name="attemptId" value={attempt.id} />
+      <input type="hidden" name="skill" value={activeSkill ?? ""} />
       <input ref={elapsedRef} type="hidden" name="elapsedSeconds" defaultValue={attempt.elapsedSeconds} />
       <input
         ref={partTimesInputRef}
@@ -1798,12 +1881,22 @@ export function AttemptWorkspace({
 
       <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-4 py-3">
         <div className="flex min-w-0 items-center gap-3">
-          <Link
-            href={previewMode ? "/teacher/materials" : "/student"}
-            className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
-          >
-            {previewMode ? "‹ Kho tài liệu" : "‹ Bảng điều khiển"}
-          </Link>
+          {isMultiSkill && !previewMode ? (
+            <button
+              type="button"
+              onClick={() => setActiveSkill(null)}
+              className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+            >
+              ‹ Kỹ năng
+            </button>
+          ) : (
+            <Link
+              href={previewMode ? "/teacher/materials" : "/student"}
+              className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+            >
+              {previewMode ? "‹ Kho tài liệu" : "‹ Bảng điều khiển"}
+            </Link>
+          )}
           <div className="min-w-0">
             <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-primary">
               {previewMode ? "Phòng làm bài" : "Phòng làm bài"}
@@ -1841,14 +1934,14 @@ export function AttemptWorkspace({
             </button>
           </div>
           <AnimatedThemeToggle />
-          {timeLimitMinutes ? (
-            <CountdownTimer startedAtMs={startedAtMs} timeLimitMinutes={timeLimitMinutes} />
+          {activeSkillLimit ? (
+            <CountdownTimer startedAtMs={skillStartedAtMs} timeLimitMinutes={activeSkillLimit} />
           ) : null}
         </div>
       </header>
 
       <div className="min-h-0 flex-1 overflow-hidden">
-      {assignment.units.map((assignmentUnit, partIndex) => {
+      {activeUnits.map((assignmentUnit, partIndex) => {
         const unit = assignmentUnit.assignableUnit;
         const tableCompletionQuestions = unit.questions.filter(
           (question) => question.questionType === "table_completion"
@@ -2473,13 +2566,15 @@ export function AttemptWorkspace({
                     }
                     return;
                   }
-                  if (!window.confirm("Nộp bài? Bạn sẽ không thể chỉnh sửa sau khi nộp.")) {
+                  if (!window.confirm("Nộp kỹ năng này? Bạn sẽ không sửa được sau khi nộp.")) {
                     event.preventDefault();
                   }
                 }}
                 className="rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
               >
-                {previewMode ? "Thoát xem trước" : "Nộp bài"}
+                {previewMode
+                  ? "Thoát xem trước"
+                  : `Nộp ${activeSkill ? SKILL_TIME_LABELS[activeSkill] ?? activeSkill : ""}`}
               </button>
             </div>
           </div>
@@ -2490,6 +2585,38 @@ export function AttemptWorkspace({
 
   if (!mounted) {
     return null;
+  }
+
+  // Bài nhiều kỹ năng và chưa chọn kỹ năng: hiện màn chọn kỹ năng. Xem trước bỏ
+  // qua màn này (không gọi server action, vào thẳng phiên hiển thị tất cả phần).
+  if (isMultiSkill && !previewMode && activeSkill === null) {
+    return createPortal(
+      <SkillPicker
+        title={assignment.title}
+        items={skillOrder.map((skill) => {
+          const units = unitsForSkill(assignment.units, skill);
+          const row = attemptSkills.find((item) => item.skill === skill);
+          return {
+            skill,
+            status: row?.status ?? "not_started",
+            partCount: units.length,
+            questionCount: units.reduce(
+              (sum, unit) => sum + unit.assignableUnit.questions.length,
+              0
+            ),
+            minutes: skillLimits[skill] ?? null
+          };
+        })}
+        onOpen={openSkill}
+        onViewResult={(skill) => {
+          window.location.href = `/student/results/${attempt.id}?skill=${skill}`;
+        }}
+        onExit={() => {
+          window.location.href = "/student";
+        }}
+      />,
+      document.body
+    );
   }
 
   return createPortal(content, document.body);

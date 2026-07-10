@@ -575,6 +575,7 @@ const importQuestionSchema = z.object({
   options: z.array(importScalar).optional(),
   answer: z.union([importScalar, z.array(importScalar)]).optional(),
   explanation: z.string().trim().optional(),
+  evidence: z.string().trim().optional(),
   points: z.number().int().min(1).default(1)
 });
 
@@ -789,6 +790,7 @@ export async function importMaterial(
               correctAnswerJson:
                 question.answer === undefined ? null : JSON.stringify(question.answer),
               explanation: optionalText(question.explanation),
+              answerEvidence: optionalText(question.evidence),
               points: question.points
             }))
           }

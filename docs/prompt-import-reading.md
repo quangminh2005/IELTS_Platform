@@ -91,13 +91,22 @@ QUY TẮC CHỌN questionType:
 - Short answer THẬT SỰ (câu hỏi có dấu "?" trả lời trong vài từ, KHÔNG phải điền vào đoạn)
   → "short_answer". prompt là câu hỏi đầy đủ, answer là từ/số.
 
+DẪN CHỨNG (evidence) — thêm cho MỖI câu:
+- Trường "evidence" = trích NGUYÊN VĂN một câu/đoạn ngắn trong bài chứa đáp án đúng.
+  Giữ đúng tiếng Anh gốc, KHÔNG diễn giải, KHÔNG dịch.
+- Với note_completion / table_completion / short_answer: nếu bỏ trống, hệ thống tự dò
+  câu chứa đáp án. Vẫn nên điền để chắc chắn đúng chỗ.
+- Với multiple_choice / true_false_not_given / matching: BẮT BUỘC điền "evidence" vì hệ
+  thống KHÔNG tự dò được (đáp án chỉ là chữ cái/TRUE-FALSE, không nằm nguyên văn trong bài).
+
 KIỂM TRA TRƯỚC KHI XUẤT:
 1. Tổng 40 câu, order chạy 1→40 không trùng.
 2. Mọi câu multiple_choice / true_false_not_given: answer phải nằm trong options
    (so sánh không phân biệt hoa thường, khoảng trắng).
 3. Mọi câu note_completion: phải có đúng một "[[order]]" tương ứng trong metadata.noteBody
    (và mọi "[[n]]" trong noteBody đều có câu hỏi order n).
-4. JSON parse được, không có ký tự lạ.
+4. Mọi câu multiple_choice / true_false_not_given / matching: phải có "evidence".
+5. JSON parse được, không có ký tự lạ.
 ```
 
 ---
@@ -113,4 +122,5 @@ KIỂM TRA TRƯỚC KHI XUẤT:
 ## Lưu ý
 
 - **Chỉ áp dụng cho Reading.** Listening cần audio + nhiều dạng đặc thù (note/table/plan/map completion). Khi cần Listening hoặc Writing, mở Claude làm prompt riêng — sẽ phức tạp hơn.
+- **Với đề Listening:** mỗi `unit` cần thêm trường `transcript` = toàn bộ lời thoại audio (tiếng Anh, nguyên văn) để trang kết quả hiện transcript + gạch chân đáp án. `evidence` mỗi câu là đoạn transcript chứa đáp án.
 - Sau khi có file JSON từ AI khác, có thể nhờ Claude **validate nhanh** (đọc file + chạy script kiểm tra schema/đáp án) trước khi import — đỡ phải sửa đi sửa lại trên trang web.

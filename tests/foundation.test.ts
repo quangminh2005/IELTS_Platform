@@ -112,3 +112,11 @@ describe("foundation slice", () => {
     expect(studentDashboard).not.toContain("Practice page pending");
   });
 });
+
+describe("import dẫn chứng", () => {
+  it("import map evidence -> answerEvidence", () => {
+    const src = readProjectFile("lib/actions/materials.ts");
+    expect(src).toContain("evidence: z.string().trim().optional()");
+    expect(src).toContain("answerEvidence: optionalText(question.evidence)");
+  });
+});

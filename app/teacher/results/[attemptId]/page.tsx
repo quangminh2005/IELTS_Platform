@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ResultReview } from "@/components/result-review";
+import { SkillTimeSummary } from "@/components/skill-time-summary";
 import { requireTeacher } from "@/lib/actions/classes";
 import { formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
+import { skillTimesFromParts } from "@/lib/skill-times";
 
 type ResultPageProps = {
   params: {
@@ -77,6 +79,13 @@ export default async function TeacherResultPage({ params }: ResultPageProps) {
     notFound();
   }
 
+  // Gộp thời gian làm bài theo kỹ năng từ partTimesJson (tra kỹ năng của từng phần).
+  const unitSkills: Record<string, string> = {};
+  attempt.answers.forEach((answer) => {
+    unitSkills[answer.assignableUnitId] = answer.assignableUnit.skill;
+  });
+  const skillTimes = skillTimesFromParts(attempt.partTimesJson, unitSkills);
+
   return (
     <div className="space-y-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -89,6 +98,7 @@ export default async function TeacherResultPage({ params }: ResultPageProps) {
             {attempt.student.displayName} ({attempt.student.email}) · ⏱ Thời gian làm:{" "}
             {formatDuration(attempt.elapsedSeconds)}
           </p>
+          <SkillTimeSummary skillTimes={skillTimes} className="mt-1 text-sm text-muted-foreground" />
         </div>
         <Link
           href="/teacher/calendar"
@@ -98,7 +108,7 @@ export default async function TeacherResultPage({ params }: ResultPageProps) {
         </Link>
       </header>
 
-      <ResultReview attempt={attempt} />
+      <ResultReview attempt={attempt} skillTimes={skillTimes} />
     </div>
   );
 }

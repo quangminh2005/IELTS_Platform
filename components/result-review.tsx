@@ -1,5 +1,6 @@
 import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
 import { bandsBySkill, formatBand } from "@/lib/band-score";
+import { formatDuration } from "@/lib/format-duration";
 import { isAudioUrl } from "@/lib/question-interactions";
 
 type Highlight = {
@@ -50,6 +51,8 @@ type ResultReviewProps = {
     highlights: Highlight[];
     review?: TeacherReview;
   };
+  // Thời gian làm bài theo kỹ năng (skill -> số giây). Bài cũ không có dữ liệu này.
+  skillTimes?: Record<string, number>;
 };
 
 const CRITERIA_LABELS: Record<string, string> = {
@@ -106,7 +109,7 @@ const STATUS_LABELS: Record<string, string> = {
   not_started: "Chưa làm"
 };
 
-export function ResultReview({ attempt }: ResultReviewProps) {
+export function ResultReview({ attempt, skillTimes }: ResultReviewProps) {
   const percentage =
     attempt.scorePercent !== null ? `${Math.round(attempt.scorePercent)}%` : "—";
   const statusLabel =
@@ -192,6 +195,12 @@ export function ResultReview({ attempt }: ResultReviewProps) {
               <p className="mt-2 text-sm text-muted-foreground">
                 {row.correct}/{row.total} câu đúng
               </p>
+              {skillTimes?.[row.skill] !== undefined ? (
+                <p className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
+                  <span aria-hidden="true">⏱</span>
+                  {formatDuration(skillTimes[row.skill])}
+                </p>
+              ) : null}
             </article>
           ))}
         </section>

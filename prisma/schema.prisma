@@ -182,6 +182,9 @@ model Attempt {
   status                String              @default("in_progress")
   submitReason          String?
   elapsedSeconds        Int                 @default(0)
+  // Thời gian làm bài tách theo từng phần: JSON { [assignableUnitId]: số giây }.
+  // Null với các bài nộp trước khi có tính năng này (không thể tính ngược).
+  partTimesJson         String?
   tabSwitchCount        Int                 @default(0)
   score                 Float?
   scorePercent          Float?

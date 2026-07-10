@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ResultReview } from "@/components/result-review";
+import { SkillTimeSummary } from "@/components/skill-time-summary";
 import { SubmitCelebration } from "@/components/submit-celebration";
 import { auth } from "@/lib/auth";
 import { pickDominantSkill } from "@/lib/celebration";
 import { prisma } from "@/lib/prisma";
+import { skillTimesFromParts } from "@/lib/skill-times";
 
 type ResultPageProps = {
   params: {
@@ -103,6 +105,13 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
   const isManualOnly = autoSkills.length === 0;
   const dominantSkill = pickDominantSkill(autoSkills);
 
+  // Gộp thời gian làm bài theo kỹ năng từ partTimesJson (tra kỹ năng của từng phần).
+  const unitSkills: Record<string, string> = {};
+  attempt.answers.forEach((answer) => {
+    unitSkills[answer.assignableUnitId] = answer.assignableUnit.skill;
+  });
+  const skillTimes = skillTimesFromParts(attempt.partTimesJson, unitSkills);
+
   return (
     <div className="space-y-8">
       <SubmitCelebration
@@ -119,6 +128,7 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
             Xem lại đáp án của bạn, điểm số, lời giải thích và các đoạn đã tô.
           </p>
+          <SkillTimeSummary skillTimes={skillTimes} className="mt-2 text-sm text-muted-foreground" />
         </div>
         <Link
           href="/student/history"
@@ -128,7 +138,7 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
         </Link>
       </header>
 
-      <ResultReview attempt={attempt} />
+      <ResultReview attempt={attempt} skillTimes={skillTimes} />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { auth } from "@/lib/auth";
 import { gradeAnswer, gradeAttempt } from "@/lib/grading";
 import { detectMultiSelectGroups, gradeMultiSelectGroup } from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
+import { sanitizePartTimesJson } from "@/lib/skill-times";
 import { prisma } from "@/lib/prisma";
 
 const highlightSchema = z.object({
@@ -24,7 +25,9 @@ const highlightSchema = z.object({
 const submitSchema = z.object({
   attemptId: z.string().trim().min(1),
   submitReason: z.enum(["manual", "auto_timeout"]).default("manual"),
-  elapsedSeconds: z.coerce.number().int().min(0).default(0)
+  elapsedSeconds: z.coerce.number().int().min(0).default(0),
+  // Thời gian theo phần (JSON). Là dữ liệu phụ nên không bắt buộc/không chặn nộp.
+  partTimesJson: z.string().optional()
 });
 
 export async function requireStudent() {
@@ -193,13 +196,27 @@ export async function saveAttemptDraft(formData: FormData) {
     )
     .filter((row) => row.value !== "");
 
+  // Lưu kèm thời gian theo phần (nếu client gửi) để đóng/mở lại bài không bị mất.
+  // Chỉ cập nhật khi form thực sự có trường này — tránh ghi đè null mất dữ liệu cũ.
+  const rawPartTimes = formData.get("partTimesJson");
+  const partTimesUpdate =
+    rawPartTimes !== null
+      ? [
+          prisma.attempt.update({
+            where: { id: attempt.id },
+            data: { partTimesJson: sanitizePartTimesJson(String(rawPartTimes)) }
+          })
+        ]
+      : [];
+
   await prisma.$transaction([
     prisma.answer.deleteMany({
       where: { attemptId: attempt.id }
     }),
     ...(draftRows.length > 0
       ? [prisma.answer.createMany({ data: draftRows })]
-      : [])
+      : []),
+    ...partTimesUpdate
   ]);
 }
 
@@ -295,7 +312,8 @@ export async function submitAttempt(formData: FormData) {
   const parsed = submitSchema.safeParse({
     attemptId: formData.get("attemptId"),
     submitReason: formData.get("submitReason") ?? "manual",
-    elapsedSeconds: formData.get("elapsedSeconds") ?? 0
+    elapsedSeconds: formData.get("elapsedSeconds") ?? 0,
+    partTimesJson: formData.get("partTimesJson") ?? undefined
   });
 
   if (!parsed.success) {
@@ -464,6 +482,7 @@ export async function submitAttempt(formData: FormData) {
         submittedAt,
         submitReason: parsed.data.submitReason,
         elapsedSeconds: parsed.data.elapsedSeconds,
+        partTimesJson: sanitizePartTimesJson(parsed.data.partTimesJson),
         score: attemptGrade.score,
         scorePercent: attemptGrade.scorePercent,
         autoGradedAt: submittedAt

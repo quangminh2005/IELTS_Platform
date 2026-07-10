@@ -18,6 +18,7 @@ import {
   submitAttempt
 } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
+import { parsePartTimes } from "@/lib/skill-times";
 import { AudioPlayer } from "@/components/audio-player";
 import { AudioRecorderAnswer } from "@/components/audio-recorder-answer";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
@@ -79,6 +80,7 @@ type AttemptWorkspaceProps = {
     id: string;
     startedAt: Date | string;
     elapsedSeconds: number;
+    partTimesJson?: string | null;
   };
   assignment: {
     title: string;
@@ -1507,9 +1509,36 @@ export function AttemptWorkspace({
 }: AttemptWorkspaceProps) {
   const elapsedRef = useRef<HTMLInputElement>(null);
   const submitReasonRef = useRef<HTMLInputElement>(null);
+  const partTimesInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const startedAtMs = useMemo(() => new Date(attempt.startedAt).getTime(), [attempt.startedAt]);
   const timeLimitMinutes = assignment.timeLimitMinutes;
+
+  // Bấm giờ theo phần: mỗi phần gắn với một assignableUnitId. `committedPartTimesRef`
+  // giữ số giây đã chốt cho từng phần (khởi tạo từ dữ liệu đã lưu để resume không
+  // mất giờ); `activeUnitIdRef`/`activePartSinceRef` theo dõi phần đang mở để cộng
+  // thêm phần thời gian đang trôi khi cần chụp nhanh (snapshot).
+  const partUnitIds = useMemo(
+    () => assignment.units.map((assignmentUnit) => assignmentUnit.assignableUnit.id),
+    [assignment.units]
+  );
+  const committedPartTimesRef = useRef<Record<string, number>>(
+    parsePartTimes(attempt.partTimesJson)
+  );
+  const activeUnitIdRef = useRef<string | null>(null);
+  const activePartSinceRef = useRef<number>(Date.now());
+
+  // Chụp nhanh thời gian theo phần tại thời điểm hiện tại: giờ đã chốt + phần đang
+  // trôi của phần đang mở. Không làm thay đổi dữ liệu đã chốt (tránh cộng trùng).
+  const snapshotPartTimes = useCallback((): Record<string, number> => {
+    const snapshot = { ...committedPartTimesRef.current };
+    const unitId = activeUnitIdRef.current;
+    if (unitId) {
+      const delta = Math.max(0, Math.floor((Date.now() - activePartSinceRef.current) / 1000));
+      snapshot[unitId] = (snapshot[unitId] ?? 0) + delta;
+    }
+    return snapshot;
+  }, []);
 
   // Tra cứu nhóm "Choose N": theo câu MỞ ĐẦU nhóm, và tập id mọi thành viên nhóm.
   const multiSelectByFirstId = useMemo(() => {
@@ -1590,13 +1619,14 @@ export function AttemptWorkspace({
       Object.entries(answers).forEach(([questionId, value]) => {
         formData.set(`q_${questionId}`, value);
       });
+      formData.set("partTimesJson", JSON.stringify(snapshotPartTimes()));
 
       await saveAttemptDraft(formData);
       setSaveState("saved");
     } catch {
       setSaveState("error");
     }
-  }, [answers, attempt.id]);
+  }, [answers, attempt.id, snapshotPartTimes]);
 
   // Khoá cuộn nền khi đang ở chế độ làm bài toàn màn hình.
   useEffect(() => {
@@ -1628,22 +1658,37 @@ export function AttemptWorkspace({
     return () => window.clearTimeout(timeoutId);
   }, [persistDraft, previewMode]);
 
+  // Khi học sinh chuyển sang phần khác: chốt thời gian đang trôi vào phần vừa rời,
+  // rồi bắt đầu đếm cho phần mới. Lần chạy đầu (mount) chỉ đặt phần đang mở.
+  useEffect(() => {
+    const now = Date.now();
+    const previousUnitId = activeUnitIdRef.current;
+    if (previousUnitId) {
+      const delta = Math.max(0, Math.floor((now - activePartSinceRef.current) / 1000));
+      committedPartTimesRef.current[previousUnitId] =
+        (committedPartTimesRef.current[previousUnitId] ?? 0) + delta;
+    }
+    activeUnitIdRef.current = partUnitIds[activePart] ?? null;
+    activePartSinceRef.current = now;
+  }, [activePart, partUnitIds]);
+
   useEffect(() => {
     function updateElapsed() {
-      if (!elapsedRef.current) {
-        return;
+      if (elapsedRef.current) {
+        elapsedRef.current.value = String(
+          Math.max(0, Math.floor((Date.now() - startedAtMs) / 1000))
+        );
       }
-
-      elapsedRef.current.value = String(
-        Math.max(0, Math.floor((Date.now() - startedAtMs) / 1000))
-      );
+      if (partTimesInputRef.current) {
+        partTimesInputRef.current.value = JSON.stringify(snapshotPartTimes());
+      }
     }
 
     updateElapsed();
     const intervalId = window.setInterval(updateElapsed, 1000);
 
     return () => window.clearInterval(intervalId);
-  }, [startedAtMs]);
+  }, [startedAtMs, snapshotPartTimes]);
 
   // Lưu ý: KHÔNG tự động nộp khi hết giờ. Đồng hồ chỉ đếm ngược và báo "Hết giờ";
   // học sinh tự bấm "Nộp bài". (Tránh việc mở lại bài quá giờ bị nộp ngay.)
@@ -1742,6 +1787,12 @@ export function AttemptWorkspace({
     >
       <input type="hidden" name="attemptId" value={attempt.id} />
       <input ref={elapsedRef} type="hidden" name="elapsedSeconds" defaultValue={attempt.elapsedSeconds} />
+      <input
+        ref={partTimesInputRef}
+        type="hidden"
+        name="partTimesJson"
+        defaultValue={attempt.partTimesJson ?? "{}"}
+      />
       <input ref={submitReasonRef} type="hidden" name="submitReason" defaultValue="manual" />
       <input type="hidden" name="recipientId" value={recipientId} />
 

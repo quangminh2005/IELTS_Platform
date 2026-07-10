@@ -7,7 +7,8 @@ import { PrismaClient } from "@prisma/client";
 const statements = [
   'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "transcript" TEXT;',
   'ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "image" TEXT;',
-  'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "weeklyGoal" INTEGER;'
+  'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "weeklyGoal" INTEGER;',
+  'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "partTimesJson" TEXT;'
 ];
 
 const prisma = new PrismaClient();

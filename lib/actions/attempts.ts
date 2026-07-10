@@ -22,14 +22,6 @@ const highlightSchema = z.object({
   note: z.string().trim().optional()
 });
 
-const submitSchema = z.object({
-  attemptId: z.string().trim().min(1),
-  submitReason: z.enum(["manual", "auto_timeout"]).default("manual"),
-  elapsedSeconds: z.coerce.number().int().min(0).default(0),
-  // Thời gian theo phần (JSON). Là dữ liệu phụ nên không bắt buộc/không chặn nộp.
-  partTimesJson: z.string().optional()
-});
-
 export async function requireStudent() {
   const session = await auth();
   const user = session?.user;
@@ -268,8 +260,16 @@ export async function submitSkill(formData: FormData) {
     studentId: student.id
   }));
   const skillGrade = gradeAttempt(graded.gradeItems);
+  // Kỹ năng chấm tay (Viết/Nói) không có câu tự chấm nào — gradeAttempt([]) sẽ
+  // trả score/scorePercent = 0, gây hiểu nhầm là "0%". Lưu null để trang kết quả
+  // hiển thị "chờ chấm" thay vì điểm giả.
+  const manualSkill = parsed.data.skill === "writing" || parsed.data.skill === "speaking";
 
   const submittedAt = new Date();
+  // Đánh dấu khi đây là lần nộp làm hoàn tất cả Attempt (kỹ năng cuối cùng), để
+  // sau transaction biết redirect kèm ?submitted=1 (bật hiệu ứng chúc mừng) thay
+  // vì ?skill=... (chỉ xem kết quả một kỹ năng).
+  let finalized = false;
 
   await prisma.$transaction(async (tx) => {
     // Chỉ xoá đáp án của các unit thuộc kỹ năng này — không đụng kỹ năng khác.
@@ -285,8 +285,8 @@ export async function submitSkill(formData: FormData) {
         status: "submitted",
         submittedAt,
         elapsedSeconds: parsed.data.elapsedSeconds,
-        score: skillGrade.score,
-        scorePercent: skillGrade.scorePercent
+        score: manualSkill ? null : skillGrade.score,
+        scorePercent: manualSkill ? null : skillGrade.scorePercent
       }
     });
 
@@ -312,6 +312,9 @@ export async function submitSkill(formData: FormData) {
           status: "submitted",
           submittedAt,
           submitReason: "manual",
+          // Tổng thời gian làm bài = tổng elapsedSeconds của từng kỹ năng (skills
+          // đã đọc lại ở trên nên đã có giá trị mới nhất của kỹ năng vừa nộp).
+          elapsedSeconds: skills.reduce((sum, row) => sum + (row.elapsedSeconds ?? 0), 0),
           score: totalScore,
           scorePercent,
           autoGradedAt: submittedAt
@@ -321,13 +324,20 @@ export async function submitSkill(formData: FormData) {
         where: { id: attempt.assignmentRecipientId },
         data: { status: "submitted", submittedAt }
       });
+      finalized = true;
     }
   });
 
   revalidatePath("/student");
   revalidatePath("/student/history");
   revalidatePath(`/student/assignments/${attempt.assignmentRecipientId}`);
-  redirect(`/student/results/${attempt.id}?skill=${parsed.data.skill}`);
+  // Chỉ bật hiệu ứng chúc mừng (?submitted=1) khi đây là kỹ năng cuối cùng làm
+  // Attempt hoàn tất; nộp một kỹ năng giữa chừng thì chỉ xem kết quả kỹ năng đó.
+  redirect(
+    finalized
+      ? `/student/results/${attempt.id}?submitted=1`
+      : `/student/results/${attempt.id}?skill=${parsed.data.skill}`
+  );
 }
 
 export async function saveAttemptDraft(formData: FormData) {
@@ -504,122 +514,6 @@ export async function deleteHighlight(formData: FormData) {
       attempt: { status: "in_progress" }
     }
   });
-}
-
-export async function submitAttempt(formData: FormData) {
-  const student = await requireStudent();
-  const parsed = submitSchema.safeParse({
-    attemptId: formData.get("attemptId"),
-    submitReason: formData.get("submitReason") ?? "manual",
-    elapsedSeconds: formData.get("elapsedSeconds") ?? 0,
-    partTimesJson: formData.get("partTimesJson") ?? undefined
-  });
-
-  if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid attempt submission.");
-  }
-
-  // LÁ CHẮN: từ chối mọi yêu cầu tự động nộp khi hết giờ. Tính năng auto-nộp đã
-  // bị gỡ ở client, nhưng các tab cũ còn cache code cũ vẫn có thể gửi
-  // submitReason="auto_timeout" khi đồng hồ về 0. Bỏ qua chúng — bài chỉ được nộp
-  // khi học sinh tự bấm "Nộp bài" (submitReason="manual").
-  if (parsed.data.submitReason === "auto_timeout") {
-    return;
-  }
-
-  const attempt = await prisma.attempt.findFirst({
-    where: {
-      id: parsed.data.attemptId,
-      studentId: student.id
-    },
-    include: {
-      assignmentRecipient: {
-        include: {
-          assignment: {
-            include: {
-              units: {
-                orderBy: { order: "asc" },
-                include: {
-                  assignableUnit: {
-                    include: {
-                      questions: {
-                        orderBy: { order: "asc" }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  });
-
-  if (!attempt) {
-    throw new Error("Attempt not found for this student.");
-  }
-
-  if (attempt.status === "submitted") {
-    redirect(`/student/results/${attempt.id}`);
-  }
-
-  const graded = gradeUnits(
-    attempt.assignmentRecipient.assignment.units.map((assignmentUnit) => ({
-      assignableUnitId: assignmentUnit.assignableUnitId,
-      skill: assignmentUnit.assignableUnit.skill,
-      questions: assignmentUnit.assignableUnit.questions
-    })),
-    (questionId) => String(formData.get(`q_${questionId}`) ?? "")
-  );
-  const answerRows = graded.answerRows.map((row) => ({
-    ...row,
-    attemptId: attempt.id,
-    studentId: student.id
-  }));
-
-  const attemptGrade = gradeAttempt(graded.gradeItems);
-
-  const submittedAt = new Date();
-
-  await prisma.$transaction(async (tx) => {
-    await tx.answer.deleteMany({
-      where: { attemptId: attempt.id }
-    });
-
-    if (answerRows.length > 0) {
-      await tx.answer.createMany({
-        data: answerRows
-      });
-    }
-
-    await tx.attempt.update({
-      where: { id: attempt.id },
-      data: {
-        status: "submitted",
-        submittedAt,
-        submitReason: parsed.data.submitReason,
-        elapsedSeconds: parsed.data.elapsedSeconds,
-        partTimesJson: sanitizePartTimesJson(parsed.data.partTimesJson),
-        score: attemptGrade.score,
-        scorePercent: attemptGrade.scorePercent,
-        autoGradedAt: submittedAt
-      }
-    });
-
-    await tx.assignmentRecipient.update({
-      where: { id: attempt.assignmentRecipientId },
-      data: {
-        status: "submitted",
-        submittedAt
-      }
-    });
-  });
-
-  revalidatePath("/student");
-  revalidatePath("/student/history");
-  revalidatePath(`/student/assignments/${attempt.assignmentRecipientId}`);
-  redirect(`/student/results/${attempt.id}?submitted=1`);
 }
 
 // Giáo viên cho học sinh làm lại một bài: xoá các lần làm của bài đó (kèm đáp án,

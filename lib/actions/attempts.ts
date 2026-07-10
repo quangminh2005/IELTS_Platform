@@ -250,6 +250,8 @@ export async function submitSkill(formData: FormData) {
     skillUnits.map((au) => ({
       assignableUnitId: au.assignableUnitId,
       skill: au.assignableUnit.skill,
+      content: au.assignableUnit.content,
+      transcript: au.assignableUnit.transcript,
       questions: au.assignableUnit.questions
     })),
     (questionId) => String(formData.get(`q_${questionId}`) ?? "")

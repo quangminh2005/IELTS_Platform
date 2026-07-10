@@ -1,3 +1,4 @@
+import { deriveAnswerEvidence } from "@/lib/answer-evidence";
 import { gradeAnswer, type AttemptItem } from "@/lib/grading";
 import { detectMultiSelectGroups, gradeMultiSelectGroup } from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
@@ -9,12 +10,15 @@ export type QuestionForGrading = {
   optionsJson: string | null;
   correctAnswerJson: string | null;
   explanation: string | null;
+  answerEvidence: string | null;
   points: number;
 };
 
 export type UnitForGrading = {
   assignableUnitId: string;
   skill: string;
+  content: string | null;
+  transcript: string | null;
   questions: QuestionForGrading[];
 };
 
@@ -26,6 +30,7 @@ export type GradedAnswerRow = {
   pointsAwarded: number | null;
   correctAnswerSnapshot: string | null;
   explanationSnapshot: string | null;
+  evidenceSnapshot: string | null;
 };
 
 export type GradedUnits = {
@@ -67,6 +72,16 @@ export function gradeUnits(
     const questions = unit.questions;
     const isManualSkill = isManualGradedSkill(unit.skill);
 
+    // Nguồn dò dẫn chứng: bài đọc (Reading) hoặc transcript (Listening).
+    const evidenceSource = unit.transcript ?? unit.content ?? null;
+    const evidenceFor = (question: QuestionForGrading): string | null =>
+      question.answerEvidence ??
+      deriveAnswerEvidence(
+        question.questionType,
+        parseCorrectAnswers(question.correctAnswerJson),
+        evidenceSource
+      );
+
     const groupResult = new Map<string, { isCorrect: boolean; pointsAwarded: number }>();
     if (!isManualSkill) {
       const groups = detectMultiSelectGroups(
@@ -104,7 +119,8 @@ export function gradeUnits(
           isCorrect: null,
           pointsAwarded: null,
           correctAnswerSnapshot: null,
-          explanationSnapshot: question.explanation
+          explanationSnapshot: question.explanation,
+          evidenceSnapshot: evidenceFor(question)
         });
         continue;
       }
@@ -120,7 +136,8 @@ export function gradeUnits(
         isCorrect: grade.isCorrect,
         pointsAwarded: grade.pointsAwarded,
         correctAnswerSnapshot: answerSnapshot(question.correctAnswerJson),
-        explanationSnapshot: question.explanation
+        explanationSnapshot: question.explanation,
+        evidenceSnapshot: evidenceFor(question)
       });
 
       gradeItems.push(

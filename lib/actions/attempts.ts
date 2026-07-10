@@ -352,11 +352,7 @@ export async function saveAttemptDraft(formData: FormData) {
               units: {
                 include: {
                   assignableUnit: {
-                    include: {
-                      questions: {
-                        select: { id: true }
-                      }
-                    }
+                    select: { skill: true, questions: { select: { id: true } } }
                   }
                 }
               }
@@ -371,7 +367,20 @@ export async function saveAttemptDraft(formData: FormData) {
     throw new Error("Attempt not found for this student.");
   }
 
-  const draftRows = attempt.assignmentRecipient.assignment.units
+  const submittedSkillRows = await prisma.attemptSkill.findMany({
+    where: { attemptId: attempt.id, status: "submitted" },
+    select: { skill: true }
+  });
+  const submittedSkills = new Set(submittedSkillRows.map((row) => row.skill));
+
+  const units = attempt.assignmentRecipient.assignment.units;
+  // Unit thuộc kỹ năng ĐÃ NỘP: đáp án đã chấm — tuyệt đối không xoá/ghi đè khi lưu nháp.
+  const lockedUnitIds = units
+    .filter((assignmentUnit) => submittedSkills.has(assignmentUnit.assignableUnit.skill))
+    .map((assignmentUnit) => assignmentUnit.assignableUnitId);
+
+  const draftRows = units
+    .filter((assignmentUnit) => !submittedSkills.has(assignmentUnit.assignableUnit.skill))
     .flatMap((assignmentUnit) =>
       assignmentUnit.assignableUnit.questions.map((question) => ({
         attemptId: attempt.id,
@@ -398,7 +407,10 @@ export async function saveAttemptDraft(formData: FormData) {
 
   await prisma.$transaction([
     prisma.answer.deleteMany({
-      where: { attemptId: attempt.id }
+      where: {
+        attemptId: attempt.id,
+        ...(lockedUnitIds.length > 0 ? { assignableUnitId: { notIn: lockedUnitIds } } : {})
+      }
     }),
     ...(draftRows.length > 0
       ? [prisma.answer.createMany({ data: draftRows })]

@@ -5,9 +5,8 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireTeacher } from "@/lib/actions/classes";
 import { auth } from "@/lib/auth";
-import { gradeAnswer, gradeAttempt } from "@/lib/grading";
-import { detectMultiSelectGroups, gradeMultiSelectGroup } from "@/lib/multi-select";
-import { parseQuestionOptions } from "@/lib/question-interactions";
+import { gradeAttempt } from "@/lib/grading";
+import { gradeUnits } from "@/lib/attempt-grading";
 import { sanitizePartTimesJson } from "@/lib/skill-times";
 import { prisma } from "@/lib/prisma";
 
@@ -49,41 +48,8 @@ export async function requireStudent() {
   return student;
 }
 
-function parseCorrectAnswers(value: string | null): string[] {
-  if (!value) {
-    return [];
-  }
-
-  try {
-    const parsed = JSON.parse(value);
-
-    if (Array.isArray(parsed)) {
-      return parsed.map((answer) => String(answer));
-    }
-
-    if (typeof parsed === "string" || typeof parsed === "number" || typeof parsed === "boolean") {
-      return [String(parsed)];
-    }
-  } catch {
-    return [value];
-  }
-
-  return [];
-}
-
-function answerSnapshot(value: string | null) {
-  const answers = parseCorrectAnswers(value);
-
-  return answers.length > 0 ? answers.join(" | ") : value;
-}
-
 function optionalText(value?: string) {
   return value ? value : null;
-}
-
-// Writing và Speaking do giáo viên chấm tay (không có đáp án đúng để so khớp).
-function isManualGradedSkill(skill: string): boolean {
-  return skill === "writing" || skill === "speaking";
 }
 
 export async function startAttempt(recipientId: string) {
@@ -365,102 +331,21 @@ export async function submitAttempt(formData: FormData) {
     redirect(`/student/results/${attempt.id}`);
   }
 
-  const gradedAnswers = attempt.assignmentRecipient.assignment.units.flatMap((assignmentUnit) => {
-    const questions = assignmentUnit.assignableUnit.questions;
-    // Writing/Speaking do giáo viên chấm tay: KHÔNG tự động chấm. Đánh dấu
-    // isCorrect = null ("Chờ chấm"), không có điểm và không cộng vào điểm tự
-    // động — tránh hiển thị "Sai" và kéo điểm tổng xuống 0.
-    const isManualSkill = isManualGradedSkill(assignmentUnit.assignableUnit.skill);
-
-    // Nhóm "Choose N" (vd chọn 2 đáp án): chấm theo tập — mỗi chữ đúng phân biệt
-    // = 1 điểm, loại trùng. Kết quả từng câu lưu vào groupResult để dùng bên dưới.
-    const groupResult = new Map<string, { isCorrect: boolean; pointsAwarded: number }>();
-    if (!isManualSkill) {
-      const groups = detectMultiSelectGroups(
-        questions.map((question) => ({
-          id: question.id,
-          questionType: question.questionType,
-          options: parseQuestionOptions(question.optionsJson),
-          correctAnswers: parseCorrectAnswers(question.correctAnswerJson)
-        }))
-      );
-
-      for (const group of groups) {
-        const slotValues = group.questionIds.map((id) =>
-          String(formData.get(`q_${id}`) ?? "").trim()
-        );
-        const firstMember = questions.find((question) => question.id === group.questionIds[0]);
-        const correctSet = parseCorrectAnswers(firstMember?.correctAnswerJson ?? null);
-        const marks = gradeMultiSelectGroup(slotValues, correctSet);
-
-        group.questionIds.forEach((id, index) => {
-          const points = questions.find((question) => question.id === id)?.points ?? 1;
-          groupResult.set(id, {
-            isCorrect: marks[index],
-            pointsAwarded: marks[index] ? points : 0
-          });
-        });
-      }
-    }
-
-    return questions.map((question) => {
-      const value = String(formData.get(`q_${question.id}`) ?? "").trim();
-
-      if (isManualSkill) {
-        return {
-          answerRow: {
-            attemptId: attempt.id,
-            studentId: student.id,
-            questionId: question.id,
-            assignableUnitId: assignmentUnit.assignableUnitId,
-            value,
-            isCorrect: null,
-            pointsAwarded: null,
-            correctAnswerSnapshot: null,
-            explanationSnapshot: question.explanation
-          },
-          gradeItem: null
-        };
-      }
-
-      const correctAnswers = parseCorrectAnswers(question.correctAnswerJson);
-      const group = groupResult.get(question.id);
-      const grade = group ?? gradeAnswer(value, correctAnswers, question.points);
-
-      return {
-        answerRow: {
-          attemptId: attempt.id,
-          studentId: student.id,
-          questionId: question.id,
-          assignableUnitId: assignmentUnit.assignableUnitId,
-          value,
-          isCorrect: grade.isCorrect,
-          pointsAwarded: grade.pointsAwarded,
-          correctAnswerSnapshot: answerSnapshot(question.correctAnswerJson),
-          explanationSnapshot: question.explanation
-        },
-        // Với câu trong nhóm, ép gradeAttempt cho ra đúng số điểm đã chấm theo tập.
-        gradeItem: group
-          ? {
-              value: group.isCorrect ? value || "1" : "",
-              correctAnswers: group.isCorrect ? [value || "1"] : [],
-              points: question.points
-            }
-          : {
-              value,
-              correctAnswers,
-              points: question.points
-            }
-      };
-    });
-  });
-  const answerRows = gradedAnswers.map((answer) => answer.answerRow);
-
-  const attemptGrade = gradeAttempt(
-    gradedAnswers
-      .map((answer) => answer.gradeItem)
-      .filter((item): item is NonNullable<typeof item> => item !== null)
+  const graded = gradeUnits(
+    attempt.assignmentRecipient.assignment.units.map((assignmentUnit) => ({
+      assignableUnitId: assignmentUnit.assignableUnitId,
+      skill: assignmentUnit.assignableUnit.skill,
+      questions: assignmentUnit.assignableUnit.questions
+    })),
+    (questionId) => String(formData.get(`q_${questionId}`) ?? "")
   );
+  const answerRows = graded.answerRows.map((row) => ({
+    ...row,
+    attemptId: attempt.id,
+    studentId: student.id
+  }));
+
+  const attemptGrade = gradeAttempt(graded.gradeItems);
 
   const submittedAt = new Date();
 

@@ -6,15 +6,18 @@ import { SubmitCelebration } from "@/components/submit-celebration";
 import { auth } from "@/lib/auth";
 import { pickDominantSkill } from "@/lib/celebration";
 import { prisma } from "@/lib/prisma";
-import { skillTimesFromParts } from "@/lib/skill-times";
+import { SKILL_TIME_LABELS, skillTimesFromParts } from "@/lib/skill-times";
 
 type ResultPageProps = {
   params: {
     attemptId: string;
   };
+  searchParams: {
+    skill?: string;
+  };
 };
 
-export default async function StudentResultPage({ params }: ResultPageProps) {
+export default async function StudentResultPage({ params, searchParams }: ResultPageProps) {
   const session = await auth();
 
   if (!session?.user?.id || session.user.role !== "student") {
@@ -90,6 +93,13 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
           note: true,
           sourceType: true
         }
+      },
+      skills: {
+        select: {
+          skill: true,
+          score: true,
+          scorePercent: true
+        }
       }
     }
   });
@@ -97,6 +107,14 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
   if (!attempt) {
     notFound();
   }
+
+  // Xem theo kỹ năng (?skill=): dùng khi học sinh vừa nộp một kỹ năng và muốn xem
+  // kết quả ngay, không phải chờ nộp hết bài. Không có param -> giữ trang gộp như cũ.
+  const skillFilter = searchParams.skill;
+  const skillLabel = skillFilter ? SKILL_TIME_LABELS[skillFilter] ?? skillFilter : null;
+  const skillResult = skillFilter
+    ? attempt.skills.find((row) => row.skill === skillFilter) ?? null
+    : null;
 
   // Các câu đã chấm tự động (Nghe/Đọc) có isCorrect khác null; Viết/Nói = null.
   const autoSkills = attempt.answers
@@ -112,16 +130,36 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
   });
   const skillTimes = skillTimesFromParts(attempt.partTimesJson, unitSkills);
 
+  // Lọc đáp án theo kỹ năng khi xem tức thời (?skill=). Không có param -> giữ nguyên.
+  const answers = skillFilter
+    ? attempt.answers.filter((answer) => answer.assignableUnit?.skill === skillFilter)
+    : attempt.answers;
+
+  // Khi xem theo kỹ năng, điểm/% hiển thị lấy từ AttemptSkill của đúng kỹ năng đó
+  // (thay vì điểm gộp cả bài).
+  const reviewAttempt = skillFilter
+    ? {
+        ...attempt,
+        answers,
+        score: skillResult?.score ?? null,
+        scorePercent: skillResult?.scorePercent ?? null
+      }
+    : attempt;
+
   return (
     <div className="space-y-8">
-      <SubmitCelebration
-        scorePercent={attempt.scorePercent}
-        isManualOnly={isManualOnly}
-        dominantSkill={dominantSkill}
-      />
+      {!skillFilter ? (
+        <SubmitCelebration
+          scorePercent={attempt.scorePercent}
+          isManualOnly={isManualOnly}
+          dominantSkill={dominantSkill}
+        />
+      ) : null}
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-semibold text-primary">Kết quả</p>
+          <p className="text-sm font-semibold text-primary">
+            {skillFilter ? `Kết quả kỹ năng ${skillLabel}` : "Kết quả"}
+          </p>
           <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
             {attempt.assignmentRecipient.assignment.title}
           </h2>
@@ -130,15 +168,25 @@ export default async function StudentResultPage({ params }: ResultPageProps) {
           </p>
           <SkillTimeSummary skillTimes={skillTimes} className="mt-2 text-sm text-muted-foreground" />
         </div>
-        <Link
-          href="/student/history"
-          className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
-        >
-          ← Về lịch sử
-        </Link>
+        <div className="flex w-fit flex-col items-end gap-2">
+          {skillFilter ? (
+            <Link
+              href={`/student/assignments/${attempt.assignmentRecipientId}`}
+              className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+            >
+              ‹ Về chọn kỹ năng
+            </Link>
+          ) : null}
+          <Link
+            href="/student/history"
+            className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+          >
+            ← Về lịch sử
+          </Link>
+        </div>
       </header>
 
-      <ResultReview attempt={attempt} skillTimes={skillTimes} />
+      <ResultReview attempt={reviewAttempt} skillTimes={skillTimes} />
     </div>
   );
 }

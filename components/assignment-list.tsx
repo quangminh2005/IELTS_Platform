@@ -1,12 +1,14 @@
 import { deleteAssignment, updateAssignment } from "@/lib/actions/assignments";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { DueDateField } from "@/components/due-date-field";
+import { SkillTimeInputs } from "@/components/skill-time-inputs";
 import {
   StudentPicker,
   type StudentPickerClass,
   type StudentPickerStudent
 } from "@/components/student-picker";
 import { UnitPicker, type UnitPickerMaterial } from "@/components/unit-picker";
+import { parseSkillTimeLimits } from "@/lib/skill-parse";
 
 export type AssignmentItem = {
   id: string;
@@ -14,6 +16,7 @@ export type AssignmentItem = {
   instructions: string | null;
   deadline: Date | null;
   timeLimitMinutes: number | null;
+  skillTimeLimitsJson: string | null;
   mode: string;
   unitCount: number;
   recipientCount: number;
@@ -99,6 +102,13 @@ export function AssignmentList({
   students,
   classOptions
 }: AssignmentListProps) {
+  const unitSkills: Record<string, string> = {};
+  materials.forEach((material) =>
+    material.units.forEach((unit) => {
+      unitSkills[unit.id] = unit.skill;
+    })
+  );
+
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
       <div className="border-b border-border px-5 py-4">
@@ -223,6 +233,19 @@ export function AssignmentList({
                           materials={materials}
                           selectedUnitIds={assignment.unitIds}
                           compact
+                        />
+                      </div>
+                    </fieldset>
+
+                    <fieldset>
+                      <legend className="text-sm font-semibold">Thời gian mỗi kỹ năng</legend>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        Mỗi kỹ năng là một phiên riêng, có đồng hồ riêng. Bỏ trống = không giới hạn.
+                      </p>
+                      <div className="mt-2">
+                        <SkillTimeInputs
+                          unitSkills={unitSkills}
+                          defaultValues={parseSkillTimeLimits(assignment.skillTimeLimitsJson)}
                         />
                       </div>
                     </fieldset>

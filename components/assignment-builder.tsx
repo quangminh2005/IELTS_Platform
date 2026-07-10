@@ -1,5 +1,6 @@
 import { createAssignment } from "@/lib/actions/assignments";
 import { DueDateField } from "@/components/due-date-field";
+import { SkillTimeInputs } from "@/components/skill-time-inputs";
 import {
   StudentPicker,
   type StudentPickerClass,
@@ -16,6 +17,13 @@ type AssignmentBuilderProps = {
 export function AssignmentBuilder({ materials, students, classOptions }: AssignmentBuilderProps) {
   const hasUnits = materials.some((material) => material.units.length > 0);
   const canCreate = hasUnits && students.length > 0;
+
+  const unitSkills: Record<string, string> = {};
+  materials.forEach((material) =>
+    material.units.forEach((unit) => {
+      unitSkills[unit.id] = unit.skill;
+    })
+  );
 
   return (
     <form
@@ -81,6 +89,16 @@ export function AssignmentBuilder({ materials, students, classOptions }: Assignm
           <legend className="text-sm font-semibold">Các phần</legend>
           <div className="mt-3">
             <UnitPicker materials={materials} />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend className="text-sm font-semibold">Thời gian mỗi kỹ năng</legend>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Mỗi kỹ năng là một phiên riêng, có đồng hồ riêng. Bỏ trống = không giới hạn.
+          </p>
+          <div className="mt-3">
+            <SkillTimeInputs unitSkills={unitSkills} />
           </div>
         </fieldset>
 

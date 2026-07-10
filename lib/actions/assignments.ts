@@ -7,6 +7,8 @@ import { requireTeacher } from "@/lib/actions/classes";
 import { parseAssignmentDeadline } from "@/lib/assignment-deadline";
 import { assignmentNoticePath } from "@/lib/assignment-notices";
 import { prisma } from "@/lib/prisma";
+import { serializeSkillTimeLimits } from "@/lib/skill-parse";
+import { SKILL_TIME_ORDER } from "@/lib/skill-times";
 
 const assignmentSchema = z.object({
   title: z.string().trim().min(2, "Tiêu đề bài tập phải có ít nhất 2 ký tự."),
@@ -75,6 +77,19 @@ function optionalText(value?: string) {
   return value ? value : null;
 }
 
+// Đọc các ô skillTime_<skill> thành map { skill: phút }. Bỏ ô trống/không hợp lệ.
+function readSkillTimeLimits(formData: FormData): Record<string, number> {
+  const map: Record<string, number> = {};
+  for (const skill of SKILL_TIME_ORDER) {
+    const raw = formData.get(`skillTime_${skill}`);
+    const minutes = Number(raw);
+    if (raw != null && String(raw).trim() !== "" && Number.isFinite(minutes) && minutes > 0) {
+      map[skill] = Math.floor(minutes);
+    }
+  }
+  return map;
+}
+
 export async function createAssignment(formData: FormData) {
   const teacher = await requireTeacher();
   const parsed = assignmentSchema.safeParse({
@@ -99,6 +114,8 @@ export async function createAssignment(formData: FormData) {
 
   await verifyUnitsAndStudents(teacher.id, unitIds, studentIds);
 
+  const skillTimeLimitsJson = serializeSkillTimeLimits(readSkillTimeLimits(formData));
+
   await prisma.assignment.create({
     data: {
       teacherId: teacher.id,
@@ -106,6 +123,7 @@ export async function createAssignment(formData: FormData) {
       instructions: optionalText(parsed.data.instructions),
       deadline,
       timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
+      skillTimeLimitsJson,
       mode: "homework",
       units: {
         create: unitIds.map((unitId, index) => ({
@@ -203,7 +221,8 @@ export async function updateAssignment(formData: FormData) {
         title: parsed.data.title,
         instructions: optionalText(parsed.data.instructions),
         deadline,
-        timeLimitMinutes: parsed.data.timeLimitMinutes ?? null
+        timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
+        skillTimeLimitsJson: serializeSkillTimeLimits(readSkillTimeLimits(formData))
       }
     }),
     prisma.assignmentUnit.deleteMany({

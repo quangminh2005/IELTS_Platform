@@ -46,17 +46,32 @@ export function deriveAnswerEvidence(
   return null;
 }
 
-// Ghép mẫu regex khớp đáp án linh hoạt khoảng trắng: bỏ khoảng trắng trong đáp án,
-// nối từng ký tự bằng \s* để khớp cả bản có cách lẫn không cách ("GT82LC" ↔ "GT8 2LC").
-function flexiblePattern(answer: string): string {
-  const chars = answer
-    .replace(/\s+/g, "")
-    .split("")
-    .map(escapeRegExp);
-  if (chars.length === 0) {
-    return "";
+// Sinh các mẫu regex khớp một đáp án trong text (không phân biệt hoa/thường):
+//  1. Khớp thường: nguyên văn, khoảng trắng trong đáp án nới thành \s+.
+//  2. Khớp linh hoạt khoảng trắng: CHỈ cho đáp án "mã" (lẫn chữ VÀ số) — nối ký tự
+//     bằng \s* để "GT82LC" ↔ "GT8 2LC". Không áp dụng đáp án thuần chữ/thuần số
+//     (tránh "at" khớp "a t-shirt").
+//  3. Khớp đọc đánh vần: >= 3 ký tự chữ-số, dấu ngăn cách BẮT BUỘC [-.\s] giữa mỗi
+//     cặp — "Hardie" ↔ "H-A-R-D-I-E". Không khớp cách viết sai gây nhiễu ("Hardy").
+function answerPatterns(answer: string): string[] {
+  const alnum = answer.replace(/[^\p{L}\p{N}]/gu, "");
+  const patterns: string[] = [];
+
+  // 1. Khớp thường.
+  const exact = escapeRegExp(answer).replace(/(?:\\)?\s+/g, "\\s+");
+  patterns.push(`\\b${exact}\\b`);
+
+  // 2. Khớp linh hoạt khoảng trắng (chỉ đáp án mã lẫn chữ và số).
+  if (/\p{L}/u.test(alnum) && /\p{N}/u.test(alnum)) {
+    patterns.push(`\\b${alnum.split("").map(escapeRegExp).join("\\s*")}\\b`);
   }
-  return `\\b${chars.join("\\s*")}\\b`;
+
+  // 3. Khớp đọc đánh vần.
+  if (alnum.length >= 3) {
+    patterns.push(`\\b${alnum.split("").map(escapeRegExp).join("[-.\\s]")}\\b`);
+  }
+
+  return patterns;
 }
 
 // Tách text thành các đoạn { text, match } — phần match=true là chỗ trùng đáp án
@@ -72,7 +87,7 @@ export function splitByAnswerMatches(
     // Ưu tiên đáp án dài hơn (tính theo số ký tự không kể khoảng trắng).
     .sort((a, b) => b.replace(/\s+/g, "").length - a.replace(/\s+/g, "").length);
 
-  const patterns = candidates.map(flexiblePattern).filter(Boolean);
+  const patterns = candidates.flatMap(answerPatterns).filter(Boolean);
   if (patterns.length === 0) {
     return [{ text, match: false }];
   }

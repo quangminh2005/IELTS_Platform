@@ -79,6 +79,26 @@ describe("splitByAnswerMatches", () => {
     const parts = splitByAnswerMatches("I am John Peterson here.", ["John Petterson", "John Peterson"]);
     expect(parts.some((p) => p.match && p.text === "John Peterson")).toBe(true);
   });
+
+  it("tô đáp án đọc đánh vần (gạch nối)", () => {
+    const parts = splitByAnswerMatches("Yes, it's H-A-R-D-I-E.", ["Hardie"]);
+    expect(parts.some((p) => p.match && p.text === "H-A-R-D-I-E")).toBe(true);
+  });
+
+  it("tô đáp án đọc đánh vần (khoảng trắng)", () => {
+    const parts = splitByAnswerMatches("spelt H A R D I E ok", ["Hardie"]);
+    expect(parts.some((p) => p.match && p.text === "H A R D I E")).toBe(true);
+  });
+
+  it("không tô cách viết sai gây nhiễu (không khớp mờ)", () => {
+    const parts = splitByAnswerMatches("Louisa: Hardy.", ["Hardie"]);
+    expect(parts.every((p) => !p.match)).toBe(true);
+  });
+
+  it("không tô bừa đáp án 2 ký tự vào chuỗi có dấu ngăn cách", () => {
+    const parts = splitByAnswerMatches("wear a t-shirt", ["at"]);
+    expect(parts.every((p) => !p.match)).toBe(true);
+  });
 });
 
 describe("fillSourceBlanks", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { deriveAnswerEvidence, splitByAnswerMatches } from "@/lib/answer-evidence";
+import { deriveAnswerEvidence, splitByAnswerMatches, fillSourceBlanks } from "@/lib/answer-evidence";
 
 describe("deriveAnswerEvidence", () => {
   const passage =
@@ -55,5 +55,42 @@ describe("splitByAnswerMatches", () => {
     expect(splitByAnswerMatches("See paragraph B.", ["B a laser technique"])).toEqual([
       { text: "See paragraph B.", match: false }
     ]);
+  });
+
+  it("khớp linh hoạt khoảng trắng: đáp án không cách khớp bản có cách", () => {
+    const parts = splitByAnswerMatches("Postcode GT8 2LC here.", ["GT82LC"]);
+    expect(parts).toEqual([
+      { text: "Postcode ", match: false },
+      { text: "GT8 2LC", match: true },
+      { text: " here.", match: false }
+    ]);
+  });
+
+  it("khớp linh hoạt khoảng trắng: đáp án có cách khớp bản không cách", () => {
+    const parts = splitByAnswerMatches("Code GT82LC done.", ["GT8 2LC"]);
+    expect(parts).toEqual([
+      { text: "Code ", match: false },
+      { text: "GT82LC", match: true },
+      { text: " done.", match: false }
+    ]);
+  });
+
+  it("chọn biến thể đáp án xuất hiện trong text", () => {
+    const parts = splitByAnswerMatches("I am John Peterson here.", ["John Petterson", "John Peterson"]);
+    expect(parts.some((p) => p.match && p.text === "John Peterson")).toBe(true);
+  });
+});
+
+describe("fillSourceBlanks", () => {
+  it("thay [[n]] bằng đáp án đúng của câu order n", () => {
+    expect(fillSourceBlanks("The [[1]] is hot.", { 1: "core" })).toBe("The core is hot.");
+  });
+
+  it("thiếu đáp án -> ____", () => {
+    expect(fillSourceBlanks("A [[2]] b", {})).toBe("A ____ b");
+  });
+
+  it("không có blank -> giữ nguyên", () => {
+    expect(fillSourceBlanks("No blanks here", { 1: "x" })).toBe("No blanks here");
   });
 });

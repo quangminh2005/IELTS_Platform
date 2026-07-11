@@ -46,8 +46,22 @@ export function deriveAnswerEvidence(
   return null;
 }
 
+// Ghép mẫu regex khớp đáp án linh hoạt khoảng trắng: bỏ khoảng trắng trong đáp án,
+// nối từng ký tự bằng \s* để khớp cả bản có cách lẫn không cách ("GT82LC" ↔ "GT8 2LC").
+function flexiblePattern(answer: string): string {
+  const chars = answer
+    .replace(/\s+/g, "")
+    .split("")
+    .map(escapeRegExp);
+  if (chars.length === 0) {
+    return "";
+  }
+  return `\\b${chars.join("\\s*")}\\b`;
+}
+
 // Tách text thành các đoạn { text, match } — phần match=true là chỗ trùng đáp án
-// nguyên văn (để bọc gạch chân). Không tìm thấy -> trả nguyên text (match=false).
+// (khớp linh hoạt khoảng trắng, không phân biệt hoa/thường). Không có đáp án nào
+// khớp -> trả nguyên text (match=false).
 export function splitByAnswerMatches(
   text: string,
   answers: string[]
@@ -55,13 +69,15 @@ export function splitByAnswerMatches(
   const candidates = answers
     .map((answer) => answer.trim())
     .filter(Boolean)
-    .sort((a, b) => b.length - a.length);
+    // Ưu tiên đáp án dài hơn (tính theo số ký tự không kể khoảng trắng).
+    .sort((a, b) => b.replace(/\s+/g, "").length - a.replace(/\s+/g, "").length);
 
-  if (candidates.length === 0) {
+  const patterns = candidates.map(flexiblePattern).filter(Boolean);
+  if (patterns.length === 0) {
     return [{ text, match: false }];
   }
 
-  const combined = new RegExp(`\\b(${candidates.map(escapeRegExp).join("|")})\\b`, "gi");
+  const combined = new RegExp(patterns.join("|"), "gi");
 
   const parts: Array<{ text: string; match: boolean }> = [];
   let lastIndex = 0;
@@ -83,4 +99,16 @@ export function splitByAnswerMatches(
   }
 
   return parts.length > 0 ? parts : [{ text, match: false }];
+}
+
+// Thay [[n]] trong nguồn (bài đọc/transcript) bằng đáp án đúng của câu order=n để đọc
+// liền mạch; thiếu đáp án -> "____". Không có [[n]] -> trả nguyên nguồn.
+export function fillSourceBlanks(
+  source: string,
+  answersByOrder: Record<number, string>
+): string {
+  return source.replace(/\[\[(\d+)\]\]/g, (_match, n) => {
+    const answer = answersByOrder[Number(n)];
+    return answer && answer.trim() ? answer : "____";
+  });
 }

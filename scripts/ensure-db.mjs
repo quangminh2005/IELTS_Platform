@@ -6,6 +6,9 @@ import { PrismaClient } from "@prisma/client";
 
 const statements = [
   'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "transcript" TEXT;',
+  // Giải thích/dẫn chứng đáp án cho Listening & Reading
+  'ALTER TABLE "Question" ADD COLUMN IF NOT EXISTS "answerEvidence" TEXT;',
+  'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "evidenceSnapshot" TEXT;',
   'ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "image" TEXT;',
   'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "weeklyGoal" INTEGER;',
   'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "partTimesJson" TEXT;',

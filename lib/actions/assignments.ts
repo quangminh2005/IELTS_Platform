@@ -264,12 +264,7 @@ export async function deleteAssignment(formData: FormData) {
       teacherId: teacher.id
     },
     select: {
-      id: true,
-      recipients: {
-        select: {
-          _count: { select: { attempts: true } }
-        }
-      }
+      id: true
     }
   });
 
@@ -277,17 +272,8 @@ export async function deleteAssignment(formData: FormData) {
     redirect(assignmentNoticePath("error", "Không tìm thấy bài tập này."));
   }
 
-  const hasAttempts = assignment.recipients.some((recipient) => recipient._count.attempts > 0);
-
-  if (hasAttempts) {
-    redirect(
-      assignmentNoticePath(
-        "error",
-        "Không thể xoá bài này vì đã có học viên bắt đầu làm hoặc đã nộp."
-      )
-    );
-  }
-
+  // Cho phép xoá kể cả khi học viên đã bắt đầu làm hoặc đã nộp —
+  // các attempt/answer sẽ tự động bị xoá theo (onDelete: Cascade trong schema).
   await prisma.assignment.delete({
     where: { id: assignment.id }
   });

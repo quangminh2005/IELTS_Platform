@@ -121,6 +121,10 @@ export function AssignmentList({
             const fullySubmitted =
               assignment.recipientCount > 0 &&
               assignment.submittedCount >= assignment.recipientCount;
+            const deleteConfirmMessage =
+              assignment.submittedCount > 0
+                ? `Xoá bài giao "${assignment.title}"?\n\nĐã có ${assignment.submittedCount} học viên nộp bài — toàn bộ bài làm và kết quả của họ sẽ bị xoá vĩnh viễn và KHÔNG thể khôi phục.\n\nBạn chắc chắn muốn xoá?`
+                : `Xoá bài giao "${assignment.title}"? Không thể hoàn tác.`;
 
             return (
               <article key={assignment.id} className="px-5 py-4">
@@ -266,7 +270,7 @@ export function AssignmentList({
                       <button className={secondaryButtonClass}>Lưu bài giao</button>
                       <ConfirmSubmitButton
                         formAction={deleteAssignment}
-                        confirmMessage={`Xoá bài giao "${assignment.title}"? Không thể hoàn tác.`}
+                        confirmMessage={deleteConfirmMessage}
                         className={dangerButtonClass}
                       >
                         Xoá bài giao

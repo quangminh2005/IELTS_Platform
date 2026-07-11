@@ -70,7 +70,8 @@ export default async function StudentResultPage({ params, searchParams }: Result
             select: {
               title: true,
               skill: true,
-              transcript: true
+              transcript: true,
+              content: true
             }
           },
           annotations: {

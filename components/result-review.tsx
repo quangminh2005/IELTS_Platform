@@ -1,8 +1,7 @@
-import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
-import { splitByAnswerMatches } from "@/lib/answer-evidence";
+import { type Annotation } from "@/components/annotated-answer";
+import { ResultAnswers, type ResultPart } from "@/components/result-answers";
 import { bandsBySkill, formatBand } from "@/lib/band-score";
 import { formatDuration } from "@/lib/format-duration";
-import { isAudioUrl } from "@/lib/question-interactions";
 
 type Highlight = {
   id: string;
@@ -14,6 +13,7 @@ type Highlight = {
 
 type Answer = {
   id: string;
+  assignableUnitId: string;
   value: string;
   isCorrect: boolean | null;
   pointsAwarded: number | null;
@@ -30,6 +30,7 @@ type Answer = {
     title: string;
     skill: string;
     transcript?: string | null;
+    content?: string | null;
   };
 };
 
@@ -81,54 +82,12 @@ function parseCriteria(json: string | null): Array<{ label: string; value: numbe
   }
 }
 
-function correctnessLabel(value: boolean | null) {
-  if (value === true) {
-    return "Đúng";
-  }
-
-  if (value === false) {
-    return "Sai";
-  }
-
-  return "Chờ chấm";
-}
-
-function correctnessClass(value: boolean | null) {
-  if (value === true) {
-    return "border-emerald-400/50 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300";
-  }
-
-  if (value === false) {
-    return "border-red-400/50 bg-red-500/10 text-red-600 dark:text-red-300";
-  }
-
-  return "border-accent/50 bg-accent/10 text-accent-foreground dark:text-accent";
-}
-
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
   submitted: "Đã nộp",
   in_progress: "Đang làm",
   not_started: "Chưa làm"
 };
-
-// Hiển thị text và gạch chân phần trùng đáp án nguyên văn.
-function UnderlinedEvidence({ text, answers }: { text: string; answers: string[] }) {
-  const parts = splitByAnswerMatches(text, answers);
-  return (
-    <>
-      {parts.map((part, index) =>
-        part.match ? (
-          <u key={index} className="font-semibold decoration-emerald-500 decoration-2">
-            {part.text}
-          </u>
-        ) : (
-          <span key={index}>{part.text}</span>
-        )
-      )}
-    </>
-  );
-}
 
 export function ResultReview({ attempt, skillTimes }: ResultReviewProps) {
   const percentage =
@@ -152,6 +111,59 @@ export function ResultReview({ attempt, skillTimes }: ResultReviewProps) {
 
   const review = attempt.review;
   const criteriaRows = parseCriteria(review?.criteriaScoresJson ?? null);
+
+  // Gom đáp án theo từng part (assignableUnit), giữ thứ tự xuất hiện. Nguồn cột trái:
+  // Listening = transcript, Reading = content, còn lại = null (hiện một cột).
+  const partMap = new Map<string, ResultPart>();
+  for (const answer of attempt.answers) {
+    const unit = answer.assignableUnit;
+    let part = partMap.get(answer.assignableUnitId);
+    if (!part) {
+      const sourceText =
+        unit.skill === "listening"
+          ? unit.transcript ?? null
+          : unit.skill === "reading"
+            ? unit.content ?? null
+            : null;
+      part = {
+        unitId: answer.assignableUnitId,
+        title: unit.title,
+        skill: unit.skill,
+        sourceText,
+        answers: [],
+        answerStrings: [],
+        answersByOrder: {},
+        minOrder: null,
+        maxOrder: null
+      };
+      partMap.set(answer.assignableUnitId, part);
+    }
+    part.answers.push({
+      id: answer.id,
+      order: answer.question?.order ?? null,
+      prompt: answer.question?.prompt ?? null,
+      points: answer.question?.points ?? null,
+      value: answer.value,
+      isCorrect: answer.isCorrect,
+      pointsAwarded: answer.pointsAwarded,
+      correctAnswerSnapshot: answer.correctAnswerSnapshot,
+      explanationSnapshot: answer.explanationSnapshot,
+      annotations: answer.annotations
+    });
+    const corrects = answer.correctAnswerSnapshot
+      ? answer.correctAnswerSnapshot.split(" | ")
+      : [];
+    part.answerStrings.push(...corrects);
+    if (answer.question) {
+      const order = answer.question.order;
+      if (corrects[0]) {
+        part.answersByOrder[order] = corrects[0];
+      }
+      part.minOrder = part.minOrder === null ? order : Math.min(part.minOrder, order);
+      part.maxOrder = part.maxOrder === null ? order : Math.max(part.maxOrder, order);
+    }
+  }
+  const parts = [...partMap.values()];
 
   return (
     <div className="space-y-6">
@@ -242,159 +254,7 @@ export function ResultReview({ attempt, skillTimes }: ResultReviewProps) {
         </article>
       </section>
 
-      <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-        <div className="border-b border-border px-5 py-4">
-          <h3 className="text-base font-semibold">Đáp án</h3>
-        </div>
-        <div className="divide-y divide-border">
-          {attempt.answers.length > 0 ? (
-            attempt.answers.map((answer) => (
-              <article key={answer.id} className="px-5 py-5">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">{answer.assignableUnit.title}</p>
-                    <h4 className="mt-1 font-semibold">
-                      {answer.question ? `Câu ${answer.question.order}` : "Câu chưa liên kết"}
-                    </h4>
-                    {answer.question ? (
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                        {answer.question.prompt}
-                      </p>
-                    ) : null}
-                  </div>
-                  <span
-                    className={`rounded-full border px-3 py-1 text-xs font-medium ${correctnessClass(
-                      answer.isCorrect
-                    )}`}
-                  >
-                    {correctnessLabel(answer.isCorrect)}
-                  </span>
-                </div>
-
-                <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
-                  <div className="rounded-lg border border-border bg-muted/60 p-3">
-                    <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                      Bạn trả lời
-                    </dt>
-                    <dd className="mt-2">
-                      {answer.value ? (
-                        isAudioUrl(answer.value) ? (
-                          <audio controls src={answer.value} className="w-full" preload="metadata">
-                            <track kind="captions" />
-                          </audio>
-                        ) : (
-                          <AnnotatedAnswer text={answer.value} annotations={answer.annotations} />
-                        )
-                      ) : (
-                        <span className="whitespace-pre-wrap">Bỏ trống</span>
-                      )}
-                    </dd>
-                  </div>
-                  <div className="rounded-lg border border-emerald-400/30 bg-emerald-500/5 p-3">
-                    <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                      Đáp án đúng
-                    </dt>
-                    <dd className="mt-2 whitespace-pre-wrap">
-                      {answer.correctAnswerSnapshot || "Không có"}
-                    </dd>
-                  </div>
-                </dl>
-
-                {answer.explanationSnapshot ? (
-                  <div className="mt-3 rounded-lg border border-border bg-muted/60 p-3 text-sm">
-                    <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                      Giải thích
-                    </p>
-                    <p className="mt-2 leading-6">{answer.explanationSnapshot}</p>
-                  </div>
-                ) : null}
-
-                {answer.evidenceSnapshot ? (
-                  <div className="mt-3 rounded-lg border border-emerald-400/30 bg-emerald-500/5 p-3 text-sm">
-                    <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                      Dẫn chứng (đoạn chứa đáp án)
-                    </p>
-                    <p className="mt-2 leading-6">
-                      <UnderlinedEvidence
-                        text={answer.evidenceSnapshot}
-                        answers={
-                          answer.correctAnswerSnapshot
-                            ? answer.correctAnswerSnapshot.split(" | ")
-                            : []
-                        }
-                      />
-                    </p>
-                  </div>
-                ) : null}
-
-                <p className="mt-3 text-sm text-muted-foreground">
-                  {answer.isCorrect === null ? (
-                    "Chờ giáo viên chấm"
-                  ) : (
-                    <>
-                      Điểm: {answer.pointsAwarded ?? 0}
-                      {answer.question ? ` / ${answer.question.points}` : ""}
-                    </>
-                  )}
-                </p>
-              </article>
-            ))
-          ) : (
-            <p className="px-5 py-8 text-sm text-muted-foreground">
-              Chưa có đáp án nào cho lần làm bài này.
-            </p>
-          )}
-        </div>
-      </section>
-
-      {(() => {
-        // Gom transcript theo từng part Listening (unit có transcript). Mỗi part
-        // hiện 1 lần, gạch chân các đáp án nguyên văn trong toàn bộ transcript.
-        const listeningUnits = new Map<
-          string,
-          { title: string; transcript: string; answers: string[] }
-        >();
-        attempt.answers.forEach((answer) => {
-          if (answer.assignableUnit.skill !== "listening" || !answer.assignableUnit.transcript) {
-            return;
-          }
-          const key = answer.assignableUnit.title;
-          const entry =
-            listeningUnits.get(key) ??
-            {
-              title: answer.assignableUnit.title,
-              transcript: answer.assignableUnit.transcript,
-              answers: []
-            };
-          if (answer.correctAnswerSnapshot) {
-            entry.answers.push(...answer.correctAnswerSnapshot.split(" | "));
-          }
-          listeningUnits.set(key, entry);
-        });
-        const units = [...listeningUnits.values()];
-        if (units.length === 0) {
-          return null;
-        }
-        return (
-          <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-            <div className="border-b border-border px-5 py-4">
-              <h3 className="text-base font-semibold">Transcript</h3>
-            </div>
-            <div className="divide-y divide-border">
-              {units.map((unit) => (
-                <details key={unit.title} className="px-5 py-4">
-                  <summary className="cursor-pointer text-sm font-semibold text-primary">
-                    Xem full transcript — {unit.title}
-                  </summary>
-                  <p className="mt-3 whitespace-pre-wrap text-sm leading-7">
-                    <UnderlinedEvidence text={unit.transcript} answers={unit.answers} />
-                  </p>
-                </details>
-              ))}
-            </div>
-          </section>
-        );
-      })()}
+      <ResultAnswers parts={parts} />
 
       {attempt.highlights.length > 0 ? (
         <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">

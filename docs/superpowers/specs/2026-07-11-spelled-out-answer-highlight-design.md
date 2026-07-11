@@ -29,15 +29,21 @@ mẫu `flexiblePattern`: các ký tự (bỏ khoảng trắng) nối bằng `\s*
 
 ## Kiến trúc
 
-Chỉ sửa `lib/answer-evidence.ts`, hàm `splitByAnswerMatches`:
+Chỉ sửa `lib/answer-evidence.ts`, hàm `splitByAnswerMatches` — gộp việc dựng mẫu
+vào một helper `answerPatterns(answer)` sinh tối đa 3 mẫu, mỗi mẫu có điều kiện áp
+dụng riêng để không tô bừa:
 
-- Thêm helper `spelledPattern(answer: string): string` — lấy các ký tự chữ-số của
-  đáp án; nếu < 3 ký tự trả `""` (bỏ qua); nếu không, trả
-  `\b<c1>[-.\s]<c2>[-.\s]...<cn>\b` (dấu ngăn cách **bắt buộc** giữa mỗi cặp).
-- Với mỗi đáp án, đưa **cả hai** mẫu vào regex tổng: `flexiblePattern(a)` và
-  `spelledPattern(a)` (bỏ mẫu rỗng). Giữ nguyên phần còn lại (sort theo độ dài,
-  cờ `gi`, vòng lặp `exec`, chống vòng lặp vô hạn).
-- `flexiblePattern`, `deriveAnswerEvidence`, `fillSourceBlanks` giữ nguyên.
+1. **Khớp thường** (mọi đáp án): nguyên văn, khoảng trắng trong đáp án nới thành `\s+`.
+2. **Khớp linh hoạt khoảng trắng** (chỉ đáp án "mã" lẫn chữ VÀ số): nối ký tự bằng
+   `\s*` — `GT82LC` ↔ `GT8 2LC`. Không áp dụng đáp án thuần chữ/thuần số (tránh "at"
+   khớp "a t-shirt").
+3. **Khớp đọc đánh vần** (đáp án ≥ 3 ký tự chữ-số): nối ký tự bằng dấu ngăn cách
+   **bắt buộc** `[-.\s]` — `Hardie` ↔ `H-A-R-D-I-E`.
+
+`splitByAnswerMatches` dùng `candidates.flatMap(answerPatterns)`; giữ nguyên phần
+còn lại (sort theo độ dài, cờ `gi`, vòng lặp `exec`, chống vòng lặp vô hạn). Thay
+`flexiblePattern` cũ bằng `answerPatterns`. `deriveAnswerEvidence`, `fillSourceBlanks`
+giữ nguyên.
 
 Chữ ký `splitByAnswerMatches(text, answers)` không đổi → `result-answers.tsx` không
 cần sửa.

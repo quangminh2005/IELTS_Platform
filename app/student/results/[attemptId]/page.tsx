@@ -149,9 +149,9 @@ export default async function StudentResultPage({ params, searchParams }: Result
     : attempt;
 
   return (
-    // Trang kết quả chiếm trọn màn hình (giống chin.edu.vn): phủ lên cả sidebar bằng
-    // overlay cố định, dùng hết chiều ngang để cột transcript / đáp án rộng rãi.
-    <div className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background">
+    // Trang kết quả chạy toàn màn hình (giống chin.edu.vn) — AppShell đã bỏ sidebar
+    // + khung max-w cho route /results/, ở đây chỉ cần dùng hết chiều ngang.
+    <div className="flex min-h-screen flex-col bg-background">
       {!skillFilter ? (
         <SubmitCelebration
           scorePercent={attempt.scorePercent}

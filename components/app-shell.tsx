@@ -203,6 +203,14 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
     };
   }, [mobileOpen]);
 
+  // Trang kết quả chạy toàn màn hình như chin.edu.vn: bỏ sidebar + bỏ khung
+  // max-w để dùng hết chiều ngang. Không bọc trong `animate-fade-in` vì lớp này
+  // tạo transform → phá vỡ position:fixed của các overlay con bên trong trang.
+  const isFullScreen = pathname.includes("/results/");
+  if (isFullScreen) {
+    return <div className="min-h-screen bg-background">{children}</div>;
+  }
+
   return (
     <div className="min-h-screen">
       {/* Thanh trên cùng cho điện thoại / máy tính bảng */}

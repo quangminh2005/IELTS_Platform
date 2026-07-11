@@ -87,9 +87,9 @@ export default async function TeacherResultPage({ params }: ResultPageProps) {
   const skillTimes = skillTimesFromParts(attempt.partTimesJson, unitSkills);
 
   return (
-    // Trang kết quả chiếm trọn màn hình (giống chin.edu.vn): phủ lên cả sidebar bằng
-    // overlay cố định, dùng hết chiều ngang để cột transcript / đáp án rộng rãi.
-    <div className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background">
+    // Trang kết quả chạy toàn màn hình (giống chin.edu.vn) — AppShell đã bỏ sidebar
+    // + khung max-w cho route /results/, ở đây chỉ cần dùng hết chiều ngang.
+    <div className="flex min-h-screen flex-col bg-background">
       {/* Thanh trên cùng dính, gọn — tiêu đề + học viên + nút quay lại */}
       <header className="sticky top-0 z-10 border-b border-border bg-card/85 px-4 py-3 backdrop-blur sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">

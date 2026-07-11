@@ -57,6 +57,8 @@ type ResultReviewProps = {
   };
   // Thời gian làm bài theo kỹ năng (skill -> số giây). Bài cũ không có dữ liệu này.
   skillTimes?: Record<string, number>;
+  // Đẩy sticky của cột transcript xuống dưới thanh trên cùng (trang toàn màn hình).
+  sourceStickyTopClass?: string;
 };
 
 const CRITERIA_LABELS: Record<string, string> = {
@@ -89,7 +91,7 @@ const STATUS_LABELS: Record<string, string> = {
   not_started: "Chưa làm"
 };
 
-export function ResultReview({ attempt, skillTimes }: ResultReviewProps) {
+export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: ResultReviewProps) {
   const percentage =
     attempt.scorePercent !== null ? `${Math.round(attempt.scorePercent)}%` : "—";
   const statusLabel =
@@ -254,7 +256,7 @@ export function ResultReview({ attempt, skillTimes }: ResultReviewProps) {
         </article>
       </section>
 
-      <ResultAnswers parts={parts} />
+      <ResultAnswers parts={parts} stickyTopClass={sourceStickyTopClass} />
 
       {attempt.highlights.length > 0 ? (
         <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">

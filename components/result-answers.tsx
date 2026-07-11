@@ -131,7 +131,16 @@ function AnswerCard({ answer }: { answer: PartAnswer }) {
   );
 }
 
-export function ResultAnswers({ parts }: { parts: ResultPart[] }) {
+export function ResultAnswers({
+  parts,
+  // Khoảng cách sticky của cột transcript so với đỉnh khung cuộn. Trang kết quả
+  // học viên chạy toàn màn hình + có thanh trên cùng dính nên cần đẩy xuống để
+  // không bị thanh đó che; trang giáo viên giữ mặc định.
+  stickyTopClass = "lg:top-4"
+}: {
+  parts: ResultPart[];
+  stickyTopClass?: string;
+}) {
   const [active, setActive] = useState(0);
 
   if (parts.length === 0) {
@@ -188,7 +197,9 @@ export function ResultAnswers({ parts }: { parts: ResultPart[] }) {
               </p>
             </details>
             {/* Desktop: cột trái dính, cuộn riêng */}
-            <div className="hidden overflow-hidden rounded-xl border border-border bg-card shadow-card lg:block lg:sticky lg:top-4 lg:max-h-[75vh] lg:self-start lg:overflow-auto">
+            <div
+              className={`hidden overflow-hidden rounded-xl border border-border bg-card shadow-card lg:block lg:sticky lg:max-h-[75vh] lg:self-start lg:overflow-auto ${stickyTopClass}`}
+            >
               <div className="border-b border-border px-5 py-3 text-sm font-semibold">
                 {sourceLabel}
               </div>

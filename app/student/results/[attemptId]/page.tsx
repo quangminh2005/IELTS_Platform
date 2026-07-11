@@ -149,7 +149,9 @@ export default async function StudentResultPage({ params, searchParams }: Result
     : attempt;
 
   return (
-    <div className="space-y-8">
+    // Trang kết quả chiếm trọn màn hình (giống chin.edu.vn): phủ lên cả sidebar bằng
+    // overlay cố định, dùng hết chiều ngang để cột transcript / đáp án rộng rãi.
+    <div className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background">
       {!skillFilter ? (
         <SubmitCelebration
           scorePercent={attempt.scorePercent}
@@ -157,38 +159,49 @@ export default async function StudentResultPage({ params, searchParams }: Result
           dominantSkill={dominantSkill}
         />
       ) : null}
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-sm font-semibold text-primary">
-            {skillFilter ? `Kết quả kỹ năng ${skillLabel}` : "Kết quả"}
-          </p>
-          <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-            {attempt.assignmentRecipient.assignment.title}
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            Xem lại đáp án của bạn, điểm số, lời giải thích và các đoạn đã tô.
-          </p>
-          <SkillTimeSummary skillTimes={skillTimes} className="mt-2 text-sm text-muted-foreground" />
-        </div>
-        <div className="flex w-fit flex-col items-end gap-2">
-          {skillFilter ? (
+
+      {/* Thanh trên cùng dính, gọn — tiêu đề + thời gian + nút quay lại */}
+      <header className="sticky top-0 z-10 border-b border-border bg-card/85 px-4 py-3 backdrop-blur sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+          <div className="min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+              {skillFilter ? `Kết quả kỹ năng ${skillLabel}` : "Kết quả"}
+            </p>
+            <h2 className="mt-0.5 truncate text-lg font-bold tracking-tight sm:text-xl">
+              {attempt.assignmentRecipient.assignment.title}
+            </h2>
+            <SkillTimeSummary
+              skillTimes={skillTimes}
+              className="mt-1 text-xs text-muted-foreground"
+            />
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            {skillFilter ? (
+              <Link
+                href={`/student/assignments/${attempt.assignmentRecipientId}`}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+              >
+                ‹ Về chọn kỹ năng
+              </Link>
+            ) : null}
             <Link
-              href={`/student/assignments/${attempt.assignmentRecipientId}`}
-              className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+              href="/student/history"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
             >
-              ‹ Về chọn kỹ năng
+              ← Về lịch sử
             </Link>
-          ) : null}
-          <Link
-            href="/student/history"
-            className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
-          >
-            ← Về lịch sử
-          </Link>
+          </div>
         </div>
       </header>
 
-      <ResultReview attempt={reviewAttempt} skillTimes={skillTimes} />
+      {/* Nội dung dùng hết chiều ngang màn hình */}
+      <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
+        <ResultReview
+          attempt={reviewAttempt}
+          skillTimes={skillTimes}
+          sourceStickyTopClass="lg:top-[88px]"
+        />
+      </main>
     </div>
   );
 }

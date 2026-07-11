@@ -87,28 +87,45 @@ export default async function TeacherResultPage({ params }: ResultPageProps) {
   const skillTimes = skillTimesFromParts(attempt.partTimesJson, unitSkills);
 
   return (
-    <div className="space-y-8">
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-sm font-semibold text-primary">Kết quả học viên</p>
-          <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-            {attempt.assignmentRecipient.assignment.title}
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {attempt.student.displayName} ({attempt.student.email}) · ⏱ Thời gian làm:{" "}
-            {formatDuration(attempt.elapsedSeconds)}
-          </p>
-          <SkillTimeSummary skillTimes={skillTimes} className="mt-1 text-sm text-muted-foreground" />
+    // Trang kết quả chiếm trọn màn hình (giống chin.edu.vn): phủ lên cả sidebar bằng
+    // overlay cố định, dùng hết chiều ngang để cột transcript / đáp án rộng rãi.
+    <div className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background">
+      {/* Thanh trên cùng dính, gọn — tiêu đề + học viên + nút quay lại */}
+      <header className="sticky top-0 z-10 border-b border-border bg-card/85 px-4 py-3 backdrop-blur sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+          <div className="min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+              Kết quả học viên
+            </p>
+            <h2 className="mt-0.5 truncate text-lg font-bold tracking-tight sm:text-xl">
+              {attempt.assignmentRecipient.assignment.title}
+            </h2>
+            <p className="mt-1 truncate text-xs text-muted-foreground">
+              {attempt.student.displayName} ({attempt.student.email}) · ⏱ Thời gian làm:{" "}
+              {formatDuration(attempt.elapsedSeconds)}
+            </p>
+            <SkillTimeSummary
+              skillTimes={skillTimes}
+              className="mt-1 text-xs text-muted-foreground"
+            />
+          </div>
+          <Link
+            href="/teacher/calendar"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+          >
+            ← Về Lịch giao bài
+          </Link>
         </div>
-        <Link
-          href="/teacher/calendar"
-          className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
-        >
-          ← Về Lịch giao bài
-        </Link>
       </header>
 
-      <ResultReview attempt={attempt} skillTimes={skillTimes} />
+      {/* Nội dung dùng hết chiều ngang màn hình */}
+      <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
+        <ResultReview
+          attempt={attempt}
+          skillTimes={skillTimes}
+          sourceStickyTopClass="lg:top-[104px]"
+        />
+      </main>
     </div>
   );
 }

@@ -417,6 +417,32 @@ export async function saveAttemptDraft(formData: FormData) {
         ]
       : [];
 
+  // Heartbeat thời gian làm thực: ghi vào AttemptSkill.elapsedSeconds của kỹ năng
+  // đang mở. Chỉ tăng (max) để nhịp lỗi/nhiều tab không kéo lùi; bỏ qua kỹ năng đã nộp.
+  const draftSkill = String(formData.get("skill") ?? "").trim();
+  const draftElapsed = Number(formData.get("elapsedSeconds"));
+  const skillRowForElapsed =
+    draftSkill && Number.isFinite(draftElapsed) && draftElapsed >= 0
+      ? await prisma.attemptSkill.findUnique({
+          where: { attemptId_skill: { attemptId: attempt.id, skill: draftSkill } },
+          select: { elapsedSeconds: true, status: true }
+        })
+      : null;
+  const skillElapsedUpdate =
+    skillRowForElapsed && skillRowForElapsed.status !== "submitted"
+      ? [
+          prisma.attemptSkill.updateMany({
+            where: { attemptId: attempt.id, skill: draftSkill, status: { not: "submitted" } },
+            data: {
+              elapsedSeconds: Math.max(
+                skillRowForElapsed.elapsedSeconds,
+                Math.floor(draftElapsed)
+              )
+            }
+          })
+        ]
+      : [];
+
   await prisma.$transaction([
     prisma.answer.deleteMany({
       where: {
@@ -427,7 +453,8 @@ export async function saveAttemptDraft(formData: FormData) {
     ...(draftRows.length > 0
       ? [prisma.answer.createMany({ data: draftRows })]
       : []),
-    ...partTimesUpdate
+    ...partTimesUpdate,
+    ...skillElapsedUpdate
   ]);
 }
 

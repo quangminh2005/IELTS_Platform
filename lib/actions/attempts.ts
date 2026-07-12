@@ -9,6 +9,8 @@ import { gradeAttempt } from "@/lib/grading";
 import { gradeUnits } from "@/lib/attempt-grading";
 import { allSkillsSubmitted, orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
 import { sanitizePartTimesJson } from "@/lib/skill-times";
+import { parseSkillTimeLimits } from "@/lib/skill-parse";
+import { isSkillTimeUp, skillBudgetSeconds } from "@/lib/active-time";
 import { prisma } from "@/lib/prisma";
 
 const highlightSchema = z.object({
@@ -200,11 +202,6 @@ export async function submitSkill(formData: FormData) {
   if (!parsed.success) {
     throw new Error(parsed.error.issues[0]?.message ?? "Dữ liệu nộp không hợp lệ.");
   }
-  // Giữ chính sách: bỏ qua auto-timeout.
-  if (parsed.data.submitReason === "auto_timeout") {
-    return;
-  }
-
   const attempt = await prisma.attempt.findFirst({
     where: { id: parsed.data.attemptId, studentId: student.id },
     include: {
@@ -240,6 +237,29 @@ export async function submitSkill(formData: FormData) {
     }));
   if (skillRow?.status === "submitted") {
     redirect(`/student/results/${attempt.id}?skill=${parsed.data.skill}`);
+  }
+
+  // Tự động nộp khi hết giờ: chỉ chấp nhận khi kỹ năng THẬT SỰ đã dùng hết ngân
+  // sách thời gian (chống nộp non do client lỗi). Speaking không bao giờ tự nộp.
+  if (parsed.data.submitReason === "auto_timeout") {
+    if (parsed.data.skill === "speaking") {
+      return;
+    }
+    const assignment = attempt.assignmentRecipient.assignment;
+    const isMultiSkill = orderedSkillsOfAssignment(assignment.units).length > 1;
+    const budget = skillBudgetSeconds(
+      parsed.data.skill,
+      parseSkillTimeLimits(assignment.skillTimeLimitsJson),
+      isMultiSkill,
+      assignment.timeLimitMinutes
+    );
+    if (budget == null) {
+      return; // kỹ năng không giới hạn giờ → không tự nộp.
+    }
+    const elapsed = Math.max(parsed.data.elapsedSeconds, skillRow?.elapsedSeconds ?? 0);
+    if (!isSkillTimeUp(elapsed, budget)) {
+      return; // client gửi nhầm lúc chưa hết giờ.
+    }
   }
 
   const allUnits = attempt.assignmentRecipient.assignment.units;

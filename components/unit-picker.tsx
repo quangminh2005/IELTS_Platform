@@ -1,3 +1,5 @@
+import { UnitPickerTest } from "@/components/unit-picker-test";
+
 export type UnitPickerUnit = {
   id: string;
   title: string;
@@ -175,52 +177,18 @@ export function UnitPicker({ materials, selectedUnitIds, compact = false }: Unit
                     <div className="space-y-2 border-t border-border/70 p-2">
                       {skillNode.tests.map((test) => {
                         const material = test.material;
-                        const testSelected = material.units.filter((unit) =>
-                          selected.has(unit.id)
-                        ).length;
+                        const testSelectedIds = material.units
+                          .filter((unit) => selected.has(unit.id))
+                          .map((unit) => unit.id);
 
                         return (
-                          <details
+                          <UnitPickerTest
                             key={material.id}
-                            open={testSelected > 0}
-                            className="rounded-md border border-border/60 bg-background/60"
-                          >
-                            <summary className="flex cursor-pointer items-center justify-between gap-2 px-3 py-2 text-sm">
-                              <span>
-                                <span className="block font-medium">{test.label}</span>
-                                <span className="mt-0.5 block text-xs text-muted-foreground">
-                                  {material.units.length} phần
-                                </span>
-                              </span>
-                              {selectedBadge(testSelected)}
-                            </summary>
-
-                            <div className="divide-y divide-border border-t border-border/60">
-                              {material.units.map((unit) => (
-                                <label
-                                  key={unit.id}
-                                  className={`flex gap-3 px-3 text-sm ${padY}`}
-                                >
-                                  <input
-                                    name="unitIds"
-                                    value={unit.id}
-                                    type="checkbox"
-                                    defaultChecked={selected.has(unit.id)}
-                                    className="mt-1 h-4 w-4 rounded border-border accent-primary"
-                                  />
-                                  <span>
-                                    <span className="block font-medium">{unit.title}</span>
-                                    <span className="mt-1 block text-xs capitalize text-muted-foreground">
-                                      Phần {unit.unitNumber} · {formatLabel(unit.unitType)}
-                                      {unit.defaultTimeLimitMinutes
-                                        ? ` · ${unit.defaultTimeLimitMinutes} phút`
-                                        : ""}
-                                    </span>
-                                  </span>
-                                </label>
-                              ))}
-                            </div>
-                          </details>
+                            label={test.label}
+                            units={material.units}
+                            selectedUnitIds={testSelectedIds}
+                            padY={padY}
+                          />
                         );
                       })}
                     </div>

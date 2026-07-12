@@ -22,6 +22,7 @@ import { HighlightLayer, type HighlightPayload } from "@/components/highlight-la
 import { SkillPicker } from "@/components/skill-picker";
 import { orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
+import { accumulateActiveSeconds, AUTO_SUBMIT_SKILLS } from "@/lib/active-time";
 import { parsePartTimes, SKILL_TIME_LABELS } from "@/lib/skill-times";
 import { AudioPlayer } from "@/components/audio-player";
 import { AudioRecorderAnswer } from "@/components/audio-recorder-answer";
@@ -98,7 +99,12 @@ type AttemptWorkspaceProps = {
   multiSelectGroups: MultiSelectGroup[];
   // Hàng AttemptSkill (kỹ năng + trạng thái + mốc bắt đầu) để dựng màn chọn kỹ
   // năng và đồng hồ theo kỹ năng. Rỗng ở chế độ xem trước của giáo viên.
-  attemptSkills?: Array<{ skill: string; status: string; startedAt: string | Date | null }>;
+  attemptSkills?: Array<{
+    skill: string;
+    status: string;
+    startedAt: string | Date | null;
+    elapsedSeconds: number;
+  }>;
   // Chế độ giáo viên xem trước giao diện làm bài: KHÔNG lưu nháp, KHÔNG ghi
   // highlight vào DB, nút "Nộp bài" chỉ đóng lại (không chấm điểm).
   previewMode?: boolean;
@@ -1366,25 +1372,8 @@ function ChoiceGridQuestionSet({
   );
 }
 
-function CountdownTimer({
-  startedAtMs,
-  timeLimitMinutes
-}: {
-  startedAtMs: number;
-  timeLimitMinutes: number;
-}) {
-  const endMs = startedAtMs + timeLimitMinutes * 60 * 1000;
-  const [remaining, setRemaining] = useState(() => Math.max(0, endMs - Date.now()));
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setRemaining(Math.max(0, endMs - Date.now()));
-    }, 1000);
-
-    return () => window.clearInterval(id);
-  }, [endMs]);
-
-  const totalSeconds = Math.floor(remaining / 1000);
+function CountdownTimer({ remainingSeconds }: { remainingSeconds: number }) {
+  const totalSeconds = Math.max(0, Math.floor(remainingSeconds));
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   const expired = totalSeconds <= 0;
@@ -1520,7 +1509,9 @@ export function AttemptWorkspace({
   const submitReasonRef = useRef<HTMLInputElement>(null);
   const partTimesInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const startedAtMs = useMemo(() => new Date(attempt.startedAt).getTime(), [attempt.startedAt]);
+  // Bộ đếm "thời gian làm thực" (giây) của kỹ năng đang mở + cờ chống tự-nộp trùng.
+  const consumedRef = useRef(0);
+  const autoSubmittedRef = useRef(false);
   const timeLimitMinutes = assignment.timeLimitMinutes;
 
   // Danh sách kỹ năng của bài (theo thứ tự IELTS) + giới hạn phút mỗi kỹ năng.
@@ -1540,10 +1531,6 @@ export function AttemptWorkspace({
   const [activeSkill, setActiveSkill] = useState<string | null>(() =>
     !isMultiSkill && !previewMode ? skillOrder[0] ?? null : null
   );
-  // Mốc bắt đầu cục bộ cho kỹ năng vừa khởi động trong phiên này (server action
-  // startSkillSession ghi startedAt vào DB nhưng prop attemptSkills chưa cập nhật
-  // ngay, nên giữ mốc client để đồng hồ chạy đúng từ lúc bấm "Bắt đầu").
-  const [skillStartOverrides, setSkillStartOverrides] = useState<Record<string, number>>({});
 
   // Các phần đang hiển thị = phần của kỹ năng đang mở. Xem trước: hiện TẤT CẢ phần
   // (như trước đây) để giáo viên xem toàn bộ đề trong một phiên.
@@ -1599,6 +1586,8 @@ export function AttemptWorkspace({
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [activePart, setActivePart] = useState(0);
+  // Số giây còn lại của kỹ năng đang mở (null = không giới hạn / chưa mở kỹ năng).
+  const [remaining, setRemaining] = useState<number | null>(null);
   // Cỡ chữ vùng nội dung (đề + câu hỏi) cho học sinh tự chỉnh; lưu localStorage.
   const [fontScale, setFontScale] = useState(1.1);
   // Render the full-screen test room through a portal so it escapes any
@@ -1653,40 +1642,48 @@ export function AttemptWorkspace({
     });
   }, []);
 
-  // Đồng hồ theo kỹ năng: mốc bắt đầu ưu tiên mốc client (vừa bấm "Bắt đầu"),
-  // rồi tới startedAt trong DB (khi mở lại bài dở), cuối cùng lùi về mốc của cả
-  // lần làm bài. Giới hạn = phút cấu hình cho kỹ năng đó; bài 1 kỹ năng không có
-  // cấu hình riêng thì dùng thời gian chung của bài (giữ hành vi cũ).
+  // Giới hạn = phút cấu hình cho kỹ năng đó; bài 1 kỹ năng không có cấu hình riêng
+  // thì dùng thời gian chung của bài (giữ hành vi cũ). null = không giới hạn.
   const activeSkillRow = attemptSkills.find((row) => row.skill === activeSkill);
-  const skillStartOverrideMs = activeSkill ? skillStartOverrides[activeSkill] : undefined;
-  const skillStartedAtMs =
-    skillStartOverrideMs ??
-    (activeSkillRow?.startedAt ? new Date(activeSkillRow.startedAt).getTime() : startedAtMs);
   const activeSkillLimit = activeSkill
     ? skillLimits[activeSkill] ?? (isMultiSkill ? null : timeLimitMinutes)
     : timeLimitMinutes;
 
+  // Tự động nộp kỹ năng khi hết giờ: chỉ Listening/Reading/Writing, không xem trước,
+  // và chỉ một lần. Gọi requestSubmit() nên KHÔNG đi qua hộp thoại xác nhận của nút Nộp.
+  const maybeAutoSubmit = useCallback(() => {
+    if (autoSubmittedRef.current || previewMode) return;
+    if (!activeSkill || !AUTO_SUBMIT_SKILLS.has(activeSkill)) return;
+    autoSubmittedRef.current = true;
+    if (submitReasonRef.current) {
+      submitReasonRef.current.value = "auto_timeout";
+    }
+    formRef.current?.requestSubmit();
+  }, [activeSkill, previewMode]);
+
   // Mở một kỹ năng từ màn chọn: đánh dấu "đang làm" trên server (bỏ qua khi xem
-  // trước) rồi vào phiên. Ghi mốc bắt đầu client để đồng hồ chạy ngay.
+  // trước) rồi vào phiên.
   async function openSkill(skill: string) {
     if (!previewMode) {
       const formData = new FormData();
       formData.set("attemptId", attempt.id);
       formData.set("skill", skill);
       await startSkillSession(formData);
-      setSkillStartOverrides((previous) =>
-        previous[skill] ? previous : { ...previous, [skill]: Date.now() }
-      );
     }
     setActiveSkill(skill);
   }
 
   const persistDraft = useCallback(async () => {
+    if (previewMode || !activeSkill) {
+      return;
+    }
     setSaveState("saving");
 
     try {
       const formData = new FormData();
       formData.set("attemptId", attempt.id);
+      formData.set("skill", activeSkill);
+      formData.set("elapsedSeconds", String(Math.floor(consumedRef.current)));
       Object.entries(answers).forEach(([questionId, value]) => {
         formData.set(`q_${questionId}`, value);
       });
@@ -1697,7 +1694,7 @@ export function AttemptWorkspace({
     } catch {
       setSaveState("error");
     }
-  }, [answers, attempt.id, snapshotPartTimes]);
+  }, [answers, attempt.id, snapshotPartTimes, activeSkill, previewMode]);
 
   // Khoá cuộn nền khi đang ở chế độ làm bài toàn màn hình.
   useEffect(() => {
@@ -1729,6 +1726,18 @@ export function AttemptWorkspace({
     return () => window.clearTimeout(timeoutId);
   }, [persistDraft, previewMode]);
 
+  // Heartbeat: định kỳ lưu tiến độ (đáp án + thời gian làm thực) kể cả khi học sinh
+  // chỉ ngồi đọc không gõ, để mất mạng/đóng tab thì mở lại tiếp tục đúng chỗ.
+  useEffect(() => {
+    if (previewMode || !activeSkill) {
+      return;
+    }
+    const intervalId = window.setInterval(() => {
+      void persistDraft();
+    }, 10000);
+    return () => window.clearInterval(intervalId);
+  }, [previewMode, activeSkill, persistDraft]);
+
   // Khi học sinh chuyển sang phần khác: chốt thời gian đang trôi vào phần vừa rời,
   // rồi bắt đầu đếm cho phần mới. Lần chạy đầu (mount) chỉ đặt phần đang mở.
   useEffect(() => {
@@ -1749,27 +1758,57 @@ export function AttemptWorkspace({
     setActivePart(0);
   }, [activeSkill]);
 
+  // Đếm "thời gian làm thực" cho kỹ năng đang mở: mỗi giây cộng tối đa cap giây (bỏ
+  // qua khoảng lặng do máy ngủ/tab nền/mất mạng). Cập nhật đồng hồ + trường ẩn nộp bài;
+  // khi hết ngân sách thì tự nộp.
   useEffect(() => {
-    function updateElapsed() {
+    if (previewMode || !activeSkill) {
+      setRemaining(null);
+      return;
+    }
+
+    autoSubmittedRef.current = false;
+    consumedRef.current = activeSkillRow?.elapsedSeconds ?? 0;
+    const budgetSeconds = activeSkillLimit != null ? activeSkillLimit * 60 : null;
+    let lastTick = Date.now();
+
+    function tick() {
+      const now = Date.now();
+      consumedRef.current = accumulateActiveSeconds(consumedRef.current, now - lastTick);
+      lastTick = now;
+
       if (elapsedRef.current) {
-        // elapsedSeconds nộp kèm kỹ năng: đếm từ mốc bắt đầu của kỹ năng đang mở.
-        elapsedRef.current.value = String(
-          Math.max(0, Math.floor((Date.now() - skillStartedAtMs) / 1000))
-        );
+        elapsedRef.current.value = String(Math.floor(consumedRef.current));
       }
       if (partTimesInputRef.current) {
         partTimesInputRef.current.value = JSON.stringify(snapshotPartTimes());
       }
+
+      if (budgetSeconds == null) {
+        setRemaining(null);
+        return;
+      }
+      const rem = Math.max(0, budgetSeconds - consumedRef.current);
+      setRemaining(rem);
+      if (rem <= 0) {
+        maybeAutoSubmit();
+      }
     }
 
-    updateElapsed();
-    const intervalId = window.setInterval(updateElapsed, 1000);
-
+    tick();
+    const intervalId = window.setInterval(tick, 1000);
     return () => window.clearInterval(intervalId);
-  }, [skillStartedAtMs, snapshotPartTimes]);
+  }, [
+    previewMode,
+    activeSkill,
+    activeSkillLimit,
+    activeSkillRow?.elapsedSeconds,
+    snapshotPartTimes,
+    maybeAutoSubmit
+  ]);
 
-  // Lưu ý: KHÔNG tự động nộp khi hết giờ. Đồng hồ chỉ đếm ngược và báo "Hết giờ";
-  // học sinh tự bấm "Nộp bài". (Tránh việc mở lại bài quá giờ bị nộp ngay.)
+  // Đồng hồ đếm theo "thời gian làm thực": hết ngân sách thì tự nộp (Listening/Reading/
+  // Writing) qua maybeAutoSubmit; đồng hồ tạm dừng khi mất mạng/đóng tab/máy ngủ.
 
   async function createHighlight(
     assignableUnitId: string,
@@ -1934,8 +1973,8 @@ export function AttemptWorkspace({
             </button>
           </div>
           <AnimatedThemeToggle />
-          {activeSkillLimit ? (
-            <CountdownTimer startedAtMs={skillStartedAtMs} timeLimitMinutes={activeSkillLimit} />
+          {activeSkillLimit != null && remaining != null ? (
+            <CountdownTimer remainingSeconds={remaining} />
           ) : null}
         </div>
       </header>

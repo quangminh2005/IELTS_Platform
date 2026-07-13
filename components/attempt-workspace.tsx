@@ -28,6 +28,7 @@ import { AudioPlayer } from "@/components/audio-player";
 import { AudioRecorderAnswer } from "@/components/audio-recorder-answer";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
+  parseGroupImages,
   parseGroupInstructions,
   parseGroupTitles,
   parseMarkdownTable,
@@ -2024,6 +2025,7 @@ export function AttemptWorkspace({
         const images = parseUnitImages(unit.metadataJson);
         const groupInstructions = parseGroupInstructions(unit.metadataJson);
         const groupTitles = parseGroupTitles(unit.metadataJson);
+        const groupImages = parseGroupImages(unit.metadataJson);
         // Dải câu của mỗi nhóm = từ key (câu đầu nhóm) tới ngay trước key kế tiếp,
         // hoặc tới câu cuối của phần. Nhờ vậy nhãn hiện đúng "Câu 7–13" dù nhóm gồm
         // nhiều thẻ câu riêng lẻ.
@@ -2049,15 +2051,35 @@ export function AttemptWorkspace({
           const startOrder = Math.min(...groupQuestions.map((question) => question.order));
           const text = groupInstructions[startOrder];
           const title = groupTitles[startOrder];
-          if (!text && !title) {
+          // Ảnh gắn với nhóm (vd bản đồ câu 20–21) hiện NGAY TRÊN nhóm câu, ngay
+          // dưới khung hướng dẫn — giống đề gốc, không đẩy sang cột đoạn văn.
+          const groupImgs = groupImages[startOrder] ?? [];
+          if (!text && !title && groupImgs.length === 0) {
             return null;
           }
           return (
-            <GroupInstructionBox
-              rangeLabel={groupRangeLabel[startOrder] ?? `Câu ${startOrder}`}
-              text={text ?? ""}
-              title={title}
-            />
+            <div className="space-y-3">
+              {text || title ? (
+                <GroupInstructionBox
+                  rangeLabel={groupRangeLabel[startOrder] ?? `Câu ${startOrder}`}
+                  text={text ?? ""}
+                  title={title}
+                />
+              ) : null}
+              {groupImgs.length > 0 ? (
+                <div className="space-y-3 rounded-lg border border-primary/20 bg-white p-3">
+                  {groupImgs.map((src, index) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      key={`${src}-${index}`}
+                      src={src}
+                      alt={`Ảnh minh hoạ cho ${groupRangeLabel[startOrder] ?? `câu ${startOrder}`}`}
+                      className="mx-auto max-w-full rounded-md"
+                    />
+                  ))}
+                </div>
+              ) : null}
+            </div>
           );
         };
         const hasPassage = !isListening && (Boolean(sourceText) || images.length > 0);

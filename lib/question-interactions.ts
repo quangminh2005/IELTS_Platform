@@ -79,6 +79,43 @@ export function parseGroupTitles(
   return parseOrderStringMap(metadataJson, "groupTitles");
 }
 
+// Ảnh gắn với TỪNG NHÓM câu (vd bản đồ cho câu 20–21) lưu trong
+// metadata.groupImages = { "<order câu đầu nhóm>": "url" | ["url", ...] }.
+// Hiển thị NGAY TRÊN nhóm câu (giống đề gốc), thay vì ở cột đoạn văn.
+export function parseGroupImages(
+  metadataJson: string | null | undefined
+): Record<number, string[]> {
+  if (!metadataJson) {
+    return {};
+  }
+
+  try {
+    const parsed = JSON.parse(metadataJson);
+    const raw = (parsed as { groupImages?: unknown })?.groupImages;
+    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+      const result: Record<number, string[]> = {};
+      for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
+        const order = Number(key);
+        if (!Number.isInteger(order)) {
+          continue;
+        }
+        const list = Array.isArray(value) ? value : [value];
+        const urls = list
+          .map((url) => String(url))
+          .filter((url) => url.trim().length > 0);
+        if (urls.length > 0) {
+          result[order] = urls;
+        }
+      }
+      return result;
+    }
+  } catch {
+    return {};
+  }
+
+  return {};
+}
+
 // Giá trị câu trả lời là một file audio (bài Speaking ghi âm) hay không.
 // Dùng để hiển thị trình phát audio thay vì text ở trang chấm/kết quả.
 export function isAudioUrl(value: string | null | undefined): boolean {

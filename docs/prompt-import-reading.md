@@ -34,6 +34,7 @@ SCHEMA:
       "metadata": {
         "groupTitles": { "<order câu đầu nhóm>": "<TIÊU ĐỀ in giữa của nhóm nếu đề gốc có>" },
         "groupInstructions": { "<order câu đầu nhóm>": "<hướng dẫn nguyên văn của nhóm>" },
+        "groupImages": { "<order câu đầu nhóm>": ["<url hoặc data URI của ảnh cho nhóm câu đó>"] },
         "noteBody": "<CHỈ khi có summary/note/sentence completion — xem quy tắc bên dưới>"
       },
       "questions": [ ... 13–14 câu ... ]
@@ -55,6 +56,11 @@ MỖI CÂU HỎI:
 
 TIÊU ĐỀ NHÓM: nếu đề gốc có tiêu đề in đậm/canh giữa phía trên một nhóm câu, chép nguyên văn
 vào metadata.groupTitles với key = order câu đầu nhóm. KHÔNG bỏ sót tiêu đề.
+
+ẢNH CỦA CÂU HỎI (bản đồ / sơ đồ / biểu đồ đi kèm một nhóm câu, vd "map below" cho câu 20–21):
+đặt vào metadata.groupImages với key = order câu đầu nhóm, value = url hoặc data URI. Ảnh sẽ hiện
+NGAY TRÊN nhóm câu đó (giống đề gốc). TUYỆT ĐỐI KHÔNG dùng metadata.images cho ảnh của câu hỏi —
+metadata.images render ở cột đoạn văn bên trái (chỉ dùng cho ảnh thuộc về passage).
 
 Ô GHÉP "both ___ and ___": nếu một chỗ điền in thành HAI ô nhưng answer key chỉ đánh MỘT số
 (vd note "pictures of both (33)...... and ......", đáp án "33 Jupiter and Saturn") → đặt [[n]]

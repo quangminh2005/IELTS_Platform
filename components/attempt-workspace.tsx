@@ -893,10 +893,15 @@ function MatchingQuestionSet({
 
   // Mỗi lựa chọn chỉ dùng một lần: đáp án đã gán cho một câu sẽ biến mất khỏi
   // hộp (giống chin.edu.vn). Xoá đáp án ở một câu thì lựa chọn quay lại hộp.
+  // NGOẠI LỆ: dạng phân loại (vd "xếp nhóm vào làn sóng A/B/C") có ít lựa chọn
+  // hơn số câu → một chữ cái dùng cho nhiều câu, nên KHÔNG rút khỏi hộp.
+  const allowReuse = sharedOptions.length < questions.length;
   const usedOptions = new Set(
     Object.values(selections).filter((value) => value.length > 0)
   );
-  const availableOptions = sharedOptions.filter((option) => !usedOptions.has(option));
+  const availableOptions = allowReuse
+    ? sharedOptions
+    : sharedOptions.filter((option) => !usedOptions.has(option));
 
   return (
     <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,0.85fr)]">
@@ -2345,18 +2350,43 @@ export function AttemptWorkspace({
           });
         }
         if (matchingQuestions.length > 0) {
-          orderedSections.push({
-            order: minOrder(matchingQuestions),
-            node: (
-              <div key="matching-section" className="space-y-3">
-                {groupBox(matchingQuestions)}
-                <MatchingQuestionSet
-                  questions={matchingQuestions}
-                  savedAnswers={answers}
-                  onAnswerChange={handleAnswerChange}
-                />
-              </div>
-            )
+          // Tách các câu "matching" thành từng nhóm riêng theo bộ lựa chọn và theo
+          // ranh giới khung hướng dẫn. Nhờ vậy mỗi dạng ghép trong cùng một phần —
+          // matching headings (i–x), ghép route trên bản đồ (A–F), phân loại A/B/C… —
+          // có hộp lựa chọn + hướng dẫn RIÊNG, đúng như đề gốc (không dồn chung một hộp).
+          const sortedMatching = [...matchingQuestions].sort((a, b) => a.order - b.order);
+          const matchingRuns: Question[][] = [];
+          sortedMatching.forEach((question) => {
+            const current = matchingRuns[matchingRuns.length - 1];
+            if (!current) {
+              matchingRuns.push([question]);
+              return;
+            }
+            const prevOptions = parseQuestionOptions(current[current.length - 1].optionsJson);
+            const options = parseQuestionOptions(question.optionsJson);
+            const sameOptions =
+              options.length === prevOptions.length &&
+              options.every((option, k) => option === prevOptions[k]);
+            if (sameOptions && !groupKeys.includes(question.order)) {
+              current.push(question);
+            } else {
+              matchingRuns.push([question]);
+            }
+          });
+          matchingRuns.forEach((run, runIndex) => {
+            orderedSections.push({
+              order: minOrder(run),
+              node: (
+                <div key={`matching-section-${runIndex}`} className="space-y-3">
+                  {groupBox(run)}
+                  <MatchingQuestionSet
+                    questions={run}
+                    savedAnswers={answers}
+                    onAnswerChange={handleAnswerChange}
+                  />
+                </div>
+              )
+            });
           });
         }
         regularRenderItems.forEach((item) => {

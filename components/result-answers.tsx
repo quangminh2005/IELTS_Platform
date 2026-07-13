@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
-import { fillSourceBlanks, splitByAnswerMatches } from "@/lib/answer-evidence";
+import { buildEvidenceSegments, fillSourceBlanks, type EvidenceSegment } from "@/lib/answer-evidence";
 import { isAudioUrl } from "@/lib/question-interactions";
 
 export type PartAnswer = {
@@ -14,6 +14,7 @@ export type PartAnswer = {
   isCorrect: boolean | null;
   pointsAwarded: number | null;
   correctAnswerSnapshot: string | null;
+  evidenceSnapshot: string | null;
   explanationSnapshot: string | null;
   annotations: Annotation[];
 };
@@ -44,30 +45,84 @@ function correctnessClass(value: boolean | null) {
   return "border-accent/50 bg-accent/10 text-accent-foreground dark:text-accent";
 }
 
-// Văn bản nguồn với các đáp án đúng được tô sáng.
-function HighlightedSource({ text, answers }: { text: string; answers: string[] }) {
-  const parts = splitByAnswerMatches(text, answers);
+// Render transcript theo các đoạn đã gắn số câu. Chỉ tô khi có activeOrder: câu văn
+// chứa đáp án (nền xanh) + đúng từ đáp án (đậm/gạch chân) + badge [n] ở đầu câu.
+function EvidenceTranscript({
+  segments,
+  activeOrder
+}: {
+  segments: EvidenceSegment[];
+  activeOrder: number | null;
+}) {
+  let badgeShown = false;
   return (
     <>
-      {parts.map((part, index) =>
-        part.match ? (
-          <mark
-            key={index}
-            className="rounded bg-emerald-500/25 px-0.5 font-semibold text-emerald-800 dark:bg-emerald-400/25 dark:text-emerald-200"
-          >
-            {part.text}
-          </mark>
-        ) : (
-          <span key={index}>{part.text}</span>
-        )
-      )}
+      {segments.map((seg, index) => {
+        const inSentence = activeOrder !== null && seg.sentenceOrders.includes(activeOrder);
+        const isAnswer = activeOrder !== null && seg.answerOrders.includes(activeOrder);
+        const showBadge = inSentence && !badgeShown;
+        if (showBadge) badgeShown = true;
+        const markClass = [
+          inSentence ? "rounded bg-emerald-500/15 dark:bg-emerald-400/15" : "",
+          isAnswer
+            ? "font-semibold text-emerald-800 underline decoration-emerald-500 dark:text-emerald-200"
+            : ""
+        ]
+          .filter(Boolean)
+          .join(" ");
+        return (
+          <span key={index}>
+            {showBadge ? (
+              <span
+                data-evidence-order={activeOrder as number}
+                className="mx-0.5 inline-flex items-center rounded-full bg-emerald-600 px-1.5 py-0.5 align-middle text-[11px] font-bold leading-none text-white"
+              >
+                [{activeOrder}]
+              </span>
+            ) : null}
+            <span className={markClass || undefined}>{seg.text}</span>
+          </span>
+        );
+      })}
     </>
   );
 }
 
-function AnswerCard({ answer }: { answer: PartAnswer }) {
+function AnswerCard({
+  answer,
+  isLinked,
+  isActive,
+  onSelect
+}: {
+  answer: PartAnswer;
+  isLinked: boolean;
+  isActive: boolean;
+  onSelect: (order: number) => void;
+}) {
+  const interactive = isLinked && answer.order !== null;
+  const activate = () => {
+    if (answer.order !== null) onSelect(answer.order);
+  };
   return (
-    <article className="rounded-xl border border-border bg-card p-4 shadow-card">
+    <article
+      className={`rounded-xl border bg-card p-4 shadow-card transition ${
+        isActive ? "border-primary ring-2 ring-primary" : "border-border"
+      } ${interactive ? "cursor-pointer hover:border-primary" : ""}`}
+      {...(interactive
+        ? {
+            role: "button",
+            tabIndex: 0,
+            "aria-pressed": isActive,
+            onClick: activate,
+            onKeyDown: (event: React.KeyboardEvent) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                activate();
+              }
+            }
+          }
+        : {})}
+    >
       <div className="flex items-start justify-between gap-3">
         <h4 className="font-semibold">
           {answer.order !== null ? `Câu ${answer.order}` : "Câu chưa liên kết"}
@@ -142,21 +197,58 @@ export function ResultAnswers({
   stickyTopClass?: string;
 }) {
   const [active, setActive] = useState(0);
+  const [activeOrder, setActiveOrder] = useState<number | null>(null);
+  const desktopScrollRef = useRef<HTMLDivElement | null>(null);
+  const mobileDetailsRef = useRef<HTMLDetailsElement | null>(null);
 
-  if (parts.length === 0) {
+  // Lưu ý: các hook dưới đây phải gọi vô điều kiện (không đặt sau early return)
+  // để không vi phạm rules-of-hooks — dùng `part` có thể null thay vì return sớm.
+  const part = parts.length > 0 ? parts[Math.min(active, parts.length - 1)] : null;
+  const showSource = !!part?.sourceText && (part.skill === "listening" || part.skill === "reading");
+  const sourceLabel = part?.skill === "listening" ? "Transcript" : "Bài đọc";
+  const filledSource =
+    showSource && part ? fillSourceBlanks(part.sourceText as string, part.answersByOrder) : "";
+
+  // Cắt transcript theo câu dẫn chứng của part đang xem (dựa trên evidenceSnapshot).
+  const { segments, linkedOrders } = useMemo(() => {
+    if (!showSource || !part) return { segments: [] as EvidenceSegment[], linkedOrders: [] as number[] };
+    const targets = part.answers
+      .filter((answer) => answer.order !== null && answer.evidenceSnapshot?.trim())
+      .map((answer) => ({
+        order: answer.order as number,
+        evidence: answer.evidenceSnapshot as string,
+        answers: answer.correctAnswerSnapshot ? answer.correctAnswerSnapshot.split(" | ") : []
+      }));
+    return buildEvidenceSegments(filledSource, targets, part.answersByOrder);
+  }, [showSource, filledSource, part]);
+  const linkedSet = useMemo(() => new Set(linkedOrders), [linkedOrders]);
+
+  // Cuộn cột trái tới câu dẫn chứng đang chọn (cuộn trong khung, không cuộn cả trang).
+  useEffect(() => {
+    if (activeOrder === null) return;
+    const box = desktopScrollRef.current;
+    if (box) {
+      const anchor = box.querySelector<HTMLElement>(`[data-evidence-order="${activeOrder}"]`);
+      if (anchor) {
+        const delta = anchor.getBoundingClientRect().top - box.getBoundingClientRect().top;
+        box.scrollTo({ top: box.scrollTop + delta - box.clientHeight / 2, behavior: "smooth" });
+      }
+    }
+    const details = mobileDetailsRef.current;
+    if (details) {
+      details.open = true;
+      const anchor = details.querySelector<HTMLElement>(`[data-evidence-order="${activeOrder}"]`);
+      anchor?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [activeOrder]);
+
+  if (!part) {
     return (
       <section className="rounded-xl border border-border bg-card p-8 text-sm text-muted-foreground shadow-card">
         Chưa có đáp án nào cho lần làm bài này.
       </section>
     );
   }
-
-  const part = parts[Math.min(active, parts.length - 1)];
-  const showSource = !!part.sourceText && (part.skill === "listening" || part.skill === "reading");
-  const sourceLabel = part.skill === "listening" ? "Transcript" : "Bài đọc";
-  const filledSource = showSource
-    ? fillSourceBlanks(part.sourceText as string, part.answersByOrder)
-    : "";
 
   return (
     <section className="space-y-4">
@@ -165,7 +257,10 @@ export function ResultAnswers({
           <button
             key={p.unitId}
             type="button"
-            onClick={() => setActive(index)}
+            onClick={() => {
+              setActive(index);
+              setActiveOrder(null);
+            }}
             className={`rounded-lg border px-3 py-2 text-sm font-semibold transition ${
               index === active
                 ? "border-primary bg-primary text-primary-foreground"
@@ -188,23 +283,24 @@ export function ResultAnswers({
         {showSource ? (
           <>
             {/* Mobile: gấp-mở, để câu hỏi ở ngay dưới */}
-            <details className="rounded-xl border border-border bg-card shadow-card lg:hidden">
+            <details ref={mobileDetailsRef} className="rounded-xl border border-border bg-card shadow-card lg:hidden">
               <summary className="cursor-pointer px-5 py-3 text-sm font-semibold">
                 {sourceLabel}
               </summary>
               <p className="whitespace-pre-wrap px-5 pb-4 text-sm leading-7">
-                <HighlightedSource text={filledSource} answers={part.answerStrings} />
+                <EvidenceTranscript segments={segments} activeOrder={activeOrder} />
               </p>
             </details>
             {/* Desktop: cột trái dính, cuộn riêng */}
             <div
+              ref={desktopScrollRef}
               className={`hidden overflow-hidden rounded-xl border border-border bg-card shadow-card lg:block lg:sticky lg:max-h-[75vh] lg:self-start lg:overflow-auto ${stickyTopClass}`}
             >
               <div className="border-b border-border px-5 py-3 text-sm font-semibold">
                 {sourceLabel}
               </div>
               <p className="whitespace-pre-wrap px-5 py-4 text-sm leading-7">
-                <HighlightedSource text={filledSource} answers={part.answerStrings} />
+                <EvidenceTranscript segments={segments} activeOrder={activeOrder} />
               </p>
             </div>
           </>
@@ -212,7 +308,13 @@ export function ResultAnswers({
 
         <div className="space-y-4">
           {part.answers.map((answer) => (
-            <AnswerCard key={answer.id} answer={answer} />
+            <AnswerCard
+              key={answer.id}
+              answer={answer}
+              isLinked={answer.order !== null && linkedSet.has(answer.order)}
+              isActive={answer.order !== null && answer.order === activeOrder}
+              onSelect={(order) => setActiveOrder((current) => (current === order ? null : order))}
+            />
           ))}
         </div>
       </div>

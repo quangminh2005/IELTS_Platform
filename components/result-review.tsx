@@ -149,6 +149,7 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
       isCorrect: answer.isCorrect,
       pointsAwarded: answer.pointsAwarded,
       correctAnswerSnapshot: answer.correctAnswerSnapshot,
+      evidenceSnapshot: answer.evidenceSnapshot,
       explanationSnapshot: answer.explanationSnapshot,
       annotations: answer.annotations
     });

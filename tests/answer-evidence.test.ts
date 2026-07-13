@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { deriveAnswerEvidence, splitByAnswerMatches, fillSourceBlanks } from "@/lib/answer-evidence";
+import {
+  deriveAnswerEvidence,
+  splitByAnswerMatches,
+  fillSourceBlanks,
+  buildEvidenceSegments
+} from "@/lib/answer-evidence";
 
 describe("deriveAnswerEvidence", () => {
   const passage =
@@ -112,5 +117,81 @@ describe("fillSourceBlanks", () => {
 
   it("không có blank -> giữ nguyên", () => {
     expect(fillSourceBlanks("No blanks here", { 1: "x" })).toBe("No blanks here");
+  });
+});
+
+describe("buildEvidenceSegments", () => {
+  it("định vị câu dẫn chứng và gắn từ đáp án cho câu", () => {
+    const source = "Man: What is your name? Louisa: It's Hardie. Man: Thanks.";
+    const { segments, linkedOrders } = buildEvidenceSegments(
+      source,
+      [{ order: 1, evidence: "Louisa: It's Hardie.", answers: ["Hardie"] }],
+      {}
+    );
+    expect(linkedOrders).toEqual([1]);
+    expect(segments.some((s) => s.sentenceOrders.includes(1))).toBe(true);
+    const ans = segments.find((s) => s.answerOrders.includes(1));
+    expect(ans?.text).toBe("Hardie");
+    // Ghép lại phải đúng nguyên văn nguồn (không mất/không thừa ký tự).
+    expect(segments.map((s) => s.text).join("")).toBe(source);
+  });
+
+  it("bỏ qua câu có evidence không nằm trong nguồn", () => {
+    const { segments, linkedOrders } = buildEvidenceSegments(
+      "No such sentence here.",
+      [{ order: 2, evidence: "Completely different text.", answers: ["x"] }],
+      {}
+    );
+    expect(linkedOrders).toEqual([]);
+    expect(segments).toEqual([
+      { text: "No such sentence here.", sentenceOrders: [], answerOrders: [] }
+    ]);
+  });
+
+  it("hai câu cùng một câu văn -> đoạn mang cả hai order", () => {
+    const source = "The core and the mantle are hot layers.";
+    const { segments } = buildEvidenceSegments(
+      source,
+      [
+        { order: 1, evidence: "The core and the mantle are hot layers.", answers: ["core"] },
+        { order: 2, evidence: "The core and the mantle are hot layers.", answers: ["mantle"] }
+      ],
+      {}
+    );
+    expect(
+      segments.some((s) => s.sentenceOrders.includes(1) && s.sentenceOrders.includes(2))
+    ).toBe(true);
+    expect(segments.some((s) => s.answerOrders.includes(1) && s.text === "core")).toBe(true);
+    expect(segments.some((s) => s.answerOrders.includes(2) && s.text === "mantle")).toBe(true);
+  });
+
+  it("điền [[n]] trong evidence để khớp nguồn đã điền", () => {
+    const filled = "The summary says the answer is photosynthesis clearly.";
+    const { segments, linkedOrders } = buildEvidenceSegments(
+      filled,
+      [
+        {
+          order: 3,
+          evidence: "The summary says the answer is [[3]] clearly.",
+          answers: ["photosynthesis"]
+        }
+      ],
+      { 3: "photosynthesis" }
+    );
+    expect(linkedOrders).toEqual([3]);
+    expect(
+      segments.some((s) => s.answerOrders.includes(3) && s.text === "photosynthesis")
+    ).toBe(true);
+  });
+
+  it("đáp án không khớp nguyên văn -> có câu, trống từ đáp án", () => {
+    const source = "Yes, it's Hardy spelled differently.";
+    const { segments } = buildEvidenceSegments(
+      source,
+      [{ order: 1, evidence: "Yes, it's Hardy spelled differently.", answers: ["Hardie"] }],
+      {}
+    );
+    expect(segments.some((s) => s.sentenceOrders.includes(1))).toBe(true);
+    expect(segments.every((s) => s.answerOrders.length === 0)).toBe(true);
   });
 });

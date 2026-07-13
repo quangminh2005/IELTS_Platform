@@ -127,3 +127,104 @@ export function fillSourceBlanks(
     return answer && answer.trim() ? answer : "____";
   });
 }
+
+export type EvidenceTarget = {
+  order: number; // số thứ tự câu
+  evidence: string; // evidenceSnapshot (câu văn, có thể còn [[n]])
+  answers: string[]; // các biến thể đáp án đúng
+};
+
+export type EvidenceSegment = {
+  text: string;
+  sentenceOrders: number[]; // order có "câu dẫn chứng" phủ đoạn này
+  answerOrders: number[]; // order có "đúng từ đáp án" là đoạn này
+};
+
+// Cắt filledSource thành các đoạn, mỗi đoạn biết thuộc câu dẫn chứng nào và có phải
+// đúng từ đáp án của câu nào. Định vị câu dẫn chứng bằng cách điền [[n]] cho evidence
+// rồi tìm chuỗi con trong filledSource (con trỏ chạy tăng theo order để phân biệt câu
+// trùng). Không định vị được -> bỏ câu đó (không liên kết).
+export function buildEvidenceSegments(
+  filledSource: string,
+  targets: EvidenceTarget[],
+  answersByOrder: Record<number, string>
+): { segments: EvidenceSegment[]; linkedOrders: number[] } {
+  type Interval = { start: number; end: number; order: number; kind: "sentence" | "answer" };
+  const intervals: Interval[] = [];
+  const linkedOrders: number[] = [];
+
+  const sorted = [...targets].sort((a, b) => a.order - b.order);
+  let cursor = 0;
+
+  for (const target of sorted) {
+    const filledEvidence = fillSourceBlanks(target.evidence, answersByOrder).trim();
+    if (!filledEvidence) continue;
+
+    let start = filledSource.indexOf(filledEvidence, cursor);
+    if (start === -1) start = filledSource.indexOf(filledEvidence);
+    if (start === -1) continue; // không định vị được -> bỏ
+
+    const end = start + filledEvidence.length;
+    cursor = end;
+    linkedOrders.push(target.order);
+    intervals.push({ start, end, order: target.order, kind: "sentence" });
+
+    // Tìm đúng từ/cụm đáp án trong khoảng câu (ưu tiên đáp án dài, khớp linh hoạt).
+    const patterns = target.answers
+      .map((a) => a.trim())
+      .filter(Boolean)
+      .sort((a, b) => b.replace(/\s+/g, "").length - a.replace(/\s+/g, "").length)
+      .flatMap(answerPatterns)
+      .filter(Boolean);
+    if (patterns.length > 0) {
+      const re = new RegExp(patterns.join("|"), "gi");
+      const sentence = filledSource.slice(start, end);
+      const m = re.exec(sentence);
+      if (m && m[0].length > 0) {
+        intervals.push({
+          start: start + m.index,
+          end: start + m.index + m[0].length,
+          order: target.order,
+          kind: "answer"
+        });
+      }
+    }
+  }
+
+  if (intervals.length === 0) {
+    return {
+      segments: [{ text: filledSource, sentenceOrders: [], answerOrders: [] }],
+      linkedOrders
+    };
+  }
+
+  // Tô khoảng: gộp mọi điểm ranh giới, cắt chuỗi thành đoạn liền kề.
+  const points = new Set<number>([0, filledSource.length]);
+  for (const iv of intervals) {
+    points.add(iv.start);
+    points.add(iv.end);
+  }
+  const bounds = [...points].sort((a, b) => a - b);
+
+  const segments: EvidenceSegment[] = [];
+  for (let i = 0; i < bounds.length - 1; i++) {
+    const segStart = bounds[i];
+    const segEnd = bounds[i + 1];
+    if (segStart >= segEnd) continue;
+    const sentenceOrders: number[] = [];
+    const answerOrders: number[] = [];
+    for (const iv of intervals) {
+      if (iv.start <= segStart && segEnd <= iv.end) {
+        if (iv.kind === "sentence" && !sentenceOrders.includes(iv.order)) {
+          sentenceOrders.push(iv.order);
+        }
+        if (iv.kind === "answer" && !answerOrders.includes(iv.order)) {
+          answerOrders.push(iv.order);
+        }
+      }
+    }
+    segments.push({ text: filledSource.slice(segStart, segEnd), sentenceOrders, answerOrders });
+  }
+
+  return { segments, linkedOrders };
+}

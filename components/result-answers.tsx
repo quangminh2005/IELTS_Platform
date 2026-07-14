@@ -287,7 +287,7 @@ export function ResultAnswers({
               <summary className="cursor-pointer px-5 py-3 text-sm font-semibold">
                 {sourceLabel}
               </summary>
-              <p className="whitespace-pre-wrap px-5 pb-4 text-sm leading-7">
+              <p className="whitespace-pre-wrap px-5 pb-4 text-base leading-8">
                 <EvidenceTranscript segments={segments} activeOrder={activeOrder} />
               </p>
             </details>
@@ -299,7 +299,7 @@ export function ResultAnswers({
               <div className="border-b border-border px-5 py-3 text-sm font-semibold">
                 {sourceLabel}
               </div>
-              <p className="whitespace-pre-wrap px-5 py-4 text-sm leading-7">
+              <p className="whitespace-pre-wrap px-5 py-4 text-base leading-8">
                 <EvidenceTranscript segments={segments} activeOrder={activeOrder} />
               </p>
             </div>

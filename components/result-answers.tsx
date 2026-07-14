@@ -2,7 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
-import { buildEvidenceSegments, fillSourceBlanks, type EvidenceSegment } from "@/lib/answer-evidence";
+import {
+  buildEvidenceSegments,
+  buildEvidenceTargets,
+  fillSourceBlanks,
+  type EvidenceSegment
+} from "@/lib/answer-evidence";
 import { isAudioUrl } from "@/lib/question-interactions";
 
 export type PartAnswer = {
@@ -209,16 +214,11 @@ export function ResultAnswers({
   const filledSource =
     showSource && part ? fillSourceBlanks(part.sourceText as string, part.answersByOrder) : "";
 
-  // Cắt transcript theo câu dẫn chứng của part đang xem (dựa trên evidenceSnapshot).
+  // Cắt transcript theo câu dẫn chứng của part đang xem: câu điền từ dùng evidenceSnapshot
+  // sẵn có, câu trắc nghiệm dò theo từ khóa đáp án.
   const { segments, linkedOrders } = useMemo(() => {
     if (!showSource || !part) return { segments: [] as EvidenceSegment[], linkedOrders: [] as number[] };
-    const targets = part.answers
-      .filter((answer) => answer.order !== null && answer.evidenceSnapshot?.trim())
-      .map((answer) => ({
-        order: answer.order as number,
-        evidence: answer.evidenceSnapshot as string,
-        answers: answer.correctAnswerSnapshot ? answer.correctAnswerSnapshot.split(" | ") : []
-      }));
+    const targets = buildEvidenceTargets(part.answers, filledSource);
     return buildEvidenceSegments(filledSource, targets, part.answersByOrder);
   }, [showSource, filledSource, part]);
   const linkedSet = useMemo(() => new Set(linkedOrders), [linkedOrders]);

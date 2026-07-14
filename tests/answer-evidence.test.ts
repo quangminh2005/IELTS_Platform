@@ -3,7 +3,10 @@ import {
   deriveAnswerEvidence,
   splitByAnswerMatches,
   fillSourceBlanks,
-  buildEvidenceSegments
+  buildEvidenceSegments,
+  findEvidenceSentence,
+  answerKeywords,
+  buildEvidenceTargets
 } from "@/lib/answer-evidence";
 
 describe("deriveAnswerEvidence", () => {
@@ -193,5 +196,115 @@ describe("buildEvidenceSegments", () => {
     );
     expect(segments.some((s) => s.sentenceOrders.includes(1))).toBe(true);
     expect(segments.every((s) => s.answerOrders.length === 0)).toBe(true);
+  });
+});
+
+describe("findEvidenceSentence", () => {
+  const passage =
+    "Lightning is dangerous. Power companies lose money every year. Atoms split apart.";
+
+  it("trả câu chứa đáp án nguyên văn", () => {
+    expect(findEvidenceSentence(passage, ["power companies"])).toBe(
+      "Power companies lose money every year."
+    );
+  });
+
+  it("ưu tiên đáp án dài nhất", () => {
+    expect(findEvidenceSentence(passage, ["companies", "power companies"])).toBe(
+      "Power companies lose money every year."
+    );
+  });
+
+  it("không thấy -> null; nguồn null -> null", () => {
+    expect(findEvidenceSentence(passage, ["zzz"])).toBeNull();
+    expect(findEvidenceSentence(null, ["x"])).toBeNull();
+  });
+});
+
+describe("answerKeywords", () => {
+  it("bóc nhãn phương án", () => {
+    expect(answerKeywords("B. climbing | C. collecting")).toEqual(["climbing", "collecting"]);
+  });
+
+  it("giữ nguyên đáp án không có nhãn", () => {
+    expect(answerKeywords("power companies")).toEqual(["power companies"]);
+  });
+
+  it("snapshot null -> mảng rỗng", () => {
+    expect(answerKeywords(null)).toEqual([]);
+  });
+});
+
+describe("buildEvidenceTargets", () => {
+  const transcript =
+    "Olivia: Why don't you begin with describing his passion for collecting things? Victor: No, it was climbing that he spent his time on. Victor: They decided to live on a small island with harsh weather.";
+
+  it("có evidenceSnapshot -> dùng đúng câu đó", () => {
+    const targets = buildEvidenceTargets(
+      [
+        {
+          order: 5,
+          evidenceSnapshot: "Victor: No, it was climbing that he spent his time on.",
+          correctAnswerSnapshot: "climbing"
+        }
+      ],
+      transcript
+    );
+    expect(targets).toEqual([
+      {
+        order: 5,
+        evidence: "Victor: No, it was climbing that he spent his time on.",
+        answers: ["climbing"]
+      }
+    ]);
+  });
+
+  it("trắc nghiệm chưa có evidenceSnapshot -> dò từ khóa; nhiều đáp án -> nhiều đích cùng order", () => {
+    const targets = buildEvidenceTargets(
+      [{ order: 21, evidenceSnapshot: null, correctAnswerSnapshot: "B. climbing | C. collecting" }],
+      transcript
+    );
+    expect(targets).toHaveLength(2);
+    expect(targets.every((target) => target.order === 21)).toBe(true);
+    expect(targets.map((target) => target.answers)).toEqual([["climbing"], ["collecting"]]);
+    expect(targets[0].evidence).toContain("climbing");
+    expect(targets[1].evidence).toContain("collecting");
+  });
+
+  it("đáp án diễn giải lại, không có trong nguồn -> không đích", () => {
+    expect(
+      buildEvidenceTargets(
+        [
+          {
+            order: 23,
+            evidenceSnapshot: null,
+            correctAnswerSnapshot: "B. to experience an isolated place"
+          }
+        ],
+        transcript
+      )
+    ).toEqual([]);
+  });
+
+  it("loại nhãn đúng/sai và chữ cái lẻ -> không đích", () => {
+    expect(
+      buildEvidenceTargets(
+        [
+          { order: 1, evidenceSnapshot: null, correctAnswerSnapshot: "TRUE" },
+          { order: 2, evidenceSnapshot: null, correctAnswerSnapshot: "NOT GIVEN" },
+          { order: 3, evidenceSnapshot: null, correctAnswerSnapshot: "C" }
+        ],
+        "It is true that nothing is given here. C is a letter."
+      )
+    ).toEqual([]);
+  });
+
+  it("order null -> bỏ", () => {
+    expect(
+      buildEvidenceTargets(
+        [{ order: null, evidenceSnapshot: "x", correctAnswerSnapshot: "y" }],
+        transcript
+      )
+    ).toEqual([]);
   });
 });

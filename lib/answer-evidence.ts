@@ -14,13 +14,13 @@ function answerRegExp(answer: string): RegExp {
   return new RegExp(`\\b${escapeRegExp(answer)}\\b`, "i");
 }
 
-// Trả câu trong sourceText chứa đáp án nguyên văn, hoặc null.
-export function deriveAnswerEvidence(
-  questionType: string,
-  correctAnswers: string[],
-  sourceText: string | null
+// Trả câu trong sourceText chứa nguyên văn một trong các answers (ranh giới từ, không
+// phân biệt hoa/thường); ưu tiên answer dài nhất. Không thấy -> null.
+export function findEvidenceSentence(
+  sourceText: string | null,
+  answers: string[]
 ): string | null {
-  if (!sourceText || !LITERAL_ANSWER_TYPES.has(questionType)) {
+  if (!sourceText) {
     return null;
   }
 
@@ -30,7 +30,7 @@ export function deriveAnswerEvidence(
     .filter(Boolean);
 
   // Ưu tiên đáp án dài nhất để khớp cụm chính xác hơn từ đơn.
-  const candidates = correctAnswers
+  const candidates = answers
     .map((answer) => answer.trim())
     .filter(Boolean)
     .sort((a, b) => b.length - a.length);
@@ -44,6 +44,19 @@ export function deriveAnswerEvidence(
   }
 
   return null;
+}
+
+// Trả câu trong sourceText chứa đáp án nguyên văn, hoặc null. Chỉ dùng cho câu điền từ
+// (đáp án nằm nguyên văn trong bài); câu nhãn (MC/TF-NG/matching) trả null.
+export function deriveAnswerEvidence(
+  questionType: string,
+  correctAnswers: string[],
+  sourceText: string | null
+): string | null {
+  if (!LITERAL_ANSWER_TYPES.has(questionType)) {
+    return null;
+  }
+  return findEvidenceSentence(sourceText, correctAnswers);
 }
 
 // Sinh các mẫu regex khớp một đáp án trong text (không phân biệt hoa/thường):
@@ -227,4 +240,69 @@ export function buildEvidenceSegments(
   }
 
   return { segments, linkedOrders };
+}
+
+// Nhãn đáp án đúng/sai — không phải từ khóa dò được trong bài ("yes"/"no" còn xuất hiện
+// nhan nhản trong hội thoại nên dò sẽ tô bừa).
+const LABEL_ANSWER_TOKENS = new Set(["true", "false", "not given", "yes", "no", "ng"]);
+
+// Tách correctAnswerSnapshot ("a | b") thành từng đáp án, bỏ nhãn phương án đầu
+// ("A. " / "b) ") để lấy từ khóa dùng tô đậm và dò trong nguồn.
+export function answerKeywords(correctAnswerSnapshot: string | null): string[] {
+  if (!correctAnswerSnapshot) {
+    return [];
+  }
+  return correctAnswerSnapshot
+    .split(" | ")
+    .map((answer) => answer.replace(/^[A-Za-z][.)]\s+/, "").trim())
+    .filter(Boolean);
+}
+
+// Từ khóa đủ "chắc" để đi dò trong nguồn: bỏ nhãn đúng/sai và token quá ngắn (chữ cái lẻ
+// của câu matching) — tránh tô bừa.
+function isSearchableKeyword(keyword: string): boolean {
+  if (LABEL_ANSWER_TOKENS.has(keyword.toLowerCase())) {
+    return false;
+  }
+  return keyword.replace(/[^\p{L}\p{N}]/gu, "").length >= 2;
+}
+
+export type EvidenceTargetInput = {
+  order: number | null;
+  evidenceSnapshot: string | null;
+  correctAnswerSnapshot: string | null;
+};
+
+// Dựng danh sách đích dẫn chứng cho một part:
+//  - Đã có evidenceSnapshot (câu điền từ tự sinh khi chấm, hoặc giáo viên nhập) -> dùng
+//    câu đó; từ khóa đáp án chỉ để tô đậm bên trong.
+//  - Chưa có (câu trắc nghiệm...) -> với MỖI từ khóa dò được câu chứa nó, tạo một đích
+//    cùng order; nhờ vậy câu "chọn nhiều đáp án" tô được nhiều chỗ. Không dò ra -> bỏ.
+export function buildEvidenceTargets(
+  items: EvidenceTargetInput[],
+  filledSource: string
+): EvidenceTarget[] {
+  const targets: EvidenceTarget[] = [];
+
+  for (const item of items) {
+    if (item.order === null) {
+      continue;
+    }
+    const keywords = answerKeywords(item.correctAnswerSnapshot);
+    const evidence = item.evidenceSnapshot?.trim();
+
+    if (evidence) {
+      targets.push({ order: item.order, evidence, answers: keywords });
+      continue;
+    }
+
+    for (const keyword of keywords.filter(isSearchableKeyword)) {
+      const sentence = findEvidenceSentence(filledSource, [keyword]);
+      if (sentence) {
+        targets.push({ order: item.order, evidence: sentence, answers: [keyword] });
+      }
+    }
+  }
+
+  return targets;
 }

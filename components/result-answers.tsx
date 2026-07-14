@@ -19,6 +19,7 @@ export type PartAnswer = {
   isCorrect: boolean | null;
   pointsAwarded: number | null;
   correctAnswerSnapshot: string | null;
+  questionEvidence: string | null;
   evidenceSnapshot: string | null;
   explanationSnapshot: string | null;
   annotations: Annotation[];
@@ -218,7 +219,7 @@ export function ResultAnswers({
   // sẵn có, câu trắc nghiệm dò theo từ khóa đáp án.
   const { segments, linkedOrders } = useMemo(() => {
     if (!showSource || !part) return { segments: [] as EvidenceSegment[], linkedOrders: [] as number[] };
-    const targets = buildEvidenceTargets(part.answers, filledSource);
+    const targets = buildEvidenceTargets(part.answers, filledSource, part.answersByOrder);
     return buildEvidenceSegments(filledSource, targets, part.answersByOrder);
   }, [showSource, filledSource, part]);
   const linkedSet = useMemo(() => new Set(linkedOrders), [linkedOrders]);

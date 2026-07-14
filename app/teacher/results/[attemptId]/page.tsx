@@ -45,7 +45,7 @@ export default async function TeacherResultPage({ params }: ResultPageProps) {
         orderBy: { createdAt: "asc" },
         include: {
           question: {
-            select: { order: true, prompt: true, points: true }
+            select: { order: true, prompt: true, points: true, answerEvidence: true }
           },
           assignableUnit: {
             select: { title: true, skill: true, transcript: true, content: true }

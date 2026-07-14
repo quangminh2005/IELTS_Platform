@@ -244,11 +244,13 @@ describe("buildEvidenceTargets", () => {
       [
         {
           order: 5,
+          questionEvidence: null,
           evidenceSnapshot: "Victor: No, it was climbing that he spent his time on.",
           correctAnswerSnapshot: "climbing"
         }
       ],
-      transcript
+      transcript,
+      {}
     );
     expect(targets).toEqual([
       {
@@ -261,8 +263,16 @@ describe("buildEvidenceTargets", () => {
 
   it("trắc nghiệm chưa có evidenceSnapshot -> dò từ khóa; nhiều đáp án -> nhiều đích cùng order", () => {
     const targets = buildEvidenceTargets(
-      [{ order: 21, evidenceSnapshot: null, correctAnswerSnapshot: "B. climbing | C. collecting" }],
-      transcript
+      [
+        {
+          order: 21,
+          questionEvidence: null,
+          evidenceSnapshot: null,
+          correctAnswerSnapshot: "B. climbing | C. collecting"
+        }
+      ],
+      transcript,
+      {}
     );
     expect(targets).toHaveLength(2);
     expect(targets.every((target) => target.order === 21)).toBe(true);
@@ -277,11 +287,13 @@ describe("buildEvidenceTargets", () => {
         [
           {
             order: 23,
+            questionEvidence: null,
             evidenceSnapshot: null,
             correctAnswerSnapshot: "B. to experience an isolated place"
           }
         ],
-        transcript
+        transcript,
+        {}
       )
     ).toEqual([]);
   });
@@ -290,11 +302,12 @@ describe("buildEvidenceTargets", () => {
     expect(
       buildEvidenceTargets(
         [
-          { order: 1, evidenceSnapshot: null, correctAnswerSnapshot: "TRUE" },
-          { order: 2, evidenceSnapshot: null, correctAnswerSnapshot: "NOT GIVEN" },
-          { order: 3, evidenceSnapshot: null, correctAnswerSnapshot: "C" }
+          { order: 1, questionEvidence: null, evidenceSnapshot: null, correctAnswerSnapshot: "TRUE" },
+          { order: 2, questionEvidence: null, evidenceSnapshot: null, correctAnswerSnapshot: "NOT GIVEN" },
+          { order: 3, questionEvidence: null, evidenceSnapshot: null, correctAnswerSnapshot: "C" }
         ],
-        "It is true that nothing is given here. C is a letter."
+        "It is true that nothing is given here. C is a letter.",
+        {}
       )
     ).toEqual([]);
   });
@@ -302,9 +315,106 @@ describe("buildEvidenceTargets", () => {
   it("order null -> bỏ", () => {
     expect(
       buildEvidenceTargets(
-        [{ order: null, evidenceSnapshot: "x", correctAnswerSnapshot: "y" }],
-        transcript
+        [{ order: null, questionEvidence: null, evidenceSnapshot: "x", correctAnswerSnapshot: "y" }],
+        transcript,
+        {}
       )
     ).toEqual([]);
+  });
+
+  it("questionEvidence (giáo viên nhập) thắng evidenceSnapshot", () => {
+    const targets = buildEvidenceTargets(
+      [
+        {
+          order: 7,
+          questionEvidence: "Victor: They decided to live on a small island with harsh weather.",
+          evidenceSnapshot: "Victor: No, it was climbing that he spent his time on.",
+          correctAnswerSnapshot: "climbing"
+        }
+      ],
+      transcript,
+      {}
+    );
+    expect(targets).toEqual([
+      {
+        order: 7,
+        evidence: "Victor: They decided to live on a small island with harsh weather.",
+        answers: ["climbing"]
+      }
+    ]);
+  });
+
+  it("questionEvidence không khớp nguyên văn -> lùi về evidenceSnapshot", () => {
+    const targets = buildEvidenceTargets(
+      [
+        {
+          order: 8,
+          questionEvidence: "Giáo viên gõ tay một câu không có trong transcript.",
+          evidenceSnapshot: "Victor: No, it was climbing that he spent his time on.",
+          correctAnswerSnapshot: "climbing"
+        }
+      ],
+      transcript,
+      {}
+    );
+    expect(targets).toEqual([
+      {
+        order: 8,
+        evidence: "Victor: No, it was climbing that he spent his time on.",
+        answers: ["climbing"]
+      }
+    ]);
+  });
+
+  it("cả hai dẫn chứng đều không khớp -> lùi về dò từ khóa", () => {
+    const targets = buildEvidenceTargets(
+      [
+        {
+          order: 9,
+          questionEvidence: "Câu không có thật.",
+          evidenceSnapshot: "Câu chụp cũng không có thật.",
+          correctAnswerSnapshot: "climbing"
+        }
+      ],
+      transcript,
+      {}
+    );
+    expect(targets).toHaveLength(1);
+    expect(targets[0].order).toBe(9);
+    expect(targets[0].evidence).toContain("climbing");
+    expect(targets[0].answers).toEqual(["climbing"]);
+  });
+
+  it("dẫn chứng không khớp và từ khóa cũng không dò ra -> không đích", () => {
+    expect(
+      buildEvidenceTargets(
+        [
+          {
+            order: 10,
+            questionEvidence: "Không có thật.",
+            evidenceSnapshot: null,
+            correctAnswerSnapshot: "B. to experience an isolated place"
+          }
+        ],
+        transcript,
+        {}
+      )
+    ).toEqual([]);
+  });
+
+  it("evidenceSnapshot còn [[n]] -> điền đáp án vào rồi vẫn khớp nguồn", () => {
+    const targets = buildEvidenceTargets(
+      [
+        {
+          order: 4,
+          questionEvidence: null,
+          evidenceSnapshot: "The [[4]] is hot.",
+          correctAnswerSnapshot: "core"
+        }
+      ],
+      "The core is hot. Nothing else matters.",
+      { 4: "core" }
+    );
+    expect(targets).toEqual([{ order: 4, evidence: "The [[4]] is hot.", answers: ["core"] }]);
   });
 });

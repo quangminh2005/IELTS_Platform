@@ -25,6 +25,7 @@ type Answer = {
     order: number;
     prompt: string;
     points: number;
+    answerEvidence: string | null;
   } | null;
   assignableUnit: {
     title: string;
@@ -149,6 +150,7 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
       isCorrect: answer.isCorrect,
       pointsAwarded: answer.pointsAwarded,
       correctAnswerSnapshot: answer.correctAnswerSnapshot,
+      questionEvidence: answer.question?.answerEvidence ?? null,
       evidenceSnapshot: answer.evidenceSnapshot,
       explanationSnapshot: answer.explanationSnapshot,
       annotations: answer.annotations

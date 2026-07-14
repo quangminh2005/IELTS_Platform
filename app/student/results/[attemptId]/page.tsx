@@ -63,7 +63,8 @@ export default async function StudentResultPage({ params, searchParams }: Result
             select: {
               order: true,
               prompt: true,
-              points: true
+              points: true,
+              answerEvidence: true
             }
           },
           assignableUnit: {

@@ -406,6 +406,9 @@ export function QuestionFields({
           defaultValue={defaults?.answerEvidence ?? ""}
           className={fieldClass}
         />
+        <p className="mt-1 text-xs text-muted-foreground">
+          Dán nguyên văn một câu từ transcript/bài đọc để hệ thống tô đúng chỗ.
+        </p>
       </div>
 
       <QuestionPreview type={type} prompt={prompt} optionsText={optionsText} answerText={answerText} />

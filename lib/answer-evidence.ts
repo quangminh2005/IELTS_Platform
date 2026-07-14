@@ -269,18 +269,23 @@ function isSearchableKeyword(keyword: string): boolean {
 
 export type EvidenceTargetInput = {
   order: number | null;
-  evidenceSnapshot: string | null;
+  questionEvidence: string | null; // live từ Question.answerEvidence (giáo viên nhập)
+  evidenceSnapshot: string | null; // bản chụp lúc chấm
   correctAnswerSnapshot: string | null;
 };
 
-// Dựng danh sách đích dẫn chứng cho một part:
-//  - Đã có evidenceSnapshot (câu điền từ tự sinh khi chấm, hoặc giáo viên nhập) -> dùng
-//    câu đó; từ khóa đáp án chỉ để tô đậm bên trong.
-//  - Chưa có (câu trắc nghiệm...) -> với MỖI từ khóa dò được câu chứa nó, tạo một đích
-//    cùng order; nhờ vậy câu "chọn nhiều đáp án" tô được nhiều chỗ. Không dò ra -> bỏ.
+// Dựng danh sách đích dẫn chứng cho một part, theo 3 tầng ưu tiên — lấy tầng ĐẦU TIÊN
+// định vị được nguyên văn trong filledSource:
+//  1. questionEvidence: giáo viên nhập, đọc live -> sửa là bài cũ đổi theo ngay.
+//  2. evidenceSnapshot: chụp lúc chấm (câu điền từ tự sinh) -> giữ để không hồi quy.
+//  3. Dò từ khóa đáp án: mỗi từ khóa dò được câu chứa nó tạo một đích cùng order (câu
+//     "chọn nhiều đáp án" nhờ vậy tô được nhiều chỗ).
+// Bắt buộc "định vị được" mới chọn: giáo viên gõ sai khớp thì lùi tầng sau thay vì mất
+// hẳn highlight. Không tầng nào ra -> không đích -> thẻ trơ.
 export function buildEvidenceTargets(
   items: EvidenceTargetInput[],
-  filledSource: string
+  filledSource: string,
+  answersByOrder: Record<number, string>
 ): EvidenceTarget[] {
   const targets: EvidenceTarget[] = [];
 
@@ -289,10 +294,17 @@ export function buildEvidenceTargets(
       continue;
     }
     const keywords = answerKeywords(item.correctAnswerSnapshot);
-    const evidence = item.evidenceSnapshot?.trim();
 
-    if (evidence) {
-      targets.push({ order: item.order, evidence, answers: keywords });
+    const located = [item.questionEvidence, item.evidenceSnapshot]
+      .map((candidate) => candidate?.trim())
+      .find(
+        (candidate) =>
+          !!candidate &&
+          filledSource.includes(fillSourceBlanks(candidate, answersByOrder).trim())
+      );
+
+    if (located) {
+      targets.push({ order: item.order, evidence: located, answers: keywords });
       continue;
     }
 

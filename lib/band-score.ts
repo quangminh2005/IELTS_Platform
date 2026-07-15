@@ -118,9 +118,13 @@ export function bandsBySkill(
   }));
 }
 
+// Nhãn ngắn tiếng Việt cho kỹ năng. Viết/Nói không bao giờ ra từ bandsBySkill
+// (chấm tay, không có band) nhưng vẫn cần nhãn ở chỗ liệt kê kỹ năng của bài.
 export const SKILL_SHORT_LABELS: Record<string, string> = {
   listening: "Nghe",
-  reading: "Đọc"
+  reading: "Đọc",
+  writing: "Viết",
+  speaking: "Nói"
 };
 
 // Làm tròn về nửa band gần nhất (thang IELTS: 0.5), giống cách tính band tổng.

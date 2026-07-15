@@ -42,6 +42,8 @@ import {
   countGradedAnswers,
   studentsGroupedByClass,
   formatAttemptResult,
+  buildSkillProgress,
+  skillChipText,
   type CalendarRecipient
 } from "../lib/assignment-calendar";
 
@@ -124,6 +126,131 @@ describe("formatAttemptResult", () => {
     expect(
       formatAttemptResult({ ...base, band: 7, correct: 30, total: 40, hasPendingManual: true })
     ).toBe("7.0 · 30/40 · Chờ chấm");
+  });
+});
+
+describe("buildSkillProgress", () => {
+  // Bài Nghe đủ 40 câu: 20 đúng, 20 sai.
+  const listening40 = [
+    ...Array.from({ length: 20 }, () => ({ isCorrect: true, skill: "listening" })),
+    ...Array.from({ length: 20 }, () => ({ isCorrect: false, skill: "listening" }))
+  ];
+
+  it("kỹ năng đã nộp đủ 40 câu: có số câu đúng và band", () => {
+    const rows = buildSkillProgress(
+      ["listening", "reading"],
+      [{ skill: "listening", status: "submitted" }],
+      listening40
+    );
+    expect(rows[0]).toEqual({
+      skill: "listening",
+      submitted: true,
+      correct: 20,
+      total: 40,
+      band: 5.5
+    });
+  });
+
+  it("kỹ năng của bài chưa nộp: submitted false, không có điểm", () => {
+    const rows = buildSkillProgress(
+      ["listening", "reading"],
+      [{ skill: "listening", status: "submitted" }],
+      listening40
+    );
+    expect(rows[1]).toEqual({
+      skill: "reading",
+      submitted: false,
+      correct: null,
+      total: null,
+      band: null
+    });
+  });
+
+  it("kỹ năng chưa có dòng AttemptSkill vẫn hiện là chưa nộp", () => {
+    // Học sinh chưa mở phần Đọc lần nào -> không có dòng AttemptSkill nào cả.
+    const rows = buildSkillProgress(["listening", "reading"], [], []);
+    expect(rows.map((r) => r.skill)).toEqual(["listening", "reading"]);
+    expect(rows.every((r) => r.submitted === false)).toBe(true);
+  });
+
+  it("kỹ năng đang làm dở (chưa nộp) không tính là đã nộp", () => {
+    const rows = buildSkillProgress(
+      ["reading"],
+      [{ skill: "reading", status: "in_progress" }],
+      []
+    );
+    expect(rows[0].submitted).toBe(false);
+  });
+
+  it("bài lẻ không đủ 40 câu: giữ số câu đúng, không có band", () => {
+    const answers = [
+      ...Array.from({ length: 8 }, () => ({ isCorrect: true, skill: "listening" })),
+      ...Array.from({ length: 2 }, () => ({ isCorrect: false, skill: "listening" }))
+    ];
+    const rows = buildSkillProgress(
+      ["listening"],
+      [{ skill: "listening", status: "submitted" }],
+      answers
+    );
+    expect(rows[0]).toEqual({
+      skill: "listening",
+      submitted: true,
+      correct: 8,
+      total: 10,
+      band: null
+    });
+  });
+
+  it("kỹ năng chấm tay đã nộp: đã nộp nhưng chưa có điểm", () => {
+    const rows = buildSkillProgress(
+      ["writing"],
+      [{ skill: "writing", status: "submitted" }],
+      [{ isCorrect: null, skill: "writing" }]
+    );
+    expect(rows[0]).toEqual({
+      skill: "writing",
+      submitted: true,
+      correct: null,
+      total: null,
+      band: null
+    });
+  });
+
+  it("giữ đúng thứ tự kỹ năng của bài", () => {
+    const rows = buildSkillProgress(["listening", "reading", "writing"], [], []);
+    expect(rows.map((r) => r.skill)).toEqual(["listening", "reading", "writing"]);
+  });
+});
+
+describe("skillChipText", () => {
+  it("Nghe/Đọc đủ 40 câu: số câu đúng + band", () => {
+    expect(
+      skillChipText({ skill: "listening", submitted: true, correct: 20, total: 40, band: 5.5 })
+    ).toBe("Nghe: 20/40 · Band 5.5");
+  });
+
+  it("bài lẻ không có band: chỉ số câu đúng", () => {
+    expect(
+      skillChipText({ skill: "reading", submitted: true, correct: 8, total: 10, band: null })
+    ).toBe("Đọc: 8/10");
+  });
+
+  it("kỹ năng chấm tay đã nộp: chờ chấm", () => {
+    expect(
+      skillChipText({ skill: "writing", submitted: true, correct: null, total: null, band: null })
+    ).toBe("Viết: đã nộp · chờ chấm");
+  });
+
+  it("kỹ năng chưa nộp", () => {
+    expect(
+      skillChipText({ skill: "reading", submitted: false, correct: null, total: null, band: null })
+    ).toBe("Đọc: chưa nộp");
+  });
+
+  it("kỹ năng lạ vẫn hiện tên gốc thay vì vỡ", () => {
+    expect(
+      skillChipText({ skill: "grammar", submitted: false, correct: null, total: null, band: null })
+    ).toBe("grammar: chưa nộp");
   });
 });
 

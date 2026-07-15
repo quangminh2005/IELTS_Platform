@@ -7,11 +7,13 @@ import {
   formatAttemptResult,
   groupAssignmentsByDayDescending,
   isSubmissionLate,
+  skillChipText,
   studentsGroupedByClass,
   type CalendarAssignment,
   type CalendarClass,
   type CalendarMode,
-  type CalendarRecipient
+  type CalendarRecipient,
+  type CalendarSkillProgress
 } from "@/lib/assignment-calendar";
 
 const SUBMITTED = new Set(["submitted", "reviewed"]);
@@ -54,6 +56,27 @@ function statusLabel(recipient: CalendarRecipient) {
 
 function initials(name: string) {
   return name.trim().slice(0, 2) || "?";
+}
+
+// Chip từng kỹ năng cho học viên đang làm dở: phần đã nộp thì nhấn, phần chưa
+// nộp để chìm.
+function SkillProgressChips({ skills }: { skills: CalendarSkillProgress[] }) {
+  return (
+    <>
+      {skills.map((progress) => (
+        <span
+          key={progress.skill}
+          className={
+            progress.submitted
+              ? "rounded-full bg-primary/10 px-2 py-0.5 font-medium text-primary"
+              : "rounded-full bg-muted px-2 py-0.5 text-muted-foreground/70"
+          }
+        >
+          {skillChipText(progress)}
+        </span>
+      ))}
+    </>
+  );
 }
 
 export function AssignmentCalendar({ assignments, classes }: Props) {
@@ -297,9 +320,14 @@ function StudentRow({
             </span>
           </>
         ) : (
-          <span className="rounded-full bg-muted px-2 py-0.5 text-muted-foreground">
-            {statusLabel(recipient)}
-          </span>
+          <>
+            <span className="rounded-full bg-muted px-2 py-0.5 text-muted-foreground">
+              {statusLabel(recipient)}
+            </span>
+            {attempt?.status === "in_progress" ? (
+              <SkillProgressChips skills={attempt.skills} />
+            ) : null}
+          </>
         )}
       </div>
     </div>

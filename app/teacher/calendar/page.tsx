@@ -1,11 +1,13 @@
 import { AssignmentCalendar } from "@/components/assignment-calendar";
 import { requireTeacher } from "@/lib/actions/classes";
 import {
+  buildSkillProgress,
   countGradedAnswers,
   type CalendarAssignment,
   type CalendarClass
 } from "@/lib/assignment-calendar";
 import { attemptBand } from "@/lib/band-score";
+import { orderedSkillsOfAssignment } from "@/lib/skill-sessions";
 import { prisma } from "@/lib/prisma";
 
 export default async function TeacherCalendarPage() {
@@ -26,6 +28,8 @@ export default async function TeacherCalendarPage() {
       orderBy: { createdAt: "desc" },
       include: {
         _count: { select: { units: true } },
+        // Kỹ năng của bài (để biết học viên còn thiếu phần nào khi đang làm dở).
+        units: { select: { assignableUnit: { select: { skill: true } } } },
         recipients: {
           include: {
             student: { select: { id: true, displayName: true, email: true } },
@@ -34,6 +38,7 @@ export default async function TeacherCalendarPage() {
               take: 1,
               include: {
                 review: { select: { overallBand: true } },
+                skills: { select: { skill: true, status: true } },
                 answers: {
                   select: {
                     isCorrect: true,
@@ -62,52 +67,57 @@ export default async function TeacherCalendarPage() {
     name: cls.name
   }));
 
-  const calendarAssignments: CalendarAssignment[] = assignments.map((assignment) => ({
-    id: assignment.id,
-    title: assignment.title,
-    createdAt: assignment.createdAt.toISOString(),
-    deadline: assignment.deadline ? assignment.deadline.toISOString() : null,
-    unitCount: assignment._count.units,
-    recipients: assignment.recipients.map((recipient) => {
-      const attempt = recipient.attempts[0] ?? null;
+  const calendarAssignments: CalendarAssignment[] = assignments.map((assignment) => {
+    const assignmentSkills = orderedSkillsOfAssignment(assignment.units);
 
-      if (!attempt) {
+    return {
+      id: assignment.id,
+      title: assignment.title,
+      createdAt: assignment.createdAt.toISOString(),
+      deadline: assignment.deadline ? assignment.deadline.toISOString() : null,
+      unitCount: assignment._count.units,
+      recipients: assignment.recipients.map((recipient) => {
+        const attempt = recipient.attempts[0] ?? null;
+
+        if (!attempt) {
+          return {
+            studentId: recipient.student.id,
+            displayName: recipient.student.displayName,
+            email: recipient.student.email,
+            classIds: classIdsByStudent.get(recipient.student.id) ?? [],
+            status: recipient.status,
+            attempt: null
+          };
+        }
+
+        const answers = attempt.answers.map((answer) => ({
+          isCorrect: answer.isCorrect,
+          skill: answer.assignableUnit.skill
+        }));
+        const { correct, total } = countGradedAnswers(answers);
+
         return {
           studentId: recipient.student.id,
           displayName: recipient.student.displayName,
           email: recipient.student.email,
           classIds: classIdsByStudent.get(recipient.student.id) ?? [],
           status: recipient.status,
-          attempt: null
+          attempt: {
+            id: attempt.id,
+            status: attempt.status,
+            submittedAt: attempt.submittedAt ? attempt.submittedAt.toISOString() : null,
+            elapsedSeconds: attempt.elapsedSeconds,
+            band: attemptBand(attempt.review?.overallBand ?? null, answers),
+            correct,
+            total,
+            scorePercent: attempt.scorePercent,
+            hasPendingManual: answers.some((answer) => answer.isCorrect === null),
+            skills: buildSkillProgress(assignmentSkills, attempt.skills, answers)
+          }
         };
-      }
-
-      const answers = attempt.answers.map((answer) => ({
-        isCorrect: answer.isCorrect,
-        skill: answer.assignableUnit.skill
-      }));
-      const { correct, total } = countGradedAnswers(answers);
-
-      return {
-        studentId: recipient.student.id,
-        displayName: recipient.student.displayName,
-        email: recipient.student.email,
-        classIds: classIdsByStudent.get(recipient.student.id) ?? [],
-        status: recipient.status,
-        attempt: {
-          id: attempt.id,
-          status: attempt.status,
-          submittedAt: attempt.submittedAt ? attempt.submittedAt.toISOString() : null,
-          elapsedSeconds: attempt.elapsedSeconds,
-          band: attemptBand(attempt.review?.overallBand ?? null, answers),
-          correct,
-          total,
-          scorePercent: attempt.scorePercent,
-          hasPendingManual: answers.some((answer) => answer.isCorrect === null)
-        }
-      };
-    })
-  }));
+      })
+    };
+  });
 
   return (
     <div className="space-y-8">

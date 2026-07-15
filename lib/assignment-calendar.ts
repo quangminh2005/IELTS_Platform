@@ -2,9 +2,19 @@
 // Toàn bộ ở đây không phụ thuộc Prisma/React để test được và dùng chung
 // cho cả server component lẫn client component.
 
-import { formatBand } from "@/lib/band-score";
+import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 
 export type CalendarClass = { id: string; name: string };
+
+// Tiến độ MỘT kỹ năng trong một lần làm bài đang dở.
+// correct/total/band = null khi chưa nộp, hoặc khi là kỹ năng chấm tay (Viết/Nói).
+export type CalendarSkillProgress = {
+  skill: string;
+  submitted: boolean;
+  correct: number | null;
+  total: number | null;
+  band: number | null;
+};
 
 export type CalendarAttempt = {
   id: string;
@@ -16,6 +26,7 @@ export type CalendarAttempt = {
   total: number;
   scorePercent: number | null;
   hasPendingManual: boolean; // còn câu Writing/Speaking chưa chấm
+  skills: CalendarSkillProgress[]; // tiến độ từng kỹ năng của bài
 };
 
 export type CalendarRecipient = {
@@ -101,6 +112,52 @@ export function countGradedAnswers(
   }
 
   return { correct, total };
+}
+
+// Tiến độ từng kỹ năng của một lần làm bài đang dở, để trang Lịch giao bài cho
+// biết học viên đã xong phần nào. Ghép ba nguồn:
+//   - assignmentSkills: kỹ năng CỦA BÀI (đã sắp thứ tự IELTS). Lấy từ bài chứ
+//     không từ attemptSkills, vì AttemptSkill chỉ sinh ra khi học sinh mở kỹ năng
+//     đó — kỹ năng chưa đụng tới vẫn phải hiện "chưa nộp".
+//   - attemptSkills: trạng thái nộp; không có dòng => coi như chưa nộp.
+//   - answers: số câu đúng + band (bandsBySkill chỉ trả về Nghe/Đọc, nên Viết/Nói
+//     đã nộp sẽ không có điểm — phía hiển thị ghi "chờ chấm").
+export function buildSkillProgress(
+  assignmentSkills: string[],
+  attemptSkills: Array<{ skill: string; status: string }>,
+  answers: Array<{ isCorrect: boolean | null; skill: string }>
+): CalendarSkillProgress[] {
+  const statusBySkill = new Map(attemptSkills.map((row) => [row.skill, row.status]));
+  const bandBySkill = new Map(bandsBySkill(answers).map((row) => [row.skill, row]));
+
+  return assignmentSkills.map((skill) => {
+    const submitted = statusBySkill.get(skill) === "submitted";
+    const scored = submitted ? bandBySkill.get(skill) : undefined;
+
+    return {
+      skill,
+      submitted,
+      correct: scored?.correct ?? null,
+      total: scored?.total ?? null,
+      band: scored?.band ?? null
+    };
+  });
+}
+
+// Chữ trên chip tiến độ một kỹ năng: "Nghe: 20/40 · Band 5.5", "Viết: đã nộp ·
+// chờ chấm" (kỹ năng chấm tay), hay "Đọc: chưa nộp".
+export function skillChipText(progress: CalendarSkillProgress): string {
+  const label = SKILL_SHORT_LABELS[progress.skill] ?? progress.skill;
+
+  if (!progress.submitted) {
+    return `${label}: chưa nộp`;
+  }
+  if (progress.correct === null || progress.total === null) {
+    return `${label}: đã nộp · chờ chấm`;
+  }
+
+  const score = `${label}: ${progress.correct}/${progress.total}`;
+  return progress.band === null ? score : `${score} · Band ${formatBand(progress.band)}`;
 }
 
 // Gom học viên theo lớp. Lọc theo 1 lớp -> chỉ lớp đó. "Tất cả" -> mỗi lớp có

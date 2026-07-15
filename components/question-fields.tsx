@@ -1,8 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { ActionForm, ActionSubmitButton, type ServerAction } from "@/components/action-form";
-import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
+import {
+  ActionDeleteButton,
+  ActionForm,
+  ActionSubmitButton,
+  type ServerAction
+} from "@/components/action-form";
 import { parseQuestionOptions, splitPromptIntoSegments } from "@/lib/question-interactions";
 
 type UnitChoice = {
@@ -29,7 +33,7 @@ type QuestionFieldsProps = {
   selectedUnitId?: string;
   hiddenFields?: Record<string, string>;
   defaults?: QuestionDefaults;
-  deleteAction?: (formData: FormData) => void | Promise<void>;
+  deleteAction?: ServerAction;
   deleteConfirm?: string;
 };
 
@@ -417,13 +421,13 @@ export function QuestionFields({
       <div className="flex flex-wrap gap-2">
         <ActionSubmitButton className={secondaryButtonClass}>{submitLabel}</ActionSubmitButton>
         {deleteAction ? (
-          <ConfirmSubmitButton
-            formAction={deleteAction}
+          <ActionDeleteButton
+            action={deleteAction}
             confirmMessage={deleteConfirm ?? "Xoá câu hỏi này? Không thể hoàn tác."}
             className={dangerButtonClass}
           >
             Xoá câu hỏi
-          </ConfirmSubmitButton>
+          </ActionDeleteButton>
         ) : null}
       </div>
     </ActionForm>

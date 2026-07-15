@@ -556,34 +556,40 @@ export async function updateQuestion(formData: FormData): Promise<ActionResult> 
   }
 }
 
-export async function deleteQuestion(formData: FormData) {
-  const teacher = await requireTeacher();
-  const id = idSchema.parse(formData.get("questionId"));
+export async function deleteQuestion(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  const question = await prisma.question.findFirst({
-    where: {
-      id,
-      assignableUnit: {
-        material: {
-          teacherId: teacher.id
+  try {
+    const id = idSchema.parse(formData.get("questionId"));
+
+    const question = await prisma.question.findFirst({
+      where: {
+        id,
+        assignableUnit: {
+          material: {
+            teacherId: teacher.id
+          }
         }
+      },
+      select: {
+        id: true,
+        order: true
       }
-    },
-    select: {
-      id: true
+    });
+
+    if (!question) {
+      throw new Error("Không tìm thấy câu hỏi này.");
     }
-  });
 
-  if (!question) {
-    redirect(materialNoticePath("error", "Question not found for this teacher."));
+    await prisma.question.delete({
+      where: { id: question.id }
+    });
+
+    revalidatePath("/teacher/materials");
+    return actionOk(`Đã xoá câu ${question.order}.`);
+  } catch (error) {
+    return actionFail(error, "Xoá câu hỏi");
   }
-
-  await prisma.question.delete({
-    where: { id: question.id }
-  });
-
-  revalidatePath("/teacher/materials");
-  redirect(materialNoticePath("success", "Question deleted."));
 }
 
 const importScalar = z.union([z.string(), z.number(), z.boolean()]);

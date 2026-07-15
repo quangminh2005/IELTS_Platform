@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import Link from "next/link";
+import { ActionDeleteButton, ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { AudioUpload } from "@/components/audio-upload";
-import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { ImageUpload } from "@/components/image-upload";
 import { MaterialsBrowser, type MaterialBrowserItem } from "@/components/materials-browser";
 import { QuestionFields } from "@/components/question-fields";
@@ -313,7 +313,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         <PencilIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
                         Sửa tài liệu
                       </summary>
-                      <form action={updateMaterial} className="mt-4 grid gap-3">
+                      <ActionForm action={updateMaterial} className="mt-4 grid gap-3">
                         <input type="hidden" name="materialId" value={material.id} />
                         <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_12rem]">
                           <div>
@@ -374,16 +374,18 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           </div>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                          <button className={secondaryButtonClass}>Lưu tài liệu</button>
-                          <ConfirmSubmitButton
-                            formAction={deleteMaterial}
+                          <ActionSubmitButton className={secondaryButtonClass}>
+                            Lưu tài liệu
+                          </ActionSubmitButton>
+                          <ActionDeleteButton
+                            action={deleteMaterial}
                             confirmMessage={`Xoá tài liệu "${material.title}"?\n\nSẽ xoá toàn bộ phần, câu hỏi VÀ CẢ BÀI LÀM/ĐÁP ÁN của học sinh thuộc tài liệu này. Các bài tập đã giao có dùng tài liệu này sẽ bị gỡ phần đó. KHÔNG THỂ HOÀN TÁC.`}
                             className={dangerButtonClass}
                           >
                             Xoá tài liệu
-                          </ConfirmSubmitButton>
+                          </ActionDeleteButton>
                         </div>
-                      </form>
+                      </ActionForm>
                     </details>
                   </div>
                 </div>
@@ -427,7 +429,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           <PencilIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
                           Sửa phần
                         </summary>
-                        <form action={updateUnit} className="mt-4 grid gap-3">
+                        <ActionForm action={updateUnit} className="mt-4 grid gap-3">
                           <input type="hidden" name="unitId" value={unit.id} />
                           <input type="hidden" name="materialId" value={material.id} />
                           <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_12rem_6rem]">
@@ -565,16 +567,18 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                             </div>
                           </div>
                           <div className="flex flex-wrap gap-2">
-                            <button className={secondaryButtonClass}>Lưu phần</button>
-                            <ConfirmSubmitButton
-                              formAction={deleteUnit}
+                            <ActionSubmitButton className={secondaryButtonClass}>
+                              Lưu phần
+                            </ActionSubmitButton>
+                            <ActionDeleteButton
+                              action={deleteUnit}
                               confirmMessage={`Xoá phần "${unit.title}" cùng toàn bộ câu hỏi? Không thể hoàn tác.`}
                               className={dangerButtonClass}
                             >
                               Xoá phần
-                            </ConfirmSubmitButton>
+                            </ActionDeleteButton>
                           </div>
-                        </form>
+                        </ActionForm>
                       </details>
                       {unit.questions.length > 0 ? (
                         <details className="mt-3">

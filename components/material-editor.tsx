@@ -1,4 +1,5 @@
 import { createMaterial, createQuestion, createUnit } from "@/lib/actions/materials";
+import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { AudioUpload } from "@/components/audio-upload";
 import { ImageUpload } from "@/components/image-upload";
 import { QuestionFields } from "@/components/question-fields";
@@ -62,7 +63,7 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
 
   return (
     <div className="grid gap-5 xl:grid-cols-3">
-      <form action={createMaterial} className="rounded-xl border border-border bg-card p-5 shadow-card">
+      <ActionForm action={createMaterial} className="rounded-xl border border-border bg-card p-5 shadow-card">
         <h3 className="text-base font-semibold">Tài liệu mới</h3>
         <p className="mt-1 text-sm text-muted-foreground">Tạo mục mới theo kỹ năng và nguồn.</p>
 
@@ -98,12 +99,15 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
         </label>
         <textarea id="material-description" name="description" rows={3} className={fieldClass} />
 
-        <button className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
+        <ActionSubmitButton
+          pendingLabel="Đang tạo…"
+          className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+        >
           Tạo tài liệu
-        </button>
-      </form>
+        </ActionSubmitButton>
+      </ActionForm>
 
-      <form action={createUnit} className="rounded-xl border border-border bg-card p-5 shadow-card">
+      <ActionForm action={createUnit} className="rounded-xl border border-border bg-card p-5 shadow-card">
         <h3 className="text-base font-semibold">Phần mới</h3>
         <p className="mt-1 text-sm text-muted-foreground">Phần sẽ kế thừa kỹ năng của tài liệu đã chọn.</p>
 
@@ -203,10 +207,13 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
         </label>
         <textarea id="metadataJson" name="metadataJson" rows={2} placeholder='{"part":1}' className={fieldClass} />
 
-        <button className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
+        <ActionSubmitButton
+          pendingLabel="Đang tạo…"
+          className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+        >
           Tạo phần
-        </button>
-      </form>
+        </ActionSubmitButton>
+      </ActionForm>
 
       <div className="rounded-xl border border-border bg-card p-5 shadow-card">
         <h3 className="text-base font-semibold">Câu hỏi Listening / Reading</h3>

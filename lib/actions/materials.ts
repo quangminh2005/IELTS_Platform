@@ -133,298 +133,322 @@ function buildUnitMetadata(
   return Object.keys(meta).length > 0 ? JSON.stringify(meta) : null;
 }
 
-export async function createMaterial(formData: FormData) {
-  const teacher = await requireTeacher();
-  const parsed = materialSchema.safeParse({
-    title: formData.get("title"),
-    skill: formData.get("skill"),
-    sourceLabel: formData.get("sourceLabel"),
-    description: formData.get("description")
-  });
+export async function createMaterial(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid material details.");
-  }
+  try {
+    const parsed = materialSchema.safeParse({
+      title: formData.get("title"),
+      skill: formData.get("skill"),
+      sourceLabel: formData.get("sourceLabel"),
+      description: formData.get("description")
+    });
 
-  await prisma.material.create({
-    data: {
-      teacherId: teacher.id,
-      skill: parsed.data.skill,
-      title: parsed.data.title,
-      sourceLabel: optionalText(parsed.data.sourceLabel),
-      description: optionalText(parsed.data.description)
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Thông tin tài liệu chưa hợp lệ.");
     }
-  });
 
-  revalidatePath("/teacher");
-  revalidatePath("/teacher/materials");
+    await prisma.material.create({
+      data: {
+        teacherId: teacher.id,
+        skill: parsed.data.skill,
+        title: parsed.data.title,
+        sourceLabel: optionalText(parsed.data.sourceLabel),
+        description: optionalText(parsed.data.description)
+      }
+    });
+
+    revalidatePath("/teacher");
+    revalidatePath("/teacher/materials");
+    return actionOk(`Đã tạo tài liệu "${parsed.data.title}".`);
+  } catch (error) {
+    return actionFail(error, "Tạo tài liệu");
+  }
 }
 
-export async function updateMaterial(formData: FormData) {
-  const teacher = await requireTeacher();
-  const id = idSchema.parse(formData.get("materialId"));
-  const parsed = materialSchema.safeParse({
-    title: formData.get("title"),
-    skill: formData.get("skill"),
-    sourceLabel: formData.get("sourceLabel"),
-    description: formData.get("description")
-  });
+export async function updateMaterial(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid material details.");
-  }
+  try {
+    const id = idSchema.parse(formData.get("materialId"));
+    const parsed = materialSchema.safeParse({
+      title: formData.get("title"),
+      skill: formData.get("skill"),
+      sourceLabel: formData.get("sourceLabel"),
+      description: formData.get("description")
+    });
 
-  const result = await prisma.material.updateMany({
-    where: {
-      id,
-      teacherId: teacher.id
-    },
-    data: {
-      skill: parsed.data.skill,
-      title: parsed.data.title,
-      sourceLabel: optionalText(parsed.data.sourceLabel),
-      description: optionalText(parsed.data.description)
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Thông tin tài liệu chưa hợp lệ.");
     }
-  });
 
-  if (result.count === 0) {
-    throw new Error("Material not found for this teacher.");
-  }
+    const result = await prisma.material.updateMany({
+      where: {
+        id,
+        teacherId: teacher.id
+      },
+      data: {
+        skill: parsed.data.skill,
+        title: parsed.data.title,
+        sourceLabel: optionalText(parsed.data.sourceLabel),
+        description: optionalText(parsed.data.description)
+      }
+    });
 
-  await prisma.assignableUnit.updateMany({
-    where: {
-      materialId: id
-    },
-    data: {
-      skill: parsed.data.skill
+    if (result.count === 0) {
+      throw new Error("Không tìm thấy tài liệu này.");
     }
-  });
 
-  revalidatePath("/teacher");
-  revalidatePath("/teacher/materials");
+    await prisma.assignableUnit.updateMany({
+      where: {
+        materialId: id
+      },
+      data: {
+        skill: parsed.data.skill
+      }
+    });
+
+    revalidatePath("/teacher");
+    revalidatePath("/teacher/materials");
+    return actionOk(`Đã lưu tài liệu "${parsed.data.title}".`);
+  } catch (error) {
+    return actionFail(error, "Lưu tài liệu");
+  }
 }
 
-export async function deleteMaterial(formData: FormData) {
-  const teacher = await requireTeacher();
-  const id = idSchema.parse(formData.get("materialId"));
+export async function deleteMaterial(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  const material = await prisma.material.findFirst({
-    where: {
-      id,
-      teacherId: teacher.id
-    },
-    select: {
-      id: true,
-      units: {
-        select: {
-          _count: {
-            select: {
-              assignmentUnits: true,
-              answers: true,
-              highlights: true
+  try {
+    const id = idSchema.parse(formData.get("materialId"));
+
+    const material = await prisma.material.findFirst({
+      where: {
+        id,
+        teacherId: teacher.id
+      },
+      select: {
+        id: true,
+        units: {
+          select: {
+            _count: {
+              select: {
+                assignmentUnits: true,
+                answers: true,
+                highlights: true
+              }
             }
           }
         }
       }
+    });
+
+    if (!material) {
+      throw new Error("Không tìm thấy tài liệu này.");
     }
-  });
 
-  if (!material) {
-    redirect(materialNoticePath("error", "Material not found for this teacher."));
-  }
+    // Cho phép xoá kể cả khi đã giao bài / có bài làm. Xoá tài liệu sẽ kéo theo
+    // (cascade ở DB) các phần, câu hỏi, câu trả lời và đánh dấu liên quan; các
+    // bài tập đã giao có thể còn lại nhưng mất phần dùng tài liệu này.
+    const answerCount = material.units.reduce((sum, unit) => sum + unit._count.answers, 0);
+    const assignedCount = material.units.reduce(
+      (sum, unit) => sum + unit._count.assignmentUnits,
+      0
+    );
 
-  // Cho phép xoá kể cả khi đã giao bài / có bài làm. Xoá tài liệu sẽ kéo theo
-  // (cascade ở DB) các phần, câu hỏi, câu trả lời và đánh dấu liên quan; các
-  // bài tập đã giao có thể còn lại nhưng mất phần dùng tài liệu này.
-  const answerCount = material.units.reduce((sum, unit) => sum + unit._count.answers, 0);
-  const assignedCount = material.units.reduce(
-    (sum, unit) => sum + unit._count.assignmentUnits,
-    0
-  );
+    await prisma.material.delete({
+      where: { id: material.id }
+    });
 
-  await prisma.material.delete({
-    where: { id: material.id }
-  });
+    revalidatePath("/teacher");
+    revalidatePath("/teacher/materials");
 
-  revalidatePath("/teacher");
-  revalidatePath("/teacher/materials");
-  redirect(
-    materialNoticePath(
-      "success",
+    return actionOk(
       answerCount > 0 || assignedCount > 0
         ? `Đã xoá tài liệu (kèm ${answerCount} câu trả lời của học sinh${
             assignedCount > 0 ? `, gỡ khỏi ${assignedCount} lượt giao bài` : ""
           }).`
         : "Đã xoá tài liệu."
-    )
-  );
-}
-
-export async function createUnit(formData: FormData) {
-  const teacher = await requireTeacher();
-  const parsed = unitSchema.safeParse({
-    materialId: formData.get("materialId"),
-    unitType: formData.get("unitType"),
-    unitNumber: formData.get("unitNumber"),
-    title: formData.get("title"),
-    instructions: formData.get("instructions"),
-    content: formData.get("content"),
-    audioUrl: formData.get("audioUrl"),
-    transcript: formData.get("transcript"),
-    defaultTimeLimitMinutes: formData.get("defaultTimeLimitMinutes"),
-    metadataJson: formData.get("metadataJson"),
-    imageUrlsJson: formData.get("imageUrlsJson")
-  });
-
-  if (!parsed.success) {
-    redirect(
-      materialNoticePath("error", parsed.error.issues[0]?.message ?? "Thông tin phần chưa hợp lệ.")
     );
+  } catch (error) {
+    return actionFail(error, "Xoá tài liệu");
   }
-
-  const material = await prisma.material.findFirst({
-    where: {
-      id: parsed.data.materialId,
-      teacherId: teacher.id
-    },
-    select: {
-      id: true,
-      skill: true
-    }
-  });
-
-  if (!material) {
-    redirect(materialNoticePath("error", "Không tìm thấy tài liệu của giáo viên này."));
-  }
-
-  await prisma.assignableUnit.create({
-    data: {
-      materialId: material.id,
-      skill: material.skill,
-      unitType: parsed.data.unitType,
-      unitNumber: parsed.data.unitNumber,
-      title: parsed.data.title,
-      instructions: optionalText(parsed.data.instructions),
-      content: parsed.data.content ?? "",
-      audioUrl: optionalText(parsed.data.audioUrl),
-      transcript: optionalText(parsed.data.transcript),
-      defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
-      metadataJson: buildUnitMetadata(parsed.data.metadataJson, parsed.data.imageUrlsJson)
-    }
-  });
-
-  revalidatePath("/teacher/materials");
 }
 
-export async function updateUnit(formData: FormData) {
-  const teacher = await requireTeacher();
-  const id = idSchema.parse(formData.get("unitId"));
-  const parsed = unitSchema.safeParse({
-    materialId: formData.get("materialId"),
-    unitType: formData.get("unitType"),
-    unitNumber: formData.get("unitNumber"),
-    title: formData.get("title"),
-    instructions: formData.get("instructions"),
-    content: formData.get("content"),
-    audioUrl: formData.get("audioUrl"),
-    transcript: formData.get("transcript"),
-    defaultTimeLimitMinutes: formData.get("defaultTimeLimitMinutes"),
-    metadataJson: formData.get("metadataJson"),
-    imageUrlsJson: formData.get("imageUrlsJson")
-  });
+export async function createUnit(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  if (!parsed.success) {
-    redirect(
-      materialNoticePath("error", parsed.error.issues[0]?.message ?? "Thông tin phần chưa hợp lệ.")
-    );
-  }
+  try {
+    const parsed = unitSchema.safeParse({
+      materialId: formData.get("materialId"),
+      unitType: formData.get("unitType"),
+      unitNumber: formData.get("unitNumber"),
+      title: formData.get("title"),
+      instructions: formData.get("instructions"),
+      content: formData.get("content"),
+      audioUrl: formData.get("audioUrl"),
+      transcript: formData.get("transcript"),
+      defaultTimeLimitMinutes: formData.get("defaultTimeLimitMinutes"),
+      metadataJson: formData.get("metadataJson"),
+      imageUrlsJson: formData.get("imageUrlsJson")
+    });
 
-  const material = await prisma.material.findFirst({
-    where: {
-      id: parsed.data.materialId,
-      teacherId: teacher.id
-    },
-    select: {
-      id: true,
-      skill: true
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Thông tin phần chưa hợp lệ.");
     }
-  });
 
-  if (!material) {
-    redirect(materialNoticePath("error", "Không tìm thấy tài liệu của giáo viên này."));
-  }
-
-  const result = await prisma.assignableUnit.updateMany({
-    where: {
-      id,
-      material: {
+    const material = await prisma.material.findFirst({
+      where: {
+        id: parsed.data.materialId,
         teacherId: teacher.id
+      },
+      select: {
+        id: true,
+        skill: true
       }
-    },
-    data: {
-      materialId: material.id,
-      skill: material.skill,
-      unitType: parsed.data.unitType,
-      unitNumber: parsed.data.unitNumber,
-      title: parsed.data.title,
-      instructions: optionalText(parsed.data.instructions),
-      content: parsed.data.content ?? "",
-      audioUrl: optionalText(parsed.data.audioUrl),
-      transcript: optionalText(parsed.data.transcript),
-      defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
-      metadataJson: buildUnitMetadata(parsed.data.metadataJson, parsed.data.imageUrlsJson)
+    });
+
+    if (!material) {
+      throw new Error("Không tìm thấy tài liệu của giáo viên này.");
     }
-  });
 
-  if (result.count === 0) {
-    throw new Error("Unit not found for this teacher.");
+    await prisma.assignableUnit.create({
+      data: {
+        materialId: material.id,
+        skill: material.skill,
+        unitType: parsed.data.unitType,
+        unitNumber: parsed.data.unitNumber,
+        title: parsed.data.title,
+        instructions: optionalText(parsed.data.instructions),
+        content: parsed.data.content ?? "",
+        audioUrl: optionalText(parsed.data.audioUrl),
+        transcript: optionalText(parsed.data.transcript),
+        defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
+        metadataJson: buildUnitMetadata(parsed.data.metadataJson, parsed.data.imageUrlsJson)
+      }
+    });
+
+    revalidatePath("/teacher/materials");
+    return actionOk(`Đã tạo phần "${parsed.data.title}".`);
+  } catch (error) {
+    return actionFail(error, "Tạo phần");
   }
-
-  revalidatePath("/teacher/materials");
 }
 
-export async function deleteUnit(formData: FormData) {
-  const teacher = await requireTeacher();
-  const id = idSchema.parse(formData.get("unitId"));
+export async function updateUnit(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  const unit = await prisma.assignableUnit.findFirst({
-    where: {
-      id,
-      material: {
+  try {
+    const id = idSchema.parse(formData.get("unitId"));
+    const parsed = unitSchema.safeParse({
+      materialId: formData.get("materialId"),
+      unitType: formData.get("unitType"),
+      unitNumber: formData.get("unitNumber"),
+      title: formData.get("title"),
+      instructions: formData.get("instructions"),
+      content: formData.get("content"),
+      audioUrl: formData.get("audioUrl"),
+      transcript: formData.get("transcript"),
+      defaultTimeLimitMinutes: formData.get("defaultTimeLimitMinutes"),
+      metadataJson: formData.get("metadataJson"),
+      imageUrlsJson: formData.get("imageUrlsJson")
+    });
+
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Thông tin phần chưa hợp lệ.");
+    }
+
+    const material = await prisma.material.findFirst({
+      where: {
+        id: parsed.data.materialId,
         teacherId: teacher.id
+      },
+      select: {
+        id: true,
+        skill: true
       }
-    },
-    select: {
-      id: true,
-      _count: {
-        select: {
-          assignmentUnits: true,
-          answers: true,
-          highlights: true
+    });
+
+    if (!material) {
+      throw new Error("Không tìm thấy tài liệu của giáo viên này.");
+    }
+
+    const result = await prisma.assignableUnit.updateMany({
+      where: {
+        id,
+        material: {
+          teacherId: teacher.id
+        }
+      },
+      data: {
+        materialId: material.id,
+        skill: material.skill,
+        unitType: parsed.data.unitType,
+        unitNumber: parsed.data.unitNumber,
+        title: parsed.data.title,
+        instructions: optionalText(parsed.data.instructions),
+        content: parsed.data.content ?? "",
+        audioUrl: optionalText(parsed.data.audioUrl),
+        transcript: optionalText(parsed.data.transcript),
+        defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
+        metadataJson: buildUnitMetadata(parsed.data.metadataJson, parsed.data.imageUrlsJson)
+      }
+    });
+
+    if (result.count === 0) {
+      throw new Error("Không tìm thấy phần này.");
+    }
+
+    revalidatePath("/teacher/materials");
+    return actionOk(`Đã lưu phần "${parsed.data.title}".`);
+  } catch (error) {
+    return actionFail(error, "Lưu phần");
+  }
+}
+
+export async function deleteUnit(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
+
+  try {
+    const id = idSchema.parse(formData.get("unitId"));
+
+    const unit = await prisma.assignableUnit.findFirst({
+      where: {
+        id,
+        material: {
+          teacherId: teacher.id
+        }
+      },
+      select: {
+        id: true,
+        title: true,
+        _count: {
+          select: {
+            assignmentUnits: true,
+            answers: true,
+            highlights: true
+          }
         }
       }
+    });
+
+    if (!unit) {
+      throw new Error("Không tìm thấy phần này.");
     }
-  });
 
-  if (!unit) {
-    redirect(materialNoticePath("error", "Unit not found for this teacher."));
+    if (unit._count.assignmentUnits > 0 || unit._count.answers > 0 || unit._count.highlights > 0) {
+      throw new Error("Phần này đã được giao hoặc đã có bài làm nên không xoá được.");
+    }
+
+    await prisma.assignableUnit.delete({
+      where: { id: unit.id }
+    });
+
+    revalidatePath("/teacher/materials");
+    return actionOk(`Đã xoá phần "${unit.title}".`);
+  } catch (error) {
+    return actionFail(error, "Xoá phần");
   }
-
-  if (unit._count.assignmentUnits > 0 || unit._count.answers > 0 || unit._count.highlights > 0) {
-    redirect(
-      materialNoticePath(
-        "error",
-        "Cannot delete this unit because it has assigned work or submitted answers."
-      )
-    );
-  }
-
-  await prisma.assignableUnit.delete({
-    where: { id: unit.id }
-  });
-
-  revalidatePath("/teacher/materials");
-  redirect(materialNoticePath("success", "Unit deleted."));
 }
 
 export async function createQuestion(formData: FormData): Promise<ActionResult> {

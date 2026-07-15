@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { requireTeacher } from "@/lib/actions/classes";
 import { normalizeAnswer } from "@/lib/grading";
 import { materialNoticePath } from "@/lib/material-notices";
@@ -426,119 +427,133 @@ export async function deleteUnit(formData: FormData) {
   redirect(materialNoticePath("success", "Unit deleted."));
 }
 
-export async function createQuestion(formData: FormData) {
-  const teacher = await requireTeacher();
-  const parsed = questionSchema.safeParse({
-    assignableUnitId: formData.get("assignableUnitId"),
-    order: formData.get("order"),
-    questionType: formData.get("questionType"),
-    prompt: formData.get("prompt"),
-    optionsJson: formData.get("optionsJson"),
-    correctAnswerJson: formData.get("correctAnswerJson"),
-    explanation: formData.get("explanation"),
-    answerEvidence: formData.get("answerEvidence"),
-    points: formData.get("points")
-  });
+export async function createQuestion(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
+  const order = String(formData.get("order") ?? "?");
 
-  if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid question details.");
-  }
+  try {
+    const parsed = questionSchema.safeParse({
+      assignableUnitId: formData.get("assignableUnitId"),
+      order: formData.get("order"),
+      questionType: formData.get("questionType"),
+      prompt: formData.get("prompt"),
+      optionsJson: formData.get("optionsJson"),
+      correctAnswerJson: formData.get("correctAnswerJson"),
+      explanation: formData.get("explanation"),
+      answerEvidence: formData.get("answerEvidence"),
+      points: formData.get("points")
+    });
 
-  const unit = await prisma.assignableUnit.findFirst({
-    where: {
-      id: parsed.data.assignableUnitId,
-      material: {
-        teacherId: teacher.id
-      }
-    },
-    select: {
-      id: true
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Thông tin câu hỏi chưa hợp lệ.");
     }
-  });
 
-  if (!unit) {
-    throw new Error("Unit not found for this teacher.");
-  }
-
-  await prisma.question.create({
-    data: {
-      assignableUnitId: unit.id,
-      order: parsed.data.order,
-      questionType: parsed.data.questionType,
-      prompt: parsed.data.prompt,
-      optionsJson: optionalJson(parsed.data.optionsJson, "Options JSON"),
-      correctAnswerJson: optionalJson(parsed.data.correctAnswerJson, "Correct answer JSON"),
-      explanation: optionalText(parsed.data.explanation),
-      answerEvidence: optionalText(parsed.data.answerEvidence),
-      points: parsed.data.points
-    }
-  });
-
-  revalidatePath("/teacher/materials");
-}
-
-export async function updateQuestion(formData: FormData) {
-  const teacher = await requireTeacher();
-  const id = idSchema.parse(formData.get("questionId"));
-  const parsed = questionSchema.safeParse({
-    assignableUnitId: formData.get("assignableUnitId"),
-    order: formData.get("order"),
-    questionType: formData.get("questionType"),
-    prompt: formData.get("prompt"),
-    optionsJson: formData.get("optionsJson"),
-    correctAnswerJson: formData.get("correctAnswerJson"),
-    explanation: formData.get("explanation"),
-    answerEvidence: formData.get("answerEvidence"),
-    points: formData.get("points")
-  });
-
-  if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid question details.");
-  }
-
-  const unit = await prisma.assignableUnit.findFirst({
-    where: {
-      id: parsed.data.assignableUnitId,
-      material: {
-        teacherId: teacher.id
-      }
-    },
-    select: {
-      id: true
-    }
-  });
-
-  if (!unit) {
-    throw new Error("Unit not found for this teacher.");
-  }
-
-  const result = await prisma.question.updateMany({
-    where: {
-      id,
-      assignableUnit: {
+    const unit = await prisma.assignableUnit.findFirst({
+      where: {
+        id: parsed.data.assignableUnitId,
         material: {
           teacherId: teacher.id
         }
+      },
+      select: {
+        id: true
       }
-    },
-    data: {
-      assignableUnitId: unit.id,
-      order: parsed.data.order,
-      questionType: parsed.data.questionType,
-      prompt: parsed.data.prompt,
-      optionsJson: optionalJson(parsed.data.optionsJson, "Options JSON"),
-      correctAnswerJson: optionalJson(parsed.data.correctAnswerJson, "Correct answer JSON"),
-      explanation: optionalText(parsed.data.explanation),
-      answerEvidence: optionalText(parsed.data.answerEvidence),
-      points: parsed.data.points
+    });
+
+    if (!unit) {
+      throw new Error("Không tìm thấy phần này của giáo viên.");
     }
-  });
 
-  if (result.count === 0) {
-    throw new Error("Question not found for this teacher.");
+    await prisma.question.create({
+      data: {
+        assignableUnitId: unit.id,
+        order: parsed.data.order,
+        questionType: parsed.data.questionType,
+        prompt: parsed.data.prompt,
+        optionsJson: optionalJson(parsed.data.optionsJson, "Lựa chọn"),
+        correctAnswerJson: optionalJson(parsed.data.correctAnswerJson, "Đáp án"),
+        explanation: optionalText(parsed.data.explanation),
+        answerEvidence: optionalText(parsed.data.answerEvidence),
+        points: parsed.data.points
+      }
+    });
+
+    revalidatePath("/teacher/materials");
+    return actionOk(`Đã tạo câu ${parsed.data.order}.`);
+  } catch (error) {
+    return actionFail(error, `Tạo câu ${order}`);
   }
+}
 
-  revalidatePath("/teacher/materials");
+export async function updateQuestion(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
+  const order = String(formData.get("order") ?? "?");
+
+  try {
+    const id = idSchema.parse(formData.get("questionId"));
+    const parsed = questionSchema.safeParse({
+      assignableUnitId: formData.get("assignableUnitId"),
+      order: formData.get("order"),
+      questionType: formData.get("questionType"),
+      prompt: formData.get("prompt"),
+      optionsJson: formData.get("optionsJson"),
+      correctAnswerJson: formData.get("correctAnswerJson"),
+      explanation: formData.get("explanation"),
+      answerEvidence: formData.get("answerEvidence"),
+      points: formData.get("points")
+    });
+
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Thông tin câu hỏi chưa hợp lệ.");
+    }
+
+    const unit = await prisma.assignableUnit.findFirst({
+      where: {
+        id: parsed.data.assignableUnitId,
+        material: {
+          teacherId: teacher.id
+        }
+      },
+      select: {
+        id: true
+      }
+    });
+
+    if (!unit) {
+      throw new Error("Không tìm thấy phần này của giáo viên.");
+    }
+
+    const result = await prisma.question.updateMany({
+      where: {
+        id,
+        assignableUnit: {
+          material: {
+            teacherId: teacher.id
+          }
+        }
+      },
+      data: {
+        assignableUnitId: unit.id,
+        order: parsed.data.order,
+        questionType: parsed.data.questionType,
+        prompt: parsed.data.prompt,
+        optionsJson: optionalJson(parsed.data.optionsJson, "Lựa chọn"),
+        correctAnswerJson: optionalJson(parsed.data.correctAnswerJson, "Đáp án"),
+        explanation: optionalText(parsed.data.explanation),
+        answerEvidence: optionalText(parsed.data.answerEvidence),
+        points: parsed.data.points
+      }
+    });
+
+    if (result.count === 0) {
+      throw new Error("Không tìm thấy câu hỏi này.");
+    }
+
+    revalidatePath("/teacher/materials");
+    return actionOk(`Đã lưu câu ${parsed.data.order}.`);
+  } catch (error) {
+    return actionFail(error, `Lưu câu ${order}`);
+  }
 }
 
 export async function deleteQuestion(formData: FormData) {

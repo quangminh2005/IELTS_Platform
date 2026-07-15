@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ActionForm, ActionSubmitButton, type ServerAction } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { parseQuestionOptions, splitPromptIntoSegments } from "@/lib/question-interactions";
 
@@ -21,7 +22,7 @@ type QuestionDefaults = {
 };
 
 type QuestionFieldsProps = {
-  formAction: (formData: FormData) => void | Promise<void>;
+  formAction: ServerAction;
   submitLabel: string;
   idPrefix: string;
   units?: UnitChoice[];
@@ -242,7 +243,7 @@ export function QuestionFields({
   const meta = typeMeta[type];
 
   return (
-    <form action={formAction} className="mt-2 grid gap-3">
+    <ActionForm action={formAction} className="mt-2 grid gap-3">
       {hiddenFields
         ? Object.entries(hiddenFields).map(([name, value]) => (
             <input key={name} type="hidden" name={name} value={value} />
@@ -414,7 +415,7 @@ export function QuestionFields({
       <QuestionPreview type={type} prompt={prompt} optionsText={optionsText} answerText={answerText} />
 
       <div className="flex flex-wrap gap-2">
-        <button className={secondaryButtonClass}>{submitLabel}</button>
+        <ActionSubmitButton className={secondaryButtonClass}>{submitLabel}</ActionSubmitButton>
         {deleteAction ? (
           <ConfirmSubmitButton
             formAction={deleteAction}
@@ -425,6 +426,6 @@ export function QuestionFields({
           </ConfirmSubmitButton>
         ) : null}
       </div>
-    </form>
+    </ActionForm>
   );
 }

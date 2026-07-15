@@ -25,18 +25,18 @@ const questionTypes = [
 ] as const;
 
 const materialSchema = z.object({
-  title: z.string().trim().min(2, "Material title must be at least 2 characters."),
-  skill: z.enum(skills, "Choose a valid IELTS skill."),
+  title: z.string().trim().min(2, "Tiêu đề tài liệu cần ít nhất 2 ký tự."),
+  skill: z.enum(skills, "Chọn một kỹ năng IELTS hợp lệ."),
   sourceLabel: z.string().trim().optional(),
   description: z.string().trim().optional()
 });
 
 const unitSchema = z
   .object({
-    materialId: z.string().trim().min(1, "Choose a material."),
-    unitType: z.enum(unitTypes, "Choose a valid unit type."),
-    unitNumber: z.coerce.number().int().min(1, "Unit number must be at least 1."),
-    title: z.string().trim().min(2, "Unit title must be at least 2 characters."),
+    materialId: z.string().trim().min(1, "Chọn tài liệu."),
+    unitType: z.enum(unitTypes, "Chọn loại phần hợp lệ."),
+    unitNumber: z.coerce.number().int().min(1, "Số thứ tự phải từ 1 trở lên."),
+    title: z.string().trim().min(2, "Tiêu đề phần cần ít nhất 2 ký tự."),
     instructions: z.string().trim().optional(),
     // Reading/Writing cần Nội dung (bài đọc/đề bài); Listening/Speaking lấy
     // nguồn từ audio nên có thể để trống — kiểm tra ở superRefine bên dưới.
@@ -45,7 +45,7 @@ const unitSchema = z
     transcript: z.string().trim().optional(),
     defaultTimeLimitMinutes: z.preprocess(
       (value) => (value === "" || value === null ? undefined : value),
-      z.coerce.number().int().min(1, "Time limit must be at least 1 minute.").optional()
+      z.coerce.number().int().min(1, "Thời gian phải từ 1 phút trở lên.").optional()
     ),
     metadataJson: z.string().trim().optional(),
     imageUrlsJson: z.string().trim().optional()
@@ -63,15 +63,15 @@ const unitSchema = z
   });
 
 const questionSchema = z.object({
-  assignableUnitId: z.string().trim().min(1, "Choose a unit."),
-  order: z.coerce.number().int().min(1, "Question order must be at least 1."),
-  questionType: z.string().trim().min(1, "Question type is required."),
-  prompt: z.string().trim().min(1, "Question prompt is required."),
+  assignableUnitId: z.string().trim().min(1, "Chọn phần cho câu hỏi."),
+  order: z.coerce.number().int().min(1, "Thứ tự phải từ 1 trở lên."),
+  questionType: z.string().trim().min(1, "Thiếu dạng câu."),
+  prompt: z.string().trim().min(1, "Đề bài không được để trống."),
   optionsJson: z.string().trim().optional(),
   correctAnswerJson: z.string().trim().optional(),
   explanation: z.string().trim().optional(),
   answerEvidence: z.string().trim().optional(),
-  points: z.coerce.number().int().min(1, "Points must be at least 1.")
+  points: z.coerce.number().int().min(1, "Điểm phải từ 1 trở lên.")
 });
 
 const idSchema = z.string().trim().min(1);
@@ -88,7 +88,7 @@ function optionalJson(value: string | undefined, label: string) {
   try {
     return JSON.stringify(JSON.parse(value));
   } catch {
-    throw new Error(`${label} must be valid JSON.`);
+    throw new Error(`${label} phải là JSON hợp lệ.`);
   }
 }
 
@@ -107,7 +107,7 @@ function buildUnitMetadata(
         meta = parsed as Record<string, unknown>;
       }
     } catch {
-      throw new Error("Metadata JSON must be valid JSON.");
+      throw new Error("Metadata phải là JSON hợp lệ.");
     }
   }
 

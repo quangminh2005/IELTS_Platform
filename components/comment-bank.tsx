@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionForm } from "@/components/action-form";
 import { createCommentSnippet, deleteCommentSnippet } from "@/lib/actions/comment-snippets";
 
 export type Snippet = {
@@ -32,7 +33,7 @@ export function CommentBank({ snippets, attemptId, onInsert }: CommentBankProps)
               >
                 {snippet.text}
               </button>
-              <form action={deleteCommentSnippet}>
+              <ActionForm action={deleteCommentSnippet}>
                 <input type="hidden" name="snippetId" value={snippet.id} />
                 <input type="hidden" name="attemptId" value={attemptId} />
                 <button
@@ -42,7 +43,7 @@ export function CommentBank({ snippets, attemptId, onInsert }: CommentBankProps)
                 >
                   ✕
                 </button>
-              </form>
+              </ActionForm>
             </li>
           ))}
         </ul>
@@ -52,7 +53,7 @@ export function CommentBank({ snippets, attemptId, onInsert }: CommentBankProps)
         </p>
       )}
 
-      <form action={createCommentSnippet} className="mt-3 flex gap-2">
+      <ActionForm action={createCommentSnippet} className="mt-3 flex gap-2">
         <input type="hidden" name="attemptId" value={attemptId} />
         <input
           name="text"
@@ -66,7 +67,7 @@ export function CommentBank({ snippets, attemptId, onInsert }: CommentBankProps)
         >
           Thêm
         </button>
-      </form>
+      </ActionForm>
     </section>
   );
 }

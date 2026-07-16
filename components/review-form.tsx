@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { CommentBank, type Snippet } from "@/components/comment-bank";
 import { saveTeacherReview } from "@/lib/actions/reviews";
 
@@ -128,7 +129,7 @@ export function ReviewForm({
 
   return (
     <div className="grid gap-5">
-      <form action={saveTeacherReview} className="grid gap-5">
+      <ActionForm action={saveTeacherReview} className="grid gap-5">
       <input type="hidden" name="attemptId" value={attemptId} />
       <input type="hidden" name="criteriaScoresJson" value={criteriaJson} />
       {nextAttemptId ? (
@@ -210,12 +211,9 @@ export function ReviewForm({
       </label>
 
       <div className="flex flex-wrap gap-3">
-        <button
-          type="submit"
-          className="inline-flex rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
-        >
+        <ActionSubmitButton className="inline-flex rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
           Lưu nhận xét
-        </button>
+        </ActionSubmitButton>
         {nextAttemptId ? (
           <button
             type="submit"
@@ -227,7 +225,7 @@ export function ReviewForm({
           </button>
         ) : null}
       </div>
-      </form>
+      </ActionForm>
 
       <CommentBank snippets={snippets} attemptId={attemptId} onInsert={insertSnippet} />
     </div>

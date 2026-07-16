@@ -15,15 +15,38 @@ const NETWORK_FAIL: ActionResult = {
   message: "Không lưu được, kiểm tra kết nối rồi thử lại."
 };
 
+// redirect()/notFound() trong server action hoạt động bằng cách ném lỗi có digest
+// riêng. Không được nuốt chúng thành toast lỗi — phải để Next điều hướng. Dùng cho
+// nút "Lưu & chấm bài tiếp" (saveTeacherReview redirect sang bài kế).
+function isNextControlFlowError(error: unknown) {
+  const digest =
+    error && typeof error === "object" && "digest" in error
+      ? String((error as { digest?: unknown }).digest)
+      : "";
+  return digest.startsWith("NEXT_REDIRECT") || digest === "NEXT_NOT_FOUND";
+}
+
 async function runAndNotify(
   action: ServerAction,
   formData: FormData,
   notify: (result: ActionResult) => void
 ) {
+  let result: ActionResult | undefined;
+
   try {
-    notify(await action(formData));
-  } catch {
+    result = await action(formData);
+  } catch (error) {
+    if (isNextControlFlowError(error)) {
+      throw error; // để Next tự điều hướng
+    }
     notify(NETWORK_FAIL);
+    return;
+  }
+
+  // Nếu action redirect và Next xử lý ngầm (không ném ra client) thì result rỗng
+  // → không bắn toast.
+  if (result) {
+    notify(result);
   }
 }
 

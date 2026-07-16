@@ -108,31 +108,33 @@ export async function updateClassWeeklyGoal(formData: FormData): Promise<ActionR
   }
 }
 
-export async function addStudent(formData: FormData) {
-  const teacher = await requireTeacher();
-  const parsed = studentSchema.safeParse({
-    classId: formData.get("classId"),
-    email: formData.get("email"),
-    displayName: formData.get("displayName")
-  });
+export async function addStudent(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid student details.");
-  }
+  try {
+    const parsed = studentSchema.safeParse({
+      classId: formData.get("classId"),
+      email: formData.get("email"),
+      displayName: formData.get("displayName")
+    });
 
-  const targetClass = await prisma.class.findFirst({
-    where: {
-      id: parsed.data.classId,
-      teacherId: teacher.id
-    },
-    select: { id: true }
-  });
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Thông tin học viên chưa hợp lệ.");
+    }
 
-  if (!targetClass) {
-    throw new Error("Class not found for this teacher.");
-  }
+    const targetClass = await prisma.class.findFirst({
+      where: {
+        id: parsed.data.classId,
+        teacherId: teacher.id
+      },
+      select: { id: true }
+    });
 
-  const student = await prisma.studentProfile.upsert({
+    if (!targetClass) {
+      throw new Error("Không tìm thấy lớp của giáo viên này.");
+    }
+
+    const student = await prisma.studentProfile.upsert({
     where: { email: parsed.data.email },
     update: {
       displayName: parsed.data.displayName
@@ -143,24 +145,28 @@ export async function addStudent(formData: FormData) {
     }
   });
 
-  await prisma.classStudent.upsert({
-    where: {
-      classId_studentId: {
+    await prisma.classStudent.upsert({
+      where: {
+        classId_studentId: {
+          classId: targetClass.id,
+          studentId: student.id
+        }
+      },
+      update: {},
+      create: {
         classId: targetClass.id,
         studentId: student.id
       }
-    },
-    update: {},
-    create: {
-      classId: targetClass.id,
-      studentId: student.id
-    }
-  });
+    });
 
-  revalidatePath("/teacher");
-  revalidatePath("/teacher/classes");
-  revalidatePath(`/teacher/classes/${targetClass.id}`);
-  revalidatePath(`/teacher/students/${student.id}`);
+    revalidatePath("/teacher");
+    revalidatePath("/teacher/classes");
+    revalidatePath(`/teacher/classes/${targetClass.id}`);
+    revalidatePath(`/teacher/students/${student.id}`);
+    return actionOk(`Đã thêm học viên "${parsed.data.displayName}".`);
+  } catch (error) {
+    return actionFail(error, "Thêm học viên");
+  }
 }
 
 export async function deleteClass(formData: FormData) {
@@ -168,7 +174,7 @@ export async function deleteClass(formData: FormData) {
   const classId = String(formData.get("classId") ?? "").trim();
 
   if (!classId) {
-    throw new Error("Missing class id.");
+    redirect(classNoticePath("error", "Thiếu mã lớp."));
   }
 
   // Xoá lớp: liên kết học viên–lớp (ClassStudent) tự xoá theo cascade; bài tập đã
@@ -178,36 +184,43 @@ export async function deleteClass(formData: FormData) {
   });
 
   if (result.count === 0) {
-    throw new Error("Class not found for this teacher.");
+    redirect(classNoticePath("error", "Không tìm thấy lớp này."));
   }
 
   revalidatePath("/teacher");
   revalidatePath("/teacher/classes");
-  // "Xoá lớp" có thể bấm từ trang chi tiết lớp (trang đó sẽ không còn) → quay về danh sách.
-  redirect("/teacher/classes");
+  // "Xoá lớp" bấm từ trang chi tiết lớp (trang đó sẽ không còn) → quay về danh sách
+  // kèm thông báo để NoticeToast hiện popup.
+  redirect(classNoticePath("success", "Đã xoá lớp."));
 }
 
-export async function removeStudentFromClass(formData: FormData) {
-  const teacher = await requireTeacher();
-  const classId = String(formData.get("classId") ?? "").trim();
-  const studentId = String(formData.get("studentId") ?? "").trim();
+export async function removeStudentFromClass(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  if (!classId || !studentId) {
-    throw new Error("Missing class or student id.");
-  }
+  try {
+    const classId = String(formData.get("classId") ?? "").trim();
+    const studentId = String(formData.get("studentId") ?? "").trim();
 
-  // Chỉ gỡ liên kết học viên khỏi lớp; hồ sơ, bài làm, lịch sử vẫn còn.
-  await prisma.classStudent.deleteMany({
-    where: {
-      classId,
-      studentId,
-      class: { teacherId: teacher.id }
+    if (!classId || !studentId) {
+      throw new Error("Thiếu mã lớp hoặc mã học viên.");
     }
-  });
 
-  revalidatePath("/teacher");
-  revalidatePath("/teacher/classes");
-  revalidatePath(`/teacher/classes/${classId}`);
+    // Chỉ gỡ liên kết học viên khỏi lớp; hồ sơ, bài làm, lịch sử vẫn còn.
+    await prisma.classStudent.deleteMany({
+      where: {
+        classId,
+        studentId,
+        class: { teacherId: teacher.id }
+      }
+    });
+
+    revalidatePath("/teacher");
+    revalidatePath("/teacher/classes");
+    revalidatePath(`/teacher/classes/${classId}`);
+    return actionOk("Đã gỡ học viên khỏi lớp.");
+  } catch (error) {
+    return actionFail(error, "Gỡ học viên");
+  }
 }
 
 export async function deleteStudent(formData: FormData) {
@@ -215,7 +228,7 @@ export async function deleteStudent(formData: FormData) {
   const studentId = String(formData.get("studentId") ?? "").trim();
 
   if (!studentId) {
-    throw new Error("Missing student id.");
+    redirect(classNoticePath("error", "Thiếu mã học viên."));
   }
 
   // Chỉ cho phép xoá học sinh thuộc một lớp của chính giáo viên này.
@@ -225,7 +238,7 @@ export async function deleteStudent(formData: FormData) {
   });
 
   if (!membership) {
-    throw new Error("Student not found for this teacher.");
+    redirect(classNoticePath("error", "Không tìm thấy học viên này."));
   }
 
   const student = await prisma.studentProfile.findUnique({
@@ -243,5 +256,5 @@ export async function deleteStudent(formData: FormData) {
 
   revalidatePath("/teacher");
   revalidatePath("/teacher/classes");
-  redirect("/teacher/classes");
+  redirect(classNoticePath("success", "Đã xoá học viên."));
 }

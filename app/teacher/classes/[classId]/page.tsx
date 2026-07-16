@@ -6,6 +6,7 @@ import {
   removeStudentFromClass,
   requireTeacher
 } from "@/lib/actions/classes";
+import { ActionDeleteButton, ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { prisma } from "@/lib/prisma";
 
@@ -94,16 +95,17 @@ export default async function TeacherClassDetailPage({ params }: ClassDetailPage
                     >
                       Xem hồ sơ
                     </Link>
-                    <form action={removeStudentFromClass}>
+                    <ActionForm action={removeStudentFromClass}>
                       <input type="hidden" name="classId" value={classItem.id} />
                       <input type="hidden" name="studentId" value={membership.student.id} />
-                      <ConfirmSubmitButton
+                      <ActionDeleteButton
+                        action={removeStudentFromClass}
                         confirmMessage={`Gỡ ${membership.student.displayName} khỏi lớp "${classItem.name}"? Hồ sơ và bài làm của học viên vẫn được giữ lại.`}
                         className="rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-muted-foreground transition hover:border-red-400 hover:text-red-600 dark:hover:text-red-400"
                       >
                         Gỡ
-                      </ConfirmSubmitButton>
-                    </form>
+                      </ActionDeleteButton>
+                    </ActionForm>
                   </div>
                 </div>
               ))
@@ -115,7 +117,7 @@ export default async function TeacherClassDetailPage({ params }: ClassDetailPage
           </div>
         </div>
 
-        <form action={addStudent} className="h-fit rounded-xl border border-border bg-card p-5 shadow-card">
+        <ActionForm action={addStudent} className="h-fit rounded-xl border border-border bg-card p-5 shadow-card">
           <h3 className="text-base font-semibold">Thêm học viên vào lớp này</h3>
           <p className="mt-1 text-sm text-muted-foreground">
             Học viên sẽ được thêm thẳng vào lớp <span className="font-medium">{classItem.name}</span>.
@@ -140,10 +142,13 @@ export default async function TeacherClassDetailPage({ params }: ClassDetailPage
             required
             className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
           />
-          <button className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
+          <ActionSubmitButton
+            pendingLabel="Đang thêm…"
+            className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+          >
             Thêm học viên
-          </button>
-        </form>
+          </ActionSubmitButton>
+        </ActionForm>
       </section>
     </div>
   );

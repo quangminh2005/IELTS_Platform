@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { deleteStudent, requireTeacher } from "@/lib/actions/classes";
 import { resetRecipientAttempts } from "@/lib/actions/attempts";
+import { ActionDeleteButton, ActionForm } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
@@ -165,15 +166,16 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                       {recipient.attempts.length} lần làm
                     </span>
                     {recipient.attempts.length > 0 ? (
-                      <form action={resetRecipientAttempts}>
+                      <ActionForm action={resetRecipientAttempts}>
                         <input type="hidden" name="recipientId" value={recipient.id} />
-                        <ConfirmSubmitButton
+                        <ActionDeleteButton
+                          action={resetRecipientAttempts}
                           confirmMessage={`Cho học sinh làm lại "${recipient.assignment.title}"? Các lần làm hiện tại (kèm đáp án) sẽ bị xoá để bắt đầu lại từ đầu.`}
                           className="inline-flex items-center rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-semibold text-primary transition hover:border-primary"
                         >
                           Cho làm lại
-                        </ConfirmSubmitButton>
-                      </form>
+                        </ActionDeleteButton>
+                      </ActionForm>
                     ) : null}
                   </div>
                 </div>

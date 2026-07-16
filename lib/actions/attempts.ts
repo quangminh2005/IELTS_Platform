@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { requireTeacher } from "@/lib/actions/classes";
 import { auth } from "@/lib/auth";
 import { gradeAttempt } from "@/lib/grading";
@@ -568,35 +569,41 @@ export async function deleteHighlight(formData: FormData) {
 // Giáo viên cho học sinh làm lại một bài: xoá các lần làm của bài đó (kèm đáp án,
 // highlight... theo cascade) và đặt lại trạng thái "chưa làm". Sau đó học sinh mở
 // bài sẽ bắt đầu một lần làm mới.
-export async function resetRecipientAttempts(formData: FormData) {
-  const teacher = await requireTeacher();
-  const recipientId = String(formData.get("recipientId") ?? "").trim();
+export async function resetRecipientAttempts(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  if (!recipientId) {
-    throw new Error("Missing recipient id.");
+  try {
+    const recipientId = String(formData.get("recipientId") ?? "").trim();
+
+    if (!recipientId) {
+      throw new Error("Thiếu mã bài giao.");
+    }
+
+    // Chỉ cho phép thao tác trên bài thuộc lớp/bài tập của chính giáo viên này.
+    const recipient = await prisma.assignmentRecipient.findFirst({
+      where: {
+        id: recipientId,
+        assignment: { teacherId: teacher.id }
+      },
+      select: { id: true, studentId: true }
+    });
+
+    if (!recipient) {
+      throw new Error("Không tìm thấy bài giao này.");
+    }
+
+    await prisma.$transaction([
+      prisma.attempt.deleteMany({ where: { assignmentRecipientId: recipient.id } }),
+      prisma.assignmentRecipient.update({
+        where: { id: recipient.id },
+        data: { status: "assigned", submittedAt: null }
+      })
+    ]);
+
+    revalidatePath("/student");
+    revalidatePath(`/teacher/students/${recipient.studentId}`);
+    return actionOk("Đã đặt lại lượt làm cho bài này.");
+  } catch (error) {
+    return actionFail(error, "Đặt lại lượt làm");
   }
-
-  // Chỉ cho phép thao tác trên bài thuộc lớp/bài tập của chính giáo viên này.
-  const recipient = await prisma.assignmentRecipient.findFirst({
-    where: {
-      id: recipientId,
-      assignment: { teacherId: teacher.id }
-    },
-    select: { id: true, studentId: true }
-  });
-
-  if (!recipient) {
-    throw new Error("Assignment not found for this teacher.");
-  }
-
-  await prisma.$transaction([
-    prisma.attempt.deleteMany({ where: { assignmentRecipientId: recipient.id } }),
-    prisma.assignmentRecipient.update({
-      where: { id: recipient.id },
-      data: { status: "assigned", submittedAt: null }
-    })
-  ]);
-
-  revalidatePath("/student");
-  revalidatePath(`/teacher/students/${recipient.studentId}`);
 }

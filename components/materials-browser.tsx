@@ -43,12 +43,6 @@ const controlClass =
 export function MaterialsBrowser({ items }: { items: MaterialBrowserItem[] }) {
   const [filters, setFilters] = useState<MaterialFilters>(defaultMaterialFilters);
 
-  const cardById = useMemo(() => {
-    const map = new Map<string, ReactNode>();
-    for (const item of items) map.set(item.meta.id, item.card);
-    return map;
-  }, [items]);
-
   // Chỉ hiện các kỹ năng thực sự có trong kho.
   const availableSkills = useMemo(() => {
     const set = new Set(items.map((item) => item.meta.skill));
@@ -67,6 +61,15 @@ export function MaterialsBrowser({ items }: { items: MaterialBrowserItem[] }) {
     () => filterAndSortMaterials(items.map((item) => item.meta), filters),
     [items, filters]
   );
+
+  // Vị trí hiển thị (theo thứ tự đã lọc/sắp xếp) của từng thẻ đang hiện.
+  // Thẻ không có trong map = bị lọc ẩn. Dùng để đặt CSS `order` + `hidden`
+  // mà KHÔNG mount/unmount lại cây DOM nặng của thẻ khi đổi bộ lọc.
+  const visibleOrder = useMemo(() => {
+    const map = new Map<string, number>();
+    visible.forEach((meta, index) => map.set(meta.id, index));
+    return map;
+  }, [visible]);
 
   const hasActiveFilter =
     filters.search.trim() !== "" ||
@@ -172,13 +175,25 @@ export function MaterialsBrowser({ items }: { items: MaterialBrowserItem[] }) {
         </div>
       </div>
 
-      {visible.length > 0 ? (
-        <div className="space-y-4">
-          {visible.map((meta) => (
-            <div key={meta.id}>{cardById.get(meta.id)}</div>
-          ))}
-        </div>
-      ) : (
+      {/* Giữ MỌI thẻ luôn mounted; lọc/sắp xếp chỉ bật-tắt `hidden` và đổi CSS
+          `order` trên lớp bọc — tránh dựng lại cây DOM khổng lồ mỗi lần đổi bộ lọc. */}
+      <div className={visible.length > 0 ? "flex flex-col gap-4" : "hidden"}>
+        {items.map((item) => {
+          const order = visibleOrder.get(item.meta.id);
+          const isVisible = order !== undefined;
+          return (
+            <div
+              key={item.meta.id}
+              className={isVisible ? undefined : "hidden"}
+              style={isVisible ? { order } : undefined}
+            >
+              {item.card}
+            </div>
+          );
+        })}
+      </div>
+
+      {visible.length === 0 ? (
         <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
           <p className="font-semibold">Không có tài liệu khớp bộ lọc</p>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -192,7 +207,7 @@ export function MaterialsBrowser({ items }: { items: MaterialBrowserItem[] }) {
             Xoá bộ lọc
           </button>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

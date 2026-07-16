@@ -3,18 +3,20 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { auth } from "@/lib/auth";
+import { classNoticePath } from "@/lib/class-notices";
 import { prisma } from "@/lib/prisma";
 
 const classSchema = z.object({
-  name: z.string().trim().min(2, "Class name must be at least 2 characters."),
+  name: z.string().trim().min(2, "Tên lớp cần ít nhất 2 ký tự."),
   description: z.string().trim().optional()
 });
 
 const studentSchema = z.object({
-  classId: z.string().trim().min(1, "Choose a class."),
-  email: z.string().trim().email("Enter a valid email address.").toLowerCase(),
-  displayName: z.string().trim().min(1, "Student name is required.")
+  classId: z.string().trim().min(1, "Chọn một lớp."),
+  email: z.string().trim().email("Nhập email hợp lệ.").toLowerCase(),
+  displayName: z.string().trim().min(1, "Cần nhập tên học viên.")
 });
 
 const weeklyGoalSchema = z.object({
@@ -48,46 +50,62 @@ export async function requireTeacher() {
   });
 }
 
-export async function createClass(formData: FormData) {
-  const teacher = await requireTeacher();
-  const parsed = classSchema.safeParse({
-    name: formData.get("name"),
-    description: formData.get("description")
-  });
+export async function createClass(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Invalid class details.");
-  }
+  try {
+    const parsed = classSchema.safeParse({
+      name: formData.get("name"),
+      description: formData.get("description")
+    });
 
-  await prisma.class.create({
-    data: {
-      teacherId: teacher.id,
-      name: parsed.data.name,
-      description: parsed.data.description || null
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Thông tin lớp chưa hợp lệ.");
     }
-  });
 
-  revalidatePath("/teacher");
-  revalidatePath("/teacher/classes");
+    await prisma.class.create({
+      data: {
+        teacherId: teacher.id,
+        name: parsed.data.name,
+        description: parsed.data.description || null
+      }
+    });
+
+    revalidatePath("/teacher");
+    revalidatePath("/teacher/classes");
+    return actionOk(`Đã tạo lớp "${parsed.data.name}".`);
+  } catch (error) {
+    return actionFail(error, "Tạo lớp");
+  }
 }
 
-export async function updateClassWeeklyGoal(formData: FormData) {
-  const teacher = await requireTeacher();
-  const parsed = weeklyGoalSchema.safeParse({
-    classId: formData.get("classId"),
-    weeklyGoal: formData.get("weeklyGoal")
-  });
+export async function updateClassWeeklyGoal(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
-  if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Chỉ tiêu tuần không hợp lệ.");
+  try {
+    const parsed = weeklyGoalSchema.safeParse({
+      classId: formData.get("classId"),
+      weeklyGoal: formData.get("weeklyGoal")
+    });
+
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Chỉ tiêu tuần không hợp lệ.");
+    }
+
+    const result = await prisma.class.updateMany({
+      where: { id: parsed.data.classId, teacherId: teacher.id },
+      data: { weeklyGoal: parsed.data.weeklyGoal }
+    });
+
+    if (result.count === 0) {
+      throw new Error("Không tìm thấy lớp này.");
+    }
+
+    revalidatePath("/teacher/classes");
+    return actionOk("Đã lưu chỉ tiêu tuần.");
+  } catch (error) {
+    return actionFail(error, "Lưu chỉ tiêu tuần");
   }
-
-  await prisma.class.updateMany({
-    where: { id: parsed.data.classId, teacherId: teacher.id },
-    data: { weeklyGoal: parsed.data.weeklyGoal }
-  });
-
-  revalidatePath("/teacher/classes");
 }
 
 export async function addStudent(formData: FormData) {

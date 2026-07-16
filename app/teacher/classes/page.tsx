@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Prisma } from "@prisma/client";
+import { ActionForm, ActionSubmitButton } from "@/components/action-form";
+import { NoticeToast } from "@/components/notice-toast";
 import { createClass, updateClassWeeklyGoal, requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
 
@@ -15,7 +17,14 @@ type TeacherClass = Prisma.ClassGetPayload<{
   include: typeof classInclude;
 }>;
 
-export default async function TeacherClassesPage() {
+type TeacherClassesPageProps = {
+  searchParams?: {
+    classesMessage?: string;
+    classesStatus?: string;
+  };
+};
+
+export default async function TeacherClassesPage({ searchParams }: TeacherClassesPageProps) {
   const teacher = await requireTeacher();
   const classes: TeacherClass[] = await prisma.class.findMany({
     where: { teacherId: teacher.id },
@@ -23,8 +32,12 @@ export default async function TeacherClassesPage() {
     include: classInclude
   });
 
+  const classesMessage = searchParams?.classesMessage;
+  const classesStatus = searchParams?.classesStatus === "success" ? "success" : "error";
+
   return (
     <div className="space-y-8">
+      <NoticeToast message={classesMessage} status={classesStatus} />
       <header>
         <p className="text-sm font-semibold text-primary">Danh sách lớp</p>
         <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Lớp học & học viên</h2>
@@ -62,7 +75,7 @@ export default async function TeacherClassesPage() {
                     </div>
                   </div>
                 </Link>
-                <form
+                <ActionForm
                   action={updateClassWeeklyGoal}
                   className="flex items-center gap-2 border-t border-border px-5 py-3"
                 >
@@ -79,10 +92,10 @@ export default async function TeacherClassesPage() {
                     defaultValue={classItem.weeklyGoal ?? 3}
                     className="w-20 rounded-lg border border-border bg-background px-3 py-1.5 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
                   />
-                  <button className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-semibold text-primary transition hover:border-primary">
+                  <ActionSubmitButton className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-semibold text-primary transition hover:border-primary">
                     Lưu
-                  </button>
-                </form>
+                  </ActionSubmitButton>
+                </ActionForm>
               </div>
             ))
           ) : (
@@ -95,7 +108,7 @@ export default async function TeacherClassesPage() {
           )}
         </div>
 
-        <form action={createClass} className="h-fit rounded-xl border border-border bg-card p-5 shadow-card">
+        <ActionForm action={createClass} className="h-fit rounded-xl border border-border bg-card p-5 shadow-card">
           <h3 className="text-base font-semibold">Tạo lớp học</h3>
           <label className="mt-4 block text-sm font-medium" htmlFor="name">
             Tên lớp
@@ -116,10 +129,13 @@ export default async function TeacherClassesPage() {
             rows={3}
             className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
           />
-          <button className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
+          <ActionSubmitButton
+            pendingLabel="Đang tạo…"
+            className="mt-4 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+          >
             Tạo lớp
-          </button>
-        </form>
+          </ActionSubmitButton>
+        </ActionForm>
       </section>
     </div>
   );

@@ -280,7 +280,7 @@ export function ResultAnswers({
 
       <p className="text-sm font-semibold text-primary">{part.title}</p>
 
-      <div className={showSource ? "grid gap-4 lg:grid-cols-2" : ""}>
+      <div className={showSource ? "grid gap-4 lg:grid-cols-[3fr_2fr]" : ""}>
         {showSource ? (
           <>
             {/* Mobile: gấp-mở, để câu hỏi ở ngay dưới */}
@@ -295,7 +295,7 @@ export function ResultAnswers({
             {/* Desktop: cột trái dính, cuộn riêng */}
             <div
               ref={desktopScrollRef}
-              className={`hidden overflow-hidden rounded-xl border border-border bg-card shadow-card lg:block lg:sticky lg:max-h-[75vh] lg:self-start lg:overflow-auto ${stickyTopClass}`}
+              className={`hidden overflow-hidden rounded-xl border border-border bg-card shadow-card lg:block lg:sticky lg:max-h-[82vh] lg:self-start lg:overflow-auto ${stickyTopClass}`}
             >
               <div className="border-b border-border px-5 py-3 text-sm font-semibold">
                 {sourceLabel}

@@ -118,10 +118,20 @@ lệch nhau.
 | [`app/teacher/students/[studentId]/page.tsx`](../../../app/teacher/students/[studentId]/page.tsx) | Trong danh sách các lần làm bài (khoảng dòng 202) | Xem một học viên có lặp lại hành vi qua nhiều bài không |
 | [`app/teacher/review/page.tsx`](../../../app/teacher/review/page.tsx) → [`components/review-queue.tsx`](../../../components/review-queue.tsx) | Cạnh tên học viên trong hàng đợi | **Chỉ có tác dụng với Writing/Speaking** — trang này lọc `skill: { in: ["writing", "speaking"] }` nên bài Reading thuần không bao giờ xuất hiện ở đây |
 
-**Cạm bẫy:** ba trang là **ba truy vấn Prisma riêng biệt**. Cả ba đều phải `select`/`include`
-thêm `tabSwitchCount` và `findAttemptCount`, kể cả `app/teacher/calendar/page.tsx` (nguồn dữ
-liệu cho `assignment-calendar.tsx`). Sót chỗ nào thì cờ ở đó **im lặng không hiện** chứ không
-báo lỗi — phải kiểm từng trang bằng dữ liệu thật.
+**Cạm bẫy — nằm ở tầng DTO, không phải tầng truy vấn.** Cả bốn trang đều query Attempt bằng
+`include:` (không phải `select:`), nên Prisma **tự trả về mọi cột scalar** — hai cột mới có
+sẵn, **không cần sửa truy vấn**. Chỗ làm rơi dữ liệu là các **lớp map sang DTO**:
+
+- `app/teacher/calendar/page.tsx` map thủ công sang `CalendarAttempt` (khoảng dòng 105–115) →
+  phải thêm hai trường, **và** thêm vào type `CalendarAttempt` trong
+  [`lib/assignment-calendar.ts`](../../../lib/assignment-calendar.ts) (dòng ~19).
+- `app/teacher/review/page.tsx` map thủ công sang `rows` (khoảng dòng 53–70) → phải thêm hai
+  trường, **và** thêm vào type `Row` trong [`components/review-queue.tsx`](../../../components/review-queue.tsx) (dòng ~8).
+- `app/teacher/students/[studentId]/page.tsx` và `app/teacher/results/[attemptId]/page.tsx`
+  dùng thẳng object Prisma, **không có DTO** → không cần đụng gì thêm.
+
+Sót chỗ nào thì cờ ở đó **im lặng không hiện** chứ không báo lỗi (TypeScript sẽ bắt được nếu
+type được khai đúng — đó là lý do phải sửa type trước).
 
 ### Văn phong
 

@@ -2946,7 +2946,8 @@ export function AttemptWorkspace({
           </div>
         </header>
         <div className="min-h-0 flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-6xl px-4 py-5">
+          {/* Dùng hết chiều ngang màn hình (giống trang kết quả học viên), không giới hạn max-width */}
+          <div className="px-4 py-5 sm:px-6 lg:px-8">
             <ResultReview attempt={previewResult} />
           </div>
         </div>

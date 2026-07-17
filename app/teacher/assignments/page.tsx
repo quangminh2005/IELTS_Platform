@@ -84,6 +84,7 @@ type TeacherAssignmentsPageProps = {
   searchParams?: {
     assignmentsMessage?: string;
     assignmentsStatus?: string;
+    assignmentsReset?: string;
   };
 };
 
@@ -91,6 +92,9 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
   const teacher = await requireTeacher();
   const assignmentsMessage = searchParams?.assignmentsMessage;
   const assignmentsStatus = searchParams?.assignmentsStatus === "success" ? "success" : "error";
+  // Đổi sau mỗi lần tạo bài thành công → dùng làm `key` để dựng lại form,
+  // xoá sạch phần/học viên đã tích cho lần giao kế tiếp.
+  const builderResetKey = searchParams?.assignmentsReset ?? "builder";
 
   const [materials, classes, assignments]: [TeacherMaterial[], TeacherClass[], RecentAssignment[]] =
     await Promise.all([
@@ -155,6 +159,7 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
         />
 
         <AssignmentBuilder
+          key={builderResetKey}
           materials={materials}
           students={students}
           classOptions={classOptions}

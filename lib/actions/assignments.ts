@@ -141,7 +141,10 @@ export async function createAssignment(formData: FormData) {
   });
 
   revalidateAssignmentPaths();
-  redirect(assignmentNoticePath("success", "Đã giao bài thành công!"));
+  // Kèm token duy nhất để trang dựng lại form tạo bài (reset phần/học viên đã
+  // chọn), giúp giáo viên giao bài kế tiếp mà không phải bỏ tích thủ công.
+  const resetToken = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+  redirect(assignmentNoticePath("success", "Đã giao bài thành công!", resetToken));
 }
 
 function revalidateAssignmentPaths() {

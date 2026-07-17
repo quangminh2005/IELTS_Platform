@@ -65,7 +65,14 @@ export default async function MaterialPreviewPage({ params }: MaterialPreviewPag
           order: question.order,
           questionType: question.questionType,
           prompt: question.prompt,
-          optionsJson: question.optionsJson
+          optionsJson: question.optionsJson,
+          // Chỉ ở chế độ xem trước (trang giáo viên) mới kèm đáp án/giải thích để
+          // chấm & hiện kết quả ngay trong trình duyệt. Trang làm bài của học sinh
+          // KHÔNG truyền các trường này.
+          correctAnswerJson: question.correctAnswerJson,
+          explanation: question.explanation,
+          answerEvidence: question.answerEvidence,
+          points: question.points
         }))
       }
     }))

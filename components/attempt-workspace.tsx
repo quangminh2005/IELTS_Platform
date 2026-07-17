@@ -20,6 +20,10 @@ import {
 } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
 import { SkillPicker } from "@/components/skill-picker";
+import { ResultReview } from "@/components/result-review";
+import { type Annotation } from "@/components/annotated-answer";
+import { gradeUnits, type UnitForGrading } from "@/lib/attempt-grading";
+import { gradeAttempt } from "@/lib/grading";
 import { orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
 import { accumulateActiveSeconds, AUTO_SUBMIT_SKILLS } from "@/lib/active-time";
@@ -48,6 +52,12 @@ type Question = {
   questionType: string;
   prompt: string;
   optionsJson: string | null;
+  // Chỉ có ở chế độ xem trước của giáo viên (để chấm + hiện đáp án/giải thích ngay
+  // trong trình duyệt). Trang làm bài của học sinh KHÔNG truyền các trường này.
+  correctAnswerJson?: string | null;
+  explanation?: string | null;
+  answerEvidence?: string | null;
+  points?: number;
 };
 
 type Highlight = {
@@ -114,6 +124,35 @@ type AttemptWorkspaceProps = {
 type AnswerChange = (questionId: string, value: string) => void;
 
 type SaveState = "idle" | "saving" | "saved" | "error";
+
+// Kết quả chấm tại chỗ cho phòng xem trước (không lưu DB). Hình dạng khớp prop
+// `attempt` của <ResultReview> — tái dùng đúng trang kết quả của học sinh.
+type PreviewResultAnswer = {
+  id: string;
+  assignableUnitId: string;
+  value: string;
+  isCorrect: boolean | null;
+  pointsAwarded: number | null;
+  correctAnswerSnapshot: string | null;
+  explanationSnapshot: string | null;
+  evidenceSnapshot: string | null;
+  annotations: Annotation[];
+  question: { order: number; prompt: string; points: number; answerEvidence: string | null } | null;
+  assignableUnit: {
+    title: string;
+    skill: string;
+    transcript?: string | null;
+    content?: string | null;
+  };
+};
+
+type PreviewResult = {
+  score: number | null;
+  scorePercent: number | null;
+  status: string;
+  answers: PreviewResultAnswer[];
+  highlights: never[];
+};
 
 function usesLongAnswer(questionType: string) {
   return (
@@ -1592,6 +1631,8 @@ export function AttemptWorkspace({
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [activePart, setActivePart] = useState(0);
+  // Chế độ xem trước: kết quả chấm tại chỗ (null = đang làm bài, chưa nộp).
+  const [previewResult, setPreviewResult] = useState<PreviewResult | null>(null);
   // Số giây còn lại của kỹ năng đang mở (null = không giới hạn / chưa mở kỹ năng).
   const [remaining, setRemaining] = useState<number | null>(null);
   // Cỡ chữ vùng nội dung (đề + câu hỏi) cho học sinh tự chỉnh; lưu localStorage.
@@ -1872,6 +1913,88 @@ export function AttemptWorkspace({
   const answeredCount = activeQuestionIds.filter(
     (id) => (answers[id] ?? "").trim() !== ""
   ).length;
+
+  // Xem trước: chấm toàn bộ đáp án ngay trong trình duyệt (KHÔNG lưu DB) bằng đúng
+  // hàm chấm của server (gradeUnits/gradeAttempt), rồi dựng dữ liệu cho <ResultReview>
+  // — trang kết quả của học sinh — để giáo viên xem đáp án + giải thích.
+  const gradePreview = () => {
+    const units: UnitForGrading[] = activeUnits.map((assignmentUnit) => {
+      const unit = assignmentUnit.assignableUnit;
+      return {
+        assignableUnitId: unit.id,
+        skill: unit.skill,
+        content: unit.content,
+        transcript: unit.transcript,
+        questions: unit.questions.map((question) => ({
+          id: question.id,
+          order: question.order,
+          questionType: question.questionType,
+          optionsJson: question.optionsJson,
+          correctAnswerJson: question.correctAnswerJson ?? null,
+          explanation: question.explanation ?? null,
+          answerEvidence: question.answerEvidence ?? null,
+          points: question.points ?? 1
+        }))
+      };
+    });
+
+    // Tra cứu câu + phần theo id để ghép vào từng dòng đáp án đã chấm.
+    const questionMeta = new Map<
+      string,
+      { order: number; prompt: string; points: number; answerEvidence: string | null }
+    >();
+    const unitMeta = new Map<
+      string,
+      { title: string; skill: string; transcript: string | null; content: string | null }
+    >();
+    for (const assignmentUnit of activeUnits) {
+      const unit = assignmentUnit.assignableUnit;
+      unitMeta.set(unit.id, {
+        title: unit.title,
+        skill: unit.skill,
+        transcript: unit.transcript,
+        content: unit.content
+      });
+      for (const question of unit.questions) {
+        questionMeta.set(question.id, {
+          order: question.order,
+          prompt: question.prompt,
+          points: question.points ?? 1,
+          answerEvidence: question.answerEvidence ?? null
+        });
+      }
+    }
+
+    const { answerRows, gradeItems } = gradeUnits(units, (id) => answers[id] ?? "");
+    const grade = gradeAttempt(gradeItems);
+    // Bài toàn Viết/Nói không có câu tự chấm → điểm null (khớp học sinh: "chờ chấm"
+    // thay vì hiện 0%).
+    const hasAutoGraded = answerRows.some((row) => row.isCorrect !== null);
+
+    const resultAnswers: PreviewResultAnswer[] = answerRows.map((row) => ({
+      id: row.questionId,
+      assignableUnitId: row.assignableUnitId,
+      value: row.value,
+      isCorrect: row.isCorrect,
+      pointsAwarded: row.pointsAwarded,
+      correctAnswerSnapshot: row.correctAnswerSnapshot,
+      explanationSnapshot: row.explanationSnapshot,
+      evidenceSnapshot: row.evidenceSnapshot,
+      annotations: [],
+      question: questionMeta.get(row.questionId) ?? null,
+      assignableUnit:
+        unitMeta.get(row.assignableUnitId) ??
+        { title: "", skill: "", transcript: null, content: null }
+    }));
+
+    setPreviewResult({
+      score: hasAutoGraded ? grade.score : null,
+      scorePercent: hasAutoGraded ? grade.scorePercent : null,
+      status: "submitted",
+      answers: resultAnswers,
+      highlights: []
+    });
+  };
 
   // Question palette grouped by unit ("Phần").
   const parts = activeUnits.map((assignmentUnit) => {
@@ -2648,13 +2771,9 @@ export function AttemptWorkspace({
                 type={previewMode ? "button" : "submit"}
                 onClick={(event) => {
                   if (previewMode) {
-                    if (
-                      window.confirm(
-                        "Đây là bản xem trước — không có bài nào được nộp hay chấm điểm. Thoát về Kho tài liệu?"
-                      )
-                    ) {
-                      window.location.href = "/teacher/materials";
-                    }
+                    // Chấm tại chỗ + hiện trang kết quả (không lưu DB). Thoát về Kho
+                    // tài liệu dùng link "‹ Kho tài liệu" ở góc trên.
+                    gradePreview();
                     return;
                   }
                   if (!window.confirm("Nộp kỹ năng này? Bạn sẽ không sửa được sau khi nộp.")) {
@@ -2664,7 +2783,7 @@ export function AttemptWorkspace({
                 className="rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
               >
                 {previewMode
-                  ? "Thoát xem trước"
+                  ? "Nộp & xem đáp án"
                   : `Nộp ${activeSkill ? SKILL_TIME_LABELS[activeSkill] ?? activeSkill : ""}`}
               </button>
             </div>
@@ -2706,6 +2825,52 @@ export function AttemptWorkspace({
           window.location.href = "/student";
         }}
       />,
+      document.body
+    );
+  }
+
+  // Xem trước: đã "Nộp" → hiện trang kết quả (ResultReview) toàn màn hình. "Làm lại"
+  // quay về phòng làm bài, giữ nguyên đáp án đã điền để nộp lại.
+  if (previewMode && previewResult) {
+    return createPortal(
+      <div className="fixed inset-0 z-50 flex flex-col bg-background">
+        <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-4 py-3">
+          <div className="flex min-w-0 items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setPreviewResult(null)}
+              className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+            >
+              ‹ Làm lại
+            </button>
+            <div className="min-w-0">
+              <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-primary">
+                Kết quả xem trước
+                <span className="rounded-full border border-amber-400/60 bg-amber-400/15 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-300">
+                  Xem trước
+                </span>
+              </p>
+              <h2 className="truncate text-base font-bold tracking-tight sm:text-lg">
+                {assignment.title}
+              </h2>
+            </div>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <AnimatedThemeToggle />
+            <Link
+              href="/teacher/materials"
+              className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
+            >
+              Kho tài liệu ›
+            </Link>
+          </div>
+        </header>
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <div className="mx-auto max-w-6xl px-4 py-5">
+            <ResultReview attempt={previewResult} />
+          </div>
+        </div>
+      </div>,
       document.body
     );
   }

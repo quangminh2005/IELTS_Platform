@@ -320,14 +320,19 @@ export async function submitSkill(formData: FormData) {
 
     // Ghi nhận hành vi đáng ngờ: gắn với cả Attempt (không tách theo kỹ năng). Chạy ở
     // MỌI lượt nộp chứ không chỉ lượt cuối, vì heartbeat gần nhất có thể đã cũ tới 10
-    // giây. mergeCount đảm bảo chỉ tăng, không kéo lùi số đã lưu.
-    await tx.attempt.update({
-      where: { id: attempt.id },
-      data: {
-        tabSwitchCount: mergeCount(attempt.tabSwitchCount, parsed.data.tabSwitchCount),
-        findAttemptCount: mergeCount(attempt.findAttemptCount, parsed.data.findAttemptCount)
-      }
-    });
+    // giây. Dùng GREATEST ngay trong SQL (thay vì đọc-rồi-so ở JS) để việc lấy max
+    // là NGUYÊN TỬ trong DB — hai tab cùng nộp một lúc sẽ không còn ghi đè làm tụt
+    // số đếm xuống thấp hơn giá trị mà request kia vừa lưu. mergeCount ở đây chỉ để
+    // làm sạch giá trị client gửi lên (ép NaN/âm về 0, làm tròn xuống) trước khi đưa
+    // vào GREATEST, không còn dùng để so với giá trị DB nữa.
+    const safeTabSwitchCount = mergeCount(0, parsed.data.tabSwitchCount);
+    const safeFindAttemptCount = mergeCount(0, parsed.data.findAttemptCount);
+    await tx.$executeRaw`
+      UPDATE "Attempt"
+      SET "tabSwitchCount" = GREATEST("tabSwitchCount", ${safeTabSwitchCount}),
+          "findAttemptCount" = GREATEST("findAttemptCount", ${safeFindAttemptCount})
+      WHERE "id" = ${attempt.id}
+    `;
 
     // Kiểm tra đã nộp hết chưa (đọc lại trong transaction cho chắc).
     const skills = await tx.attemptSkill.findMany({ where: { attemptId: attempt.id } });
@@ -480,22 +485,20 @@ export async function saveAttemptDraft(formData: FormData) {
         ]
       : [];
 
-  // Ghi nhận hành vi đáng ngờ theo nhịp heartbeat. `attempt` query bằng include: nên
-  // đã có sẵn hai cột này. mergeCount chặn việc nhịp đến trễ kéo lùi số đã lưu.
+  // Ghi nhận hành vi đáng ngờ theo nhịp heartbeat. Dùng GREATEST ngay trong SQL để
+  // việc lấy max là NGUYÊN TỬ trong DB — heartbeat đến trễ hoặc nhiều tab cùng lưu
+  // nháp một lúc sẽ không còn đọc-rồi-ghi-đè làm tụt số đếm xuống thấp hơn giá trị
+  // đã lưu. mergeCount ở đây chỉ để làm sạch giá trị client gửi lên (ép NaN/âm về 0,
+  // làm tròn xuống) trước khi đưa vào GREATEST, không còn dùng để so với giá trị DB.
+  const safeTabSwitchCount = mergeCount(0, Number(formData.get("tabSwitchCount")));
+  const safeFindAttemptCount = mergeCount(0, Number(formData.get("findAttemptCount")));
   const proctorUpdate = [
-    prisma.attempt.update({
-      where: { id: attempt.id },
-      data: {
-        tabSwitchCount: mergeCount(
-          attempt.tabSwitchCount,
-          Number(formData.get("tabSwitchCount"))
-        ),
-        findAttemptCount: mergeCount(
-          attempt.findAttemptCount,
-          Number(formData.get("findAttemptCount"))
-        )
-      }
-    })
+    prisma.$executeRaw`
+      UPDATE "Attempt"
+      SET "tabSwitchCount" = GREATEST("tabSwitchCount", ${safeTabSwitchCount}),
+          "findAttemptCount" = GREATEST("findAttemptCount", ${safeFindAttemptCount})
+      WHERE "id" = ${attempt.id}
+    `
   ];
 
   await prisma.$transaction([

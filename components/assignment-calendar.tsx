@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { formatDuration } from "@/lib/format-duration";
+import { ProctorFlag } from "@/components/proctor-flag";
 import {
   formatAttemptResult,
   groupAssignmentsByDayDescending,
@@ -318,6 +319,7 @@ function StudentRow({
             <span className="rounded-full bg-muted px-2 py-0.5 text-muted-foreground">
               {formatAttemptResult(attempt)}
             </span>
+            <ProctorFlag counts={attempt} className="self-center" />
           </>
         ) : (
           <>

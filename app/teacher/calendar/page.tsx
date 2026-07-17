@@ -107,6 +107,8 @@ export default async function TeacherCalendarPage() {
             status: attempt.status,
             submittedAt: attempt.submittedAt ? attempt.submittedAt.toISOString() : null,
             elapsedSeconds: attempt.elapsedSeconds,
+            tabSwitchCount: attempt.tabSwitchCount,
+            findAttemptCount: attempt.findAttemptCount,
             band: attemptBand(attempt.review?.overallBand ?? null, answers),
             correct,
             total,

@@ -21,6 +21,8 @@ export type CalendarAttempt = {
   status: string; // in_progress | submitted | reviewed
   submittedAt: string | null; // ISO
   elapsedSeconds: number;
+  tabSwitchCount: number;
+  findAttemptCount: number;
   band: number | null;
   correct: number;
   total: number;

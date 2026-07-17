@@ -4,6 +4,7 @@ import { ResultReview } from "@/components/result-review";
 import { SkillTimeSummary } from "@/components/skill-time-summary";
 import { requireTeacher } from "@/lib/actions/classes";
 import { formatDuration } from "@/lib/format-duration";
+import { proctorSummary } from "@/lib/proctor-signals";
 import { prisma } from "@/lib/prisma";
 import { skillTimesFromParts } from "@/lib/skill-times";
 
@@ -104,6 +105,7 @@ export default async function TeacherResultPage({ params }: ResultPageProps) {
               {attempt.student.displayName} ({attempt.student.email}) · ⏱ Thời gian làm:{" "}
               {formatDuration(attempt.elapsedSeconds)}
             </p>
+            <p className="mt-1 text-xs text-muted-foreground">{proctorSummary(attempt)}</p>
             <SkillTimeSummary
               skillTimes={skillTimes}
               className="mt-1 text-xs text-muted-foreground"

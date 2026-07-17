@@ -1889,6 +1889,15 @@ export function AttemptWorkspace({
       if (partTimesInputRef.current) {
         partTimesInputRef.current.value = JSON.stringify(snapshotPartTimes());
       }
+      // Render lại từ RSC (vd. revalidatePath khi startSkillSession) đặt hidden input về
+      // defaultValue cũ đọc từ DB, xoá mất giá trị vừa bump — nên phải đồng bộ lại từ ref
+      // mỗi giây như elapsedSeconds/partTimesJson ở trên, không chỉ ghi một lần lúc bump.
+      if (tabSwitchInputRef.current) {
+        tabSwitchInputRef.current.value = String(tabSwitchCountRef.current);
+      }
+      if (findAttemptInputRef.current) {
+        findAttemptInputRef.current.value = String(findAttemptCountRef.current);
+      }
 
       if (budgetSeconds == null) {
         setRemaining(null);

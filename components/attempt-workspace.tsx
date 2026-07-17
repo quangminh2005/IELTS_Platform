@@ -45,6 +45,7 @@ import {
   usesDragDropAnswer
 } from "@/lib/question-interactions";
 import type { MultiSelectGroup } from "@/lib/multi-select";
+import { isFindShortcut, shouldCountTabAway } from "@/lib/proctor-signals";
 
 type Question = {
   id: string;
@@ -97,6 +98,9 @@ type AttemptWorkspaceProps = {
     startedAt: Date | string;
     elapsedSeconds: number;
     partTimesJson?: string | null;
+    // Số đếm hành vi đáng ngờ. Optional vì phòng xem trước không có Attempt thật.
+    tabSwitchCount?: number;
+    findAttemptCount?: number;
   };
   assignment: {
     title: string;
@@ -1554,6 +1558,12 @@ export function AttemptWorkspace({
   const submitReasonRef = useRef<HTMLInputElement>(null);
   const partTimesInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const tabSwitchInputRef = useRef<HTMLInputElement>(null);
+  const findAttemptInputRef = useRef<HTMLInputElement>(null);
+  // Số đếm để trong ref (không phải state): không cần render lại, và tuyệt đối không
+  // hiện gì lên màn hình học viên. `?? 0` cho phòng xem trước (attempt giả).
+  const tabSwitchCountRef = useRef(attempt.tabSwitchCount ?? 0);
+  const findAttemptCountRef = useRef(attempt.findAttemptCount ?? 0);
   // Bộ đếm "thời gian làm thực" (giây) của kỹ năng đang mở + cờ chống tự-nộp trùng.
   const consumedRef = useRef(0);
   const autoSubmittedRef = useRef(false);
@@ -1735,6 +1745,8 @@ export function AttemptWorkspace({
         formData.set(`q_${questionId}`, value);
       });
       formData.set("partTimesJson", JSON.stringify(snapshotPartTimes()));
+      formData.set("tabSwitchCount", String(tabSwitchCountRef.current));
+      formData.set("findAttemptCount", String(findAttemptCountRef.current));
 
       await saveAttemptDraft(formData);
       setSaveState("saved");
@@ -1784,6 +1796,53 @@ export function AttemptWorkspace({
     }, 10000);
     return () => window.clearInterval(intervalId);
   }, [previewMode, activeSkill, persistDraft]);
+
+  // Ghi nhận hành vi đáng ngờ: CHỈ ĐẾM, KHÔNG CHẶN. Cố ý không gọi preventDefault để
+  // ô tìm kiếm vẫn mở bình thường và học viên không biết mình bị ghi nhận — tính năng
+  // này hiệu quả nhất khi học viên không biết nó tồn tại.
+  // Không chạy ở phòng xem trước của giáo viên (giáo viên tự xem đề của mình).
+  useEffect(() => {
+    if (previewMode || !activeSkill) {
+      return;
+    }
+
+    function bump(
+      counter: { current: number },
+      input: React.RefObject<HTMLInputElement>
+    ) {
+      counter.current += 1;
+      if (input.current) {
+        input.current.value = String(counter.current);
+      }
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (isFindShortcut(event)) {
+        bump(findAttemptCountRef, findAttemptInputRef);
+      }
+    }
+
+    // Chỉ tính khi rời tab quá TAB_AWAY_MIN_MS: thông báo nhảy lên rồi tắt ngay là vô
+    // tình, không phải gian lận.
+    let hiddenSince: number | null = null;
+    function onVisibilityChange() {
+      if (document.hidden) {
+        hiddenSince = Date.now();
+        return;
+      }
+      if (hiddenSince !== null && shouldCountTabAway(Date.now() - hiddenSince)) {
+        bump(tabSwitchCountRef, tabSwitchInputRef);
+      }
+      hiddenSince = null;
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, [previewMode, activeSkill]);
 
   // Khi học sinh chuyển sang phần khác: chốt thời gian đang trôi vào phần vừa rời,
   // rồi bắt đầu đếm cho phần mới. Lần chạy đầu (mount) chỉ đặt phần đang mở.
@@ -2043,6 +2102,18 @@ export function AttemptWorkspace({
         type="hidden"
         name="partTimesJson"
         defaultValue={attempt.partTimesJson ?? "{}"}
+      />
+      <input
+        ref={tabSwitchInputRef}
+        type="hidden"
+        name="tabSwitchCount"
+        defaultValue={attempt.tabSwitchCount ?? 0}
+      />
+      <input
+        ref={findAttemptInputRef}
+        type="hidden"
+        name="findAttemptCount"
+        defaultValue={attempt.findAttemptCount ?? 0}
       />
       <input ref={submitReasonRef} type="hidden" name="submitReason" defaultValue="manual" />
       <input type="hidden" name="recipientId" value={recipientId} />

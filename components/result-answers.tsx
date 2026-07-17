@@ -111,7 +111,7 @@ function AnswerCard({
   };
   return (
     <article
-      className={`rounded-xl border bg-card p-4 shadow-card transition ${
+      className={`rounded-xl border bg-card p-5 shadow-card transition ${
         isActive ? "border-primary ring-2 ring-primary" : "border-border"
       } ${interactive ? "cursor-pointer hover:border-primary" : ""}`}
       {...(interactive
@@ -130,11 +130,11 @@ function AnswerCard({
         : {})}
     >
       <div className="flex items-start justify-between gap-3">
-        <h4 className="font-semibold">
+        <h4 className="text-lg font-semibold">
           {answer.order !== null ? `Câu ${answer.order}` : "Câu chưa liên kết"}
         </h4>
         <span
-          className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium ${correctnessClass(
+          className={`shrink-0 rounded-full border px-3 py-1 text-sm font-medium ${correctnessClass(
             answer.isCorrect
           )}`}
         >
@@ -142,14 +142,14 @@ function AnswerCard({
         </span>
       </div>
       {answer.prompt ? (
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">{answer.prompt}</p>
+        <p className="mt-2 text-base leading-7 text-muted-foreground">{answer.prompt}</p>
       ) : null}
-      <dl className="mt-3 grid gap-3 text-sm sm:grid-cols-2">
-        <div className="rounded-lg border border-border bg-muted/60 p-3">
-          <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+      <dl className="mt-3 grid gap-3 text-base sm:grid-cols-2">
+        <div className="rounded-lg border border-border bg-muted/60 p-4">
+          <dt className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
             Bạn trả lời
           </dt>
-          <dd className="mt-2">
+          <dd className="mt-2 leading-7">
             {answer.value ? (
               isAudioUrl(answer.value) ? (
                 <audio controls src={answer.value} className="w-full" preload="metadata">
@@ -163,22 +163,22 @@ function AnswerCard({
             )}
           </dd>
         </div>
-        <div className="rounded-lg border border-emerald-400/30 bg-emerald-500/5 p-3">
-          <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <div className="rounded-lg border border-emerald-400/30 bg-emerald-500/5 p-4">
+          <dt className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
             Đáp án đúng
           </dt>
-          <dd className="mt-2 whitespace-pre-wrap">{answer.correctAnswerSnapshot || "Không có"}</dd>
+          <dd className="mt-2 whitespace-pre-wrap leading-7">{answer.correctAnswerSnapshot || "Không có"}</dd>
         </div>
       </dl>
       {answer.explanationSnapshot ? (
-        <div className="mt-3 rounded-lg border border-border bg-muted/60 p-3 text-sm">
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <div className="mt-4 rounded-lg border border-border bg-muted/60 p-5">
+          <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
             Giải thích
           </p>
-          <p className="mt-2 leading-6">{answer.explanationSnapshot}</p>
+          <p className="mt-2 whitespace-pre-wrap text-[17px] leading-8">{answer.explanationSnapshot}</p>
         </div>
       ) : null}
-      <p className="mt-3 text-sm text-muted-foreground">
+      <p className="mt-3 text-base text-muted-foreground">
         {answer.isCorrect === null ? (
           "Chờ giáo viên chấm"
         ) : (

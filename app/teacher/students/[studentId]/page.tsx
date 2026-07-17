@@ -207,7 +207,7 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                             {typeof attempt.scorePercent === "number"
                               ? ` · ${attempt.scorePercent.toFixed(1)}%`
                               : ""}
-                            <ProctorFlag counts={attempt} />
+                            <ProctorFlag counts={attempt} className="ml-1" />
                           </p>
                           {bands.length > 0 ? (
                             <div className="mt-2 flex flex-wrap gap-2">

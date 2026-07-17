@@ -52,6 +52,7 @@ describe("foundation slice", () => {
       "customTimeLimitMinutes",
       "elapsedSeconds",
       "tabSwitchCount",
+      "findAttemptCount",
       "criteriaScoresJson",
       "skillTimeLimitsJson",
       "@@unique([attemptId])",

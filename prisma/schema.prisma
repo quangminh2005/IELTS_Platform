@@ -190,6 +190,9 @@ model Attempt {
   // Null với các bài nộp trước khi có tính năng này (không thể tính ngược).
   partTimesJson         String?
   tabSwitchCount        Int                 @default(0)
+  // Số lần học viên nhấn Ctrl+F / F3 khi làm bài. Chỉ là manh mối để hỏi lại học
+  // viên, KHÔNG phải bằng chứng: mở ô tìm kiếm qua menu ⋮ thì không đếm được.
+  findAttemptCount      Int                 @default(0)
   score                 Float?
   scorePercent          Float?
   autoGradedAt          DateTime?

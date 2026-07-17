@@ -32,7 +32,12 @@ const statements = [
       ALTER TABLE "AttemptSkill" ADD CONSTRAINT "AttemptSkill_attemptId_fkey"
       FOREIGN KEY ("attemptId") REFERENCES "Attempt"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
-  END $$;`
+  END $$;`,
+  // Ghi nhận hành vi đáng ngờ khi làm bài (Ctrl+F, rời tab)
+  'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "findAttemptCount" INTEGER NOT NULL DEFAULT 0;',
+  // tabSwitchCount đã có trong schema từ đầu nhưng chưa từng được ghi — thêm cho
+  // chắc, câu lệnh idempotent nên chạy lại vô hại.
+  'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "tabSwitchCount" INTEGER NOT NULL DEFAULT 0;',
 ];
 
 const prisma = new PrismaClient();

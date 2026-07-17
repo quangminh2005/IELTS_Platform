@@ -7,14 +7,22 @@ import {
   type StudentPickerStudent
 } from "@/components/student-picker";
 import { UnitPicker, type UnitPickerMaterial } from "@/components/unit-picker";
+import { ResetOnToken } from "@/components/reset-on-token";
 
 type AssignmentBuilderProps = {
   materials: UnitPickerMaterial[];
   students: StudentPickerStudent[];
   classOptions: StudentPickerClass[];
+  // Đổi sau mỗi lần tạo bài thành công → remount form để xoá lựa chọn cũ.
+  resetToken: string;
 };
 
-export function AssignmentBuilder({ materials, students, classOptions }: AssignmentBuilderProps) {
+export function AssignmentBuilder({
+  materials,
+  students,
+  classOptions,
+  resetToken
+}: AssignmentBuilderProps) {
   const hasUnits = materials.some((material) => material.units.length > 0);
   const canCreate = hasUnits && students.length > 0;
 
@@ -26,6 +34,7 @@ export function AssignmentBuilder({ materials, students, classOptions }: Assignm
   );
 
   return (
+    <ResetOnToken token={resetToken}>
     <form
       action={createAssignment}
       className="flex flex-col rounded-xl border border-border bg-card shadow-card xl:sticky xl:top-6 xl:max-h-[calc(100vh-3rem)]"
@@ -120,5 +129,6 @@ export function AssignmentBuilder({ materials, students, classOptions }: Assignm
         </button>
       </div>
     </form>
+    </ResetOnToken>
   );
 }

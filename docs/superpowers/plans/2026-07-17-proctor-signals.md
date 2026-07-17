@@ -451,15 +451,24 @@ import { isFindShortcut, shouldCountTabAway } from "@/lib/proctor-signals";
 
 - [ ] **Step 2: Thêm hai trường vào type prop `attempt`**
 
-Tìm type prop `attempt` (khối có `elapsedSeconds: number;` ở dòng ~98 và ~117 — **kiểm cả hai chỗ**, sửa chỗ mô tả `attempt` được truyền vào `AttemptWorkspace`). Thêm:
+Sửa **duy nhất** khối `attempt` trong `type AttemptWorkspaceProps` (dòng ~95–100). **Không** đụng vào `elapsedSeconds` ở dòng ~117 — cái đó thuộc `attemptSkills`, khác hẳn.
+
+Hai trường phải là **optional**: phòng xem trước dựng một `attempt` giả
+(`app/teacher/materials/[materialId]/preview/page.tsx:97` — `attempt={{ id: "preview", startedAt: new Date(), elapsedSeconds: 0 }}`) và hai số đếm **không có nghĩa gì** ở đó. Khai bắt buộc sẽ làm trang xem trước không biên dịch được. Đây là cùng lối với `partTimesJson?` và `attemptSkills?` sẵn có trong file.
 
 ```ts
+  attempt: {
+    id: string;
+    startedAt: Date | string;
     elapsedSeconds: number;
-    tabSwitchCount: number;
-    findAttemptCount: number;
+    partTimesJson?: string | null;
+    // Số đếm hành vi đáng ngờ. Optional vì phòng xem trước không có Attempt thật.
+    tabSwitchCount?: number;
+    findAttemptCount?: number;
+  };
 ```
 
-Nếu TypeScript báo lỗi ở trang truyền props (`app/student/...`), kiểm tra trang đó query Attempt bằng `include:` (tự có mọi cột scalar) — thường không cần sửa gì.
+Trang `app/student/assignments/[recipientId]/page.tsx` truyền thẳng object Prisma nên đã có sẵn hai cột — không cần sửa. **Không** thêm hai trường vào object giả của trang xem trước.
 
 - [ ] **Step 3: Thêm refs**
 
@@ -469,9 +478,9 @@ Cạnh `const elapsedRef = useRef<HTMLInputElement>(null);` (dòng ~1553):
   const tabSwitchInputRef = useRef<HTMLInputElement>(null);
   const findAttemptInputRef = useRef<HTMLInputElement>(null);
   // Số đếm để trong ref (không phải state): không cần render lại, và tuyệt đối không
-  // hiện gì lên màn hình học viên.
-  const tabSwitchCountRef = useRef(attempt.tabSwitchCount);
-  const findAttemptCountRef = useRef(attempt.findAttemptCount);
+  // hiện gì lên màn hình học viên. `?? 0` cho phòng xem trước (attempt giả).
+  const tabSwitchCountRef = useRef(attempt.tabSwitchCount ?? 0);
+  const findAttemptCountRef = useRef(attempt.findAttemptCount ?? 0);
 ```
 
 - [ ] **Step 4: Thêm effect bắt tín hiệu**
@@ -546,13 +555,13 @@ Sau hidden input `partTimesJson` (dòng ~2042–2047):
         ref={tabSwitchInputRef}
         type="hidden"
         name="tabSwitchCount"
-        defaultValue={attempt.tabSwitchCount}
+        defaultValue={attempt.tabSwitchCount ?? 0}
       />
       <input
         ref={findAttemptInputRef}
         type="hidden"
         name="findAttemptCount"
-        defaultValue={attempt.findAttemptCount}
+        defaultValue={attempt.findAttemptCount ?? 0}
       />
 ```
 

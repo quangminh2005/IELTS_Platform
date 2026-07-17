@@ -12,6 +12,7 @@ import { allSkillsSubmitted, orderedSkillsOfAssignment, unitsForSkill } from "@/
 import { sanitizePartTimesJson } from "@/lib/skill-times";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
 import { isSkillTimeUp, skillBudgetSeconds } from "@/lib/active-time";
+import { mergeCount } from "@/lib/proctor-signals";
 import { prisma } from "@/lib/prisma";
 
 const highlightSchema = z.object({
@@ -185,7 +186,9 @@ const submitSkillSchema = z.object({
   attemptId: z.string().trim().min(1),
   skill: z.enum(["listening", "reading", "writing", "speaking"]),
   submitReason: z.enum(["manual", "auto_timeout"]).default("manual"),
-  elapsedSeconds: z.coerce.number().int().min(0).default(0)
+  elapsedSeconds: z.coerce.number().int().min(0).default(0),
+  tabSwitchCount: z.coerce.number().int().min(0).default(0),
+  findAttemptCount: z.coerce.number().int().min(0).default(0)
 });
 
 // Học sinh nộp riêng một kỹ năng: chấm + ghi Answer của các unit thuộc kỹ năng
@@ -198,7 +201,9 @@ export async function submitSkill(formData: FormData) {
     attemptId: formData.get("attemptId"),
     skill: formData.get("skill"),
     submitReason: formData.get("submitReason") ?? "manual",
-    elapsedSeconds: formData.get("elapsedSeconds") ?? 0
+    elapsedSeconds: formData.get("elapsedSeconds") ?? 0,
+    tabSwitchCount: formData.get("tabSwitchCount") ?? 0,
+    findAttemptCount: formData.get("findAttemptCount") ?? 0
   });
   if (!parsed.success) {
     throw new Error(parsed.error.issues[0]?.message ?? "Dữ liệu nộp không hợp lệ.");
@@ -310,6 +315,17 @@ export async function submitSkill(formData: FormData) {
         elapsedSeconds: parsed.data.elapsedSeconds,
         score: manualSkill ? null : skillGrade.score,
         scorePercent: manualSkill ? null : skillGrade.scorePercent
+      }
+    });
+
+    // Ghi nhận hành vi đáng ngờ: gắn với cả Attempt (không tách theo kỹ năng). Chạy ở
+    // MỌI lượt nộp chứ không chỉ lượt cuối, vì heartbeat gần nhất có thể đã cũ tới 10
+    // giây. mergeCount đảm bảo chỉ tăng, không kéo lùi số đã lưu.
+    await tx.attempt.update({
+      where: { id: attempt.id },
+      data: {
+        tabSwitchCount: mergeCount(attempt.tabSwitchCount, parsed.data.tabSwitchCount),
+        findAttemptCount: mergeCount(attempt.findAttemptCount, parsed.data.findAttemptCount)
       }
     });
 
@@ -464,6 +480,24 @@ export async function saveAttemptDraft(formData: FormData) {
         ]
       : [];
 
+  // Ghi nhận hành vi đáng ngờ theo nhịp heartbeat. `attempt` query bằng include: nên
+  // đã có sẵn hai cột này. mergeCount chặn việc nhịp đến trễ kéo lùi số đã lưu.
+  const proctorUpdate = [
+    prisma.attempt.update({
+      where: { id: attempt.id },
+      data: {
+        tabSwitchCount: mergeCount(
+          attempt.tabSwitchCount,
+          Number(formData.get("tabSwitchCount"))
+        ),
+        findAttemptCount: mergeCount(
+          attempt.findAttemptCount,
+          Number(formData.get("findAttemptCount"))
+        )
+      }
+    })
+  ];
+
   await prisma.$transaction([
     prisma.answer.deleteMany({
       where: {
@@ -475,7 +509,8 @@ export async function saveAttemptDraft(formData: FormData) {
       ? [prisma.answer.createMany({ data: draftRows })]
       : []),
     ...partTimesUpdate,
-    ...skillElapsedUpdate
+    ...skillElapsedUpdate,
+    ...proctorUpdate
   ]);
 }
 

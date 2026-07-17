@@ -75,7 +75,9 @@ export default async function TeacherReviewPage() {
         : null,
       isLate,
       durationLabel: formatDuration(attempt.elapsedSeconds),
-      durationSuspect: durationExceedsLimit(attempt.elapsedSeconds, assignment.timeLimitMinutes)
+      durationSuspect: durationExceedsLimit(attempt.elapsedSeconds, assignment.timeLimitMinutes),
+      tabSwitchCount: attempt.tabSwitchCount,
+      findAttemptCount: attempt.findAttemptCount
     };
   });
 

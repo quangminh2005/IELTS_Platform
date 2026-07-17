@@ -4,6 +4,7 @@ import { deleteStudent, requireTeacher } from "@/lib/actions/classes";
 import { resetRecipientAttempts } from "@/lib/actions/attempts";
 import { ActionDeleteButton, ActionForm } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
+import { ProctorFlag } from "@/components/proctor-flag";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
@@ -206,6 +207,7 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                             {typeof attempt.scorePercent === "number"
                               ? ` · ${attempt.scorePercent.toFixed(1)}%`
                               : ""}
+                            <ProctorFlag counts={attempt} />
                           </p>
                           {bands.length > 0 ? (
                             <div className="mt-2 flex flex-wrap gap-2">

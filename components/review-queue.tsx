@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { ProctorFlag } from "@/components/proctor-flag";
 
 export type QueueRow = {
   id: string;
@@ -17,6 +18,8 @@ export type QueueRow = {
   isLate: boolean;
   durationLabel: string;
   durationSuspect: boolean;
+  tabSwitchCount: number;
+  findAttemptCount: number;
 };
 
 type ReviewQueueProps = {
@@ -177,7 +180,10 @@ export function ReviewQueue({ rows }: ReviewQueueProps) {
                 filtered.map((row) => (
                   <tr key={row.id} className="transition hover:bg-muted/30">
                     <td className="px-4 py-3">
-                      <p className="font-medium">{row.studentName}</p>
+                      <p className="flex items-center gap-1 font-medium">
+                        {row.studentName}
+                        <ProctorFlag counts={row} />
+                      </p>
                       <p className="text-xs text-muted-foreground">{row.studentEmail}</p>
                     </td>
                     <td className="px-4 py-3">

@@ -1,12 +1,9 @@
 import type { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { ActionDeleteButton, ActionForm, ActionSubmitButton } from "@/components/action-form";
-import { AudioUpload } from "@/components/audio-upload";
-import { ImageUpload } from "@/components/image-upload";
+import { MaterialUnitsPanel } from "@/components/material-units-panel";
 import { MaterialsBrowser, type MaterialBrowserItem } from "@/components/materials-browser";
-import { QuestionFields } from "@/components/question-fields";
 import { requireTeacher } from "@/lib/actions/classes";
-import { parseUnitImages } from "@/lib/question-interactions";
 import {
   deleteMaterial,
   deleteQuestion,
@@ -22,13 +19,21 @@ import {
 } from "@/lib/materials-filter";
 import { prisma } from "@/lib/prisma";
 
-const materialInclude = {
+// Query nhẹ: trang danh sách chỉ cần đủ dữ liệu để vẽ thẻ + tính cờ trạng thái.
+// Không nạp content/transcript/metadata hay các bản ghi câu hỏi — những thứ đó chỉ
+// tải khi giáo viên bấm mở "Xem N phần" (xem MaterialUnitsPanel + API detail route).
+const materialSelect = {
+  id: true,
+  title: true,
+  skill: true,
+  sourceLabel: true,
+  description: true,
+  createdAt: true,
   units: {
     orderBy: [{ unitNumber: "asc" }, { createdAt: "desc" }],
-    include: {
-      questions: {
-        orderBy: { order: "asc" }
-      },
+    select: {
+      id: true,
+      audioUrl: true,
       _count: {
         select: {
           questions: true
@@ -41,10 +46,10 @@ const materialInclude = {
       units: true
     }
   }
-} satisfies Prisma.MaterialInclude;
+} satisfies Prisma.MaterialSelect;
 
 type TeacherMaterial = Prisma.MaterialGetPayload<{
-  include: typeof materialInclude;
+  select: typeof materialSelect;
 }>;
 
 const skillOptions = [
@@ -52,13 +57,6 @@ const skillOptions = [
   { value: "reading", label: "Reading" },
   { value: "writing", label: "Writing" },
   { value: "speaking", label: "Speaking" }
-];
-
-const unitTypeOptions = [
-  { value: "listening_part", label: "Listening part" },
-  { value: "reading_passage", label: "Reading passage" },
-  { value: "writing_task", label: "Writing task" },
-  { value: "speaking_part", label: "Speaking part" }
 ];
 
 const fieldClass =
@@ -106,23 +104,6 @@ function EyeIcon({ className }: { className?: string }) {
   );
 }
 
-function ListIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
-    </svg>
-  );
-}
-
 function formatValue(value: string) {
   return value
     .split("_")
@@ -166,7 +147,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
   const materials: TeacherMaterial[] = await prisma.material.findMany({
     where: { teacherId: teacher.id },
     orderBy: { createdAt: "desc" },
-    include: materialInclude
+    select: materialSelect
   });
 
   const totalUnits = materials.reduce((sum, material) => sum + material._count.units, 0);
@@ -298,7 +279,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         {material.description}
                       </p>
                     ) : null}
-                    {material.units.length > 0 ? (
+                    {material._count.units > 0 ? (
                       <Link
                         href={`/teacher/materials/${material.id}/preview`}
                         target="_blank"
@@ -391,240 +372,16 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                 </div>
               </div>
 
-              {material.units.length > 0 ? (
-                <details>
-                  <summary className="cursor-pointer px-5 py-3 text-sm font-semibold transition-colors hover:bg-muted/50">
-                    <EyeIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
-                    Xem {material._count.units} phần · {materialQuestions} câu hỏi
-                  </summary>
-                  <div className="border-t border-border py-2 pl-4 pr-2 sm:pl-6">
-                    <div className="divide-y divide-border border-l-2 border-primary/25 pl-3 sm:pl-4">
-                    {material.units.map((unit) => (
-                    <div key={unit.id} className="py-4 pr-3">
-                      <div>
-                        <p className="font-medium">
-                          {unit.unitNumber}. {unit.title}
-                        </p>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {formatValue(unit.unitType)} · {unit._count.questions} câu hỏi
-                        </p>
-                      </div>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {unit.questions.slice(0, 3).map((question) => (
-                          <span
-                            key={question.id}
-                            className="rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground"
-                          >
-                            Q{question.order} {formatValue(question.questionType)}
-                          </span>
-                        ))}
-                        {unit.questions.length > 3 ? (
-                          <span className="rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground">
-                            +{unit.questions.length - 3}
-                          </span>
-                        ) : null}
-                      </div>
-                      <details className="mt-3 rounded-lg border border-border bg-muted/60 p-4 transition-colors hover:border-primary/40 hover:bg-muted">
-                        <summary className="cursor-pointer text-sm font-semibold">
-                          <PencilIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
-                          Sửa phần
-                        </summary>
-                        <ActionForm action={updateUnit} className="mt-4 grid gap-3">
-                          <input type="hidden" name="unitId" value={unit.id} />
-                          <input type="hidden" name="materialId" value={material.id} />
-                          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_12rem_6rem]">
-                            <div>
-                              <label className="text-sm font-medium" htmlFor={`unit-title-${unit.id}`}>
-                                Tiêu đề
-                              </label>
-                              <input
-                                id={`unit-title-${unit.id}`}
-                                name="title"
-                                minLength={2}
-                                required
-                                defaultValue={unit.title}
-                                className={fieldClass}
-                              />
-                            </div>
-                            <div>
-                              <label className="text-sm font-medium" htmlFor={`unit-type-${unit.id}`}>
-                                Loại phần
-                              </label>
-                              <select
-                                id={`unit-type-${unit.id}`}
-                                name="unitType"
-                                required
-                                defaultValue={unit.unitType}
-                                className={fieldClass}
-                              >
-                                {unitTypeOptions.map((option) => (
-                                  <option key={option.value} value={option.value}>
-                                    {option.label}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                            <div>
-                              <label className="text-sm font-medium" htmlFor={`unit-number-${unit.id}`}>
-                                Số thứ tự
-                              </label>
-                              <input
-                                id={`unit-number-${unit.id}`}
-                                name="unitNumber"
-                                type="number"
-                                min={1}
-                                required
-                                defaultValue={unit.unitNumber}
-                                className={fieldClass}
-                              />
-                            </div>
-                          </div>
-                          <div className="grid gap-3 md:grid-cols-2">
-                            <div>
-                              <label className="text-sm font-medium" htmlFor={`unit-instructions-${unit.id}`}>
-                                Hướng dẫn
-                              </label>
-                              <textarea
-                                id={`unit-instructions-${unit.id}`}
-                                name="instructions"
-                                rows={3}
-                                defaultValue={unit.instructions ?? ""}
-                                className={fieldClass}
-                              />
-                            </div>
-                            <div>
-                              <label className="text-sm font-medium" htmlFor={`unit-content-${unit.id}`}>
-                                Nội dung
-                              </label>
-                              <textarea
-                                id={`unit-content-${unit.id}`}
-                                name="content"
-                                rows={5}
-                                defaultValue={unit.content}
-                                className={fieldClass}
-                              />
-                            </div>
-                          </div>
-                          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_8rem]">
-                            <div>
-                              <label className="text-sm font-medium" htmlFor={`unit-audio-${unit.id}`}>
-                                Âm thanh
-                              </label>
-                              <AudioUpload
-                                id={`unit-audio-${unit.id}`}
-                                defaultValue={unit.audioUrl ?? ""}
-                              />
-                            </div>
-                            <div>
-                              <label className="text-sm font-medium" htmlFor={`unit-time-${unit.id}`}>
-                                Thời gian (phút)
-                              </label>
-                              <input
-                                id={`unit-time-${unit.id}`}
-                                name="defaultTimeLimitMinutes"
-                                type="number"
-                                min={1}
-                                defaultValue={unit.defaultTimeLimitMinutes ?? ""}
-                                className={fieldClass}
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label className="text-sm font-medium" htmlFor={`unit-image-${unit.id}`}>
-                              Hình ảnh (biểu đồ/bản đồ Writing Task 1, ...)
-                            </label>
-                            <div className="mt-2">
-                              <ImageUpload
-                                id={`unit-image-${unit.id}`}
-                                defaultValue={parseUnitImages(unit.metadataJson)}
-                              />
-                            </div>
-                          </div>
-                          <div className="grid gap-3 md:grid-cols-2">
-                            <div>
-                              <label className="text-sm font-medium" htmlFor={`unit-transcript-${unit.id}`}>
-                                Lời thoại (transcript)
-                              </label>
-                              <textarea
-                                id={`unit-transcript-${unit.id}`}
-                                name="transcript"
-                                rows={3}
-                                defaultValue={unit.transcript ?? ""}
-                                className={fieldClass}
-                              />
-                            </div>
-                            <div>
-                              <label className="text-sm font-medium" htmlFor={`unit-metadata-${unit.id}`}>
-                                Metadata (JSON)
-                              </label>
-                              <textarea
-                                id={`unit-metadata-${unit.id}`}
-                                name="metadataJson"
-                                rows={3}
-                                defaultValue={unit.metadataJson ?? ""}
-                                className={fieldClass}
-                              />
-                            </div>
-                          </div>
-                          <div className="flex flex-wrap gap-2">
-                            <ActionSubmitButton className={secondaryButtonClass}>
-                              Lưu phần
-                            </ActionSubmitButton>
-                            <ActionDeleteButton
-                              action={deleteUnit}
-                              confirmMessage={`Xoá phần "${unit.title}" cùng toàn bộ câu hỏi? Không thể hoàn tác.`}
-                              className={dangerButtonClass}
-                            >
-                              Xoá phần
-                            </ActionDeleteButton>
-                          </div>
-                        </ActionForm>
-                      </details>
-                      {unit.questions.length > 0 ? (
-                        <details className="mt-3">
-                          <summary className="cursor-pointer text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
-                            <ListIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle" />
-                            Danh sách câu hỏi ({unit.questions.length})
-                          </summary>
-                          <div className="mt-3 space-y-3">
-                          {unit.questions.map((question) => (
-                            <details
-                              key={question.id}
-                              className="rounded-md border border-border bg-background/45 p-4 transition-colors hover:border-primary/40"
-                            >
-                              <summary className="cursor-pointer text-sm font-semibold">
-                                <PencilIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />
-                                Sửa câu {question.order} · {formatValue(question.questionType)}
-                              </summary>
-                              <QuestionFields
-                                formAction={updateQuestion}
-                                submitLabel="Lưu câu hỏi"
-                                idPrefix={`edit-${question.id}`}
-                                selectedUnitId={unit.id}
-                                hiddenFields={{ questionId: question.id }}
-                                defaults={{
-                                  questionType: question.questionType,
-                                  order: question.order,
-                                  points: question.points,
-                                  prompt: question.prompt,
-                                  optionsJson: question.optionsJson,
-                                  correctAnswerJson: question.correctAnswerJson,
-                                  explanation: question.explanation,
-                                  answerEvidence: question.answerEvidence
-                                }}
-                                deleteAction={deleteQuestion}
-                                deleteConfirm={`Xoá câu ${question.order}? Không thể hoàn tác.`}
-                              />
-                            </details>
-                          ))}
-                          </div>
-                        </details>
-                      ) : null}
-                    </div>
-                    ))}
-                    </div>
-                  </div>
-                </details>
+              {material._count.units > 0 ? (
+                <MaterialUnitsPanel
+                  materialId={material.id}
+                  unitCount={material._count.units}
+                  questionCount={materialQuestions}
+                  updateUnit={updateUnit}
+                  deleteUnit={deleteUnit}
+                  updateQuestion={updateQuestion}
+                  deleteQuestion={deleteQuestion}
+                />
               ) : (
                 <p className="px-5 py-6 text-sm text-muted-foreground">
                   Chưa có phần nào. Bấm{" "}

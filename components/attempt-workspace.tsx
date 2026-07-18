@@ -507,6 +507,44 @@ function TableCompletionCell({
   );
 }
 
+// Các dòng đứng TRƯỚC bảng trong tableBody (vd "# Science written in the first
+// half of the 17th century") là dòng tiêu đề gộp của bảng trong đề gốc.
+// parseMarkdownTable chỉ giữ dòng có "|" nên phải render những dòng này riêng.
+function TableCaptionLines({ lines }: { lines: string[] }) {
+  const visible = lines.filter((line) => line.trim() !== "");
+
+  if (visible.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="space-y-1 border-b border-border bg-muted/40 px-3 py-2">
+      {visible.map((line, index) => {
+        const trimmed = line.trim();
+        if (trimmed.startsWith("# ")) {
+          return (
+            <p key={index} className="text-center text-base font-bold">
+              {trimmed.slice(2)}
+            </p>
+          );
+        }
+        if (trimmed.startsWith("## ")) {
+          return (
+            <p key={index} className="font-bold">
+              {trimmed.slice(3)}
+            </p>
+          );
+        }
+        return (
+          <p key={index} className="text-sm leading-7">
+            {trimmed}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 function TableCompletionQuestionSet({
   content,
   questions,
@@ -520,6 +558,11 @@ function TableCompletionQuestionSet({
 }) {
   const table = parseMarkdownTable(content);
   const questionsByOrder = new Map(questions.map((question) => [question.order, question]));
+  const captionLines = (() => {
+    const lines = content.split(/\r?\n/);
+    const firstTableLine = lines.findIndex((line) => line.includes("|"));
+    return firstTableLine > 0 ? lines.slice(0, firstTableLine) : [];
+  })();
 
   if (!table) {
     return (
@@ -547,6 +590,7 @@ function TableCompletionQuestionSet({
 
   return (
     <div className="overflow-x-auto rounded-md border border-border bg-background/40">
+      <TableCaptionLines lines={captionLines} />
       <table className="min-w-full border-collapse text-sm">
         <thead>
           <tr className="bg-muted/60">

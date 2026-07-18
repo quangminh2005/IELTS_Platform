@@ -1,0 +1,636 @@
+{
+  "title": "IELTS Master – Test 14 (Reading)",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master (Academic) – Test 14",
+  "description": "Reading Test 14 – How much higher? How much faster? / The Nature and Aims of Archaeology / The Problem of Scarce Resources. 40 câu, tự chấm, có giải thích và dẫn chứng.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 – How much higher? How much faster?",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 1–13.",
+      "content": "How much higher? How much faster?\n\nSince the early years of the twentieth century, when the International Athletic Federation began keeping records, there has been a steady improvement in how fast athletes run, how high they jump and how far they are able to hurl massive objects, themselves included, through space. For the so-called power events – that require a relatively brief, explosive release of energy, like the 100-metre sprint and the long jump – times and distances have improved ten to twenty percent. In the endurance events the results have been more dramatic. At the 1908 Olympics, John Hayes of the U.S. team ran the marathon in a time of 2:55:18. In 1999, Morocco's Khalid Khannouchi set a new world record of 2:05:42, almost thirty percent faster.\n\nNo one theory can explain improvements in performance, but the most important factor has been genetics. 'The athlete must choose his parents carefully,' says Jesus Dapena, a sports scientist at Indiana University, invoking an oft-cited adage. Over the past century, the composition of the human gene pool has not changed appreciably, but with increasing global participation in athletics – and greater rewards to tempt athletes – it is more likely that individuals possessing the unique complement of genes for athletic performance can be identified early. 'Was there someone like [sprinter] Michael Johnson in the 1920s?' Dapena asks. 'I'm sure there was, but his talent was probably never realized.'\n\nIdentifying genetically talented individuals is only the first step. Michael Yessis, an emeritus professor of Sports Science at California State University at Fullerton, maintains that 'genetics only determines about one third of what an athlete can do. But with the right training we can go much further with that one third than we've been going.' Yessis believes that U.S. runners, despite their impressive achievements, are 'running on their genetics'. By applying more scientific methods, 'they're going to go much faster'. These methods include strength training that duplicates what they are doing in their running events as well as plyometrics, a technique pioneered in the former Soviet Union.\n\nWhereas most exercises are designed to build up strength or endurance, plyometrics focuses on increasing power – the rate at which an athlete can expend energy. When a sprinter runs, Yessis explains, her foot stays in contact with the ground for just under a tenth of a second, half of which is devoted to landing and the other half to pushing off. Plyometric exercises help athletes make the best use of this brief interval.\n\nNutrition is another area that sports trainers have failed to address adequately. 'Many athletes are not getting the best nutrition, even through supplements,' Yessis insists. Each activity has its own nutritional needs. Few coaches, for instance, understand how deficiencies in trace minerals can lead to injuries.\n\nFocused training will also play a role in enabling records to be broken. 'If we applied the Russian training model to some of the outstanding runners we have in this country,' Yessis asserts, 'they would be breaking records left and right.' He will not predict by how much, however: 'Exactly what the limits are it's hard to say, but there will be increases even if only by hundredths of a second, as long as our training continues to improve.'\n\nOne of the most important new methodologies is biomechanics, the study of the body in motion. A biomechanic films an athlete in action and then digitizes her performance, recording the motion of every joint and limb in three dimensions. By applying Newton's law to these motions, 'we can say that this athlete's run is not fast enough; that this one is not using his arms strongly enough during take-off,' says Dapena, who uses these methods to help high jumpers. To date, however, biomechanics has made only a small difference to athletic performance.\n\nRevolutionary ideas still come from the athletes themselves. For example, during the 1968 Olympics in Mexico City, a relatively unknown high jumper named Dick Fosbury won the gold by going over the bar backwards, in complete contradiction of all the received high-jumping wisdom, a move instantly dubbed the Fosbury flop. Fosbury himself did not know what he was doing. That understanding took the later analysis of biomechanics specialists, who put their minds to comprehending something that was too complex and unorthodox ever to have been invented through their own mathematical simulations. Fosbury also required another element that lies behind many improvements in athletic performance: an innovation in athletic equipment. In Fosbury's case, it was the cushions that jumpers land on. Traditionally, high jumpers would land in pits filled with sawdust. But by Fosbury's time, sawdust pits had been replaced by soft foam cushions, ideal for flopping.\n\nIn the end, most people who examine human performance are humbled by the resourcefulness of athletes and the powers of the human body. 'Once you study athletics, you learn that it's a vexingly complex issue,' says John S. Raglin, a sports psychologist at Indiana University. 'Core performance is not a simple or mundane thing of higher, faster, longer. So many variables enter into the equation, and our understanding in many cases is fundamental. We've got a long way to go.' For the foreseeable future, records will be made to be broken.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Do the following statements agree with the information given in Reading Passage 1?\nIn boxes 1–6 on your answer sheet write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+          "7": "Complete the sentences below with words taken from Reading Passage 1.\nUse ONE WORD for each answer.\nWrite your answers in boxes 7–10 on your answer sheet.",
+          "11": "Choose the correct letter, A, B, C or D.\nWrite your answers in boxes 11–13 on your answer sheet."
+        },
+        "noteBody": "• According to Professor Yessis, American runners are relying for their current success on [[7]].\n• Yessis describes a training approach from the former Soviet Union that aims to develop an athlete's [[8]].\n• Yessis links an inadequate diet to [[9]].\n• Yessis claims that the key to setting new records is better [[10]]."
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "true_false_not_given",
+          "prompt": "Modern official athletic records date from about 1900.",
+          "answer": "TRUE",
+          "explanation": "Bài mở đầu: kỷ lục chính thức bắt đầu được ghi từ 'the early years of the twentieth century', tức khoảng năm 1900. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Since the early years of the twentieth century, when the International Athletic Federation began keeping records"
+        },
+        {
+          "order": 2,
+          "questionType": "true_false_not_given",
+          "prompt": "There was little improvement in athletic performance before the twentieth century.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói về giai đoạn từ đầu thế kỷ 20 trở đi, KHÔNG đề cập thành tích trước thế kỷ 20 ra sao. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 3,
+          "questionType": "true_false_not_given",
+          "prompt": "Performance has improved most greatly in events requiring an intensive burst of energy.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: nội dung sức mạnh (bùng nổ năng lượng ngắn) chỉ cải thiện 10–20%, còn nội dung sức bền 'more dramatic' (marathon nhanh hơn gần 30%). → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "times and distances have improved ten to twenty percent. In the endurance events the results have been more dramatic."
+        },
+        {
+          "order": 4,
+          "questionType": "true_false_not_given",
+          "prompt": "Improvements in athletic performance can be fully explained by genetics.",
+          "answer": "FALSE",
+          "explanation": "Bài nói 'No one theory can explain improvements' và Yessis cho rằng gen chỉ quyết định khoảng 1/3 → không thể giải thích hoàn toàn bằng di truyền. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "No one theory can explain improvements in performance, but the most important factor has been genetics."
+        },
+        {
+          "order": 5,
+          "questionType": "true_false_not_given",
+          "prompt": "The parents of top athletes have often been successful athletes themselves.",
+          "answer": "NOT GIVEN",
+          "explanation": "Câu 'The athlete must choose his parents carefully' chỉ là cách nói ví von về gen; bài KHÔNG nói cha mẹ các VĐV hàng đầu cũng từng là VĐV thành công. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 6,
+          "questionType": "true_false_not_given",
+          "prompt": "The growing international importance of athletics means that gifted athletes can be recognised at a younger age.",
+          "answer": "TRUE",
+          "explanation": "Nhờ 'increasing global participation in athletics' và phần thưởng lớn hơn, người có tố chất 'can be identified early' — được phát hiện sớm hơn. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "with increasing global participation in athletics – and greater rewards to tempt athletes – it is more likely that individuals possessing the unique complement of genes for athletic performance can be identified early"
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Câu 7",
+          "answer": [
+            "genetics"
+          ],
+          "explanation": "Yessis nói VĐV chạy Mỹ đang 'running on their genetics' — dựa vào tố chất di truyền sẵn có. → genetics.",
+          "points": 1,
+          "evidence": "Yessis believes that U.S. runners, despite their impressive achievements, are 'running on their genetics'."
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Câu 8",
+          "answer": [
+            "power"
+          ],
+          "explanation": "Plyometrics — kỹ thuật khởi nguồn từ Liên Xô cũ — tập trung tăng 'power' (công suất). → power.",
+          "points": 1,
+          "evidence": "Whereas most exercises are designed to build up strength or endurance, plyometrics focuses on increasing power"
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Câu 9",
+          "answer": [
+            "injuries"
+          ],
+          "explanation": "Thiếu vi khoáng trong chế độ ăn có thể dẫn tới 'injuries' (chấn thương). → injuries.",
+          "points": 1,
+          "evidence": "Few coaches, for instance, understand how deficiencies in trace minerals can lead to injuries."
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Câu 10",
+          "answer": [
+            "training"
+          ],
+          "explanation": "Yessis nói kỷ lục sẽ còn tăng 'as long as our training continues to improve' — chìa khoá là tập luyện tốt hơn. → training.",
+          "points": 1,
+          "evidence": "there will be increases even if only by hundredths of a second, as long as our training continues to improve."
+        },
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "Biomechanics films are proving particularly useful because they enable trainers to",
+          "answer": "A highlight areas for improvement in athletes",
+          "explanation": "Phim phân tích sinh cơ học giúp chỉ ra VĐV chạy chưa đủ nhanh, chưa dùng tay đủ mạnh — tức nêu ra chỗ cần cải thiện. → A.",
+          "points": 1,
+          "options": [
+            "A highlight areas for improvement in athletes",
+            "B assess the fitness levels of athletes",
+            "C select top athletes",
+            "D predict the success of athletes"
+          ],
+          "evidence": "we can say that this athlete's run is not fast enough; that this one is not using his arms strongly enough during take-off"
+        },
+        {
+          "order": 12,
+          "questionType": "multiple_choice",
+          "prompt": "Biomechanics specialists used theoretical models to",
+          "answer": "D explain the Fosbury flop",
+          "explanation": "Fosbury tự nghĩ ra động tác; các chuyên gia sinh cơ học chỉ phân tích để GIẢI THÍCH nó về sau, chứ không tạo ra nó. → D.",
+          "points": 1,
+          "options": [
+            "A soften the Fosbury flop",
+            "B create the Fosbury flop",
+            "C correct the Fosbury flop",
+            "D explain the Fosbury flop"
+          ],
+          "evidence": "That understanding took the later analysis of biomechanics specialists"
+        },
+        {
+          "order": 13,
+          "questionType": "multiple_choice",
+          "prompt": "John S. Raglin believes our current knowledge of athletics is",
+          "answer": "B basic",
+          "explanation": "Raglin nói hiểu biết hiện nay 'is fundamental' — mới ở mức cơ bản, còn 'a long way to go'. → B.",
+          "points": 1,
+          "options": [
+            "A mistaken",
+            "B basic",
+            "C diverse",
+            "D theoretical"
+          ],
+          "evidence": "our understanding in many cases is fundamental"
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 – The Nature and Aims of Archaeology",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 14–27.",
+      "content": "The Nature and Aims of Archaeology\n\nArchaeology is partly the discovery of treasures of the past, partly the work of the scientific analyst, partly the exercise of the creative imagination. It is toiling in the sun on an excavation in the Middle East, it is working with living Inuit in the snows of Alaska, and it is investigating the sewers of Roman Britain. But it is also the painstaking task of interpretation, so that we come to understand what these things mean for the human story. And it is the conservation of the world's cultural heritage against looting and careless harm.\n\nArchaeology, then, is both a physical activity out in the field, and an intellectual pursuit in the study or laboratory. That is part of its great attraction. The rich mixture of danger and detective work has also made it the perfect vehicle for fiction writers and film-makers, from Agatha Christie with Murder in Mesopotamia to Stephen Spielberg with Indiana Jones. However far from reality such portrayals are, they capture the essential truth that archaeology is an exciting quest – the quest for knowledge about ourselves and our past.\n\nBut how does archaeology relate to other disciplines such as anthropology and history that are also concerned with the human story? Is archaeology itself a science? And what are the responsibilities of the archaeologist in today's world?\n\nAnthropology, at its broadest, is the study of humanity – our physical characteristics as animals and our unique non-biological characteristics that we call culture. Culture in this sense includes what the anthropologist, Edward Tylor, summarised in 1871 as 'knowledge, beliefs, art, morals, custom and any other capabilities and habits acquired by man as a member of society'. Anthropologists also use the term 'culture' in a more restricted sense when they refer to the 'culture' of a particular society, meaning the non-biological characteristics unique to that society, which distinguish it from other societies. Anthropology is thus a broad discipline – so broad that it is generally broken down into three smaller disciplines: physical anthropology, cultural anthropology and archaeology.\n\nPhysical anthropology, or biological anthropology as it is called, concerns the study of human biological or physical characteristics and how they evolved. Cultural anthropology – or social anthropology – analyses human culture and society. Two of its branches are ethnography (the study at first hand of individual living cultures) and ethnology (which sets out to compare cultures using ethnographic evidence to derive general principles about human society).\n\nArchaeology is the 'past tense of cultural anthropology'. Whereas cultural anthropologists will often base their conclusions on the experience of living within contemporary communities, archaeologists study past societies primarily through their material remains – the buildings, tools, and other artefacts that constitute what is known as the material culture left over from former societies.\n\nNevertheless, one of the most important tasks for the archaeologist today is to know how to interpret material culture in human terms. How were those pots used? Why are some dwellings round and others square? Here the methods of archaeology and ethnography overlap. Archaeologists in recent decades have developed 'ethnoarchaeology' where, like ethnographers, they live among contemporary communities, but with the specific purpose of learning how such societies use material culture – how they make their tools and weapons, why they build their settlements where they do, and so on. Moreover, archaeology has a role to play in the field of conservation. Heritage studies constitute a developing field, where it is realised that the world's cultural heritage is a diminishing resource which holds different meanings for different people.\n\nIf, then, archaeology deals with the past, in what way does it differ from history? In the broadest sense, just as archaeology is an aspect of anthropology, so too is it a part of history – where we mean the whole history of humankind from its beginnings over three million years ago. Indeed, for more than ninety-nine percent of that huge span of time, archaeology – the study of past material culture – is the only significant source of information. Conventional historical sources begin only with the introduction of written records around 3,000 BC in western Asia, and much later in most other parts in the world.\n\nA commonly drawn distinction is between pre-history, i.e. the period before written records – and history in the narrow sense, meaning the study of the past using written evidence. To archaeology, which studies all cultures and periods, whether with or without writing, the distinction between history and pre-history is a convenient dividing line that recognises the importance of the written word, but in no way lessens the importance of the useful information contained in oral histories.\n\nSince the aim of archaeology is the understanding of humankind, it is a humanistic study, and since it deals with the human past, it is a historical discipline. But it differs from the study of written history in a fundamental way. The material the archaeologist finds does not tell us directly what to think. Historical records make statements, offer opinions and pass judgements. The objects the archaeologists discover, on the other hand, tell us nothing directly in themselves. In this respect, the practice of the archaeologist is rather like that of the scientist, who collects data, conducts experiments, formulates a hypothesis, tests the hypothesis against more data, and then, in conclusion, devises a model that seems best to summarise the pattern observed in the data. The archaeologist has to develop a picture of the past, just as the scientist has to develop a coherent view of the natural world.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Do the following statements agree with the claims of the writer in Reading Passage 2?\nIn boxes 14–19 on your answer sheet write\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+          "20": "Choose TWO letters A–E.\nWrite your answers in boxes 20 and 21 on your answer sheet.\nThe list below gives some statements about anthropology.\nWhich TWO statements are mentioned by the writer of the text?\nA It is important for government planners\nB It is a continually growing field of study\nC It often involves long periods of fieldwork\nD It is subdivided for study purposes\nE It studies human evolutionary patterns",
+          "22": "Choose TWO letters A–E.\nWrite your answers in boxes 22 and 23 on your answer sheet.\nThe list below gives some of the tasks of an archaeologist.\nWhich TWO of these tasks are mentioned by the writer of the text?\nA examining ancient waste sites to investigate diet\nB studying cave art to determine its significance\nC deducing reasons for the shape of domestic buildings\nD investigating the way different cultures make and use objects\nE examining evidence for past climate changes",
+          "24": "Complete the summary of the last two paragraphs of Reading Passage 2.\nChoose NO MORE THAN TWO WORDS from the passage for each answer."
+        },
+        "noteBody": "Much of the work of archaeologists can be done using written records, but they find [[24]] equally valuable. The writer describes archaeology as both a [[25]] and a [[26]]. However, as archaeologists do not try to influence human behaviour, the writer compares their style of working to that of a [[27]]."
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "true_false_not_given",
+          "prompt": "Archaeology involves creativity as well as investigative work.",
+          "answer": "YES",
+          "explanation": "Khảo cổ vừa là phân tích khoa học vừa là 'the exercise of the creative imagination' — có cả sáng tạo. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "partly the work of the scientific analyst, partly the exercise of the creative imagination"
+        },
+        {
+          "order": 15,
+          "questionType": "true_false_not_given",
+          "prompt": "Archaeologists must be able to translate texts from ancient languages.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài không nói nhà khảo cổ phải biết dịch văn bản cổ. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 16,
+          "questionType": "true_false_not_given",
+          "prompt": "Movies give a realistic picture of the work of archaeologists.",
+          "answer": "NO",
+          "explanation": "Bài nói các mô tả trong tiểu thuyết/phim ảnh 'far from reality' — không thực tế. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "However far from reality such portrayals are"
+        },
+        {
+          "order": 17,
+          "questionType": "true_false_not_given",
+          "prompt": "Anthropologists define culture in more than one way.",
+          "answer": "YES",
+          "explanation": "Nhà nhân học dùng 'culture' theo nghĩa rộng (Tylor) và cả 'a more restricted sense' — hơn một cách định nghĩa. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Anthropologists also use the term 'culture' in a more restricted sense"
+        },
+        {
+          "order": 18,
+          "questionType": "true_false_not_given",
+          "prompt": "Archaeology is a more demanding field of study than anthropology.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài không so sánh mức độ khó/đòi hỏi giữa khảo cổ học và nhân học. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 19,
+          "questionType": "true_false_not_given",
+          "prompt": "The history of Europe has been documented since 3,000 BC.",
+          "answer": "NO",
+          "explanation": "Chữ viết xuất hiện khoảng 3000 TCN ở TÂY Á, còn hầu hết nơi khác (gồm châu Âu) thì 'much later'. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Conventional historical sources begin only with the introduction of written records around 3,000 BC in western Asia, and much later in most other parts in the world."
+        },
+        {
+          "order": 20,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO statements about anthropology are mentioned by the writer? (Câu 20)",
+          "answer": [
+            "D It is subdivided for study purposes",
+            "E It studies human evolutionary patterns"
+          ],
+          "explanation": "Bài nói nhân học là ngành rộng, 'generally broken down into three smaller disciplines' — được chia nhỏ để nghiên cứu → D. (Hai đáp án đúng của cụm 20–21 là D và E.)",
+          "points": 1,
+          "options": [
+            "A It is important for government planners",
+            "B It is a continually growing field of study",
+            "C It often involves long periods of fieldwork",
+            "D It is subdivided for study purposes",
+            "E It studies human evolutionary patterns"
+          ],
+          "evidence": "Anthropology is thus a broad discipline – so broad that it is generally broken down into three smaller disciplines: physical anthropology, cultural anthropology and archaeology."
+        },
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO statements about anthropology are mentioned by the writer? (Câu 21)",
+          "answer": [
+            "D It is subdivided for study purposes",
+            "E It studies human evolutionary patterns"
+          ],
+          "explanation": "Nhân học thể chất nghiên cứu đặc điểm sinh học của con người 'and how they evolved' — tiến hoá → E. (Hai đáp án đúng của cụm 20–21 là D và E.)",
+          "points": 1,
+          "options": [
+            "A It is important for government planners",
+            "B It is a continually growing field of study",
+            "C It often involves long periods of fieldwork",
+            "D It is subdivided for study purposes",
+            "E It studies human evolutionary patterns"
+          ],
+          "evidence": "Physical anthropology, or biological anthropology as it is called, concerns the study of human biological or physical characteristics and how they evolved."
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO tasks of an archaeologist are mentioned by the writer? (Câu 22)",
+          "answer": [
+            "C deducing reasons for the shape of domestic buildings",
+            "D investigating the way different cultures make and use objects"
+          ],
+          "explanation": "Bài đặt câu hỏi vì sao có nhà tròn, nhà vuông — suy luận lý do hình dạng nhà ở → C. (Hai đáp án đúng của cụm 22–23 là C và D.)",
+          "points": 1,
+          "options": [
+            "A examining ancient waste sites to investigate diet",
+            "B studying cave art to determine its significance",
+            "C deducing reasons for the shape of domestic buildings",
+            "D investigating the way different cultures make and use objects",
+            "E examining evidence for past climate changes"
+          ],
+          "evidence": "Why are some dwellings round and others square?"
+        },
+        {
+          "order": 23,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO tasks of an archaeologist are mentioned by the writer? (Câu 23)",
+          "answer": [
+            "C deducing reasons for the shape of domestic buildings",
+            "D investigating the way different cultures make and use objects"
+          ],
+          "explanation": "Dân tộc khảo cổ học tìm hiểu cách các cộng đồng chế tạo và sử dụng đồ vật → D. (Hai đáp án đúng của cụm 22–23 là C và D.)",
+          "points": 1,
+          "options": [
+            "A examining ancient waste sites to investigate diet",
+            "B studying cave art to determine its significance",
+            "C deducing reasons for the shape of domestic buildings",
+            "D investigating the way different cultures make and use objects",
+            "E examining evidence for past climate changes"
+          ],
+          "evidence": "learning how such societies use material culture – how they make their tools and weapons, why they build their settlements where they do"
+        },
+        {
+          "order": 24,
+          "questionType": "note_completion",
+          "prompt": "Câu 24",
+          "answer": [
+            "oral histories",
+            "oral history"
+          ],
+          "explanation": "Ngoài văn bản viết, khảo cổ vẫn coi trọng thông tin chứa trong 'oral histories' (lịch sử truyền miệng). → oral histories.",
+          "points": 1,
+          "evidence": "but in no way lessens the importance of the useful information contained in oral histories"
+        },
+        {
+          "order": 25,
+          "questionType": "note_completion",
+          "prompt": "Câu 25",
+          "answer": [
+            "humanistic study"
+          ],
+          "explanation": "Vì mục tiêu là hiểu về loài người nên khảo cổ là 'a humanistic study'. → humanistic study.",
+          "points": 1,
+          "evidence": "Since the aim of archaeology is the understanding of humankind, it is a humanistic study"
+        },
+        {
+          "order": 26,
+          "questionType": "note_completion",
+          "prompt": "Câu 26",
+          "answer": [
+            "historical discipline"
+          ],
+          "explanation": "Vì nghiên cứu quá khứ của con người nên khảo cổ là 'a historical discipline'. → historical discipline.",
+          "points": 1,
+          "evidence": "since it deals with the human past, it is a historical discipline"
+        },
+        {
+          "order": 27,
+          "questionType": "note_completion",
+          "prompt": "Câu 27",
+          "answer": [
+            "scientist"
+          ],
+          "explanation": "Cách làm việc của nhà khảo cổ giống 'the scientist' — thu thập dữ liệu, làm thí nghiệm, đặt và kiểm chứng giả thuyết. → scientist.",
+          "points": 1,
+          "evidence": "the practice of the archaeologist is rather like that of the scientist"
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 – The Problem of Scarce Resources",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 28–40.",
+      "content": "The Problem of Scarce Resources\n\nSection A\n\nThe problem of how health-care resources should be allocated or apportioned, so that they are distributed in both the most just and most efficient way, is not a new one. Every health system in an economically developed society is faced with the need to decide (either formally or informally) what proportion of the community's total resources should be spent on health-care; how resources are to be apportioned; what diseases and disabilities and which forms of treatment are to be given priority; which members of the community are to be given special consideration in respect of their health needs; and which forms of treatment are the most cost-effective.\n\nSection B\n\nWhat is new is that, from the 1950s onwards, there have been certain general changes in outlook about the finitude of resources as a whole and of health-care resources in particular, as well as more specific changes regarding the clientele of health-care resources and the cost to the community of those resources. Thus, in the 1950s and 1960s, there emerged an awareness in Western societies that resources for the provision of fossil fuel energy were finite and exhaustible and that the capacity of nature or the environment to sustain economic development and population was also finite. In other words, we became aware of the obvious fact that there were 'limits to growth'. The new consciousness that there were also severe limits to health-care resources was part of this general revelation of the obvious. Looking back, it now seems quite incredible that in the national health systems that emerged in many countries in the years immediately after the 1939-45 World War, it was assumed without question that all the basic health needs of any community could be satisfied, at least in principle; the 'invisible hand' of economic progress would provide.\n\nSection C\n\nHowever, at exactly the same time as this new realization of the finite character of health-care resources was sinking in, an awareness of a contrary kind was developing in Western societies: that people have a basic right to health-care as a necessary condition of a proper human life. Like education, political and legal processes and institutions, public order, communication, transport and money supply, health-care came to be seen as one of the fundamental social facilities necessary for people to exercise their other rights as autonomous human beings. People are not in a position to exercise personal liberty and to be self-determining if they are poverty-stricken, or deprived of basic education, or do not live within a context of law and order. In the same way, basic health-care is a condition of the exercise of autonomy.\n\nSection D\n\nAlthough the language of 'rights' sometimes leads to confusion, by the late 1970s it was recognized in most societies that people have a right to health-care (though there has been considerable resistance in the United States to the idea that there is a formal right to health-care). It is also accepted that this right generates an obligation or duty for the state to ensure that adequate health-care resources are provided out of the public purse. The state has no obligation to provide a health-care system itself, but to ensure that such a system is provided. Put another way, basic health-care is now recognized as a 'public good', rather than a 'private good' that one is expected to buy for oneself. As the 1976 declaration of the World Health Organisation put it: 'The enjoyment of the highest attainable standard of health is one of the fundamental rights of every human being without distinction of race, religion, political belief, economic or social condition'. As has just been remarked, in a liberal society basic health is seen as one of the indispensable conditions for the exercise of personal autonomy.\n\nSection E\n\nJust at the time when it became obvious that health-care resources could not possibly meet the demands being made upon them, people were demanding that their fundamental right to health-care be satisfied by the state. The second set of more specific changes that have led to the present concern about the distribution of health-care resources stems from the dramatic rise in health costs in most OECD countries, accompanied by large-scale demographic and social changes which have meant, to take one example, that elderly people are now major (and relatively very expensive) consumers of health-care resources. Thus in OECD countries as a whole, health costs increased from 3.8% of GDP in 1960 to 7% of GDP in 1980, and it has been predicted that the proportion of health costs to GDP will continue to increase. (In the US the current figure is about 12% of GDP, and in Australia about 7.8% of GDP.) As a consequence, during the 1980s a kind of doomsday scenario (analogous to similar doomsday extrapolations about energy needs and fossil fuels or about population increases) was projected by health administrators, economists and politicians. In this scenario, ever-rising health costs were matched against static or declining resources.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "28": "Reading Passage 3 has five sections A–E.\nChoose the correct heading for section A and C–E from the list of headings below.\nWrite the correct number i–viii in boxes 28–31 on your answer sheet.\n\nList of Headings\ni The connection between health-care and other human rights\nii The development of market-based health systems\niii The role of the state in health-care\niv A problem shared by every economically developed country\nv The impact of recent change\nvi The views of the medical establishment\nvii The end of an illusion\nviii Sustainable economic development\n\nExample: Section B — viii",
+          "32": "Classify the following as first occurring\nA between 1945 and 1950\nB between 1950 and 1980\nC after 1980\nWrite the correct letter A, B or C in boxes 32–35 on your answer sheet.",
+          "36": "Do the following statements agree with the views of the writer in Reading Passage 3?\nIn boxes 36–40 on your answer sheet write\nYES if the statement agrees with the views of the writer\nNO if the statement contradicts the views of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this"
+        }
+      },
+      "questions": [
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "Section A",
+          "answer": "iv A problem shared by every economically developed country",
+          "explanation": "Mục A nói mọi hệ thống y tế ở nước phát triển đều phải đối mặt bài toán phân bổ nguồn lực. → iv.",
+          "points": 1,
+          "options": [
+            "i The connection between health-care and other human rights",
+            "ii The development of market-based health systems",
+            "iii The role of the state in health-care",
+            "iv A problem shared by every economically developed country",
+            "v The impact of recent change",
+            "vi The views of the medical establishment",
+            "vii The end of an illusion",
+            "viii Sustainable economic development"
+          ],
+          "evidence": "Every health system in an economically developed society is faced with the need to decide"
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "Section C",
+          "answer": "i The connection between health-care and other human rights",
+          "explanation": "Mục C nối y tế với các quyền cơ bản khác: y tế là điều kiện để con người thực thi các quyền của mình. → i.",
+          "points": 1,
+          "options": [
+            "i The connection between health-care and other human rights",
+            "ii The development of market-based health systems",
+            "iii The role of the state in health-care",
+            "iv A problem shared by every economically developed country",
+            "v The impact of recent change",
+            "vi The views of the medical establishment",
+            "vii The end of an illusion",
+            "viii Sustainable economic development"
+          ],
+          "evidence": "health-care came to be seen as one of the fundamental social facilities necessary for people to exercise their other rights as autonomous human beings"
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "Section D",
+          "answer": "iii The role of the state in health-care",
+          "explanation": "Mục D bàn nghĩa vụ và vai trò của nhà nước trong việc bảo đảm nguồn lực y tế. → iii.",
+          "points": 1,
+          "options": [
+            "i The connection between health-care and other human rights",
+            "ii The development of market-based health systems",
+            "iii The role of the state in health-care",
+            "iv A problem shared by every economically developed country",
+            "v The impact of recent change",
+            "vi The views of the medical establishment",
+            "vii The end of an illusion",
+            "viii Sustainable economic development"
+          ],
+          "evidence": "It is also accepted that this right generates an obligation or duty for the state to ensure that adequate health-care resources are provided out of the public purse."
+        },
+        {
+          "order": 31,
+          "questionType": "matching",
+          "prompt": "Section E",
+          "answer": "v The impact of recent change",
+          "explanation": "Mục E nói tác động của những thay đổi gần đây: chi phí y tế tăng vọt, dân số già. → v.",
+          "points": 1,
+          "options": [
+            "i The connection between health-care and other human rights",
+            "ii The development of market-based health systems",
+            "iii The role of the state in health-care",
+            "iv A problem shared by every economically developed country",
+            "v The impact of recent change",
+            "vi The views of the medical establishment",
+            "vii The end of an illusion",
+            "viii Sustainable economic development"
+          ],
+          "evidence": "The second set of more specific changes that have led to the present concern about the distribution of health-care resources stems from the dramatic rise in health costs in most OECD countries"
+        },
+        {
+          "order": 32,
+          "questionType": "matching",
+          "prompt": "the realisation that the resources of the national health system were limited",
+          "answer": "B between 1950 and 1980",
+          "explanation": "Nhận thức nguồn lực y tế có giới hạn xuất hiện 'from the 1950s onwards' → thuộc giai đoạn 1950–1980. → B.",
+          "points": 1,
+          "options": [
+            "A between 1945 and 1950",
+            "B between 1950 and 1980",
+            "C after 1980"
+          ],
+          "evidence": "from the 1950s onwards, there have been certain general changes in outlook about the finitude of resources as a whole and of health-care resources in particular"
+        },
+        {
+          "order": 33,
+          "questionType": "matching",
+          "prompt": "a sharp rise in the cost of health-care",
+          "answer": "B between 1950 and 1980",
+          "explanation": "Chi phí y tế tăng mạnh từ 3.8% GDP (1960) lên 7% GDP (1980) → trong khoảng 1950–1980. → B.",
+          "points": 1,
+          "options": [
+            "A between 1945 and 1950",
+            "B between 1950 and 1980",
+            "C after 1980"
+          ],
+          "evidence": "health costs increased from 3.8% of GDP in 1960 to 7% of GDP in 1980"
+        },
+        {
+          "order": 34,
+          "questionType": "matching",
+          "prompt": "a belief that all the health-care resources the community needed would be produced by economic growth",
+          "answer": "A between 1945 and 1950",
+          "explanation": "Niềm tin rằng tiến bộ kinh tế sẽ lo đủ mọi nhu cầu y tế có ở các hệ thống y tế lập ngay sau Thế chiến 1939–45 → 1945–1950. → A.",
+          "points": 1,
+          "options": [
+            "A between 1945 and 1950",
+            "B between 1950 and 1980",
+            "C after 1980"
+          ],
+          "evidence": "it was assumed without question that all the basic health needs of any community could be satisfied, at least in principle; the 'invisible hand' of economic progress would provide."
+        },
+        {
+          "order": 35,
+          "questionType": "matching",
+          "prompt": "an acceptance of the role of the state in guaranteeing the provision of health-care",
+          "answer": "B between 1950 and 1980",
+          "explanation": "Việc thừa nhận quyền được y tế và nghĩa vụ của nhà nước diễn ra 'by the late 1970s' → 1950–1980. → B.",
+          "points": 1,
+          "options": [
+            "A between 1945 and 1950",
+            "B between 1950 and 1980",
+            "C after 1980"
+          ],
+          "evidence": "by the late 1970s it was recognized in most societies that people have a right to health-care"
+        },
+        {
+          "order": 36,
+          "questionType": "true_false_not_given",
+          "prompt": "Personal liberty and independence have never been regarded as directly linked to health-care.",
+          "answer": "NO",
+          "explanation": "Ngược lại: bài khẳng định y tế cơ bản 'is a condition of the exercise of autonomy' — gắn trực tiếp với tự do và quyền tự quyết. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "In the same way, basic health-care is a condition of the exercise of autonomy."
+        },
+        {
+          "order": 37,
+          "questionType": "true_false_not_given",
+          "prompt": "Health-care came to be seen as a right at about the same time that the limits of health-care resources became evident.",
+          "answer": "YES",
+          "explanation": "Bài nói 'at exactly the same time' — đúng lúc nhận ra nguồn lực hữu hạn thì ý thức về quyền được chăm sóc y tế cũng hình thành. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "at exactly the same time as this new realization of the finite character of health-care resources was sinking in, an awareness of a contrary kind was developing in Western societies: that people have a basic right to health-care"
+        },
+        {
+          "order": 38,
+          "questionType": "true_false_not_given",
+          "prompt": "In OECD countries population changes have had an impact on health-care costs in recent years.",
+          "answer": "YES",
+          "explanation": "Thay đổi nhân khẩu quy mô lớn (người cao tuổi nay là nhóm tiêu thụ y tế lớn và tốn kém) đã đẩy chi phí y tế lên. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "accompanied by large-scale demographic and social changes which have meant, to take one example, that elderly people are now major (and relatively very expensive) consumers of health-care resources"
+        },
+        {
+          "order": 39,
+          "questionType": "true_false_not_given",
+          "prompt": "OECD governments have consistently underestimated the level of health-care provision needed.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài không nói chính phủ các nước OECD liên tục đánh giá thấp mức cung ứng y tế cần thiết. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 40,
+          "questionType": "true_false_not_given",
+          "prompt": "In most economically developed countries the elderly will have to make special provision for their health-care in the future.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói người cao tuổi là nhóm tiêu thụ y tế tốn kém, KHÔNG nói họ sẽ phải tự lo liệu riêng cho y tế trong tương lai. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        }
+      ]
+    }
+  ]
+}

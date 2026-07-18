@@ -1,0 +1,704 @@
+{
+  "title": "IELTS Master – Test 12 (Reading)",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master (Academic) – Test 12",
+  "description": "Reading Test 12 – Lost for Words / Alternative Medicine in Australia / Play is a Serious Business. 40 câu, tự chấm, có giải thích và dẫn chứng.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 – Lost for Words",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 1–13.",
+      "content": "Lost for Words\n\nIn the Native American Navajo nation, which sprawls across four states in the American south-west, the native language is dying. Most of its speakers are middle-aged or elderly. Although many students take classes in Navajo, the schools are run in English. Street signs, supermarket goods and even their own newspaper are all in English. Not surprisingly, linguists doubt that any native speakers of Navajo will remain in a hundred years' time.\n\nNavajo is far from alone. Half the world's 6,800 languages are likely to vanish within two generations - that's one language lost every ten days. Never before has the planet's linguistic diversity shrunk at such a pace. 'At the moment, we are heading for about three or four languages dominating the world,' says Mark Pagel, an evolutionary biologist at the University of Reading. 'It's a mass extinction, and whether we will ever rebound from the loss is difficult to know.'\n\nIsolation breeds linguistic diversity: as a result, the world is peppered with languages spoken by only a few people. Only 250 languages have more than a million speakers, and at least 3,000 have fewer than 2,500. It is not necessarily these small languages that are about to disappear. Navajo is considered endangered despite having 150,000 speakers. What makes a language endangered is not just the number of speakers, but how old they are. If it is spoken by children it is relatively safe. The critically endangered languages are those that are only spoken by the elderly, according to Michael Krauss, director of the Alaska Native Language Center, in Fairbanks.\n\nWhy do people reject the language of their parents? It begins with a crisis of confidence, when a small community finds itself alongside a larger, wealthier society, says Nicholas Ostler, of Britain's Foundation for Endangered Languages, in Bath. 'People lose faith in their culture,' he says. 'When the next generation reaches their teens, they might not want to be induced into the old traditions.'\n\nThe change is not always voluntary. Quite often, governments try to kill off a minority language by banning its use in public or discouraging its use in schools, all to promote national unity. The former US policy of running Indian reservation schools in English, for example, effectively put languages such as Navajo on the danger list. But Salikoko Mufwene, who chairs the Linguistics department at the University of Chicago, argues that the deadliest weapon is not government policy but economic globalisation. 'Native Americans have not lost pride in their language, but they have had to adapt to socio-economic pressures,' he says. 'They cannot refuse to speak English if most commercial activity is in English.' But are languages worth saving? At the very least, there is a loss of data for the study of languages and their evolution, which relies on comparisons between languages, both living and dead. When an unwritten and unrecorded language disappears, it is lost to science.\n\nLanguage is also intimately bound up with culture, so it may be difficult to preserve one without the other. 'If a person shifts from Navajo to English, they lose something,' Mufwene says. 'Moreover, the loss of diversity may also deprive us of different ways of looking at the world,' says Pagel. There is mounting evidence that learning a language produces physiological changes in the brain. 'Your brain and mine are different from the brain of someone who speaks French, for instance,' Pagel says, and this could affect our thoughts and perceptions. 'The patterns and connections we make among various concepts may be structured by the linguistic habits of our community.'\n\nSo despite linguists' best efforts, many languages will disappear over the next century. But a growing interest in cultural identity may prevent the direst predictions from coming true. 'The key to fostering diversity is for people to learn their ancestral tongue, as well as the dominant language,' says Doug Whalen, founder and president of the Endangered Language Fund in New Haven, Connecticut. 'Most of these languages will not survive without a large degree of bilingualism,' he says. In New Zealand, classes for children have slowed the erosion of Maori and rekindled interest in the language. A similar approach in Hawaii has produced about 8,000 new speakers of Polynesian languages in the past few years. In California, 'apprentice' programmes have provided life support to several indigenous languages. Volunteer 'apprentices' pair up with one of the last living speakers of a Native American tongue to learn a traditional skill such as basket weaving, with instruction exclusively in the endangered language. After about 300 hours of training they are generally sufficiently fluent to transmit the language to the next generation. But Mufwene says that preventing a language dying out is not the same as giving it new life by using it every day. 'Preserving a language is more like preserving fruits in a jar,' he says.\n\nHowever, preservation can bring a language back from the dead. There are examples of languages that have survived in written form and then been revived by later generations. But a written form is essential for this, so the mere possibility of revival has led many speakers of endangered languages to develop systems of writing where none existed before.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the summary below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 1–4 on your answer sheet.",
+          "5": "Look at the following statements (Questions 5–9) and the list of people in the box below.\nMatch each statement with the correct person A–E.\nWrite the appropriate letter A–E in boxes 5–9 on your answer sheet.\nNB You may use any letter more than once.",
+          "10": "Do the following statements agree with the views of the writer in Reading Passage 1?\nIn boxes 10–13 on your answer sheet write\nYES if the statement agrees with the views of the writer\nNO if the statement contradicts the views of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this"
+        },
+        "noteBody": "There are currently approximately 6,800 languages in the world. This great variety of languages came about largely as a result of geographical [[1]]. But in today's world, factors such as government initiatives and [[2]] are contributing to a huge decrease in the number of languages. One factor which may help to ensure that some endangered languages do not die out completely is people's increasing appreciation of their [[3]]. This has been encouraged through programmes of language classes for children and through 'apprentice' schemes, in which the endangered language is used as the medium of instruction to teach people a [[4]]. Some speakers of endangered languages have even produced writing systems in order to help secure the survival of their mother tongue."
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": [
+            "isolation"
+          ],
+          "explanation": "Bài viết 'Isolation breeds linguistic diversity' — sự cô lập/tách biệt về địa lý sinh ra đa dạng ngôn ngữ. Chỗ trống là 'geographical ___', nên điền 'isolation'.",
+          "points": 1,
+          "evidence": "Isolation breeds linguistic diversity: as a result, the world is peppered with languages spoken by only a few people."
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": [
+            "economic globalisation",
+            "economic globalization",
+            "globalisation",
+            "globalization",
+            "socio-economic pressures"
+          ],
+          "explanation": "Bên cạnh 'government initiatives' (chính sách nhà nước), yếu tố còn lại khiến số ngôn ngữ giảm mạnh là 'economic globalisation' (toàn cầu hoá kinh tế). Bài cũng gọi là 'socio-economic pressures'.",
+          "points": 1,
+          "evidence": "the deadliest weapon is not government policy but economic globalisation."
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Câu 3",
+          "answer": [
+            "cultural identity"
+          ],
+          "explanation": "Điều giúp một số ngôn ngữ nguy cấp không biến mất hẳn là sự quan tâm ngày càng tăng của con người tới 'cultural identity' (bản sắc văn hoá).",
+          "points": 1,
+          "evidence": "But a growing interest in cultural identity may prevent the direst predictions from coming true."
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": [
+            "traditional skill"
+          ],
+          "explanation": "Trong các chương trình 'apprentice', ngôn ngữ nguy cấp được dùng làm phương tiện dạy học viên một 'traditional skill' (kỹ năng truyền thống) như đan giỏ.",
+          "points": 1,
+          "evidence": "Volunteer 'apprentices' pair up with one of the last living speakers of a Native American tongue to learn a traditional skill such as basket weaving"
+        },
+        {
+          "order": 5,
+          "questionType": "matching",
+          "prompt": "Endangered languages cannot be saved unless people learn to speak more than one language.",
+          "answer": "E Doug Whalen",
+          "explanation": "Doug Whalen nói phần lớn các ngôn ngữ này 'will not survive without a large degree of bilingualism' — không thể cứu nếu người ta không nói được nhiều hơn một thứ tiếng.",
+          "points": 1,
+          "options": [
+            "A Michael Krauss",
+            "B Salikoko Mufwene",
+            "C Nicholas Ostler",
+            "D Mark Pagel",
+            "E Doug Whalen"
+          ],
+          "evidence": "'Most of these languages will not survive without a large degree of bilingualism,' he says."
+        },
+        {
+          "order": 6,
+          "questionType": "matching",
+          "prompt": "Saving languages from extinction is not in itself a satisfactory goal.",
+          "answer": "B Salikoko Mufwene",
+          "explanation": "Mufwene cho rằng ngăn một ngôn ngữ khỏi biến mất chưa phải mục tiêu thoả đáng — bảo tồn suông chỉ như 'preserving fruits in a jar', khác với việc dùng nó mỗi ngày.",
+          "points": 1,
+          "options": [
+            "A Michael Krauss",
+            "B Salikoko Mufwene",
+            "C Nicholas Ostler",
+            "D Mark Pagel",
+            "E Doug Whalen"
+          ],
+          "evidence": "But Mufwene says that preventing a language dying out is not the same as giving it new life by using it every day."
+        },
+        {
+          "order": 7,
+          "questionType": "matching",
+          "prompt": "The way we think may be determined by our language.",
+          "answer": "D Mark Pagel",
+          "explanation": "Pagel nói học ngôn ngữ tạo thay đổi sinh lý trong não và 'this could affect our thoughts and perceptions' — cách ta suy nghĩ có thể do ngôn ngữ định hình.",
+          "points": 1,
+          "options": [
+            "A Michael Krauss",
+            "B Salikoko Mufwene",
+            "C Nicholas Ostler",
+            "D Mark Pagel",
+            "E Doug Whalen"
+          ],
+          "evidence": "'Your brain and mine are different from the brain of someone who speaks French, for instance,' Pagel says, and this could affect our thoughts and perceptions."
+        },
+        {
+          "order": 8,
+          "questionType": "matching",
+          "prompt": "Young people often reject the established way of life in their community.",
+          "answer": "C Nicholas Ostler",
+          "explanation": "Ostler mô tả 'crisis of confidence': đến tuổi thiếu niên, thế hệ sau 'might not want to be induced into the old traditions' — thường chối bỏ lối sống cũ của cộng đồng.",
+          "points": 1,
+          "options": [
+            "A Michael Krauss",
+            "B Salikoko Mufwene",
+            "C Nicholas Ostler",
+            "D Mark Pagel",
+            "E Doug Whalen"
+          ],
+          "evidence": "'When the next generation reaches their teens, they might not want to be induced into the old traditions.'"
+        },
+        {
+          "order": 9,
+          "questionType": "matching",
+          "prompt": "A change of language may mean a loss of traditional culture.",
+          "answer": "B Salikoko Mufwene",
+          "explanation": "Mufwene nói ngôn ngữ gắn chặt với văn hoá; khi chuyển từ Navajo sang tiếng Anh thì 'they lose something' — mất đi một phần văn hoá.",
+          "points": 1,
+          "options": [
+            "A Michael Krauss",
+            "B Salikoko Mufwene",
+            "C Nicholas Ostler",
+            "D Mark Pagel",
+            "E Doug Whalen"
+          ],
+          "evidence": "'If a person shifts from Navajo to English, they lose something,' Mufwene says."
+        },
+        {
+          "order": 10,
+          "questionType": "true_false_not_given",
+          "prompt": "The Navajo language will die out because it currently has too few speakers.",
+          "answer": "NO",
+          "explanation": "Ngược với nhận định: Navajo nguy cấp KHÔNG phải vì quá ít người nói (nó có 150,000 người nói) mà vì độ tuổi người nói. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Navajo is considered endangered despite having 150,000 speakers. What makes a language endangered is not just the number of speakers, but how old they are."
+        },
+        {
+          "order": 11,
+          "questionType": "true_false_not_given",
+          "prompt": "A large number of native speakers fails to guarantee the survival of a language.",
+          "answer": "YES",
+          "explanation": "Bài đồng ý: dù có tới 150,000 người nói, Navajo vẫn nguy cấp — số người nói đông không đảm bảo ngôn ngữ tồn tại. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Navajo is considered endangered despite having 150,000 speakers."
+        },
+        {
+          "order": 12,
+          "questionType": "true_false_not_given",
+          "prompt": "National governments could do more to protect endangered languages.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài nói chính phủ đôi khi cố dập tắt ngôn ngữ thiểu số, nhưng KHÔNG bàn liệu chính phủ 'nên/có thể làm nhiều hơn' để bảo vệ chúng. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 13,
+          "questionType": "true_false_not_given",
+          "prompt": "The loss of linguistic diversity is inevitable.",
+          "answer": "YES",
+          "explanation": "Bài khẳng định dù nỗ lực, 'many languages will disappear over the next century' và gọi đó là 'mass extinction' — mất đa dạng ngôn ngữ là điều khó tránh. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "So despite linguists' best efforts, many languages will disappear over the next century."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 – Alternative Medicine in Australia",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 14–26.",
+      "content": "Alternative Medicine in Australia\n\nThe first students to study alternative medicine at university level in Australia began their four-year, full-time course at the University of Technology, Sydney, in early 1994. Their course covered, among other therapies, acupuncture. The theory they learnt is based on the traditional Chinese explanation of this ancient healing art: that it can regulate the flow of 'Qi' or energy through pathways in the body. This course reflects how far some alternative therapies have come in their struggle for acceptance by the medical establishment.\n\nAustralia has been unusual in the Western world in having a very conservative attitude to natural or alternative therapies, according to Dr Paul Laver, a lecturer in Public Health at the University of Sydney. 'We've had a tradition of doctors being fairly powerful and I guess they are pretty loath to allow any pretenders to their position to come into it.' In many other industrialized countries, orthodox and alternative medicines have worked 'hand in glove' for years. In Europe, only orthodox doctors can prescribe herbal medicine. In Germany, plant remedies account for 10% of the national turnover of pharmaceuticals. Americans made more visits to alternative therapists than to orthodox doctors in 1990, and each year they spend about $US 12 billion on the therapies that have not been scientifically tested.\n\nDisenchantment with orthodox medicine has seen the popularity of alternative therapies in Australia climb steadily during the past 20 years. In a 1983 national health survey, 1.9% of people said they had contacted a chiropractor, naturopath, osteopath, acupuncturist or herbalist in the two weeks prior to the survey. By 1990, this figure had risen to 2.6% of the population. The 550,000 consultations with alternative therapists reported in the 1990 survey represented about an eighth of the total number of consultations with medically qualified personnel covered by the survey, according to Dr Laver and colleagues writing in the Australian Journal of Public Health in 1993. 'A better educated and less accepting public has become disillusioned with the experts in general and increasingly skeptical about science and empirically based knowledge,' they said. 'The high standing of professionals, including doctors, has been eroded as a consequence.'\n\nRather than resisting or criticizing this trend, increasing numbers of Australian doctors, particularly younger ones, are forming group practices with alternative therapists or taking courses themselves, particularly in acupuncture and herbalism. Part of the incentive was financial, Dr Laver said. 'The bottom line is that most general practitioners are business people. If they see potential clientele going elsewhere, they might want to be able to offer a similar service.'\n\nIn 1993, Dr Laver and his colleagues published a survey of 289 Sydney people who attended eight alternative therapists' practices in Sydney. These practices offered a wide range of alternative therapies from 25 therapists. Those surveyed had experienced chronic illnesses, for which orthodox medicine had been able to provide little relief. They commented that they liked the holistic approach of their alternative therapists and the friendly, concerned and detailed attention they had received. The cold, impersonal manner of orthodox doctors featured in the survey. An increasing exodus from their clinics, coupled with this and a number of other relevant surveys carried out in Australia, all pointing to orthodox doctors' inadequacies, have led mainstream doctors themselves to begin to admit they could learn from the personal style of alternative therapists. Dr Patrick Store, President of the Royal College of General Practitioners, concurs that orthodox doctors could learn a lot about bedside manner and advising patients on preventative health from alternative therapists.\n\nAccording to the Australian Journal of Public Health, 18% of patients visiting alternative therapists do so because they suffer from muscular-skeletal complaints; 12% suffer from digestive problems, which is only 1% more than those suffering from emotional problems. Those suffering from respiratory complaints represent 7% of their patients, and candida sufferers represent an equal percentage. Headache sufferers and those complaining of general ill health represent 6% and 5% of patients respectively, and a further 4% see therapists for general health maintenance.\n\nThe survey suggested that complementary medicine is probably a better term than alternative medicine. Alternative medicine appears to be an adjunct, sought in times of disenchantment when conventional medicine seems not to offer the answer.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Choose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 14 and 15 on your answer sheet.",
+          "16": "Do the following statements agree with the views of the writer in Reading Passage 2?\nIn boxes 16–23 on your answer sheet write\nYES if the statement agrees with the views of the writer\nNO if the statement contradicts the views of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+          "24": "Complete the vertical axis in the chart below.\nWrite NO MORE THAN THREE WORDS."
+        },
+        "groupImages": {
+          "24": [
+            "data:image/jpeg;base64,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"
+          ]
+        },
+        "noteBody": "# Medical complaints of patients visiting therapists\nTrục dọc của biểu đồ, từ trên xuống dưới:\n• Other\n• Musculo-skeletal\n• Digestive\n• [[24]]\n• Respiratory\n• Candida\n• [[25]]\n• [[26]]\n• General health maintenance"
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "Traditionally, how have Australian doctors differed from doctors in many Western countries?",
+          "answer": "C They have been reluctant to accept alternative therapists.",
+          "explanation": "Úc khác biệt vì có thái độ bảo thủ với liệu pháp thay thế; bác sĩ 'loath to allow any pretenders to their position' — miễn cưỡng chấp nhận các nhà trị liệu thay thế. → C.",
+          "points": 1,
+          "options": [
+            "A They have worked closely with pharmaceutical companies.",
+            "B They have often worked alongside other therapists.",
+            "C They have been reluctant to accept alternative therapists.",
+            "D They have regularly prescribed alternative remedies."
+          ],
+          "evidence": "'We've had a tradition of doctors being fairly powerful and I guess they are pretty loath to allow any pretenders to their position to come into it.'"
+        },
+        {
+          "order": 15,
+          "questionType": "multiple_choice",
+          "prompt": "In 1990, Americans",
+          "answer": "B consulted alternative therapists more often than doctors.",
+          "explanation": "Bài nói năm 1990 người Mỹ 'made more visits to alternative therapists than to orthodox doctors' — đến nhà trị liệu thay thế nhiều hơn bác sĩ chính thống. → B.",
+          "points": 1,
+          "options": [
+            "A were prescribed more herbal medicines than in previous years.",
+            "B consulted alternative therapists more often than doctors.",
+            "C spent more on natural therapies than orthodox medicines.",
+            "D made more complaints about doctors than in previous years."
+          ],
+          "evidence": "Americans made more visits to alternative therapists than to orthodox doctors in 1990"
+        },
+        {
+          "order": 16,
+          "questionType": "true_false_not_given",
+          "prompt": "Australians have been turning to alternative therapies in increasing numbers over the past 20 years.",
+          "answer": "YES",
+          "explanation": "Bài nói mức phổ biến của liệu pháp thay thế 'climb steadily during the past 20 years' — ngày càng nhiều người Úc tìm đến. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Disenchantment with orthodox medicine has seen the popularity of alternative therapies in Australia climb steadily during the past 20 years."
+        },
+        {
+          "order": 17,
+          "questionType": "true_false_not_given",
+          "prompt": "Between 1983 and 1990 the numbers of patients visiting alternative therapists rose to include a further 8% of the population.",
+          "answer": "NO",
+          "explanation": "Con số chỉ tăng từ 1.9% (1983) lên 2.6% (1990) — tức thêm khoảng 0.7%, KHÔNG phải thêm 8%. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "In a 1983 national health survey, 1.9% of people said they had contacted a chiropractor, naturopath, osteopath, acupuncturist or herbalist in the two weeks prior to the survey. By 1990, this figure had risen to 2.6% of the population."
+        },
+        {
+          "order": 18,
+          "questionType": "true_false_not_given",
+          "prompt": "The 1990 survey related to 550,000 consultations with alternative therapists.",
+          "answer": "YES",
+          "explanation": "Bài ghi rõ '550,000 consultations with alternative therapists reported in the 1990 survey'. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "The 550,000 consultations with alternative therapists reported in the 1990 survey"
+        },
+        {
+          "order": 19,
+          "questionType": "true_false_not_given",
+          "prompt": "In the past, Australians had a higher opinion of doctors than they do today.",
+          "answer": "YES",
+          "explanation": "Bài nói uy tín của giới chuyên môn, gồm bác sĩ, 'has been eroded' (bị xói mòn) — nghĩa là trước đây người Úc coi trọng bác sĩ hơn bây giờ. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "The high standing of professionals, including doctors, has been eroded as a consequence."
+        },
+        {
+          "order": 20,
+          "questionType": "true_false_not_given",
+          "prompt": "Some Australian doctors are retraining in alternative therapies.",
+          "answer": "YES",
+          "explanation": "Nhiều bác sĩ Úc, nhất là người trẻ, 'taking courses themselves, particularly in acupuncture and herbalism' — đang học lại về liệu pháp thay thế. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "increasing numbers of Australian doctors, particularly younger ones, are forming group practices with alternative therapists or taking courses themselves, particularly in acupuncture and herbalism."
+        },
+        {
+          "order": 21,
+          "questionType": "true_false_not_given",
+          "prompt": "Alternative therapists earn higher salaries than doctors.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài có nhắc động cơ tài chính của bác sĩ, nhưng KHÔNG so sánh thu nhập giữa nhà trị liệu thay thế và bác sĩ. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 22,
+          "questionType": "true_false_not_given",
+          "prompt": "The 1993 Sydney survey involved 289 patients who visited alternative therapists for acupuncture treatment.",
+          "answer": "NO",
+          "explanation": "289 người được khảo sát ở các phòng khám cung cấp 'a wide range of alternative therapies' (nhiều liệu pháp), KHÔNG phải chỉ riêng châm cứu. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "In 1993, Dr Laver and his colleagues published a survey of 289 Sydney people who attended eight alternative therapists' practices in Sydney. These practices offered a wide range of alternative therapies from 25 therapists."
+        },
+        {
+          "order": 23,
+          "questionType": "true_false_not_given",
+          "prompt": "All the patients in the 1993 Sydney survey had long-term medical complaints.",
+          "answer": "YES",
+          "explanation": "Bài nói những người được khảo sát đều 'had experienced chronic illnesses' (bệnh mãn tính) — tức bệnh kéo dài. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Those surveyed had experienced chronic illnesses, for which orthodox medicine had been able to provide little relief."
+        },
+        {
+          "order": 24,
+          "questionType": "note_completion",
+          "prompt": "Câu 24",
+          "answer": [
+            "emotional problems",
+            "emotional"
+          ],
+          "explanation": "Biểu đồ xếp theo % giảm dần. Sau Digestive (12%) là mục 11% — bài nói digestive 'only 1% more than those suffering from emotional problems'. → 24 = emotional problems.",
+          "points": 1,
+          "evidence": "12% suffer from digestive problems, which is only 1% more than those suffering from emotional problems."
+        },
+        {
+          "order": 25,
+          "questionType": "note_completion",
+          "prompt": "Câu 25",
+          "answer": [
+            "headaches",
+            "headache",
+            "headache sufferers"
+          ],
+          "explanation": "Mục ~6% (ngay sau Candida 7%) là 'headache sufferers' — người bị đau đầu. → 25 = headaches.",
+          "points": 1,
+          "evidence": "Headache sufferers and those complaining of general ill health represent 6% and 5% of patients respectively"
+        },
+        {
+          "order": 26,
+          "questionType": "note_completion",
+          "prompt": "Câu 26",
+          "answer": [
+            "general ill health"
+          ],
+          "explanation": "Mục ~5% (ngay trước General health maintenance 4%) là 'general ill health' (sức khoẻ kém nói chung). → 26 = general ill health.",
+          "points": 1,
+          "evidence": "Headache sufferers and those complaining of general ill health represent 6% and 5% of patients respectively"
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 – Play is a Serious Business",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 27–40.",
+      "content": "PLAY IS A SERIOUS BUSINESS\n\nA  Playing is a serious business. Children engrossed in a make-believe world, fox cubs play-fighting or kittens teasing a ball of string aren't just having fun. Play may look like a carefree and exuberant way to pass the time before the hard work of adulthood comes along, but there's much more to it than that. For a start, play can even cost animals their lives. Eighty per cent of deaths among juvenile fur seals occur because playing pups fail to spot predators approaching. It is also extremely expensive in terms of energy. Playful young animals use around two or three per cent of their energy cavorting, and in children that figure can be closer to fifteen per cent. 'Even two or three per cent is huge,' says John Byers of Idaho University. 'You just don't find animals wasting energy like that,' he adds. There must be a reason.\n\nB  But if play is not simply a developmental hiccup, as biologists once thought, why did it evolve? The latest idea suggests that play has evolved to build big brains. In other words, playing makes you intelligent. Playfulness, it seems, is common only among mammals, although a few of the larger-brained birds also indulge. Animals at play often use unique signs - tail-wagging in dogs, for example - to indicate that activity superficially resembling adult behavior is not really in earnest. A popular explanation of play has been that it helps juveniles develop the skills they will need to hunt, mate and socialise as adults. Another has been that it allows young animals to get in shape for adult life by improving their respiratory endurance. Both these ideas have been questioned in recent years.\n\nC  Take the exercise theory. If play evolved to build muscle or as a kind of endurance training, then you would expect to see permanent benefits. But Byers points out that the benefits of increased exercise disappear rapidly after training stops, so any improvement in endurance resulting from juvenile play would be lost by adulthood. 'If the function of play was to get into shape,' says Byers, 'the optimum time for playing would depend on when it was most advantageous for the young of a particular species to do so. But it doesn't work like that.' Across species, play tends to peak about halfway through the suckling stage and then decline.\n\nD  Then there's the skills-training hypothesis. At first glance, playing animals do appear to be practising the complex manoeuvres they will need in adulthood. But a closer inspection reveals this interpretation as too simplistic. In one study, behavioural ecologist Tim Caro, from the University of California, looked at the predatory play of kittens and their predatory behaviour when they reached adulthood. He found that the way the cats played had no significant effect on their hunting prowess in later life.\n\nE  Earlier this year, Sergio Pellis of Lethbridge University, Canada, reported that there is a strong positive link between brain size and playfulness among mammals in general. Comparing measurements for fifteen orders of mammal, he and his team found larger brains (for a given body size) are linked to greater playfulness. The converse was also found to be true. Robert Barton of Durham University believes that, because large brains are more sensitive to developmental stimuli than smaller brains, they require more play to help mould them for adulthood. 'I concluded it's to do with learning, and with the importance of environmental data to the brain during development,' he says.\n\nF  According to Byers, the timing of the playful stage in young animals provides an important clue to what's going on. If you plot the amount of time a juvenile devotes to play each day over the course of its development, you discover a pattern typically associated with a 'sensitive period' - a brief development window during which the brain can actually be modified in ways that are not possible earlier or later in life. Think of the relative ease with which young children - but not infants or adults - absorb language. Other researchers have found that play in cats, rats and mice is at its most intense just as this 'window of opportunity' reaches its peak.\n\nG  'People have not paid enough attention to the amount of the brain activated by play,' says Marc Bekoff from Colorado University. Bekoff studied coyote pups at play and found that the kind of behaviour involved was markedly more variable and unpredictable than that of adults. Such behaviour activates many different parts of the brain, he reasons. Bekoff likens it to a behavioural kaleidoscope, with animals at play jumping rapidly between activities. 'They use behaviour from a lot of different contexts - predation, aggression, reproduction,' he says. 'Their developing brain is getting all sorts of stimulation.'\n\nH  Not only is more of the brain involved in play than was suspected, but it also seems to activate higher cognitive processes. 'There's enormous cognitive involvement in play,' says Bekoff. He points out that play often involves complex assessments of playmates, ideas of reciprocity and the use of specialised signals and rules. He believes that play creates a brain that has greater behavioural flexibility and improved potential for learning later in life. The idea is backed up by the work of Stephen Siviy of Gettysburg College. Siviy studied how bouts of play affected the brain's levels of a particular chemical associated with the stimulation and growth of nerve cells. He was surprised by the extent of the activation. 'Play just lights everything up,' he says. By allowing link-ups between brain areas that might not normally communicate with each other, play may enhance creativity.\n\nI  What might further experimentation suggest about the way children are raised in many societies today? We already know that rat pups denied the chance to play grow smaller brain components and fail to develop the ability to apply social rules when they interact with their peers. With schooling beginning earlier and becoming increasingly exam-orientated, play is likely to get even less of a look-in. Who knows what the result of that will be?",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Reading Passage 3 has nine paragraphs labelled A–I.\nWhich paragraph contains the following information?\nWrite the correct letter A–I in boxes 27–32 on your answer sheet.\nNB You may use any letter more than once.",
+          "33": "Choose THREE letters, A–F.\nWrite your answers in boxes 33–35 on your answer sheet.\nThe list below gives some ways of regarding play. Which THREE ways are mentioned by the writer of the text?\nA a rehearsal for later adult activities\nB a method animals use to prove themselves to their peer group\nC an activity intended to build up strength for adulthood\nD a means of communicating feelings\nE a defensive strategy\nF an activity assisting organ growth",
+          "36": "Look at the following researchers (Questions 36–40) and the list of findings below.\nMatch each researcher with the correct finding.\nWrite the correct letter A–H in boxes 36–40 on your answer sheet."
+        }
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "multiple_choice",
+          "prompt": "the way play causes unusual connections in the brain which are beneficial",
+          "answer": "H",
+          "explanation": "Đoạn H nói việc chơi 'allowing link-ups between brain areas that might not normally communicate with each other' và 'may enhance creativity' — tạo kết nối bất thường có lợi trong não. → H.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "By allowing link-ups between brain areas that might not normally communicate with each other, play may enhance creativity."
+        },
+        {
+          "order": 28,
+          "questionType": "multiple_choice",
+          "prompt": "insights from recording how much time young animals spend playing",
+          "answer": "F",
+          "explanation": "Đoạn F: nếu 'plot the amount of time a juvenile devotes to play each day', ta thấy quy luật ứng với 'sensitive period'. → F.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "If you plot the amount of time a juvenile devotes to play each day over the course of its development, you discover a pattern typically associated with a 'sensitive period'"
+        },
+        {
+          "order": 29,
+          "questionType": "multiple_choice",
+          "prompt": "a description of the physical hazards that can accompany play",
+          "answer": "A",
+          "explanation": "Đoạn A nêu nguy hiểm thể chất khi chơi: 80% cái chết của hải cẩu non do mải chơi không phát hiện thú săn mồi. → A.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "Eighty per cent of deaths among juvenile fur seals occur because playing pups fail to spot predators approaching."
+        },
+        {
+          "order": 30,
+          "questionType": "multiple_choice",
+          "prompt": "a description of the mental activities which are exercised and developed during play",
+          "answer": "H",
+          "explanation": "Đoạn H mô tả các hoạt động trí óc khi chơi: 'complex assessments of playmates, ideas of reciprocity and the use of specialised signals and rules'. → H.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "He points out that play often involves complex assessments of playmates, ideas of reciprocity and the use of specialised signals and rules."
+        },
+        {
+          "order": 31,
+          "questionType": "multiple_choice",
+          "prompt": "the possible effects that a reduction in play opportunities will have on humans",
+          "answer": "I",
+          "explanation": "Đoạn I bàn việc trẻ em ngày nay ít được chơi hơn (đi học sớm, nặng thi cử) và tự hỏi hệ quả sẽ ra sao — tác động có thể có khi giảm cơ hội chơi ở con người. → I.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "With schooling beginning earlier and becoming increasingly exam-orientated, play is likely to get even less of a look-in. Who knows what the result of that will be?"
+        },
+        {
+          "order": 32,
+          "questionType": "multiple_choice",
+          "prompt": "the classes of animals for which play is important",
+          "answer": "B",
+          "explanation": "Đoạn B nêu nhóm động vật hay chơi: chủ yếu là động vật có vú (mammals) và vài loài chim não lớn. → B.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "Playfulness, it seems, is common only among mammals, although a few of the larger-brained birds also indulge."
+        },
+        {
+          "order": 33,
+          "questionType": "multiple_choice",
+          "prompt": "Which THREE ways of regarding play are mentioned by the writer? (Câu 33)",
+          "answer": [
+            "A a rehearsal for later adult activities",
+            "C an activity intended to build up strength for adulthood",
+            "F an activity assisting organ growth"
+          ],
+          "explanation": "Bài nêu 3 cách nhìn về việc chơi: (A) tập dượt cho hoạt động khi trưởng thành, (C) rèn thể lực cho tuổi trưởng thành, (F) giúp phát triển cơ quan/não. Cách A ứng với câu 'helps juveniles develop the skills they will need to hunt, mate and socialise as adults'. → chọn A, C, F.",
+          "points": 1,
+          "options": [
+            "A a rehearsal for later adult activities",
+            "B a method animals use to prove themselves to their peer group",
+            "C an activity intended to build up strength for adulthood",
+            "D a means of communicating feelings",
+            "E a defensive strategy",
+            "F an activity assisting organ growth"
+          ],
+          "evidence": "A popular explanation of play has been that it helps juveniles develop the skills they will need to hunt, mate and socialise as adults."
+        },
+        {
+          "order": 34,
+          "questionType": "multiple_choice",
+          "prompt": "Which THREE ways of regarding play are mentioned by the writer? (Câu 34)",
+          "answer": [
+            "A a rehearsal for later adult activities",
+            "C an activity intended to build up strength for adulthood",
+            "F an activity assisting organ growth"
+          ],
+          "explanation": "Cách C — 'rèn thể lực cho tuổi trưởng thành' — ứng với 'get in shape for adult life by improving their respiratory endurance'. (Ba đáp án đúng của cả cụm 33–35 là A, C, F.)",
+          "points": 1,
+          "options": [
+            "A a rehearsal for later adult activities",
+            "B a method animals use to prove themselves to their peer group",
+            "C an activity intended to build up strength for adulthood",
+            "D a means of communicating feelings",
+            "E a defensive strategy",
+            "F an activity assisting organ growth"
+          ],
+          "evidence": "Another has been that it allows young animals to get in shape for adult life by improving their respiratory endurance."
+        },
+        {
+          "order": 35,
+          "questionType": "multiple_choice",
+          "prompt": "Which THREE ways of regarding play are mentioned by the writer? (Câu 35)",
+          "answer": [
+            "A a rehearsal for later adult activities",
+            "C an activity intended to build up strength for adulthood",
+            "F an activity assisting organ growth"
+          ],
+          "explanation": "Cách F — 'giúp phát triển cơ quan' — ứng với ý 'play has evolved to build big brains' (não là một cơ quan). (Ba đáp án đúng của cả cụm 33–35 là A, C, F.)",
+          "points": 1,
+          "options": [
+            "A a rehearsal for later adult activities",
+            "B a method animals use to prove themselves to their peer group",
+            "C an activity intended to build up strength for adulthood",
+            "D a means of communicating feelings",
+            "E a defensive strategy",
+            "F an activity assisting organ growth"
+          ],
+          "evidence": "The latest idea suggests that play has evolved to build big brains."
+        },
+        {
+          "order": 36,
+          "questionType": "matching",
+          "prompt": "Robert Barton",
+          "answer": "B Play provides input concerning physical surroundings",
+          "explanation": "Barton nói việc chơi liên quan 'the importance of environmental data to the brain during development' — cung cấp thông tin về môi trường xung quanh. → B.",
+          "points": 1,
+          "options": [
+            "A There is a link between a specific substance in the brain and playing",
+            "B Play provides input concerning physical surroundings",
+            "C Varieties of play can be matched to different stages of evolutionary history",
+            "D There is a tendency for mammals with smaller brains to play less",
+            "E Play is not a form of fitness training for the future",
+            "F Some species of larger brained birds engage in play",
+            "G A wide range of activities are combined during play",
+            "H Play is a method of teaching survival techniques"
+          ],
+          "evidence": "'I concluded it's to do with learning, and with the importance of environmental data to the brain during development,' he says."
+        },
+        {
+          "order": 37,
+          "questionType": "matching",
+          "prompt": "Marc Bekoff",
+          "answer": "G A wide range of activities are combined during play",
+          "explanation": "Bekoff thấy khi chơi con vật kết hợp nhiều loại hành vi từ nhiều bối cảnh (săn mồi, gây hấn, sinh sản) — 'a wide range of activities are combined'. → G.",
+          "points": 1,
+          "options": [
+            "A There is a link between a specific substance in the brain and playing",
+            "B Play provides input concerning physical surroundings",
+            "C Varieties of play can be matched to different stages of evolutionary history",
+            "D There is a tendency for mammals with smaller brains to play less",
+            "E Play is not a form of fitness training for the future",
+            "F Some species of larger brained birds engage in play",
+            "G A wide range of activities are combined during play",
+            "H Play is a method of teaching survival techniques"
+          ],
+          "evidence": "'They use behaviour from a lot of different contexts - predation, aggression, reproduction,' he says."
+        },
+        {
+          "order": 38,
+          "questionType": "matching",
+          "prompt": "John Byers",
+          "answer": "E Play is not a form of fitness training for the future",
+          "explanation": "Byers bác giả thuyết chơi để rèn thể lực: lợi ích thể lực 'disappear rapidly after training stops', nên chơi lúc nhỏ không phải là tập luyện thể lực cho tương lai. → E.",
+          "points": 1,
+          "options": [
+            "A There is a link between a specific substance in the brain and playing",
+            "B Play provides input concerning physical surroundings",
+            "C Varieties of play can be matched to different stages of evolutionary history",
+            "D There is a tendency for mammals with smaller brains to play less",
+            "E Play is not a form of fitness training for the future",
+            "F Some species of larger brained birds engage in play",
+            "G A wide range of activities are combined during play",
+            "H Play is a method of teaching survival techniques"
+          ],
+          "evidence": "But Byers points out that the benefits of increased exercise disappear rapidly after training stops, so any improvement in endurance resulting from juvenile play would be lost by adulthood."
+        },
+        {
+          "order": 39,
+          "questionType": "matching",
+          "prompt": "Sergio Pellis",
+          "answer": "D There is a tendency for mammals with smaller brains to play less",
+          "explanation": "Pellis tìm ra liên hệ thuận giữa kích thước não và mức độ chơi; 'the converse was also found to be true' — não càng nhỏ càng chơi ít. → D.",
+          "points": 1,
+          "options": [
+            "A There is a link between a specific substance in the brain and playing",
+            "B Play provides input concerning physical surroundings",
+            "C Varieties of play can be matched to different stages of evolutionary history",
+            "D There is a tendency for mammals with smaller brains to play less",
+            "E Play is not a form of fitness training for the future",
+            "F Some species of larger brained birds engage in play",
+            "G A wide range of activities are combined during play",
+            "H Play is a method of teaching survival techniques"
+          ],
+          "evidence": "larger brains (for a given body size) are linked to greater playfulness. The converse was also found to be true."
+        },
+        {
+          "order": 40,
+          "questionType": "matching",
+          "prompt": "Stephen Siviy",
+          "answer": "A There is a link between a specific substance in the brain and playing",
+          "explanation": "Siviy nghiên cứu ảnh hưởng của chơi lên mức 'a particular chemical' trong não — tức mối liên hệ giữa một chất trong não và việc chơi. → A.",
+          "points": 1,
+          "options": [
+            "A There is a link between a specific substance in the brain and playing",
+            "B Play provides input concerning physical surroundings",
+            "C Varieties of play can be matched to different stages of evolutionary history",
+            "D There is a tendency for mammals with smaller brains to play less",
+            "E Play is not a form of fitness training for the future",
+            "F Some species of larger brained birds engage in play",
+            "G A wide range of activities are combined during play",
+            "H Play is a method of teaching survival techniques"
+          ],
+          "evidence": "Siviy studied how bouts of play affected the brain's levels of a particular chemical associated with the stimulation and growth of nerve cells."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,675 @@
+{
+  "title": "IELTS Master – Test 15 (Reading)",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master (Academic) – Test 15",
+  "description": "Reading Test 15 – Johnson's Dictionary / Nature or Nurture? / The Truth About the Environment. 40 câu, tự chấm, có giải thích và dẫn chứng.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 – Johnson's Dictionary",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 1–13.",
+      "content": "Johnson's Dictionary\n\nFor the century before Johnson's Dictionary was published in 1775, there had been concern about the state of the English language. There was no standard way of speaking or writing and no agreement as to the best way of bringing some order to the chaos of English spelling. Dr Johnson provided the solution.\n\nThere had, of course, been dictionaries in the past, the first of these being a little book of some 120 pages, compiled by a certain Robert Cawdray, published in 1604 under the title A Table Alphabetical of hard usual English words. Like the various dictionaries that came after it during the seventeenth century, Cawdray's tended to concentrate on 'scholarly' words; one function of the dictionary was to enable its student to convey an impression of fine learning.\n\nBeyond the practical need to make order out of chaos, the rise of dictionaries is associated with the rise of the English middle class, who were anxious to define and circumscribe the various worlds to conquer – lexical as well as social and commercial. It is highly appropriate that Dr Samuel Johnson, the very model of an eighteenth-century literary man, as famous in his own time as in ours, should have published his Dictionary at the very beginning of the heyday of the middle class.\n\nJohnson was a poet and critic who raised common sense to the heights of genius. His approach to the problems that had worried writers throughout the late seventeenth and early eighteenth centuries was intensely practical. Up until his time, the task of producing a dictionary on such a large scale had seemed impossible without the establishment of an academy to make decisions about right and wrong usage. Johnson decided he did not need an academy to settle arguments about language; he would write a dictionary himself; and he would do it single-handed. Johnson signed the contract for the Dictionary with the bookseller Robert Dosley at a breakfast held at the Golden Anchor Inn near Holborn Bar on 18 June 1764. He was to be paid £1,575 in instalments, and from this he took money to rent 17 Gough Square, in which he set up his 'dictionary workshop'.\n\nJames Boswell, his biographer, described the garret where Johnson worked as 'fitted up like a counting house' with a long desk running down the middle at which the copying clerks would work standing up. Johnson himself was stationed on a rickety chair at an 'old crazy deal table' surrounded by a chaos of borrowed books. He was also helped by six assistants, two of whom died whilst the Dictionary was still in preparation.\n\nThe work was immense; filling about eighty large notebooks (and without a library to hand), Johnson wrote the definitions of over 40,000 words, and illustrated their many meanings with some 114,000 quotations drawn from English writing on every subject, from the Elizabethans to his own time. He did not expect to achieve complete originality. Working to a deadline, he had to draw on the best of all previous dictionaries, and to make his work one of heroic synthesis. In fact, it was very much more. Unlike his predecessors, Johnson treated English very practically, as a living language, with many different shades of meaning. He adopted his definitions on the principle of English common law – according to precedent. After its publication, his Dictionary was not seriously rivalled for over a century.\n\nAfter many vicissitudes the Dictionary was finally published on 15 April 1775. It was instantly recognised as a landmark throughout Europe. 'This very noble work,' wrote the leading Italian lexicographer, 'will be a perpetual monument of Fame to the Author, an Honour to his own Country in particular, and a general Benefit to the republic of Letters throughout Europe.' The fact that Johnson had taken on the Academies of Europe and matched them (everyone knew that forty French academics had taken forty years to produce the first French national dictionary) was cause for much English celebration.\n\nJohnson had worked for nine years, 'with little assistance of the learned, and without any patronage of the great; not in the soft obscurities of retirement, or under the shelter of academic bowers, but amidst inconvenience and distraction, in sickness and in sorrow'. For all its faults and eccentricities his two-volume work is a masterpiece and a landmark, in his own words, 'setting the orthography, displaying the analogy, regulating the structures, and ascertaining the significations of English words'. It is the cornerstone of Standard English, an achievement which, in James Boswell's words, 'conferred stability on the language of his country'.\n\nThe Dictionary, together with his other writing, made Johnson famous and so well esteemed that his friends were able to prevail upon King George III to offer him a pension. From then on, he was to become the Johnson of folklore.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Choose THREE letters A–H.\nWrite your answers in boxes 1–3 on your answer sheet.\nNB Your answers may be given in any order.\nWhich THREE of the following statements are true of Johnson's Dictionary?\nA It avoided all scholarly words.\nB It was the only English dictionary in general use for 200 years.\nC It was famous because of the large number of people involved.\nD It focused mainly on language from contemporary texts.\nE There was a time limit for its completion.\nF It ignored work done by previous dictionary writers.\nG It took into account subtleties of meaning.\nH Its definitions were famous for their originality.",
+          "4": "Complete the summary.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.",
+          "8": "Do the following statements agree with the information given in Reading Passage 1?\nIn boxes 8–13 on your answer sheet, write\nTRUE if the statement is true according to the passage\nFALSE if the statement is false according to the passage\nNOT GIVEN if the information is not given in the passage"
+        },
+        "noteBody": "In 1764 Dr Johnson accepted the contract to produce a dictionary. Having rented a garret, he took on a number of [[4]], who stood at a long central desk. Johnson did not have a [[5]] available to him, but eventually produced definitions of in excess of 40,000 words written down in 80 large notebooks. On publication, the Dictionary was immediately hailed in many European countries as a landmark. According to his biographer, James Boswell, Johnson's principal achievement was to bring [[6]] to the English language. As a reward for his hard work, he was granted a [[7]] by the king."
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "multiple_choice",
+          "prompt": "Which THREE of the following statements are true of Johnson's Dictionary? (Câu 1)",
+          "answer": [
+            "D It focused mainly on language from contemporary texts.",
+            "E There was a time limit for its completion.",
+            "G It took into account subtleties of meaning."
+          ],
+          "explanation": "Đáp án D: các trích dẫn minh hoạ được lấy từ tác phẩm tiếng Anh 'from the Elizabethans to his own time' — tức văn bản đương thời chứ không phải từ ngữ kinh viện cổ. (Ba đáp án đúng của cụm 1–3 là D, E, G.)",
+          "points": 1,
+          "options": [
+            "A It avoided all scholarly words.",
+            "B It was the only English dictionary in general use for 200 years.",
+            "C It was famous because of the large number of people involved.",
+            "D It focused mainly on language from contemporary texts.",
+            "E There was a time limit for its completion.",
+            "F It ignored work done by previous dictionary writers.",
+            "G It took into account subtleties of meaning.",
+            "H Its definitions were famous for their originality."
+          ],
+          "evidence": "illustrated their many meanings with some 114,000 quotations drawn from English writing on every subject, from the Elizabethans to his own time"
+        },
+        {
+          "order": 2,
+          "questionType": "multiple_choice",
+          "prompt": "Which THREE of the following statements are true of Johnson's Dictionary? (Câu 2)",
+          "answer": [
+            "D It focused mainly on language from contemporary texts.",
+            "E There was a time limit for its completion.",
+            "G It took into account subtleties of meaning."
+          ],
+          "explanation": "Đáp án E: Johnson phải 'Working to a deadline' — có thời hạn hoàn thành. (Ba đáp án đúng của cụm 1–3 là D, E, G.)",
+          "points": 1,
+          "options": [
+            "A It avoided all scholarly words.",
+            "B It was the only English dictionary in general use for 200 years.",
+            "C It was famous because of the large number of people involved.",
+            "D It focused mainly on language from contemporary texts.",
+            "E There was a time limit for its completion.",
+            "F It ignored work done by previous dictionary writers.",
+            "G It took into account subtleties of meaning.",
+            "H Its definitions were famous for their originality."
+          ],
+          "evidence": "Working to a deadline, he had to draw on the best of all previous dictionaries"
+        },
+        {
+          "order": 3,
+          "questionType": "multiple_choice",
+          "prompt": "Which THREE of the following statements are true of Johnson's Dictionary? (Câu 3)",
+          "answer": [
+            "D It focused mainly on language from contemporary texts.",
+            "E There was a time limit for its completion.",
+            "G It took into account subtleties of meaning."
+          ],
+          "explanation": "Đáp án G: Johnson coi tiếng Anh là ngôn ngữ sống, 'with many different shades of meaning' — có tính đến các sắc thái nghĩa. (Ba đáp án đúng của cụm 1–3 là D, E, G.)",
+          "points": 1,
+          "options": [
+            "A It avoided all scholarly words.",
+            "B It was the only English dictionary in general use for 200 years.",
+            "C It was famous because of the large number of people involved.",
+            "D It focused mainly on language from contemporary texts.",
+            "E There was a time limit for its completion.",
+            "F It ignored work done by previous dictionary writers.",
+            "G It took into account subtleties of meaning.",
+            "H Its definitions were famous for their originality."
+          ],
+          "evidence": "Johnson treated English very practically, as a living language, with many different shades of meaning"
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": [
+            "copying clerks",
+            "clerks"
+          ],
+          "explanation": "Boswell tả căn gác có bàn dài ở giữa, nơi 'the copying clerks would work standing up' — những người chép thuê đứng làm việc. → (copying) clerks.",
+          "points": 1,
+          "evidence": "with a long desk running down the middle at which the copying clerks would work standing up"
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Câu 5",
+          "answer": [
+            "library"
+          ],
+          "explanation": "Johnson làm việc 'without a library to hand' — không có thư viện bên cạnh. → library.",
+          "points": 1,
+          "evidence": "filling about eighty large notebooks (and without a library to hand)"
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Câu 6",
+          "answer": [
+            "stability"
+          ],
+          "explanation": "Theo Boswell, thành tựu chính của Johnson là 'conferred stability on the language of his country' — mang lại sự ổn định cho tiếng Anh. → stability.",
+          "points": 1,
+          "evidence": "an achievement which, in James Boswell's words, 'conferred stability on the language of his country'"
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Câu 7",
+          "answer": [
+            "pension"
+          ],
+          "explanation": "Bạn bè thuyết phục được vua George III ban cho Johnson 'a pension' (khoản trợ cấp). → pension.",
+          "points": 1,
+          "evidence": "his friends were able to prevail upon King George III to offer him a pension"
+        },
+        {
+          "order": 8,
+          "questionType": "true_false_not_given",
+          "prompt": "The growing importance of the middle classes led to an increased demand for dictionaries.",
+          "answer": "TRUE",
+          "explanation": "Bài nói sự phát triển của từ điển 'is associated with the rise of the English middle class' — tầng lớp trung lưu lớn mạnh kéo theo nhu cầu từ điển. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "the rise of dictionaries is associated with the rise of the English middle class"
+        },
+        {
+          "order": 9,
+          "questionType": "true_false_not_given",
+          "prompt": "Johnson has become more well known since his death.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: Johnson 'as famous in his own time as in ours' — nổi tiếng thời ông cũng ngang thời nay, không phải nổi hơn sau khi mất. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "as famous in his own time as in ours"
+        },
+        {
+          "order": 10,
+          "questionType": "true_false_not_given",
+          "prompt": "Johnson had been planning to write a dictionary for several years.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài không nói Johnson đã ấp ủ ý định viết từ điển từ nhiều năm trước. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 11,
+          "questionType": "true_false_not_given",
+          "prompt": "Johnson set up an academy to help with the writing of his Dictionary.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: 'Johnson decided he did not need an academy' — ông quyết định tự làm một mình, không lập viện hàn lâm. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Johnson decided he did not need an academy to settle arguments about language"
+        },
+        {
+          "order": 12,
+          "questionType": "true_false_not_given",
+          "prompt": "Johnson only received payment for his Dictionary on its completion.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: ông được trả £1,575 'in instalments' — trả góp nhiều đợt, không phải chỉ khi hoàn thành. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "He was to be paid £1,575 in instalments"
+        },
+        {
+          "order": 13,
+          "questionType": "true_false_not_given",
+          "prompt": "Not all of the assistants survived to see the publication of the Dictionary.",
+          "answer": "TRUE",
+          "explanation": "Trong sáu trợ lý, 'two of whom died whilst the Dictionary was still in preparation' — hai người mất trước khi sách ra. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "He was also helped by six assistants, two of whom died whilst the Dictionary was still in preparation."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 – Nature or Nurture?",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 14–26.",
+      "content": "Nature or Nurture?\n\nA  A few years ago, in one of the most fascinating and disturbing experiments in behavioural psychology, Stanley Milgram of Yale University tested 40 subjects from all walks of life for their willingness to obey instructions given by a 'leader' in a situation in which the subjects might feel a personal distaste for the actions they were called upon to perform. Specifically, Milgram told each volunteer 'teacher-subject' that the experiment was in the noble cause of education, and was designed to test whether or not punishing pupils for their mistakes would have a positive effect on the pupils' ability to learn.\n\nB  Milgram's experimental set-up involved placing the teacher-subject before a panel of thirty switches with labels ranging from '15 volts of electricity (slight shock)' to '450 volts (danger - severe shock)' in steps of 15 volts each. The teacher-subject was told that whenever the pupil gave the wrong answer to a question, a shock was to be administered, beginning at the lowest level and increasing in severity with each successive wrong answer. The supposed 'pupil' was in reality an actor hired by Milgram to simulate receiving the shocks by emitting a spectrum of groans, screams and writhings together with an assortment of statements and expletives denouncing both the experiment and the experimenter. Milgram told the teacher-subject to ignore the reactions of the pupil, and to administer whatever level of shock was called for, as per the rule governing the experimental situation of the moment.\n\nC  As the experiment unfolded, the pupil would deliberately give the wrong answers to questions posed by the teacher, thereby bringing on various electrical punishments, even up to the danger level of 300 volts and beyond. Many of the teacher-subjects balked at administering the higher levels of punishment, and turned to Milgram with questioning looks and/or complaints about continuing the experiment. In these situations, Milgram calmly explained that the teacher-subject was to ignore the pupil's cries for mercy and carry on with the experiment. If the subject was still reluctant to proceed, Milgram said that it was important for the sake of the experiment that the procedure be followed through to the end. His final argument was, 'You have no other choice. You must go on.' What Milgram was trying to discover was the number of teacher-subjects who would be willing to administer the highest levels of shock, even in the face of strong personal and moral revulsion against the rules and conditions of the experiment.\n\nD  Prior to carrying out the experiment, Milgram explained his idea to a group of 39 psychiatrists and asked them to predict the average percentage of people in an ordinary population who would be willing to administer the highest shock level of 450 volts. The overwhelming consensus was that virtually all the teacher-subjects would refuse to obey the experimenter. The psychiatrists felt that 'most subjects would not go beyond 150 volts' and they further anticipated that only four per cent would go up to 300 volts. Furthermore, they thought that only a lunatic fringe of about one in 1,000 would give the highest shock of 450 volts.\n\nE  What were the actual results? Well, over 60 per cent of the teacher-subjects continued to obey Milgram up to the 450-volt limit! In repetitions of the experiment in other countries, the percentage of obedient teacher-subjects was even higher, reaching 85 per cent in one country. How can we possibly account for this vast discrepancy between what calm, rational, knowledgeable people predict in the comfort of their study and what pressured, flustered, but cooperative teachers actually do in the laboratory of real life?\n\nF  One's first inclination might be to argue that there must be some sort of built-in animal aggression instinct that was activated by the experiment, and that Milgram's teacher-subjects were just following a genetic need to discharge this pent-up primal urge onto the pupil by administering the electrical shock. A modern hard-core sociobiologist might even go so far as to claim that this aggressive instinct evolved as an advantageous trait, having been of survival value to our ancestors in their struggle against the hardships of life on the plains and in the caves, ultimately finding its way into our genetic make-up as a remnant of our ancient animal ways.\n\nG  An alternative to this notion of genetic programming is to see the teacher-subjects' actions as a result of the social environment under which the experiment was carried out. As Milgram himself pointed out, 'Most subjects in the experiment see their behaviour in a larger context that is benevolent and useful to society - the pursuit of scientific truth. The psychological laboratory has a strong claim to legitimacy and evokes trust and confidence in those who perform there. An action such as shocking a victim, which in isolation appears evil, acquires a completely different meaning when placed in this setting.'\n\nH  Thus, in this explanation the subject merges his unique personality and personal and moral code with that of larger institutional structures, surrendering individual properties like loyalty, self-sacrifice and discipline to the service of malevolent systems of authority.\n\nI  Here we have two radically different explanations for why so many teacher-subjects were willing to forgo their sense of personal responsibility for the sake of an institutional authority figure. The problem for biologists, psychologists and anthropologists is to sort out which of these two polar explanations is more plausible. This, in essence, is the problem of modern sociobiology - to discover the degree to which hard-wired genetic programming dictates, or at least strongly biases, the interaction of animals and humans with their environment, that is, their behaviour. Put another way, sociobiology is concerned with elucidating the biological basis of all behaviour.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Reading Passage 2 has nine paragraphs, A–I.\nWhich paragraph contains the following information?\nWrite the correct letter A–I in boxes 14–19 on your answer sheet.",
+          "20": "Choose the correct letter, A, B, C or D.\nWrite your answers in boxes 20–22 on your answer sheet.",
+          "23": "Do the following statements agree with the information given in Reading Passage 2?\nIn boxes 23–26 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this"
+        }
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "a biological explanation of the teacher-subjects' behaviour",
+          "answer": "F",
+          "explanation": "Đoạn F nêu cách giải thích sinh học: bản năng hung hăng bẩm sinh, có giá trị sinh tồn, đi vào bộ gen. → F.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "One's first inclination might be to argue that there must be some sort of built-in animal aggression instinct that was activated by the experiment"
+        },
+        {
+          "order": 15,
+          "questionType": "multiple_choice",
+          "prompt": "the explanation Milgram gave the teacher-subjects for the experiment",
+          "answer": "A",
+          "explanation": "Đoạn A: Milgram nói với người tham gia rằng thí nghiệm phục vụ giáo dục, để xem phạt lỗi có giúp học tốt hơn không. → A.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "Milgram told each volunteer 'teacher-subject' that the experiment was in the noble cause of education, and was designed to test whether or not punishing pupils for their mistakes would have a positive effect on the pupils' ability to learn."
+        },
+        {
+          "order": 16,
+          "questionType": "multiple_choice",
+          "prompt": "the identity of the pupils",
+          "answer": "B",
+          "explanation": "Đoạn B tiết lộ 'pupil' thật ra là diễn viên được Milgram thuê để giả vờ bị điện giật. → B.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "The supposed 'pupil' was in reality an actor hired by Milgram to simulate receiving the shocks"
+        },
+        {
+          "order": 17,
+          "questionType": "multiple_choice",
+          "prompt": "the expected statistical outcome",
+          "answer": "D",
+          "explanation": "Đoạn D nêu dự đoán bằng con số của 39 bác sĩ tâm thần: đa số không quá 150 volt, 4% tới 300 volt, 1/1000 tới 450 volt. → D.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "The psychiatrists felt that 'most subjects would not go beyond 150 volts' and they further anticipated that only four per cent would go up to 300 volts."
+        },
+        {
+          "order": 18,
+          "questionType": "multiple_choice",
+          "prompt": "the general aim of sociobiological study",
+          "answer": "I",
+          "explanation": "Đoạn I nêu mục tiêu chung của xã hội sinh học: 'sociobiology is concerned with elucidating the biological basis of all behaviour'. → I.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "Put another way, sociobiology is concerned with elucidating the biological basis of all behaviour."
+        },
+        {
+          "order": 19,
+          "questionType": "multiple_choice",
+          "prompt": "the way Milgram persuaded the teacher-subjects to continue",
+          "answer": "C",
+          "explanation": "Đoạn C kể cách Milgram thuyết phục: bảo bỏ qua tiếng van xin, nhấn mạnh phải làm đến cùng, và câu chốt 'You have no other choice. You must go on.' → C.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "His final argument was, 'You have no other choice. You must go on.'"
+        },
+        {
+          "order": 20,
+          "questionType": "multiple_choice",
+          "prompt": "The teacher-subjects were told that they were testing whether",
+          "answer": "B punishment helps learning",
+          "explanation": "Milgram nói thí nghiệm nhằm kiểm tra 'whether or not punishing pupils for their mistakes would have a positive effect on the pupils' ability to learn'. → B.",
+          "points": 1,
+          "options": [
+            "A a 450-volt shock was dangerous",
+            "B punishment helps learning",
+            "C the pupils were honest",
+            "D they were suited to teaching"
+          ],
+          "evidence": "was designed to test whether or not punishing pupils for their mistakes would have a positive effect on the pupils' ability to learn"
+        },
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "The teacher-subjects were instructed to",
+          "answer": "D give punishment according to a rule",
+          "explanation": "Họ được lệnh bỏ qua phản ứng của 'học trò' và giật điện ở mức 'as per the rule governing the experimental situation' — theo đúng quy tắc. → D.",
+          "points": 1,
+          "options": [
+            "A stop when a pupil asked them to",
+            "B denounce pupils who made mistakes",
+            "C reduce the shock level after a correct answer",
+            "D give punishment according to a rule"
+          ],
+          "evidence": "to administer whatever level of shock was called for, as per the rule governing the experimental situation of the moment"
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "Before the experiment took place the psychiatrists",
+          "answer": "C underestimated the teacher-subjects' willingness to comply with experimental procedure",
+          "explanation": "Các bác sĩ tâm thần dự đoán hầu như tất cả sẽ từ chối, nhưng thực tế hơn 60% tuân lệnh tới 450 volt — họ đã đánh giá thấp mức độ tuân thủ. → C.",
+          "points": 1,
+          "options": [
+            "A believed that a shock of 150 volts was too dangerous",
+            "B failed to agree on how the teacher-subjects would respond to instructions",
+            "C underestimated the teacher-subjects' willingness to comply with experimental procedure",
+            "D thought that many of the teacher-subjects would administer a shock of 450 volts"
+          ],
+          "evidence": "The overwhelming consensus was that virtually all the teacher-subjects would refuse to obey the experimenter."
+        },
+        {
+          "order": 23,
+          "questionType": "true_false_not_given",
+          "prompt": "Several of the subjects were psychology students at Yale University.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói 40 người tham gia 'from all walks of life' (đủ mọi tầng lớp), không nói có sinh viên tâm lý của Yale. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 24,
+          "questionType": "true_false_not_given",
+          "prompt": "Some people may believe that the teacher-subjects' behaviour could be explained as a positive survival mechanism.",
+          "answer": "TRUE",
+          "explanation": "Đoạn F: nhà xã hội sinh học có thể cho rằng bản năng hung hăng này 'evolved as an advantageous trait, having been of survival value to our ancestors' — một cơ chế sinh tồn có lợi. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "this aggressive instinct evolved as an advantageous trait, having been of survival value to our ancestors"
+        },
+        {
+          "order": 25,
+          "questionType": "true_false_not_given",
+          "prompt": "In a sociological explanation, personal values are more powerful than authority.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: đoạn H nói cá nhân hoà tan các giá trị và chuẩn mực đạo đức của mình vào cơ cấu thể chế, 'surrendering' chúng cho hệ thống quyền uy. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "the subject merges his unique personality and personal and moral code with that of larger institutional structures, surrendering individual properties like loyalty, self-sacrifice and discipline to the service of malevolent systems of authority"
+        },
+        {
+          "order": 26,
+          "questionType": "true_false_not_given",
+          "prompt": "Milgram's experiment solves an important question in sociobiology.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: đoạn I nói vẫn còn hai cách giải thích trái ngược và việc phân định cái nào hợp lý hơn vẫn là 'the problem' chưa giải quyết. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "The problem for biologists, psychologists and anthropologists is to sort out which of these two polar explanations is more plausible."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 – The Truth About the Environment",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 27–40.",
+      "content": "The Truth About the Environment\n\nFor many environmentalists, the world seems to be getting worse. They have developed a hit-list of our main fears: that natural resources are running out; that the population is ever growing, leaving less and less to eat; that species are becoming extinct in vast numbers, and that the planet's air and water are becoming ever more polluted.\n\nBut a quick look at the facts shows a different picture. First, energy and other natural resources have become more abundant, not less so, since the book 'The Limits to Growth' was published in 1972 by a group of scientists. Second, more food is now produced per head of the world's population than at any time in history. Fewer people are starving. Third, although species are indeed becoming extinct, only about 0.7% of them are expected to disappear in the next 50 years, not 25-50%, as has so often been predicted. And finally, most forms of environmental pollution either appear to have been exaggerated, or are transient - associated with the early phases of industrialisation and therefore best cured not by restricting economic growth, but by accelerating it.\n\nOne form of pollution - the release of greenhouse gases that causes global warming - does appear to be a phenomenon that is going to extend well into our future, but its total impact is unlikely to pose a devastating problem. A bigger problem may well turn out to be an inappropriate response to it.\n\nYet opinion polls suggest that many people nurture the belief that environmental standards are declining and four factors seem to cause this disjunction between perception and reality. One is the lopsidedness built into scientific research. Scientific funding goes mainly to areas with many problems. That may be wise policy but it will also create an impression that many more potential problems exist than is the case.\n\nSecondly, environmental groups need to be noticed by the mass media. They also need to keep the money rolling in. Understandably, perhaps, they sometimes overstate their arguments. In 1997, for example, the World Wide Fund for Nature issued a press release entitled: 'Two thirds of the world's forests lost forever'. The truth turns out to be nearer 20%.\n\nThough these groups are run overwhelmingly by selfless folk, they nevertheless share many of the characteristics of other lobby groups. That would matter less if people applied the same degree of scepticism to environmental lobbying as they do to lobby groups in other fields. A trade organisation arguing for, say, weaker pollution control is instantly seen as self-interested. Yet a green organisation opposing such a weakening is seen as altruistic, even if an impartial view of the controls in question might suggest they are doing more harm than good.\n\nA third source of confusion is the attitude of the media. People are clearly more curious about bad news than good. Newspapers and broadcasters are there to provide what the public wants. That, however, can lead to significant distortions of perception. An example was America's encounter with El Nino in 1997 and 1998. This climatic phenomenon was accused of wrecking tourism, causing allergies, melting the ski-slopes, and causing 22 deaths. However, according to an article in the Bulletin of the American Meteorological Society, the damage it did was estimated at US$4 billion but the benefits amounted to some US$19 billion. These came from higher winter temperatures (which saved an estimated 850 lives, reduced heating costs and diminished spring floods caused by meltwaters).\n\nThe fourth factor is poor individual perception. People worry that the endless rise in the amount of stuff everyone throws away will cause the world to run out of places to dispose of waste. Yet, even if America's trash output continues to rise as it has done in the past, and even if the American population doubles by 2100, all the rubbish America produces through the entire 21st century will still take up only one-12,000th of the area of the entire United States.\n\nSo what of global warming? As we know, carbon dioxide emissions are causing the planet to warm. The best estimates are that the temperatures will rise by 2-3°C in this century, causing considerable problems, at a total cost of US$5,000 billion.\n\nDespite the intuition that something drastic needs to be done about such a costly problem, economic analyses clearly show it will be far more expensive to cut carbon dioxide emissions radically than to pay the costs of adaptation to the increased temperatures. A model by one of the main authors of the United Nations Climate Change Panel shows how an expected temperature increase of 2.1 degrees in 2100 would only be diminished to an increase of 1.9 degrees. Or to put it another way, the temperature increase that the planet would have experienced in 2094 would be postponed to 2100.\n\nSo this does not prevent global warming, but merely buys the world six years. Yet the cost of reducing carbon dioxide emissions, for the United States alone, will be higher than the cost of solving the world's single, most pressing health problem: providing universal access to clean drinking water and sanitation. Such measures would avoid 2 million deaths every year, and prevent half a billion people from becoming seriously ill.\n\nIt is crucial that we look at the facts if we want to make the best possible decisions for the future. It may be costly to be overly optimistic - but more costly still to be too pessimistic.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Do the following statements agree with the information given in Reading Passage 3?\nIn boxes 27–32 on your answer sheet, write\nYES if the statement agrees with the writer's claims\nNO if the statement contradicts the writer's claims\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+          "33": "Choose the correct letter, A, B, C or D.\nWrite your answers in boxes 33–37 on your answer sheet.",
+          "38": "Complete the summary with the list of words A–I below.\nWrite the correct letter A–I in boxes 38–40 on your answer sheet.\n\nA unrealistic    B agreed    C expensive    D right    E long-term\nF usual    G surprising    H personal    I urgent"
+        },
+        "noteBody": "# GLOBAL WARMING\n\nThe writer admits that global warming is a [[38]] challenge, but says that it will not have a catastrophic impact on our future, if we deal with it in the [[39]] way. If we try to reduce the levels of greenhouse gases, he believes that it would only have a minimal impact on rising temperatures. He feels it would be better to spend money on the more [[40]] health problem of providing the world's population with clean drinking water."
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "true_false_not_given",
+          "prompt": "Environmentalists take a pessimistic view of the world for a number of reasons.",
+          "answer": "YES",
+          "explanation": "Mở bài liệt kê 'a hit-list of our main fears' gồm nhiều lý do: cạn tài nguyên, bùng nổ dân số, tuyệt chủng, ô nhiễm. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "They have developed a hit-list of our main fears: that natural resources are running out; that the population is ever growing, leaving less and less to eat; that species are becoming extinct in vast numbers, and that the planet's air and water are becoming ever more polluted."
+        },
+        {
+          "order": 28,
+          "questionType": "true_false_not_given",
+          "prompt": "Data on the Earth's natural resources has only been collected since 1972.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ lấy mốc cuốn 'The Limits to Growth' (1972) để so sánh, KHÔNG nói dữ liệu tài nguyên chỉ được thu thập từ năm đó. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 29,
+          "questionType": "true_false_not_given",
+          "prompt": "The number of starving people in the world has increased in recent years.",
+          "answer": "NO",
+          "explanation": "Ngược lại: bài nói lương thực bình quân đầu người cao nhất lịch sử và 'Fewer people are starving.' → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Second, more food is now produced per head of the world's population than at any time in history. Fewer people are starving."
+        },
+        {
+          "order": 30,
+          "questionType": "true_false_not_given",
+          "prompt": "Extinct species are being replaced by new species.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói tỉ lệ tuyệt chủng (khoảng 0.7% trong 50 năm), KHÔNG đề cập loài mới thay thế loài đã tuyệt chủng. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 31,
+          "questionType": "true_false_not_given",
+          "prompt": "Some pollution problems have been correctly linked to industrialisation.",
+          "answer": "YES",
+          "explanation": "Bài nói phần lớn ô nhiễm hoặc bị phóng đại, hoặc chỉ tạm thời và 'associated with the early phases of industrialisation' — tức có gắn đúng với công nghiệp hoá. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "most forms of environmental pollution either appear to have been exaggerated, or are transient - associated with the early phases of industrialisation"
+        },
+        {
+          "order": 32,
+          "questionType": "true_false_not_given",
+          "prompt": "It would be best to attempt to slow down economic growth.",
+          "answer": "NO",
+          "explanation": "Ngược lại: bài nói cách chữa tốt nhất là 'not by restricting economic growth, but by accelerating it' — đẩy nhanh chứ không kìm hãm tăng trưởng. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "therefore best cured not by restricting economic growth, but by accelerating it"
+        },
+        {
+          "order": 33,
+          "questionType": "multiple_choice",
+          "prompt": "What aspect of scientific research does the writer express concern about in paragraph 4?",
+          "answer": "C the selection of areas to research",
+          "explanation": "Tác giả lo về 'lopsidedness' trong nghiên cứu: kinh phí chủ yếu đổ vào những lĩnh vực nhiều vấn đề — tức cách chọn lĩnh vực nghiên cứu. → C.",
+          "points": 1,
+          "options": [
+            "A the need to produce results",
+            "B the lack of financial support",
+            "C the selection of areas to research",
+            "D the desire to solve every research problem"
+          ],
+          "evidence": "One is the lopsidedness built into scientific research. Scientific funding goes mainly to areas with many problems."
+        },
+        {
+          "order": 34,
+          "questionType": "multiple_choice",
+          "prompt": "The writer quotes from the Worldwide Fund for Nature to illustrate how",
+          "answer": "D environmental groups can exaggerate their claims",
+          "explanation": "WWF tuyên bố mất 2/3 rừng thế giới, nhưng sự thật gần 20% — ví dụ cho việc các nhóm môi trường 'sometimes overstate their arguments'. → D.",
+          "points": 1,
+          "options": [
+            "A influential the mass media can be",
+            "B effective environmental groups can be",
+            "C the mass media can help groups raise funds",
+            "D environmental groups can exaggerate their claims"
+          ],
+          "evidence": "In 1997, for example, the World Wide Fund for Nature issued a press release entitled: 'Two thirds of the world's forests lost forever'. The truth turns out to be nearer 20%."
+        },
+        {
+          "order": 35,
+          "questionType": "multiple_choice",
+          "prompt": "What is the writer's main point about lobby groups in paragraph 6?",
+          "answer": "C Some receive more criticism than others",
+          "explanation": "Tác giả nói tổ chức thương mại bị coi ngay là vụ lợi, còn tổ chức xanh lại được xem là vị tha — cùng là vận động hành lang nhưng bị soi xét khác nhau. → C.",
+          "points": 1,
+          "options": [
+            "A Some are more active than others",
+            "B Some are better organised than others",
+            "C Some receive more criticism than others",
+            "D Some support more important issues than others"
+          ],
+          "evidence": "A trade organisation arguing for, say, weaker pollution control is instantly seen as self-interested. Yet a green organisation opposing such a weakening is seen as altruistic"
+        },
+        {
+          "order": 36,
+          "questionType": "multiple_choice",
+          "prompt": "The writer suggests that newspapers print items that are intended to",
+          "answer": "B meet their readers' expectations",
+          "explanation": "Bài nói người đọc tò mò tin xấu hơn tin tốt, và 'Newspapers and broadcasters are there to provide what the public wants' — đáp ứng thị hiếu độc giả. → B.",
+          "points": 1,
+          "options": [
+            "A educate readers",
+            "B meet their readers' expectations",
+            "C encourage feedback from readers",
+            "D mislead readers"
+          ],
+          "evidence": "People are clearly more curious about bad news than good. Newspapers and broadcasters are there to provide what the public wants."
+        },
+        {
+          "order": 37,
+          "questionType": "multiple_choice",
+          "prompt": "What does the writer say about America's waste problem?",
+          "answer": "B It is not as important as we have been led to believe",
+          "explanation": "Dù rác tiếp tục tăng và dân số gấp đôi, toàn bộ rác của Mỹ cả thế kỷ 21 chỉ chiếm 1/12.000 diện tích nước Mỹ — vấn đề không lớn như người ta tưởng. → B.",
+          "points": 1,
+          "options": [
+            "A It will increase in line with population growth",
+            "B It is not as important as we have been led to believe",
+            "C It has been reduced through public awareness of the issues",
+            "D It is only significant in certain areas of the country"
+          ],
+          "evidence": "all the rubbish America produces through the entire 21st century will still take up only one-12,000th of the area of the entire United States"
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": [
+            "E",
+            "long-term",
+            "long term",
+            "E long-term"
+          ],
+          "explanation": "Bài nói khí nhà kính gây nóng lên toàn cầu 'is going to extend well into our future' — một thách thức dài hạn. → E (long-term).",
+          "points": 1,
+          "evidence": "does appear to be a phenomenon that is going to extend well into our future"
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": [
+            "D",
+            "right",
+            "D right"
+          ],
+          "explanation": "Tác giả cảnh báo 'A bigger problem may well turn out to be an inappropriate response to it' — nên vấn đề là phải ứng phó ĐÚNG cách. → D (right).",
+          "points": 1,
+          "evidence": "A bigger problem may well turn out to be an inappropriate response to it."
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": [
+            "I",
+            "urgent",
+            "I urgent"
+          ],
+          "explanation": "Nước sạch được gọi là 'the world's single, most pressing health problem' — vấn đề sức khoẻ cấp bách nhất. → I (urgent).",
+          "points": 1,
+          "evidence": "will be higher than the cost of solving the world's single, most pressing health problem: providing universal access to clean drinking water and sanitation"
+        }
+      ]
+    }
+  ]
+}

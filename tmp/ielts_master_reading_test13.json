@@ -1,0 +1,621 @@
+{
+  "title": "IELTS Master – Test 13 (Reading)",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master (Academic) – Test 13",
+  "description": "Reading Test 13 – Micro Enterprise Credit for Street Youth / Volcanoes – Earth-Shattering News / Obtaining Linguistic Data. 40 câu, tự chấm, có giải thích và dẫn chứng.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 – Micro Enterprise Credit for Street Youth",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 1–13.",
+      "content": "Micro Enterprise Credit for Street Youth\n\n'I am from a large, poor family and for many years we have done without breakfast. Ever since I joined the Street Kids International program I have been able to buy my family sugar and buns for breakfast. I have also bought myself decent second hand clothes and shoes.' – Doreen Soko\n\n'We have had business experience. Now I am confident to expand what we have been doing. I have learnt cash management and the way of keeping money so we save for reinvestment. Now business is a part of our lives. As well, we didn't know each other before – now we have made new friends.' – Fan Kaoma\n\nParticipants in the Youth Skill Enterprise Initiative Program, Zambia\n\nIntroduction\n\nAlthough small-scale business training and credit programs have become more common throughout the world, relatively little attention has been paid to the need to direct such opportunities to young people. Even less attention has been paid to children living on the street or in difficult circumstances.\n\nOver the past nine years, Street Kids International (S.K.I.) has been working with partner organisations in Africa, Latin America and India to support the economic lives of street children. The purpose of this paper is to share some of the lessons S.K.I. and our partners have learned.\n\nBackground\n\nTypically, children do not end up on the streets due to a single cause, but to a combination of factors: a dearth of adequately funded schools, the demand for income at home, family breakdown and violence. The street may be attractive to children as a place to find adventurous play and money. However, it is also a place where some children are exposed, with little or no protection, to exploitative employment, urban crime, and abuse.\n\nChildren who work on the streets are generally involved in unskilled, labour-intensive tasks which require long hours, such as shining shoes, carrying goods, guarding or washing cars, and informal trading. Some may also earn income through begging, or through theft and illegal activities. At the same time, there are street children who take pride in supporting themselves and their families and who often enjoy their work. Many children may choose entrepreneurship because it allows them a degree of independence, is less exploitative than many forms of paid employment, and is flexible enough to allow them to participate in other activities such as education and domestic tasks.\n\nStreet Business Partnerships\n\nS.K.I. has worked with partner organisations in Latin America, Africa and India to develop innovative opportunities for street children to earn income.\n\n• The S.K.I. Bicycle Courier Service first started in the Sudan. Participants in this enterprise were supplied with bicycles, which they used to deliver parcels and messages, and which they were required to pay for gradually from their wages. A similar program was taken up in Bangalore, India.\n\n• Another successful project, The Shoe Shine Collective, was a partnership program with the Y.W.C.A. in the Dominican Republic. In this project, participants were lent money to purchase shoe shine boxes. They were also given a safe place to store their equipment, and facilities for individual savings plans.\n\n• The Youth Skills Enterprise initiative in Zambia is a joint program with the Red Cross Society and the Y.W.C.A. Street youths are supported to start their own small business through business training, life skills training and access to credit.\n\nLessons learned\n\nThe following lessons have emerged from the programs that S.K.I. and partner organisations have created.\n\n• Being an entrepreneur is not for everyone, nor for every street child. Ideally, potential participants will have been involved in the organisation's programs for at least six months, and trust and relationship building will have already been established.\n\n• The involvement of the participants has been essential to the development of relevant programs. When children have had a major role in determining procedures, they are more likely to abide by and enforce them.\n\n• It is critical for all loans to be linked to training programs that include the development of basic business and life skills.\n\n• There are tremendous advantages to involving parents or guardians in the program, where such relationships exist. Home visits allow staff the opportunity to know where the participants live, and to understand more about each individual's situation.\n\n• Small loans are provided initially for purchasing fixed assets such as bicycles, shoe shine kits and basic building materials for a market stall. As the entrepreneurs gain experience, the enterprises can be gradually expanded and consideration can be given to increasing loan amounts. The loan amounts in S.K.I. programs have generally ranged from US$90-$100.\n\n• All S.K.I. programs have charged interest on the loans, primarily to get the entrepreneurs used to the concept of paying interest on borrowed money. Generally the rates have been modest (lower than bank rates).\n\nConclusion\n\nThere is a need to recognise the importance of access to credit for impoverished young people seeking to fulfill economic needs. The provision of small loans to support the entrepreneurial dreams and ambitions of youth can be an effective means to help them change their lives. However, we believe that credit must be extended in association with other types of support that help participants develop critical skills as well as productive businesses.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Choose the correct letter, A, B, C or D.\nWrite your answers in boxes 1–4 on your answer sheet.",
+          "5": "Complete the table below.\nChoose NO MORE THAN THREE WORDS from Reading Passage 1 for each answer.",
+          "9": "Do the following statements agree with the claims of the writer?\nIn boxes 9–12 on your answer sheet write\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+          "13": "Choose the correct letter, A, B, C or D.\nWrite your answer in box 13 on your answer sheet."
+        },
+        "tableBody": "| Country | Organisations involved | Type of project | Support provided |\n| --- | --- | --- | --- |\n| [[5]] | • S.K.I. | Courier service | • Provision of [[6]] |\n| Dominican Republic | • S.K.I.  • Y.W.C.A. | [[7]] | • Loans  • Storage facilities  • Saving plans |\n| Zambia | • S.K.I.  • The Red Cross  • Y.W.C.A. | Setting up small business | • Business training  • [[8]] training  • Access to credit |"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "multiple_choice",
+          "prompt": "The quotations in the box at the beginning of the article",
+          "answer": "A exemplify the effects of S.K.I.",
+          "explanation": "Hai lời trích đầu bài là lời người tham gia kể những gì đạt được nhờ S.K.I. (mua đồ ăn, học quản lý tiền, có bạn mới) — minh hoạ tác dụng của S.K.I. → A.",
+          "points": 1,
+          "options": [
+            "A exemplify the effects of S.K.I.",
+            "B explain why S.K.I. was set up",
+            "C outline the problems of street children",
+            "D highlight the benefits to society of S.K.I."
+          ],
+          "evidence": "Ever since I joined the Street Kids International program I have been able to buy my family sugar and buns for breakfast."
+        },
+        {
+          "order": 2,
+          "questionType": "multiple_choice",
+          "prompt": "The main purpose of S.K.I. is to",
+          "answer": "D give business training and loans to street children.",
+          "explanation": "S.K.I. hỗ trợ trẻ đường phố kiếm sống bằng đào tạo kinh doanh, kỹ năng sống và cho vay vốn. → D.",
+          "points": 1,
+          "options": [
+            "A draw the attention of governments to the problem of street children.",
+            "B provide schools and social support for street children.",
+            "C encourage the public to give money to street children.",
+            "D give business training and loans to street children."
+          ],
+          "evidence": "Street youths are supported to start their own small business through business training, life skills training and access to credit."
+        },
+        {
+          "order": 3,
+          "questionType": "multiple_choice",
+          "prompt": "Which of the following is mentioned by the writer as a reason why children end up living on the streets?",
+          "answer": "C poverty",
+          "explanation": "Trong các nguyên nhân bài nêu (trường thiếu kinh phí, cần thu nhập ở nhà, gia đình tan vỡ, bạo lực), 'the demand for income at home' phản ánh sự nghèo khó — chỉ 'poverty' được nhắc. → C.",
+          "points": 1,
+          "options": [
+            "A unemployment",
+            "B war",
+            "C poverty",
+            "D crime"
+          ],
+          "evidence": "a dearth of adequately funded schools, the demand for income at home, family breakdown and violence."
+        },
+        {
+          "order": 4,
+          "questionType": "multiple_choice",
+          "prompt": "In order to become more independent, street children may",
+          "answer": "C set up their own business",
+          "explanation": "Để độc lập hơn, trẻ có thể chọn khởi nghiệp ('choose entrepreneurship because it allows them a degree of independence') — tự lập kinh doanh riêng. → C.",
+          "points": 1,
+          "options": [
+            "A reject paid employment",
+            "B leave their families",
+            "C set up their own business",
+            "D employ other children"
+          ],
+          "evidence": "Many children may choose entrepreneurship because it allows them a degree of independence"
+        },
+        {
+          "order": 5,
+          "questionType": "table_completion",
+          "prompt": "Câu 5",
+          "answer": [
+            "Sudan and India",
+            "Sudan and india"
+          ],
+          "explanation": "Dịch vụ courier bằng xe đạp bắt đầu ở Sudan và sau đó là Bangalore, Ấn Độ. → Sudan and India.",
+          "points": 1,
+          "evidence": "The S.K.I. Bicycle Courier Service first started in the Sudan."
+        },
+        {
+          "order": 6,
+          "questionType": "table_completion",
+          "prompt": "Câu 6",
+          "answer": [
+            "bicycles"
+          ],
+          "explanation": "Người tham gia dịch vụ courier được cấp xe đạp (bicycles) để giao hàng. → bicycles.",
+          "points": 1,
+          "evidence": "Participants in this enterprise were supplied with bicycles"
+        },
+        {
+          "order": 7,
+          "questionType": "table_completion",
+          "prompt": "Câu 7",
+          "answer": [
+            "Shoe Shine Collective",
+            "shoe shine collective",
+            "The Shoe Shine Collective",
+            "shoe shine"
+          ],
+          "explanation": "Dự án ở Cộng hoà Dominica là 'The Shoe Shine Collective' (đánh giày). → Shoe Shine Collective.",
+          "points": 1,
+          "evidence": "Another successful project, The Shoe Shine Collective, was a partnership program with the Y.W.C.A. in the Dominican Republic."
+        },
+        {
+          "order": 8,
+          "questionType": "table_completion",
+          "prompt": "Câu 8",
+          "answer": [
+            "life skills"
+          ],
+          "explanation": "Ở Zambia, ngoài business training còn có 'life skills training' → chỗ trống (8) = life skills.",
+          "points": 1,
+          "evidence": "Street youths are supported to start their own small business through business training, life skills training and access to credit."
+        },
+        {
+          "order": 9,
+          "questionType": "true_false_not_given",
+          "prompt": "Any street child can set up their own small business if given enough support.",
+          "answer": "NO",
+          "explanation": "Ngược với nhận định: bài nói làm doanh nhân 'không hợp với mọi người, cũng không hợp với mọi trẻ đường phố'. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Being an entrepreneur is not for everyone, nor for every street child."
+        },
+        {
+          "order": 10,
+          "questionType": "true_false_not_given",
+          "prompt": "In some cases, the families of street children may need financial support from S.K.I.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài nói nên lôi kéo cha mẹ/người giám hộ tham gia và thăm nhà, nhưng KHÔNG đề cập gia đình cần S.K.I. hỗ trợ tài chính. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 11,
+          "questionType": "true_false_not_given",
+          "prompt": "Only one fixed loan should be given to each child.",
+          "answer": "NO",
+          "explanation": "Ngược lại: khi có kinh nghiệm, khoản vay 'can be given to increasing loan amounts' — không phải chỉ một khoản cố định. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "As the entrepreneurs gain experience, the enterprises can be gradually expanded and consideration can be given to increasing loan amounts."
+        },
+        {
+          "order": 12,
+          "questionType": "true_false_not_given",
+          "prompt": "The children have to pay back slightly more money than they borrowed.",
+          "answer": "YES",
+          "explanation": "Mọi chương trình S.K.I. đều tính lãi trên khoản vay → trẻ phải trả lại nhiều hơn số đã mượn một chút. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "All S.K.I. programs have charged interest on the loans"
+        },
+        {
+          "order": 13,
+          "questionType": "multiple_choice",
+          "prompt": "The writers conclude that money should only be lent to street children",
+          "answer": "A as part of a wider program of aid",
+          "explanation": "Kết luận: tín dụng chỉ nên cấp 'in association with other types of support' — như một phần của chương trình hỗ trợ rộng hơn. → A.",
+          "points": 1,
+          "options": [
+            "A as part of a wider program of aid",
+            "B for programs that are not too ambitious",
+            "C when programs are supported by local businesses",
+            "D if the projects planned are realistic and useful"
+          ],
+          "evidence": "credit must be extended in association with other types of support that help participants develop critical skills as well as productive businesses."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 – Volcanoes: Earth-Shattering News",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 14–26.",
+      "content": "Volcanoes – Earth-Shattering News\n\nA  Volcanoes are the ultimate earth-moving machinery. A violent eruption can blow the top few kilometres off a mountain, scatter fine ash practically all over the globe and hurl rock fragments into the stratosphere to darken the skies a continent away.\n\nBut the classic eruption – cone-shaped mountain, big bang, mushroom cloud and surges of molten lava – is only a tiny part of a global story. Volcanism, the name given to volcanic processes, really has shaped the world. Eruptions have rifted continents, raised mountain chains, constructed islands and shaped the topography of the earth. The entire ocean floor has a basement of volcanic basalt.\n\nVolcanoes have not only made the continents, they are also thought to have made the world's first stable atmosphere and provided all the water for the oceans, rivers and ice-caps. There are now about 600 active volcanoes. Every year they add two or three cubic kilometres of rock to the continents. Imagine a similar number of volcanoes smoking away for the last 3,500 million years. That is enough rock to explain the continental crust.\n\nWhat comes out of volcanic craters is mostly gas. More than 90% of this gas is water vapour from the deep earth: enough to explain, over 3,500 million years, the water in the oceans. The rest of the gas is nitrogen, carbon dioxide, sulphur dioxide, methane, ammonia and hydrogen. The quantity of these gases, again multiplied over 3,500 million years, is enough to explain the mass of the world's atmosphere. We are alive because volcanoes provided the soil, air and water we need.\n\nB  Geologists consider the earth as having a molten core, surrounded by a semi-molten mantle and a brittle, outer skin. It helps to think of a soft-boiled egg with a runny yolk, a firm but squishy white and a hard shell. If the shell is even slightly cracked during boiling, the white material bubbles out and sets like a tiny mountain chain over the crack – like an archipelago of volcanic islands such as the Hawaiian Islands. But the earth is so much bigger and the mantle below is so much hotter.\n\nEven though the mantle rocks are kept solid by overlying pressure, they can still slowly 'flow' like thick treacle. The flow, thought to be in the form of convection currents, is powerful enough to fracture the 'eggshell' of the crust into plates, and keep them bumping and grinding against each other, or even overlapping, at the rate of a few centimetres a year. These fracture zones, where the collisions occur, are where earthquakes happen. And, very often, volcanoes.\n\nC  These zones are lines of weakness, or hot spots. Every eruption is different, but put at its simplest, where there are weaknesses, rocks deep in the mantle, heated to 1,350°C, will start to expand and rise. As they do so, the pressure drops, and they expand and become liquid and rise more swiftly.\n\nSometimes it is slow: vast bubbles of magma – molten rock from the mantle – inch towards the surface, cooling slowly, to show through as granite extrusions (as on Skye, or the Great Whin Sill, the lava dyke squeezed out like toothpaste that carries part of Hadrian's Wall in northern England). Sometimes – as in Northern Ireland, Wales and the Karoo in South Africa – the magma rose faster, and then flowed out horizontally on to the surface in vast thick sheets. In the Deccan plateau in western India, there are more than two million cubic kilometres of lava, some of it 2,400 metres thick, formed over 500,000 years of slurping eruption.\n\nSometimes the magma moves very swiftly indeed. It does not have time to cool as it surges upwards. The gases trapped inside the boiling rock expand suddenly, the lava glows with heat, it begins to froth, and it explodes with tremendous force. Then the slightly cooler lava following it begins to flow over the lip of the crater. It happens on Mars, it happened on the moon, it even happens on some of the moons of Jupiter and Uranus. By studying the evidence, volcanologists can read the force of the great blasts of the past. Is the pumice light and full of holes? The explosion was tremendous. Are the rocks heavy, with huge crystalline basalt shapes, like the Giant's Causeway in Northern Ireland? It was a slow, gentle eruption.\n\nThe biggest eruptions are deep on the mid-ocean floor, where new lava is forcing the continents apart and widening the Atlantic by perhaps five centimetres a year. Look at maps of volcanoes, earthquakes and island chains like the Philippines and Japan, and you can see the rough outlines of what are called tectonic plates – the plates which make up the earth's crust and mantle. The most dramatic of these is the Pacific 'ring of fire' where there have been the most violent explosions – Mount Pinatubo near Manila, Mount St Helen's in the Rockies and El Chichón in Mexico about a decade ago, not to mention world-shaking blasts like Krakatoa in the Sunda Straits in 1883.\n\nD  But volcanoes are not very predictable. That is because geological time is not like human time. During quiet periods, volcanoes cap themselves with their own lava by forming a powerful cone from the molten rocks slopping over the rim of the crater; later the lava cools slowly into a huge, hard, stable plug which blocks any further eruption until the pressure below becomes irresistible. In the case of Mount Pinatubo, this took 600 years.\n\nThen, sometimes, with only a small warning, the mountain blows its top. It did this at Mont Pelée in Martinique at 7.49 a.m. on 8 May, 1902. Of a town of 28,000, only two people survived. In 1815, a sudden blast removed the top 1,280 metres of Mount Tambora in Indonesia. The eruption was so fierce that dust thrown into the stratosphere darkened the skies, cancelling the following summer in Europe and North America. Thousands starved as the harvest failed, after snow in June and frosts in August. Volcanoes are potentially world news, especially the quiet ones.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Reading Passage 2 has four sections A–D.\nChoose the correct heading for each section from the list of headings below.\nWrite the correct number i–vi in boxes 14–17 on your answer sheet.\n\nList of Headings\ni Causes of volcanic eruption\nii Efforts to predict volcanic eruption\niii Volcanoes and the features of our planet\niv Different types of volcanic eruption\nv International relief efforts\nvi The unpredictability of volcanic eruption",
+          "18": "Answer the questions below.\nChoose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.\nWrite your answers in boxes 18–21 on your answer sheet.",
+          "22": "Complete the summary below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 22–26 on your answer sheet."
+        },
+        "noteBody": "Volcanic eruptions have shaped the earth's land surface. They may also have produced the world's atmosphere and [[22]]. Eruptions occur when molten rocks from the earth's mantle rise and expand. When they become liquid, they move more quickly through cracks in the surface. There are different types of eruption. Sometimes the [[23]] moves slowly and forms outcrops of granite on the earth's surface. When it moves more quickly it may flow out in thick horizontal sheets. Examples of this type of eruption can be found in Northern Ireland, Wales, South Africa and [[24]]. A third type of eruption occurs when the lava emerges very quickly and [[25]] violently. This happens because the magma moves so suddenly that [[26]] are emitted."
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "matching",
+          "prompt": "Section A",
+          "answer": "iii Volcanoes and the features of our planet",
+          "explanation": "Mục A nói núi lửa đã tạo nên lục địa, khí quyển, nước biển — các đặc điểm của hành tinh. → iii.",
+          "points": 1,
+          "options": [
+            "i Causes of volcanic eruption",
+            "ii Efforts to predict volcanic eruption",
+            "iii Volcanoes and the features of our planet",
+            "iv Different types of volcanic eruption",
+            "v International relief efforts",
+            "vi The unpredictability of volcanic eruption"
+          ],
+          "evidence": "Volcanism, the name given to volcanic processes, really has shaped the world. Eruptions have rifted continents, raised mountain chains, constructed islands and shaped the topography of the earth."
+        },
+        {
+          "order": 15,
+          "questionType": "matching",
+          "prompt": "Section B",
+          "answer": "i Causes of volcanic eruption",
+          "explanation": "Mục B giải thích nguyên nhân phun trào: dòng đối lưu làm nứt vỏ Trái Đất thành các mảng, nơi va chạm sinh núi lửa. → i.",
+          "points": 1,
+          "options": [
+            "i Causes of volcanic eruption",
+            "ii Efforts to predict volcanic eruption",
+            "iii Volcanoes and the features of our planet",
+            "iv Different types of volcanic eruption",
+            "v International relief efforts",
+            "vi The unpredictability of volcanic eruption"
+          ],
+          "evidence": "The flow, thought to be in the form of convection currents, is powerful enough to fracture the 'eggshell' of the crust into plates"
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "Section C",
+          "answer": "iv Different types of volcanic eruption",
+          "explanation": "Mục C mô tả các kiểu phun trào khác nhau: chậm (granite), nhanh (tấm dung nham), rất nhanh (nổ tung). → iv.",
+          "points": 1,
+          "options": [
+            "i Causes of volcanic eruption",
+            "ii Efforts to predict volcanic eruption",
+            "iii Volcanoes and the features of our planet",
+            "iv Different types of volcanic eruption",
+            "v International relief efforts",
+            "vi The unpredictability of volcanic eruption"
+          ],
+          "evidence": "Every eruption is different, but put at its simplest, where there are weaknesses, rocks deep in the mantle, heated to 1,350°C, will start to expand and rise."
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "Section D",
+          "answer": "vi The unpredictability of volcanic eruption",
+          "explanation": "Mục D nhấn mạnh núi lửa rất khó dự đoán ('not very predictable'), kể cả những ngọn đang yên. → vi.",
+          "points": 1,
+          "options": [
+            "i Causes of volcanic eruption",
+            "ii Efforts to predict volcanic eruption",
+            "iii Volcanoes and the features of our planet",
+            "iv Different types of volcanic eruption",
+            "v International relief efforts",
+            "vi The unpredictability of volcanic eruption"
+          ],
+          "evidence": "But volcanoes are not very predictable. That is because geological time is not like human time."
+        },
+        {
+          "order": 18,
+          "questionType": "short_answer",
+          "prompt": "What are the sections of the earth's crust, often associated with volcanic activity, called?",
+          "answer": [
+            "tectonic plates",
+            "plates"
+          ],
+          "explanation": "Các mảng cấu tạo nên vỏ Trái Đất gọi là 'tectonic plates' (các mảng kiến tạo). → plates / tectonic plates.",
+          "points": 1,
+          "evidence": "what are called tectonic plates – the plates which make up the earth's crust and mantle"
+        },
+        {
+          "order": 19,
+          "questionType": "short_answer",
+          "prompt": "What is the name given to molten rock from the mantle?",
+          "answer": [
+            "magma"
+          ],
+          "explanation": "Đá nóng chảy từ lớp phủ được gọi là 'magma'. → magma.",
+          "points": 1,
+          "evidence": "vast bubbles of magma – molten rock from the mantle"
+        },
+        {
+          "order": 20,
+          "questionType": "short_answer",
+          "prompt": "What is the earthquake zone on the Pacific Ocean called?",
+          "answer": [
+            "ring of fire",
+            "the ring of fire",
+            "Pacific ring of fire"
+          ],
+          "explanation": "Vùng động đất/núi lửa ở Thái Bình Dương gọi là 'ring of fire' (vành đai lửa). → ring of fire.",
+          "points": 1,
+          "evidence": "The most dramatic of these is the Pacific 'ring of fire'"
+        },
+        {
+          "order": 21,
+          "questionType": "short_answer",
+          "prompt": "For how many years did Mount Pinatubo remain inactive?",
+          "answer": [
+            "600 years",
+            "600"
+          ],
+          "explanation": "Núi Pinatubo nằm im khoảng 600 năm trước khi phun ('this took 600 years'). → 600 (years).",
+          "points": 1,
+          "evidence": "In the case of Mount Pinatubo, this took 600 years."
+        },
+        {
+          "order": 22,
+          "questionType": "note_completion",
+          "prompt": "Câu 22",
+          "answer": [
+            "oceans",
+            "water",
+            "the oceans"
+          ],
+          "explanation": "Núi lửa tạo ra khí quyển và cung cấp nước cho biển ('provided all the water for the oceans'). → oceans / water.",
+          "points": 1,
+          "evidence": "provided all the water for the oceans, rivers and ice-caps"
+        },
+        {
+          "order": 23,
+          "questionType": "note_completion",
+          "prompt": "Câu 23",
+          "answer": [
+            "magma",
+            "lava",
+            "molten rocks",
+            "molten rock"
+          ],
+          "explanation": "Kiểu phun trào chậm: 'magma' dâng lên từ từ, nguội chậm tạo đá granite. → magma.",
+          "points": 1,
+          "evidence": "vast bubbles of magma – molten rock from the mantle – inch towards the surface, cooling slowly, to show through as granite extrusions"
+        },
+        {
+          "order": 24,
+          "questionType": "note_completion",
+          "prompt": "Câu 24",
+          "answer": [
+            "western India",
+            "India"
+          ],
+          "explanation": "Kiểu phun trào chảy thành tấm ngang có ở Bắc Ireland, Wales, Nam Phi và (tây) Ấn Độ (cao nguyên Deccan). → India / western India.",
+          "points": 1,
+          "evidence": "In the Deccan plateau in western India, there are more than two million cubic kilometres of lava"
+        },
+        {
+          "order": 25,
+          "questionType": "note_completion",
+          "prompt": "Câu 25",
+          "answer": [
+            "explodes"
+          ],
+          "explanation": "Khi dung nham trào ra rất nhanh thì 'explodes' (nổ tung) dữ dội. → explodes.",
+          "points": 1,
+          "evidence": "it begins to froth, and it explodes with tremendous force"
+        },
+        {
+          "order": 26,
+          "questionType": "note_completion",
+          "prompt": "Câu 26",
+          "answer": [
+            "trapped gases",
+            "gases"
+          ],
+          "explanation": "Vì magma dâng đột ngột nên các 'gases trapped inside the boiling rock' (khí bị giữ trong đá) phóng ra. → (trapped) gases.",
+          "points": 1,
+          "evidence": "The gases trapped inside the boiling rock expand suddenly"
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 – Obtaining Linguistic Data",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 27–40.",
+      "content": "Obtaining Linguistic Data\n\nA  Many procedures are available for obtaining data about a language. They range from a carefully planned, intensive field investigation in a foreign country to a casual introspection about one's mother tongue carried out in an armchair at home.\n\nB  In all cases, someone has to act as a source of language data — an informant. Informants are (ideally) native speakers of a language, who provide utterances for analysis and other kinds of information about the language (e.g. translations, comments about correctness, or judgments on usage). Often, when studying their mother tongue, linguists act as their own informants, judging the ambiguity, acceptability, or other properties of utterances against their own intuitions. The convenience of this approach makes it widely used, and it is considered the norm in the generative approach to linguistics. But a linguist's personal judgments are often uncertain, or disagree with the judgments of other linguists, at which point recourse is needed to more objective methods of enquiry, using non-linguists as informants. The latter procedure is unavoidable when working on foreign languages, or child speech.\n\nC  Many factors must be considered when selecting informants – whether one is working with single speakers (a common situation when language has not been described before), two people interacting, small groups or large-scale samples. Age, sex, social background and other aspects of identity are important, as these factors are known to influence the kind of language used. The topic of conversation and the characteristics of the social setting (e.g. the level of formality) are also highly relevant, as are the personal qualities of the informants (e.g. their fluency and consistency). For large studies, scrupulous attention has been paid to the sampling theory employed, and in all cases, decisions have to be made about the best investigative techniques to use.\n\nD  Today, researchers often tape-record informants. This enables the linguist's claims about the language to be checked, and provides a way of making those claims more accurate (\"difficult\" pieces of speech can be listened to repeatedly). But obtaining naturalistic, good-quality data is never easy. People talk abnormally when they know they are being recorded, and sound quality can be poor. A variety of tape-recording procedures have thus been devised to minimize the \"observer's paradox\" (how to observe the way people behave when they are not being observed). Some recordings are made without the speakers being aware of the fact — a procedure that obtains very natural data, though ethical objections must be anticipated. Alternatively, attempts can be made to make the speaker forget about the recording, such as keeping the tape recorder out of sight, or using radio microphones. A useful technique is to introduce a topic that quickly involves the speaker, and stimulates a natural language style (e.g. asking older informants about how times have changed in their locality).\n\nE  An audio tape recording does not solve all the linguist's problems, however. Speech is often unclear and ambiguous. Where possible, therefore, the recording has to be supplemented by the observer's written comments on the non-verbal behavior of the participants, and about the context in general. A facial expression, for example, can dramatically alter the meaning of what is said. Video recordings avoid these problems to a large extent, but even they have limitations (the camera cannot be everywhere), and transcriptions always benefit from any additional commentary provided by an observer.\n\nF  Linguists also make great use of structured sessions, in which they systematically ask their informants for utterances that describe certain actions, objects or behaviour. With a bilingual informant, or through use of an interpreter, it is possible to use translation techniques ('How do you say table in your language?'). A large number of points can be covered in a short time, using interview worksheets and questionnaires. Often, the researcher wishes to obtain information about just a single variable, in which case a restricted set of questions may be used: a particular feature of pronunciation, for example, can be elicited by asking the informant to say a restricted set of words. There are also several direct methods of elicitation, such as asking informants to fill in the blanks in a substitution frame (e.g. I ___ see a car), or feeding them the wrong stimulus for correction ('is it possible to say I no can see?').\n\nG  A representative sample of language, compiled for the purpose of linguistic analysis, is known as a corpus. A corpus enables the linguist to make unbiased statements about frequency of usage, and it provides accessible data for the use of different researchers. Its range and size are variable. Some corpora attempt to cover the language as a whole, taking extracts from many kinds of text, others are extremely selective, providing a collection of material that deals only with a particular linguistic feature. The size of the corpus depends on practical factors, such as the time available to collect, process and store the data: it can take up to several hours to provide an accurate transcription of a few minutes of speech. Sometimes a small sample of data will be enough to decide a linguistic hypothesis; by contrast, corpora in major research projects can total millions of words. An important principle is that all corpora, whatever their size, are inevitably limited in their coverage, and always need to be supplemented by data derived from the intuitions of native speakers of the language, through either introspection or experimentation.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Reading Passage 3 has seven paragraphs labelled A–G.\nWhich paragraph contains the following information?\nWrite the correct letter A–G in boxes 27–31 on your answer sheet.\nNB You may use any letter more than once.",
+          "32": "Complete the table below.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.\nWrite your answers in boxes 32–36 on your answer sheet.",
+          "37": "Complete the summary of paragraph G below.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.\nWrite your answers in boxes 37–40 on your answer sheet."
+        },
+        "tableBody": "| Methods of obtaining linguistic data | Advantages | Disadvantages |\n| --- | --- | --- |\n| [[32]] as informant | Convenient | Method of enquiry not objective enough |\n| Non-linguistic as informant | Necessary with [[33]] and child speech | The number of factors to be considered |\n| Recording as informant | Allows linguists' claims to be checked | [[34]] of sound |\n| Videoing as informant | Allows speakers' [[35]] to be observed | [[36]] might miss certain things |",
+        "noteBody": "A linguist can use a corpus to comment objectively on [[37]]. Some corpora include a wide range of language while others are used to focus on a [[38]]. The length of time the process takes will affect the [[39]] of the corpus. No corpus can ever cover the whole language and so linguists often find themselves relying on the additional information that can be gained from the [[40]] of those who speak the language concerned."
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "multiple_choice",
+          "prompt": "the effect of recording on the way people talk",
+          "answer": "D",
+          "explanation": "Đoạn D nói 'People talk abnormally when they know they are being recorded' — ghi âm ảnh hưởng cách nói. → D.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "People talk abnormally when they know they are being recorded"
+        },
+        {
+          "order": 28,
+          "questionType": "multiple_choice",
+          "prompt": "the importance of taking notes on body language",
+          "answer": "E",
+          "explanation": "Đoạn E nhấn mạnh phải ghi chú thêm về 'non-verbal behavior' (ngôn ngữ cơ thể). → E.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "the recording has to be supplemented by the observer's written comments on the non-verbal behavior of the participants"
+        },
+        {
+          "order": 29,
+          "questionType": "multiple_choice",
+          "prompt": "the fact that language is influenced by social situation",
+          "answer": "C",
+          "explanation": "Đoạn C nói bối cảnh xã hội, độ tuổi, giới tính... ảnh hưởng loại ngôn ngữ được dùng. → C.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "Age, sex, social background and other aspects of identity are important, as these factors are known to influence the kind of language used."
+        },
+        {
+          "order": 30,
+          "questionType": "multiple_choice",
+          "prompt": "how informants can be helped to be less self-conscious",
+          "answer": "D",
+          "explanation": "Đoạn D nêu cách giúp người nói bớt để ý việc bị ghi âm (giấu máy ghi âm, dùng micro không dây). → D.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "attempts can be made to make the speaker forget about the recording, such as keeping the tape recorder out of sight"
+        },
+        {
+          "order": 31,
+          "questionType": "multiple_choice",
+          "prompt": "various methods that can be used to generate specific data",
+          "answer": "F",
+          "explanation": "Đoạn F liệt kê nhiều phương pháp thu dữ liệu cụ thể (dịch, bảng hỏi, điền chỗ trống...). → F.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "There are also several direct methods of elicitation, such as asking informants to fill in the blanks in a substitution frame"
+        },
+        {
+          "order": 32,
+          "questionType": "table_completion",
+          "prompt": "Câu 32",
+          "answer": [
+            "linguist",
+            "linguists",
+            "linguist acts"
+          ],
+          "explanation": "Khi nghiên cứu tiếng mẹ đẻ, chính nhà ngôn ngữ đóng vai người cung cấp dữ liệu ('linguists act as their own informants') — tiện lợi nhưng thiếu khách quan. → linguist.",
+          "points": 1,
+          "evidence": "when studying their mother tongue, linguists act as their own informants"
+        },
+        {
+          "order": 33,
+          "questionType": "table_completion",
+          "prompt": "Câu 33",
+          "answer": [
+            "foreign languages"
+          ],
+          "explanation": "Dùng người ngoài làm informant là bắt buộc khi nghiên cứu 'foreign languages' và tiếng trẻ em. → foreign languages.",
+          "points": 1,
+          "evidence": "The latter procedure is unavoidable when working on foreign languages, or child speech."
+        },
+        {
+          "order": 34,
+          "questionType": "table_completion",
+          "prompt": "Câu 34",
+          "answer": [
+            "poor quality",
+            "quality"
+          ],
+          "explanation": "Nhược điểm của ghi âm: 'sound quality can be poor' → (poor) quality của âm thanh. → poor quality / quality.",
+          "points": 1,
+          "evidence": "People talk abnormally when they know they are being recorded, and sound quality can be poor."
+        },
+        {
+          "order": 35,
+          "questionType": "table_completion",
+          "prompt": "Câu 35",
+          "answer": [
+            "non-verbal behaviour",
+            "non-verbal behavior",
+            "facial expressions",
+            "facial expression"
+          ],
+          "explanation": "Ưu điểm của quay video: quan sát được 'non-verbal behavior / facial expression' (hành vi phi ngôn ngữ). → non-verbal behaviour / facial expressions.",
+          "points": 1,
+          "evidence": "the recording has to be supplemented by the observer's written comments on the non-verbal behavior of the participants"
+        },
+        {
+          "order": 36,
+          "questionType": "table_completion",
+          "prompt": "Câu 36",
+          "answer": [
+            "camera",
+            "the camera",
+            "video recording",
+            "recording"
+          ],
+          "explanation": "Nhược điểm của quay video: 'the camera cannot be everywhere' — máy quay có thể bỏ sót vài chi tiết. → camera.",
+          "points": 1,
+          "evidence": "Video recordings avoid these problems to a large extent, but even they have limitations (the camera cannot be everywhere)"
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": [
+            "frequency of usage",
+            "usage of frequency"
+          ],
+          "explanation": "Corpus giúp nhà ngôn ngữ nhận định khách quan về 'frequency of usage' (tần suất sử dụng). → frequency of usage.",
+          "points": 1,
+          "evidence": "A corpus enables the linguist to make unbiased statements about frequency of usage"
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": [
+            "particular linguistic feature",
+            "linguistic feature"
+          ],
+          "explanation": "Một số corpus chỉ tập trung vào 'a particular linguistic feature' (một đặc điểm ngôn ngữ cụ thể). → particular linguistic feature.",
+          "points": 1,
+          "evidence": "providing a collection of material that deals only with a particular linguistic feature"
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": [
+            "size"
+          ],
+          "explanation": "Thời gian xử lý ảnh hưởng đến 'size of the corpus' (kích thước kho ngữ liệu). → size.",
+          "points": 1,
+          "evidence": "The size of the corpus depends on practical factors, such as the time available to collect, process and store the data"
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": [
+            "intuitions",
+            "intuition"
+          ],
+          "explanation": "Không corpus nào bao trọn cả ngôn ngữ, nên phải bổ sung bằng 'the intuitions of native speakers' (trực giác người bản ngữ). → intuitions.",
+          "points": 1,
+          "evidence": "always need to be supplemented by data derived from the intuitions of native speakers of the language"
+        }
+      ]
+    }
+  ]
+}

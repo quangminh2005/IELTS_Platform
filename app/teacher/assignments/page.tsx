@@ -126,6 +126,7 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
     deadline: assignment.deadline,
     timeLimitMinutes: assignment.timeLimitMinutes,
     skillTimeLimitsJson: assignment.skillTimeLimitsJson,
+    lockAudio: assignment.lockAudio,
     mode: assignment.mode,
     unitCount: assignment._count.units,
     recipientCount: assignment._count.recipients,

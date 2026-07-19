@@ -17,6 +17,7 @@ export type AssignmentItem = {
   deadline: Date | null;
   timeLimitMinutes: number | null;
   skillTimeLimitsJson: string | null;
+  lockAudio: boolean;
   mode: string;
   unitCount: number;
   recipientCount: number;
@@ -252,6 +253,25 @@ export function AssignmentList({
                           defaultValues={parseSkillTimeLimits(assignment.skillTimeLimitsJson)}
                         />
                       </div>
+                    </fieldset>
+
+                    <fieldset>
+                      <legend className="text-sm font-semibold">Chế độ thi thật (Listening)</legend>
+                      <label className="mt-2 flex cursor-pointer items-start gap-2.5 rounded-lg border border-border bg-background p-3">
+                        <input
+                          type="checkbox"
+                          name="lockAudio"
+                          defaultChecked={assignment.lockAudio}
+                          className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+                        />
+                        <span className="text-sm leading-5">
+                          <span className="font-medium">Ẩn thanh audio</span>
+                          <span className="mt-0.5 block text-xs text-muted-foreground">
+                            Audio tự phát liên tục, học viên chỉ chỉnh được âm lượng và phải
+                            kiểm tra âm thanh trước khi vào bài.
+                          </span>
+                        </span>
+                      </label>
                     </fieldset>
 
                     <fieldset>

@@ -20,7 +20,9 @@ const assignmentSchema = z.object({
   dueDate: z.string().trim().optional(),
   dueTime: z.string().trim().optional(),
   unitIds: z.array(z.string().trim().min(1)).min(1, "Hãy chọn ít nhất một phần."),
-  studentIds: z.array(z.string().trim().min(1)).min(1, "Hãy chọn ít nhất một học viên.")
+  studentIds: z.array(z.string().trim().min(1)).min(1, "Hãy chọn ít nhất một học viên."),
+  // Checkbox "Ẩn thanh audio": có mặt trong FormData = bật (giá trị "on").
+  lockAudio: z.preprocess((value) => value === "on" || value === "true", z.boolean())
 });
 
 const idSchema = z.string().trim().min(1);
@@ -99,7 +101,8 @@ export async function createAssignment(formData: FormData) {
     dueDate: formData.get("dueDate"),
     dueTime: formData.get("dueTime"),
     unitIds: formData.getAll("unitIds"),
-    studentIds: formData.getAll("studentIds")
+    studentIds: formData.getAll("studentIds"),
+    lockAudio: formData.get("lockAudio")
   });
 
   if (!parsed.success) {
@@ -124,6 +127,7 @@ export async function createAssignment(formData: FormData) {
       deadline,
       timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
       skillTimeLimitsJson,
+      lockAudio: parsed.data.lockAudio,
       mode: "homework",
       units: {
         create: unitIds.map((unitId, index) => ({
@@ -164,7 +168,8 @@ export async function updateAssignment(formData: FormData) {
     dueDate: formData.get("dueDate"),
     dueTime: formData.get("dueTime"),
     unitIds: formData.getAll("unitIds"),
-    studentIds: formData.getAll("studentIds")
+    studentIds: formData.getAll("studentIds"),
+    lockAudio: formData.get("lockAudio")
   });
 
   if (!parsed.success) {
@@ -225,7 +230,8 @@ export async function updateAssignment(formData: FormData) {
         instructions: optionalText(parsed.data.instructions),
         deadline,
         timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
-        skillTimeLimitsJson: serializeSkillTimeLimits(readSkillTimeLimits(formData))
+        skillTimeLimitsJson: serializeSkillTimeLimits(readSkillTimeLimits(formData)),
+        lockAudio: parsed.data.lockAudio
       }
     }),
     prisma.assignmentUnit.deleteMany({

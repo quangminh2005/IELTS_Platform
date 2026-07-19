@@ -142,6 +142,9 @@ model Assignment {
   // Thời gian làm bài theo từng kỹ năng: JSON { "listening": 30, "reading": 60 } (phút).
   // Kỹ năng không có khóa = không đếm ngược. timeLimitMinutes giữ làm fallback/1 kỹ năng.
   skillTimeLimitsJson String?
+  // Chế độ thi thật cho Listening: ẩn thanh audio (không play/pause/tua), audio tự
+  // phát liên tục, học viên chỉ chỉnh được âm lượng; có màn kiểm tra âm thanh trước.
+  lockAudio        Boolean               @default(false)
   mode             String                @default("homework")
   createdAt        DateTime              @default(now())
   updatedAt        DateTime              @updatedAt

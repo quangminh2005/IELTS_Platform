@@ -73,9 +73,12 @@ const VolumeIcon = ({ muted }: { muted: boolean }) => (
 
 type AudioPlayerProps = {
   src: string;
+  // Tự phát khi vào bài. Nếu trình duyệt chặn autoplay (chưa có thao tác người
+  // dùng trên trang), sẽ phát ngay ở lần bấm chuột/chạm đầu tiên bất kỳ.
+  autoPlay?: boolean;
 };
 
-export function AudioPlayer({ src }: AudioPlayerProps) {
+export function AudioPlayer({ src, autoPlay = false }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -107,6 +110,29 @@ export function AudioPlayer({ src }: AudioPlayerProps) {
       audio.removeEventListener("ended", onEnded);
     };
   }, []);
+
+  useEffect(() => {
+    if (!autoPlay) return;
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    let cancelled = false;
+    const playOnFirstGesture = () => {
+      if (!cancelled && audio.paused) {
+        void audio.play().catch(() => undefined);
+      }
+    };
+
+    audio.play().catch(() => {
+      // Trình duyệt chặn autoplay → chờ thao tác đầu tiên của học viên rồi phát.
+      window.addEventListener("pointerdown", playOnFirstGesture, { once: true });
+    });
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener("pointerdown", playOnFirstGesture);
+    };
+  }, [autoPlay]);
 
   const togglePlay = useCallback(() => {
     const audio = audioRef.current;

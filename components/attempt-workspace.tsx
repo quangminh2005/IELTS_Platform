@@ -30,6 +30,8 @@ import { accumulateActiveSeconds, AUTO_SUBMIT_SKILLS } from "@/lib/active-time";
 import { parsePartTimes, SKILL_TIME_LABELS } from "@/lib/skill-times";
 import { AudioPlayer } from "@/components/audio-player";
 import { AudioRecorderAnswer } from "@/components/audio-recorder-answer";
+import { LockedListeningAudio, type LockedTrack } from "@/components/locked-audio-player";
+import { SoundCheck } from "@/components/sound-check";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
   parseGroupImages,
@@ -107,6 +109,8 @@ type AttemptWorkspaceProps = {
     instructions: string | null;
     timeLimitMinutes: number | null;
     skillTimeLimitsJson?: string | null;
+    // Chế độ thi thật Listening: ẩn thanh audio, tự phát liên tục, chỉ chỉnh âm lượng.
+    lockAudio?: boolean;
     units: AssignmentUnit[];
   };
   highlights: Highlight[];
@@ -1715,6 +1719,26 @@ export function AttemptWorkspace({
     !isMultiSkill && !previewMode ? skillOrder[0] ?? null : null
   );
 
+  // Chế độ thi thật Listening (ẩn thanh audio). Không áp dụng cho xem trước của
+  // giáo viên — giáo viên vẫn cần nghe/tua tự do khi soát đề.
+  const audioLocked = Boolean(assignment.lockAudio) && !previewMode;
+  // Danh sách audio Listening theo thứ tự phần — phát nối tiếp ở chế độ khoá.
+  const lockedTracks = useMemo<LockedTrack[]>(() => {
+    if (!audioLocked) return [];
+    return unitsForSkill(assignment.units, "listening")
+      .filter((assignmentUnit) => assignmentUnit.assignableUnit.audioUrl)
+      .map((assignmentUnit) => ({
+        unitId: assignmentUnit.assignableUnit.id,
+        src: assignmentUnit.assignableUnit.audioUrl as string,
+        order: assignmentUnit.order
+      }));
+  }, [audioLocked, assignment.units]);
+  // Đã qua màn "Kiểm tra âm thanh" chưa (đặt lại mỗi lần vào trang/đổi kỹ năng —
+  // cú bấm "Tiếp tục" đồng thời mở khoá autoplay cho trình duyệt).
+  const [soundCheckDone, setSoundCheckDone] = useState(false);
+  const needsSoundCheck =
+    audioLocked && activeSkill === "listening" && lockedTracks.length > 0 && !soundCheckDone;
+
   // Các phần đang hiển thị = phần của kỹ năng đang mở. Xem trước: hiện TẤT CẢ phần
   // (như trước đây) để giáo viên xem toàn bộ đề trong một phiên.
   const activeUnits = useMemo(() => {
@@ -1996,7 +2020,9 @@ export function AttemptWorkspace({
   // qua khoảng lặng do máy ngủ/tab nền/mất mạng). Cập nhật đồng hồ + trường ẩn nộp bài;
   // khi hết ngân sách thì tự nộp.
   useEffect(() => {
-    if (previewMode || !activeSkill) {
+    // Chưa qua màn kiểm tra âm thanh thì đồng hồ chưa chạy (giống thi thật:
+    // giờ chỉ tính từ lúc thực sự vào bài).
+    if (previewMode || !activeSkill || needsSoundCheck) {
       setRemaining(null);
       return;
     }
@@ -2044,6 +2070,7 @@ export function AttemptWorkspace({
   }, [
     previewMode,
     activeSkill,
+    needsSoundCheck,
     activeSkillLimit,
     activeSkillRow?.elapsedSeconds,
     snapshotPartTimes,
@@ -2310,6 +2337,12 @@ export function AttemptWorkspace({
             </button>
           </div>
           <AnimatedThemeToggle />
+          {audioLocked && activeSkill === "listening" && soundCheckDone && lockedTracks.length > 0 ? (
+            <LockedListeningAudio
+              tracks={lockedTracks}
+              storageKey={`lockedAudio_${attempt.id}`}
+            />
+          ) : null}
           {activeSkillLimit != null && remaining != null ? (
             <CountdownTimer remainingSeconds={remaining} />
           ) : null}
@@ -2419,13 +2452,21 @@ export function AttemptWorkspace({
             highlight.assignableUnitId === unit.id && highlight.sourceType === sourceType
         );
 
+        // Chế độ khoá audio: KHÔNG hiện thanh phát theo phần — audio phát nối tiếp
+        // qua LockedListeningAudio trên header (chỉ chỉnh âm lượng được).
         const audioSection = unit.audioUrl ? (
-          <div className="shrink-0 border-b border-border bg-muted/30 px-5 py-3">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary">
-              Bài nghe
-            </p>
-            <AudioPlayer src={unit.audioUrl} />
-          </div>
+          audioLocked && isListening ? null : (
+            <div className="shrink-0 border-b border-border bg-muted/30 px-5 py-3">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary">
+                Bài nghe
+              </p>
+              {/* Tự phát audio phần đầu ngay khi học viên vào bài Listening */}
+              <AudioPlayer
+                src={unit.audioUrl}
+                autoPlay={isListening && partIndex === 0 && !previewMode}
+              />
+            </div>
+          )
         ) : isListening ? (
           <div className="shrink-0 border-b border-border bg-amber-500/10 px-5 py-3 text-sm font-medium text-amber-700 dark:text-amber-300">
             Chưa có file nghe cho phần này. Vui lòng báo giáo viên bổ sung audio.
@@ -3031,6 +3072,26 @@ export function AttemptWorkspace({
         }}
         onExit={() => {
           window.location.href = "/student";
+        }}
+      />,
+      document.body
+    );
+  }
+
+  // Chế độ khoá audio: trước khi vào bài Listening phải qua màn "Kiểm tra âm
+  // thanh" (giống chin.edu.vn). Cú bấm "Tiếp tục" đồng thời là thao tác người
+  // dùng để trình duyệt cho phép audio bài nghe tự phát ngay sau đó.
+  if (needsSoundCheck) {
+    return createPortal(
+      <SoundCheck
+        title={assignment.title}
+        onContinue={() => setSoundCheckDone(true)}
+        onExit={() => {
+          if (isMultiSkill) {
+            setActiveSkill(null);
+          } else {
+            window.location.href = "/student";
+          }
         }}
       />,
       document.body

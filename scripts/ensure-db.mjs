@@ -33,6 +33,8 @@ const statements = [
       FOREIGN KEY ("attemptId") REFERENCES "Attempt"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
   END $$;`,
+  // Chế độ thi thật Listening: khoá thanh audio, chỉ cho chỉnh âm lượng
+  'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "lockAudio" BOOLEAN NOT NULL DEFAULT false;',
   // Ghi nhận hành vi đáng ngờ khi làm bài (Ctrl+F, rời tab)
   'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "findAttemptCount" INTEGER NOT NULL DEFAULT 0;',
   // tabSwitchCount đã có trong schema từ đầu nhưng chưa từng được ghi — thêm cho

@@ -1082,6 +1082,77 @@ function MatchingQuestionSet({
   );
 }
 
+// "Hộp từ" trong hướng dẫn: đề gốc in danh sách lựa chọn (A–K, List of Headings…)
+// trong một khung kẻ viền, xếp thành nhiều cột. Trong groupInstructions viết:
+//
+//   :::box
+//   A tariffs | B components | C container ships | D output
+//   E employees | F insurance costs | G trade | H freight
+//   :::
+//
+// Mỗi dòng là một hàng, các ô ngăn bằng "|". Nếu dòng không có "|" thì mỗi dòng
+// là một ô (dùng cho List of Headings — mỗi tiêu đề một dòng, xếp 1 cột).
+function InstructionWordBox({ lines }: { lines: string[] }) {
+  const rows = lines.map((line) =>
+    line
+      .split("|")
+      .map((cell) => cell.trim())
+      .filter((cell) => cell !== "")
+  );
+  const columns = Math.max(1, ...rows.map((row) => row.length));
+
+  return (
+    <div className="mt-2 overflow-x-auto rounded-md border border-foreground/40 bg-background/60 px-4 py-3">
+      <div
+        className="grid gap-x-6 gap-y-1.5"
+        style={{ gridTemplateColumns: `repeat(${columns}, minmax(max-content, 1fr))` }}
+      >
+        {rows.flatMap((row, rowIndex) =>
+          row.map((cell, cellIndex) => {
+            // Tách chữ cái/số thứ tự đầu ô ("A tariffs", "iii Some heading") để in đậm.
+            const match = /^([A-Z]|[ivx]+)\s+(.*)$/.exec(cell);
+            return (
+              <p key={`${rowIndex}-${cellIndex}`} className="text-sm leading-6 text-foreground">
+                {match ? (
+                  <>
+                    <span className="font-bold">{match[1]}</span> {match[2]}
+                  </>
+                ) : (
+                  cell
+                )}
+              </p>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Tách text hướng dẫn thành các khối: đoạn chữ thường và hộp từ (:::box ... :::).
+function splitInstructionBlocks(text: string) {
+  const blocks: { kind: "text" | "box"; lines: string[] }[] = [];
+  let current: { kind: "text" | "box"; lines: string[] } = { kind: "text", lines: [] };
+
+  text.split("\n").forEach((line) => {
+    const trimmed = line.trim();
+    if (trimmed === ":::box") {
+      blocks.push(current);
+      current = { kind: "box", lines: [] };
+      return;
+    }
+    if (trimmed === ":::" && current.kind === "box") {
+      blocks.push(current);
+      current = { kind: "text", lines: [] };
+      return;
+    }
+    current.lines.push(line);
+  });
+  blocks.push(current);
+
+  return blocks.filter((block) => block.lines.some((line) => line.trim() !== ""));
+}
+
 // Khung hướng dẫn cho một nhóm câu (kiểu chin.edu.vn): tiêu đề "Câu X–Y" + nội
 // dung yêu cầu, viền đỏ nổi bật phía trên nhóm.
 function GroupInstructionBox({
@@ -1093,12 +1164,25 @@ function GroupInstructionBox({
   text: string;
   title?: string;
 }) {
+  const blocks = splitInstructionBlocks(text);
+
   return (
     <div className="space-y-2">
       {text ? (
         <div className="rounded-md border border-rose-400/60 bg-rose-500/10 px-4 py-3 dark:border-rose-400/40">
           <p className="text-sm font-bold text-rose-700 dark:text-rose-300">{rangeLabel}</p>
-          <p className="mt-1 whitespace-pre-line text-sm leading-6 text-foreground">{text}</p>
+          {blocks.map((block, index) =>
+            block.kind === "box" ? (
+              <InstructionWordBox key={index} lines={block.lines} />
+            ) : (
+              <p
+                key={index}
+                className="mt-1 whitespace-pre-line text-sm leading-6 text-foreground"
+              >
+                {block.lines.join("\n").trim()}
+              </p>
+            )
+          )}
         </div>
       ) : null}
       {title ? (

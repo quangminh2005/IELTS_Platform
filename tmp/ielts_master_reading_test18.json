@@ -1,0 +1,619 @@
+{
+  "title": "IELTS Master – Test 18 (Reading)",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master (Academic) – Test 18",
+  "description": "Reading Test 18 – The Impact of Wilderness Tourism / Flawed Beauty: the problem with toughened glass / The effects of light on plant and animal species. 40 câu, tự chấm, có giải thích và dẫn chứng.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 – The Impact of Wilderness Tourism",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 1–13.",
+      "content": "A The market for tourism in remote areas is booming as never before. Countries all across the world are actively promoting their 'wilderness' regions - such as mountains, Arctic lands, deserts, small islands and wetlands - to high-spending tourists. The attraction of these areas is obvious: by definition, wilderness tourism requires little or no initial investment. But that does not mean that there is no cost. As the 1992 United Nations Conference on Environment and Development recognized, these regions are fragile (i.e. highly vulnerable to abnormal pressures) not just in terms of their ecology, but also in terms of the culture of their inhabitants. The three most significant types of fragile environment in these respects, and also in terms of the proportion of the Earth's surface they cover, are deserts, mountains and Arctic areas. An important characteristic is their marked seasonality, with harsh conditions prevailing for many months each year. Consequently, most human activities, including tourism, are limited to quite clearly defined parts of the year.\n\nTourists are drawn to these regions by their natural landscape beauty and the unique cultures of their indigenous people. And poor governments in these isolated areas have welcomed the new breed of 'adventure tourist', grateful for the hard currency they bring. For several years now, tourism has been the prime source of foreign exchange in Nepal and Bhutan. Tourism is also a key element in the economies of Arctic zones such as Lapland and Alaska and in desert areas such as Ayers Rock in Australia and Arizona's Monument Valley.\n\nB Once a location is established as a main tourist destination, the effects on the local community are profound. When hill-farmers, for example, can make more money in a few weeks working as porters for foreign trekkers than they can in a year working in their fields, it is not surprising that many of them give up their farm-work, which is thus left to other members of the family. In some hill-regions, this has led to a serious decline in farm output and a change in the local diet, because there is insufficient labour to maintain terraces and irrigation systems and tend to crops. The result has been that many people in these regions have turned to outside supplies of rice and other foods.\n\nIn Arctic and desert societies, year-round survival has traditionally depended on hunting animals and fish and collecting fruit over a relatively short season. However, as some inhabitants become involved in tourism, they no longer have time to collect wild food; this has led to increasing dependence on bought food and stores. Tourism is not always the culprit behind such changes. All kinds of wage labour, or government handouts, tend to undermine traditional survival systems. Whatever the cause, the dilemma is always the same: what happens if these new, external sources of income dry up?\n\nThe physical impact of visitors is another serious problem associated with the growth in adventure tourism. Much attention has focused on erosion along major trails, but perhaps more important are the deforestation and impacts on water supplies arising from the need to provide tourists with cooked food and hot showers. In both mountains and deserts, slow-growing trees are often the main sources of fuel and water supplies may be limited or vulnerable to degradation through heavy use.\n\nC Stories about the problems of tourism have become legion in the last few years. Yet it does not have to be a problem. Although tourism inevitably affects the region in which it takes place, the costs to these fragile environments and their local cultures can be minimized. Indeed, it can even be a vehicle for reinvigorating local cultures, as has happened with the Sherpas of Nepal's Khumbu Valley and in some Alpine villages. And a growing number of adventure tourism operators are trying to ensure that their activities benefit the local population and environment over the long term.\n\nIn the Swiss Alps, communities have decided that their future depends on integrating tourism more effectively with the local economy. Local concern about the rising number of second home developments in the Swiss Pays d'Enhaut resulted in limits being imposed on their growth. There has also been a renaissance in communal cheese production in the area, providing the locals with a reliable source of income that does not depend on outside visitors.\n\nMany of the Arctic tourist destinations have been exploited by outside companies, who employ transient workers and repatriate most of the profits to their home base. But some Arctic communities are now operating tour businesses themselves, thereby ensuring that the benefits accrue locally. For instance, a native corporation in Alaska, employing local people, is running an air tour from Anchorage to Kotzebue, where tourists eat Arctic food, walk on the tundra and watch local musicians and dancers.\n\nNative people in the desert regions of the American Southwest have followed similar strategies, encouraging tourists to visit their pueblos and reservations to purchase high-quality handicrafts and artwork. The Acoma and San Ildefonso pueblos have established highly profitable pottery businesses, while the Navajo and Hopi groups have been similarly successful with jewellery.\n\nToo many people living in fragile environments have lost control over their economies, their culture and their environment when tourism has penetrated their homelands. Merely restricting tourism cannot be the solution to the imbalance, because people's desire to see new places will not just disappear. Instead, communities in fragile environments must achieve greater control over tourism ventures in their regions; in order to balance their needs and aspirations with the demands of tourism. A growing number of communities are demonstrating that, with firm communal decision-making, this is possible. The critical question now is whether this can become the norm, rather than the exception.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Reading Passage 1 has three sections, A–C.\nChoose the correct heading for each section from the list of headings below.\nWrite the correct number i–vi in boxes 1–3 on your answer sheet.\n\nList of Headings\n:::box\ni The expansion of international tourism in recent years\nii How local communities can balance their own needs with the demands of wilderness tourism\niii Fragile regions and the reasons for the expansion of tourism there\niv Traditional methods of food-supply in fragile regions\nv Some of the disruptive effects of wilderness tourism\nvi The economic benefits of mass tourism\n:::",
+          "4": "Do the following statements reflect the claims of the writer in Reading Passage 1?\nIn boxes 4–9 on your answer sheet, write\nYES if the statement reflects the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+          "10": "Choose ONE WORD from Reading Passage 1 for each answer.\nWrite your answers in boxes 10–13 on your answer sheet."
+        },
+        "tableBody": "# The positive ways in which some local communities have responded to tourism\n| People / Location | Activity |\n| --- | --- |\n| Swiss Pays d'Enhaut | Revived production of [[10]] |\n| Arctic communities | Operate [[11]] businesses |\n| Acoma and San Ildefonso | Produce and sell [[12]] |\n| Navajo and Hopi | Produce and sell [[13]] |"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "matching",
+          "prompt": "Section A",
+          "answer": "iii Fragile regions and the reasons for the expansion of tourism there",
+          "explanation": "Mục A giới thiệu các vùng hoang sơ dễ tổn thương (sa mạc, núi, Bắc Cực) và lý do du lịch bùng nổ ở đó: gần như không cần vốn đầu tư ban đầu, cảnh đẹp và văn hoá bản địa hút khách. → iii.",
+          "points": 1,
+          "options": [
+            "i The expansion of international tourism in recent years",
+            "ii How local communities can balance their own needs with the demands of wilderness tourism",
+            "iii Fragile regions and the reasons for the expansion of tourism there",
+            "iv Traditional methods of food-supply in fragile regions",
+            "v Some of the disruptive effects of wilderness tourism",
+            "vi The economic benefits of mass tourism"
+          ],
+          "evidence": "The attraction of these areas is obvious: by definition, wilderness tourism requires little or no initial investment."
+        },
+        {
+          "order": 2,
+          "questionType": "matching",
+          "prompt": "Section B",
+          "answer": "v Some of the disruptive effects of wilderness tourism",
+          "explanation": "Mục B liệt kê các tác động xấu: nông dân bỏ ruộng, sản lượng nông nghiệp giảm, phụ thuộc lương thực mua ngoài, xói mòn đường mòn, phá rừng và cạn nguồn nước. → v.",
+          "points": 1,
+          "options": [
+            "i The expansion of international tourism in recent years",
+            "ii How local communities can balance their own needs with the demands of wilderness tourism",
+            "iii Fragile regions and the reasons for the expansion of tourism there",
+            "iv Traditional methods of food-supply in fragile regions",
+            "v Some of the disruptive effects of wilderness tourism",
+            "vi The economic benefits of mass tourism"
+          ],
+          "evidence": "In some hill-regions, this has led to a serious decline in farm output and a change in the local diet"
+        },
+        {
+          "order": 3,
+          "questionType": "matching",
+          "prompt": "Section C",
+          "answer": "ii How local communities can balance their own needs with the demands of wilderness tourism",
+          "explanation": "Mục C nêu các ví dụ cộng đồng tự nắm quyền kiểm soát du lịch (Thuỵ Sĩ, Bắc Cực, người bản địa Tây Nam Mỹ) để cân bằng nhu cầu của mình với đòi hỏi của du lịch. → ii.",
+          "points": 1,
+          "options": [
+            "i The expansion of international tourism in recent years",
+            "ii How local communities can balance their own needs with the demands of wilderness tourism",
+            "iii Fragile regions and the reasons for the expansion of tourism there",
+            "iv Traditional methods of food-supply in fragile regions",
+            "v Some of the disruptive effects of wilderness tourism",
+            "vi The economic benefits of mass tourism"
+          ],
+          "evidence": "communities in fragile environments must achieve greater control over tourism ventures in their regions; in order to balance their needs and aspirations with the demands of tourism"
+        },
+        {
+          "order": 4,
+          "questionType": "true_false_not_given",
+          "prompt": "The low financial cost of setting up wilderness tourism makes it attractive to many countries.",
+          "answer": "YES",
+          "explanation": "Bài nói sức hấp dẫn của các vùng này là 'hiển nhiên': du lịch hoang dã gần như không cần vốn đầu tư ban đầu, nên các nước khắp thế giới đua nhau quảng bá. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "The attraction of these areas is obvious: by definition, wilderness tourism requires little or no initial investment."
+        },
+        {
+          "order": 5,
+          "questionType": "true_false_not_given",
+          "prompt": "Deserts, mountains and Arctic regions are examples of environments that are both ecologically and culturally fragile.",
+          "answer": "YES",
+          "explanation": "Bài nói các vùng này mong manh không chỉ về sinh thái mà cả về văn hoá cư dân, và ba loại tiêu biểu nhất chính là sa mạc, núi và vùng Bắc Cực. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "The three most significant types of fragile environment in these respects, and also in terms of the proportion of the Earth's surface they cover, are deserts, mountains and Arctic areas."
+        },
+        {
+          "order": 6,
+          "questionType": "true_false_not_given",
+          "prompt": "Wilderness tourism operates throughout the year in fragile areas.",
+          "answer": "NO",
+          "explanation": "Ngược lại: do tính mùa vụ rõ rệt, phần lớn hoạt động của con người — kể cả du lịch — bị giới hạn trong những khoảng thời gian nhất định trong năm. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Consequently, most human activities, including tourism, are limited to quite clearly defined parts of the year."
+        },
+        {
+          "order": 7,
+          "questionType": "true_false_not_given",
+          "prompt": "The spread of tourism in certain hill-regions has resulted in a fall in the amount of food produced locally.",
+          "answer": "YES",
+          "explanation": "Bài nói ở một số vùng đồi núi, việc này đã dẫn tới sản lượng nông nghiệp giảm nghiêm trọng vì thiếu nhân lực chăm ruộng bậc thang và hệ thống tưới. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "In some hill-regions, this has led to a serious decline in farm output and a change in the local diet"
+        },
+        {
+          "order": 8,
+          "questionType": "true_false_not_given",
+          "prompt": "Traditional food-gathering in desert societies was distributed evenly over the year.",
+          "answer": "NO",
+          "explanation": "Ngược lại: việc săn bắt và hái lượm truyền thống diễn ra trong một mùa tương đối ngắn, rồi dùng cho cả năm — không rải đều quanh năm. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "year-round survival has traditionally depended on hunting animals and fish and collecting fruit over a relatively short season"
+        },
+        {
+          "order": 9,
+          "questionType": "true_false_not_given",
+          "prompt": "Government handouts do more damage than tourism does to traditional patterns of food-gathering.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói mọi hình thức làm công ăn lương HOẶC trợ cấp chính phủ đều làm suy yếu hệ thống sinh tồn truyền thống, chứ không so sánh cái nào hại hơn du lịch. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 10,
+          "questionType": "table_completion",
+          "prompt": "Câu 10",
+          "answer": [
+            "cheese"
+          ],
+          "explanation": "Ở vùng Pays d'Enhaut (Thuỵ Sĩ) đã có sự hồi sinh của nghề làm phô mai chung của cộng đồng, tạo nguồn thu ổn định không phụ thuộc khách du lịch. → cheese.",
+          "points": 1,
+          "evidence": "There has also been a renaissance in communal cheese production in the area"
+        },
+        {
+          "order": 11,
+          "questionType": "table_completion",
+          "prompt": "Câu 11",
+          "answer": [
+            "tour",
+            "tourism",
+            "tourist"
+          ],
+          "explanation": "Một số cộng đồng Bắc Cực nay tự đứng ra kinh doanh du lịch (operating tour businesses themselves) để lợi nhuận ở lại địa phương. → tour (chấp nhận tourism/tourist).",
+          "points": 1,
+          "evidence": "But some Arctic communities are now operating tour businesses themselves"
+        },
+        {
+          "order": 12,
+          "questionType": "table_completion",
+          "prompt": "Câu 12",
+          "answer": [
+            "pottery"
+          ],
+          "explanation": "Hai pueblo Acoma và San Ildefonso đã lập được các cơ sở làm gốm rất sinh lời. → pottery.",
+          "points": 1,
+          "evidence": "The Acoma and San Ildefonso pueblos have established highly profitable pottery businesses"
+        },
+        {
+          "order": 13,
+          "questionType": "table_completion",
+          "prompt": "Câu 13",
+          "answer": [
+            "jewellery",
+            "jewelry"
+          ],
+          "explanation": "Nhóm Navajo và Hopi cũng thành công tương tự với đồ trang sức. → jewellery.",
+          "points": 1,
+          "evidence": "while the Navajo and Hopi groups have been similarly successful with jewellery"
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 – Flawed Beauty: the problem with toughened glass",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 14–26.",
+      "content": "On 2nd August 1999, a particularly hot day in the town of Cirencester in the UK, a large pane of toughened glass in the roof of a shopping centre at Bishops Walk shattered without warning and fell from its frame. When fragments were analysed by experts at the giant glass manufacturer Pilkington, which had made the pane, they found that minute crystals of nickel sulphide trapped inside the glass had almost certainly caused the failure.\n\n'The glass industry is aware of the issue,' says Brian Waldron, chairman of the standards committee at the Glass and Glazing Federation, a British trade association, and standards development officer at Pilkington. But he insists that cases are few and far between. 'It's a very rare phenomenon,' he says.\n\nOthers disagree. 'On average I see about one or two buildings a month suffering from nickel sulphide related failures,' says Barrie Josie, a consultant engineer involved in the Bishops Walk investigation. Other experts tell of similar experiences. Tony Wilmott of London-based consulting engineers Sandberg, and Simon Armstrong at CladTech Associates in Hampshire both say they know of hundreds of cases. 'What you hear is only the tip of the iceberg,' says Trevor Ford, a glass expert at Resolve Engineering in Brisbane, Queensland. He believes the reason is simple: 'No-one wants bad press.'\n\nToughened glass is found everywhere, from cars and bus shelters to the windows, walls and roofs of thousands of buildings around the world. It's easy to see why. This glass has five times the strength of standard glass, and when it does break it shatters into tiny cubes rather than large, razor-sharp shards. Architects love it because large panels can be bolted together to make transparent walls, and turning it into ceilings and floors is almost as easy.\n\nIt is made by heating a sheet of ordinary glass to about 620°C to soften it slightly, allowing its structure to expand, and then cooling it rapidly with jets of cold air. This causes the outer layer of the pane to contract and solidify before the interior. When the interior finally solidifies and shrinks, it exerts a pull on the outer layer that leaves it in permanent compression and produces a tensile force inside the glass. As cracks propagate best in materials under tension, the compressive force on the surface must be overcome before the pane will break, making it more resistant to cracking.\n\nThe problem starts when glass contains nickel sulphide impurities. Trace amounts of nickel and sulphur are usually present in the raw materials used to make glass, and nickel can also be introduced by fragments of nickel alloys falling into the molten glass. As the glass is heated, these atoms react to form tiny crystals of nickel sulphide. Just a tenth of a gram of nickel in the furnace can create up to 50,000 crystals.\n\nThese crystals can exist in two forms: a dense form called the alpha phase, which is stable at high temperatures, and a less dense form called the beta phase, which is stable at room temperatures. The high temperatures used in the toughening process convert all the crystals to the dense, compact alpha form. But the subsequent cooling is so rapid that the crystals don't have time to change back to the beta phase. This leaves unstable alpha crystals in the glass, primed like a coiled spring, ready to revert to the beta phase without warning.\n\nWhen this happens, the crystals expand by up to 4%. And if they are within the central, tensile region of the pane, the stresses this unleashes can shatter the whole sheet. The time that elapses before failure occurs is unpredictable. It could happen just months after manufacture, or decades later, although if the glass is heated - by sunlight, for example - the process is speeded up. Ironically, says Graham Dodd, of consulting engineers Arup in London, the oldest pane of toughened glass known to have failed due to nickel sulphide inclusions was in Pilkington's glass research building in Lathom, Lancashire. The pane was 27 years old.\n\nData showing the scale of the nickel sulphide problem is almost impossible to find. The picture is made more complicated by the fact that these crystals occur in batches. So even if, on average, there is only one inclusion in 7 tonnes of glass, if you experience one nickel sulphide failure in your building, that probably means you've got a problem in more than one pane. Josie says that in the last decade he has worked on over 15 buildings with the number of failures into double figures.\n\nOne of the worst examples of this is Waterfront Place, which was completed in 1990. Over the following decade the 40 storey Brisbane block suffered a rash of failures. Eighty panes of its toughened glass shattered due to inclusions before experts were finally called in. John Barry, an expert in nickel sulphide contamination at the University of Queensland, analysed every glass pane in the building. Using a studio camera, a photographer went up in a cradle to take photos of every pane. These were scanned under a modified microfiche reader for signs of nickel sulphide crystals. 'We discovered at least another 120 panes with potentially dangerous inclusions which were then replaced,' says Barry. 'It was a very expensive and time-consuming process that took around six months to complete.' Though the project cost A$1.6 million (nearly £700,000), the alternative - re-cladding the entire building - would have cost ten times as much.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Look at the following people and the list of statements below.\nMatch each person with the correct statement.\nWrite the correct letter A–H in boxes 14–17 on your answer sheet.\n\nList of Statements\n:::box\nA suggests that publicity about nickel sulphide failure has been suppressed\nB regularly sees cases of nickel sulphide failure\nC closely examined all the glass in one building\nD was involved with the construction of Bishops Walk\nE recommended the rebuilding of Waterfront Place\nF thinks the benefits of toughened glass are exaggerated\nG claims that nickel sulphide failure is very unusual\nH refers to the most extreme case of delayed failure\n:::",
+          "18": "Complete the summary with the list of words A–P below.\nWrite your answers in boxes 18–23 on your answer sheet.\n:::box\nA numerous | B detected | C quickly | D agreed\nE warm | F sharp | G expands | H slowly\nI unexpectedly | J removed | K contracts | L disputed\nM cold | N moved | O small | P calculated\n:::",
+          "24": "Do the following statements agree with the information given in Reading Passage 2?\nIn boxes 24–26 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this"
+        },
+        "noteBody": "## Toughened Glass\nToughened glass is favoured by architects because it is much stronger than ordinary glass, and the fragments are not as [[18]] when it breaks. However, it has one disadvantage: it can shatter [[19]].\nThis fault is a result of the manufacturing process. Ordinary glass is first heated, then cooled very [[20]].\nThe outer layer [[21]] before the inner layer, and the tension between the two layers which is created because of this makes the glass stronger. However, if the glass contains nickel sulphide impurities, crystals of nickel sulphide are formed. These are unstable, and can expand suddenly, particularly if the weather is [[22]]. If this happens, the pane of glass may break. The frequency with which such problems occur is [[23]] by glass experts. Furthermore, the crystals cannot be detected without sophisticated equipment."
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "matching",
+          "prompt": "Brian Waldron",
+          "answer": "G claims that nickel sulphide failure is very unusual",
+          "explanation": "Waldron thừa nhận ngành kính biết vấn đề này nhưng khẳng định các ca rất hiếm: 'It's a very rare phenomenon'. → G.",
+          "points": 1,
+          "options": [
+            "A suggests that publicity about nickel sulphide failure has been suppressed",
+            "B regularly sees cases of nickel sulphide failure",
+            "C closely examined all the glass in one building",
+            "D was involved with the construction of Bishops Walk",
+            "E recommended the rebuilding of Waterfront Place",
+            "F thinks the benefits of toughened glass are exaggerated",
+            "G claims that nickel sulphide failure is very unusual",
+            "H refers to the most extreme case of delayed failure"
+          ],
+          "evidence": "But he insists that cases are few and far between. 'It's a very rare phenomenon,' he says."
+        },
+        {
+          "order": 15,
+          "questionType": "matching",
+          "prompt": "Trevor Ford",
+          "answer": "A suggests that publicity about nickel sulphide failure has been suppressed",
+          "explanation": "Ford nói những gì nghe được chỉ là phần nổi của tảng băng, và lý do rất đơn giản: 'No-one wants bad press' — tức thông tin bị ém đi. → A.",
+          "points": 1,
+          "options": [
+            "A suggests that publicity about nickel sulphide failure has been suppressed",
+            "B regularly sees cases of nickel sulphide failure",
+            "C closely examined all the glass in one building",
+            "D was involved with the construction of Bishops Walk",
+            "E recommended the rebuilding of Waterfront Place",
+            "F thinks the benefits of toughened glass are exaggerated",
+            "G claims that nickel sulphide failure is very unusual",
+            "H refers to the most extreme case of delayed failure"
+          ],
+          "evidence": "He believes the reason is simple: 'No-one wants bad press.'"
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "Graham Dodd",
+          "answer": "H refers to the most extreme case of delayed failure",
+          "explanation": "Dodd nhắc tấm kính cường lực vỡ muộn nhất từng biết — đã 27 năm tuổi, ở chính toà nhà nghiên cứu của Pilkington. → H.",
+          "points": 1,
+          "options": [
+            "A suggests that publicity about nickel sulphide failure has been suppressed",
+            "B regularly sees cases of nickel sulphide failure",
+            "C closely examined all the glass in one building",
+            "D was involved with the construction of Bishops Walk",
+            "E recommended the rebuilding of Waterfront Place",
+            "F thinks the benefits of toughened glass are exaggerated",
+            "G claims that nickel sulphide failure is very unusual",
+            "H refers to the most extreme case of delayed failure"
+          ],
+          "evidence": "the oldest pane of toughened glass known to have failed due to nickel sulphide inclusions was in Pilkington's glass research building in Lathom, Lancashire. The pane was 27 years old."
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "John Barry",
+          "answer": "C closely examined all the glass in one building",
+          "explanation": "Barry phân tích TỪNG tấm kính của toà Waterfront Place: chụp ảnh mọi tấm rồi soi dưới máy đọc microfiche cải tiến. → C.",
+          "points": 1,
+          "options": [
+            "A suggests that publicity about nickel sulphide failure has been suppressed",
+            "B regularly sees cases of nickel sulphide failure",
+            "C closely examined all the glass in one building",
+            "D was involved with the construction of Bishops Walk",
+            "E recommended the rebuilding of Waterfront Place",
+            "F thinks the benefits of toughened glass are exaggerated",
+            "G claims that nickel sulphide failure is very unusual",
+            "H refers to the most extreme case of delayed failure"
+          ],
+          "evidence": "John Barry, an expert in nickel sulphide contamination at the University of Queensland, analysed every glass pane in the building."
+        },
+        {
+          "order": 18,
+          "questionType": "note_completion",
+          "prompt": "Câu 18",
+          "answer": [
+            "F",
+            "F sharp",
+            "sharp"
+          ],
+          "explanation": "Ưu điểm của kính cường lực: khi vỡ nó vỡ vụn thành các hạt nhỏ chứ không thành mảnh lớn sắc như dao cạo — tức mảnh vỡ không sắc bằng. → F sharp.",
+          "points": 1,
+          "evidence": "when it does break it shatters into tiny cubes rather than large, razor-sharp shards"
+        },
+        {
+          "order": 19,
+          "questionType": "note_completion",
+          "prompt": "Câu 19",
+          "answer": [
+            "I",
+            "I unexpectedly",
+            "unexpectedly"
+          ],
+          "explanation": "Nhược điểm: tinh thể alpha bất ổn có thể trở về pha beta 'without warning', khiến kính vỡ bất ngờ, thời điểm không thể đoán trước. → I unexpectedly.",
+          "points": 1,
+          "evidence": "ready to revert to the beta phase without warning"
+        },
+        {
+          "order": 20,
+          "questionType": "note_completion",
+          "prompt": "Câu 20",
+          "answer": [
+            "C",
+            "C quickly",
+            "quickly"
+          ],
+          "explanation": "Quy trình: nung kính thường lên khoảng 620°C rồi làm nguội thật NHANH bằng luồng khí lạnh. → C quickly.",
+          "points": 1,
+          "evidence": "and then cooling it rapidly with jets of cold air"
+        },
+        {
+          "order": 21,
+          "questionType": "note_completion",
+          "prompt": "Câu 21",
+          "answer": [
+            "K",
+            "K contracts",
+            "contracts"
+          ],
+          "explanation": "Việc làm nguội nhanh khiến lớp ngoài CO LẠI và đông cứng trước lớp trong. → K contracts.",
+          "points": 1,
+          "evidence": "This causes the outer layer of the pane to contract and solidify before the interior."
+        },
+        {
+          "order": 22,
+          "questionType": "note_completion",
+          "prompt": "Câu 22",
+          "answer": [
+            "E",
+            "E warm",
+            "warm"
+          ],
+          "explanation": "Quá trình vỡ được đẩy nhanh nếu kính bị làm nóng, ví dụ do ánh nắng — tức thời tiết ấm. (Sự cố Bishops Walk cũng xảy ra vào một ngày đặc biệt nóng.) → E warm.",
+          "points": 1,
+          "evidence": "although if the glass is heated - by sunlight, for example - the process is speeded up"
+        },
+        {
+          "order": 23,
+          "questionType": "note_completion",
+          "prompt": "Câu 23",
+          "answer": [
+            "L",
+            "L disputed",
+            "disputed"
+          ],
+          "explanation": "Các chuyên gia bất đồng về mức độ phổ biến: Waldron bảo cực hiếm, còn Josie, Ford, Wilmott, Armstrong nói hàng trăm ca — 'Others disagree'. → L disputed.",
+          "points": 1,
+          "evidence": "Others disagree."
+        },
+        {
+          "order": 24,
+          "questionType": "true_false_not_given",
+          "prompt": "Little doubt was expressed about the reason for the Bishops Walk accident.",
+          "answer": "TRUE",
+          "explanation": "Chuyên gia Pilkington kết luận các tinh thể nickel sulphide 'gần như chắc chắn' (almost certainly) đã gây ra sự cố — tức gần như không còn nghi ngờ gì. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "they found that minute crystals of nickel sulphide trapped inside the glass had almost certainly caused the failure"
+        },
+        {
+          "order": 25,
+          "questionType": "true_false_not_given",
+          "prompt": "Toughened glass has the same appearance as ordinary glass.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài nói về độ bền, cách vỡ và ứng dụng của kính cường lực, nhưng không hề so sánh HÌNH THỨC bề ngoài của nó với kính thường. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 26,
+          "questionType": "true_false_not_given",
+          "prompt": "There is plenty of documented evidence available about the incidence of nickel sulphide failure.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: dữ liệu về quy mô vấn đề nickel sulphide gần như không thể tìm được. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Data showing the scale of the nickel sulphide problem is almost impossible to find."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 – The effects of light on plant and animal species",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 27–40.",
+      "content": "Light is important to organisms for two different reasons. Firstly it is used as a cue for the timing of daily and seasonal rhythms in both plant and animals, and secondly it is used to assist growth in plants.\n\nBreeding in most organisms occurs during a part of the year only, and so a reliable cue is needed to trigger breeding behaviour. Day length is an excellent cue, because it provides a perfectly predictable pattern of change within the year. In the temperate zone in spring, temperatures fluctuate greatly from day to day, but day length increases steadily by a predictable amount. The seasonal impact of day length on physiological responses is called photoperiodism, and the amount of experimental evidence for this phenomenon is considerable. For example, some species of birds' breeding can be induced even in midwinter simply by increasing day length artificially (Wolfson 1964). Other examples of photoperiodism occur in plants. A short-day plant flowers when the day is less than a certain critical length. A long-day plant flowers after a certain critical day length is exceeded. In both cases the critical day length differs from species to species. Plants which flower after a period of vegetative growth, regardless of photoperiod, are known as day-neutral plants.\n\nBreeding seasons in animals such as birds have evolved to occupy the part of the year in which offspring have the greatest chances of survival. Before the breeding season begins, food reserves must be built up to support the energy cost of reproduction, and to provide for young birds both when they are in the nest and after fledging. Thus many temperate-zone birds use the increasing day lengths in spring as a cue to begin the nesting cycle, because this is a point when adequate food resources will be assured.\n\nThe adaptive significance of photoperiodism in plants is also clear. Short-day plants that flower in spring in the temperate zone are adapted to maximising seedling growth during the growing season. Long-day plants are adapted for situations that require fertilization by insects, or a long period of seed ripening. Short-day plants that flower in the autumn in the temperate zone are able to build up food reserves over the growing season and over winter as seeds. Day-neutral plants have an evolutionary advantage when the connection between the favourable period for reproduction and day length is much less certain. For example, desert annuals germinate, flower and seed whenever suitable rainfall occurs, regardless of the day length.\n\nThe breeding season of some plants can be delayed to extraordinary lengths. Bamboos are perennial grasses that remain in a vegetative state for many years and then suddenly flower, fruit and die (Evans 1976). Every bamboo of the species Chusquea abietifolia on the island of Jamaica flowered, set seed and died during 1884. The next generation of bamboo flowered and died between 1916 and 1918, which suggests a vegetative cycle of about 31 years. The climatic trigger for this flowering cycle is not yet known, but the adaptive significance is clear. The simultaneous production of masses of bamboo seeds (in some cases lying 12 to 15 centimetres deep on the ground) is more than all the seed-eating animals can cope with at the time, so that some seeds escape being eaten and grow up to form the next generation (Evans 1976).\n\nThe second reason light is important to organisms is that it is essential for photosynthesis. This is the process by which plants use energy from the sun to convert carbon from soil or water into organic material for growth. The rate of photosynthesis in a plant can be measured by calculating the rate of its uptake of carbon. There is a wide range of photosynthetic responses of plants to variations in light intensity. Some plants reach maximal photosynthesis at one-quarter full sunlight, and others, like sugarcane, never reach a maximum, but continue to increase photosynthesis rate as light intensity rises.\n\nPlants in general can be divided into two groups: shade-tolerant species and shade-intolerant species. This classification is commonly used in forestry and horticulture. Shade-tolerant plants have lower photosynthetic rates and hence have lower growth rates than those of shade-intolerant species. Plant species become adapted to living in a certain kind of habitat, and in the process evolve a series of characteristics that prevent them from occupying other habitats. Grime (1966) suggests that light may be one of the major components directing these adaptations. For example, eastern hemlock seedlings are shade-tolerant. They can survive in the forest understorey under very low light levels because they have a low photosynthetic rate.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Do the following statements agree with the information given in Reading Passage 3?\nIn boxes 27–33 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+          "34": "Complete the sentences.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.\nWrite your answers in boxes 34–40 on your answer sheet."
+        },
+        "noteBody": "Day length is a useful cue for breeding in areas where [[34]] are unpredictable.\nPlants which do not respond to light levels are referred to as [[35]].\nBirds in temperate climates associate longer days with nesting and the availability of [[36]].\nPlants that flower when days are long often depend on [[37]] to help them reproduce.\nDesert annuals respond to [[38]] as a signal for reproduction.\nThere is no limit to the photosynthetic rate in plants such as [[39]].\nTolerance to shade is one criterion for the [[40]] of plants in forestry and horticulture."
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "true_false_not_given",
+          "prompt": "There is plenty of scientific evidence to support photoperiodism.",
+          "answer": "TRUE",
+          "explanation": "Bài nói lượng bằng chứng thực nghiệm cho hiện tượng quang chu kỳ là 'considerable' — rất nhiều. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "the amount of experimental evidence for this phenomenon is considerable"
+        },
+        {
+          "order": 28,
+          "questionType": "true_false_not_given",
+          "prompt": "Some types of bird can be encouraged to breed out of season.",
+          "answer": "TRUE",
+          "explanation": "Một số loài chim có thể được kích thích sinh sản ngay giữa mùa đông chỉ bằng cách kéo dài ngày một cách nhân tạo. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "some species of birds' breeding can be induced even in midwinter simply by increasing day length artificially"
+        },
+        {
+          "order": 29,
+          "questionType": "true_false_not_given",
+          "prompt": "Photoperiodism is restricted to certain geographic areas.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài lấy ví dụ ở vùng ôn đới và sa mạc nhưng không hề khẳng định quang chu kỳ CHỈ xảy ra ở một số khu vực địa lý nhất định. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 30,
+          "questionType": "true_false_not_given",
+          "prompt": "Desert annuals are examples of long-day plants.",
+          "answer": "FALSE",
+          "explanation": "Cây một năm ở sa mạc nảy mầm, ra hoa và kết hạt bất cứ khi nào có mưa thích hợp, KHÔNG phụ thuộc độ dài ngày — đó là ví dụ của cây trung tính (day-neutral), không phải cây ngày dài. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "For example, desert annuals germinate, flower and seed whenever suitable rainfall occurs, regardless of the day length."
+        },
+        {
+          "order": 31,
+          "questionType": "true_false_not_given",
+          "prompt": "Bamboos flower several times during their life cycle.",
+          "answer": "FALSE",
+          "explanation": "Tre ở trạng thái sinh dưỡng nhiều năm rồi đột ngột ra hoa, kết quả và CHẾT — tức chỉ ra hoa một lần trong đời. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Bamboos are perennial grasses that remain in a vegetative state for many years and then suddenly flower, fruit and die"
+        },
+        {
+          "order": 32,
+          "questionType": "true_false_not_given",
+          "prompt": "Scientists have yet to determine the cue for Chusquea abietifolia's seasonal rhythm.",
+          "answer": "TRUE",
+          "explanation": "Bài nói tác nhân khí hậu kích hoạt chu kỳ ra hoa này vẫn chưa được biết. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "The climatic trigger for this flowering cycle is not yet known"
+        },
+        {
+          "order": 33,
+          "questionType": "true_false_not_given",
+          "prompt": "Eastern hemlock is a fast-growing plant.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: cây chịu bóng như eastern hemlock có tốc độ quang hợp thấp nên tốc độ sinh trưởng cũng thấp. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Shade-tolerant plants have lower photosynthetic rates and hence have lower growth rates than those of shade-intolerant species."
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": [
+            "temperatures",
+            "temperature"
+          ],
+          "explanation": "Ở vùng ôn đới mùa xuân, nhiệt độ dao động thất thường từng ngày, còn độ dài ngày thì tăng đều đặn và đoán trước được — nên độ dài ngày mới là tín hiệu tốt. → temperatures.",
+          "points": 1,
+          "evidence": "In the temperate zone in spring, temperatures fluctuate greatly from day to day, but day length increases steadily by a predictable amount."
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": [
+            "day-neutral plants",
+            "day-neutral",
+            "day neutral plants"
+          ],
+          "explanation": "Cây ra hoa sau một giai đoạn sinh trưởng sinh dưỡng, bất kể quang chu kỳ, được gọi là cây trung tính với ánh sáng. → day-neutral plants.",
+          "points": 1,
+          "evidence": "Plants which flower after a period of vegetative growth, regardless of photoperiod, are known as day-neutral plants."
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": [
+            "food resources",
+            "food",
+            "adequate food resources"
+          ],
+          "explanation": "Chim vùng ôn đới dùng ngày dài dần vào mùa xuân làm tín hiệu bắt đầu làm tổ, vì đó là lúc chắc chắn có đủ nguồn thức ăn. → (adequate) food resources.",
+          "points": 1,
+          "evidence": "as a cue to begin the nesting cycle, because this is a point when adequate food resources will be assured"
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": [
+            "insects",
+            "fertilization by insects"
+          ],
+          "explanation": "Cây ngày dài thích nghi với những tình huống cần côn trùng thụ phấn. → insects.",
+          "points": 1,
+          "evidence": "Long-day plants are adapted for situations that require fertilization by insects, or a long period of seed ripening."
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": [
+            "rainfall",
+            "suitable rainfall"
+          ],
+          "explanation": "Cây một năm ở sa mạc nảy mầm, ra hoa và kết hạt mỗi khi có lượng mưa thích hợp. → (suitable) rainfall.",
+          "points": 1,
+          "evidence": "desert annuals germinate, flower and seed whenever suitable rainfall occurs"
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": [
+            "sugarcane",
+            "sugar cane"
+          ],
+          "explanation": "Một số cây như mía không bao giờ đạt mức quang hợp tối đa mà cứ tăng mãi khi cường độ sáng tăng. → sugarcane.",
+          "points": 1,
+          "evidence": "others, like sugarcane, never reach a maximum, but continue to increase photosynthesis rate as light intensity rises"
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": [
+            "classification"
+          ],
+          "explanation": "Việc chia cây thành nhóm chịu bóng và không chịu bóng — cách phân loại này thường dùng trong lâm nghiệp và làm vườn. → classification.",
+          "points": 1,
+          "evidence": "This classification is commonly used in forestry and horticulture."
+        }
+      ]
+    }
+  ]
+}

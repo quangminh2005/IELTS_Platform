@@ -51,6 +51,8 @@ MỖI CÂU HỎI:
   "prompt": "<đề câu hỏi — với note_completion chỉ ghi ngắn 'Câu N'>",
   "options": ["A", "B", ...],   // chỉ cho multiple_choice / true_false_not_given
   "answer": "<đáp án>",
+  "explanation": "<giải thích ngắn bằng TIẾNG VIỆT vì sao đáp án đúng — xem quy tắc bên dưới>",
+  "evidence": "<trích NGUYÊN VĂN câu tiếng Anh trong bài chứa đáp án — xem quy tắc bên dưới>",
   "points": 1
 }
 
@@ -97,6 +99,29 @@ QUY TẮC CHỌN questionType:
 - Short answer THẬT SỰ (câu hỏi có dấu "?" trả lời trong vài từ, KHÔNG phải điền vào đoạn)
   → "short_answer". prompt là câu hỏi đầy đủ, answer là từ/số.
 
+HỘP LỰA CHỌN trong groupInstructions (":::box") — BẮT BUỘC:
+- Mọi danh sách lựa chọn dùng chung cho cả nhóm (hộp từ "A–K", "List of Headings",
+  "List of Statements", danh sách của "Choose TWO letters A–H") phải bọc trong fence
+  ":::box ... :::" để render thành KHUNG KẺ nhiều cột giống đề gốc, thay vì chữ chạy liền.
+- Mỗi dòng trong fence = một hàng; các ô trên cùng hàng ngăn bằng "|"; số cột lấy theo hàng
+  nhiều ô nhất. Giữ đúng số cột như đề gốc.
+- Dòng KHÔNG có "|" thì mỗi dòng là một ô (xếp 1 cột) — dùng cho List of Headings/Statements
+  vì mỗi mục dài.
+- Chữ cái / số La Mã ở đầu mỗi ô được hệ thống tự in đậm, không cần đánh dấu thêm.
+
+    "groupInstructions": {
+      "23": "Complete the summary using the list of words, A–K, below.\n:::box\nA tariffs | B components | C container ships | D output\nE employees | F insurance costs | G trade | H freight\nI fares | J software | K international standards\n:::"
+    }
+
+GIẢI THÍCH (explanation) — thêm cho MỖI câu:
+- Trường "explanation" = giải thích NGẮN GỌN bằng TIẾNG VIỆT (1–3 câu) vì sao đáp án đúng:
+  chỉ ra chỗ trong bài đọc dẫn tới đáp án, diễn đạt lại ý bằng tiếng Việt cho học viên dễ hiểu.
+  Có thể trích kèm vài từ tiếng Anh gốc trong ngoặc kép để đối chiếu.
+- KHÁC với "evidence": explanation là lời giảng bằng tiếng Việt; evidence là câu gốc tiếng Anh
+  nguyên văn. Điền CẢ HAI cho mỗi câu.
+- Với true_false_not_given: nêu rõ vì sao TRUE/FALSE/NOT GIVEN (vd "bài không hề nhắc tới…" cho
+  NOT GIVEN; "bài nói ngược lại rằng…" cho FALSE).
+
 DẪN CHỨNG (evidence) — thêm cho MỖI câu:
 - Trường "evidence" = trích NGUYÊN VĂN một câu/đoạn ngắn trong bài chứa đáp án đúng.
   Giữ đúng tiếng Anh gốc, KHÔNG diễn giải, KHÔNG dịch.
@@ -112,7 +137,8 @@ KIỂM TRA TRƯỚC KHI XUẤT:
 3. Mọi câu note_completion: phải có đúng một "[[order]]" tương ứng trong metadata.noteBody
    (và mọi "[[n]]" trong noteBody đều có câu hỏi order n).
 4. Mọi câu multiple_choice / true_false_not_given / matching: phải có "evidence".
-5. JSON parse được, không có ký tự lạ.
+5. Mọi câu (cả 40) phải có "explanation" bằng tiếng Việt, không để trống.
+6. JSON parse được, không có ký tự lạ.
 ```
 
 ---

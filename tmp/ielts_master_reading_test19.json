@@ -1,0 +1,674 @@
+{
+  "title": "IELTS Master – Test 19 (Reading)",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master (Academic) – Test 19",
+  "description": "Reading Test 19 – Australia's Sporting Success / Delivering the Goods / Climate change and the Inuit. 40 câu, tự chấm, có giải thích và dẫn chứng.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 – Australia's Sporting Success",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 1–13.",
+      "content": "A They play hard, they play often, and they play to win. Australian sports teams win more than their fair share of titles, demolishing rivals with seeming ease. How do they do it? A big part of the secret is an extensive and expensive network of sporting academies underpinned by science and medicine. At the Australian Institute of Sport (AIS), hundreds of youngsters and pros live and train under the eyes of coaches. Another body, the Australian Sports Commission (ASC), finances programmes of excellence in a total of 96 sports for thousands of sportsmen and women. Both provide intensive coaching, training facilities and nutritional advice.\n\nB Inside the academies, science takes centre stage. The AIS employs more than 100 sports scientists and doctors, and collaborates with scores of others in universities and research centres. AIS scientists work across a number of sports, applying skills learned in one - such as building muscle strength in golfers - to others, such as swimming and squash. They are backed up by technicians who design instruments to collect data from athletes. They all focus on one aim: winning. 'We can't waste our time looking at ethereal scientific questions that don't help the coach work with an athlete and improve performance,' says Peter Fricker, chief of science at AIS.\n\nC A lot of their work comes down to measurement - everything from the exact angle of a swimmer's dive to the second-by-second power output of a cyclist. This data is used to wring improvements out of athletes. The focus is on individuals, tweaking performances to squeeze an extra hundredth of a second here, an extra millimetre there. No gain is too slight to bother with. It's the tiny, gradual improvements that add up to world-beating results. To demonstrate how the system works, Bruce Mason at AIS shows off the prototype of a 3D analysis tool for studying swimmers. A wire-frame model of a champion swimmer slices through the water, her arms moving in slow motion. Looking side-on, Mason measures the distance between strokes. From above, he analyses how her spine swivels. When fully developed, this system will enable him to build a biomechanical profile for coaches to use to help budding swimmers. Mason's contribution to sport also includes the development of the SWAN (SWimming ANalysis) system now used in Australian national competitions. It collects images from digital cameras running at 50 frames a second and breaks down each part of a swimmer's performance into factors that can be analysed individually - stroke length, stroke frequency, average duration of each stroke, velocity, start, lap and finish times, and so on. At the end of each race, SWAN spits out data on each swimmer.\n\nD 'Take a look,' says Mason, pulling out a sheet of data. He points out the data on the swimmers in second and third place, which shows that the one who finished third actually swam faster. So why did he finish 35 hundredths of a second down? 'His turn times were 44 hundredths of a second behind the other guy,' says Mason. 'If he can improve on his turns, he can do much better.' This is the kind of accuracy that AIS scientists' research is bringing to a range of sports. With the Cooperative Research Centre for Micro Technology in Melbourne, they are developing unobtrusive sensors that will be embedded in an athlete's clothes or running shoes to monitor heart rate, sweating, heat production or any other factor that might have an impact on an athlete's ability to run.\n\nThere's more to it than simply measuring performance. Fricker gives the example of athletes who may be down with coughs and colds 11 or 12 times a year. After years of experimentation, AIS and the University of Newcastle in New South Wales developed a test that measures how much of the immune-system protein immunoglobulin A is present in athletes' saliva. If IgA levels suddenly fall below a certain level, training is eased or dropped altogether. Soon, IgA levels start rising again, and the danger passes. Since the tests were introduced, AIS athletes in all sports have been remarkably successful at staying healthy.\n\nE Using data is a complex business. Well before a championship, sports scientists and coaches start to prepare the athlete by developing a 'competition model', based on what they expect will be the winning times. 'You design the model to make that time,' says Mason. 'A start of this much, each free-swimming period has to be this fast, with a certain stroke frequency and stroke length, with turns done in these times'. All the training is then geared towards making the athlete hit those targets, both overall and for each segment of the race. Techniques like these have transformed Australia into arguably the world's most successful sporting nation.\n\nF Of course, there's nothing to stop other countries copying - and many have tried. Some years ago, the AIS unveiled coolant-lined jackets for endurance athletes. At the Atlanta Olympic Games in 1996, these sliced as much as two per cent off cyclists' and rowers' times. Now everyone uses them. The same has happened to the 'altitude tent', developed by AIS to replicate the effect of altitude training at sea level. But Australia's success story is about more than easily copied technological fixes, and up to now no nation has replicated its all-encompassing system.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Reading Passage 1 has six sections, A–F.\nWhich paragraph contains the following information?\nWrite the correct letter A–F in boxes 1–7 on your answer sheet.\nNB You may use any letter more than once.",
+          "8": "Classify the following techniques according to whether the writer states they\nA are currently exclusively used by Australians\nB will be used in the future by Australians\nC are currently used by both Australians and their rivals\nWrite the correct letter A, B or C in boxes 8–11 on your answer sheet.",
+          "12": "Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from Reading Passage 1 for each answer.\nWrite your answers in boxes 12 and 13 on your answer sheet."
+        }
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "multiple_choice",
+          "prompt": "a reference to the exchange of expertise between different sports",
+          "answer": "B",
+          "explanation": "Đoạn B nói các nhà khoa học AIS làm việc xuyên nhiều môn, đem kỹ năng học được ở môn này (vd tăng cơ cho golfer) áp dụng cho môn khác như bơi và squash. → B.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "evidence": "AIS scientists work across a number of sports, applying skills learned in one - such as building muscle strength in golfers - to others, such as swimming and squash."
+        },
+        {
+          "order": 2,
+          "questionType": "multiple_choice",
+          "prompt": "an explanation of how visual imaging is employed in investigations",
+          "answer": "C",
+          "explanation": "Đoạn C mô tả công cụ phân tích 3D dựng mô hình khung dây vận động viên bơi và hệ SWAN thu hình từ camera kỹ thuật số 50 khung hình/giây. → C.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "evidence": "It collects images from digital cameras running at 50 frames a second"
+        },
+        {
+          "order": 3,
+          "questionType": "multiple_choice",
+          "prompt": "a reason for narrowing the scope of research activity",
+          "answer": "B",
+          "explanation": "Đoạn B dẫn lời Fricker: không được phí thời gian vào những câu hỏi khoa học viển vông không giúp cải thiện thành tích — đó là lý do thu hẹp phạm vi nghiên cứu. → B.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "evidence": "'We can't waste our time looking at ethereal scientific questions that don't help the coach work with an athlete and improve performance,' says Peter Fricker"
+        },
+        {
+          "order": 4,
+          "questionType": "multiple_choice",
+          "prompt": "how some AIS ideas have been reproduced",
+          "answer": "F",
+          "explanation": "Đoạn F nói áo làm mát và 'lều độ cao' do AIS phát triển nay ai cũng dùng — tức các ý tưởng của AIS đã bị sao chép. → F.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "evidence": "Now everyone uses them. The same has happened to the 'altitude tent'"
+        },
+        {
+          "order": 5,
+          "questionType": "multiple_choice",
+          "prompt": "how obstacles to optimum achievement can be investigated",
+          "answer": "D",
+          "explanation": "Đoạn D nói về cảm biến theo dõi nhịp tim, mồ hôi… và xét nghiệm IgA trong nước bọt để phát hiện nguy cơ ốm — đều là cách dò tìm trở ngại cho thành tích tối ưu. → D.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "evidence": "developed a test that measures how much of the immune-system protein immunoglobulin A is present in athletes' saliva"
+        },
+        {
+          "order": 6,
+          "questionType": "multiple_choice",
+          "prompt": "an overview of the funded support of athletes",
+          "answer": "A",
+          "explanation": "Đoạn A giới thiệu tổng quan hệ thống học viện thể thao tốn kém: AIS nuôi và huấn luyện vận động viên, ASC tài trợ chương trình xuất sắc cho 96 môn. → A.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "evidence": "Another body, the Australian Sports Commission (ASC), finances programmes of excellence in a total of 96 sports for thousands of sportsmen and women."
+        },
+        {
+          "order": 7,
+          "questionType": "multiple_choice",
+          "prompt": "how performance requirements are calculated before an event",
+          "answer": "E",
+          "explanation": "Đoạn E nói trước giải, họ dựng 'competition model' dựa trên thành tích dự đoán sẽ vô địch, rồi đặt chỉ tiêu cho từng chặng. → E.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "evidence": "sports scientists and coaches start to prepare the athlete by developing a 'competition model', based on what they expect will be the winning times"
+        },
+        {
+          "order": 8,
+          "questionType": "multiple_choice",
+          "prompt": "cameras",
+          "answer": "A",
+          "explanation": "Hệ SWAN thu hình từ camera kỹ thuật số hiện đang được dùng trong các giải quốc gia của Úc — bài không nói nước khác dùng. → A (chỉ Úc đang dùng).",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C"
+          ],
+          "evidence": "the SWAN (SWimming ANalysis) system now used in Australian national competitions"
+        },
+        {
+          "order": 9,
+          "questionType": "multiple_choice",
+          "prompt": "sensors",
+          "answer": "B",
+          "explanation": "Cảm biến gắn vào quần áo/giày mới ĐANG được phát triển ('are developing'), tức sẽ dùng trong tương lai. → B.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C"
+          ],
+          "evidence": "they are developing unobtrusive sensors that will be embedded in an athlete's clothes or running shoes"
+        },
+        {
+          "order": 10,
+          "questionType": "multiple_choice",
+          "prompt": "protein tests",
+          "answer": "A",
+          "explanation": "Xét nghiệm protein miễn dịch IgA do AIS và ĐH Newcastle phát triển, đã áp dụng cho vận động viên Úc; bài không nói nước khác dùng. → A.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C"
+          ],
+          "evidence": "AIS and the University of Newcastle in New South Wales developed a test that measures how much of the immune-system protein immunoglobulin A is present in athletes' saliva"
+        },
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "altitude tents",
+          "answer": "C",
+          "explanation": "'Lều độ cao' do AIS phát triển nhưng đã bị sao chép, giống như áo làm mát mà 'giờ ai cũng dùng'. → C (cả Úc lẫn đối thủ).",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C"
+          ],
+          "evidence": "The same has happened to the 'altitude tent', developed by AIS to replicate the effect of altitude training at sea level."
+        },
+        {
+          "order": 12,
+          "questionType": "short_answer",
+          "prompt": "What is produced to help an athlete plan their performance in an event?",
+          "answer": [
+            "competition model",
+            "a competition model"
+          ],
+          "explanation": "Trước giải, nhà khoa học và HLV dựng một 'competition model' để vận động viên biết phải đạt mốc nào ở từng chặng. → competition model.",
+          "points": 1,
+          "evidence": "start to prepare the athlete by developing a 'competition model', based on what they expect will be the winning times"
+        },
+        {
+          "order": 13,
+          "questionType": "short_answer",
+          "prompt": "By how much did some cyclists' performance improve at the 1996 Olympic Games?",
+          "answer": [
+            "2%",
+            "two per cent",
+            "2 per cent",
+            "two percent",
+            "2 percent"
+          ],
+          "explanation": "Áo làm mát của AIS giúp giảm tới hai phần trăm thời gian của các tay đua xe đạp và chèo thuyền tại Olympic Atlanta 1996. → 2%.",
+          "points": 1,
+          "evidence": "these sliced as much as two per cent off cyclists' and rowers' times"
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 – Delivering the Goods",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 14–26.",
+      "content": "A International trade is growing at a startling pace. While the global economy has been expanding at a bit over 3% a year, the volume of trade has been rising at a compound annual rate of about twice that. Foreign products, from meat to machinery, play a more important role in almost every economy in the world, and foreign markets now tempt businesses that never much worried about sales beyond their nation's borders.\n\nB What lies behind this explosion in international commerce? The general worldwide decline in trade barriers, such as customs duties and import quotas, is surely one explanation. The economic opening of countries that have traditionally been minor players is another. But one force behind the import-export boom has passed all but unnoticed: the rapidly falling cost of getting goods to market. Theoretically, in the world of trade, shipping costs do not matter. Goods, once they have been made, are assumed to move instantly and at no cost from place to place. The real world, however, is full of frictions. Cheap labour may make Chinese clothing competitive in America, but if delays in shipment tie up working capital and cause winter coats to arrive in spring, trade may lose its advantages.\n\nC At the turn of the 20th century, agriculture and manufacturing were the two most important sectors almost everywhere, accounting for about 70% of total output in Germany, Italy and France, and 40-50% in America, Britain and Japan. International commerce was therefore dominated by raw materials, such as wheat, wood and iron ore, or processed commodities, such as meat and steel. But these sorts of products are heavy and bulky and the cost of transporting them relatively high.\n\nD Countries still trade disproportionately with their geographic neighbours. Over time, however, world output has shifted into goods whose worth is unrelated to their size and weight. Today, it is finished manufactured products that dominate the flow of trade, and, thanks to technological advances such as lightweight components, manufactured goods themselves have tended to become lighter and less bulky. As a result, less transportation is required for every dollar's worth of imports or exports.\n\nE To see how this influences trade, consider the business of making disk drives for computers. Most of the world's disk-drive manufacturing is concentrated in South-east Asia. This is possible only because disk drives, while valuable, are small and light and so cost little to ship. Computer manufacturers in Japan or Texas will not face hugely bigger freight bills if they import drives from Singapore rather than purchasing them on the domestic market. Distance therefore poses no obstacle to the globalisation of the disk-drive industry.\n\nF This is even more true of the fast-growing information industries. Films and compact discs cost little to transport, even by aeroplane. Computer software can be 'exported' without ever loading it onto a ship, simply by transmitting it over telephone lines from one country to another, so freight rates and cargo-handling schedules become insignificant factors in deciding where to make the product. Businesses can locate based on other considerations, such as the availability of labour, while worrying less about the cost of delivering their output.\n\nG In many countries deregulation has helped to drive the process along. But, behind the scenes, a series of technological innovations known broadly as containerisation and inter-modal transportation has led to swift productivity improvements in cargo-handling. Forty years ago, the process of exporting or importing involved a great many stages of handling, which risked portions of the shipment being damaged or stolen along the way. The invention of the container crane made it possible to load and unload containers without capsizing the ship and the adoption of standard container sizes allowed almost any box to be transported on any ship. By 1967, dual-purpose ships, carrying loose cargo in the hold and containers on the deck, were giving way to all-container vessels that moved thousands of boxes at a time.\n\nH The shipping container transformed ocean shipping into a highly efficient, intensely competitive business. But getting the cargo to and from the dock was a different story. National governments, by and large, kept a much firmer hand on truck and railroad tariffs than on charges for ocean freight. This started changing, however, in the mid-1970s, when America began to deregulate its transportation industry. First airlines, then road hauliers and railways, were freed from restrictions on what they could carry, where they could haul it and what price they could charge. Big productivity gains resulted. Between 1985 and 1996, for example, America's freight railways dramatically reduced their employment, trackage, and their fleets of locomotives - while increasing the amount of cargo they hauled. Europe's railways have also shown marked, albeit smaller, productivity improvements.\n\nI In America the period of huge productivity gains in transportation may be almost over, but in most countries the process still has far to go. State ownership of railways and airlines, regulation of freight rates and toleration of anti-competitive practices, such as cargo-handling monopolies, all keep the cost of shipping unnecessarily high and deter international trade. Bringing these barriers down would help the world's economies grow even closer.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Reading Passage 2 has nine sections, A–I.\nWhich paragraph contains the following information?\nWrite the correct letter A–I in boxes 14–17 on your answer sheet.",
+          "18": "Do the following statements agree with the information given in Reading Passage 2?\nIn boxes 18–22 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+          "23": "Complete the summary using the list of words, A–K, below.\nWrite the correct letter, A–K, in boxes 23–26 on your answer sheet.\n:::box\nA tariffs | B components | C container ships | D output\nE employees | F insurance costs | G trade | H freight\nI fares | J software | K international standards\n:::"
+        },
+        "noteBody": "## THE TRANSPORT REVOLUTION\nModern cargo-handling methods have had a significant effect on [[23]] as the business of moving freight around the world becomes increasingly streamlined. Manufacturers of computers, for instance, are able to import [[24]] from overseas, rather than having to rely on a local supplier. The introduction of [[25]] has meant that bulk cargo can be safely and efficiently moved over long distances. While international shipping is now efficient, there is still a need for governments to reduce [[26]] in order to free up the domestic cargo sector."
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "a suggestion for improving trade in the future",
+          "answer": "I",
+          "explanation": "Đoạn I đề xuất dỡ bỏ các rào cản (sở hữu nhà nước, quy định giá cước, độc quyền bốc dỡ) để kinh tế thế giới xích lại gần nhau hơn. → I.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "Bringing these barriers down would help the world's economies grow even closer."
+        },
+        {
+          "order": 15,
+          "questionType": "multiple_choice",
+          "prompt": "the effects of the introduction of electronic delivery",
+          "answer": "F",
+          "explanation": "Đoạn F nói phần mềm có thể 'xuất khẩu' qua đường dây điện thoại mà không cần lên tàu, khiến cước vận tải thành yếu tố không đáng kể khi chọn nơi sản xuất. → F.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "Computer software can be 'exported' without ever loading it onto a ship, simply by transmitting it over telephone lines from one country to another"
+        },
+        {
+          "order": 16,
+          "questionType": "multiple_choice",
+          "prompt": "the similar cost involved in transporting a product from abroad or from a local supplier",
+          "answer": "E",
+          "explanation": "Đoạn E nói nhà sản xuất máy tính ở Nhật hay Texas không phải trả cước cao hơn bao nhiêu khi nhập ổ đĩa từ Singapore thay vì mua trong nước. → E.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "Computer manufacturers in Japan or Texas will not face hugely bigger freight bills if they import drives from Singapore rather than purchasing them on the domestic market."
+        },
+        {
+          "order": 17,
+          "questionType": "multiple_choice",
+          "prompt": "the weakening relationship between the value of goods and the cost of their delivery",
+          "answer": "D",
+          "explanation": "Đoạn D nói sản lượng thế giới đã chuyển sang hàng hoá mà giá trị không còn liên quan tới kích thước và trọng lượng, nên mỗi đô-la hàng cần ít vận chuyển hơn. → D.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "world output has shifted into goods whose worth is unrelated to their size and weight"
+        },
+        {
+          "order": 18,
+          "questionType": "true_false_not_given",
+          "prompt": "International trade is increasing at a greater rate than the world economy.",
+          "answer": "TRUE",
+          "explanation": "Kinh tế toàn cầu tăng hơn 3%/năm một chút, còn khối lượng thương mại tăng khoảng GẤP ĐÔI mức đó. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "While the global economy has been expanding at a bit over 3% a year, the volume of trade has been rising at a compound annual rate of about twice that."
+        },
+        {
+          "order": 19,
+          "questionType": "true_false_not_given",
+          "prompt": "Cheap labour guarantees effective trade conditions.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: nhân công rẻ có thể giúp quần áo Trung Quốc cạnh tranh, NHƯNG nếu giao hàng chậm (áo mùa đông tới nơi vào mùa xuân) thì lợi thế mất sạch. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Cheap labour may make Chinese clothing competitive in America, but if delays in shipment tie up working capital and cause winter coats to arrive in spring, trade may lose its advantages."
+        },
+        {
+          "order": 20,
+          "questionType": "true_false_not_given",
+          "prompt": "Japan imports more meat and steel than France.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài có nhắc thịt và thép là hàng hoá chế biến chủ đạo đầu thế kỷ 20, và nhắc Nhật, Pháp khi nói tỉ trọng sản lượng — nhưng không hề so sánh lượng NHẬP KHẨU giữa hai nước. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 21,
+          "questionType": "true_false_not_given",
+          "prompt": "Most countries continue to prefer to trade with nearby nations.",
+          "answer": "TRUE",
+          "explanation": "Đoạn D mở đầu: các nước vẫn giao thương với láng giềng địa lý nhiều hơn mức tương xứng. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Countries still trade disproportionately with their geographic neighbours."
+        },
+        {
+          "order": 22,
+          "questionType": "true_false_not_given",
+          "prompt": "Small computer components are manufactured in Germany.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài nói phần lớn ổ đĩa được sản xuất ở Đông Nam Á, và nhắc Đức khi nói tỉ trọng nông nghiệp – chế tạo đầu thế kỷ 20, chứ không nói Đức sản xuất linh kiện máy tính. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 23,
+          "questionType": "note_completion",
+          "prompt": "Câu 23",
+          "answer": [
+            "G",
+            "G trade",
+            "trade"
+          ],
+          "explanation": "Các phương pháp bốc dỡ hàng hiện đại đã tác động mạnh tới THƯƠNG MẠI — cả bài nói về việc chi phí vận chuyển giảm thúc đẩy giao thương quốc tế. → G trade.",
+          "points": 1,
+          "evidence": "But one force behind the import-export boom has passed all but unnoticed: the rapidly falling cost of getting goods to market."
+        },
+        {
+          "order": 24,
+          "questionType": "note_completion",
+          "prompt": "Câu 24",
+          "answer": [
+            "B",
+            "B components",
+            "components"
+          ],
+          "explanation": "Nhà sản xuất máy tính có thể nhập LINH KIỆN (ổ đĩa) từ nước ngoài thay vì mua của nhà cung cấp trong nước. → B components.",
+          "points": 1,
+          "evidence": "if they import drives from Singapore rather than purchasing them on the domestic market"
+        },
+        {
+          "order": 25,
+          "questionType": "note_completion",
+          "prompt": "Câu 25",
+          "answer": [
+            "C",
+            "C container ships",
+            "container ships"
+          ],
+          "explanation": "Từ 1967, tàu chuyên chở container đã thay thế tàu lưỡng dụng, chở hàng nghìn thùng mỗi chuyến — nhờ đó hàng rời được vận chuyển an toàn, hiệu quả trên quãng đường dài. → C container ships.",
+          "points": 1,
+          "evidence": "were giving way to all-container vessels that moved thousands of boxes at a time"
+        },
+        {
+          "order": 26,
+          "questionType": "note_completion",
+          "prompt": "Câu 26",
+          "answer": [
+            "A",
+            "A tariffs",
+            "tariffs"
+          ],
+          "explanation": "Chính phủ vẫn siết chặt cước phí (tariffs) đường bộ và đường sắt hơn nhiều so với cước biển; muốn giải phóng vận tải nội địa thì phải giảm các mức cước/quy định này. → A tariffs.",
+          "points": 1,
+          "evidence": "National governments, by and large, kept a much firmer hand on truck and railroad tariffs than on charges for ocean freight."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 – Climate change and the Inuit",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 27–40.",
+      "content": "A Unusual incidents are being reported across the Arctic. Inuit families going off on snowmobiles to prepare their summer hunting camps have found themselves cut off from home by a sea of mud, following early thaws. There are reports of igloos losing their insulating properties as the snow drips and refreezes, of lakes draining into the sea as permafrost melts, and sea ice breaking up earlier than usual, carrying seals beyond the reach of hunters. Climate change may still be a rather abstract idea to most of us, but in the Arctic it is already having dramatic effects - if summertime ice continues to shrink at its present rate, the Arctic Ocean could soon become virtually ice-free in summer. The knock-on effects are likely to include more warming, cloudier skies, increased precipitation and higher sea levels. Scientists are increasingly keen to find out what's going on because they consider the Arctic the 'canary in the mine' for global warming - a warning of what's in store for the rest of the world.\n\nB For the Inuit the problem is urgent. They live in precarious balance with one of the toughest environments on earth. Climate change, whatever its causes, is a direct threat to their way of life. Nobody knows the Arctic as well as the locals, which is why they are not content simply to stand back and let outside experts tell them what's happening. In Canada, where the Inuit people are jealously guarding their hard-won autonomy in the country's newest territory, Nunavut, they believe their best hope of survival in this changing environment lies in combining their ancestral knowledge with the best of modern science. This is a challenge in itself.\n\nC The Canadian Arctic is a vast, treeless polar desert that's covered with snow for most of the year. Venture into this terrain and you get some idea of the hardships facing anyone who calls this home. Farming is out of the question and nature offers meagre pickings. Humans first settled in the Arctic a mere 4,500 years ago, surviving by exploiting sea mammals and fish. The environment tested them to the limits: sometimes the colonists were successful, sometimes they failed and vanished. But around a thousand years ago, one group emerged that was uniquely well adapted to cope with the Arctic environment. These Thule people moved in from Alaska, bringing kayaks, sleds, dogs, pottery and iron tools. They are the ancestors of today's Inuit people.\n\nD Life for the descendants of the Thule people is still harsh. Nunavut is 1.9 million square kilometres of rock and ice, and a handful of islands around the North Pole. It's currently home to 2,500 people, all but a handful of them indigenous Inuit. Over the past 40 years, most have abandoned their nomadic ways and settled in the territory's 28 isolated communities, but they still rely heavily on nature to provide food and clothing.\n\nProvisions available in local shops have to be flown into Nunavut on one of the most costly air networks in the world, or brought by supply ship during the few ice-free weeks of summer. It would cost a family around £7,000 a year to replace meat they obtained themselves through hunting with imported meat. Economic opportunities are scarce, and for many people state benefits are their only income.\n\nE While the Inuit may not actually starve if hunting and trapping are curtailed by climate change, there has certainly been an impact on people's health. Obesity, heart disease and diabetes are beginning to appear in a people for whom these have never before been problems. There has been a crisis of identity as the traditional skills of hunting, trapping and preparing skins have begun to disappear. In Nunavut's 'igloo and email' society, where adults who were born in igloos have children who may never have been out on the land, there's a high incidence of depression.\n\nF With so much at stake, the Inuit are determined to play a key role in teasing out the mysteries of climate change in the Arctic. Having survived there for centuries, they believe their wealth of traditional knowledge is vital to the task. And Western scientists are starting to draw on this wisdom, increasingly referred to as 'Inuit Qaujimajatuqangit', or IQ. 'In the early days scientists ignored us when they came up here to study anything. They just figured these people don't know very much so we won't ask them,' says John Amagoalik, an Inuit leader and politician. 'But in recent years IQ has had much more credibility and weight.' In fact it is now a requirement for anyone hoping to get permission to do research that they consult the communities, who are helping to set the research agenda to reflect their most important concerns. They can turn down applications from scientists they believe will work against their interests, or research projects that will impinge too much on their daily lives and traditional activities.\n\nG Some scientists doubt the value of traditional knowledge because the occupation of the Arctic doesn't go back far enough. Others, however, point out that the first weather stations in the far north date back just 50 years. There are still huge gaps in our environmental knowledge, and despite the scientific onslaught, many predictions are no more than best guesses. IQ could help to bridge the gap and resolve the tremendous uncertainty about how much of what we're seeing is natural capriciousness and how much is the consequence of human activity.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Choose the correct heading for paragraphs B–G from the list of headings below.\nWrite the correct number i–ix in boxes 27–32 on your answer sheet.\n\nList of Headings\n:::box\ni The reaction of the Inuit community to climate change\nii Understanding of climate change remains limited\niii Alternative sources of essential supplies\niv Respect for Inuit opinion grows\nv A healthier choice of food\nvi A difficult landscape\nvii Negative effects on well-being\nviii Alarm caused by unprecedented events in the Arctic\nix The benefits of an easier existence\n:::\nExample: Paragraph A — viii",
+          "33": "Complete the summary of paragraphs C and D below.\nChoose NO MORE THAN TWO WORDS from paragraphs C and D for each answer.\nWrite your answers in boxes 33–40 on your answer sheet."
+        },
+        "noteBody": "If you visit the Canadian Arctic, you immediately appreciate the problems faced by people for whom this is home. It would clearly be impossible for the people to engage in [[33]] as a means of supporting themselves. For thousands of years they have had to rely on catching [[34]] and [[35]] as a means of sustenance. The harsh surroundings saw many who tried to settle there pushed to their limits, although some were successful. The [[36]] people were an example of the latter and for them the environment did not prove unmanageable. For the present inhabitants, life continues to be a struggle. The territory of Nunavut consists of little more than ice, rock and a few [[37]]. In recent years, many of them have been obliged to give up their [[38]] lifestyle, but they continue to depend mainly on [[39]] for their food and clothes. [[40]] produce is particularly expensive."
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "Paragraph B",
+          "answer": "i The reaction of the Inuit community to climate change",
+          "explanation": "Đoạn B nói người Inuit không chịu đứng ngoài để chuyên gia bên ngoài phán, mà chọn kết hợp tri thức tổ tiên với khoa học hiện đại — chính là phản ứng của cộng đồng trước biến đổi khí hậu. → i.",
+          "points": 1,
+          "options": [
+            "i The reaction of the Inuit community to climate change",
+            "ii Understanding of climate change remains limited",
+            "iii Alternative sources of essential supplies",
+            "iv Respect for Inuit opinion grows",
+            "v A healthier choice of food",
+            "vi A difficult landscape",
+            "vii Negative effects on well-being",
+            "viii Alarm caused by unprecedented events in the Arctic",
+            "ix The benefits of an easier existence"
+          ],
+          "evidence": "they believe their best hope of survival in this changing environment lies in combining their ancestral knowledge with the best of modern science"
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "Paragraph C",
+          "answer": "vi A difficult landscape",
+          "explanation": "Đoạn C tả Bắc Cực Canada là sa mạc địa cực mênh mông, không cây, tuyết phủ gần như quanh năm, không trồng trọt được — một vùng đất khắc nghiệt. → vi.",
+          "points": 1,
+          "options": [
+            "i The reaction of the Inuit community to climate change",
+            "ii Understanding of climate change remains limited",
+            "iii Alternative sources of essential supplies",
+            "iv Respect for Inuit opinion grows",
+            "v A healthier choice of food",
+            "vi A difficult landscape",
+            "vii Negative effects on well-being",
+            "viii Alarm caused by unprecedented events in the Arctic",
+            "ix The benefits of an easier existence"
+          ],
+          "evidence": "The Canadian Arctic is a vast, treeless polar desert that's covered with snow for most of the year."
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "Paragraph D",
+          "answer": "iii Alternative sources of essential supplies",
+          "explanation": "Đoạn D nói hàng hoá trong cửa hàng phải chở bằng máy bay hoặc tàu tiếp tế mùa hè, còn dân vẫn dựa vào thiên nhiên — tức các nguồn cung nhu yếu phẩm thay thế. → iii.",
+          "points": 1,
+          "options": [
+            "i The reaction of the Inuit community to climate change",
+            "ii Understanding of climate change remains limited",
+            "iii Alternative sources of essential supplies",
+            "iv Respect for Inuit opinion grows",
+            "v A healthier choice of food",
+            "vi A difficult landscape",
+            "vii Negative effects on well-being",
+            "viii Alarm caused by unprecedented events in the Arctic",
+            "ix The benefits of an easier existence"
+          ],
+          "evidence": "Provisions available in local shops have to be flown into Nunavut on one of the most costly air networks in the world, or brought by supply ship during the few ice-free weeks of summer."
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "Paragraph E",
+          "answer": "vii Negative effects on well-being",
+          "explanation": "Đoạn E nói về béo phì, tim mạch, tiểu đường, khủng hoảng bản sắc và tỉ lệ trầm cảm cao — các tác động xấu lên sức khoẻ và đời sống tinh thần. → vii.",
+          "points": 1,
+          "options": [
+            "i The reaction of the Inuit community to climate change",
+            "ii Understanding of climate change remains limited",
+            "iii Alternative sources of essential supplies",
+            "iv Respect for Inuit opinion grows",
+            "v A healthier choice of food",
+            "vi A difficult landscape",
+            "vii Negative effects on well-being",
+            "viii Alarm caused by unprecedented events in the Arctic",
+            "ix The benefits of an easier existence"
+          ],
+          "evidence": "Obesity, heart disease and diabetes are beginning to appear in a people for whom these have never before been problems."
+        },
+        {
+          "order": 31,
+          "questionType": "matching",
+          "prompt": "Paragraph F",
+          "answer": "iv Respect for Inuit opinion grows",
+          "explanation": "Đoạn F nói trước kia nhà khoa học phớt lờ người Inuit, nay tri thức IQ được coi trọng và ai muốn nghiên cứu đều phải tham vấn cộng đồng. → iv.",
+          "points": 1,
+          "options": [
+            "i The reaction of the Inuit community to climate change",
+            "ii Understanding of climate change remains limited",
+            "iii Alternative sources of essential supplies",
+            "iv Respect for Inuit opinion grows",
+            "v A healthier choice of food",
+            "vi A difficult landscape",
+            "vii Negative effects on well-being",
+            "viii Alarm caused by unprecedented events in the Arctic",
+            "ix The benefits of an easier existence"
+          ],
+          "evidence": "'But in recent years IQ has had much more credibility and weight.'"
+        },
+        {
+          "order": 32,
+          "questionType": "matching",
+          "prompt": "Paragraph G",
+          "answer": "ii Understanding of climate change remains limited",
+          "explanation": "Đoạn G nói vẫn còn những lỗ hổng lớn trong hiểu biết môi trường, nhiều dự báo chẳng hơn gì phỏng đoán. → ii.",
+          "points": 1,
+          "options": [
+            "i The reaction of the Inuit community to climate change",
+            "ii Understanding of climate change remains limited",
+            "iii Alternative sources of essential supplies",
+            "iv Respect for Inuit opinion grows",
+            "v A healthier choice of food",
+            "vi A difficult landscape",
+            "vii Negative effects on well-being",
+            "viii Alarm caused by unprecedented events in the Arctic",
+            "ix The benefits of an easier existence"
+          ],
+          "evidence": "There are still huge gaps in our environmental knowledge, and despite the scientific onslaught, many predictions are no more than best guesses."
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Câu 33",
+          "answer": [
+            "farming"
+          ],
+          "explanation": "Đoạn C nói ở vùng này 'Farming is out of the question' — trồng trọt là chuyện không thể. → farming.",
+          "points": 1,
+          "evidence": "Farming is out of the question and nature offers meagre pickings."
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": [
+            "sea mammals"
+          ],
+          "explanation": "Con người định cư ở Bắc Cực 4.500 năm trước, sống nhờ khai thác thú biển và cá. → sea mammals.",
+          "points": 1,
+          "evidence": "Humans first settled in the Arctic a mere 4,500 years ago, surviving by exploiting sea mammals and fish."
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": [
+            "fish"
+          ],
+          "explanation": "Vế còn lại của cùng câu: 'sea mammals and fish'. → fish.",
+          "points": 1,
+          "evidence": "surviving by exploiting sea mammals and fish"
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": [
+            "Thule",
+            "thule",
+            "Thule people"
+          ],
+          "explanation": "Nhóm người thích nghi thành công với Bắc Cực khoảng 1.000 năm trước là người Thule, tổ tiên của người Inuit ngày nay. → Thule.",
+          "points": 1,
+          "evidence": "These Thule people moved in from Alaska, bringing kayaks, sleds, dogs, pottery and iron tools."
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": [
+            "islands",
+            "a few islands"
+          ],
+          "explanation": "Nunavut gồm 1,9 triệu km² đá và băng, cùng một số ít hòn đảo quanh Bắc Cực. → islands.",
+          "points": 1,
+          "evidence": "Nunavut is 1.9 million square kilometres of rock and ice, and a handful of islands around the North Pole."
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": [
+            "nomadic"
+          ],
+          "explanation": "Trong 40 năm qua, phần lớn đã từ bỏ lối sống du mục để định cư ở 28 cộng đồng biệt lập. → nomadic.",
+          "points": 1,
+          "evidence": "Over the past 40 years, most have abandoned their nomadic ways and settled in the territory's 28 isolated communities"
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": [
+            "nature"
+          ],
+          "explanation": "Dù đã định cư, họ vẫn phụ thuộc nặng nề vào thiên nhiên để có thức ăn và quần áo. → nature.",
+          "points": 1,
+          "evidence": "but they still rely heavily on nature to provide food and clothing"
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": [
+            "Imported",
+            "imported"
+          ],
+          "explanation": "Một gia đình phải tốn khoảng 7.000 bảng/năm nếu thay thịt tự săn bằng thịt NHẬP KHẨU — hàng nhập đặc biệt đắt đỏ. → Imported.",
+          "points": 1,
+          "evidence": "It would cost a family around £7,000 a year to replace meat they obtained themselves through hunting with imported meat."
+        }
+      ]
+    }
+  ]
+}

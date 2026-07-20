@@ -168,7 +168,20 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
       part.maxOrder = part.maxOrder === null ? order : Math.max(part.maxOrder, order);
     }
   }
+  // Answer được lưu theo thứ tự học viên bấm lưu (createdAt) nên phải sắp lại
+  // theo số câu; câu không gắn Question (order = null) đẩy xuống cuối. Các part
+  // cũng sắp theo câu nhỏ nhất để tab "Phần 1, 2..." đúng thứ tự đề.
+  const byOrder = (a: number | null, b: number | null) => {
+    if (a === null && b === null) return 0;
+    if (a === null) return 1;
+    if (b === null) return -1;
+    return a - b;
+  };
   const parts = [...partMap.values()];
+  for (const part of parts) {
+    part.answers.sort((a, b) => byOrder(a.order, b.order));
+  }
+  parts.sort((a, b) => byOrder(a.minOrder, b.minOrder));
 
   return (
     <div className="space-y-6">

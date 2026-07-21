@@ -385,6 +385,51 @@ describe("buildEvidenceTargets", () => {
     expect(targets[0].answers).toEqual(["climbing"]);
   });
 
+  it("ô ghép: dẫn chứng ngăn bằng \" / \" -> nhiều đích cùng order, tách đáp án theo vế", () => {
+    const source =
+      "I've designed publicity before. We haven't got enough people to do the lights at the moment.";
+    const targets = buildEvidenceTargets(
+      [
+        {
+          order: 4,
+          questionEvidence:
+            "I've designed publicity before. / We haven't got enough people to do the lights at the moment.",
+          evidenceSnapshot: null,
+          correctAnswerSnapshot: "publicity and lights | lights and publicity"
+        }
+      ],
+      source,
+      {}
+    );
+    expect(targets).toHaveLength(2);
+    expect(targets.every((target) => target.order === 4)).toBe(true);
+    expect(targets[0].evidence).toBe("I've designed publicity before.");
+    expect(targets[1].evidence).toBe(
+      "We haven't got enough people to do the lights at the moment."
+    );
+    // Giữ cụm gốc và thêm từng vế để tô đúng từ ở mỗi câu.
+    expect(targets[0].answers).toContain("publicity");
+    expect(targets[0].answers).toContain("lights");
+  });
+
+  it("ô ghép: mảnh dẫn chứng không khớp nguyên văn -> bỏ mảnh đó, giữ mảnh còn lại", () => {
+    const source = "I've designed publicity before. Nothing else matters here.";
+    const targets = buildEvidenceTargets(
+      [
+        {
+          order: 4,
+          questionEvidence: "I've designed publicity before. / Câu này không có trong bài.",
+          evidenceSnapshot: null,
+          correctAnswerSnapshot: "publicity and lights"
+        }
+      ],
+      source,
+      {}
+    );
+    expect(targets).toHaveLength(1);
+    expect(targets[0].evidence).toBe("I've designed publicity before.");
+  });
+
   it("dẫn chứng không khớp và từ khóa cũng không dò ra -> không đích", () => {
     expect(
       buildEvidenceTargets(

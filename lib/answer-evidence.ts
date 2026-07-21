@@ -267,6 +267,40 @@ function isSearchableKeyword(keyword: string): boolean {
   return keyword.replace(/[^\p{L}\p{N}]/gu, "").length >= 2;
 }
 
+// Một ô dẫn chứng có thể gồm NHIỀU câu trong bài, ngăn nhau bằng " / " — dùng cho câu
+// nhiều đáp án (ô ghép "publicity and lights", chọn nhiều phương án) khi các đáp án nằm
+// ở hai chỗ khác nhau trong bài.
+function splitEvidencePieces(evidence: string | null | undefined): string[] {
+  if (!evidence) {
+    return [];
+  }
+  return evidence
+    .split(" / ")
+    .map((piece) => piece.trim())
+    .filter(Boolean);
+}
+
+// Đáp án ô ghép được lưu thành một cụm ("publicity and lights"); tách thêm từng vế để
+// tô đúng từ ở mỗi câu dẫn chứng. Giữ cả cụm gốc và để trước để ưu tiên khớp nguyên cụm.
+function expandCompositeKeywords(keywords: string[]): string[] {
+  const expanded = [...keywords];
+  for (const keyword of keywords) {
+    if (!/ and /i.test(keyword)) {
+      continue;
+    }
+    for (const part of keyword.split(/ and /i)) {
+      const trimmed = part.trim();
+      if (
+        trimmed.replace(/[^\p{L}\p{N}]/gu, "").length >= 2 &&
+        !expanded.includes(trimmed)
+      ) {
+        expanded.push(trimmed);
+      }
+    }
+  }
+  return expanded;
+}
+
 export type EvidenceTargetInput = {
   order: number | null;
   questionEvidence: string | null; // live từ Question.answerEvidence (giáo viên nhập)
@@ -293,18 +327,25 @@ export function buildEvidenceTargets(
     if (item.order === null) {
       continue;
     }
-    const keywords = answerKeywords(item.correctAnswerSnapshot);
+    const keywords = expandCompositeKeywords(answerKeywords(item.correctAnswerSnapshot));
 
-    const located = [item.questionEvidence, item.evidenceSnapshot]
-      .map((candidate) => candidate?.trim())
-      .find(
-        (candidate) =>
-          !!candidate &&
-          filledSource.includes(fillSourceBlanks(candidate, answersByOrder).trim())
+    // Lấy nguồn dẫn chứng đầu tiên định vị được ÍT NHẤT một mảnh; mảnh nào không tìm
+    // thấy nguyên văn trong bài thì bỏ, mảnh nào thấy thì thành một đích riêng.
+    let locatedPieces: string[] = [];
+    for (const candidate of [item.questionEvidence, item.evidenceSnapshot]) {
+      const pieces = splitEvidencePieces(candidate).filter((piece) =>
+        filledSource.includes(fillSourceBlanks(piece, answersByOrder).trim())
       );
+      if (pieces.length > 0) {
+        locatedPieces = pieces;
+        break;
+      }
+    }
 
-    if (located) {
-      targets.push({ order: item.order, evidence: located, answers: keywords });
+    if (locatedPieces.length > 0) {
+      for (const piece of locatedPieces) {
+        targets.push({ order: item.order, evidence: piece, answers: keywords });
+      }
       continue;
     }
 

@@ -1,0 +1,425 @@
+{
+  "title": "IELTS Master – Listening Test 8",
+  "skill": "listening",
+  "sourceLabel": "IELTS Master – Listening Test 8",
+  "description": "Listening Test 8: 4 part, 40 câu. Nhớ upload 4 file audio MP3 cho từng part sau khi import.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 – Midbury Drama Club",
+      "instructions": "Nghe và hoàn thành ghi chú. Điền KHÔNG QUÁ BA TỪ HOẶC MỘT SỐ cho mỗi câu trả lời.",
+      "content": "# Midbury Drama Club\n\n## Background\nExample: Club started in 1957\n\n- Prize recently won by [[1]] section\n- Usually performs [[2]] plays\n\n## Meetings\n- Next auditions will be on Tuesday, [[3]]\n- Help is needed with [[4]] and [[4]]\n- Rehearsals take place in the [[5]] hall\n- Nearest car park for rehearsals is in Ashburton Road opposite the [[6]]\n\n## Costs\n- Annual membership fee is £[[7]]\n- Extra payment for [[8]]\n\n## Contact\n- Secretary’s name is Sarah [[9]]\n- Secretary’s phone number is [[10]]",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": "youth",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": "comedy",
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Câu 3",
+          "answer": ["12th march", "12 march", "march 12th", "march 12", "12th of march", "the 12th of march"],
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": ["publicity and lights", "lights and publicity"],
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Câu 5",
+          "answer": "community",
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Câu 6",
+          "answer": "sports centre",
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Câu 7",
+          "answer": "180",
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Câu 8",
+          "answer": "costumes",
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Câu 9",
+          "answer": "sawdicott",
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Câu 10",
+          "answer": "07955240063",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupTitles": {},
+        "groupInstructions": {
+          "1": "Complete the notes below. Write NO MORE THAN THREE WORDS OR A NUMBER."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 – Forward thinking charity & Classes",
+      "instructions": "Nghe và trả lời câu hỏi.",
+      "content": " ",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "11. What does the charity Forward thinking do?",
+          "options": [
+            "A it funds art exhibitions in hospitals",
+            "B it produces affordable materials for art therapy",
+            "C it encourages the use of arts projects in healthcare"
+          ],
+          "answer": "C it encourages the use of arts projects in healthcare",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "multiple_choice",
+          "prompt": "12. What benefit of Forward thinking’s work does Jasmine mention?",
+          "options": [
+            "A people avoid going to hospital",
+            "B patients require fewer drugs",
+            "C medical students do better in tests"
+          ],
+          "answer": "B patients require fewer drugs",
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "multiple_choice",
+          "prompt": "13. When did the organization become known as Forward thinking?",
+          "options": [
+            "A 1986",
+            "B in the 1990s",
+            "C 2005"
+          ],
+          "answer": "C 2005",
+          "points": 1
+        },
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "14. Where does Forward thinking operate?",
+          "options": [
+            "A within Clifton city",
+            "B in all parts of London",
+            "C in several towns and villages near Clifton"
+          ],
+          "answer": "C in several towns and villages near Clifton",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "multiple_choice",
+          "prompt": "15. Jasmine explains that the Colville Centre is",
+          "options": [
+            "A a school for people with health problems",
+            "B a venue for a range of different activities",
+            "C a building which needs repairing"
+          ],
+          "answer": "B a venue for a range of different activities",
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "16. Learn Salsa",
+          "options": [
+            "A children and teenagers",
+            "B adults",
+            "C all ages"
+          ],
+          "answer": "B adults",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "17. Smooth Movers",
+          "options": [
+            "A children and teenagers",
+            "B adults",
+            "C all ages"
+          ],
+          "answer": "B adults",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "matching",
+          "prompt": "18. Art of the Forest",
+          "options": [
+            "A children and teenagers",
+            "B adults",
+            "C all ages"
+          ],
+          "answer": "C all ages",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "matching",
+          "prompt": "19. The Money Maze",
+          "options": [
+            "A children and teenagers",
+            "B adults",
+            "C all ages"
+          ],
+          "answer": "B adults",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "matching",
+          "prompt": "20. Make a Play",
+          "options": [
+            "A children and teenagers",
+            "B adults",
+            "C all ages"
+          ],
+          "answer": "A children and teenagers",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupTitles": {},
+        "groupInstructions": {
+          "11": "Choose the correct letter A, B or C.",
+          "16": "Who can take part in each of the classes?\nWrite the correct letter A, B or C next to questions 16-20."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 – City Centre Field Trip",
+      "instructions": "Nghe và hoàn thành lưu đồ, sau đó chọn người phụ trách cho từng nhiệm vụ.",
+      "content": "A. air quality\nB. journey times\nC. land use\nD. leisure facilities\nE. means of transport\nF. parking facilities\nG. number of pedestrians\nH. place of employment\nI. traffic flow\n\n---\n\n# CITY CENTRE FIELD TRIP\n\n- Choose area of city to study\n- did a survey of [[21]] in city centre to compare with old maps\n- [[22]] was assessed in five key locations\n- Measured [[23]] twice a day\n- Researched [[24]] during one afternoon\n- Looked at official figures\n- Measured [[25]] in several locations\n- Asked questions about [[26]]",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "note_completion",
+          "prompt": "Câu 21",
+          "answer": "C",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "note_completion",
+          "prompt": "Câu 22",
+          "answer": "A",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "note_completion",
+          "prompt": "Câu 23",
+          "answer": "I",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "note_completion",
+          "prompt": "Câu 24",
+          "answer": "F",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "note_completion",
+          "prompt": "Câu 25",
+          "answer": "G",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "note_completion",
+          "prompt": "Câu 26",
+          "answer": "E",
+          "points": 1
+        },
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "27. draw graphs and maps",
+          "options": [
+            "A Stefan",
+            "B Lauren",
+            "C both Stefan and Lauren"
+          ],
+          "answer": "B Lauren",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "28. choose photographs",
+          "options": [
+            "A Stefan",
+            "B Lauren",
+            "C both Stefan and Lauren"
+          ],
+          "answer": "C both Stefan and Lauren",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "29. write report",
+          "options": [
+            "A Stefan",
+            "B Lauren",
+            "C both Stefan and Lauren"
+          ],
+          "answer": "A Stefan",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "30. do presentation",
+          "options": [
+            "A Stefan",
+            "B Lauren",
+            "C both Stefan and Lauren"
+          ],
+          "answer": "C both Stefan and Lauren",
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupTitles": {},
+        "groupInstructions": {
+          "21": "Complete the flow chart below. Choose SIX answers from the list and write the correct letter A-I next to questions 21-26.",
+          "27": "Who will be responsible for each task?\nWrite the correct letter next to questions 27-30."
+        }
+      }
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 – Manufacturing in the English Midlands",
+      "instructions": "Nghe và hoàn thành ghi chú. Điền ONE WORD ONLY cho mỗi câu trả lời.",
+      "content": "# Manufacturing in the English Midlands\n\n- 31. In the eighteenth century, the [[31]] still determined how most people made a living.\n- 32. In the ground were minerals which supported the many [[32]] of the region.\n- 33. Since the late sixteenth century the French settlers had made [[33]]\n- 34. In Cheshire [[34]] was mined and transported on the river Mersey.\n- 35. Potters worked in a few [[35]] situated on the small hills of North Staffordshire.\n\n:::break\n\n# Pottery Notes\n\n## Earthware\n\nAdvantages\n- Potters used [[36]] day\n- Saved money on [[37]]\n\nDisadvantages\n- Needed two things in the kiln to be [[38]]\n- Fragility led to high [[39]] during manufacturing\n\n## Stoneware\n- More expensive but better\n- Made from a [[40]] of clay and flint",
+      "defaultTimeLimitMinutes": 10,
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Câu 31",
+          "answer": "land",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "prompt": "Câu 32",
+          "answer": ["industries", "trades"],
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Câu 33",
+          "answer": "glass",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": "salt",
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": "villages",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": "local",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": "fuel",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": "waterproof",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": "wastage",
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": ["mixture", "mix"],
+          "points": 1
+        }
+      ],
+      "metadata": {
+        "groupTitles": {},
+        "groupInstructions": {
+          "31": "Complete the sentences below. Write ONE WORD only for each answer.",
+          "36": "Complete the notes below. Write ONE WORD only for each answer."
+        }
+      }
+    }
+  ]
+}

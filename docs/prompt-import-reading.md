@@ -129,6 +129,11 @@ DẪN CHỨNG (evidence) — thêm cho MỖI câu:
   câu chứa đáp án. Vẫn nên điền để chắc chắn đúng chỗ.
 - Với multiple_choice / true_false_not_given / matching: BẮT BUỘC điền "evidence" vì hệ
   thống KHÔNG tự dò được (đáp án chỉ là chữ cái/TRUE-FALSE, không nằm nguyên văn trong bài).
+- Câu có NHIỀU đáp án nằm ở hai chỗ khác nhau (ô ghép "[[n]] and [[n]]", chọn nhiều
+  phương án): ghép các câu dẫn chứng bằng dấu " / " (dấu gạch chéo có khoảng trắng hai
+  bên), mỗi mảnh vẫn phải NGUYÊN VĂN. Ví dụ:
+  "I've designed publicity before. / We haven't got enough people to do the lights."
+  Mảnh nào không khớp nguyên văn sẽ bị bỏ, nên đừng thêm "..." hay tên người nói.
 
 KIỂM TRA TRƯỚC KHI XUẤT:
 1. Tổng 40 câu, order chạy 1→40 không trùng.

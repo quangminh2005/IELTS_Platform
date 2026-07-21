@@ -44,6 +44,7 @@ import {
   parseUnitImages,
   parseUnitMetaString,
   promptHasGap,
+  splitCellLines,
   splitCompositeParts,
   splitPromptIntoGapSegments,
   splitPromptIntoSegments,
@@ -498,67 +499,80 @@ function TableCompletionCell({
   compositeParts: Record<string, string[]>;
   onCompositeChange: (questionId: string, partIndex: number, count: number, value: string) => void;
 }) {
-  const segments = splitPromptIntoSegments(value);
+  // Mỗi mục "• ..." của đề gốc nằm trên MỘT dòng riêng trong ô (xem splitCellLines).
+  const lines = splitCellLines(value);
   const inputClass =
     "mx-1 inline-flex h-8 w-24 rounded-md border border-primary/50 bg-background/80 px-2 text-center text-sm font-medium outline-none ring-primary/40 focus:ring-2";
 
+  const renderSegment = (
+    segment: { type: "text" | "blank"; value: string },
+    index: number,
+    lineIndex: number
+  ) => {
+    if (segment.type === "text") {
+      return <span key={`${segment.type}-${index}`}>{segment.value}</span>;
+    }
+
+    const question = questionsByOrder.get(Number(segment.value));
+
+    if (!question) {
+      return <span key={`${segment.type}-${segment.value}-${index}`}>[[{segment.value}]]</span>;
+    }
+
+    const key = `${segment.type}-${segment.value}-${index}`;
+    const count = partCounts[Number(segment.value)] ?? 1;
+
+    // Ô đơn (một chỗ trống cho một câu) — như cũ.
+    if (count <= 1) {
+      return (
+        <input
+          key={key}
+          name={`q_${question.id}`}
+          placeholder={segment.value}
+          defaultValue={savedAnswers[question.id] ?? ""}
+          onChange={(event) => onAnswerChange(question.id, event.target.value)}
+          autoComplete="off"
+          className={inputClass}
+        />
+      );
+    }
+
+    // Ô ghép: nhiều ô cho cùng một câu. Ô ẩn q_<id> mang cả cụm để nộp/chấm.
+    const partIndex = partIndexByBlank[`${cellKey}-${lineIndex}-${index}`] ?? 0;
+    const parts = compositeParts[question.id] ?? Array.from({ length: count }, () => "");
+
+    return (
+      <span key={key} className="inline-flex align-middle">
+        {partIndex === 0 ? (
+          <input
+            type="hidden"
+            name={`q_${question.id}`}
+            value={combineCompositeParts(parts)}
+            readOnly
+          />
+        ) : null}
+        <input
+          value={parts[partIndex] ?? ""}
+          placeholder={partIndex === 0 ? segment.value : ""}
+          onChange={(event) =>
+            onCompositeChange(question.id, partIndex, count, event.target.value)
+          }
+          autoComplete="off"
+          className={inputClass}
+        />
+      </span>
+    );
+  };
+
   return (
     <>
-      {segments.map((segment, index) => {
-        if (segment.type === "text") {
-          return <span key={`${segment.type}-${index}`}>{segment.value}</span>;
-        }
-
-        const question = questionsByOrder.get(Number(segment.value));
-
-        if (!question) {
-          return <span key={`${segment.type}-${segment.value}-${index}`}>[[{segment.value}]]</span>;
-        }
-
-        const key = `${segment.type}-${segment.value}-${index}`;
-        const count = partCounts[Number(segment.value)] ?? 1;
-
-        // Ô đơn (một chỗ trống cho một câu) — như cũ.
-        if (count <= 1) {
-          return (
-            <input
-              key={key}
-              name={`q_${question.id}`}
-              placeholder={segment.value}
-              defaultValue={savedAnswers[question.id] ?? ""}
-              onChange={(event) => onAnswerChange(question.id, event.target.value)}
-              autoComplete="off"
-              className={inputClass}
-            />
-          );
-        }
-
-        // Ô ghép: nhiều ô cho cùng một câu. Ô ẩn q_<id> mang cả cụm để nộp/chấm.
-        const partIndex = partIndexByBlank[`${cellKey}-${index}`] ?? 0;
-        const parts = compositeParts[question.id] ?? Array.from({ length: count }, () => "");
-
-        return (
-          <span key={key} className="inline-flex align-middle">
-            {partIndex === 0 ? (
-              <input
-                type="hidden"
-                name={`q_${question.id}`}
-                value={combineCompositeParts(parts)}
-                readOnly
-              />
-            ) : null}
-            <input
-              value={parts[partIndex] ?? ""}
-              placeholder={partIndex === 0 ? segment.value : ""}
-              onChange={(event) =>
-                onCompositeChange(question.id, partIndex, count, event.target.value)
-              }
-              autoComplete="off"
-              className={inputClass}
-            />
-          </span>
-        );
-      })}
+      {lines.map((line, lineIndex) => (
+        <div key={lineIndex} className={lineIndex > 0 ? "mt-1" : undefined}>
+          {splitPromptIntoSegments(line).map((segment, index) =>
+            renderSegment(segment, index, lineIndex)
+          )}
+        </div>
+      ))}
     </>
   );
 }

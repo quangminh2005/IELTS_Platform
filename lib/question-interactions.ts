@@ -253,23 +253,38 @@ export function combineCompositeParts(parts: string[]): string {
   return parts.every((part) => !part.trim()) ? "" : parts.join(" and ");
 }
 
+// Một ô bảng có thể chứa NHIỀU dòng (đề gốc hay in danh sách gạch đầu dòng
+// trong một ô). Bảng markdown không xuống dòng thật được, nên quy ước:
+//   • "<br>"        = xuống dòng tường minh;
+//   • ";" đứng ngay trước một mục "• " cũng tự xuống dòng (giữ tương thích với
+//     các đề đã import theo lối cũ "• A; • B; • C").
+export function splitCellLines(cell: string): string[] {
+  return cell
+    .split(/<br\s*\/?>|;\s*(?=•)/i)
+    .map((line) => line.trim())
+    .filter((line) => line !== "");
+}
+
 // Vị trí (ô thứ mấy trong cụm ô ghép) của từng chỗ trống trong một bảng, tính
 // TRƯỚC theo thứ tự đọc bảng — nhờ vậy không phụ thuộc thứ tự render của React.
-// Key = "<dòng>-<cột>-<segment>", khớp với cách TableCompletionCell dựng key.
+// Key = "<hàng>-<cột>-<dòng trong ô>-<segment>", khớp với cách
+// TableCompletionCell dựng key.
 export function tableBlankPartIndexes(rows: string[][]): Record<string, number> {
   const map: Record<string, number> = {};
   const seen: Record<number, number> = {};
 
   rows.forEach((row, rowIndex) => {
     row.forEach((cell, cellIndex) => {
-      splitPromptIntoSegments(cell).forEach((segment, segmentIndex) => {
-        if (segment.type !== "blank") {
-          return;
-        }
-        const order = Number(segment.value);
-        const partIndex = seen[order] ?? 0;
-        seen[order] = partIndex + 1;
-        map[`${rowIndex}-${cellIndex}-${segmentIndex}`] = partIndex;
+      splitCellLines(cell).forEach((line, lineIndex) => {
+        splitPromptIntoSegments(line).forEach((segment, segmentIndex) => {
+          if (segment.type !== "blank") {
+            return;
+          }
+          const order = Number(segment.value);
+          const partIndex = seen[order] ?? 0;
+          seen[order] = partIndex + 1;
+          map[`${rowIndex}-${cellIndex}-${lineIndex}-${segmentIndex}`] = partIndex;
+        });
       });
     });
   });

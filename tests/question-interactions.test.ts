@@ -5,6 +5,7 @@ import {
   parseMarkdownTable,
   parseQuestionOptions,
   promptHasGap,
+  splitCellLines,
   splitCompositeParts,
   splitPromptIntoGapSegments,
   splitPromptIntoSegments,
@@ -162,10 +163,56 @@ describe("ô ghép (composite blanks)", () => {
 `);
 
     expect(tableBlankPartIndexes(table?.rows ?? [])).toEqual({
-      // dòng 0, cột 1: segment 1 là ô đầu, segment 3 là ô thứ hai của cùng câu 7
-      "0-1-1": 0,
-      "0-1-3": 1,
-      "1-1-0": 0
+      // hàng 0, cột 1, dòng 0 trong ô: segment 1 là ô đầu, segment 3 là ô thứ hai
+      "0-1-0-1": 0,
+      "0-1-0-3": 1,
+      "1-1-0-0": 0
+    });
+  });
+});
+
+// Đề gốc hay in danh sách gạch đầu dòng trong MỘT ô bảng; bảng markdown không
+// xuống dòng thật được nên phải tách bằng "<br>" (hoặc ";" trước mỗi "•").
+describe("splitCellLines", () => {
+  it("tách ô theo <br>", () => {
+    expect(splitCellLines("• Funny<br>• Lazy?<br>• Outdoor type")).toEqual([
+      "• Funny",
+      "• Lazy?",
+      "• Outdoor type"
+    ]);
+  });
+
+  it("chấp nhận <br/> và <BR>", () => {
+    expect(splitCellLines("a<br/>b<BR>c")).toEqual(["a", "b", "c"]);
+  });
+
+  it("vẫn tách được lối cũ '• A; • B' của các đề đã import", () => {
+    expect(splitCellLines("• Older; • Quiet; • [[5]]")).toEqual([
+      "• Older",
+      "• Quiet",
+      "• [[5]]"
+    ]);
+  });
+
+  it("KHÔNG cắt dấu ';' bình thường giữa câu", () => {
+    expect(splitCellLines("gas; electricity")).toEqual(["gas; electricity"]);
+  });
+
+  it("giữ nguyên ô một dòng", () => {
+    expect(splitCellLines("[[1]] teacher")).toEqual(["[[1]] teacher"]);
+  });
+
+  it("đánh số ô ghép theo đúng dòng trong ô", () => {
+    const table = parseMarkdownTable(`
+| Name | Description |
+| --- | --- |
+| Leo | • Funny<br>• Not [[7]] or [[7]] |
+`);
+
+    // dòng 1 của ô (index 1) chứa hai chỗ trống của cùng câu 7
+    expect(tableBlankPartIndexes(table?.rows ?? [])).toEqual({
+      "0-1-1-1": 0,
+      "0-1-1-3": 1
     });
   });
 });

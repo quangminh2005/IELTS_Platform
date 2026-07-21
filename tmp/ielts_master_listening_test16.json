@@ -1,0 +1,670 @@
+{
+ "title": "IELTS Master – Listening Test 16",
+ "skill": "listening",
+ "sourceLabel": "IELTS Master – Listening Test 16",
+ "description": "Listening Test 16: 4 part, 40 câu (thư viện & đặt máy tính / Doors Open Day ở Royal Observatory / rác vũ trụ / tâm lý học bán lẻ trong siêu thị). Nhớ upload 4 file audio MP3 cho từng part.",
+ "units": [
+  {
+   "unitType": "listening_part",
+   "unitNumber": 1,
+   "title": "Listening Part 1 – Libraries & booking a computer",
+   "instructions": "Nghe hai sinh viên bàn về các thư viện trong thành phố và cách đặt chỗ máy tính.",
+   "content": "# Process of booking a computer\n\n:::flow\nStep 1: log in to [[6]] using your student number and [[7]]\nStep 2: choose the resource type you would like to use\nStep 3: select [[8]] of computer\nStep 4: select date of booking using [[9]] options\nStep 5: complete your booking. Your name should appear on the booking [[10]]\n:::",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "tableBody": "| Name of library | Location | Opening times | Other information |\n| --- | --- | --- | --- |\n| Baillieu library | Parkville campus | 8.30am to [[1]]pm weekdays | Popular with students |\n| Brownless library | Near Grattan street and [[2]] | 7am to 2am daily | Open to [[3]] students only |\n| RMIT library | Level 5, building 8, [[4]] Swanston street | 10am-12 midnight Monday to Friday; 10am-[[5]]pm Saturdays and Sundays | Good internet facilities |",
+    "groupInstructions": {
+     "1": "Complete the table below using NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+     "6": "Complete the flow chart below. Write NO MORE THAN ONE WORD for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 1,
+     "questionType": "table_completion",
+     "prompt": "Câu 1",
+     "answer": [
+      "10",
+      "ten"
+     ],
+     "explanation": "Thư viện Baillieu mở 8h30 sáng tới 10 giờ tối các ngày trong tuần (11h–5h là giờ cuối tuần — bẫy).",
+     "evidence": "It's open from 8:30 in the morning until 10 o'clock in the evening, Mondays to Fridays.",
+     "points": 1
+    },
+    {
+     "order": 2,
+     "questionType": "table_completion",
+     "prompt": "Câu 2",
+     "answer": [
+      "Royal Parade",
+      "Royal parade",
+      "royal parade"
+     ],
+     "explanation": "Thư viện Brownless nằm gần Grattan Street và Royal Parade.",
+     "evidence": "Yes, Grattan Street and Royal Parade.",
+     "points": 1
+    },
+    {
+     "order": 3,
+     "questionType": "table_completion",
+     "prompt": "Câu 3",
+     "answer": [
+      "biomedical",
+      "Biomedical"
+     ],
+     "explanation": "Thư viện này chỉ mở cho sinh viên ngành y sinh (biomedical) nên hai bạn không dùng được.",
+     "evidence": "It's only open to biomedical students.",
+     "points": 1
+    },
+    {
+     "order": 4,
+     "questionType": "table_completion",
+     "prompt": "Câu 4",
+     "answer": [
+      "360"
+     ],
+     "explanation": "Địa chỉ đầy đủ của RMIT Library: Level 5, Building 8, 360 Swanston Street.",
+     "evidence": "The full address is Level 5, Building 8, 360 Swanston Street.",
+     "points": 1
+    },
+    {
+     "order": 5,
+     "questionType": "table_completion",
+     "prompt": "Câu 5",
+     "answer": [
+      "6",
+      "six"
+     ],
+     "explanation": "Cuối tuần RMIT mở 10h sáng nhưng đóng cửa lúc 6 giờ chiều.",
+     "evidence": "Uh, 10:00 in the morning, but it closes at 6:00 on Saturdays and Sundays.",
+     "points": 1
+    },
+    {
+     "order": 6,
+     "questionType": "note_completion",
+     "prompt": "Câu 6",
+     "answer": [
+      "BookIt",
+      "Bookit",
+      "bookit"
+     ],
+     "explanation": "Bước đầu tiên là đăng nhập vào hệ thống đặt chỗ tên BookIt.",
+     "evidence": "Okay, first of all, you need to log on to BookIt.",
+     "points": 1
+    },
+    {
+     "order": 7,
+     "questionType": "note_completion",
+     "prompt": "Câu 7",
+     "answer": [
+      "password",
+      "Password"
+     ],
+     "explanation": "Đăng nhập cần mã số sinh viên và MẬT KHẨU.",
+     "evidence": "Okay. Now it's asking me for my student ID and my password.",
+     "points": 1
+    },
+    {
+     "order": 8,
+     "questionType": "note_completion",
+     "prompt": "Câu 8",
+     "answer": [
+      "location",
+      "Location"
+     ],
+     "explanation": "Sau khi chọn loại thiết bị thì bấm vào “location” (vị trí máy) — hệ thống hiện sơ đồ mặt bằng để chọn máy.",
+     "evidence": "So now what you need to do is click on location.",
+     "points": 1
+    },
+    {
+     "order": 9,
+     "questionType": "note_completion",
+     "prompt": "Câu 9",
+     "answer": [
+      "View",
+      "view"
+     ],
+     "explanation": "Bấm ngày mà không được thì phải vào mục “View Options” thì lịch mới chạy.",
+     "evidence": "You've got to go into 'View Options'.",
+     "points": 1
+    },
+    {
+     "order": 10,
+     "questionType": "note_completion",
+     "prompt": "Câu 10",
+     "answer": [
+      "schedule",
+      "Schedule"
+     ],
+     "explanation": "Đặt xong sẽ thấy tên mình hiện trên booking schedule (lịch đặt chỗ).",
+     "evidence": "It says 'Booking completed' and there's my name on the booking schedule.",
+     "points": 1
+    }
+   ],
+   "transcript": "SECTION 1\nInstruction:\nYou will hear a number of different recordings, and you will have to answer questions on what you hear. There will be time for you to read the instructions and questions, and you will have a chance to check your work. All the recordings will be played once only. The test is in four sections. Write all your answers in the listening question booklet. At the end of the test, you will be given 10 minutes to transfer your answers to an answer sheet. Now turn to Section 1.\nYou will hear two students talking about libraries. First, you have some time to look at questions 1 to 5.\n(Pause)\nListen carefully to the first part of the conversation and answer questions 1 to 5.\nZara: Hi there, Tim. You look tired.\nTim: Hi, Zara. I am tired. Well, it is SWOTVAC after all.\nZara: SWOTVAC? Ah, yes, of course, exam period. Don't remind me. I'm pretty exhausted myself. I'm finding it very difficult to study. It's so noisy where I live. I can't concentrate with all that traffic outside. I definitely need to find a quieter place to study.\nTim: Me too. Actually, I've just downloaded some information about the best libraries in the city. Take a look at this. It's the Baillieu Library.\nZara: The Baillieu Library? Isn't that the really old library on Parkville campus?\nTim: Yeah, that's the one. It's the oldest in the city. And it says here that it's really popular with students.\nZara: Popular with students? That means it's noisy and crowded!\nTim: (Laughs) Okay, okay. I see what you mean. But we could try to get there early to make sure we get good seats and a large desk to work at. It's open from 8:30 in the morning until 10 o'clock in the evening, Mondays to Fridays.\nZara: 10? That's very early. I study much better after midnight. Just look at the size of my folder here. I've got so much to get through. Basically, I need to be in the library 24/7 to get all my revision done. Now, if the Baillieu is that popular, it must be open at weekends.\nTim: Yes, of course it is. It opens at 11 o'clock in fact, and it closes at 5:00 p.m.\nZara: Great. Not exactly what I call ideal for late-night study. Count me out.\nTim: Okay, okay. Here's another one. The Brownless Library.\nZara: Ah, yeah. I think I've gone past it a couple of times. It's close to Grattan Street, right?\nTim: Yes, Grattan Street and Royal Parade.\nZara: Royal Parade? Well, that's convenient for me. My apartment's just a few minutes' walk from there. When's it open?\nTim: Well, it says here it opens at 7:00 in the morning, and you'll be pleased to hear that it closes well after midnight, 2:00 a.m. in fact. And we can go there any day of the week.\nZara: That sounds ideal.\nTim: Oh, wait a minute. We can't use it. It's only open to biomedical students.\nZara: Biomedical students only? Great. Just when we thought we'd found the perfect place to study.\nTim: Oh, wait a minute. This one sounds good. The RMIT Library.\nZara: The RMIT Library? I've never heard of it. Where is it?\nTim: It's on Swanston Street, near the central bus station.\nZara: Swanston Street? Ah, yes, I know where that is. It's a really long street though. Do you have a number?\nTim: Yes, number 360 Swanston Street. The full address is Level 5, Building 8, 360 Swanston Street.\nZara: Okay. I think we'd need to get the bus there, but that's not a problem. So when's it open?\nTim: It's open from 10:00 till midnight on weekdays.\nZara: And what about weekends?\nTim: Uh, 10:00 in the morning, but it closes at 6:00 on Saturdays and Sundays. But listen, it says here it has excellent computer and internet facilities. I like the sound of that.\nZara: Me too. In fact, I like the sound of it so much, I think I'll take advantage of their excellent computer facilities right here and now.\nTim: And how exactly are you going to do that? Your laptop isn't working.\nZara: I know, I know. So can I borrow yours?\n(Pause)\nNow you have some time to look at questions 6 to 10.\n(Pause)\nNow listen to the rest of the conversation and answer questions 6 to 10.\nTim: Okay, here's the RMIT Library website. So we want the bookings page. Okay, first of all, you need to log on to BookIt.\nZara: BookIt?\nTim: Yeah, that's it, BookIt.\nZara: Okay. Now it's asking me for my student ID and my password.\nTim: Okay, so just type in your student number.\nZara: I think I can just about remember it.\nTim: And now your password.\nZara: Okay.\nTim: So next, you need to choose the resource type you want to book.\nZara: That's easy. A PC.\nTim: So now what you need to do is click on location.\nZara: Location. Okay. Now it's giving me a floor plan. It looks like I've got a choice of 18 computers.\nTim: Great. So click on one of the PCs.\nZara: I'm choosing this one. It's right next to the window. PC number 4 to be exact. So what do I do now?\nTim: So now you have to choose the date of booking. So when do you want to book it for?\nZara: Let's go for tomorrow. That's Friday, June 6th.\nTim: And just click.\nZara: I just have. So why isn't it working?\nTim: You've got to go into 'View Options'.\nZara: Ah, it's working now. Friday, June 6th.\nTim: Okay, so now you need to choose a time.\nZara: Let's go for late afternoon. 5:00 p.m.\nTim: Right, let's do it.\nZara: Great. It says 'Booking completed' and there's my name on the booking schedule. Result!\nThat is the end of Section 1. You now have half a minute to check your answers.\n(Pause)"
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 2,
+   "title": "Listening Part 2 – Doors Open Day at the Royal Observatory",
+   "instructions": "Nghe hướng dẫn viên giới thiệu chương trình Doors Open Day tại Đài thiên văn Hoàng gia (Edinburgh). Câu 11–14: mỗi câu tick HAI đáp án.",
+   "content": "The tour of the telescope dome includes access to the [[15]] of the building\nTour participants are advised to have suitable [[16]]\nVisitors to the Crawford Collection can see items from the astronomical [[17]] on display\nThe children's craft workshops take place in the [[18]]\nDuring the craft workshops children can construct a model of a [[19]]\nChildren also have the opportunity to colour a [[20]]",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "groupInstructions": {
+     "11": "Choose TWO answers for each question.",
+     "15": "Complete the sentences using NO MORE THAN TWO WORDS for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 11,
+     "questionType": "multiple_choice",
+     "prompt": "11. Doors Open",
+     "options": [
+      "A is an annual event",
+      "B lasts for one week",
+      "C is a free event",
+      "D happens in spring",
+      "E is more than 100 years old"
+     ],
+     "answer": [
+      "A is an annual event",
+      "C is a free event"
+     ],
+     "explanation": "A đúng: sự kiện diễn ra HẰNG NĂM vào tháng 9. C đúng: hoàn toàn miễn phí. Loại B (chỉ một cuối tuần), D (tháng 9 – mùa thu), E (112 là số TOÀ NHÀ tham gia, không phải số tuổi).",
+     "evidence": "Doors Open takes place every year in September, and the Observatory is one of the many buildings, 112 of them in fact, that open their doors to visitors for one weekend. And yes, there's absolutely no charge. It's all completely free.",
+     "points": 1
+    },
+    {
+     "order": 12,
+     "questionType": "multiple_choice",
+     "prompt": "12. The Observatory",
+     "options": [
+      "A is situated in Edinburgh",
+      "B was built 20 years ago",
+      "C regularly participates in the Doors Open event",
+      "D is 120 years old",
+      "E is open to visitors every day of the year"
+     ],
+     "answer": [
+      "A is situated in Edinburgh",
+      "C regularly participates in the Doors Open event"
+     ],
+     "explanation": "A đúng: đài thiên văn ở Edinburgh. C đúng: đã tham gia sự kiện này hơn 20 năm nay, tức là tham gia thường xuyên (20 năm là thời gian THAM GIA, không phải tuổi toà nhà → loại B, D).",
+     "evidence": "Yes, it's Doors Open Day here in Edinburgh, and we're delighted that you have chosen to make this very special building part of your own Doors Open Day experience. / The Observatory has been involved in this event for more than 20 years, and every year we attract more and more visitors, like you, who want to find out more about great buildings in the city.",
+     "points": 1
+    },
+    {
+     "order": 13,
+     "questionType": "multiple_choice",
+     "prompt": "13. Planetarium Shows",
+     "options": [
+      "A take place twice a day",
+      "B are more popular on Saturday",
+      "C run on Saturday and Sunday",
+      "D run four times a day",
+      "E finish at half past ten"
+     ],
+     "answer": [
+      "C run on Saturday and Sunday",
+      "D run four times a day"
+     ],
+     "explanation": "C đúng: chiếu cả hôm nay (thứ Bảy) và ngày mai, Chủ nhật. D đúng: mỗi ngày chiếu BỐN suất (10h30, 11h30, 14h, 15h) — nên loại A.",
+     "evidence": "Now, these will run four times, both today and tomorrow, Sunday.",
+     "points": 1
+    },
+    {
+     "order": 14,
+     "questionType": "multiple_choice",
+     "prompt": "14. All tickets",
+     "options": [
+      "A must be booked in advance",
+      "B are already sold out",
+      "C are on sale at the information point",
+      "D must be booked online",
+      "E are available for from midday"
+     ],
+     "answer": [
+      "A must be booked in advance",
+      "C are on sale at the information point"
+     ],
+     "explanation": "A đúng: bắt buộc phải đặt trước (“booking is essential”). C đúng: vé lấy tại quầy thông tin (information point). Mốc giữa trưa chỉ áp dụng cho hai suất chiều nên loại E.",
+     "evidence": "Tickets for the two shows we're running this morning, the first showing at 10:30 and the second at 11:30, will be available on a first-come, first-served basis here at the information point. / So booking is essential, as spaces go very quickly!",
+     "points": 1
+    },
+    {
+     "order": 15,
+     "questionType": "note_completion",
+     "prompt": "Câu 15",
+     "answer": [
+      "roof",
+      "the roof",
+      "Roof"
+     ],
+     "explanation": "Người tham quan mái vòm kính thiên văn còn được lên MÁI của toà nhà để ngắm toàn cảnh thành phố.",
+     "evidence": "These include a tour of the Telescope Dome, and visitors will even have the opportunity to get onto the roof!",
+     "points": 1
+    },
+    {
+     "order": 16,
+     "questionType": "note_completion",
+     "prompt": "Câu 16",
+     "answer": [
+      "shoes",
+      "comfortable shoes",
+      "Shoes"
+     ],
+     "explanation": "Vì phải leo nhiều bậc thang nên khách được khuyên đi GIÀY thoải mái.",
+     "evidence": "I hope that those of you who are interested are wearing your most comfortable shoes and that you can keep up the pace.",
+     "points": 1
+    },
+    {
+     "order": 17,
+     "questionType": "note_completion",
+     "prompt": "Câu 17",
+     "answer": [
+      "library",
+      "Library"
+     ],
+     "explanation": "Crawford Collection là một THƯ VIỆN thiên văn, thuộc hàng quan trọng nhất thế giới; một số hiện vật được trưng bày.",
+     "evidence": "the Crawford Collection is an astronomical library, and not only that, it ranks as one of the most important astronomical libraries in the world",
+     "points": 1
+    },
+    {
+     "order": 18,
+     "questionType": "note_completion",
+     "prompt": "Câu 18",
+     "answer": [
+      "Visitor Centre",
+      "visitor centre",
+      "visitor center",
+      "Visitor Center"
+     ],
+     "explanation": "Xưởng thủ công cho trẻ em tổ chức tại Visitor Centre (trung tâm đón khách).",
+     "evidence": "we have a craft workshop for children here in the Visitor Centre",
+     "points": 1
+    },
+    {
+     "order": 19,
+     "questionType": "note_completion",
+     "prompt": "Câu 19",
+     "answer": [
+      "telescope",
+      "Telescope"
+     ],
+     "explanation": "Ở xưởng thủ công, trẻ tự làm mô hình KÍNH THIÊN VĂN.",
+     "evidence": "where they can make their very own model of a telescope and color their very own planet",
+     "points": 1
+    },
+    {
+     "order": 20,
+     "questionType": "note_completion",
+     "prompt": "Câu 20",
+     "answer": [
+      "planet",
+      "Planet"
+     ],
+     "explanation": "Ngoài ra trẻ còn được tô màu một HÀNH TINH của riêng mình.",
+     "evidence": "where they can make their very own model of a telescope and color their very own planet",
+     "points": 1
+    }
+   ],
+   "transcript": "SECTION 2\n(Track 6)\nNow turn to Section 2.\nYou will hear a guide talking about a tourist program. First, you have some time to look at questions 11 to 14.\n(Pause)\nListen carefully to the first part of the talk and answer questions 11 to 14.\nKathy: Welcome to all of you. Can everyone see me and hear me? Good. My name's Kathy, and I'm here to tell you about the special program of events going on here at the Royal Observatory. Yes, it's Doors Open Day here in Edinburgh, and we're delighted that you have chosen to make this very special building part of your own Doors Open Day experience.\nNow, I'll make a start with giving you some background information about the Doors Open event. Doors Open takes place every year in September, and the Observatory is one of the many buildings, 112 of them in fact, that open their doors to visitors for one weekend. And yes, there's absolutely no charge. It's all completely free.\nThe Observatory has been involved in this event for more than 20 years, and every year we attract more and more visitors, like you, who want to find out more about great buildings in the city. And hopefully, you'll leave with a better understanding of the universe, too.\nOkay. Now let's run through today's program of events. There are many activities to choose from, so make sure you make the most of your visit. Now, there will be planetarium shows throughout the day. Now, these will run four times, both today and tomorrow, Sunday. These are popular, so please note that we're operating a booking system for these shows. Tickets for the two shows we're running this morning, the first showing at 10:30 and the second at 11:30, will be available on a first-come, first-served basis here at the information point. Tickets for the two afternoon shows at 2:00 p.m. and then at 3:00 p.m. will be released later on at midday. So booking is essential, as spaces go very quickly!\n(Pause)\nNow you have some time to look at questions 15 to 20.\n(Pause)\nNow listen to the next part of the talk and answer questions 15 to 20.\nKathy: We also have some special tours of the Observatory available. These include a tour of the Telescope Dome, and visitors will even have the opportunity to get onto the roof! I hope that those of you who are interested are wearing your most comfortable shoes and that you can keep up the pace. It will be worth the effort of climbing all these stairs. You'll have stunning views over the city when you reach the top!\nNow, for those of you who want to take things at a more leisurely pace, there will be an opportunity to visit the Crawford Collection and learn about the instruments that have been built here, and there will also be some items from the collection on view. For those of you who don't already know, the Crawford Collection is an astronomical library, and not only that, it ranks as one of the most important astronomical libraries in the world. You are promised a real treat here!\nAnd it's great to have so many younger visitors here today. Now, we have a craft workshop for children here in the Visitor Centre, where they can make their very own model of a telescope and color their very own planet! Please note that all children must be accompanied by an adult.\nSo, as you can see, it's a pretty full timetable and there's a lot going on. Now, any questions?\nThat is the end of Section 2. You now have half a minute to check your answers.\n(Pause)"
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 3,
+   "title": "Listening Part 3 – Space junk",
+   "instructions": "Nghe ba sinh viên thảo luận về rác thải trong vũ trụ.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {
+     "27": "Space Junk - Satellites"
+    },
+    "tableBody": "| Name of satellite | Country of origin | Notes |\n| --- | --- | --- |\n| UARS | United States | • Size and weight of [[27]]; • Was in space for two decades |\n| Skylab | United States | • Ended up in [[28]]; • Weight of [[29]] |\n| Mir | Russia | • Larger than UARS; • Ended up in [[30]] |",
+    "groupInstructions": {
+     "21": "Choose THREE letters A-G.\nWhich THREE examples of space junk are mentioned by the speaker?",
+     "24": "Which country is responsible for depositing the following percentages of space junk?\n:::box\nA China\nB Europe\nC India\nD Russia\nE United States\n:::",
+     "27": "Complete the table below. Choose the answers from the options and write the appropriate letter A-I next to questions 27-30.\n:::box\nA a grown up gorilla\nB a double decker bus\nC the desert\nD Eastern Australia\nE the 1980s\nF 2001\nG 100 tonnes\nH the South Pacific\n:::"
+    }
+   },
+   "questions": [
+    {
+     "order": 21,
+     "questionType": "multiple_choice",
+     "prompt": "21. Ví dụ 1",
+     "options": [
+      "A cans",
+      "B cooling tanks",
+      "C metal plates",
+      "D metal screws",
+      "E paint",
+      "F satellites",
+      "G whole rackets"
+     ],
+     "answer": [
+      "D metal screws",
+      "E paint",
+      "F satellites"
+     ],
+     "explanation": "Ruth kể các loại rác: vệ tinh đã chết (F), ốc vít kim loại rơi ra (D), hạt sơn li ti (E). “Liquid coolant” là chất làm mát dạng lỏng, KHÔNG phải bồn làm mát (B).",
+     "evidence": "Anything from dead satellites to loose metal screws. There are even tiny particles of paint and liquid coolant.",
+     "points": 1
+    },
+    {
+     "order": 22,
+     "questionType": "multiple_choice",
+     "prompt": "22. Ví dụ 2",
+     "options": [
+      "A cans",
+      "B cooling tanks",
+      "C metal plates",
+      "D metal screws",
+      "E paint",
+      "F satellites",
+      "G whole rackets"
+     ],
+     "answer": [
+      "D metal screws",
+      "E paint",
+      "F satellites"
+     ],
+     "explanation": "Ba đáp án đúng là D, E, F (xem giải thích câu 21). Thứ tự chọn không quan trọng.",
+     "evidence": "Anything from dead satellites to loose metal screws. There are even tiny particles of paint and liquid coolant.",
+     "points": 1
+    },
+    {
+     "order": 23,
+     "questionType": "multiple_choice",
+     "prompt": "23. Ví dụ 3",
+     "options": [
+      "A cans",
+      "B cooling tanks",
+      "C metal plates",
+      "D metal screws",
+      "E paint",
+      "F satellites",
+      "G whole rackets"
+     ],
+     "answer": [
+      "D metal screws",
+      "E paint",
+      "F satellites"
+     ],
+     "explanation": "Ba đáp án đúng là D, E, F (xem giải thích câu 21). Thứ tự chọn không quan trọng.",
+     "evidence": "Anything from dead satellites to loose metal screws. There are even tiny particles of paint and liquid coolant.",
+     "points": 1
+    },
+    {
+     "order": 24,
+     "questionType": "matching",
+     "prompt": "24. 28%",
+     "options": [
+      "A China",
+      "B Europe",
+      "C India",
+      "D Russia",
+      "E United States"
+     ],
+     "answer": "A China",
+     "explanation": "28% lượng rác vũ trụ đến từ Trung Quốc.",
+     "evidence": "and then 28% is from China",
+     "points": 1
+    },
+    {
+     "order": 25,
+     "questionType": "matching",
+     "prompt": "25. 29%",
+     "options": [
+      "A China",
+      "B Europe",
+      "C India",
+      "D Russia",
+      "E United States"
+     ],
+     "answer": "E United States",
+     "explanation": "Gần một phần ba — chính xác là 29% — đến từ Mỹ.",
+     "evidence": "Another third—well, just under actually, 29%—is from America, and then 28% is from China.",
+     "points": 1
+    },
+    {
+     "order": 26,
+     "questionType": "matching",
+     "prompt": "26. 37%",
+     "options": [
+      "A China",
+      "B Europe",
+      "C India",
+      "D Russia",
+      "E United States"
+     ],
+     "answer": "D Russia",
+     "explanation": "Hơn một phần ba — 37% — đến từ Nga, nhiều nhất trong các nước.",
+     "evidence": "Over a third—37% to be exact—comes from Russia.",
+     "points": 1
+    },
+    {
+     "order": 27,
+     "questionType": "table_completion",
+     "prompt": "Câu 27",
+     "answer": [
+      "B",
+      "B a double decker bus",
+      "a double decker bus"
+     ],
+     "explanation": "UARS nặng 5.700 kg — tương đương một chiếc xe buýt hai tầng.",
+     "evidence": "And that's about the same as a double-decker bus, apparently.",
+     "points": 1
+    },
+    {
+     "order": 28,
+     "questionType": "table_completion",
+     "prompt": "Câu 28",
+     "answer": [
+      "C",
+      "C the desert",
+      "the desert"
+     ],
+     "explanation": "Skylab rơi xuống Ấn Độ Dương và các SA MẠC ở TÂY Úc — nên chọn “the desert”, không phải “Eastern Australia” (bẫy).",
+     "evidence": "It fell into the Indian Ocean and the deserts of Western Australia.",
+     "points": 1
+    },
+    {
+     "order": 29,
+     "questionType": "table_completion",
+     "prompt": "Câu 29",
+     "answer": [
+      "G",
+      "G 100 tonnes",
+      "100 tonnes"
+     ],
+     "explanation": "Theo ghi chép của Ruth, Skylab nặng 100 tấn.",
+     "evidence": "According to what I wrote down, that particular space junk weighed 100 tons.",
+     "points": 1
+    },
+    {
+     "order": 30,
+     "questionType": "table_completion",
+     "prompt": "Câu 30",
+     "answer": [
+      "H",
+      "H the South Pacific",
+      "the South Pacific"
+     ],
+     "explanation": "Trạm Mir của Nga (135 tấn, lớn hơn UARS nhiều) rơi thẳng xuống Nam Thái Bình Dương năm 2001.",
+     "evidence": "It plunged straight into the South Pacific.",
+     "points": 1
+    }
+   ],
+   "transcript": "SECTION 3\n(Track 7)\nNow turn to Section 3.\nYou will hear three students discussing the issue of waste deposited in space. First, you have some time to look at questions 21 to 23.\n(Pause)\nListen carefully to the first part of the discussion and answer questions 21 to 23.\nSam: Hey, did you manage to go to the talk by Dr Chadwick this morning, Andy?\nAndy: I was there. What happened to you, Sam?\nSam: My bike had a puncture.\nAndy: Seriously?\nSam: Anyway, Ruth, I bet you took some notes. Can you fill me in?\nRuth: Sure. It was all about space junk. Really interesting, actually. I mean, I knew about how much rubbish humans are dumping here on planet Earth, but I had no idea how much junk there is flying around in space. Did you know that there are literally millions of pieces of rubbish orbiting the Earth as we speak?\nSam: Not until now, I didn't.\nAndy: They reckon that around 100 tons of very small objects, like mainly dust, drops on Earth every single day.\nRuth: Yes, that's what she said.\nSam: I thought space junk was all man-made. I can't believe they know so accurately how much is actually out there. Do they track and monitor it all the time?\nAndy: Yeah, they do. According to the talk, there are nearly 25,000 objects larger than 10 centimeters in diameter now orbiting the Earth.\nSam: And what does all this space junk consist of? Isn't it all discarded parts of rockets that were either broken or left behind after space missions, like Apollo and all those spacecraft from years ago?\nRuth: Well, yes, but not only that. All other kinds of debris that we've dumped in space, too. Anything from dead satellites to loose metal screws. There are even tiny particles of paint and liquid coolant.\n(Pause)\nYou now have some time to look at questions 24 to 26.\n(Pause)\nNow listen to the next part of the discussion and answer questions 24 to 26.\nSam: So who is to blame for depositing all this rubbish? Where does it come from?\nRuth: Well, I knew you were going to ask me that, Sam. So, hang on. You can take some of my notes if you like.\nSam: Thanks a lot. That's really helpful.\nRuth: Here, look. Over a third—37% to be exact—comes from Russia. But other countries are close behind. Another third—well, just under actually, 29%—is from America, and then 28% is from China.\nAndy: Yes, but other countries, like India, are adding to the rubbish pile. And don't forget the European Space Agency also has spacecraft in orbit.\nRuth: That's true. We're talking serious space junk here.\nSam: Pretty serious, I'd say. So come on, what do you think are the chances of something solid dropping from space onto our heads?\nAndy: (Laughs) Good question. Everyone asked that. Dr Chadwick said at least one piece of junk falls to Earth every single day. But look at it this way: Earth is a pretty big place. So actually, the statistical chances of being hit are extremely low.\n(Pause)\nYou now have some time to look at questions 27 to 30.\n(Pause)\nNow listen to the rest of the discussion and answer questions 27 to 30.\nSam: So are you saying I'm more likely to win the lottery?\nRuth: Well, just think about it. Two-thirds of the Earth is ocean.\nAndy: That's true. But in time, almost all these pieces of rubbish will fall to Earth, because the object's orbit is decreased by its gravitational pull. But the good news is that they don't cause any serious damage. You know, they can't actually survive the heat generated on re-entry. They simply burn away.\nRuth: But that's not always the case. There are exceptions. Chunks of the United States UARS satellite recently fell into the Pacific Ocean.\nSam: The UARS satellite?\nRuth: It was this 6-ton satellite launched by the space shuttle Discovery way back in 1991. So it had been up in space for 20 years, but stopped working in 2005. It weighed 5,700 kilos.\nAndy: And that's about the same as a double-decker bus, apparently.\nRuth: And—I'll just check my notes—here it is, yes: the largest of these great big chunks that fell into the sea weighed about 158 kilograms. Think of the weight of an adult gorilla, Sam, and you get the picture.\nSam: A nice soft landing, then!\nAndy: Dr Chadwick said, imagine a couple of washing machines tied together and traveling at 100 miles per hour, and you'll get an idea! Oh, and do you remember Skylab? That was another US space station, and it fell to Earth at least three decades ago, in 1979. It fell into the Indian Ocean and the deserts of Western Australia.\nRuth: According to what I wrote down, that particular space junk weighed 100 tons. And let's not forget Mir, the Russian space station. Mir weighed 135 tons, far, far larger than UARS, and it fell to Earth in 2001. It plunged straight into the South Pacific.\nSam: All very interesting. Listen, I've got some junk of my own to sort out: my bike. That's the second puncture this week!\nRuth: Come on, I'll help you fix it.\nThat is the end of Section 3. You now have half a minute to check your answers.\n(Pause)"
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 4,
+   "title": "Listening Part 4 – Retail psychology: supermarket layout",
+   "instructions": "Nghe bài giảng về tâm lý học bán lẻ và cách siêu thị bố trí hàng hoá.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {
+     "31": "Supermarket layout"
+    },
+    "tableBody": "| Name of area | Location of area | Purpose of area |\n| --- | --- | --- |\n| Decompression zone (sometimes called the [[31]] zone) | Situated immediately inside the entrance and is generally free of [[32]] | To encourage the customer to [[33]] to the supermarket |\n| [[34]] zone | Situated on the right side near the front door | To encourage customers to relax before they start shopping |\n| Power aisle | The central route through the supermarket | To display [[35]] |",
+    "groupInstructions": {
+     "31": "Complete the table below. Use NO MORE THAN TWO WORDS for each answer.",
+     "36": "Which items do the following sentences apply to?\nWrite correct letter A, B, C, D or E next to questions 36-40.\n:::box\nA fruit and vegetables\nB bread and milk\nC cheap tinned foods\nD flowers\nE sunglasses\n:::"
+    }
+   },
+   "questions": [
+    {
+     "order": 31,
+     "questionType": "table_completion",
+     "prompt": "Câu 31",
+     "answer": [
+      "dead",
+      "Dead"
+     ],
+     "explanation": "Khu ngay sau cửa vào được gọi là “decompression zone” hay “dead zone”.",
+     "evidence": "This area immediately around the entrance is what retailers refer to as the \"decompression zone\" or the \"dead zone\".",
+     "points": 1
+    },
+    {
+     "order": 32,
+     "questionType": "table_completion",
+     "prompt": "Câu 32",
+     "answer": [
+      "stock",
+      "Stock",
+      "merchandise"
+     ],
+     "explanation": "Khu này gần như trống trơn, siêu thị không bày HÀNG ở đây vì khách chưa sẵn sàng mua.",
+     "evidence": "Yes, it's pretty much clear of stock altogether.",
+     "points": 1
+    },
+    {
+     "order": 33,
+     "questionType": "table_completion",
+     "prompt": "Câu 33",
+     "answer": [
+      "adjust",
+      "Adjust"
+     ],
+     "explanation": "Mục đích là để khách THÍCH NGHI/điều chỉnh sau khi từ ngoài bước vào (cất chìa khoá, bỏ kính râm…).",
+     "evidence": "This is where the customers recover from the environment outside, and by that I mean, this is where they adjust.",
+     "points": 1
+    },
+    {
+     "order": 34,
+     "questionType": "table_completion",
+     "prompt": "Câu 34",
+     "answer": [
+      "dwell",
+      "Dwell"
+     ],
+     "explanation": "Khu bên phải cạnh cửa ra vào gọi là “dwell zone” — nơi khách thư giãn, xem lướt (thường bày báo và hoa).",
+     "evidence": "The dwell zone is the area on the right-hand side by the front door where you are encouraged to relax and browse.",
+     "points": 1
+    },
+    {
+     "order": 35,
+     "questionType": "table_completion",
+     "prompt": "Câu 35",
+     "answer": [
+      "offers",
+      "Offers",
+      "the strongest offers",
+      "strongest offers"
+     ],
+     "explanation": "Power aisle là lối đi chính, nơi trưng bày các CHƯƠNG TRÌNH KHUYẾN MÃI mạnh nhất.",
+     "evidence": "And so this is the area of the supermarket where the strongest offers are displayed.",
+     "points": 1
+    },
+    {
+     "order": 36,
+     "questionType": "matching",
+     "prompt": "36. They are referred to as distress goods",
+     "options": [
+      "A fruit and vegetables",
+      "B bread and milk",
+      "C cheap tinned foods",
+      "D flowers",
+      "E sunglasses"
+     ],
+     "answer": "D flowers",
+     "explanation": "Hoa và báo được gọi là “distress goods” — hàng mua vội, mua theo cảm hứng. Trong hộp chỉ có “flowers”.",
+     "evidence": "And let's think back to flowers and newspapers. / Now, they're known as \"distress goods\".",
+     "points": 1
+    },
+    {
+     "order": 37,
+     "questionType": "matching",
+     "prompt": "37. They are always located at the front of the supermarket",
+     "options": [
+      "A fruit and vegetables",
+      "B bread and milk",
+      "C cheap tinned foods",
+      "D flowers",
+      "E sunglasses"
+     ],
+     "answer": "A fruit and vegetables",
+     "explanation": "Rau quả luôn được bày phía trước để tạo hình ảnh siêu thị “lành mạnh”.",
+     "evidence": "Yes, fruit and vegetables are always at the front because it gives the supermarket a healthy image.",
+     "points": 1
+    },
+    {
+     "order": 38,
+     "questionType": "matching",
+     "prompt": "38. They are referred to as destination goods",
+     "options": [
+      "A fruit and vegetables",
+      "B bread and milk",
+      "C cheap tinned foods",
+      "D flowers",
+      "E sunglasses"
+     ],
+     "answer": "B bread and milk",
+     "explanation": "Hàng thiết yếu như bánh mì, sữa, ngũ cốc bị đặt tít trong cùng để khách phải đi hết cửa hàng — gọi là “destination goods”.",
+     "evidence": "Now, what about everyday items like bread or milk or cereals? They're always placed right at the back of the supermarket. / That's why items like these are often called \"destination goods\".",
+     "points": 1
+    },
+    {
+     "order": 39,
+     "questionType": "matching",
+     "prompt": "39. They are normally located below eye level",
+     "options": [
+      "A fruit and vegetables",
+      "B bread and milk",
+      "C cheap tinned foods",
+      "D flowers",
+      "E sunglasses"
+     ],
+     "answer": "C cheap tinned foods",
+     "explanation": "Hàng đắt tiền được đặt ngang tầm mắt; đồ hộp rẻ bị xếp rất thấp nên khó thấy.",
+     "evidence": "It's often quite hard to spot items like cheap tinned food. Why is that? Well, they're normally placed very low on the shelves.",
+     "points": 1
+    },
+    {
+     "order": 40,
+     "questionType": "matching",
+     "prompt": "40. They are often located at the check-out",
+     "options": [
+      "A fruit and vegetables",
+      "B bread and milk",
+      "C cheap tinned foods",
+      "D flowers",
+      "E sunglasses"
+     ],
+     "answer": "E sunglasses",
+     "explanation": "Quầy thanh toán thay hàng liên tục theo thời tiết: nắng thì bày KÍNH RÂM, mưa thì bày ô.",
+     "evidence": "So if the sun comes out, the checkout is an ideal place to display sunglasses, and if it rains, umbrellas can be placed there instead.",
+     "points": 1
+    }
+   ],
+   "transcript": "SECTION 4\n(Track 8)\nNow turn to Section 4.\nYou will hear a woman talking about retail psychology. First, you have some time to look at questions 31 to 40.\n(Pause)\nListen carefully to the talk and answer questions 31 to 40.\nSpeaker: Hello, everyone. Let's get started on the final lecture in our module on retail psychology.\nToday, we're going to focus on supermarket layouts and how retailers display their products to encourage us, as customers, to spend as much of our money as possible.\nIt's an interesting topic. Now, most of us don't actually realize that the layout is deliberately designed to make us part with our money. But in fact, millions of pounds are spent on research into the psychology of shoppers and what motivates us to buy.\nSo, let's have a look at an actual supermarket layout. Now, here's the entrance to the store, just here.\nThis area immediately around the entrance is what retailers refer to as the \"decompression zone\" or the \"dead zone\". This is where the customers recover from the environment outside, and by that I mean, this is where they adjust. For example, the place where they might put their keys in their pockets, or take off their sunglasses, these kinds of things.\nSo, what do you notice about this area? It's very empty, isn't it? Yes, it's pretty much clear of stock altogether. This area is not designed or used to sell us anything. Basically, the supermarkets never put any merchandise here, because they know that no one's ready to buy yet.\nHowever, the retailers want their customers to feel comfortable. If they're in a relaxed state of mind, they're much more likely to stay longer and spend money.\nNow, let's look back at the entrance again. Now it's interesting, but we know that three-quarters of us look right, not left, when we go into a supermarket. So 75% of people. This gives the supermarkets a great opportunity to hit us with promotions and offers. So near the front door, you might also find what we call the \"dwell zone\".\nThe dwell zone is the area on the right-hand side by the front door where you are encouraged to relax and browse. You will usually find newspapers and flowers here to help you do exactly that.\nMoving on from the dwell zone, we come to the \"power aisle\". Basically, it's the main route customers return to after venturing into nearby aisles. And so this is the area of the supermarket where the strongest offers are displayed. So, you might see a sign that reads \"Barbecue Time\", and you'll see all the items you could possibly need for a barbecue: the charcoal, the sauces, the skewers, and the drinks. Everything you need all in one place.\nWere you planning a barbecue before you went shopping? Do you even have a garden? Yes, the power aisle has a very powerful effect on sales, even though most of us don't even realize we are being sold to here.\nNow, let's think about fruit and vegetables for a moment. They're always located towards the front. Now, why do you think this is? Yes, fruit and vegetables are always at the front because it gives the supermarket a healthy image.\nAnd let's think back to flowers and newspapers. We talked about both these items earlier. And yes, they're displayed near the front, on the right. Now, they're known as \"distress goods\". Why is that? Well, these are the goods that we often buy in a hurry or on impulse. In other words, these are the items we didn't actually intend to buy at all, but the supermarkets want us to put them in our trolleys even before we start our proper shopping.\nNow, what about everyday items like bread or milk or cereals? They're always placed right at the back of the supermarket. Yes, in this area here. Again, this is a deliberate strategy by the supermarkets. Basically, they want us to walk through the whole store to get them, in the hope we will buy other things on the way. That's why items like these are often called \"destination goods\".\nNow, where products are placed on the shelves makes a real difference. We read shelves a bit like we read a book: our eyes go from left to right. And they want you to focus on the more expensive items, so they place them at eye level. It's often quite hard to spot items like cheap tinned food. Why is that? Well, they're normally placed very low on the shelves. Basically, the supermarkets don't want the cheapest products to be the ones you see first.\nFinally, let's have a look at the checkout area here. Now, we all know that sweets are deliberately placed within the reach of children at the checkout. But all kinds of things are displayed at checkouts these days. In fact, supermarkets can change what's on offer almost by the hour. It's a quick and easy way for them to rotate their stock. So if the sun comes out, the checkout is an ideal place to display sunglasses, and if it rains, umbrellas can be placed there instead.\nNow, does anyone have any questions?\nThat is the end of Section 4."
+  }
+ ]
+}

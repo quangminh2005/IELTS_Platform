@@ -1,6 +1,10 @@
 import { deriveAnswerEvidence } from "@/lib/answer-evidence";
 import { gradeAnswer, type AttemptItem } from "@/lib/grading";
-import { detectMultiSelectGroups, gradeMultiSelectGroup } from "@/lib/multi-select";
+import {
+  detectMultiSelectGroups,
+  gradeMultiPickValue,
+  gradeMultiSelectGroup
+} from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
 
 export type QuestionForGrading = {
@@ -97,7 +101,11 @@ export function gradeUnits(
         const slotValues = group.questionIds.map((id) => getValue(id).trim());
         const firstMember = questions.find((q) => q.id === group.questionIds[0]);
         const correctSet = parseCorrectAnswers(firstMember?.correctAnswerJson ?? null);
-        const marks = gradeMultiSelectGroup(slotValues, correctSet);
+        // Ô "joined": một số câu chứa cả N chữ → đúng/sai trọn gói.
+        const marks =
+          group.mode === "joined"
+            ? [gradeMultiPickValue(slotValues[0] ?? "", correctSet)]
+            : gradeMultiSelectGroup(slotValues, correctSet);
         group.questionIds.forEach((id, index) => {
           const points = questions.find((q) => q.id === id)?.points ?? 1;
           groupResult.set(id, {

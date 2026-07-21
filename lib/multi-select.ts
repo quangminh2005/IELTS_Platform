@@ -7,7 +7,27 @@ import { normalizeAnswer } from "./grading";
 export type MultiSelectGroup = {
   questionIds: string[];
   selectCount: number;
+  // "slots"  = N số câu liên tiếp, mỗi câu giữ MỘT chữ đã chọn (mỗi chữ 1 điểm).
+  // "joined" = CHỈ MỘT số câu nhưng phải chọn N chữ (vd "Choose TWO answers for
+  //            each question"): cả N chữ lưu chung một ô, nối bằng MULTI_PICK_SEPARATOR,
+  //            và chỉ được điểm khi chọn ĐÚNG CẢ N chữ.
+  mode: "slots" | "joined";
 };
+
+// Dấu nối các lựa chọn trong một ô "joined" — trùng với cách answerSnapshot nối
+// đáp án đúng, nên trang kết quả hiện hai bên cùng một định dạng.
+export const MULTI_PICK_SEPARATOR = " | ";
+
+export function parseMultiPickValue(value: string): string[] {
+  return value
+    .split("|")
+    .map((piece) => piece.trim())
+    .filter((piece) => piece.length > 0);
+}
+
+export function formatMultiPickValue(values: string[]): string {
+  return values.join(MULTI_PICK_SEPARATOR);
+}
 
 export type DetectQuestion = {
   id: string;
@@ -61,9 +81,18 @@ export function detectMultiSelectGroups(questions: DetectQuestion[]): MultiSelec
     if (runLength >= 2 && runLength === correctSet.size && isSubsetOfOptions) {
       groups.push({
         questionIds: questions.slice(i, end).map((question) => question.id),
-        selectCount: runLength
+        selectCount: runLength,
+        mode: "slots"
       });
       i = end;
+    } else if (runLength === 1 && correctSet.size >= 2 && isSubsetOfOptions) {
+      // Một số câu duy nhất nhưng có ≥ 2 đáp án đúng → dạng "mỗi câu chọn N chữ".
+      groups.push({
+        questionIds: [start.id],
+        selectCount: correctSet.size,
+        mode: "joined"
+      });
+      i += 1;
     } else if (runLength >= 2) {
       // Dãy cùng đáp án nhưng độ dài không khớp số đáp án đúng (dữ liệu bất
       // thường) → bỏ qua cả dãy, tránh gom nhầm một dãy con tuỳ tiện.
@@ -74,6 +103,13 @@ export function detectMultiSelectGroups(questions: DetectQuestion[]): MultiSelec
   }
 
   return groups;
+}
+
+// Chấm một ô "joined" (một số câu, chọn N chữ): chỉ đúng khi tập chữ đã chọn
+// TRÙNG KHỚP tập đáp án đúng — thiếu, thừa hay sai một chữ đều 0 điểm.
+export function gradeMultiPickValue(value: string, correctAnswers: string[]): boolean {
+  const picked = normalizedSet(parseMultiPickValue(value));
+  return picked.size > 0 && sameSet(picked, normalizedSet(correctAnswers));
 }
 
 // Chấm một nhóm chọn-N theo tập: mỗi chữ đúng phân biệt được 1 điểm (chấm phần),

@@ -24,7 +24,48 @@ const writingUnit = {
   ]
 };
 
+// Một số câu Listening yêu cầu tick HAI đáp án (vd Test 16 câu 11): cả hai chữ
+// lưu chung một ô, nối bằng " | ", và chỉ được điểm khi đúng cả hai.
+const multiPickUnit = {
+  assignableUnitId: "u3",
+  skill: "listening",
+  content: null,
+  transcript: "Doors Open takes place every year. It's all completely free.",
+  questions: [
+    {
+      id: "q11",
+      order: 11,
+      questionType: "multiple_choice",
+      optionsJson: JSON.stringify([
+        "A is an annual event",
+        "B lasts for one week",
+        "C is a free event"
+      ]),
+      correctAnswerJson: JSON.stringify(["A is an annual event", "C is a free event"]),
+      explanation: null,
+      answerEvidence: "It's all completely free.",
+      points: 1
+    }
+  ]
+};
+
 describe("gradeUnits", () => {
+  it("cho điểm câu tick-hai-đáp-án khi chọn đúng cả hai (không phụ thuộc thứ tự)", () => {
+    const result = gradeUnits(
+      [multiPickUnit],
+      () => "C is a free event | A is an annual event"
+    );
+    expect(result.answerRows[0].isCorrect).toBe(true);
+    expect(result.answerRows[0].pointsAwarded).toBe(1);
+    expect(result.gradeItems[0].points).toBe(1);
+  });
+
+  it("không cho điểm câu tick-hai-đáp-án khi mới chọn một chữ", () => {
+    const result = gradeUnits([multiPickUnit], () => "A is an annual event");
+    expect(result.answerRows[0].isCorrect).toBe(false);
+    expect(result.answerRows[0].pointsAwarded).toBe(0);
+  });
+
   it("auto-grades reading answers", () => {
     const values: Record<string, string> = { q1: "paris" };
     const result = gradeUnits([readingUnit], (id) => values[id] ?? "");

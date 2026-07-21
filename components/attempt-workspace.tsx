@@ -46,7 +46,11 @@ import {
   splitPromptIntoSegments,
   usesDragDropAnswer
 } from "@/lib/question-interactions";
-import type { MultiSelectGroup } from "@/lib/multi-select";
+import {
+  formatMultiPickValue,
+  parseMultiPickValue,
+  type MultiSelectGroup
+} from "@/lib/multi-select";
 import { isFindShortcut, shouldCountTabAway } from "@/lib/proctor-signals";
 
 type Question = {
@@ -1298,6 +1302,7 @@ function MultiSelectQuestionSet({
   questions,
   options,
   selectCount,
+  mode,
   savedAnswers,
   onAnswerChange,
   flagged,
@@ -1306,21 +1311,33 @@ function MultiSelectQuestionSet({
   questions: Question[];
   options: string[];
   selectCount: number;
+  mode: "slots" | "joined";
   savedAnswers: Record<string, string>;
   onAnswerChange: AnswerChange;
   flagged: Set<string>;
   onToggleFlag: (questionId: string) => void;
 }) {
-  const selected = questions
-    .map((question) => savedAnswers[question.id] ?? "")
-    .filter((value) => value.length > 0);
+  const firstQuestion = questions[0];
+  // "joined": cả N chữ nằm chung một ô của MỘT số câu. "slots": mỗi câu một chữ.
+  const selected =
+    mode === "joined"
+      ? parseMultiPickValue(savedAnswers[firstQuestion.id] ?? "")
+      : questions
+          .map((question) => savedAnswers[question.id] ?? "")
+          .filter((value) => value.length > 0);
   const selectedSet = new Set(selected);
   const atLimit = selected.length >= selectCount;
-  const firstQuestion = questions[0];
   const isFlagged = flagged.has(firstQuestion.id);
 
   // Gán lại danh sách chữ đã chọn vào N ô theo thứ tự (ô thừa để trống).
   const assignSlots = (letters: string[]) => {
+    if (mode === "joined") {
+      const next = formatMultiPickValue(letters);
+      if ((savedAnswers[firstQuestion.id] ?? "") !== next) {
+        onAnswerChange(firstQuestion.id, next);
+      }
+      return;
+    }
     questions.forEach((question, index) => {
       const next = letters[index] ?? "";
       if ((savedAnswers[question.id] ?? "") !== next) {
@@ -1348,7 +1365,7 @@ function MultiSelectQuestionSet({
       ))}
       <div className="flex items-center justify-between gap-2">
         <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          Chọn {selectCount} đáp án{" "}
+          {mode === "joined" ? `Câu ${firstQuestion.order} · ` : ""}Chọn {selectCount} đáp án{" "}
           <span className={selected.length === selectCount ? "text-primary" : ""}>
             ({selected.length}/{selectCount})
           </span>
@@ -1366,6 +1383,9 @@ function MultiSelectQuestionSet({
           {isFlagged ? "★ Đã đánh dấu" : "☆ Đánh dấu"}
         </button>
       </div>
+      {mode === "joined" && firstQuestion.prompt ? (
+        <p className="mt-2 text-base font-medium leading-7">{firstQuestion.prompt}</p>
+      ) : null}
       <div className="mt-3 space-y-2">
         {options.map((option) => {
           const checked = selectedSet.has(option);
@@ -2486,6 +2506,7 @@ export function AttemptWorkspace({
               questions: Question[];
               options: string[];
               selectCount: number;
+              mode: "slots" | "joined";
             }
           | { kind: "choicegrid"; key: string; questions: Question[] }
           | { kind: "single"; key: string; question: Question };
@@ -2530,7 +2551,8 @@ export function AttemptWorkspace({
                   key: `ms-${question.id}`,
                   questions: groupQuestions,
                   options,
-                  selectCount: group.selectCount
+                  selectCount: group.selectCount,
+                  mode: group.mode
                 });
                 i += groupQuestions.length - 1;
                 continue;
@@ -2814,6 +2836,7 @@ export function AttemptWorkspace({
                     questions={item.questions}
                     options={item.options}
                     selectCount={item.selectCount}
+                    mode={item.mode}
                     savedAnswers={answers}
                     onAnswerChange={handleAnswerChange}
                     flagged={flagged}

@@ -1,0 +1,632 @@
+{
+ "title": "IELTS Master – Listening Test 14",
+ "skill": "listening",
+ "sourceLabel": "IELTS Master – Listening Test 14",
+ "description": "Listening Test 14: 4 part, 40 câu (đổi mật khẩu WebNet / nhà nghỉ ven biển / thực tập tại Gregory Associates / Development Studies). Nhớ upload 4 file audio MP3 cho từng part.",
+ "units": [
+  {
+   "unitType": "listening_part",
+   "unitNumber": 1,
+   "title": "Listening Part 1 – New password (WebNet)",
+   "instructions": "Nghe cuộc gọi giữa nhân viên nhà mạng WebNet và khách hàng muốn cấp lại mật khẩu, hoàn thành phiếu ghi chú.",
+   "content": "# NEW PASSWORD\n\nCall taken by: Natasha\nCustomer's full name: Michael [[1]]\nDate of birth: 27 March 1988\nPrevious address: 319 [[2]] East Providence\nPhone number: 049248002\nData allowance: [[3]]\nCurrent plan: [[4]]\nMother's maiden name: [[5]]\nFirst pet: [[6]]\nNew password sent on: [[7]]\nExtra services required: new [[8]]\nCancel [[9]]\n[[10]] pack",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "groupInstructions": {
+     "1": "Complete the notes below. Write NO MORE THAN TWO WORDS OR A NUMBER for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 1,
+     "questionType": "note_completion",
+     "prompt": "Câu 1",
+     "answer": [
+      "Simmons"
+     ],
+     "explanation": "Khách đánh vần họ của mình: S-I-M-M-O-N-S → Michael Simmons.",
+     "evidence": "Michael Simmons. S-I-M-M-O-N-S. I don't have a middle name.",
+     "points": 1
+    },
+    {
+     "order": 2,
+     "questionType": "note_completion",
+     "prompt": "Câu 2",
+     "answer": [
+      "Ocean Drive",
+      "Ocean drive"
+     ],
+     "explanation": "Địa chỉ CŨ (không phải 12 Wake Street đang ở) là 319 Ocean Drive, East Providence.",
+     "evidence": "Oh, yeah. I used to live at 319 Ocean Drive. That's in East Providence.",
+     "points": 1
+    },
+    {
+     "order": 3,
+     "questionType": "note_completion",
+     "prompt": "Câu 3",
+     "answer": [
+      "unlimited",
+      "Unlimited"
+     ],
+     "explanation": "Khách đã nâng cấp lên gói Gold nên dung lượng data là KHÔNG GIỚI HẠN (unlimited).",
+     "evidence": "I upgraded to the Gold account not long ago, so it's unlimited.",
+     "points": 1
+    },
+    {
+     "order": 4,
+     "questionType": "note_completion",
+     "prompt": "Câu 4",
+     "answer": [
+      "24 months",
+      "24-month",
+      "24 month",
+      "24-month plan"
+     ],
+     "explanation": "Ban đầu là gói 12 tháng nhưng vài tháng trước đã chuyển sang gói 24 tháng → gói hiện tại là 24 months.",
+     "evidence": "Yes, I started off with a 12-month automatic renewal, but a few months ago I switched to the 24-month plan.",
+     "points": 1
+    },
+    {
+     "order": 5,
+     "questionType": "note_completion",
+     "prompt": "Câu 5",
+     "answer": [
+      "White",
+      "white"
+     ],
+     "explanation": "Sarah là TÊN mẹ; họ thời con gái (maiden name) mới là đáp án: White (như tên màu trắng).",
+     "evidence": "Oh, sorry, I misheard. It's... um, White.",
+     "points": 1
+    },
+    {
+     "order": 6,
+     "questionType": "note_completion",
+     "prompt": "Câu 6",
+     "answer": [
+      "goldfish",
+      "a goldfish",
+      "Goldfish"
+     ],
+     "explanation": "Con vật nuôi đầu tiên của khách là một con cá vàng (goldfish).",
+     "evidence": "It was actually a goldfish.",
+     "points": 1
+    },
+    {
+     "order": 7,
+     "questionType": "note_completion",
+     "prompt": "Câu 7",
+     "answer": [
+      "30 June",
+      "30th June",
+      "June 30",
+      "30th of June"
+     ],
+     "explanation": "Nhân viên ghi lại ngày gửi mật khẩu mới: 30 tháng 6.",
+     "evidence": "I'll just make a note of the date: 30th of June.",
+     "points": 1
+    },
+    {
+     "order": 8,
+     "questionType": "note_completion",
+     "prompt": "Câu 8",
+     "answer": [
+      "modem cable",
+      "cable",
+      "modem"
+     ],
+     "explanation": "Khách cần dây CÁP nối modem với máy tính; nhân viên xác nhận sẽ gửi dây mới. (Bảng đáp án gốc ghi “Modem”, nên hệ thống chấp nhận cả “modem cable” lẫn “cable”.)",
+     "evidence": "I think the problem is with the cable that connects the modem to the computer. / You need a new cable.",
+     "points": 1
+    },
+    {
+     "order": 9,
+     "questionType": "note_completion",
+     "prompt": "Câu 9",
+     "answer": [
+      "home phone",
+      "the home phone",
+      "home phone plan"
+     ],
+     "explanation": "Khách không dùng điện thoại bàn nên yêu cầu huỷ gói home phone.",
+     "evidence": "Would you like me to cancel that home phone for you?",
+     "points": 1
+    },
+    {
+     "order": 10,
+     "questionType": "note_completion",
+     "prompt": "Câu 10",
+     "answer": [
+      "Security",
+      "security"
+     ],
+     "explanation": "Khách chỉ đăng ký gói diệt virus tên Security Pack (từ chối Parent-In Pack).",
+     "evidence": "It's called the Security Pack.",
+     "points": 1
+    }
+   ],
+   "transcript": "SECTION 1\nInstructions:\nYou will hear a number of different recordings, and you will have to answer questions on what you hear. There will be time for you to read the instructions and questions, and you will have a chance to check your work. All the recordings will be played once only. The test is in four sections. At the end of the test, you will be given 10 minutes to transfer your answers to an answer sheet. Now turn to section 1.\nYou will hear a telephone conversation between a representative of an internet provider service and a man who wants to get a new password. First, you have some time to look at questions 1 to 7.\n(Pause)\nNow we shall begin. You should answer the questions as you listen because you will not hear the recording a second time. Listen carefully and answer questions 1 to 7.\nNatasha: Good evening, this is WebNet and you're speaking with Natasha. How can I assist you today?\nMichael: Hello Natasha. I tried to log in to my WebNet account yesterday, and I realized I'd forgotten my password. Are you able to help me with that?\nNatasha: Of course. What I'll need to do is ask you a few questions to check your identity, and then I'll issue you with a new password. Is that okay?\nMichael: No problem.\nNatasha: Firstly, can I have your full name, please?\nMichael: Michael Simmons. S-I-M-M-O-N-S. I don't have a middle name.\nNatasha: Great. And your date of birth?\nMichael: It's the 27th of the 3rd, 1988.\nNatasha: Right. And I also need to know your previous address.\nMichael: I live at 12 Wake Street, and that's in...\nNatasha: We have that as your current address. What was the address you registered with us before you moved there?\nMichael: Oh, yeah. I used to live at 319 Ocean Drive. That's in East Providence.\nNatasha: I'll just need your contact phone number as well.\nMichael: That's 0492 480002.\nNatasha: And just a few questions about your account. Do you know what your current data allowance is?\nMichael: I upgraded to the Gold account not long ago, so it's unlimited.\nNatasha: Yes, unlimited data. Right. Now, can you just tell me about your payment plan? Which plan are you currently on, do you know?\nMichael: Oh, hang on a minute while I think. Yes, I started off with a 12-month automatic renewal, but a few months ago I switched to the 24-month plan.\nNatasha: That's fine. Now when you first registered for WebNet, you selected two secret questions and provided us with the answers. In order to issue you with a new password, I need you to answer those questions for me. Firstly, what is your mother's maiden name?\nMichael: My mother's name is Sarah. That's Sarah with an H.\nNatasha: That sounds like her first name. We're looking for her maiden name. That's her family name before she was married.\nMichael: Oh, sorry, I misheard. It's... um, White.\nNatasha: White, as in the color?\nMichael: Yes, that's right.\nNatasha: Now, the other question you chose to answer: What was your first pet?\nMichael: The first pet I ever had?\nNatasha: Yes.\nMichael: It was actually a goldfish.\nNatasha: That's what it says on your file. Okay, that's all done for you, Mr. Simmons. I've sent you a generic password, which should arrive in your email box within a few minutes. I'll just make a note of the date: 30th of June. When you log in, I suggest you go to the member's details section on the website and change it to something you're going to remember.\nMichael: Wonderful, thanks.\n(Pause to look at questions 8 to 10)\nNatasha: Is there anything else I can help you with today?\nMichael: Yeah, there are a few things. I've been having some connection issues recently. I think the problem is with the cable that connects the modem to the computer. Do you supply those?\nNatasha: You need a new cable. Not a problem. I'll arrange for that to be sent off tomorrow.\nMichael: Thanks. Also, I'm currently signed up for three of your services: home phone, mobile, and broadband. I use the internet a lot on my computer and on my mobile, but to be honest, I never use the home phone, and I don't see why I should keep paying for that plan.\nNatasha: Would you like me to cancel that home phone for you?\nMichael: Yes, please, if you wouldn't mind.\nNatasha: Done. Is there anything else?\nMichael: Yes, just one last thing. Do you offer any antivirus products?\nNatasha: Yes, we have one which offers full protection against viruses, spam, and identity theft, which is useful if you're doing any online banking and that kind of thing. It's called the Security Pack.\nMichael: Sounds perfect. Sign me up for one of those, please.\nNatasha: And we've got another one. It's called the Parent-In Pack. It prevents your children from accessing harmful websites and downloading things they shouldn't.\nMichael: I'm not so worried about that anymore. Both my children are adults and have left home. So, just the Security Pack, thanks. That's everything."
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 2,
+   "title": "Listening Part 2 – Renting a beach house",
+   "instructions": "Nghe chủ nhà nghỉ ven biển hướng dẫn người thuê qua điện thoại.",
+   "content": "Difficult parking in town at the weekend because of so many [[17]]\nMuseum is closed on [[18]]\n\nRecommended places to eat:\n• [[19]] for Chinese food\n• Pizzeria for Italian food\n\nPhone number for takeaway pizza [[20]]",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "groupInstructions": {
+     "11": "Where can each of the following items be found?\nChoose SIX answers from the box and write the correct letter A-I next to questions 11-16.\n:::box\nA on washing machine\nB in hallway cupboard\nC in hot water cupboard\nD next to back door\nE in bathroom\nF on top of television\nG in bedroom\nH under kitchen sink\nI above front door\n:::",
+     "17": "Complete the notes below. Write NO MORE THAN TWO WORDS AND/ OR A NUMBER for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 11,
+     "questionType": "matching",
+     "prompt": "11. Alarm",
+     "answer": "D next to back door",
+     "options": [
+      "A on washing machine",
+      "B in hallway cupboard",
+      "C in hot water cupboard",
+      "D next to back door",
+      "E in bathroom",
+      "F on top of television",
+      "G in bedroom",
+      "H under kitchen sink",
+      "I above front door"
+     ],
+     "explanation": "Chuông báo động đặt ngay cạnh công tắc đèn, sát CỬA SAU (back door) dẫn vào bếp.",
+     "evidence": "The main thing to remember is to enter by the back door, which leads into the kitchen, because that is where the alarm is situated, right next to the light switch, just beside the door.",
+     "points": 1
+    },
+    {
+     "order": 12,
+     "questionType": "matching",
+     "prompt": "12. Garage key",
+     "answer": "B in hallway cupboard",
+     "options": [
+      "A on washing machine",
+      "B in hallway cupboard",
+      "C in hot water cupboard",
+      "D next to back door",
+      "E in bathroom",
+      "F on top of television",
+      "G in bedroom",
+      "H under kitchen sink",
+      "I above front door"
+     ],
+     "explanation": "Các chìa khoá phụ (garage, laundry, nhà kho) treo trên móc BÊN TRONG tủ ở hành lang.",
+     "evidence": "You'll find them hanging on a hook inside the cupboard in the hallway, next to the hot water cupboard.",
+     "points": 1
+    },
+    {
+     "order": 13,
+     "questionType": "matching",
+     "prompt": "13. Laundry detergent",
+     "answer": "H under kitchen sink",
+     "options": [
+      "A on washing machine",
+      "B in hallway cupboard",
+      "C in hot water cupboard",
+      "D next to back door",
+      "E in bathroom",
+      "F on top of television",
+      "G in bedroom",
+      "H under kitchen sink",
+      "I above front door"
+     ],
+     "explanation": "Bột giặt để cạnh nước rửa chén, DƯỚI bồn rửa trong bếp.",
+     "evidence": "There should be some laundry detergent for the washing machine next to the dishwashing liquid under the kitchen sink.",
+     "points": 1
+    },
+    {
+     "order": 14,
+     "questionType": "matching",
+     "prompt": "14. Beach towels",
+     "answer": "A on washing machine",
+     "options": [
+      "A on washing machine",
+      "B in hallway cupboard",
+      "C in hot water cupboard",
+      "D next to back door",
+      "E in bathroom",
+      "F on top of television",
+      "G in bedroom",
+      "H under kitchen sink",
+      "I above front door"
+     ],
+     "explanation": "Khăn đi biển nằm trong một cái giỏ đặt TRÊN máy giặt.",
+     "evidence": "You'll find a pile of beach towels in a basket on the washing machine.",
+     "points": 1
+    },
+    {
+     "order": 15,
+     "questionType": "matching",
+     "prompt": "15. Bath towels",
+     "answer": "C in hot water cupboard",
+     "options": [
+      "A on washing machine",
+      "B in hallway cupboard",
+      "C in hot water cupboard",
+      "D next to back door",
+      "E in bathroom",
+      "F on top of television",
+      "G in bedroom",
+      "H under kitchen sink",
+      "I above front door"
+     ],
+     "explanation": "Khăn mới chỉ dùng trong phòng tắm được cất ở tủ bình nóng lạnh (hot water cupboard), trên kệ phía trên bình.",
+     "evidence": "These are in the hot water cupboard, on the shelf up above the cylinder.",
+     "points": 1
+    },
+    {
+     "order": 16,
+     "questionType": "matching",
+     "prompt": "16. Light bulbs",
+     "answer": "G in bedroom",
+     "options": [
+      "A on washing machine",
+      "B in hallway cupboard",
+      "C in hot water cupboard",
+      "D next to back door",
+      "E in bathroom",
+      "F on top of television",
+      "G in bedroom",
+      "H under kitchen sink",
+      "I above front door"
+     ],
+     "explanation": "Bóng đèn dự phòng để trong hộp giày trên tủ ngăn kéo ở PHÒNG NGỦ.",
+     "evidence": "There are spare light bulbs in a shoebox on the chest of drawers in the bedroom.",
+     "points": 1
+    },
+    {
+     "order": 17,
+     "questionType": "note_completion",
+     "prompt": "Câu 17",
+     "answer": [
+      "tourists",
+      "Tourists"
+     ],
+     "explanation": "Cuối tuần thị trấn đông nghẹt KHÁCH DU LỊCH nên rất khó đỗ xe.",
+     "evidence": "Parking in the town is usually really easy, except for weekends, when the place is swamped with tourists.",
+     "points": 1
+    },
+    {
+     "order": 18,
+     "questionType": "note_completion",
+     "prompt": "Câu 18",
+     "answer": [
+      "Monday",
+      "Mondays",
+      "monday"
+     ],
+     "explanation": "Bảo tàng Early History đóng cửa vào thứ Hai.",
+     "evidence": "you should know that it's not open on Mondays",
+     "points": 1
+    },
+    {
+     "order": 19,
+     "questionType": "note_completion",
+     "prompt": "Câu 19",
+     "answer": [
+      "The Happy Dragon",
+      "Happy Dragon",
+      "Happy dragon"
+     ],
+     "explanation": "Muốn ăn món Trung Quốc thì đến The Happy Dragon.",
+     "evidence": "If you like Chinese, The Happy Dragon has excellent food.",
+     "points": 1
+    },
+    {
+     "order": 20,
+     "questionType": "note_completion",
+     "prompt": "Câu 20",
+     "answer": [
+      "3231190"
+     ],
+     "explanation": "Số gọi pizza là 3231190 (3239911 là số của quán Trung Quốc — bẫy).",
+     "evidence": "Phone 3231190 for pizza, and 3239911 for Chinese.",
+     "points": 1
+    }
+   ],
+   "transcript": "SECTION 2\nInstructions:\nYou will hear a man who owns a holiday home talking on the phone to a woman who has rented it. First, you have some time to look at questions 11 to 16.\n(Pause)\nNow listen carefully and answer questions 11 to 16.\nRon: Hello, Ron Smith speaking.\nKayla: Hi, this is Kayla Lawton. I signed up with the Holiday House Agency to rent your beach house, but the agent isn't available today and I have a problem. I can't remember what she said about the alarm system.\nRon: Oh, it's quite simple, really. The main thing to remember is to enter by the back door, which leads into the kitchen, because that is where the alarm is situated, right next to the light switch, just beside the door. If you go through the front door into the living room, it will take you longer to reach the alarm, and you only have a few seconds to deactivate it. The code is 3498.\nKayla: Okay, I've got that.\nRon: The agent will have given you the back and front door keys, but there are other keys that you may need: for the garage, the laundry, and the little garden shed. You'll find them hanging on a hook inside the cupboard in the hallway, next to the hot water cupboard. The laundry room is outside, next to the garage. It should be kept locked, so please remember to return the key to the hook when you've done your washing. The last tenant lost it somewhere in the garden, and I had to have the lock replaced. There should be some laundry detergent for the washing machine next to the dishwashing liquid under the kitchen sink.\nRon: Oh, now about the linen. The sheets are already on the beds, and there are lots of towels at the house, too. Of course, you'll want to enjoy that lovely, safe swimming beach as much as possible. You'll find a pile of beach towels in a basket on the washing machine. Feel free to take these to the beach with you. We have lots of them, and they're pretty old, so it doesn't matter if they get a bit dirty or sandy. There are other newer towels for use in the bathroom only. These are in the hot water cupboard, on the shelf up above the cylinder. Please don't take these ones down to the beach.\nRon: Ah, what else? Oh yes, I should tell you that the electricity supply is generally reliable, but sometimes there are power surges, which make a few light bulbs blow. If that happens, don't worry. There are spare light bulbs in a shoebox on the chest of drawers in the bedroom. That reminds me, the main power supply is switched off at the mains box, which is above the front door. The first thing to do when you arrive is to pull down the large lever. It's clearly labeled \"Mains Switch\". You don't need to touch any of the other switches.\nKayla: Thank you. Anything else?\n(Pause to look at questions 17 to 20)\nRon: Oh, one more thing. Something that might interest you is a folder of local information. You know, the sort of thing: interesting places to visit, opening hours for the shops and services in the town, plus a little map of local walks. It's on top of the TV along with the remote control.\nRon: Parking in the town is usually really easy, except for weekends, when the place is swamped with tourists. So I would recommend doing your shopping on weekdays. Oh, one thing though: if you want to combine a shopping expedition with a visit to the Early History Museum, you should know that it's not open on Mondays.\nRon: There are lots of good places to eat in town, too. You'll find a list of menus and takeaway prices for some of the more popular local cafes and restaurants. If you like Chinese, The Happy Dragon has excellent food. Or I'd recommend the Pizzeria if you prefer Italian. They have a good selection of takeaway pasta and pizza as well. The Happy Dragon is a firm favorite with the locals, though.\nRon: Both restaurants deliver free of charge, but note the phone numbers have changed since the menus were printed. Phone 3231190 for pizza, and 3239911 for Chinese. You won't be disappointed.\nKayla: Thanks a lot, I'll do that."
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 3,
+   "title": "Listening Part 3 – Internship experience",
+   "instructions": "Nghe giáo sư và học viên cao học trao đổi về kỳ thực tập của cô ấy.",
+   "content": "# How to apply for an internship\n\n[[26]]\n[[27]]\n[[28]]\n[[29]]\n[[30]]",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "groupInstructions": {
+     "21": "Choose the correct letter A, B or C.",
+     "26": "Complete the notes below. Write NO MORE THAN TWO WORDS for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 21,
+     "questionType": "multiple_choice",
+     "prompt": "21. Why did Joanne accept the offer from Gregory Associates?",
+     "answer": "B it was from a well-known company",
+     "options": [
+      "A it covered her travel expenses",
+      "B it was from a well-known company",
+      "C it was the only offer she received"
+     ],
+     "explanation": "Cô có nhiều lời mời; công ty khác còn hỗ trợ chi phí đi lại, nhưng cô chọn Gregory Associates vì đây là công ty ĐẦU NGÀNH được biết đến rộng rãi.",
+     "evidence": "But I knew Gregory Associates was a widely recognized leader in the industry, and that was the big factor for me.",
+     "points": 1
+    },
+    {
+     "order": 22,
+     "questionType": "multiple_choice",
+     "prompt": "22. Joanne was disappointed because",
+     "answer": "C the work was not related to her studies",
+     "options": [
+      "A she found the work routine repetitive",
+      "B the staff were not very helpful",
+      "C the work was not related to her studies"
+     ],
+     "explanation": "Cô khẳng định công việc KHÔNG nhàm chán và đồng nghiệp rất tốt; điều thất vọng là việc hành chính không liên quan gì tới ngành kinh tế cô đang học.",
+     "evidence": "It just wasn't relevant to what I've been studying.",
+     "points": 1
+    },
+    {
+     "order": 23,
+     "questionType": "multiple_choice",
+     "prompt": "23. What did Joanne like best about her internship?",
+     "answer": "A observing how the workplace operates",
+     "options": [
+      "A observing how the workplace operates",
+      "B being responsible for completing projects",
+      "C working closely with the project managers"
+     ],
+     "explanation": "Vì không được giao trách nhiệm lớn nên cô có dịp ĐỨNG NGOÀI QUAN SÁT cách công ty vận hành hằng ngày — đó là điều cô thích nhất.",
+     "evidence": "I got to stand back and watch, and get a real sense of how a company like that runs on a day-to-day basis. And that was the highlight for me.",
+     "points": 1
+    },
+    {
+     "order": 24,
+     "questionType": "multiple_choice",
+     "prompt": "24. What was the hardest part of the internship?",
+     "answer": "B living on so little money",
+     "options": [
+      "A combining it with her studies",
+      "B living on so little money",
+      "C working such long hours"
+     ],
+     "explanation": "Thực tập vào kỳ nghỉ hè nên không đụng lịch học; giờ giấc thì cô quen dần. Khó nhất là sống với ngân sách eo hẹp vì không có thu nhập.",
+     "evidence": "In retrospect, the biggest difficulty was getting by on such a tight budget.",
+     "points": 1
+    },
+    {
+     "order": 25,
+     "questionType": "multiple_choice",
+     "prompt": "25. During the internship Joanne",
+     "answer": "A changed her mind about her career",
+     "options": [
+      "A changed her mind about her career",
+      "B received a job offer from the company",
+      "C decided not to continue her studies"
+     ],
+     "explanation": "Cô KHÔNG được mời làm việc và vẫn học nốt bằng; điều thay đổi là cô quyết định sau khi tốt nghiệp sẽ theo một nghề khác.",
+     "evidence": "Well, over the course of the internship, I ended up reconsidering whether this industry is really for me after all.",
+     "points": 1
+    },
+    {
+     "order": 26,
+     "questionType": "note_completion",
+     "prompt": "Câu 26",
+     "answer": [
+      "documents",
+      "Documents",
+      "get documents"
+     ],
+     "explanation": "Bước đầu tiên: chuẩn bị giấy tờ (thư giới thiệu, bảng điểm công chứng) vì mất nhiều thời gian.",
+     "evidence": "Before they do anything else, students need to get their documents sorted.",
+     "points": 1
+    },
+    {
+     "order": 27,
+     "questionType": "note_completion",
+     "prompt": "Câu 27",
+     "answer": [
+      "shortlist",
+      "Shortlist",
+      "a shortlist"
+     ],
+     "explanation": "Sau khi tìm hiểu nhiều công ty, loại bớt vị trí không phù hợp rồi lập DANH SÁCH RÚT GỌN (shortlist).",
+     "evidence": "and then put together a shortlist consisting only of those positions that are a good match",
+     "points": 1
+    },
+    {
+     "order": 28,
+     "questionType": "note_completion",
+     "prompt": "Câu 28",
+     "answer": [
+      "tailor",
+      "Tailor",
+      "alter",
+      "tailor applications"
+     ],
+     "explanation": "Không gửi cùng một CV/thư xin việc cho mọi nơi mà phải chỉnh sửa (tailor) hồ sơ theo yêu cầu riêng của từng vị trí.",
+     "evidence": "They really need to alter their applications so that they refer to the individual needs of each position.",
+     "points": 1
+    },
+    {
+     "order": 29,
+     "questionType": "note_completion",
+     "prompt": "Câu 29",
+     "answer": [
+      "call",
+      "Call",
+      "phone call"
+     ],
+     "explanation": "Theo dõi hồ sơ bằng cách GỌI ĐIỆN (email dễ bị bỏ qua), khoảng một tuần sau khi nộp.",
+     "evidence": "It's best to call each company. An email is too easy to ignore or delete.",
+     "points": 1
+    },
+    {
+     "order": 30,
+     "questionType": "note_completion",
+     "prompt": "Câu 30",
+     "answer": [
+      "ask questions",
+      "Ask questions",
+      "asking questions"
+     ],
+     "explanation": "Trong buổi phỏng vấn, quan trọng nhất là ĐẶT CÂU HỎI để thể hiện sự quan tâm thật sự tới công ty.",
+     "evidence": "but I think the most important thing is actually to ask questions",
+     "points": 1
+    }
+   ],
+   "transcript": "SECTION 3\nInstructions:\nYou will hear a college professor and a postgraduate student, Diana, discussing her recent internship experience. First, you have some time to look at questions 21 to 25.\n(Pause)\nNow listen carefully and answer questions 21 to 25.\nProfessor: Thanks for coming in today to discuss your internship experience. Completing some sort of work experience like an internship is a core part of our Master's program, and we want to make sure students are able to make the most of it.\nDiana: That's fine.\nProfessor: So, as I understand, you were offered an internship by Gregory Associates, is that correct?\nDiana: Actually, I got offers from a few companies, but Gregory Associates was the only one I seriously considered.\nProfessor: Was there any reason for that?\nDiana: Yeah, they didn't offer the best conditions. Some of the other companies were offering to cover transportation and other living costs, that kind of thing. But I knew Gregory Associates was a widely recognized leader in the industry, and that was the big factor for me.\nProfessor: And were you happy with your choice?\nDiana: Well, yes and no.\nProfessor: Mixed feelings?\nDiana: Yeah, I mean, don't get me wrong. Everyone in the office was great. They didn't talk down to me, and they were always happy to assist if I wasn't sure about something.\nProfessor: Was it the work then? Some students do find internships a little tedious and boring.\nDiana: It's not that it was boring. I was doing new things every day, and I loved that. They really kept me on my toes. It's just that I'm studying economics, you know? But most of the projects I was assigned to involved more administrative stuff. It just wasn't relevant to what I've been studying.\nProfessor: I'm sorry to hear that. I'll make a note of it. Let's talk about the good things. What did you particularly enjoy about the experience?\nDiana: Well, as an intern, the managers do tend to keep you at arm's length. They just don't trust you enough to let you take on a lot of responsibility for the big projects.\nProfessor: That's understandable.\nDiana: Yes, but in a way, I liked that, because I got to stand back and watch, and get a real sense of how a company like that runs on a day-to-day basis. And that was the highlight for me.\nProfessor: That's great to hear. How did you find managing the internship alongside your study commitments?\nDiana: Well, because my internship was over the summer break, that wasn't an issue for me at all.\nProfessor: Okay. What would you say was the biggest struggle then?\nDiana: In the beginning, I might have said the hours. Those 6:00 AM starts were tough. But I quickly got used to that. In retrospect, the biggest difficulty was getting by on such a tight budget. As I wasn't earning anything, the whole experience really drained my savings account.\nProfessor: Yeah, that can be tough. And my last question: What was the outcome of this internship for you? Some of our students are lucky enough to get offers of employment before finishing.\nDiana: At first, I was hoping I would be one of them. In the end, I wasn't, but I'm happy about that now.\nProfessor: Why is that?\nDiana: Well, over the course of the internship, I ended up reconsidering whether this industry is really for me after all. I'm going to finish my degree, because I'm only a semester away from graduation now, but then after that, I've decided to pursue a different line of work.\nProfessor: Well, I do hope you're successful with that.\n(Pause to look at questions 26 to 30)\nProfessor: Now, we're putting together a step-by-step guide about the process for students who want to apply for internships, and we were wondering if you could help us with it?\nDiana: Sure.\nProfessor: What would you say is the first step?\nDiana: Before they do anything else, students need to get their documents sorted. Companies need to see all sorts of things, such as reference letters and verified copies of academic transcripts. It can take time to get it all together, so applicants need to get onto this as soon as possible.\nProfessor: Great, we'll put that down as number one. And then students should begin researching companies?\nDiana: Absolutely. They should look at a wide range of companies and the internships they offer. They really shouldn't limit themselves at that stage.\nProfessor: It would be time-consuming to apply to them all, though.\nDiana: Yeah, so I think they need to weed out those positions they are not qualified for, or that don't meet their own needs and interests, and then put together a shortlist consisting only of those positions that are a good match.\nProfessor: And then?\nDiana: Well, the next part is the applications, of course. I think the big mistake here is that some students just send the same cover letter and the same CV to each company, when in reality, every position is a little bit different. They really need to alter their applications so that they refer to the individual needs of each position.\nProfessor: I'll make a note of that. And should students follow up on their applications?\nDiana: I think so. It's best to call each company. An email is too easy to ignore or delete. And not too soon, either. A week after the applications have been submitted is probably ideal.\nProfessor: So if they get an interview, what's next?\nDiana: Obviously, they need to prepare. For me, this included all sorts of things, like practicing my body language in front of the mirror and researching common interview questions online.\nProfessor: Any tips for the interview itself?\nDiana: Most students are so obsessed with having the right answers, but I think the most important thing is actually to ask questions. It shows the employer that you are genuinely interested in their company and in the position.\nProfessor: That's really helpful advice. Thanks for coming by today.\nDiana: No problem."
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 4,
+   "title": "Listening Part 4 – Development studies",
+   "instructions": "Nghe bài giảng mở đầu môn Development Studies và hoàn thành ghi chú.",
+   "content": "# DEVELOPMENT STUDIES\n\nDevelopment studies attempts to understand:\n• How societies change and progress over time\n• What [[31]] help to make these changes\n\n## Two approaches\n• Theoretical (understand how change occurs)\n• Applied (examine [[32]] and how they can be applied)\n\nAreas of focus: Asia Pacific region; urbanizing (including employment and [[33]]); migration, trade\n\n## You will develop skills to:\n• Understand key development issue in detail\n• Gather data (both [[34]] and textual data)\n• Carefully [[35]] findings\n• [[36]] on a research project\n\n## Brief history of development studies:\n• 1950s – the discipline emerges\n• [[37]] issues are the major consideration\n• 1970s – development studies became more [[38]] of the establishment. Questions were raised about power, environmental sustainability and [[39]] issues.\n• 1980s – today – national governments were no longer as important. Growing interests in small scale practices such as remittances and [[40]]",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "groupInstructions": {
+     "31": "Complete the notes below. Write ONE WORD ONLY for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 31,
+     "questionType": "note_completion",
+     "prompt": "Câu 31",
+     "answer": [
+      "interventions",
+      "Interventions",
+      "actions"
+     ],
+     "explanation": "Ngoài việc hiểu xã hội thay đổi ra sao, ngành còn tìm hiểu những HÀNH ĐỘNG/CAN THIỆP nào thúc đẩy các thay đổi đó.",
+     "evidence": "work out how different sorts of actions can facilitate or even encourage these changes to happen",
+     "points": 1
+    },
+    {
+     "order": 32,
+     "questionType": "note_completion",
+     "prompt": "Câu 32",
+     "answer": [
+      "policies",
+      "Policies"
+     ],
+     "explanation": "Hướng tiếp cận ứng dụng xem xét các CHÍNH SÁCH cụ thể và cách triển khai chúng hiệu quả nhất.",
+     "evidence": "we're looking at specific policies and trying to understand how they can most effectively be put into place",
+     "points": 1
+    },
+    {
+     "order": 33,
+     "questionType": "note_completion",
+     "prompt": "Câu 33",
+     "answer": [
+      "housing",
+      "Housing"
+     ],
+     "explanation": "Đô thị hoá gồm hai vấn đề: việc làm và NHÀ Ở (nhiều người lên thành phố không tìm được chỗ ở).",
+     "evidence": "And the other is housing; with so many people moving to cities, many of them struggle to find a place to live.",
+     "points": 1
+    },
+    {
+     "order": 34,
+     "questionType": "note_completion",
+     "prompt": "Câu 34",
+     "answer": [
+      "statistics",
+      "Statistics"
+     ],
+     "explanation": "Sinh viên học cách thu thập cả SỐ LIỆU THỐNG KÊ lẫn dữ liệu văn bản.",
+     "evidence": "We include sessions on how to gather statistics, but we mostly focus on textual data",
+     "points": 1
+    },
+    {
+     "order": 35,
+     "questionType": "note_completion",
+     "prompt": "Câu 35",
+     "answer": [
+      "evaluate",
+      "Evaluate"
+     ],
+     "explanation": "Sau khi có dữ liệu, phải biết ĐÁNH GIÁ kết quả một cách phản biện.",
+     "evidence": "So we're going to teach you how to critically evaluate your findings.",
+     "points": 1
+    },
+    {
+     "order": 36,
+     "questionType": "note_completion",
+     "prompt": "Câu 36",
+     "answer": [
+      "cooperate",
+      "Cooperate",
+      "co-operate"
+     ],
+     "explanation": "Bài nghiên cứu lớn làm theo nhóm 4 người nên sinh viên phải học cách HỢP TÁC.",
+     "evidence": "so you're going to learn how to cooperate as a team in order to plan and conduct this research assignment",
+     "points": 1
+    },
+    {
+     "order": 37,
+     "questionType": "note_completion",
+     "prompt": "Câu 37",
+     "answer": [
+      "economic",
+      "Economic"
+     ],
+     "explanation": "Thập niên 1950, các mối quan tâm KINH TẾ (GDP, thất nghiệp) là trọng tâm nghiên cứu.",
+     "evidence": "At that stage, economic concerns were at the forefront of nearly all research efforts.",
+     "points": 1
+    },
+    {
+     "order": 38,
+     "questionType": "note_completion",
+     "prompt": "Câu 38",
+     "answer": [
+      "critical",
+      "Critical"
+     ],
+     "explanation": "Thập niên 1970, ngành ngày càng PHÊ PHÁN các thông lệ và giả định đã được thiết lập.",
+     "evidence": "At that time, Development Studies grew increasingly critical of established practices and the assumptions that lay behind those practices.",
+     "points": 1
+    },
+    {
+     "order": 39,
+     "questionType": "note_completion",
+     "prompt": "Câu 39",
+     "answer": [
+      "gender",
+      "Gender"
+     ],
+     "explanation": "Ba vấn đề được đặt ra: quyền lực, bền vững môi trường và bất bình đẳng GIỚI.",
+     "evidence": "and problems with inequalities in terms of gender",
+     "points": 1
+    },
+    {
+     "order": 40,
+     "questionType": "note_completion",
+     "prompt": "Câu 40",
+     "answer": [
+      "micro-credit",
+      "microcredit",
+      "micro credit"
+     ],
+     "explanation": "Sáng kiến đáng chú ý là cho vay những khoản rất nhỏ (chỉ vài đô la) để phụ nữ khởi nghiệp — đó chính là tín dụng vi mô (micro-credit).",
+     "evidence": "One significant innovation here is the idea of making tiny loans, sometimes only a few dollars, to help women in particular to start up a small business.",
+     "points": 1
+    }
+   ],
+   "transcript": "SECTION 4\nInstructions:\nYou will hear the first lecture of a course in development studies. First, you have some time to look at questions 31 to 40.\n(Pause)\nNow listen carefully and answer questions 31 to 40.\nLecturer: Good morning, everyone, and welcome to your first lecture in Development Studies. Development Studies as a discipline can be boiled down to a couple of core objectives. Basically, we are trying to understand how it is that societies experience particular kinds of change, and how they progress as they develop. We're also trying to go beyond that, however, and work out how different sorts of actions can facilitate or even encourage these changes to happen.\nLecturer: To achieve these objectives, there are two key approaches that underpin Development Studies. Firstly, there's the theoretical approach, which is all about the how of change. With theory, we can explore some of the big questions: What kind of change should we aspire to, and how can this be achieved? But we don't just talk; we've also got to apply some of this thinking. So through the applied approach, we're looking at specific policies and trying to understand how they can most effectively be put into place.\nLecturer: Although we try not to limit ourselves, we do focus on a few key areas. Due to our location, for example, the Asia-Pacific region is an important area of research for us. At the moment, we're doing a lot of work on urbanization, and there are two elements to this. One is employment, as urbanization leads to major employment problems. And the other is housing; with so many people moving to cities, many of them struggle to find a place to live. Other issues of particular interest to our staff are migration and, of course, trade.\nLecturer: So, what will you be able to do with a degree in Development Studies? Well, firstly, you'll develop a full working knowledge of all aspects of development. You'll also learn how to gather data. We include sessions on how to gather statistics, but we mostly focus on textual data—that is, policy briefings, research reports, and so on. Once you've done your research, you need to know what it all means. After all, there's not much point in collecting a whole lot of data if you don't know whether it's significant or not. So we're going to teach you how to critically evaluate your findings. And finally, teamwork is a big part of development work. Your major piece of research work for this class is done in groups of four, so you're going to learn how to cooperate as a team in order to plan and conduct this research assignment.\nLecturer: I want to move on now to give you a brief overview of how Development Studies has evolved as a discipline since it was first established. The first thing to note is that, unlike other subjects such as mathematics or philosophy, Development Studies is very young. It began taking shape as a formal discipline only in the 1950s. At that stage, economic concerns were at the forefront of nearly all research efforts. Researchers assumed that development in general could be measured by indicators such as Gross Domestic Product (GDP) or unemployment levels.\nLecturer: In the 1970s, a new set of scholars took charge. These researchers, informed by the social movements of the 1960s, brought a new set of issues to the table. At that time, Development Studies grew increasingly critical of established practices and the assumptions that lay behind those practices. Questions were raised in three areas: the role of power in creating policy, the importance of environmentally sustainable change, and problems with inequalities in terms of gender.\nLecturer: From the 1980s onwards, the economy staged a comeback as a centerpiece of development practice. A key factor here was the reduced significance of national governments due to a number of market-led reforms in many countries around the world. In contrast to the 1950s, however, researchers have recently shown a heightened interest in smaller-scale economic projects. One significant innovation here is the idea of making tiny loans, sometimes only a few dollars, to help women in particular to start up a small business.\nLecturer: And that brings us to today. So let's finish now by talking about...\n(End of Section 4)"
+  }
+ ]
+}

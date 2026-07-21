@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
+  combineCompositeParts,
+  countBlankParts,
   parseMarkdownTable,
   parseQuestionOptions,
   promptHasGap,
+  splitCompositeParts,
   splitPromptIntoGapSegments,
   splitPromptIntoSegments,
+  tableBlankPartIndexes,
   usesDragDropAnswer
 } from "../lib/question-interactions";
 
@@ -104,5 +108,64 @@ describe("parseMarkdownTable", () => {
 
   it("returns null for ordinary content", () => {
     expect(parseMarkdownTable("No table here")).toBeNull();
+  });
+});
+
+// Ô ghép: đề in một câu thành nhiều chỗ trống ("both ___ and ___",
+// "not ___ or ___") nhưng answer key chỉ đánh MỘT số.
+describe("ô ghép (composite blanks)", () => {
+  it("đếm số ô của mỗi câu trong thân ghi chú", () => {
+    expect(countBlankParts("pictures of both [[33]] and [[33]], plus [[34]]")).toEqual({
+      33: 2,
+      34: 1
+    });
+  });
+
+  it("đếm được ô ghép nằm trong ô của bảng", () => {
+    expect(
+      countBlankParts("| Leo Norris | [[6]] | • Not [[7]] or [[7]] | [[8]] |")
+    ).toEqual({ 6: 1, 7: 2, 8: 1 });
+  });
+
+  it("tách đáp án đã lưu về đúng số ô", () => {
+    expect(splitCompositeParts("competitive and stressed", 2)).toEqual([
+      "competitive",
+      "stressed"
+    ]);
+  });
+
+  it("bù ô rỗng khi đáp án lưu còn thiếu phần", () => {
+    expect(splitCompositeParts("competitive", 2)).toEqual(["competitive", ""]);
+    expect(splitCompositeParts("", 2)).toEqual(["", ""]);
+  });
+
+  it("nối các ô lại bằng ' and ' để nộp/chấm", () => {
+    expect(combineCompositeParts(["competitive", "stressed"])).toBe(
+      "competitive and stressed"
+    );
+  });
+
+  it("coi là CHƯA trả lời khi mọi ô đều trống", () => {
+    expect(combineCompositeParts(["", "   "])).toBe("");
+  });
+
+  it("vẫn nộp phần đã điền khi mới điền một ô", () => {
+    expect(combineCompositeParts(["competitive", ""])).toBe("competitive and ");
+  });
+
+  it("đánh số thứ tự các ô của bảng theo thứ tự đọc", () => {
+    const table = parseMarkdownTable(`
+| Name | Description |
+| --- | --- |
+| Leo | • Not [[7]] or [[7]] |
+| Phil | [[2]] |
+`);
+
+    expect(tableBlankPartIndexes(table?.rows ?? [])).toEqual({
+      // dòng 0, cột 1: segment 1 là ô đầu, segment 3 là ô thứ hai của cùng câu 7
+      "0-1-1": 0,
+      "0-1-3": 1,
+      "1-1-0": 0
+    });
   });
 });

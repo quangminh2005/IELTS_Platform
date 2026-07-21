@@ -8,12 +8,12 @@
    "unitType": "listening_part",
    "unitNumber": 1,
    "title": "Listening Part 1 – People interested in sharing the flat",
-   "instructions": "Nghe Craig và Don bàn về ba người gọi điện hỏi thuê phòng trống. Câu 1–8 điền bảng; câu 9–10 điền ghi chú. Lưu ý câu 7: đề gốc có HAI chỗ trống ('Not …… or ……') nhưng chỉ tính MỘT câu — hãy điền cả hai từ, nối bằng 'or'.",
+   "instructions": "Nghe Craig và Don bàn về ba người gọi điện hỏi thuê phòng trống. Câu 1–8 điền bảng; câu 9–10 điền ghi chú. Câu 7 là ô ghép: đề in HAI chỗ trống nhưng chỉ tính MỘT câu, phải điền đúng cả hai ô.",
    "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
    "defaultTimeLimitMinutes": 10,
    "metadata": {
     "groupTitles": {},
-    "tableBody": "# People interested in sharing the flat\n| Name | Job | Description | Special requirements |\n| --- | --- | --- | --- |\n| Phil Parrott | [[1]] teacher | • [[2]]; • Too health-conscious? | [[3]] because of equipment |\n| David [[4]] | Lawyer | • Older; • Quiet; • [[5]] | To pay less for gas and electricity |\n| Leo Norris | [[6]] | • Funny; • Lazy?; • Not [[7]]; • Outdoor type | Somewhere to keep his [[8]] |",
+    "tableBody": "# People interested in sharing the flat\n| Name | Job | Description | Special requirements |\n| --- | --- | --- | --- |\n| Phil Parrott | [[1]] teacher | • [[2]]; • Too health-conscious? | [[3]] because of equipment |\n| David [[4]] | Lawyer | • Older; • Quiet; • [[5]] | To pay less for gas and electricity |\n| Leo Norris | [[6]] | • Funny; • Lazy?; • Not [[7]] or [[7]]; • Outdoor type | Somewhere to keep his [[8]] |",
     "noteBody": "• Leo's phone number (mobile) [[9]]\n• Leo would like to move in on [[10]]",
     "groupInstructions": {
      "1": "Complete the table below using NO MORE THAN THREE WORDS AND/OR A NUMBER for each answer.",
@@ -99,13 +99,12 @@
      "questionType": "table_completion",
      "prompt": "Câu 7",
      "answer": [
-      "competitive or stressed",
-      "competitive, stressed",
       "competitive and stressed",
-      "competitive stressed",
-      "competitive/stressed"
+      "stressed and competitive",
+      "competitive or stressed",
+      "competitive, stressed"
      ],
-     "explanation": "Leo chắc chắn KHÔNG ganh đua cũng không căng thẳng ('not competitive or stressed') — ô này có hai chỗ trống, điền cả hai từ.",
+     "explanation": "Leo chắc chắn KHÔNG ganh đua cũng không căng thẳng ('not competitive or stressed') — ô ghép hai chỗ trống, phải điền đúng CẢ HAI từ mới được tính điểm.",
      "evidence": "He's certainly not competitive or stressed, but he likes cycling and things like that.",
      "points": 1
     },

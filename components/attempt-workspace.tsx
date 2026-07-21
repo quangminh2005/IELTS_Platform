@@ -34,6 +34,8 @@ import { LockedListeningAudio, type LockedTrack } from "@/components/locked-audi
 import { SoundCheck } from "@/components/sound-check";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
+  combineCompositeParts,
+  countBlankParts,
   parseGroupImages,
   parseGroupInstructions,
   parseGroupTitles,
@@ -42,8 +44,10 @@ import {
   parseUnitImages,
   parseUnitMetaString,
   promptHasGap,
+  splitCompositeParts,
   splitPromptIntoGapSegments,
   splitPromptIntoSegments,
+  tableBlankPartIndexes,
   usesDragDropAnswer
 } from "@/lib/question-interactions";
 import {
@@ -475,16 +479,28 @@ function DragDropQuestion({
 
 function TableCompletionCell({
   value,
+  cellKey,
   questionsByOrder,
   savedAnswers,
-  onAnswerChange
+  onAnswerChange,
+  partCounts,
+  partIndexByBlank,
+  compositeParts,
+  onCompositeChange
 }: {
   value: string;
+  cellKey: string;
   questionsByOrder: Map<number, Question>;
   savedAnswers: Record<string, string>;
   onAnswerChange: AnswerChange;
+  partCounts: Record<number, number>;
+  partIndexByBlank: Record<string, number>;
+  compositeParts: Record<string, string[]>;
+  onCompositeChange: (questionId: string, partIndex: number, count: number, value: string) => void;
 }) {
   const segments = splitPromptIntoSegments(value);
+  const inputClass =
+    "mx-1 inline-flex h-8 w-24 rounded-md border border-primary/50 bg-background/80 px-2 text-center text-sm font-medium outline-none ring-primary/40 focus:ring-2";
 
   return (
     <>
@@ -499,16 +515,48 @@ function TableCompletionCell({
           return <span key={`${segment.type}-${segment.value}-${index}`}>[[{segment.value}]]</span>;
         }
 
+        const key = `${segment.type}-${segment.value}-${index}`;
+        const count = partCounts[Number(segment.value)] ?? 1;
+
+        // Ô đơn (một chỗ trống cho một câu) — như cũ.
+        if (count <= 1) {
+          return (
+            <input
+              key={key}
+              name={`q_${question.id}`}
+              placeholder={segment.value}
+              defaultValue={savedAnswers[question.id] ?? ""}
+              onChange={(event) => onAnswerChange(question.id, event.target.value)}
+              autoComplete="off"
+              className={inputClass}
+            />
+          );
+        }
+
+        // Ô ghép: nhiều ô cho cùng một câu. Ô ẩn q_<id> mang cả cụm để nộp/chấm.
+        const partIndex = partIndexByBlank[`${cellKey}-${index}`] ?? 0;
+        const parts = compositeParts[question.id] ?? Array.from({ length: count }, () => "");
+
         return (
-          <input
-            key={`${segment.type}-${segment.value}-${index}`}
-            name={`q_${question.id}`}
-            placeholder={segment.value}
-            defaultValue={savedAnswers[question.id] ?? ""}
-            onChange={(event) => onAnswerChange(question.id, event.target.value)}
-            autoComplete="off"
-            className="mx-1 inline-flex h-8 w-24 rounded-md border border-primary/50 bg-background/80 px-2 text-center text-sm font-medium outline-none ring-primary/40 focus:ring-2"
-          />
+          <span key={key} className="inline-flex align-middle">
+            {partIndex === 0 ? (
+              <input
+                type="hidden"
+                name={`q_${question.id}`}
+                value={combineCompositeParts(parts)}
+                readOnly
+              />
+            ) : null}
+            <input
+              value={parts[partIndex] ?? ""}
+              placeholder={partIndex === 0 ? segment.value : ""}
+              onChange={(event) =>
+                onCompositeChange(question.id, partIndex, count, event.target.value)
+              }
+              autoComplete="off"
+              className={inputClass}
+            />
+          </span>
         );
       })}
     </>
@@ -564,13 +612,44 @@ function TableCompletionQuestionSet({
   savedAnswers: Record<string, string>;
   onAnswerChange: AnswerChange;
 }) {
-  const table = parseMarkdownTable(content);
+  const table = useMemo(() => parseMarkdownTable(content), [content]);
   const questionsByOrder = new Map(questions.map((question) => [question.order, question]));
   const captionLines = (() => {
     const lines = content.split(/\r?\n/);
     const firstTableLine = lines.findIndex((line) => line.includes("|"));
     return firstTableLine > 0 ? lines.slice(0, firstTableLine) : [];
   })();
+
+  // Ô ghép trong bảng (vd "Not [[7]] or [[7]]"): đếm số ô của mỗi câu và tính
+  // TRƯỚC vị trí từng ô theo thứ tự đọc bảng, để không phụ thuộc thứ tự render.
+  const partCounts = useMemo(() => countBlankParts(content), [content]);
+  const partIndexByBlank = useMemo(
+    () => tableBlankPartIndexes(table?.rows ?? []),
+    [table]
+  );
+
+  const [compositeParts, setCompositeParts] = useState<Record<string, string[]>>(() => {
+    const initial: Record<string, string[]> = {};
+    questions.forEach((question) => {
+      const count = partCounts[question.order] ?? 1;
+      if (count > 1) {
+        initial[question.id] = splitCompositeParts(savedAnswers[question.id] ?? "", count);
+      }
+    });
+    return initial;
+  });
+
+  const handleCompositeChange = (
+    questionId: string,
+    partIndex: number,
+    count: number,
+    value: string
+  ) => {
+    const next = [...(compositeParts[questionId] ?? Array.from({ length: count }, () => ""))];
+    next[partIndex] = value;
+    setCompositeParts((previous) => ({ ...previous, [questionId]: next }));
+    onAnswerChange(questionId, combineCompositeParts(next));
+  };
 
   if (!table) {
     return (
@@ -616,9 +695,14 @@ function TableCompletionQuestionSet({
                 <td key={`${rowIndex}-${cellIndex}`} className="border border-border px-3 py-3 align-top leading-7">
                   <TableCompletionCell
                     value={cell}
+                    cellKey={`${rowIndex}-${cellIndex}`}
                     questionsByOrder={questionsByOrder}
                     savedAnswers={savedAnswers}
                     onAnswerChange={onAnswerChange}
+                    partCounts={partCounts}
+                    partIndexByBlank={partIndexByBlank}
+                    compositeParts={compositeParts}
+                    onCompositeChange={handleCompositeChange}
                   />
                 </td>
               ))}
@@ -695,27 +779,9 @@ function NoteCompletionQuestionSet({
   const questionsByOrder = new Map(questions.map((question) => [question.order, question]));
 
   // "Ô ghép": một câu hỏi mà đề in thành nhiều chỗ trống ("both ___ and ___").
-  // Đếm số lần mỗi order xuất hiện trong nội dung — >1 nghĩa là ô ghép.
-  const partCounts = useMemo(() => {
-    const counts: Record<number, number> = {};
-    const pattern = /\[\[(\d+)\]\]/g;
-    let match: RegExpExecArray | null;
-    while ((match = pattern.exec(content)) !== null) {
-      const order = Number(match[1]);
-      counts[order] = (counts[order] ?? 0) + 1;
-    }
-    return counts;
-  }, [content]);
-
-  // Đáp án ô ghép = các phần nối bằng " and " (khớp chữ "and" giữa các ô, giống
-  // đề). Chỉ tính đúng khi TẤT CẢ các phần đúng (server so khớp cả cụm). Nếu mọi
-  // phần đều trống thì coi như chưa trả lời.
-  const splitParts = (value: string, count: number) => {
-    const raw = value ? value.split(" and ") : [];
-    return Array.from({ length: count }, (_, index) => raw[index] ?? "");
-  };
-  const combineParts = (parts: string[]) =>
-    parts.every((part) => !part.trim()) ? "" : parts.join(" and ");
+  const partCounts = useMemo(() => countBlankParts(content), [content]);
+  const splitParts = splitCompositeParts;
+  const combineParts = combineCompositeParts;
 
   const [compositeParts, setCompositeParts] = useState<Record<string, string[]>>(() => {
     const initial: Record<string, string[]> = {};

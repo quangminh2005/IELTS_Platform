@@ -226,6 +226,57 @@ export function splitPromptIntoGapSegments(prompt: string): PromptSegment[] {
   return segments.length > 0 ? segments : [{ type: "text", value: prompt }];
 }
 
+// "Ô ghép": một câu hỏi mà đề in thành NHIỀU chỗ trống ("both ___ and ___",
+// "not ___ or ___"). Đếm số lần mỗi order xuất hiện trong thân ghi chú/bảng —
+// >1 nghĩa là ô ghép. Dùng chung cho cả note completion lẫn table completion.
+export function countBlankParts(content: string): Record<number, number> {
+  const counts: Record<number, number> = {};
+  const pattern = /\[\[(\d+)\]\]/g;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(content)) !== null) {
+    const order = Number(match[1]);
+    counts[order] = (counts[order] ?? 0) + 1;
+  }
+
+  return counts;
+}
+
+// Đáp án ô ghép = các phần nối bằng " and " (giống cách đề in). Chỉ tính ĐÚNG
+// khi TẤT CẢ các phần đúng (server so khớp cả cụm). Mọi phần trống = chưa trả lời.
+export function splitCompositeParts(value: string, count: number): string[] {
+  const raw = value ? value.split(" and ") : [];
+  return Array.from({ length: count }, (_, index) => raw[index] ?? "");
+}
+
+export function combineCompositeParts(parts: string[]): string {
+  return parts.every((part) => !part.trim()) ? "" : parts.join(" and ");
+}
+
+// Vị trí (ô thứ mấy trong cụm ô ghép) của từng chỗ trống trong một bảng, tính
+// TRƯỚC theo thứ tự đọc bảng — nhờ vậy không phụ thuộc thứ tự render của React.
+// Key = "<dòng>-<cột>-<segment>", khớp với cách TableCompletionCell dựng key.
+export function tableBlankPartIndexes(rows: string[][]): Record<string, number> {
+  const map: Record<string, number> = {};
+  const seen: Record<number, number> = {};
+
+  rows.forEach((row, rowIndex) => {
+    row.forEach((cell, cellIndex) => {
+      splitPromptIntoSegments(cell).forEach((segment, segmentIndex) => {
+        if (segment.type !== "blank") {
+          return;
+        }
+        const order = Number(segment.value);
+        const partIndex = seen[order] ?? 0;
+        seen[order] = partIndex + 1;
+        map[`${rowIndex}-${cellIndex}-${segmentIndex}`] = partIndex;
+      });
+    });
+  });
+
+  return map;
+}
+
 function parseTableRow(line: string) {
   return line
     .trim()

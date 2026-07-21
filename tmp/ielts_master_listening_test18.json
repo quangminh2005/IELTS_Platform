@@ -1,0 +1,618 @@
+{
+ "title": "IELTS Master – Listening Test 18",
+ "skill": "listening",
+ "sourceLabel": "IELTS Master – Listening Test 18",
+ "description": "Listening Test 18: 4 part, 40 câu (tìm người ở ghép căn hộ / Active Outdoor Club / bài tập về tương lai của truyền hình / lịch sử ký túc xá Scholastic House). Nhớ upload 4 file audio MP3 cho từng part.",
+ "units": [
+  {
+   "unitType": "listening_part",
+   "unitNumber": 1,
+   "title": "Listening Part 1 – People interested in sharing the flat",
+   "instructions": "Nghe Craig và Don bàn về ba người gọi điện hỏi thuê phòng trống. Câu 1–8 điền bảng; câu 9–10 điền ghi chú. Lưu ý câu 7: đề gốc có HAI chỗ trống ('Not …… or ……') nhưng chỉ tính MỘT câu — hãy điền cả hai từ, nối bằng 'or'.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "tableBody": "# People interested in sharing the flat\n| Name | Job | Description | Special requirements |\n| --- | --- | --- | --- |\n| Phil Parrott | [[1]] teacher | • [[2]]; • Too health-conscious? | [[3]] because of equipment |\n| David [[4]] | Lawyer | • Older; • Quiet; • [[5]] | To pay less for gas and electricity |\n| Leo Norris | [[6]] | • Funny; • Lazy?; • Not [[7]]; • Outdoor type | Somewhere to keep his [[8]] |",
+    "noteBody": "• Leo's phone number (mobile) [[9]]\n• Leo would like to move in on [[10]]",
+    "groupInstructions": {
+     "1": "Complete the table below using NO MORE THAN THREE WORDS AND/OR A NUMBER for each answer.",
+     "9": "Complete the notes below. Write NO MORE THAN THREE WORDS AND/ OR A NUMBER for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 1,
+     "questionType": "table_completion",
+     "prompt": "Câu 1",
+     "answer": [
+      "sports",
+      "sport"
+     ],
+     "explanation": "Phil Parrott vừa tốt nghiệp và dạy THỂ THAO → 'sports teacher'.",
+     "evidence": "He's a teacher. He's just qualified, and he teaches sports.",
+     "points": 1
+    },
+    {
+     "order": 2,
+     "questionType": "table_completion",
+     "prompt": "Câu 2",
+     "answer": [
+      "energetic",
+      "very energetic"
+     ],
+     "explanation": "Craig nhận xét Phil nghe giọng RẤT NĂNG ĐỘNG (energetic) — đây là điểm mô tả tính cách đầu tiên.",
+     "evidence": "He certainly sounded energetic, but he asked lots of questions about whether we smoked, and what sort of food we cooked.",
+     "points": 1
+    },
+    {
+     "order": 3,
+     "questionType": "table_completion",
+     "prompt": "Câu 3",
+     "answer": [
+      "big room",
+      "a big room",
+      "large room"
+     ],
+     "explanation": "Phil yêu cầu một PHÒNG RỘNG vì anh có nhiều dụng cụ thể thao (ô đã in sẵn 'because of equipment').",
+     "evidence": "He said he needs a big room because he's got lots of sports equipment.",
+     "points": 1
+    },
+    {
+     "order": 4,
+     "questionType": "table_completion",
+     "prompt": "Câu 4",
+     "answer": [
+      "Spencer"
+     ],
+     "explanation": "Họ của David được đánh vần rõ S-P-E-N-C-E-R (bẫy: Spender).",
+     "evidence": "No, Spencer. S-P-E-N-C-E-R.",
+     "points": 1
+    },
+    {
+     "order": 5,
+     "questionType": "table_completion",
+     "prompt": "Câu 5",
+     "answer": [
+      "hardworking",
+      "hard-working",
+      "hard working"
+     ],
+     "explanation": "Ngoài 'older' và 'quiet', Craig cảm nhận David là người CHĂM CHỈ, ít ra ngoài chơi.",
+     "evidence": "I got the impression he was a hard-working kind of person who doesn't go out all that much.",
+     "points": 1
+    },
+    {
+     "order": 6,
+     "questionType": "table_completion",
+     "prompt": "Câu 6",
+     "answer": [
+      "engineer",
+      "an engineer"
+     ],
+     "explanation": "Người thứ ba, Leo Norris, làm nghề KỸ SƯ.",
+     "evidence": "He's an engineer.",
+     "points": 1
+    },
+    {
+     "order": 7,
+     "questionType": "table_completion",
+     "prompt": "Câu 7",
+     "answer": [
+      "competitive or stressed",
+      "competitive, stressed",
+      "competitive and stressed",
+      "competitive stressed",
+      "competitive/stressed"
+     ],
+     "explanation": "Leo chắc chắn KHÔNG ganh đua cũng không căng thẳng ('not competitive or stressed') — ô này có hai chỗ trống, điền cả hai từ.",
+     "evidence": "He's certainly not competitive or stressed, but he likes cycling and things like that.",
+     "points": 1
+    },
+    {
+     "order": 8,
+     "questionType": "table_completion",
+     "prompt": "Câu 8",
+     "answer": [
+      "bicycle",
+      "bike",
+      "his bicycle"
+     ],
+     "explanation": "Leo hỏi có chỗ nào an toàn để cất XE ĐẠP không (Craig bảo để trong ga-ra cùng ô tô).",
+     "evidence": "He wanted to check if there was somewhere safe for his bicycle.",
+     "points": 1
+    },
+    {
+     "order": 9,
+     "questionType": "note_completion",
+     "prompt": "Câu 9",
+     "answer": [
+      "07776872433",
+      "0777 687 2433",
+      "0777 6872433",
+      "07776 872433"
+     ],
+     "explanation": "Số di động Leo để lại: 0777 687 2433 (viết liền 07776872433).",
+     "evidence": "Yes, he left his mobile number. It's 0777 687 2433.",
+     "points": 1
+    },
+    {
+     "order": 10,
+     "questionType": "note_completion",
+     "prompt": "Câu 10",
+     "answer": [
+      "28th September",
+      "28 September",
+      "28th of September",
+      "September 28",
+      "the 28th of September",
+      "28/9",
+      "28th Sept"
+     ],
+     "explanation": "Leo đã trả tiền nhà chỗ cũ đến 31/9 nhưng muốn dọn vào sớm hơn — ngày 28 tháng 9.",
+     "evidence": "He said the 28th of September.",
+     "points": 1
+    }
+   ],
+   "transcript": "Narrator: You will hear a conversation between two flatmates, Craig and Don, who are looking for a third person to share their flat. First you have some time to look at questions 1 to 5.\n(Pause)\nNow we shall begin. You should answer the questions as you listen, because you will not hear the recording a second time. Listen carefully and answer questions 1 to 5.\nDon: Hi Craig, been home long?\nCraig: Yeah, quite a time.\nDon: Did anyone phone about renting the spare room?\nCraig: Yeah, we've had three phone calls about it.\nDon: Really?\nCraig: Yeah. Do you want to hear about them?\nDon: Sure.\nCraig: Right. The first one was called Phil Parrott.\nDon: Uh-huh.\nCraig: He's a teacher. He's just qualified, and he teaches sports.\nDon: Okay.\nCraig: Actually, I'm not sure about him. He certainly sounded energetic, but he asked lots of questions about whether we smoked, and what sort of food we cooked.\nDon: Yeah. I mean we don't exactly live on pizza and chips and takeaways, well, not quite, but...\nCraig: But he might be a bit too health-conscious to really fit in with the sort of life we lead.\nDon: Yeah.\nCraig: And he asked a lot of questions about the room. He said he needs a big room because he's got lots of sports equipment.\nDon: Well, that's okay. The room's quite big, but I'm not so sure about him. What about the second one?\nCraig: He was called David Spencer.\nDon: Spender?\nCraig: No, Spencer. S-P-E-N-C-E-R. He works at Cooper Long. You know, the big company on Broad Street? He said he was a lawyer.\nDon: Oh. I'd have thought in that case he'd be earning enough to rent his own place. I wonder why he wants to share a flat.\nCraig: Well, he didn't say. He's quite a bit older than us. He did say he's just moved down here from the north of England. He seemed very quiet actually. Maybe he wants to meet some new people. I got the impression he was a hard-working kind of person who doesn't go out all that much.\nDon: Right.\nCraig: But he sounded okay. Oh, one thing though: he said he wouldn't be staying in the flat at the weekends, so he wants to pay reduced costs for gas and electricity, because he's only here five days out of seven.\nDon: Oh, I'm not sure about that. What do you think?\nCraig: Well, I suppose it's fair, but it all sounds a bit complicated.\nNarrator: Before you hear the rest of the talk, you have some time to look at questions 6 to 10.\n(Pause)\nNow listen and answer questions 6 to 10.\nCraig: Anyway, there was a third person: Leo Norris.\nDon: Yes?\nCraig: He's an engineer.\nDon: Oh, yeah?\nCraig: And he's about our age.\nDon: Right. What did he sound like?\nCraig: Well, actually he was really funny. I couldn't stop laughing when I was talking to him. He said he was very lazy and never got up until noon at weekends, and I said that wouldn't be a problem here!\nDon: No, certainly not!\nCraig: But actually, I suspect he was joking when he said he was lazy. I think he lives life as it comes. He's certainly not competitive or stressed, but he likes cycling and things like that. He sounds like an outdoor type. Anyway, I thought he sounded as if he'd fit in. He wanted to check if there was somewhere safe for his bicycle.\nDon: That's not a problem.\nCraig: No. He can leave it in the garage with my car.\nDon: So did you get his contact details?\nCraig: Yes, he left his mobile number. It's 0777 687 2433.\nDon: And does he want to move in straight away?\nCraig: Well, he's paid his rent in his present place up to the 31st of September, but he said that if possible, he'd like to move in a bit before then. He said the 28th of September.\nDon: And he was okay about the rent?\nCraig: Yeah, he said it was fine.\nDon: Right. So shall we give him a ring and see if he wants to come round and..."
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 2,
+   "title": "Listening Part 2 – Active Outdoor Club",
+   "instructions": "Nghe một thành viên Active Outdoor Club giới thiệu câu lạc bộ cho người quan tâm. Câu 11–14 chọn A, B hoặc C; câu 15–20 điền bảng hoạt động.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "tableBody": "| Activity | Day(s) | Duration | Contact person |\n| --- | --- | --- | --- |\n| [[15]] | Tuesday and Saturday | About 3-5 hours | Coordinator |\n| [[16]] | Thursday and Sunday | Up to 3 hours | [[17]] |\n| Wanderers | Sunday | [[18]] | Leader |\n| [[19]] weekends | Saturday and Sunday | All weekend | [[20]] |",
+    "groupInstructions": {
+     "11": "Choose the correct letter A, B or C.",
+     "15": "Complete the table below. Write NO MORE THAN ONE WORD AND/ OR A NUMBER for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 11,
+     "questionType": "multiple_choice",
+     "prompt": "11. Refreshments will be served",
+     "options": [
+      "A at the front counter",
+      "B in the lobby",
+      "C at the back of the hall"
+     ],
+     "answer": "B in the lobby",
+     "explanation": "Trà và cà phê được phục vụ ở SẢNH (lobby). Bàn cuối hội trường là nơi lấy tờ rơi, quầy phía trước là nơi mua sản phẩm — hai cái bẫy.",
+     "evidence": "there will be a chance for you to ask questions over tea and coffee in the lobby afterwards.",
+     "points": 1
+    },
+    {
+     "order": 12,
+     "questionType": "multiple_choice",
+     "prompt": "12. Nick Noble advertised",
+     "options": [
+      "A on the radio",
+      "B on a billboard",
+      "C in the newspaper"
+     ],
+     "answer": "A on the radio",
+     "explanation": "Ông có NGHĨ đến báo địa phương và biển quảng cáo, nhưng cuối cùng CHỌN đài phát thanh để tiếp cận nhiều người nhất.",
+     "evidence": "He thought of placing an advertisement in the local newspaper or erecting a billboard somewhere, but it was the radio that he decided on to reach the most people.",
+     "points": 1
+    },
+    {
+     "order": 13,
+     "questionType": "multiple_choice",
+     "prompt": "13. The original number of founding members was about",
+     "options": [
+      "A 12",
+      "B 20",
+      "C 200"
+     ],
+     "answer": "A 12",
+     "explanation": "Ban đầu chỉ có 'a dozen or so' (khoảng 12) bạn bè; 200 là con số của 20 năm trước, còn 20 là số năm — hai cái bẫy.",
+     "evidence": "Nick was overwhelmed by the response he got, and the club soon grew from a dozen or so friends and enthusiasts to around 200 members 20 years ago, and steadily since then to reach a membership of over 2,500 now.",
+     "points": 1
+    },
+    {
+     "order": 14,
+     "questionType": "multiple_choice",
+     "prompt": "14. The club provides activities primarily for reasonably fit",
+     "options": [
+      "A males up to 75",
+      "B females with young children",
+      "C males and females of any age"
+     ],
+     "answer": "C males and females of any age",
+     "explanation": "Câu lạc bộ phục vụ MỌI lứa tuổi và CẢ HAI giới (thành viên nhỏ nhất 5 tuổi, lớn nhất 75 tuổi) miễn là có sức khoẻ ở mức vừa phải.",
+     "evidence": "The club tries to cater for all levels of maturity and both genders.",
+     "points": 1
+    },
+    {
+     "order": 15,
+     "questionType": "table_completion",
+     "prompt": "Câu 15",
+     "answer": [
+      "tramping",
+      "tramps"
+     ],
+     "explanation": "Hoạt động thứ Ba và thứ Bảy, kéo dài 3–5 tiếng, liên hệ điều phối viên → chính là TRAMPING (đi bộ đường dài).",
+     "evidence": "Tramping is arranged for Tuesdays and Saturdays throughout the year.",
+     "points": 1
+    },
+    {
+     "order": 16,
+     "questionType": "table_completion",
+     "prompt": "Câu 16",
+     "answer": [
+      "walks",
+      "walking",
+      "walk"
+     ],
+     "explanation": "Hoạt động thứ Năm và Chủ nhật, không quá 3 tiếng, là WALKS (đi bộ) — rất được các gia đình ưa thích.",
+     "evidence": "And walks are arranged for every Thursday and every Sunday over the course of the entire year.",
+     "points": 1
+    },
+    {
+     "order": 17,
+     "questionType": "table_completion",
+     "prompt": "Câu 17",
+     "answer": [
+      "organizer",
+      "organiser",
+      "walking organizer",
+      "walking organiser"
+     ],
+     "explanation": "Muốn tham gia walks thì liên hệ NGƯỜI TỔ CHỨC (walking organizer) để xác nhận.",
+     "evidence": "and get in touch with the walking organizer to confirm your participation.",
+     "points": 1
+    },
+    {
+     "order": 18,
+     "questionType": "table_completion",
+     "prompt": "Câu 18",
+     "answer": [
+      "variable"
+     ],
+     "explanation": "Thời lượng hoạt động của nhóm Wanderers là THAY ĐỔI (variable), chỉ chắc chắn về trước khi trời tối.",
+     "evidence": "Bear in mind that the length of these activities is variable, but we're always home before dark.",
+     "points": 1
+    },
+    {
+     "order": 19,
+     "questionType": "table_completion",
+     "prompt": "Câu 19",
+     "answer": [
+      "mystery"
+     ],
+     "explanation": "Hoạt động cuối tuần trọn hai ngày là 'mystery weekends' — những chuyến đi BÍ ẨN không báo trước điểm đến.",
+     "evidence": "These are our mystery weekends.",
+     "points": 1
+    },
+    {
+     "order": 20,
+     "questionType": "table_completion",
+     "prompt": "Câu 20",
+     "answer": [
+      "chairman",
+      "the chairman"
+     ],
+     "explanation": "Muốn biết thêm về mystery weekends thì gọi cho CHỦ TỊCH ban tổ chức (số điện thoại có trong bản tin).",
+     "evidence": "For more information, call the chairman of the committee; you'll find his phone number in the newsletter.",
+     "points": 1
+    }
+   ],
+   "transcript": "Narrator: Now turn to Section 2. Section 2. You will hear a member of the Active Outdoor Club talking to a group of interested potential members. First you have some time to look at questions 11 to 14.\n(Pause)\nListen carefully and answer questions 11 to 14.\nSpeaker: I'd like to welcome you all to our Active Outdoor Club. I'll start by telling you a little bit about the history of the club and all that it can offer, and there will be a chance for you to ask questions over tea and coffee in the lobby afterwards.\nYou'll also be able to pick up pamphlets from the table at the back of the hall, and if you wish to purchase any of our products, Bill will serve you at the front counter.\nAs most of you probably know, the club was founded by Nick Noble about 30 years ago. He thought of placing an advertisement in the local newspaper or erecting a billboard somewhere, but it was the radio that he decided on to reach the most people. You know, other people who might be interested in outdoor pursuits, just basic activities like walking or tramping—anything active that could take place in some of the beautiful outdoor settings that this country has to offer.\nNick was overwhelmed by the response he got, and the club soon grew from a dozen or so friends and enthusiasts to around 200 members 20 years ago, and steadily since then to reach a membership of over 2,500 now.\nYou don't have to be a hardened athlete or extreme adventurer; on the contrary, it's a group that encourages friendship and fellowship through social and recreational activities. The club tries to cater for all levels of maturity and both genders. In fact, anyone who has the physical ability and a moderate level of health and fitness to participate in open-air activity on a regular basis. I think our youngest member is a 5-year-old boy and our oldest member is a 75-year-old man.\nOf course, we have more challenging opportunities for those who are up to it, but all excursions are graded according to level of difficulty, and there will always be something for those families with small children. More about that later.\nI'm sure you realize that it's part of the focus of the club to ensure that our natural environment is kept as pristine as possible. We all have a keen interest in conservation, and many of our members contribute their time or give a monetary donation to organizations that work to enhance and beautify our natural heritage.\nNarrator: Before you hear the rest of the talk, you have some time to look at questions 15 to 20.\n(Pause)\nNow listen and answer questions 15 to 20.\nSpeaker: Okay, now going back to the grades of activity. First of all, tramping. This is very popular with singles and couples without children, but is certainly not restricted to those groups. Tramping is arranged for Tuesdays and Saturdays throughout the year. Most tramps are of a duration of 3 to 5 hours, depending on the weather and the terrain, and of course the time of year. You would need to check the newsletter or the website to find out place and time, and if you wish to participate, phone the coordinator who can give you more information.\nI'll move on now to walking, which is very popular with families, but open to everyone. And walks are arranged for every Thursday and every Sunday over the course of the entire year. Walks last no more than 3 hours, although the Thursday walks might be shorter. And again, you would have to check the newsletter for details of the time and area to meet, and get in touch with the walking organizer to confirm your participation.\nNow, the Wanderers are what you might call a subgroup of the Active Outdoor Club. This group was set up to cater for the less active, more elderly, or families with very young children who still want to enjoy the great outdoors, but without quite so much exertion. Bear in mind that the length of these activities is variable, but we're always home before dark. Any member of the club is welcome to join in their activities on a Sunday, which include visiting some of our more beautiful parks and botanical gardens, beach walks, picnics, and even boat trips to visit some of the small islands off the coast. Often guided tours can be arranged if there is enough interest. If you'd like to see what the Wanderers are up to, check the website and then phone the leader for more information.\nI'll bet you're all ready for that cup of tea now, but before I finish, I really must mention something that can be a lot of fun: a great opportunity to form new or strengthen existing friendships, and a chance to explore a part of the country that you may never have seen before. These are our mystery weekends. The committee puts a lot of time and effort into the organization of these weekends away, not only for health and safety reasons, but also to ensure that everything runs smoothly and everyone has a good time. There will be a charge to cover travel and accommodation costs, but apart from that, it's an affordable and exciting weekend away from the city. For more information, call the chairman of the committee; you'll find his phone number in the newsletter.\nSo, that's all I have to say at this point. Please enjoy the refreshments, chat with the others, and feel free to ask questions. All the committee members are wearing large red name badges, so they're easy to find.\nNarrator: That is the end of Section 2. You now have half a minute to check your answers."
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 3,
+   "title": "Listening Part 3 – Assignment on the future of television",
+   "instructions": "Nghe giảng viên trao đổi với hai sinh viên về bài tập nghiên cứu truyền hình. Câu 21–26 chọn A, B hoặc C; câu 27–30 trả lời câu hỏi ngắn.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "groupInstructions": {
+     "21": "Choose the correct letter A, B or C.",
+     "27": "Answer the questions below. Write NO MORE THAN THREE WORDS AND/ OR A NUMBER for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 21,
+     "questionType": "multiple_choice",
+     "prompt": "21. What is the main topic of the assignment?",
+     "options": [
+      "A the historical development of television",
+      "B the development of new media",
+      "C the cultural future of television"
+     ],
+     "answer": "C the cultural future of television",
+     "explanation": "Giảng viên nói rõ KHÔNG bàn về quá khứ; new media chỉ nói lướt qua. Trọng tâm là TƯƠNG LAI của truyền hình với tư cách một hiện tượng văn hoá.",
+     "evidence": "Yeah, I agree, but the emphasis must be on the future development of television as a cultural phenomenon.",
+     "points": 1
+    },
+    {
+     "order": 22,
+     "questionType": "multiple_choice",
+     "prompt": "22. According to Emilie which new technology will become the biggest competition for television?",
+     "options": [
+      "A iPods",
+      "B mobile phones",
+      "C video games"
+     ],
+     "answer": "C video games",
+     "explanation": "Emilie (sinh viên thứ nhất) dựa vào nghiên cứu và trả lời là TRÒ CHƠI ĐIỆN TỬ. Điện thoại di động là dự đoán của bạn sinh viên còn lại cho tương lai — bẫy.",
+     "evidence": "Well, according to the research, it's video games.",
+     "points": 1
+    },
+    {
+     "order": 23,
+     "questionType": "multiple_choice",
+     "prompt": "23. According to the tutor the average length of a television programme will become",
+     "options": [
+      "A 45 minutes",
+      "B 4 to 5 minutes",
+      "C 10 minutes"
+     ],
+     "answer": "B 4 to 5 minutes",
+     "explanation": "Sinh viên đoán 10 phút, nhưng GIẢNG VIÊN nói còn ngắn hơn nữa: chỉ 4–5 phút.",
+     "evidence": "Or even less! Just mini-programs, say 4 to 5 minutes long.",
+     "points": 1
+    },
+    {
+     "order": 24,
+     "questionType": "multiple_choice",
+     "prompt": "24. What part of the library is going to be closed for one week?",
+     "options": [
+      "A the sociology section",
+      "B the media studies section",
+      "C the journals section"
+     ],
+     "answer": "B the media studies section",
+     "explanation": "Tuần tới thi công tạm dừng nên mọi khu đều mở; SAU đó khu media studies mới đóng cửa một tuần. Sociology đã đóng từ kỳ trước, khu tạp chí không bị ảnh hưởng.",
+     "evidence": "But then after that, the media studies section will be closed for a week and all the noise and dirt will start up again.",
+     "points": 1
+    },
+    {
+     "order": 25,
+     "questionType": "multiple_choice",
+     "prompt": "25. Which body do they decide to complain to?",
+     "options": [
+      "A Premises committee",
+      "B Students' Union",
+      "C the library"
+     ],
+     "answer": "A Premises committee",
+     "explanation": "Có nhắc tới Students' Union nhưng cuối cùng cả nhóm CHỐT khiếu nại lên Premises Committee (thư viện chỉ là bên cũng chịu ảnh hưởng).",
+     "evidence": "That's true, but I can't imagine that people haven't already approached them about this. Let's try the Premises Committee.",
+     "points": 1
+    },
+    {
+     "order": 26,
+     "questionType": "multiple_choice",
+     "prompt": "26. What will the reprographics office do?",
+     "options": [
+      "A send emails to your tutor",
+      "B send your dissertation to you",
+      "C send your dissertation to your tutor"
+     ],
+     "answer": "C send your dissertation to your tutor",
+     "explanation": "Reprographics gửi bản in THẲNG cho giảng viên; sinh viên phải tự đến lấy bản của mình ('They won't send copies to you').",
+     "evidence": "And if you give them my details, they'll send those copies directly to me.",
+     "points": 1
+    },
+    {
+     "order": 27,
+     "questionType": "short_answer",
+     "prompt": "27. What does the tutor compare homemade videos with?",
+     "answer": [
+      "a podcast",
+      "podcast",
+      "podcasts"
+     ],
+     "explanation": "Giảng viên ví mỗi video tự làm trên YouTube như một PODCAST phiên bản truyền hình.",
+     "evidence": "I suppose you could say that each video is a television version of a podcast.",
+     "points": 1
+    },
+    {
+     "order": 28,
+     "questionType": "short_answer",
+     "prompt": "28. What is the title of Mrs Jones's lecture?",
+     "answer": [
+      "Culture and Society",
+      "culture and society"
+     ],
+     "explanation": "Bà Jones giảng bài mang tên 'Culture and Society' — được nhắc lại hai lần để người nghe kịp chép.",
+     "evidence": "Well, Mrs. Jones is giving a lecture on \"Culture and Society\" in the University Theater.",
+     "points": 1
+    },
+    {
+     "order": 29,
+     "questionType": "short_answer",
+     "prompt": "29. Where is the lecture?",
+     "answer": [
+      "University Theatre",
+      "University Theater",
+      "the University Theatre",
+      "the University Theater",
+      "university theatre"
+     ],
+     "explanation": "Bài giảng diễn ra tại NHÀ HÁT CỦA TRƯỜNG (University Theatre).",
+     "evidence": "It's in the University Theater.",
+     "points": 1
+    },
+    {
+     "order": 30,
+     "questionType": "short_answer",
+     "prompt": "30. When is the final date for the assignment?",
+     "answer": [
+      "4 July",
+      "4th July",
+      "4th of July",
+      "the 4th of July",
+      "July 4",
+      "4/7"
+     ],
+     "explanation": "Hạn chót đọc tài liệu và hoàn thành bài tập là ngày 4 tháng 7.",
+     "evidence": "Now, don't forget you need to do the reading and finish the assignment by the 4th of July.",
+     "points": 1
+    }
+   ],
+   "transcript": "Narrator: Section 3. You will hear a tutor and some students talking about an assignment. Listen carefully and answer questions 21 to 26.\nTutor: Come in, sit down. Good to see you.\nStudent 1: Hello.\nStudent 2: Hello.\nTutor: Now, this assignment. The best thing we can do, I think, is to think how we can approach it. The main point is to investigate television, but not what's happened in the past.\nStudent 1: I was thinking that it would be necessary to go over the new media first and...\nTutor: Yes, that's a way to make a start, but you need to do that quite briefly.\nStudent 1: But it's quite a complex topic.\nTutor: Yeah, I agree, but the emphasis must be on the future development of television as a cultural phenomenon.\nStudent 1: Yes. I've been reading the talk by Ashley Highfield.\nTutor: All right, and what do you take from that? What are the things that are competing with television?\nStudent 1: Well, to start with, there is the games console, then there is the personal computer and the internet, then again the mobile phone with its capability of games and puzzles, and of course internet access. Lastly, there is the iPod with the possibility of listening to music wherever you go.\nTutor: Good. You've understood that. Now, which of these presents the greatest competition for television?\nStudent 1: Well, according to the research, it's video games.\nTutor: Yes, that's true at present. But in the future...\nStudent 2: I think the phone will present the greatest threat then.\nTutor: And why?\nStudent 2: Because it's mobile, portable, and it's developing fast.\nTutor: Yeah, I think you're right. You need always to look to the future and try to assess how things will develop, as we said. Good. Now, you need to move on to the new social trends in connection with television.\nStudent 1: Is one of them the idea that programs might become shorter and shorter?\nStudent 2: Ah, yes. The average program might be 10 minutes.\nTutor: Or even less! Just mini-programs, say 4 to 5 minutes long. Now, do you think you can get access to all the materials you need?\nStudent 2: The problem at the moment is the library.\nTutor: Oh yes, what's happening there?\nStudent 2: There's a tremendous amount of noise because of the new extension they are building. It's quite impossible to work there.\nTutor: Well, they are stopping work for a week next week, I believe, and then all the sections will be open. There's a hold-up because some roof tiles have not arrived, so there'll be peace for that week.\nStudent 1: But then after that, the media studies section will be closed for a week and all the noise and dirt will start up again.\nTutor: Yes, the sociology section will be open, and there's some good stuff there for you on this topic, and it's further away from the noise.\nStudent 2: Yeah, I don't think the sociology section is affected at all, and neither is the journal section.\nTutor: No, obviously they're rotating the closures, and it was sociology's turn to close for a week last term.\nStudent 2: I think we should make a complaint.\nTutor: Yeah, I think you should.\nStudent 2: I've had a word with the library staff. They are very sympathetic, but...\nStudent 1: They are affected by these works just as we are.\nTutor: If I were you, I'd make a complaint directly to the Premises Committee. They only meet once a year, but in fact I know they're having a meeting next Tuesday. You might like to make contact with them, but don't say that I suggested this!\nStudent 1: Yes. But the Students' Union might be better since they are independent of the university.\nStudent 2: That's true, but I can't imagine that people haven't already approached them about this. Let's try the Premises Committee.\nTutor: Good idea, why not?\nStudent 1: Okay.\nTutor: Now, don't forget I need a copy of your dissertations by email and two copies in print, that is on paper. If you give the Reprographics Office 24 hours' notice, they'll make copies for you. And if you give them my details, they'll send those copies directly to me. They won't send copies to you, so you'll need to take your own copy personally from them. Good. Any questions?\nNarrator: Now answer questions 27 to 30.\nStudent 1: One little thing was just that I wondered whether we should actually talk about that famous website—you know, the one, YouTube?\nTutor: Ah, I was rather hoping you hadn't overlooked that. Good point. It's mostly home-made videos. I suppose you could say that each video is a television version of a podcast. Anything else?\nStudent 2: Yes, I've got a question, I'm afraid. I'm not completely clear about the exact meaning of \"culture\" as we are using it in this subject.\nTutor: Well, Mrs. Jones is giving a lecture on \"Culture and Society\" in the University Theater. It's on Wednesday at 10:00 AM, and you can learn all about it there, I'm sure.\nStudent 2: Can you give us that again, please?\nTutor: Yes, that's \"Culture and Society\". It's in the University Theater. And let me just check the time... Yes, here it is: 10:00 AM on Wednesday. She'll be giving a very thorough discussion of the issues in defining what culture means.\nStudent 2: Right, that's good. The thing is, the reading list confused me a bit. One thing that occurred to me was that it might be broken down into subsections for future students.\nTutor: Yes, that's a fair point. I'll bear that in mind. Now, don't forget you need to do the reading and finish the assignment by the 4th of July. Is that okay?\nStudent 1: Fine. Thank you very much."
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 4,
+   "title": "Listening Part 4 – Scholastic House",
+   "instructions": "Nghe hiệu trưởng giới thiệu lịch sử và truyền thống của ký túc xá Scholastic House. Câu 31–37 hoàn thành câu; câu 38–40 chọn A, B hoặc C.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "noteBody": "31. Samuel Wells [[31]] before Scholastic House opened in 1903.\n32. There were [[32]] original students.\n33. Scholastic House became [[33]] in 1963.\n34. One of these students became a prominent [[34]].\n35. Scholastic House experienced difficulties during [[35]].\n36. The college has a tradition of learning and [[36]].\n37. Since 1972, controversial [[37]] have been discussed.",
+    "groupInstructions": {
+     "31": "Complete the sentences below. Write NO MORE THAN THREE WORDS for each answer.",
+     "38": "Choose the correct letter A, B or C."
+    }
+   },
+   "questions": [
+    {
+     "order": 31,
+     "questionType": "note_completion",
+     "prompt": "Câu 31",
+     "answer": [
+      "died",
+      "died in 1900",
+      "died (in 1900)"
+     ],
+     "explanation": "Samuel Wells nêu ý tưởng năm 1898 nhưng QUA ĐỜI năm 1900, trước khi trường đi vào hoạt động năm 1903.",
+     "evidence": "Wells died in 1900 before he could see the college in action.",
+     "points": 1
+    },
+    {
+     "order": 32,
+     "questionType": "note_completion",
+     "prompt": "Câu 32",
+     "answer": [
+      "10",
+      "ten"
+     ],
+     "explanation": "Scholastic House khai giảng năm 1903 với 10 sinh viên đầu tiên đến từ châu Á, châu Âu và châu Mỹ.",
+     "evidence": "Scholastic House finally began operating in 1903 with 10 students.",
+     "points": 1
+    },
+    {
+     "order": 33,
+     "questionType": "note_completion",
+     "prompt": "Câu 33",
+     "answer": [
+      "co-educational",
+      "coeducational",
+      "co educational"
+     ],
+     "explanation": "Ban đầu trường chỉ nhận nam sinh; từ năm 1963 trở thành trường NAM NỮ HỌC CHUNG.",
+     "evidence": "At that time, Scholastic House accepted only male students, although it has been co-educational since 1963.",
+     "points": 1
+    },
+    {
+     "order": 34,
+     "questionType": "note_completion",
+     "prompt": "Câu 34",
+     "answer": [
+      "teacher",
+      "university teacher",
+      "a university teacher"
+     ],
+     "explanation": "Sinh viên nổi tiếng nhất trong khoá đầu trở thành GIẢNG VIÊN đại học và đưa phương pháp đào tạo giáo viên hiện đại về nước mình.",
+     "evidence": "Perhaps the most famous graduate became a university teacher and was responsible for the introduction of modern teaching training methods in his country.",
+     "points": 1
+    },
+    {
+     "order": 35,
+     "questionType": "note_completion",
+     "prompt": "Câu 35",
+     "answer": [
+      "the Great War",
+      "Great War",
+      "the great war"
+     ],
+     "explanation": "Trường gặp khó khăn trong thời kỳ ĐẠI CHIẾN (1914–1918) vì điều lệ trường không cho sinh viên và nhân viên tham gia chiến tranh.",
+     "evidence": "The college ran into hard times during the period of the Great War (1914 to 1918), when the charter of the college was interpreted to mean that neither the students nor staff could take part in the war effort.",
+     "points": 1
+    },
+    {
+     "order": 36,
+     "questionType": "note_completion",
+     "prompt": "Câu 36",
+     "answer": [
+      "tolerance",
+      "debate",
+      "tolerance/debate",
+      "tolerance of opposing views"
+     ],
+     "explanation": "Trường xây dựng danh tiếng về học thuật và về SỰ KHOAN DUNG với những quan điểm trái chiều (thể hiện qua các đêm tranh luận mở).",
+     "evidence": "The college was building a reputation for learning and for tolerance of opposing views.",
+     "points": 1
+    },
+    {
+     "order": 37,
+     "questionType": "note_completion",
+     "prompt": "Câu 37",
+     "answer": [
+      "topics",
+      "issues",
+      "topics/issues"
+     ],
+     "explanation": "Suốt nhiều năm qua, những CHỦ ĐỀ gây tranh cãi ở thời điểm đó đều được đem ra thảo luận và tranh luận.",
+     "evidence": "Over the years, topics which were controversial at the time have been discussed and debated.",
+     "points": 1
+    },
+    {
+     "order": 38,
+     "questionType": "multiple_choice",
+     "prompt": "38. The college discusses controversial issues because it",
+     "options": [
+      "A informs the debate",
+      "B reduces tension",
+      "C encourages argument"
+     ],
+     "answer": "A informs the debate",
+     "explanation": "Lý do CHÍNH ĐÁNG duy nhất là làm sáng tỏ vấn đề và CUNG CẤP THÔNG TIN cho cuộc tranh luận. Tranh cãi cho vui thì chỉ làm TĂNG căng thẳng — nên loại B và C.",
+     "evidence": "The only legitimate reason for our behavior is that it casts light upon the topic in question and informs the debate.",
+     "points": 1
+    },
+    {
+     "order": 39,
+     "questionType": "multiple_choice",
+     "prompt": "39. The principal believes that",
+     "options": [
+      "A science is less advanced than medicine",
+      "B philosophy is more useful than science",
+      "C science is ahead of philosophy"
+     ],
+     "answer": "C science is ahead of philosophy",
+     "explanation": "Hiệu trưởng nói các nhà khoa học đã 'vượt xa' (outstripped) các nhà triết học — tức khoa học đi trước triết học.",
+     "evidence": "As the world forges ahead, we often find our scientists have outstripped our philosophers.",
+     "points": 1
+    },
+    {
+     "order": 40,
+     "questionType": "multiple_choice",
+     "prompt": "40. The principal urges the students to",
+     "options": [
+      "A accept what they are told",
+      "B ask questions at all times",
+      "C think only about their studies"
+     ],
+     "answer": "B ask questions at all times",
+     "explanation": "Ông kêu gọi sinh viên tiếp nối truyền thống LUÔN ĐẶT CÂU HỎI về hướng đi của thế giới ('querying'), chứ không chấp nhận mọi điều được nghe.",
+     "evidence": "It is your responsibility to continue this tradition of querying where our world is going.",
+     "points": 1
+    }
+   ],
+   "transcript": "Narrator: Now turn to Section 4. Section 4. You will hear an extract from an introductory talk given to a group of students who have just entered a university residential college. The speaker is the principal of the college.\nListen to what the speaker says and answer questions 31 to 37. First you have some time to look at questions 31 to 37.\n(Pause)\nNow listen carefully and answer questions 31 to 37.\nPrincipal: Good morning, and welcome to Scholastic House. I am delighted to see you here.\nIt is my duty to explain to you some of the history of our college and some of the traditions which I hope you will uphold.\nThe idea for Scholastic House was expounded by Samuel Wells in 1898. Wells was a visionary whose ideas were well ahead of his time. He wanted a college which would encourage friendship between people of different races and nationalities. Wells died in 1900 before he could see the college in action.\nScholastic House finally began operating in 1903 with 10 students. Those students came from Asia, Europe, and the Americas. At that time, Scholastic House accepted only male students, although it has been co-educational since 1963.\nNine of these foundation students went on to lead illustrious lives. The only exception died tragically on his way home from Scholastic House to Sarawak. He had only recently graduated with an honors degree in law, and he was robbed of a brilliant future.\nThe other nine students, as I said, led very fulfilling lives. Three became political leaders, three became doctors. Perhaps the most famous graduate became a university teacher and was responsible for the introduction of modern teaching training methods in his country. Two of the original group became senior engineers and went on to deeply influence the way the water systems of their country were exploited.\nThe college ran into hard times during the period of the Great War (1914 to 1918), when the charter of the college was interpreted to mean that neither the students nor staff could take part in the war effort. Many people felt that this indicated a lack of national spirit, and the walls of the college were frequently marked with graffiti.\nMeanwhile, outside the college, tens of thousands of young men went away to fight in Europe, never to return.\nThe college was building a reputation for learning and for tolerance of opposing views. Scholastic House debate and discussion nights were open to the public in 1927 and have been available to anyone who wishes to attend ever since.\nIt is a proud tradition of the college that any view may be expressed, provided that it can be defended intellectually. Over the years, topics which were controversial at the time have been discussed and debated.\nNarrator: Now look at questions 38 to 40.\nPrincipal: As I said, the college has a proud history of publicly examining controversial issues. Why should we do this? The publicity we receive is often sensational, and there is no joy in encouraging argument for its own sake. In fact, that sort of discussion just increases tension.\nThe only legitimate reason for our behavior is that it casts light upon the topic in question and informs the debate. And controversial topics are the ones which most need informed attention.\nAs the world forges ahead, we often find our scientists have outstripped our philosophers. We frequently develop scientific marvels without realizing their full implications. Nowhere is this more obvious than in medicine. We are now able to keep people alive far longer than before, but this medical ability must be measured in relation to the quality of those lives.\nI urge you to spend your time at Scholastic House wisely. You are the heirs of an excellent academic tradition of which we can all be justly proud. It is your responsibility to continue this tradition of querying where our world is going. Progress is not always upwards.\nI wish you every joy in your time here, and I hope that I will hear much well-informed debate from you.\nNarrator: That is the end of Section 4. You now have some time to check your answers."
+  }
+ ]
+}

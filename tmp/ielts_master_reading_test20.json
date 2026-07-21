@@ -1,0 +1,683 @@
+{
+  "title": "IELTS Master – Test 20 (Reading)",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master (Academic) – Test 20",
+  "description": "Reading Test 20 – Advantages of public transport / Greying population stays in the pink / Numeration. 40 câu, tự chấm, có giải thích và dẫn chứng.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 – Advantages of public transport",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 1–13.",
+      "content": "A new study conducted for the World Bank by Murdoch University's Institute for Science and Technology Policy (ISTP) has demonstrated that public transport is more efficient than cars. The study compared the proportion of wealth poured into transport by thirty-seven cities around the world. This included both the public and private costs of building, maintaining and using a transport system.\n\nThe study found that the Western Australian city of Perth is a good example of a city with minimal public transport. As a result, 17% of its wealth went into transport costs. Some European and Asian cities, on the other hand, spent as little as 5%. Professor Peter Newman, ISTP Director, pointed out that these more efficient cities were able to put the difference into attracting industry and jobs or creating a better place to live.\n\nAccording to Professor Newman, the larger Australian city of Melbourne is a rather unusual city in this sort of comparison. He describes it as two cities: ‘A European city surrounded by a car-dependent one’. Melbourne's large tram network has made car use in the inner city much lower, but the outer suburbs have the same car-based structure as most other Australian cities. The explosion in demand for accommodation in the inner suburbs of Melbourne suggests a recent change in many people's preferences as to where they live.\n\nNewman says this is a new, broader way of considering public transport issues. In the past, the case for public transport has been made on the basis of environmental and social justice considerations rather than economics. Newman, however, believes the study demonstrates that ‘the auto-dependent city model is inefficient and grossly inadequate in economic as well as environmental terms’.\n\nBicycle use was not included in the study but Newman noted that the two most ‘bicycle friendly’ cities considered - Amsterdam and Copenhagen - were very efficient, even though their public transport systems were ‘reasonable but not special’.\n\nIt is common for supporters of road networks to reject the models of cities with good public transport by arguing that such systems would not work in their particular city. One objection is climate. Some people say their city could not make more use of public transport because it is either too hot or too cold. Newman rejects this, pointing out that public transport has been successful in both Toronto and Singapore and, in fact, he has checked the use of cars against climate and found ‘zero correlation’.\n\nWhen it comes to other physical features, road lobbies are on stronger ground. For example, Newman accepts it would be hard for a city as hilly as Auckland to develop a really good rail network. However, he points out that both Hong Kong and Zürich have managed to make a success of their rail systems, heavy and light respectively, though there are few cities in the world as hilly.\n\nA In fact, Newman believes the main reason for adopting one sort of transport over another is politics: ‘The more democratic the process, the more public transport is favoured.’ He considers Portland, Oregon, a perfect example of this. Some years ago, federal money was granted to build a new road. However, local pressure groups forced a referendum over whether to spend the money on light rail instead. The rail proposal won and the railway worked spectacularly well. In the years that have followed, more and more rail systems have been put in, dramatically changing the nature of the city. Newman notes that Portland has about the same population as Perth and had a similar population density at the time.\n\nB In the UK, travel times to work had been stable for at least six centuries, with people avoiding situations that required them to spend more than half an hour travelling to work. Trains and cars initially allowed people to live at greater distances without taking longer to reach their destination. However, public infrastructure did not keep pace with urban sprawl, causing massive congestion problems which now make commuting times far higher.\n\nC There is a widespread belief that increasing wealth encourages people to live farther out where cars are the only viable transport. The example of European cities refutes that. They are often wealthier than their American counterparts but have not generated the same level of car use. In Stockholm, car use has actually fallen in recent years as the city has become larger and wealthier. A new study makes this point even more starkly. Developing cities in Asia, such as Jakarta and Bangkok, make more use of the car than wealthy Asian cities such as Tokyo and Singapore. In cities that developed later, the World Bank and Asian Development Bank discouraged the building of public transport and people have been forced to rely on cars - creating the massive traffic jams that characterize those cities.\n\nD Newman believes one of the best studies on how cities built for cars might be converted to rail use is The Urban Village report, which used Melbourne as an example. It found that pushing everyone into the city centre was not the best approach. Instead, the proposal advocated the creation of urban villages at hundreds of sites, mostly around railway stations.\n\nE It was once assumed that improvements in telecommunications would lead to more dispersal in the population as people were no longer forced into cities. However, the ISTP team's research demonstrates that the population and job density of cities rose or remained constant in the 1980s after decades of decline. The explanation for this seems to be that it is valuable to place people working in related fields together. ‘The new world will largely depend on human creativity, and creativity flourishes where people come together face-to-face.’",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Reading Passage 1 has five paragraphs, A–E.\nChoose the correct heading for each paragraph from the list of headings below.\nWrite the correct number i–viii, in boxes 1–5 on your answer sheet.\n\nList of Headings\n:::box\ni Avoiding an overcrowded centre\nii A successful exercise in people power\niii The benefits of working together in cities\niv Higher incomes need not mean more cars\nv Economic arguments fail to persuade\nvi The impact of telecommunications on population distribution\nvii Increases in travelling time\nviii Responding to arguments against public transport\n:::",
+          "6": "Do the following statements agree with the information given in Reading Passage 1?\nIn boxes 6–10 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+          "11": "Look at the following cities (Questions 11–13) and the list of descriptions below.\nMatch each city with the correct description, A–F.\nWrite the correct letter, A–F, in boxes 11–13 on your answer sheet.\n\nList of Descriptions\n:::box\nA successfully uses a light rail transport system in hilly environment\nB successful public transport system despite cold winters\nC profitably moved from road to light rail transport system\nD hilly and inappropriate for rail transport system\nE heavily dependent on cars despite widespread poverty\nF inefficient due to a limited public transport system\n:::"
+        }
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "matching",
+          "prompt": "Paragraph A",
+          "answer": "ii A successful exercise in people power",
+          "explanation": "Đoạn A kể chuyện Portland: tiền liên bang định làm đường ô tô, nhưng các nhóm gây sức ép ở địa phương đã ép tổ chức trưng cầu dân ý và phương án đường sắt nhẹ thắng — đúng là \"một cuộc vận động thành công của sức mạnh nhân dân\". → ii.",
+          "points": 1,
+          "options": [
+            "i Avoiding an overcrowded centre",
+            "ii A successful exercise in people power",
+            "iii The benefits of working together in cities",
+            "iv Higher incomes need not mean more cars",
+            "v Economic arguments fail to persuade",
+            "vi The impact of telecommunications on population distribution",
+            "vii Increases in travelling time",
+            "viii Responding to arguments against public transport"
+          ],
+          "evidence": "However, local pressure groups forced a referendum over whether to spend the money on light rail instead."
+        },
+        {
+          "order": 2,
+          "questionType": "matching",
+          "prompt": "Paragraph B",
+          "answer": "vii Increases in travelling time",
+          "explanation": "Đoạn B nói ở Anh thời gian đi làm vốn ổn định suốt sáu thế kỷ, nhưng hạ tầng không theo kịp đô thị hoá lan rộng nên nay thời gian đi làm cao hơn nhiều. → vii (thời gian di chuyển tăng lên).",
+          "points": 1,
+          "options": [
+            "i Avoiding an overcrowded centre",
+            "ii A successful exercise in people power",
+            "iii The benefits of working together in cities",
+            "iv Higher incomes need not mean more cars",
+            "v Economic arguments fail to persuade",
+            "vi The impact of telecommunications on population distribution",
+            "vii Increases in travelling time",
+            "viii Responding to arguments against public transport"
+          ],
+          "evidence": "However, public infrastructure did not keep pace with urban sprawl, causing massive congestion problems which now make commuting times far higher."
+        },
+        {
+          "order": 3,
+          "questionType": "matching",
+          "prompt": "Paragraph C",
+          "answer": "iv Higher incomes need not mean more cars",
+          "explanation": "Đoạn C bác bỏ niềm tin \"giàu lên thì dùng ô tô nhiều hơn\": các thành phố châu Âu giàu hơn Mỹ nhưng không dùng ô tô nhiều bằng; Stockholm giàu và lớn hơn mà lượng xe còn giảm. → iv.",
+          "points": 1,
+          "options": [
+            "i Avoiding an overcrowded centre",
+            "ii A successful exercise in people power",
+            "iii The benefits of working together in cities",
+            "iv Higher incomes need not mean more cars",
+            "v Economic arguments fail to persuade",
+            "vi The impact of telecommunications on population distribution",
+            "vii Increases in travelling time",
+            "viii Responding to arguments against public transport"
+          ],
+          "evidence": "They are often wealthier than their American counterparts but have not generated the same level of car use."
+        },
+        {
+          "order": 4,
+          "questionType": "matching",
+          "prompt": "Paragraph D",
+          "answer": "i Avoiding an overcrowded centre",
+          "explanation": "Đoạn D dẫn báo cáo The Urban Village: dồn tất cả mọi người vào trung tâm KHÔNG phải cách hay; nên lập hàng trăm \"làng đô thị\" quanh nhà ga. → i (tránh làm trung tâm quá tải).",
+          "points": 1,
+          "options": [
+            "i Avoiding an overcrowded centre",
+            "ii A successful exercise in people power",
+            "iii The benefits of working together in cities",
+            "iv Higher incomes need not mean more cars",
+            "v Economic arguments fail to persuade",
+            "vi The impact of telecommunications on population distribution",
+            "vii Increases in travelling time",
+            "viii Responding to arguments against public transport"
+          ],
+          "evidence": "It found that pushing everyone into the city centre was not the best approach."
+        },
+        {
+          "order": 5,
+          "questionType": "matching",
+          "prompt": "Paragraph E",
+          "answer": "iii The benefits of working together in cities",
+          "explanation": "Đoạn E nói mật độ dân cư và việc làm ở đô thị vẫn tăng/giữ nguyên vì đặt những người làm cùng lĩnh vực gần nhau thì có giá trị — sáng tạo nảy nở khi người ta gặp nhau trực tiếp. → iii (lợi ích của việc làm việc cùng nhau trong thành phố).",
+          "points": 1,
+          "options": [
+            "i Avoiding an overcrowded centre",
+            "ii A successful exercise in people power",
+            "iii The benefits of working together in cities",
+            "iv Higher incomes need not mean more cars",
+            "v Economic arguments fail to persuade",
+            "vi The impact of telecommunications on population distribution",
+            "vii Increases in travelling time",
+            "viii Responding to arguments against public transport"
+          ],
+          "evidence": "The explanation for this seems to be that it is valuable to place people working in related fields together."
+        },
+        {
+          "order": 6,
+          "questionType": "true_false_not_given",
+          "prompt": "The ISTP study examined public and private systems in every city of the world.",
+          "answer": "FALSE",
+          "explanation": "Nghiên cứu chỉ so sánh 37 thành phố trên thế giới, không phải MỌI thành phố. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "The study compared the proportion of wealth poured into transport by thirty-seven cities around the world."
+        },
+        {
+          "order": 7,
+          "questionType": "true_false_not_given",
+          "prompt": "Efficient cities can improve the quality of life for their inhabitants.",
+          "answer": "TRUE",
+          "explanation": "Các thành phố hiệu quả hơn dùng khoản tiền tiết kiệm được để thu hút công nghiệp, việc làm hoặc tạo nơi sống tốt hơn — tức nâng chất lượng sống cho dân. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "these more efficient cities were able to put the difference into attracting industry and jobs or creating a better place to live"
+        },
+        {
+          "order": 8,
+          "questionType": "true_false_not_given",
+          "prompt": "An inner-city tram network is dangerous for car drivers.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói mạng tàu điện của Melbourne làm giảm việc dùng ô tô ở nội đô, hoàn toàn KHÔNG đề cập chuyện tàu điện có nguy hiểm cho người lái ô tô hay không. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Melbourne's large tram network has made car use in the inner city much lower"
+        },
+        {
+          "order": 9,
+          "questionType": "true_false_not_given",
+          "prompt": "In Melbourne, people prefer to live in the outer suburbs.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: nhu cầu chỗ ở ở các khu NỘI đô Melbourne bùng nổ, cho thấy người dân đang đổi sở thích sang sống gần trung tâm. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "The explosion in demand for accommodation in the inner suburbs of Melbourne suggests a recent change in many people's preferences as to where they live."
+        },
+        {
+          "order": 10,
+          "questionType": "true_false_not_given",
+          "prompt": "Cities with high levels of bicycle usage can be efficient even when public transport is only averagely good.",
+          "answer": "TRUE",
+          "explanation": "Amsterdam và Copenhagen — hai thành phố thân thiện với xe đạp nhất — rất hiệu quả dù hệ thống giao thông công cộng chỉ ở mức \"khá chứ không có gì đặc biệt\". → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "were very efficient, even though their public transport systems were ‘reasonable but not special’"
+        },
+        {
+          "order": 11,
+          "questionType": "matching",
+          "prompt": "Perth",
+          "answer": "F inefficient due to a limited public transport system",
+          "explanation": "Perth là ví dụ điển hình về thành phố có giao thông công cộng tối thiểu, hậu quả là 17% của cải phải đổ vào chi phí đi lại — kém hiệu quả vì hệ thống công cộng hạn chế. → F.",
+          "points": 1,
+          "options": [
+            "A successfully uses a light rail transport system in hilly environment",
+            "B successful public transport system despite cold winters",
+            "C profitably moved from road to light rail transport system",
+            "D hilly and inappropriate for rail transport system",
+            "E heavily dependent on cars despite widespread poverty",
+            "F inefficient due to a limited public transport system"
+          ],
+          "evidence": "The study found that the Western Australian city of Perth is a good example of a city with minimal public transport. As a result, 17% of its wealth went into transport costs."
+        },
+        {
+          "order": 12,
+          "questionType": "matching",
+          "prompt": "Auckland",
+          "answer": "D hilly and inappropriate for rail transport system",
+          "explanation": "Newman thừa nhận một thành phố nhiều đồi dốc như Auckland thì rất khó phát triển mạng đường sắt tốt. → D (đồi dốc, không phù hợp cho đường sắt).",
+          "points": 1,
+          "options": [
+            "A successfully uses a light rail transport system in hilly environment",
+            "B successful public transport system despite cold winters",
+            "C profitably moved from road to light rail transport system",
+            "D hilly and inappropriate for rail transport system",
+            "E heavily dependent on cars despite widespread poverty",
+            "F inefficient due to a limited public transport system"
+          ],
+          "evidence": "Newman accepts it would be hard for a city as hilly as Auckland to develop a really good rail network."
+        },
+        {
+          "order": 13,
+          "questionType": "matching",
+          "prompt": "Portland",
+          "answer": "C profitably moved from road to light rail transport system",
+          "explanation": "Portland chuyển tiền làm đường bộ sang làm đường sắt nhẹ, và tuyến đường sắt hoạt động cực kỳ thành công, kéo theo hàng loạt tuyến khác. → C (chuyển từ đường bộ sang đường sắt nhẹ một cách hiệu quả).",
+          "points": 1,
+          "options": [
+            "A successfully uses a light rail transport system in hilly environment",
+            "B successful public transport system despite cold winters",
+            "C profitably moved from road to light rail transport system",
+            "D hilly and inappropriate for rail transport system",
+            "E heavily dependent on cars despite widespread poverty",
+            "F inefficient due to a limited public transport system"
+          ],
+          "evidence": "The rail proposal won and the railway worked spectacularly well."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 – Greying population stays in the pink",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 14–26.",
+      "content": "Elderly people are growing healthier, happier and more independent, say American scientists. The results of a 14-year study to be announced later this month reveal that the diseases associated with old age are afflicting fewer and fewer people and when they do strike, it is much later in life.\n\nIn the last 14 years, the National Long-term Health Care Survey has gathered data on the health and lifestyles of more than 20,000 men and women over 65. Researchers, now analysing the results of data gathered in 1994, say arthritis, high blood pressure and circulation problems - the major medical complaints in this age group - are troubling a smaller proportion every year. And the data confirms that the rate at which these diseases are declining continues to accelerate. Other diseases of old age - dementia, stroke, arteriosclerosis and emphysema - are also troubling fewer and fewer people.\n\n'It really raises the question of what should be considered normal ageing,' says Kenneth Manton, a demographer from Duke University in North Carolina. He says the problems doctors accepted as normal in a 65-year-old in 1982 are often not appearing until people are 70 or 75.\n\nClearly, certain diseases are beating a retreat in the face of medical advances. But there may be other contributing factors. Improvements in childhood nutrition in the first quarter of the twentieth century, for example, gave today's elderly people a better start in life than their predecessors.\n\nOn the downside, the data also reveals failures in public health that have caused surges in some illnesses. An increase in some cancers and bronchitis may reflect changing smoking habits and poorer air quality, say the researchers. 'These may be subtle influences,' says Manton, 'but our subjects have been exposed to worse and worse pollution for over 60 years. It's not surprising we see some effect.'\n\nOne interesting correlation Manton uncovered is that better-educated people are likely to live longer. For example, 65-year-old women with fewer than eight years of schooling are expected, on average, to live to 82. Those who continued their education live an extra seven years. Although some of this can be attributed to a higher income, Manton believes it is mainly because educated people seek more medical attention.\n\nThe survey also assessed how independent people over 65 were, and again found a striking trend. Almost 80% of those in the 1994 survey could complete everyday activities ranging from eating and dressing unaided to complex tasks such as cooking and managing their finances. That represents a significant drop in the number of disabled old people in the population. If the trends apparent in the United States 14 years ago had continued, researchers calculate there would be an additional one million disabled elderly people in today's population. According to Manton, slowing the trend has saved the United States government's Medicare system more than $200 billion, suggesting that the greying of America's population may prove less of a financial burden than expected.\n\nThe increasing self-reliance of many elderly people is probably linked to a massive increase in the use of simple home medical aids. For instance, the use of raised toilet seats has more than doubled since the start of the study, and the use of bath seats has grown by more than 50%. These developments also bring some health benefits, according to a report from the MacArthur Foundation's research group on successful ageing. The group found that those elderly people who were able to retain a sense of independence were more likely to stay healthy in old age.\n\nMaintaining a level of daily physical activity may help mental functioning, says Carl Cotman, a neuroscientist at the University of California at Irvine. He found that rats that exercise on a treadmill have raised levels of brain-derived neurotrophic factor coursing through their brains. Cotman believes this hormone, which keeps neurons functioning, may prevent the brains of active humans from deteriorating.\n\nAs part of the same study, Teresa Seeman, a social epidemiologist at the University of Southern California in Los Angeles, found a connection between self-esteem and stress in people over 70. In laboratory simulations of challenging activities such as driving, those who felt in control of their lives pumped out lower levels of stress hormones such as cortisol. Chronically high levels of these hormones have been linked to heart disease.\n\nBut independence can have drawbacks. Seeman found that elderly people who felt emotionally isolated maintained higher levels of stress hormones even when asleep. The research suggests that older people fare best when they feel independent but know they can get help when they need it.\n\n'Like much research into ageing, these results support common sense,' says Seeman. They also show that we may be underestimating the impact of these simple factors. 'The sort of thing that your grandmother always told you turns out to be right on target,' she says.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Complete the summary using the list of words, A–Q, below.\nWrite the correct letter, A–Q, in boxes 14–22 on your answer sheet.\n:::box\nA cost | B falling | C technology | D undernourished | E earlier\nF later | G disabled | H more | I increasing | J nutrition\nK education | L constant | M medicine | N pollution | O environmental\nP health | Q independent\n:::",
+          "23": "Look at the following Questions 23–26 and the list of descriptions below.\nMatch each question with the correct description, A–H.\nWrite the correct letter, A–H, in boxes 23–26 on your answer sheet.\n\nList of Descriptions\n:::box\nA may cause heart disease.\nB can be helped by hormone treatment.\nC may cause rises in levels of stress hormones.\nD have cost the United States government more than $200 billion.\nE may help prevent mental decline.\nF may get stronger at night.\nG allow old people to be more independent.\nH can reduce stress in difficult situations.\n:::"
+        },
+        "noteBody": "Research carried out by scientists in the United States has shown that the proportion of people over 65 suffering from the most common age-related medical problems is [[14]] and that the speed of this change is [[15]] . It also seems that these diseases are affecting people [[16]] in life than they did in the past. This is largely due to developments in [[17]] , but other factors such as improved [[18]] may also be playing a part. Increases in some other illnesses may be due to changes in personal habits and to [[19]] . The research establishes a link between levels of [[20]] and life expectancy. It also shows that there has been a considerable reduction in the number of elderly people who are [[21]] , which means that the [[22]] involved in supporting this section of the population may be less than previously predicted."
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "note_completion",
+          "prompt": "Câu 14",
+          "answer": [
+            "B",
+            "B falling",
+            "falling"
+          ],
+          "explanation": "Viêm khớp, huyết áp cao và các vấn đề tuần hoàn — những bệnh phổ biến nhất ở nhóm tuổi này — mỗi năm lại hành hạ một tỷ lệ NHỎ HƠN, tức đang giảm. → B falling.",
+          "points": 1,
+          "evidence": "are troubling a smaller proportion every year"
+        },
+        {
+          "order": 15,
+          "questionType": "note_completion",
+          "prompt": "Câu 15",
+          "answer": [
+            "I",
+            "I increasing",
+            "increasing"
+          ],
+          "explanation": "Dữ liệu xác nhận tốc độ suy giảm của các bệnh này còn tiếp tục TĂNG TỐC, tức tốc độ thay đổi đang tăng. → I increasing.",
+          "points": 1,
+          "evidence": "And the data confirms that the rate at which these diseases are declining continues to accelerate."
+        },
+        {
+          "order": 16,
+          "questionType": "note_completion",
+          "prompt": "Câu 16",
+          "answer": [
+            "F",
+            "F later",
+            "later"
+          ],
+          "explanation": "Những vấn đề mà năm 1982 bác sĩ coi là bình thường ở người 65 tuổi thì nay thường tới 70–75 tuổi mới xuất hiện — tức bệnh đến MUỘN hơn trong đời. → F later.",
+          "points": 1,
+          "evidence": "He says the problems doctors accepted as normal in a 65-year-old in 1982 are often not appearing until people are 70 or 75."
+        },
+        {
+          "order": 17,
+          "questionType": "note_completion",
+          "prompt": "Câu 17",
+          "answer": [
+            "M",
+            "M medicine",
+            "medicine"
+          ],
+          "explanation": "Rõ ràng một số bệnh đang lùi bước trước những tiến bộ của Y HỌC. → M medicine.",
+          "points": 1,
+          "evidence": "Clearly, certain diseases are beating a retreat in the face of medical advances."
+        },
+        {
+          "order": 18,
+          "questionType": "note_completion",
+          "prompt": "Câu 18",
+          "answer": [
+            "J",
+            "J nutrition",
+            "nutrition"
+          ],
+          "explanation": "Một yếu tố góp phần khác: DINH DƯỠNG trẻ em được cải thiện trong quý đầu thế kỷ 20 giúp người già hôm nay có khởi đầu tốt hơn thế hệ trước. → J nutrition.",
+          "points": 1,
+          "evidence": "Improvements in childhood nutrition in the first quarter of the twentieth century, for example, gave today's elderly people a better start in life than their predecessors."
+        },
+        {
+          "order": 19,
+          "questionType": "note_completion",
+          "prompt": "Câu 19",
+          "answer": [
+            "N",
+            "N pollution",
+            "pollution"
+          ],
+          "explanation": "Một số bệnh tăng lên là do thói quen hút thuốc thay đổi và KHÔNG KHÍ Ô NHIỄM hơn — Manton nói người tham gia đã hứng chịu ô nhiễm ngày càng nặng suốt hơn 60 năm. → N pollution.",
+          "points": 1,
+          "evidence": "An increase in some cancers and bronchitis may reflect changing smoking habits and poorer air quality, say the researchers."
+        },
+        {
+          "order": 20,
+          "questionType": "note_completion",
+          "prompt": "Câu 20",
+          "answer": [
+            "K",
+            "K education",
+            "education"
+          ],
+          "explanation": "Manton phát hiện mối tương quan: người có HỌC VẤN cao hơn thường sống lâu hơn (phụ nữ 65 tuổi học dưới 8 năm sống trung bình tới 82; người học tiếp sống thêm 7 năm). → K education.",
+          "points": 1,
+          "evidence": "One interesting correlation Manton uncovered is that better-educated people are likely to live longer."
+        },
+        {
+          "order": 21,
+          "questionType": "note_completion",
+          "prompt": "Câu 21",
+          "answer": [
+            "G",
+            "G disabled",
+            "disabled"
+          ],
+          "explanation": "Gần 80% người trên 65 tuổi tự làm được mọi việc hằng ngày — đó là mức giảm đáng kể số người già KHUYẾT TẬT/mất khả năng tự lo. → G disabled.",
+          "points": 1,
+          "evidence": "That represents a significant drop in the number of disabled old people in the population."
+        },
+        {
+          "order": 22,
+          "questionType": "note_completion",
+          "prompt": "Câu 22",
+          "answer": [
+            "A",
+            "A cost",
+            "cost"
+          ],
+          "explanation": "Nhờ xu hướng đó, hệ thống Medicare của Mỹ tiết kiệm hơn 200 tỷ đô — nghĩa là CHI PHÍ nuôi dưỡng nhóm dân số này có thể thấp hơn dự đoán. → A cost.",
+          "points": 1,
+          "evidence": "According to Manton, slowing the trend has saved the United States government's Medicare system more than $200 billion, suggesting that the greying of America's population may prove less of a financial burden than expected."
+        },
+        {
+          "order": 23,
+          "questionType": "matching",
+          "prompt": "Home medical aids",
+          "answer": "G allow old people to be more independent.",
+          "explanation": "Việc người già ngày càng tự lo được cho bản thân gắn với sự bùng nổ trong sử dụng các dụng cụ y tế gia đình đơn giản (bệ ngồi toilet nâng cao, ghế tắm). → G (giúp người già độc lập hơn).",
+          "points": 1,
+          "options": [
+            "A may cause heart disease.",
+            "B can be helped by hormone treatment.",
+            "C may cause rises in levels of stress hormones.",
+            "D have cost the United States government more than $200 billion.",
+            "E may help prevent mental decline.",
+            "F may get stronger at night.",
+            "G allow old people to be more independent.",
+            "H can reduce stress in difficult situations."
+          ],
+          "evidence": "The increasing self-reliance of many elderly people is probably linked to a massive increase in the use of simple home medical aids."
+        },
+        {
+          "order": 24,
+          "questionType": "matching",
+          "prompt": "Regular amounts of exercise",
+          "answer": "E may help prevent mental decline.",
+          "explanation": "Duy trì vận động thể chất hằng ngày có thể hỗ trợ chức năng trí óc; hormone BDNF do vận động sinh ra giữ cho nơ-ron hoạt động, ngăn não thoái hoá. → E (giúp ngăn suy giảm trí tuệ).",
+          "points": 1,
+          "options": [
+            "A may cause heart disease.",
+            "B can be helped by hormone treatment.",
+            "C may cause rises in levels of stress hormones.",
+            "D have cost the United States government more than $200 billion.",
+            "E may help prevent mental decline.",
+            "F may get stronger at night.",
+            "G allow old people to be more independent.",
+            "H can reduce stress in difficult situations."
+          ],
+          "evidence": "Maintaining a level of daily physical activity may help mental functioning, says Carl Cotman, a neuroscientist at the University of California at Irvine."
+        },
+        {
+          "order": 25,
+          "questionType": "matching",
+          "prompt": "Feelings of control over life",
+          "answer": "H can reduce stress in difficult situations.",
+          "explanation": "Trong mô phỏng các hoạt động căng thẳng như lái xe, những người cảm thấy làm chủ được cuộc sống tiết ra ÍT hormone stress (cortisol) hơn. → H (giảm căng thẳng trong tình huống khó).",
+          "points": 1,
+          "options": [
+            "A may cause heart disease.",
+            "B can be helped by hormone treatment.",
+            "C may cause rises in levels of stress hormones.",
+            "D have cost the United States government more than $200 billion.",
+            "E may help prevent mental decline.",
+            "F may get stronger at night.",
+            "G allow old people to be more independent.",
+            "H can reduce stress in difficult situations."
+          ],
+          "evidence": "In laboratory simulations of challenging activities such as driving, those who felt in control of their lives pumped out lower levels of stress hormones such as cortisol."
+        },
+        {
+          "order": 26,
+          "questionType": "matching",
+          "prompt": "Feelings of loneliness",
+          "answer": "C may cause rises in levels of stress hormones.",
+          "explanation": "Seeman thấy người già cảm thấy bị cô lập về cảm xúc duy trì mức hormone stress CAO hơn, ngay cả khi ngủ. → C (làm tăng mức hormone stress).",
+          "points": 1,
+          "options": [
+            "A may cause heart disease.",
+            "B can be helped by hormone treatment.",
+            "C may cause rises in levels of stress hormones.",
+            "D have cost the United States government more than $200 billion.",
+            "E may help prevent mental decline.",
+            "F may get stronger at night.",
+            "G allow old people to be more independent.",
+            "H can reduce stress in difficult situations."
+          ],
+          "evidence": "Seeman found that elderly people who felt emotionally isolated maintained higher levels of stress hormones even when asleep."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 – Numeration",
+      "instructions": "Bạn nên dành khoảng 20 phút cho Câu 27–40.",
+      "content": "One of the first great intellectual feats of a young child is learning how to talk, closely followed by learning how to count. From earliest childhood we are so bound up with our system of numeration that it is a feat of imagination to consider the problems faced by early humans who had not yet developed this facility. Careful consideration of our system of numeration leads to the conviction that, rather than being a facility that comes naturally to a person, it is one of the great and remarkable achievements of the human race.\n\nIt is impossible to learn the sequence of events that led to our developing the concept of number. Even the earliest of tribes had a system of numeration that, if not advanced, was sufficient for the tasks that they had to perform. Our ancestors had little use for actual numbers; instead their considerations would have been more of the kind Is this enough? Rather than how many? When they were engaged in food gathering, for example. However, when early humans first began to reflect on the nature of things around them, they discovered that they needed an idea of number simply to keep their thoughts in order. As they began to settle, grow plants and herd animals, the need for a sophisticated number system became paramount. It will never be known how and when this numeration ability developed, but it is certain that numeration was well developed by the time humans had formed even semi-permanent settlements.\n\nEvidence of early stages of arithmetic and numeration can be readily found. The indigenous peoples of Tasmania were only able to count one, two, many; those of South Africa counted one, two, two and one, two twos, two twos and one, and so on. But in real situations the number and words are often accompanied by gestures to help resolve any confusion. For example, when using the one, two, many type of system, the word many would mean, Look at my hands and see how many fingers I am showing you. This basic approach is limited in the range of numbers that it can express, but this range will generally suffice when dealing with the simpler aspects of human existence.\n\nThe lack of ability of some cultures to deal with large numbers is not really surprising. European languages, when traced back to their earlier version, are very poor in number words and expressions. The ancient Gothic word for ten, tachund, is used to express the number 100 as tachund tachund. By the seventh century, the word teon had become interchangeable with the tachund or hund of the Anglo-Saxon language, and so 100 was denoted as hund teontig, or ten times ten. The average person in the seventh century in Europe was not as familiar with numbers as we are today. In fact, to qualify as a witness in a court of law a man had to be able to count to nine!\n\nPerhaps the most fundamental step in developing a sense of number is not the ability to count, but rather to see that a number is really an abstract idea instead of a simple attachment to a group of particular objects. It must have been within the grasp of the earliest humans to conceive that four birds are distinct from two birds; however, it is not an elementary step to associate the number 4, as connected with four birds, to the number 4, as connected with four rocks. Associating a number as one of the qualities of a specific object is a great hindrance to the development of a true number sense. When the number 4 can be registered in the mind as a specific word, independent of the object being referenced, the individual is ready to take the first step toward the development of a notational system for numbers and, from there, to arithmetic.\n\nTraces of the very first stages in the development of numeration can be seen in several living languages today. The numeration system of the Tsimshian language in British Columbia contains seven distinct sets of words for numbers according to the class of the item being counted: for counting flat objects and animals, for round objects and time, for people, for long objects and trees, for canoes, for measures, and for counting when no particular object is being numerated. It seems that the last is a later development while the first six groups show the relics of an older system. This diversity of number names can also be found in some widely used languages such as Japanese.\n\nIntermixed with the development of a number sense is the development of an ability to count. Counting is not directly related to the formation of a number concept because it is possible to count by matching the items being counted against a group of pebbles, grains of corn, or the counter's fingers. These aids would have been indispensable to very early people who would have found the process impossible without some form of mechanical aid. Such aids, while different, are still used even by the most educated in today's society due to their convenience. All counting ultimately involves reference to something other than the things being counted. At first it may have been grains or pebbles but now it is a memorised sequence of words that happen to be the names of the numbers.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Complete each sentence with the correct ending, A–G, below.\nWrite the correct letter, A–G, in boxes 27–31 on your answer sheet.\n:::box\nA was necessary in order to fulfil a civic role.\nB was necessary when people began farming.\nC was necessary for the development of arithmetic.\nD persists in all societies.\nE was used when the range of number words was restricted.\nF can be traced back to early European languages.\nG was a characteristic of early numeration systems.\n:::",
+          "32": "Do the following statements agree with the information given in Reading Passage 3?\nIn boxes 32–40 on your answer sheet, write\nTRUE if the statement is true according to the passage\nFALSE if the statement is false according to the passage\nNOT GIVEN if the information is not given in the passage"
+        }
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "A developed system of numbering",
+          "answer": "B was necessary when people began farming.",
+          "explanation": "Khi con người bắt đầu định cư, trồng trọt và chăn nuôi thì nhu cầu về một hệ đếm tinh vi trở nên tối quan trọng — tức hệ đếm phát triển là cần thiết khi bắt đầu làm nông. → B.",
+          "points": 1,
+          "options": [
+            "A was necessary in order to fulfil a civic role.",
+            "B was necessary when people began farming.",
+            "C was necessary for the development of arithmetic.",
+            "D persists in all societies.",
+            "E was used when the range of number words was restricted.",
+            "F can be traced back to early European languages.",
+            "G was a characteristic of early numeration systems."
+          ],
+          "evidence": "As they began to settle, grow plants and herd animals, the need for a sophisticated number system became paramount."
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "An additional hand signal",
+          "answer": "E was used when the range of number words was restricted.",
+          "explanation": "Với hệ \"một, hai, nhiều\", từ \"nhiều\" có nghĩa là \"hãy nhìn tay tôi xem tôi giơ mấy ngón\" — cử chỉ tay được dùng khi vốn từ chỉ số bị hạn chế. → E.",
+          "points": 1,
+          "options": [
+            "A was necessary in order to fulfil a civic role.",
+            "B was necessary when people began farming.",
+            "C was necessary for the development of arithmetic.",
+            "D persists in all societies.",
+            "E was used when the range of number words was restricted.",
+            "F can be traced back to early European languages.",
+            "G was a characteristic of early numeration systems."
+          ],
+          "evidence": "For example, when using the one, two, many type of system, the word many would mean, Look at my hands and see how many fingers I am showing you."
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "In seventh-century Europe, the ability to count to a certain number",
+          "answer": "A was necessary in order to fulfil a civic role.",
+          "explanation": "Ở châu Âu thế kỷ 7, muốn đủ tư cách làm nhân chứng trước toà thì phải đếm được tới chín — tức đếm được đến một con số nhất định là điều kiện để làm một vai trò công dân. → A.",
+          "points": 1,
+          "options": [
+            "A was necessary in order to fulfil a civic role.",
+            "B was necessary when people began farming.",
+            "C was necessary for the development of arithmetic.",
+            "D persists in all societies.",
+            "E was used when the range of number words was restricted.",
+            "F can be traced back to early European languages.",
+            "G was a characteristic of early numeration systems."
+          ],
+          "evidence": "In fact, to qualify as a witness in a court of law a man had to be able to count to nine!"
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "Thinking about numbers as concepts separate from physical objects",
+          "answer": "C was necessary for the development of arithmetic.",
+          "explanation": "Khi số 4 được ghi nhận trong đầu như một từ riêng, độc lập với vật được đếm, con người mới sẵn sàng bước tới hệ ký hiệu số và từ đó tới SỐ HỌC. → C.",
+          "points": 1,
+          "options": [
+            "A was necessary in order to fulfil a civic role.",
+            "B was necessary when people began farming.",
+            "C was necessary for the development of arithmetic.",
+            "D persists in all societies.",
+            "E was used when the range of number words was restricted.",
+            "F can be traced back to early European languages.",
+            "G was a characteristic of early numeration systems."
+          ],
+          "evidence": "When the number 4 can be registered in the mind as a specific word, independent of the object being referenced, the individual is ready to take the first step toward the development of a notational system for numbers and, from there, to arithmetic."
+        },
+        {
+          "order": 31,
+          "questionType": "matching",
+          "prompt": "Expressing number differently according to class of item",
+          "answer": "G was a characteristic of early numeration systems.",
+          "explanation": "Tiếng Tsimshian có bảy bộ từ chỉ số khác nhau tuỳ loại vật được đếm; bài nói sáu nhóm đầu là dấu tích của một hệ CŨ — tức đây là đặc điểm của các hệ đếm thuở sơ khai. → G.",
+          "points": 1,
+          "options": [
+            "A was necessary in order to fulfil a civic role.",
+            "B was necessary when people began farming.",
+            "C was necessary for the development of arithmetic.",
+            "D persists in all societies.",
+            "E was used when the range of number words was restricted.",
+            "F can be traced back to early European languages.",
+            "G was a characteristic of early numeration systems."
+          ],
+          "evidence": "The numeration system of the Tsimshian language in British Columbia contains seven distinct sets of words for numbers according to the class of the item being counted"
+        },
+        {
+          "order": 32,
+          "questionType": "true_false_not_given",
+          "prompt": "For the earliest tribes, the concept of sufficiency was more important than the concept of quantity.",
+          "answer": "TRUE",
+          "explanation": "Tổ tiên ta ít dùng tới số thật; điều họ quan tâm là \"chừng này đủ chưa?\" hơn là \"bao nhiêu?\". → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Our ancestors had little use for actual numbers; instead their considerations would have been more of the kind Is this enough? Rather than how many?"
+        },
+        {
+          "order": 33,
+          "questionType": "true_false_not_given",
+          "prompt": "Indigenous Tasmanians used only four terms to indicate numbers of objects.",
+          "answer": "FALSE",
+          "explanation": "Người bản địa Tasmania chỉ đếm được \"một, hai, nhiều\" — BA từ chứ không phải bốn. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "The indigenous peoples of Tasmania were only able to count one, two, many"
+        },
+        {
+          "order": 34,
+          "questionType": "true_false_not_given",
+          "prompt": "Some peoples with simple number systems use body language to prevent misunderstanding of expressions of number.",
+          "answer": "TRUE",
+          "explanation": "Trong thực tế, các con số và từ chỉ số thường đi kèm cử chỉ để tránh nhầm lẫn. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "But in real situations the number and words are often accompanied by gestures to help resolve any confusion."
+        },
+        {
+          "order": 35,
+          "questionType": "true_false_not_given",
+          "prompt": "All cultures have been able to express large numbers clearly.",
+          "answer": "FALSE",
+          "explanation": "Bài nói thẳng rằng việc một số nền văn hoá KHÔNG xử lý được các số lớn là điều không có gì đáng ngạc nhiên. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "The lack of ability of some cultures to deal with large numbers is not really surprising."
+        },
+        {
+          "order": 36,
+          "questionType": "true_false_not_given",
+          "prompt": "The word 'thousand' has Anglo-Saxon origins.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói về từ Gothic \"tachund\" và từ \"teon\"/\"hund\" của tiếng Anglo-Saxon dùng để chỉ 100, hoàn toàn KHÔNG nhắc gì tới nguồn gốc của từ \"thousand\". → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "By the seventh century, the word teon had become interchangeable with the tachund or hund of the Anglo-Saxon language, and so 100 was denoted as hund teontig, or ten times ten."
+        },
+        {
+          "order": 37,
+          "questionType": "true_false_not_given",
+          "prompt": "In general, people in seventh-century Europe had poor counting ability.",
+          "answer": "TRUE",
+          "explanation": "Người bình thường ở châu Âu thế kỷ 7 không quen với các con số như chúng ta ngày nay — thậm chí đếm tới chín đã đủ làm nhân chứng trước toà. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "The average person in the seventh century in Europe was not as familiar with numbers as we are today."
+        },
+        {
+          "order": 38,
+          "questionType": "true_false_not_given",
+          "prompt": "In the Tsimshian language, the number for long objects and canoes is expressed with the same word.",
+          "answer": "FALSE",
+          "explanation": "Danh sách bảy bộ từ tách riêng \"vật dài và cây cối\" với \"thuyền canoe\" — hai bộ từ KHÁC nhau. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "for counting flat objects and animals, for round objects and time, for people, for long objects and trees, for canoes, for measures, and for counting when no particular object is being numerated"
+        },
+        {
+          "order": 39,
+          "questionType": "true_false_not_given",
+          "prompt": "The Tsimshian language contains both older and newer systems of counting.",
+          "answer": "TRUE",
+          "explanation": "Bộ từ cuối (đếm khi không có vật cụ thể) là phát triển về SAU, còn sáu nhóm đầu là dấu tích của một hệ CŨ — tức có cả hệ cũ lẫn hệ mới. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "It seems that the last is a later development while the first six groups show the relics of an older system."
+        },
+        {
+          "order": 40,
+          "questionType": "true_false_not_given",
+          "prompt": "Early peoples found it easier to count by using their fingers rather than a group of pebbles.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài có nhắc tới việc đếm bằng cách đối chiếu với sỏi, hạt ngô hay ngón tay, nhưng KHÔNG hề so sánh cách nào dễ hơn cách nào. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "it is possible to count by matching the items being counted against a group of pebbles, grains of corn, or the counter's fingers"
+        }
+      ]
+    }
+  ]
+}

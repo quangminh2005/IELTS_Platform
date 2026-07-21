@@ -23,6 +23,12 @@ export const SKILL_PILL_CLASSES: Record<string, string> = {
   speaking: "bg-violet-500/10 text-violet-600 dark:text-violet-300",
 };
 
+// Vị trí của một kỹ năng trong thứ tự chuẩn; kỹ năng lạ đẩy xuống cuối.
+export function skillRank(skill: string): number {
+  const index = SKILL_ORDER.indexOf(skill as Skill);
+  return index === -1 ? SKILL_ORDER.length : index;
+}
+
 // Khử trùng danh sách kỹ năng và sắp theo thứ tự chuẩn (Nghe→Đọc→Viết→Nói).
 // Bỏ qua giá trị không nằm trong SKILL_ORDER.
 export function distinctSkills(skills: string[]): string[] {

@@ -2,6 +2,7 @@ import { type Annotation } from "@/components/annotated-answer";
 import { ResultAnswers, type ResultPart } from "@/components/result-answers";
 import { bandsBySkill, formatBand } from "@/lib/band-score";
 import { formatDuration } from "@/lib/format-duration";
+import { skillRank } from "@/lib/skills";
 
 type Highlight = {
   id: string;
@@ -170,7 +171,8 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
   }
   // Answer được lưu theo thứ tự học viên bấm lưu (createdAt) nên phải sắp lại
   // theo số câu; câu không gắn Question (order = null) đẩy xuống cuối. Các part
-  // cũng sắp theo câu nhỏ nhất để tab "Phần 1, 2..." đúng thứ tự đề.
+  // sắp theo kỹ năng trước (Nghe→Đọc→Viết→Nói) rồi mới tới câu nhỏ nhất — vì mỗi
+  // kỹ năng đều đánh số từ 1 nên nếu chỉ so số câu thì Nghe và Đọc sẽ xen kẽ nhau.
   const byOrder = (a: number | null, b: number | null) => {
     if (a === null && b === null) return 0;
     if (a === null) return 1;
@@ -181,7 +183,9 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
   for (const part of parts) {
     part.answers.sort((a, b) => byOrder(a.order, b.order));
   }
-  parts.sort((a, b) => byOrder(a.minOrder, b.minOrder));
+  parts.sort(
+    (a, b) => skillRank(a.skill) - skillRank(b.skill) || byOrder(a.minOrder, b.minOrder)
+  );
 
   return (
     <div className="space-y-6">

@@ -4,6 +4,7 @@ import {
   SKILL_ORDER,
   SKILL_PILL_CLASSES,
   distinctSkills,
+  skillRank,
 } from "../lib/skills";
 
 describe("distinctSkills", () => {
@@ -23,6 +24,31 @@ describe("distinctSkills", () => {
 
   it("mảng rỗng trả về rỗng", () => {
     expect(distinctSkills([])).toEqual([]);
+  });
+});
+
+describe("skillRank", () => {
+  it("sắp part theo kỹ năng trước, rồi mới tới số câu", () => {
+    // Mỗi kỹ năng đều đánh số câu từ 1 nên nếu chỉ so số câu thì Nghe/Đọc sẽ xen kẽ.
+    const parts = [
+      { skill: "reading", minOrder: 1 },
+      { skill: "listening", minOrder: 1 },
+      { skill: "reading", minOrder: 14 },
+      { skill: "listening", minOrder: 11 },
+    ];
+    const sorted = [...parts].sort(
+      (a, b) => skillRank(a.skill) - skillRank(b.skill) || a.minOrder - b.minOrder
+    );
+    expect(sorted).toEqual([
+      { skill: "listening", minOrder: 1 },
+      { skill: "listening", minOrder: 11 },
+      { skill: "reading", minOrder: 1 },
+      { skill: "reading", minOrder: 14 },
+    ]);
+  });
+
+  it("kỹ năng lạ đẩy xuống cuối", () => {
+    expect(skillRank("xxx")).toBeGreaterThan(skillRank("speaking"));
   });
 });
 

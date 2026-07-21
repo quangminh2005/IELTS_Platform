@@ -9,6 +9,7 @@ import {
   type EvidenceSegment
 } from "@/lib/answer-evidence";
 import { isAudioUrl } from "@/lib/question-interactions";
+import { SKILL_LABELS } from "@/lib/skills";
 
 export type PartAnswer = {
   id: string;
@@ -224,6 +225,19 @@ export function ResultAnswers({
   }, [showSource, filledSource, part]);
   const linkedSet = useMemo(() => new Set(linkedOrders), [linkedOrders]);
 
+  // Nhãn tab: mỗi kỹ năng đánh số phần lại từ 1 (giống đề thi). Bài có từ 2 kỹ năng
+  // trở lên thì thêm tên kỹ năng để không nhầm "Phần 1" của Nghe với của Đọc.
+  const tabLabels = useMemo(() => {
+    const multiSkill = new Set(parts.map((p) => p.skill)).size > 1;
+    const countBySkill = new Map<string, number>();
+    return parts.map((p) => {
+      const index = (countBySkill.get(p.skill) ?? 0) + 1;
+      countBySkill.set(p.skill, index);
+      const prefix = multiSkill ? `${SKILL_LABELS[p.skill] ?? p.skill} · ` : "";
+      return `${prefix}Phần ${index}`;
+    });
+  }, [parts]);
+
   // Cuộn cột trái tới câu dẫn chứng đang chọn (cuộn trong khung, không cuộn cả trang).
   useEffect(() => {
     if (activeOrder === null) return;
@@ -268,7 +282,7 @@ export function ResultAnswers({
                 : "border-border bg-card text-muted-foreground hover:border-primary"
             }`}
           >
-            Phần {index + 1}
+            {tabLabels[index]}
             {p.minOrder !== null && p.maxOrder !== null ? (
               <span className="ml-1 font-normal opacity-80">
                 · Câu {p.minOrder}–{p.maxOrder}

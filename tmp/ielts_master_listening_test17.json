@@ -1,0 +1,609 @@
+{
+ "title": "IELTS Master – Listening Test 17",
+ "skill": "listening",
+ "sourceLabel": "IELTS Master – Listening Test 17",
+ "description": "Listening Test 17: 4 part, 40 câu (xin mã số thuế TFN / giữ an toàn cho trẻ trên Internet / khảo sát lý do du học / hoạ sĩ Charles Willson Peale). Nhớ upload 4 file audio MP3 cho từng part.",
+ "units": [
+  {
+   "unitType": "listening_part",
+   "unitNumber": 1,
+   "title": "Listening Part 1 – Applying for a Tax File Number",
+   "instructions": "Nghe cuộc trò chuyện giữa nhân viên cơ quan thuế và một phụ nữ muốn xin mã số thuế (TFN). Câu 1–4 chọn A, B hoặc C; câu 5–10 điền vào mẫu đơn.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "tableBody": "# Tax File Number – Application form\n| Item | Details |\n| --- | --- |\n| Passport # | [[5]] |\n| Nationality | Spanish |\n| Postal address | 1339 [[6]] Hollywell 1517 |\n| Contact details | Phone: 09-55775076 |\n| Preferred contact person | Martha [[7]] (landlady) |\n| Family name | Farina |\n| Title | [[8]] |\n| First given name | Maria |\n| Any other names | Mary = [[9]] |\n| Date of birth | [[10]] (dd/mm/yy) |\n| Gender | Female |\n| Name of spouse | NA |",
+    "groupInstructions": {
+     "1": "Choose the correct letter A, B or C.",
+     "5": "Complete the form below. Write NO MORE THAN TWO WORDS AND/ OR A NUMBER for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 1,
+     "questionType": "multiple_choice",
+     "prompt": "1. A TFN is a number used",
+     "options": [
+      "A exclusively for tax administration",
+      "B exclusively by individual tax payers",
+      "C for managing several government services"
+     ],
+     "answer": "C for managing several government services",
+     "explanation": "TFN cấp cho cả cá nhân LẪN tổ chức và dùng cho việc thu thuế cùng \"các hệ thống khác của chính phủ\" → không chỉ riêng thuế (loại A), không chỉ riêng cá nhân (loại B).",
+     "evidence": "It's a unique number we issue to individuals and organizations to help administer tax collection and other government systems.",
+     "points": 1
+    },
+    {
+     "order": 2,
+     "questionType": "multiple_choice",
+     "prompt": "2. Without a TFN, the applicant would be",
+     "options": [
+      "A taxed at a higher rate",
+      "B unable to work",
+      "C liable for medicare contributions"
+     ],
+     "answer": "A taxed at a higher rate",
+     "explanation": "Không có TFN thì bị khấu trừ thuế NHIỀU HƠN từ lương → bị đánh thuế ở mức cao hơn. Vẫn được đi làm (loại B); và không phải đóng Medicare levy chứ không phải phải đóng (loại C).",
+     "evidence": "Otherwise, you'll have more tax withheld from your wages or salary.",
+     "points": 1
+    },
+    {
+     "order": 3,
+     "questionType": "multiple_choice",
+     "prompt": "3. What kind of visa does the applicant have?",
+     "options": [
+      "A a visa granting indefinite stay",
+      "B a visa with work rights",
+      "C a student visa"
+     ],
+     "answer": "A a visa granting indefinite stay",
+     "explanation": "Visa lao động và visa du học đều là chuyện QUÁ KHỨ; hiện tại cô ấy có visa định cư lâu dài (permanent migrant visa) = ở lại không giới hạn thời gian.",
+     "evidence": "So now I have a permanent migrant visa.",
+     "points": 1
+    },
+    {
+     "order": 4,
+     "questionType": "multiple_choice",
+     "prompt": "4. A TFN is issued",
+     "options": [
+      "A if you change your name",
+      "B only once in a lifetime",
+      "C when you claim a government benefit"
+     ],
+     "answer": "B only once in a lifetime",
+     "explanation": "Đã có số rồi thì KHÔNG BAO GIỜ phải xin lại, dù đổi tên, kết hôn hay về hưu → cấp một lần duy nhất trong đời.",
+     "evidence": "Now, once you have a file number, you never need to reapply.",
+     "points": 1
+    },
+    {
+     "order": 5,
+     "questionType": "table_completion",
+     "prompt": "Câu 5",
+     "answer": [
+      "JGW1100536",
+      "JGW 1100 536",
+      "JGW1100 536",
+      "JGW 1100536"
+     ],
+     "explanation": "Số hộ chiếu cô ấy đọc là JGW 1100 536 (viết liền: JGW1100536).",
+     "evidence": "Oh, just a moment. I have it here. JGW 1100 536.",
+     "points": 1
+    },
+    {
+     "order": 6,
+     "questionType": "table_completion",
+     "prompt": "Câu 6",
+     "answer": [
+      "Harbour Drive",
+      "Harbor Drive",
+      "Harbour Dr",
+      "Harbor Dr"
+     ],
+     "explanation": "Địa chỉ nhận thư: 1339 Harbour Drive, Hollywell (số nhà 1339 và Hollywell đã in sẵn nên chỉ điền tên đường).",
+     "evidence": "That's 1339 Harbour Drive, Hollywell.",
+     "points": 1
+    },
+    {
+     "order": 7,
+     "questionType": "table_completion",
+     "prompt": "Câu 7",
+     "answer": [
+      "Pearce"
+     ],
+     "explanation": "Người liên hệ thay là bà chủ nhà Martha Pearce — cô ấy đánh vần rõ P-E-A-R-C-E (bẫy: PIERCE).",
+     "evidence": "No, it's P-E-A-R-C-E.",
+     "points": 1
+    },
+    {
+     "order": 8,
+     "questionType": "table_completion",
+     "prompt": "Câu 8",
+     "answer": [
+      "Miss"
+     ],
+     "explanation": "Cô ấy chưa kết hôn nên chọn danh xưng Miss (không phải Mrs hay Ms).",
+     "evidence": "I'm not married. Put me down as Miss.",
+     "points": 1
+    },
+    {
+     "order": 9,
+     "questionType": "table_completion",
+     "prompt": "Câu 9",
+     "answer": [
+      "first name",
+      "a first name",
+      "First name"
+     ],
+     "explanation": "Mọi người gọi cô là Mary, và Mary được dùng như TÊN GỌI (first name), chứ không phải họ.",
+     "evidence": "As a first name?",
+     "points": 1
+    },
+    {
+     "order": 10,
+     "questionType": "table_completion",
+     "prompt": "Câu 10",
+     "answer": [
+      "15/11/1983",
+      "15/11/83",
+      "15-11-1983"
+     ],
+     "explanation": "Ngày sinh: 15 tháng 11 năm 1983, viết theo thứ tự ngày/tháng/năm như mẫu đơn yêu cầu.",
+     "evidence": "The 15th of November 1983.",
+     "points": 1
+    }
+   ],
+   "transcript": "Announcer:\nSection 1. You will hear a conversation between a tax office employee and a woman who wants to apply for a tax number. First, you have some time to look at questions 1 to 4.\n(Pause)\nNow we shall begin. You should answer the questions as you listen because you will not hear the recording a second time. Listen carefully and answer questions 1 to 4.\nTax Officer: Good morning, Tax Office. How can I help you?\nWoman: I'd like to apply for a tax file number.\nTax Officer: Are you a citizen?\nWoman: No, but I'm told I still need a number.\nTax Officer: So what is your residency status? Are you a permanent migrant, or perhaps a temporary visitor?\nWoman: Oh, I'm... I'm a permanent migrant.\nTax Officer: And you need a TFN?\nWoman: A what?\nTax Officer: A TFN. It stands for Tax File Number.\nWoman: Yes, what is that exactly?\nTax Officer: It's a unique number we issue to individuals and organizations to help administer tax collection and other government systems.\nWoman: Why do I need one?\nTax Officer: In actual fact, you don't.\nWoman: What do you mean?\nTax Officer: It's not compulsory, you know.\nWoman: But... I should get one?\nTax Officer: Well, it's a good idea. Otherwise, you'll have more tax withheld from your wages or salary. In fact, you won't be eligible to participate in the PAYE—that's Pay As You Earn system—and you couldn't apply for income support or other benefits. You wouldn't have to pay the Medicare levy, but then, you wouldn't be entitled to claim Medicare benefits either.\nWoman: I'd better have one then.\nTax Officer: Okay. So, you're currently living in this country, right?\nWoman: Yes.\nTax Officer: What kind of visa do you have? A working visa?\nWoman: Well, I did have one, because after my student visa expired, I went back home and worked for a year before applying for a job here. The job turned out to be permanent and full time, and my employers wanted me to settle here. So now I have a permanent migrant visa.\nTax Officer: Now, once you have a file number, you never need to reapply. Even if your circumstances change, for example, if you get married or decide to take an English name, they'll even use the same one when you retire and apply for a government pension.\nWoman: I see.\nTax Officer: Have you ever had a TFN before?\nWoman: No.\nTax Officer: Right. Let's get on with the application process now.\n(Pause)\nAnnouncer: Before you hear the rest of the conversation, you have some time to look at questions 5 to 10.\n(Pause)\nNow listen and answer questions 5 to 10.\nTax Officer: What is your passport or travel document number?\nWoman: Oh, just a moment. I have it here. JGW 1100 536.\nTax Officer: Where do you come from?\nWoman: I came from Greece.\nTax Officer: Is that your country of origin?\nWoman: Yes, I came from Greece.\nTax Officer: Are you Greek? Do you have a Greek passport?\nWoman: No, I was born in Spain. I have a Spanish passport, but I've been living in Greece.\nTax Officer: And where do you live now? Where will the department send your TFN?\nWoman: That's 1339 Harbour Drive, Hollywell.\nTax Officer: Postcode?\nWoman: 1517.\nTax Officer: Thank you. Now, what's the best way to get in touch with you?\nWoman: By phone. You can ring my landline number: 0955 77 5076. I'm sorry, I haven't got a cell phone at the moment.\nTax Officer: I see. Can you give me the details of someone else we could contact if we can't get you during office hours?\nWoman: That would be my landlady.\nTax Officer: What's her name?\nWoman: Martha Pearce.\nTax Officer: Is that Pearce P-I-E-R-C-E?\nWoman: No, it's P-E-A-R-C-E.\nTax Officer: And her number is...?\nWoman: The same as the one I gave you.\nTax Officer: Yes, I've got that. Now, for some more personal details. What title do you use?\nWoman: Excuse me?\nTax Officer: Are you Mrs, Miss, or Ms?\nWoman: I'm not married. Put me down as Miss.\nTax Officer: All right. What's your surname?\nWoman: Farina.\nTax Officer: What's your first name?\nWoman: Maria.\nTax Officer: Do you have a second or middle name?\nWoman: Well, two, actually.\nTax Officer: What are they?\nWoman: Rosa Anna.\nTax Officer: I'm guessing Farina is your maiden name, since you haven't been married. But are you known by any other names?\nWoman: Farina is my only surname, but people call me Mary.\nTax Officer: As a first name?\nWoman: Yes.\nTax Officer: When were you born, Mary? Can you give it to me in the following order: day, month, and year?\nWoman: The 15th of November 1983.\nTax Officer: You're obviously female, so that brings me to the last question, which I don't really need to ask.\nWoman: What's that?\nTax Officer: Your husband's name?\nWoman: I don't have one!\nTax Officer: I know. So I'll just write down N/A for 'not applicable'.\nWoman: Thank you.\nAnnouncer: That is the end of Section 1. You now have half a minute to check your answers.\n(Pause)"
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 2,
+   "title": "Listening Part 2 – Keeping kids safe on the Internet",
+   "instructions": "Nghe bài nói về việc giữ an toàn cho trẻ khi dùng Internet. Câu 11–16 điền vào ghi chú; câu 17–20 điền vào bảng các trang web.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "noteBody": "# Keeping kids safe on Internet\n\n• Internet for children – scary but educational\n• 'Online Family Norris' blocks [[11]] and social sites\n• But still important to watch children and [[12]] them\n• Keep computer in family room where you can see it\n• Children should never use their own name nor give out [[13]]\n• Online friends stay online\n• No personal email address for youngsters\n• Teach teenagers that [[14]] on the Internet always stay there – and may ruin job prospects\n• Watch out for [[15]]\n• Teenagers use internet: to socialize or do [[16]]\n• Young kids: find help with school subjects",
+    "tableBody": "| Website | Content | Activity | Age group |\n| --- | --- | --- | --- |\n| www.mathtutor.com | Mathematics | Practice & [[17]] | All levels |\n| www.spellcity.com | Spelling | [[18]] | Primary school |\n| www.bee.co/typing | Typing | [[19]] | All levels |\n| www.coolresource.com | [[20]] | Extra practice | Middle school |",
+    "groupInstructions": {
+     "11": "Complete the notes below. Write NO MORE THAN TWO WORDS for each answer.",
+     "17": "Complete the table below. Write NO MORE THAN TWO WORDS for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 11,
+     "questionType": "note_completion",
+     "prompt": "Câu 11",
+     "answer": [
+      "military",
+      "military sites",
+      "military websites"
+     ],
+     "explanation": "Phần mềm Online Family Norton chặn các trang QUÂN SỰ và trang mạng xã hội.",
+     "evidence": "A popular one is Online Family Norton, which bars things like military and social websites.",
+     "points": 1
+    },
+    {
+     "order": 12,
+     "questionType": "note_completion",
+     "prompt": "Câu 12",
+     "answer": [
+      "educate"
+     ],
+     "explanation": "Cách tốt nhất để giữ an toàn cho trẻ là GIÁO DỤC chúng và để mắt trông chừng (\"educate them and keep an eye on them\").",
+     "evidence": "When all is said and done, the best way to keep children safe is to educate them and keep an eye on them.",
+     "points": 1
+    },
+    {
+     "order": 13,
+     "questionType": "note_completion",
+     "prompt": "Câu 13",
+     "answer": [
+      "personal information",
+      "personal info"
+     ],
+     "explanation": "Dạy trẻ không tiết lộ tên thật và tuyệt đối không cung cấp THÔNG TIN CÁ NHÂN như nơi ở hay số điện thoại.",
+     "evidence": "It is paramount that you teach them never to divulge their proper or full name, and to never provide personal information such as where they live or what their phone number is.",
+     "points": 1
+    },
+    {
+     "order": 14,
+     "questionType": "note_completion",
+     "prompt": "Câu 14",
+     "answer": [
+      "postings",
+      "posts"
+     ],
+     "explanation": "Thanh thiếu niên cần biết mọi BÀI ĐĂNG (postings) trên mạng sẽ tồn tại mãi mãi và có thể làm hỏng cơ hội xin việc.",
+     "evidence": "teenagers need to know that whatever postings they put on the web will remain accessible forever.",
+     "points": 1
+    },
+    {
+     "order": 15,
+     "questionType": "note_completion",
+     "prompt": "Câu 15",
+     "answer": [
+      "bullying",
+      "cyber bullying",
+      "cyberbullying"
+     ],
+     "explanation": "Cần đề phòng nạn BẮT NẠT trên mạng xã hội — diễn giả nói tình trạng này đang gia tăng.",
+     "evidence": "Unfortunately, bullying on social sites is another thing to look out for, and I have to tell you, it's on the increase.",
+     "points": 1
+    },
+    {
+     "order": 16,
+     "questionType": "note_completion",
+     "prompt": "Câu 16",
+     "answer": [
+      "research",
+      "homework",
+      "research/homework",
+      "homework research"
+     ],
+     "explanation": "Thanh thiếu niên lên mạng chủ yếu để giao lưu (socialize) hoặc làm phần NGHIÊN CỨU/BÀI TẬP VỀ NHÀ được giao.",
+     "evidence": "Teenagers may be mostly networking on social sites or completing research that they've been asked to do as part of their homework assignments",
+     "points": 1
+    },
+    {
+     "order": 17,
+     "questionType": "table_completion",
+     "prompt": "Câu 17",
+     "answer": [
+      "compete",
+      "competing",
+      "competition"
+     ],
+     "explanation": "Ở mathstutor.com trẻ vừa luyện tập toán vừa THI ĐUA với trẻ em khắp thế giới → \"Practice & compete\".",
+     "evidence": "They can practice mathematics on this site, no matter what their level, while they compete against other children from all over the world.",
+     "points": 1
+    },
+    {
+     "order": 18,
+     "questionType": "table_completion",
+     "prompt": "Câu 18",
+     "answer": [
+      "play games",
+      "playing games",
+      "games"
+     ],
+     "explanation": "Ở spellcity.com học sinh tiểu học gõ từ vào rồi CHƠI TRÒ CHƠI để học thuộc chính tả.",
+     "evidence": "They just type them in and play games to learn them.",
+     "points": 1
+    },
+    {
+     "order": 19,
+     "questionType": "table_completion",
+     "prompt": "Câu 19",
+     "answer": [
+      "sing",
+      "sing songs",
+      "sing (songs)",
+      "singing",
+      "sing along"
+     ],
+     "explanation": "Trang dạy đánh máy: người học gõ mười ngón trong khi HÁT theo các bài hát.",
+     "evidence": "Children, or parents for that matter, can learn to touch type as they sing along with songs.",
+     "points": 1
+    },
+    {
+     "order": 20,
+     "questionType": "table_completion",
+     "prompt": "Câu 20",
+     "answer": [
+      "worksheets",
+      "worksheet"
+     ],
+     "explanation": "coolresources.com là nơi phụ huynh tải PHIẾU BÀI TẬP (worksheets) về cho con luyện thêm — cột \"Activity\" đã có sẵn \"Extra practice\" nên chỗ trống là nội dung.",
+     "evidence": "Here's a site that parents can use to download worksheets to extend their children by giving them further practice.",
+     "points": 1
+    }
+   ],
+   "transcript": "Announcer: Now turn to Section 2.\nSection 2. You will hear a talk about keeping children safe on the internet. First, you have some time to look at questions 11 to 16.\n(Pause)\nListen carefully and answer questions 11 to 16.\nSpeaker: Thank you for coming. It's good to see so many of you interested in keeping your children safe on the internet.\nWhat's in store? Well, firstly, I'm going to talk in general about some common sense ideas and rules for young ones using the computer. Then, I'll give you some information on free educational websites. Finally, we'll finish with question time.\nI'm sure most of you think that the internet can be a frightening place in which to let your children roam loose. But let me remind you that it can also be a fountain of knowledge and education. The trick is to avoid the former and utilize the latter.\nThere are programs available, both in your local electronics supply shop and free to download, that will keep your child safe to a certain degree on the World Wide Web.\nA popular one is Online Family Norton, which bars things like military and social websites. I wouldn't advise you to rely solely on a program to protect your family though. As good as it is, you cannot abdicate your responsibility as a parent. I'm sure you all know that or you wouldn't be here.\nWhen all is said and done, the best way to keep children safe is to educate them and keep an eye on them. For this reason, you should make sure the computer which your child uses is kept in a communal space, where you can look over their shoulder from time to time.\nIt is paramount that you teach them never to divulge their proper or full name, and to never provide personal information such as where they live or what their phone number is.\nTell them that online friends must remain just that: online, unless they are supervised.\nIt is difficult, I know, to teach children about the dangers of the world when they are so naive, so trusting, and innocent. But without going into great detail, you must alert them to the possibility that the people they are chatting with may not be who they say they are.\nIt's also sensible not to give them their own email address until they are old enough to use the internet safely, so all communication from websites will go through you.\nWhen they are old enough to use social sites like Facebook and MySpace, teenagers need to know that whatever postings they put on the web will remain accessible forever. Nothing is ever really deleted there.\nAnd embarrassing pictures or remarks may come back to haunt them one day. For instance, when they apply for a job, they could jeopardize their chances as the employer or human resources staff will look on the web to find out more about their potential employee, and they may be shocked by what they find there. Not the sort of stuff an applicant would want on his or her CV.\nIt can also make them more vulnerable to bullying. Unfortunately, bullying on social sites is another thing to look out for, and I have to tell you, it's on the increase. It's a very difficult issue to deal with, but something that is more easily detected if the computer is kept in a family space.\nIf we can put these negative issues aside, let's not forget that the internet is also a wonderful place for children of all ages. Teenagers may be mostly networking on social sites or completing research that they've been asked to do as part of their homework assignments, but younger children can get assistance with mathematics, spelling, and reading on a variety of free and paid-for sites.\n(Pause)\nAnnouncer: Before you hear the rest of the talk, you have some time to look at questions 17 to 20.\n(Pause)\nNow listen and answer questions 17 to 20.\nSpeaker: A good way for children to learn and have fun at the same time is the website mathstutor.com. They can practice mathematics on this site, no matter what their level, while they compete against other children from all over the world.\nAnd here's a fun way for primary school children to learn the spelling words for the week. It can be such a chore for some children. They just type them in and play games to learn them. What's that? The website? Oh, sorry. Yes, you'll need to go to spellcity.com for that.\nThe one I'm going to tell you about now is one of the most practical sites that's popular with people of all ages. Children, or parents for that matter, can learn to touch type as they sing along with songs. And there's a variety of funny characters to help you enjoy yourself as you learn. In this day and age, typing is essential. Everyone should be able to type fast and accurately. So go to bbc.co.uk/typing and try it out.\nDon't just leave it up to the kids. Here's a site that parents can use to download worksheets to extend their children by giving them further practice. It's called coolresources.com, and I can really recommend it, particularly for middle school students.\nNow, are there any questions?\nAnnouncer: That is the end of Section 2. You now have half a minute to check your answers.\n(Pause)"
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 3,
+   "title": "Listening Part 3 – Why study abroad?",
+   "instructions": "Nghe hai sinh viên ngành giáo dục (Ted và Cleo) bàn về bài tập đầu tiên. Câu 21–23 chọn A, B hoặc C; câu 24–28 điền ghi chú; câu 29–30 điền chữ cái A–H vào biểu đồ.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "noteBody": "# Reasons for studying abroad\n\n## Study abroad\n• Is the best way to learn a language\n• Provides a [[24]]\n• Allows you to experience another culture first hand\n• Helps you [[25]]\n• Give you opportunity to make new friends\n• Helps you [[26]]\n• Enables you to [[27]]\n• Increase the value of your degree\n• Improves [[28]]\n• Expands your world view",
+    "groupInstructions": {
+     "21": "Choose the correct letter A, B or C.",
+     "24": "Complete the notes below. Write NO MORE THAN THREE WORDS for each answer.",
+     "29": "Label the diagram below. Choose your answers from the box and write the letters A-H next to questions 29-30.\n:::box\nA Afghanistan | B Saudi Arabia\nC Iraq | D Japan\nE Mexico | F Iran\nG Sweden | H USA\n:::"
+    },
+    "groupImages": {
+     "29": [
+      "data:image/jpeg;base64,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NrvOME5fp+dMX4NeId+6Txncn0wW6fnQB7GJoScCWMn2YUvmR5x5iZ9Nwrxw/BzxIH3ReNblefVv8aQ/B/xTuLDxvc5PfL//ABVAHsfnRf8APWP/AL6FBmiAyZYwPdhXjX/Cm/E3IHjW6weoJf8Axp0vwc8TSR7f+E2uc9878f8AoVAHsP2q2/5+Yf8AvsUfaYMA+fFg9PnHNeNj4Ja35W1vGFz5nc5bH86YvwX8TKqL/wAJrPtU5HDf/FUwPaPPh/57R/8AfQpwdCcB1P4146Pg34hwd3jO6OTk8v8A41Ivwi8TK+R43uwMYOGf/GkB6750O7b50efTcKeeDXz74m8H614Nv9Hu38T3N0JroIULsMj8TX0EaACiiimAUUUUAFOptOoAKKKKBhRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB598ZTj4bajzjgfzFbngH/AJELRf8Ar3H8zWN8Yo1k+G2phieFB4+orZ8A4/4QHRcf8+4/maQjosCjApaKYBRRRQAYooooAKMUUUAJiloooAKKKKACiiigAooooAKKKKACiiigAxSYpaKACiiigAooooAKKKKADFFFFABRRRQAUUUUAFFFFABRRRQAtFFBoGJmiiigQYooooAMUUUUAGKKKKACiiigAooooAOtAFAp1ACED0pOlKaSgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBMUY4paKADFFFFABRRRQAUUdqKACiiigAoxRRQAUUUUAFFFFABRRRQAUUUUAFFFFAHlfxkwp8OnaMC9GWPbivVMg8jkV5d8aXhFjoqSZ3G8GMfhXpltgW0QXONgxmkBLRRRTAKKKKACnU2nUAFFFFAwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKSloAKKKKACiiigAooooAKKKKACiiigDg/jBKsPw31InuoH6itfwDz4C0XH/PuP5msL4z5Pw01H6D+Yrd8A/8AIg6L/wBew/maQjo6KKKYBRRRQAUUUUAFFFFABRRRQAUUUUAJXGfE3xVf+D/DaanYKjsJNrBxntXZ15f8eP8Aknx/67f0pAdn4M1u48ReEdP1S6jVJrmPeyr0zmuJ1H4j6nZ/Fm18KrFG1rNLsLY5AwT/AErf+E3/ACTPRCTk+QP5mvLNd/5OR08/9N//AGU0Adb4++LN1ouvL4d8P2wuNQztZmGQD6Yrnf8Aha3jbwxf2y+KtNT7LKQAyR7Tj61mfEfwd4j0Xx1N4m0aPz0eTzUMfzMhxjBA5NJZ/Fye5uYLTxxocc8G4bWlgwV98EUAfQ+n3sepadb3sJzFMgZatVQ0aexutJt59NCCzdcxBBgAfSuH+MviTUvDnhMSaZKY5Jn2M4HIH9KAPRBLESQsiMw7BgTXM+MvHukeC7OKa+YySSvsSOM5JP8ASvnzwvN4nubqxvtM8SedcSMDJbzT4x7HJ5qT4veFtZ0nVI9R1C/M9vfT5ijzxGcfX2oA+m9O1GHU9OgvEZVSZAwBbpVzIC5JGB3zXzte6Xr/AIO+FL3k2szSNcsGhCsQYxx7+1dlBq1+/wAAp9Re6lN2LUMJix3Z3DvQB6vuBGQQQemKgubmOC3lbzU8xUJClhmvB/AvjjVLD4V65qd1eSXE8DFYTKxJB49frWJ4f8MeM/FPh+48Tp4gmTYCyRlyd/t1oA9L+GPjzVvFeu6taah5Xl2pPl7Ex3A5/OvTWdFIDOqk9ATjNfOPwR1N9LPiXUJgXeC3LuD1J3AVz0eu+IvGM19qkniX7AIGLRxGXbn6DPvQB9Y5GM549aQuo5LqPqa+ffDHjnVNZ+GOu2dzeyC8sI8x3CudxGVHX8awNC07x14r8KXOr22v3Cw2hOEMp3Pj3zQB9PyzJDGZJHVFAySTgVynhn4iaR4r1e+0+wyrWgyZHOA/IHGfrXkvg298SeP/AALq+ltqbi4s8tHMSdzDjgnP1rkfht4U1jX/ABBdR6bqT2clp887gn5gD9aAPrNpY48b5UX/AHmAzT1dJF3I6sPVTmvlPxZ4h1q/8cPpd/rFxpttC3liTDY6dcd69W+DNtrMEd6L3WYtQsCv7giQMwORyRkkcUAer0gZTnDKcdcHpUOoQm40+4iV2QvGQGQ4I+leB/DXxRqGneIPE2m6xqE8xiiYoZXJIbI9aAPoHemcb1z6ZpskyICDIgfBIBPJr5L8M+N9cXx1ZXlzf3bWUlycq8hKng8eld7reral4h+Ntvp+nXUq2trnzVRyBjBoA1/BvxL1zWPiNe6JemA2cblU2pgj6mvYkkSUExyI4H91s18kaZpmrax8Ub7T9IuzazSzMrTA/dFdP4R1PxD4N+Ksfh2/1Ga5illKMHYkEYJz+lAH0gzKi7nZVX1Y4oR0kGY3Vx6qc185eLvEXiLxn8T28L6dqL2lsJjHHsJHbOTzzS2l/wCIvhj8Q7LS9S1WW8sbggMXJwVOegJ9aAPo7rXmHxb+IWo+EFsbXSPJN1cNgmTDAde1enAhgGHQjNfMHxu0bULbxrFcXFwWt7th5OTnZzQB7x4Eu/EF74dW58S/Z1uXbcnk427Mex9a6RZoXbCzRs3oGBrxrWtP8S6B8K9PsrLVUZn5kupJNhVMdBk15Vd67e+H7vTJ7HxHdXd1kNcLvbaDnp15oA9q+Inizxjonia1tNCtopLJ1UuXj3HOcHn6VV8V/ETXNG8b6No8AhWG5UecHTJzz0Ncl8W/EOpG88O3NtdzwC4hR2WNyATuNJ4/LyfE/wAMsSS7Rrkk8nk0AfRLOqxqzsEGOrHAoSSOQnZIj/7rA186/GHxlqE3jWPQrbUZLK0gwkrIxHPqcVi+HPFF/wCGfHtlBD4hbUrCR8SsxIUjB7E0AfUjOkfMjooP95sV5X4z+ImraD8QtO0a1ELWlxjflcnv3rhby/8AEfxL+JF5penas9na2xO3YxChfXAPPWud1PS9X0X4o6bYaveveSxSgJM2eV59aAPrJOYwxHbNc14x8daT4LsYrjUGLtK+xI05JP8ASukiyYUz/dr5p+Onh3UdP1qHU570zWd3Ltiiz/q260AfRmlalDq2l299AfkmQOBnJFTtc26vsa4iDf3S4zXgFvJrnw6+F02oy6i88mpKEtRk/uOhz19jWDZ+DfGOq+DJfF5124DKPNSJnOWXjnOaAPqKqWqzz22mXM9vgSxxll3DjIrhPgz4ru/E/hVvtztJc2z7C56sOK7zVxnRr3P/ADxb+VAHnPwj8e6v40fUl1QxH7OflMabe4r0554IiA80aZ6bnAr5z+DOqHRdD8V6gBkwRlgPfIFZ/hvQfF3xMt7/AFdddmt1iclELHGcdBzxQB9PghhlSCD3BqN7m3icJJcRIx6KzgGvCPhr471XTbXXdJ1mdp5tOiLIzNkg5A61yujaF4r+IdhqXiODWplmt5CY4Ax5PHA5460wPqbIxnIx654qAXlqz+Wt1AX/ALokGfyrxOzvvGP/AAqS+ivpXtL6B9qzTPtYpx3PfrXlF/fTaXFZahZeIbqe/cgz4ZgFP170gPrDxJ4n0/wtpUl/qD/Ig4Vepo8MeI7XxVosWp2gKRyDIQnkfWvBPiJYa1rXgjS/FMuoE25tlSWHOMtk89fetP4b6frHhrwRf+K31IvafZv3Vtu4ByOevvQB761xAjhHniRz0VnAJqX6V8dx6pf65aXetX3iqW3vomzFb5Y7voc8V7x8FfFd54l8LSJfymWe1fy956kYH+NAHplRG4t1k2NPEH/ulxn8qyPGOs/2B4R1HUgfmhiyp984/rXzjpmgeM/FPh648VWurXDzJJgQq5y3Tpz70AfVXBHGPrUX2mAv5YuIi/8Ad3jNeD6p418TaD8KoItQSaHVJpPJWV87gMA5rl7zwr4w0rwjbeMxrs7M6iR4i5yo/PmgD6k3BeSQB7mgsB3GPXNeDX/jnUdd+CTaj9okiv4X8qSWNtpYjBz+ta0esaifgJ/aDXk32sxDM287u3egD2LeoXcWAUd88Uw3Vso3NcQgepcV8/8AgjXNX1b4TeI2utRuJJYRmOQudy8r3rl/D3hzxN4l8HX2tL4gnWGzyRCzk7unvx1oA+qpJoo4jK0iiMDO7PGK5Lw38RdI8T6/faVYZ3Wi5aVzgNzjjNeReAbzxD458Faxon9pOk1qm6KZmO7qOM5+tct8N/Cesa34ru7aw1FrSSzw88gJ+YZ6daAPrJZ4SzDzo9w6jcOK8++I/ijxJotxp6+HIopopXAmYruAFeL6/c+I7r4o3ujaPqVyJppjGi+aQK1/G1p4j8HaBoNhfanP9pe5BkZJTyMdM5oA+i9Omll0yCe5wsjIC/YA1PHPBKSIpo3I6hXBr5++K/jTV7CHRtHsrx7aOW2WSWVW+Y5JH9K4q11++8Ia/p1xp/iSTUVlZTMhzgZOCCCeaAPreSaKFd0sqRr6uwApI54Zl3QzRyD1Rga+X/it4p1bUPGP2U309pprAeXtyF25PPvXV/CGx1OHxKz23iFL/S1XDRs+DjthSc0wPeaKKKACiiigAooooAKKKKACiiigAooooA8k+OP/AB7aDnOPtg5Fep2RzZwck/IK80+OEY/sPSpifuXY/pXpOnsG062I7xikBaooopgFFFFABRRVDV9VTR7BrqSN5FUgbUGSaAL9Fc2PFkhGf7Gu/wBf8KcPFch/5g91+v8AhQB0VFc7/wAJTL/0B7n/AD+FJ/wlMv8A0Brr/P4UAdHRXOf8JTL/ANAa6/z+FH/CUy/9Aa6/z+FAHR0Vzn/CUy/9Aa6/z+FH/CUy/wDQGuv8/hQB0dFczJ4ruB9zRLpvxx/SnDxXMRzot2D9T/hQB0lFc4fFc3bRbo/j/wDWpj+K7jy2K6FdMw6Dd/8AWoA6aiuQXxhqQQFvDVyHz08zt+VMfxnq2Ts8MXJHY+aB/SkB2VFcT/wmetf9Cvc/9/R/hUzeMdT8tdvhu5L/AMS+Z0/SmB2FFcb/AMJnq3/QrXP/AH9H+FH/AAmer/8AQrXH/f0f4UAdlRXGf8Jnq/8A0K1x/wB/R/hR/wAJnq//AEK1x/39H+FAHZ0Vxn/CZ6v/ANCtcf8Af0f4Uf8ACZ6v/wBCtcf9/R/hQB2dGa4z/hM9X/6Fa4/7+j/Cj/hM9X/6Fa4/7+j/AAoA7PNGa4z/AITPV/8AoVrj/v6P8KP+Ez1f/oVrj/v6P8KAOzzRmuM/4TPV/wDoVrj/AL+j/Cj/AITPV/8AoVrj/v6P8KAOzzRmuNTxjq7uF/4Ri4Ge/mj/AAp8vi3VoXMf/CM3DYPUSjn9KAOvorjf+Ez1f/oV7n/v6P8ACj/hM9X/AOhXuf8Av6P8KAOyorjk8Yas7Y/4Ri4X380f4VdGv6sVBOhyD/tqP8KAOkorlrjxTeWSedd6PLHDuVS/mA4ycenvXUg5GaACiiigAooooA4P4xLu+GupY/ug/qK2fAP/ACIWi/8AXuP5msj4wSeX8NtSPqoH6itfwD/yIWi/9e4/maQHR0UUUwCiiigAooooAKKKKACiiigAooooASuN+J/hq48U+C7iytBm4T541z1NdnRSA+dfCvxL1zwToseg6h4fupDbDZGyxnp+VO8CeH9b8YfEZvFupWktrBE5kQOCpJxjGPxr6CktbeV98lvE7erKCalVFjXaihVHQDpQB89eJL7xf4E+IEl/tvL7SWl3pGCzAjGMe1YvjHXdR+J9zZWWneGZLaRW+eVosE/jivp2SKOVcSorr6MM02K2t4DmGCOMnuqgUAZHg/RX8PeE9P0uRsyQRBWyc81zfxYub2Dw1/o2kJqMTNiaNk3ED1FegYzSEBgQygg9QaAPju7tFv8AUtPk8M6LqNleEgzAhsBs9uBgV6j8adM1W68H+HW+zTXE8DgzbAWIO017dHZ20Tbo7aJG9VUA1I6LIu11DKexHFAHhOq3l/44+Dxt7fTLiG4sflKOpBfGOgx71z1l4y1OT4ZXHhFNBvGuPK8sv5bAAZHtX0skUcQ2xxqg9FGKalrbxlmSCNS33iFAzQB88+E/Ct7rPwd1fTPsksF7FMXUOpUvwOKi8HeO9W8N+E7jwyPD95LegFYm8tsA+/FfRyRpFnYgXPXApq28CymVYUEh6tt5oA+dfhfoOrTWvii1urKaK4u7Y7NylQTuB7/SuR0SLSvDsV7ZeJfDt5c6gHPk7AQP5HPevrtVVSSqgE+gqrPpWn3UwmuLOCWQHIZ0BIpgeA+HdNkf4a+Jb0aNJZmWPbENnzMMr2xmul+EVrcQ/CzU45beWORt2FdCCePSvYPIi8nyfLXy+mzHFLHDFDH5ccaqn90DigDwr4CWV3BbeIPOt5YgysFDoVyeOma5z4ea3qHgjxrqENzol5KL5vLyEIC85z09q+l4oIYM+VEqZ67RjNDW8DSeY0MZf+8V5pAfPHju/vB4ov49f8M/bbNvlgnt4cP9S2DVr4FeH9dtddu7+SCa10xlwElyN3PpXv0kMMqgSRI4HQMM0qqFUKoCqOgAoAecEYI4NfM/xY8J6vpnjO4u9GtpjFfr85hUnqenH0r6YzTGjRyCygkeooA+c/Efw7vtP+FOjzWtq51GGTzpggyw4roPgr4fv3udW8Qaxbul5KCiF1IPQc817aVDLtIyPSkVFQYVQB7UAfPXw70fULf4yX881nNHD5hIkZCAfxqfXbC/uv2gLO7jsp/syS7TLsO37rc/rXvoiRX3hAG9cUeVHv37Bu9cc0AfN/iXRNc8C/FA+J4LF7y180yL5a54IxjildNe+KvxA0/UG0qa2sbYgEygrgDJ719HyRpKu2RA6+hFEcUcShY0VF9FGKAFC4VV9BivEPjtYXuoaxocdpaTTbHBZkQkDk17jTWjRyCyg46ZFMDw34y6PrV34X0U2cE0lvboDPHHknPPYV5prFrca5pmljTPDNxa/ZsJNIIjl2/Kvr1kV1KsoIPUHvTVghRSiRIqHnAHFID5w+Juj6ncReFjDYzyeVboH2oTtO49atfEPS9Vk8deH7m0tJmEcaAusZIU5PWvoZoo3ADIpx0yKUxoTkqDj2pgfNHxW8J6nZePDrklg97Y3LCRljTd+B61H4esj4k8T29tpHhRbSxz++kuIeRwehIGO1fTbxpKu2RQy+hFNighgBEUSRg9doxSA+a7L+0vhV8Sr27m0u4urObKq0SE5Xr1ANU9XvNc8U/Eqw1ebR7qG1Mo8oGI8Jz14r6glghnx5sSSY6bhmnCKP5f3a/KMDjpQAqZESYHavHP2gdOvL3Q9JktLWWfybgu/lqSQNp9K9kPJprIrqVdQynqCOKAPCZ4L34kfCRLG2sJra60w/KsoK+bj0yB61iWHj7xLYeCX8IzeHrhrlYvIhkERAC578fWvpCOGKFcRRog9FGKTyITJ5hhQv8A3ivNAHnPwY8KX3hjwszaimy4un37O6jjr+Vd5rBJ0a92qSfJYAAcnir1GKAPnr4T+FtQu/D/AIosLi2lt2u4ysZkUjJyD3+lUfCvijxD8MbO90O70C4uMudkkaEjOPYc19Iqip9xQv0pskEMxBkiRyOhYZpgfP8A4B8CaxrkfiDWNRhNodRiKxowwc5B6VkeG9c8SfDax1TQP7GuZLmdz5EyISobj29q+mgABgAYFNkhilZWkiRmXoSM4pAfOuv6Z471T4VrNqbTTyNcGRoud4TA6/j2rjtRsL7VPCemWen+F54JLTme4ERzKcd+K+viAVKkAg9jTFijRCioqqeoA4oA8U1jTNRv/gDZ2y2Mguo4xui2nd+VVfAM934o+G+peEf7Mnt57e2BSWVSqucjjkV7vtULtwMelMighhz5USR567RjNAHydpcI8N2N3pGp+EJLzVTIfKmaLco6cdOa91+Emk3mn+GGnv8AT4bKa4bd5cSBeMDqK7traB5fMaFGcfxEc1LQBgeNNDbxH4O1HSkOHniwvPcEH+lfP+ieIfF/g/w3d+GLbSbpL1pP3c6oSF6dDj2r6fppjjZtxRS3qRzTA8I1zwd4t8RfC63n1N3n1WGXzxGx+bZgAD61gX/jXxHrHguDwemgXK3SoInlMZwRn6V9MVELaBZfMESBz/EBzSA8Mm+HuraR8FbjTvK330j+e8a8kZxx+lcvbeKNWn+F8vhJNCvDcJ8pk8tgAvHtX1B161EttAhJSCNSeuFHNAHz74Bs7uD4R+JLSSxmjuNxwDGct93jpW78MNIvrb4U6vBPbSRyybtqMpBPA7V7OsMSKVSJFDdcDrSqiqu1VAHoKYHhfwI0XUtPTXGu7WWESRFUDoRuNc/4B1TUfBXxF1OG60i6kF83k7lQ4XnOc4r6VVVQYUAfSo2t4Gl8xoEMn94rzSA+etO0fUv+GgVv/sM6232lmMjIcY2nvW98edOvb+60P7LayzBJQW8tScdfSvaxGm/ftG71xStGj/eUNjpkUAfO3xV8HarcS6NrNrYvc28dsscsYGWBBJPFYts769q2n2uieDI7ZFZRM9xbj8TkgYr6jIG3GOPSo44IYv8AVxIn+6MUAeCfED+2bfxGsF34ahv9JRdsTRwAuB/vYNZXw08Max/wsP8AtOw0+4sNMDklZSRhfTtmvpNlDjDAEe9CqqDCgAe1AC9KKKKYBRRRQAUUUUAFFFFABRRRQAUUUUAeYfG0g+HtMTGd14P6V6Np67dNtwOyAV5x8bMjQ9KbsLwf0r0mx506D/cFICeiiimAUUUUAFY3iac22mCUdVkXH5itmsHxeM6Gf+ui/wAxQBvI5aNT6ilyaji/1S/Sn0AGT60uTSUUALk0ZNJRQAuTRk0lFAC5NJk+tUtV1Sz0bTpr6+lWOGJckk9a4vTPHeteIrZtS0XQjJpqHCs8oVpPoDQB6Dk+tLk1xHhj4gf8JD4guNHm0qayuLdA0gkbPOcccc12wIPTr1xSAXJpMn1pOtLg+lAC5NJk+tHNNd0SIyyOqooyWJ4FMB+TSZPrWJoPirTfEc95Fp8hk+yyFHbHykj0NbXOfagBcn1oyfWvP9S+Id1p/j+Lw8NHuJLZ+DcKpwDz7V6BnbwSB6ZoAMn1oyfWjPrxjvQGU/dIP0OaADJ9aMn1oooAMn1oyfWiigAyfWjJ9aKKADn1NGT60UUALk0ZNJRQAZPrRk+tFFAGD4xJ/wCEan/66Rf+hit1fuisLxj/AMizcf8AXSP/ANDFbiHKKfagB1FFFABRRRQBw/xdQSfDjUgf7g/mK1vAXHgPRf8Ar3H8zWR8XXKfDjUzjPyjtnuK1/AX/IhaL/17j+ZpAdFRRRTAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiisrxHrcHh3QLvVbgZS3Tdt9e39aANXBo6V882/wAWPH+uR3OpaTp0R0+3OX+QEgf1613Xhj4mS+IfAmparHAq6lYp86HoW45x+NAHplFfPNn8bfF+p2k5sdJjmeHl2SPIUV3nwv8AibL43+02t5beVeW43MVHBHAoA9Ko7ZpCcAk9hmvEPEHxJ8XXfi650nQbVIbe3Ygy3CbQQB1ycUAe4UV5J8LvilfeKdVn0bV4kF1EuRImAG5xivVrppI7SZ4gDKqEqPegCXNFeS+AfijqXiHxXfaNqsEMRgQlSowSQf8ACsi3+Nd/L8RRozRQDTWuTEHwMgY65pAe40V5J4x+J+q6R4/tfD2lwwyRyYDllyQef6VR8XfFXXY/FA8N+GrRJ7yP5ZWIzlvb0pge00Dr0rxfwd8WNWXxT/wj3i61W3uHbZG4GAG96zfF/wAXfEmg+NdQ0m0hjuI0bbAqx5Yf40AekeOPiJp/gV7Vb23knNycKEOMfpXUaXfxarptvfQgrHOgcA9RXzH8R9X1bW/D/h++1mAw3TycqyFT37GvSvEHxEfwR4G0KCzhE1/dQARg9uvakB23jXxnY+B9Ljvr2F5UkfYqp1zWj4d1618S6Jb6pZhhDMMgN1r5o+IXi/xXq3h+1sfEmniFXfzYpQuM8YxXuHwf/wCScab/ALgoA7yiuP8AiP4ovfCXhh9TskRpVbGHGRivIz8YvHV7pbapa6bGLKI/PKI+KYH0ZRXz/c/GXxXq+h/btF0fZHbDN1MRuH4fmK7n4ffEr/hLfDt1cz27Ld2Ue6QKMhvoPxpAej0mecV89S/FPxzfjUL+ztobeytOSs6BSRkDjOM9a6qx+Kl9qHwyudfghiF9aHbKpGQTx2/GmB63kUtfO0Pxd8e6rpsmpWOlRNaW5zK6x/59a9Y+HXjeLxvoP2rZ5d1Edsye/tSA7GiiimAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAKKWm0ZoAU0lFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB5h8bufDemr63i/0r0fTxjTbcHqIxXnnxpUN4d07Jwfta4/SvQ7Liwtx/sCkBYooopgFFFFABWD4u/wCQGf8AfX+YrerB8Xf8gM/76/zFAG3F/ql+lPpkX+qX6U+gAooooAKKKKACiiigDx/9oOSRfC9iiSlEaY7wO4xXY/DOOOL4eaOLfHlmBTnHU4qbx94Sh8Y+GZtPfCzgboXP8LVxng678Y+DdFj0K80A3iwjbDNHKAAOwPWkB13i1rXwxpWpeKobYNqCQBN3rzxn868nk8Q+ILLwRZ+N/wC1pWup5/3kG4+WU44xnHevSLrRPEPirw5qltrLR2qXUQWK3TBKkHOSQa89m8F+LLzwjZeC209USGfdJd7xtKcdB68etAEninx3q1xfeGdR0vUXht9RCCWFScAnrWlrGta7p/xpg0SPVZjY3CGTy9xwuQ3HX2pnjP4Y6lb6d4eXQIluG03bvUkDcR35qKbwt441P4h2nii402BTHHt8oSqOBn/GgDIOqeKrn4l6h4ZXX5ktwz7XJJwACfX2qbwhqet65ovirRL/AFOaRLOMiOXcd3B9c1e0/wAJ+KU+Jlz4mn0xUhnL/uxKCVyD/jVvwZ4M8RaTqHiL7VZKsepI3lsJBwTQBz/wX02Sfw5rN2uo3EQiDfu4mI5A61F4Ol8c+OLC9js9fkjS0lAUOTuYZHfPpW18PPCnjPwza6jZtZwrbzbtxJBZsjGAa3/hH4W1zwveamup2ixw3J3o4cHBz0oA4rWr/XvDnxO07TpNVmnVlDy7mJyec9/ak1Tx5qOv+KtbjF3eQJZjFnDaqxywb+LbW94t8GeI9Y+J8OsW9mpsoTs3Fxkjnn9aRPA/ijwh49vNV0O1hvbW+JGHIG3qe9AGJ4i8d+Kk8J6HJfR3NrGWC3kiKyswx1z2r0D4Xajb6jLfTWGqTXliwBjSdiXj56HNUdX0rxjPcWn2/T7fUrR4v9JtQVVVPPTORnpzVz4XeCbrw5qGq381r9jhumxFblwxQZz1FAHplFFFMAooooAKKKKACiiigAooooAKKKKAMHxl/wAixcf9dI//AEMVtxf6pfpWJ4z/AORXuP8ArpH/AOhituL/AFS/SgB9FFFABRRRQBwfxh3f8K31FVfblRzn3FbXgLjwHow/6dx/M1g/GgZ+Guo/QfzFbvgH/kQtF/69x/M0gOjooopgFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABXD/FuxuL/4eajHbKzOqbiqjJIyK7imuiyIyOoZWGCD0NAHzr8MPHegeG/AOqWGpSlLssxERQ5bIAxVf4XWkx8MeL9SdWjtZoCqBhgZ3A5r2S8+F3hG9vRdy6VGJAd2EACk/TFbp8P6YNGk0mO0SKylXa0cYC8UgPEv2fUVrHxBuAbKMOfoKb8BG2eMPEKhQQY8ZHb5xXsfh3wZonhaGeLSrYxLP/rMnOaTQfBmieGry5u9LtjFNc/60k5z3oA3pGKxuwHIUmvli/1Vdd8datDrmrTafbRs3lrFld3scV9U1ymqfDnwrrGpjULzTEa4BySoADH345oA8D+CoT/hZmI3LJg7WbqRX1Nt4we/WsDTfBfh/SL/AO3WGnxQXA/iRQK6AdKAPl/4hCTwF8U5dTtFO2cGQL65yMVkXXhmSz8B6f4tCMLl7vzHJH8OP8a+ndb8J6J4hkjk1SxjndBhWYDIqSbw1pNxoy6TLaI1iq7REQMAUAeH/C2yfx38QL7xTfr8tuMxjtu6fyNU7bUIPB/x21C91kNDbSTEpKVOMY6179ovh3S/D1u0Ol2qwI5ywUAZqtr/AIN0HxOo/tWwjlYcB8Dd+dAHz14p1CLxx8XLWXQUkkiRwpkVTzgk7q2EgUftEJFIokCy85Gexr27QvCGheGx/wASvT4oXxgybRuP41IPC+jDWjrH2GP7eesu0ZzQB45+0UMXGidhu/xrl/iNFPA/hLUJButBboA3YYYmvorXPC+keImiOqWiz+V9zdjik1DwnouqaVFpl3YxyWsQxGpA+X6elAHh/wAavGOg6/oGl2mnTLPcA7yV/gGMYr0/4PgD4caaMg/IKsW3ws8HWtv5CaREyk53OAW/PFdNpulWej2MdnYQiK3T7qDtQB5/8dCR8Ppfd65nwqB/wzpqmR/Af5rXser6LYa7Z/ZNRgE0Oc7TUNv4a0i20OXRobRUsJBhogBg/wCcUAePfCoKfgvr2QCd7dvYVkfBC6ex8OeJbmEbpY4cqMZ9K9207wvo+laRLpVlarFZy53oO9VtA8E6D4aWddMtNiz8SqxyCKAPl+1vbfWdD1W71rW54rxf9VaoSFY5HatvweM/BvxP7yf/ABFe6/8ACrvB/wDaTXx0mMyN1UgbfyxWF8RPDdpoXw51G10HTMGflo4VyTyOwHtQBxfw88baDpPwrv7G8mWO5UN+7I5fIArS/Z4t5vsmq3hRlgkfCZHHapvhr8NdF1nwZaz65pLC6Vs/Ouxjx3yK9e03SrLSLNLWwto7eFOiIAKALlFFFMAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA8y+Na58P6Yc9Lxf6V6LY/wDHhb/7grz340DPh3Tv+vtf6V6FZf8AIPt/9wUgLFFFFMAooooAKwfF3/IDP++v8xW9WD4v/wCQGf8Arov/AKEKANuL/VL9KfTIv9Uv0p9ABRRRQAUUUUAFFFFACY5p2TSUUAGPx+tHbFFFAAPlGBRz60UUAGaXNJRQAZ5zRRRQAZoHHSiigAoyfWiigAooooAKKKKACiiigAooooAKKKKACiiigDB8Z/8AIsXH/XSP/wBDFbcX+qX6Vh+M/wDkWLj/AK6Rf+hit2P/AFa/SgB1FFFABRRRQBxnxVRH+H2qBwMeXx+YrR8Bf8iHo3/XuP5msn4uZPw51Laedg/mK1vAX/IhaL/17j+ZpAdFRRRTAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKWgBKKXFJQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABTWUMKdRQAm0bcdPpS0UUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB5n8a5Anh/Tfe8X+lei2JB0+3P8AsCvN/jaQdC0pSOTeDB9OlejWHGn249EFICzRRRTAKKKKACsHxf8A8gM/9dF/9CFb1YPi/wD5AZ/66L/6EKANuL/VL9KfTIv9Uv0p9ABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBz/jQgeF7gntJH/6GK3YmDRKwOQRxWD41BPhi5AXd88Zx/wADFbVm6y2UMiDCsgIFAE9FFFABRRRQBwnxgl8n4b6ifVQP1FbPgL/kQtF/69x/M1g/GkE/DXUMeg/mK3fAP/Ig6L/17j+ZpAdHRRRTAhuLqC0iaW4lWNFGSWOBVLTtf07VNKOp2s4azHWQ8AVQ8X+HLbxJo8kF3PPEqqWHkyFc8d68tsPNtPgR5EDlVaXyyQeSuaQHqun+NNB1W/8AsdpfI83QKeN309ak1TxdoejXi2t7fIkzfw9cfX0rz7xf4f03SfD+g6jp9rFa3dvKCJEUAt8p6+vWovCej2PiOfxldarBHczLcGJHkUEquxTxnpzQB65DOlxCk0Lq8TjKspyCKlBFcT8K5ZZPBcMTyb1hYohJ7V02qw6hcWhXTLmO3uM/fkj3D8qYGhg0hJ9DXkr6h40h8bxeG31q1Yyx+b5otiABnGOtdM2ieNs/L4itMYwc2p/+KpAdrRXGto3jIyZXX7QLjobY/wDxVRDRPHI5/wCEisv/AAFP/wAVQB22KTB9DXGnRfGxgKf8JDaK3977Mf8A4qmR6F43XeD4ltTk8f6MeP8Ax6gDtvpSiuKGieNgT/xUNpgjj/Rj1/76oGh+M2i2t4htA3qLY/8AxVAHbY9KTB9K4JPD3jtd3/FUWhz/ANOp/wDiqD4e8eGNVHii03Dqfsp5/wDHqAO9wfSjn0riLXQPG8cu6bxLayL6C2I/9mqSTRfGhkUp4htQB1Btjz/49QB2f4GjnpiuKudD8ayMDD4jtY8dvsxP/s1MXQ/HQfJ8R2ZGf+fU/wDxVAHcfhR26GuIbQ/HTP8A8jHZBc8gWp/+Kofw/wCNWfK+JbZVz0+zHp/31QB24zjnikyfQ/lXER+H/GqPIW8S2zKfuj7MeP8Ax6nJ4f8AGYJZvEtuT6C3OP8A0KgDth9DS/hXDr4f8aBiT4ltiOw+zH/4qpf7C8X53f8ACQ2+fT7Of/iqAOzz7UuK4ZvDfjIsxHiaAbv+nc8f+PU4eHvGIUZ8TQEj/pgf/iqAO1/A0c+lcG/hrxsznZ4ot1BPT7Mf/iqF8MeNcfN4qhJz2t2/+KoA7yiuBHhfxtkZ8VQe+Ldv/iqd/wAIt4z/AOhqhHH/AD7t/wDFUAd5z6Gj8DXE/wDCM+Lcc+KI89sQt/8AFVGPDfjRHyviiEj0Nu3/AMVQB3WD6UYNcD/wjPjgyEt4rgx6C2b/AOKp6+F/GRPzeKov+/Df/FUwO75x0owcVw8XhvxmgKSeJ4XXsRAQf/QqB4Z8XiKRT4ojLH7h8huP/HqQHcYNGD6VxEPhrxeoYS+J4mz0xA3H/j1P/wCEb8W4/wCRnj/78t/8VQB2mDRg1xf/AAjXik/8zMn/AH6b/Gg+GfFXbxOn/flv/iqAO0waMGuMXw54pUc+JEP/AGxb/GlHhzxQAwPiNMt0/dHj9aAOzxRiuLPhvxVwB4mUY/6ZN/jSf8I14q/6Gdf+/Lf/ABVAHa7aNtcV/wAI14q/6Gdf+/Tf/FUf8I14q/6Gdf8Av03/AMVQB2uKTBri/wDhGvFf/Qzr/wB+m/8AiqP+Ea8V/wDQzp/35b/4qgDtMGjBri/+Ea8Wf9DOn/flv/iqP+Ea8Wf9DOn/AH5b/wCKpgdpg+lHPoa4v/hGvFef+RnT/vy3/wAVS/8ACN+Kv+hlT/vyf8aQHZ49qXBriv8AhGfFf/QzJ/35P/xVJ/wjPiz/AKGZP+/Tf/FUwO2waMGuJ/4RnxZ/0M6f9+m/+Ko/4RnxZ/0M6f8Afpv/AIqgDtsGjBrif+EZ8Wf9DOn/AH6b/wCKpP8AhGvFn/Qzp/36b/GgDtsH0owfSuJ/4RrxZ/0M6f8Afpv8aX/hGfFf/QzJ/wB+m/8AiqAO1wfSjB9K4v8A4RnxX/0Myf8Afpv/AIqkPhnxXj/kZk/79N/8VQB2uD6UnPpXEjwv4q/6GZf+/Tf40f8ACMeLP+hnTH/XFv8A4qkB23PpRz6VxJ8L+Kv+hoH/AH6b/GnxeGvFKt8/iUMv/XJs/wA6AO059KTn0rjpfDXiZuF8SAD/AK5t/jTP+EX8TiPC+JsEDvGx5/OgDtOfSjn0rjP+Ea8V/wDQzJ/36b/Gk/4RjxT0/wCEnXn/AKZN/jQB2oz6UEH0rhz4R8UH/maT/wB+2/xp6eFPE6HI8Uc4xzG3+NAHac+h/Klwa4v/AIRnxVjB8Tr/AN+m/wAaRPC3idWLN4n57Dy2x/OgDtSDQAa4iTwt4plUBvFA4ORtiYf1pT4V8UGTefE4JxgDy2x/OgDtvwNH4GuJHhfxUDx4oU5/6ZN/8VR/wi/ir/oZ1/79N/jQB2xz2B/Kj8/yrih4Y8UYwfE4/wC/Tf40reFfEeWI8TNz0+Rv8aAO069AaOa4tfCniNYin/CTNyOoRuv51GfCHiNn3HxQ/HQBGH9aAO4APpRznpXCnwf4mYZbxQ2fZWH9acvhLxKE2P4nJX1CNn880Adzik/CuFPg3xEJNyeKJB7FWP8AWph4V8RiMKfExyO+xv8AGgDtDwKTtmuGPhHxM6FT4oOD6Rtn+dRr4J8RqhC+KpefVW/xoA76ivP28D+JHOW8WS/8BVh/WrGn+Dtdsr2OWTxLLNCpyyMGOf1pgdxRSAEU6gDyn43zFNJ0aED794Mn8q9OshjT7f8A3BXlvxzwNO0Uk9LsV6jp5zptv/uCkBYooopgFFFFABWF4v8A+QGf99f/AEIVu1heL/8AkCH/AH1/9CFAG1F/ql+lPpkX+qX6U+gAooooAKoPrNhHqaaa1wv2xhuEeecVdd1jieRjhUBY/hXzB4y8Q6hZ/Eu28VJ5iWbTbICM4ZP/ANRpAfUWKSqul6hDq2mW9/bsDDOgdfoatmmAlFFFADJpUgheaRgsaDLMT0FRWV7b6jZxXdrIJIJV3I46EVx/xMv5/wDhHho9gwF9qRMUfPTHJ/QGsX4N6hNb2N54Wvpc3elyFMH+7wBigD0XVdWs9FszdXswjjHT1J9hVHQPFmk+JHni0+ZjLAcSRyIUYfgea4T4uXt2t/oUEentPELnON4Ac46VrNrlrpOvQxWfh9Rr1/FvmjRgu0cnlsc9DSA7a/v7fTLN7q7fZCgyzYzVbQ9dsPEWmrf6bIZLdvusVxmuKtviBB4mk1fRJ9HkjltYW+0CQ7lXg+1cn4J+IC+GvB9usejXE9gk2yS4XhUzgdMUAe50tchrXjhLOaxtdPs5Lu6vY/MjH3VC4JyWIx2NZ1n8TkuNA1C+bTHN1p7FZ4FkBxjHOcY70AegVk6p4hsNHu7W2u2cS3T7IgqE8++OlcEnxilk0y31QeG7kadKQGuPM4Un2xz1re1bxZp66/o1nJpn2j7aN8M7DheD7e1AHa445ppYA8sB9TXGX/j2VNdvtM03ThdvZLmYmdUOc4wAeTXMeLPGOtT6j4aFlp0iRXLeY0e/aWJH3T9KAPXOhxRiuGvfHt4uqTaZa6OxuraDzpzJKFVOuRkjB6VQb4tQ/wDCGr4jTS5XiEvlSIH+4eO+OetAHpFFeawfFpf7S06K+0S4tLLUCBDcu3BP0xXpQByc9O1MAooooAKKKKACiiigAooooAwfGccsnhe6EBxJlMH/AIEK0tK/5BNr/wBcxVHxXL5Phu6fGcFf/QhV7Sv+QTa/9cxQBcooooAKKKKAOK+LKK/w71MN0Cf1FafgPjwHo3/XuP5ms34rqH+HeqZOAI8/qK0vAX/Ih6N/17j+ZpAdFRRRTAgvYWuLOaKMgO6FVJHQmuIsvh/NH8OpPDdzcqZ2yyyqMBWzmu+pDwCSQAPWgDzCPwV4s1e50u11+/t207T33fu0w0vBHPPvTr7wP4l0zU9UPhu+gSy1U7pllTJjPAyOR2FejQ3ttcytHDcxSOv3lVwSKc95bxTLFJPGkj/dVnAJ/CkBleE/D6+GfDlrpgfe8a/vH/vN61t0Hg0HimB5nfOW+N1muMbbTr/wI16Xg15vfE/8LqsgVwPs3Bx1+Y16XSAYAaWnGkpgJzSYpaKAE5oxS0UAJiloooAKKKKACiiigAooooAKKKKACiiigAoooPFABRSZpaACiikzQAtFJmjNAC0UUUAFFFFABRSZo5oAWik5paACiiigAooooAKKKKACiiigAoopOR1oAWiil5oASijmjBoAKKTmjmgBaKTmjmgBaKTNLQAUUUUAFFFFABRRilwaAEooooAKKKKAFpKKKACiijBoAKKO1FABRRzRQAUUZpaAEpaWigBKKWigBKKWigBKKWigBKSlpKAClpKKAPJPjmm6z0M9heDPFep2IAsLcD/nmK8v+OUxXTNFiA+9eDn8q9Qsf+Qfb/7gpAWKKKKYBRRRQAVheL/+QGf99f8A0IVu1geMjjQif+mi/wDoQoA3Yv8AVL9KdTYv9Sn0p1ABRRRQByHxG19NE8MyRqzLcXZ8mIqpOM4yfyry7xP8NRB8PY7i5157kW6b7dSpIz6DmvdrzTrPUAi3dtFOEOVEiA4ok0yyntUtZbSJ4E+6jKCo/CkB5R8CPFLXmhtoV2sq3NryhdTgr0FewnrVO10jTbGYy2llBC5GCyIAaud6ACmySJDG0j52qMnFOpCAwwwBB6g0wPKlgtvH/j+5ke4u4LbTU22/lhoizZIJB+hrntVtx8OfiraalbveXNtfDF0SrORnPU/XFe4x2tvC2YbeKM+qqAaJbO2uGJmt4pD6uoNIDzT4la5am88OtGJpIxP5hKQs2FI69Kw/iN4gTS/HOk6tpk7xTmL5pDEXUrg4+WvZGsbVgqtbQlVGANg4FeVeMPDfiqz8Xya1pFjaahaNEIkt5lUrGAT0B+tAFLwVqugxwa9qEmpyXGq6jG3moYGQeuAD71W0/ULWP4KTWnlTrMJQPLELZOCvbFdP4W8JateaxBq/iHTdPtPIX93DbxqNx6fNjr1r0UWFnsx9kg+nligDxXWfEZB8M2TJPBp8loDJcxwN5mcH5cjkdvzrJ8LarY6fZeMLeW2vtlxkwh4HJYZGMnFe/SadYzKiy2cLhDlQUHB9qcNPs8t/osPz/eyg5oA8bXUrdfgFFbGKcylUQRiFiQQVJ4xSatr0AbwPOkNyyRACQeS2UypHPFexrp9mqeWttEEHRdgxStY2hGDawnHTKDigDxHxhHpGo67q19Z3N5pWs27HY6qwS4APHTGc80661vUYdF8Ha7rNnOTG37zyoyT93qQOe9ez3Gk6ddMrXFjbyMpypaMHFTy20E0SxPDG0a9FK8CgDwvWPE9rrfi6/Gqw6ja6c1v/AKOLeB1eY8/eIH86yNM1azh+FOraK1heqy3m+NDE2cbl9vavoprK2kkEj20LMBgMUGRSf2dZHdm0hO45I2Dk0AeJeO9St7jwn4QijjuJZI5EdgsDZUcdeOK9ytbqK8to7iEkxuu5cjBxUf8AZ9mQAbWHA6DYOKnRFjGEUKvYAcUAONJS0lMAooooAKKKKACiiigDF8VIJPD1xGwyrFc/99Cr+mf8gu1/65iqfiX/AJAU/wBV/mKu6Z/yC7X/AK5igC1RRRQAUUUUAcJ8YY5JPhtqSxnB2gn8xWx4B/5EHRc/8+4/max/i9I8fw51IoCTtxx9RWx4BOfAWin/AKdx/M0gOjooopgFcl8SdSudL8E301oWSV1CCRf4Mkc11tYXjC1vL3wxeQ2MUU07JxFKAQ/tzQB5FdadZeB7fRNb0rXZJ72eTFxE1xvEnBPTPHarNtoV341s9a8T3GpXEN5bSZs0jkISPAB5H51VsPBqeI7+xt7XQrjTfs8m+6mnk3DoRhRge1bCQeI/C9rrHh610hrqO9k/0a5VwAvAHzfkaQHoXgbVp9d8HadqF1/r5IvmPqQSP6Vf1nU5dKszcx2Ul2RxsjODVTwbo0vh/wAJafpkzbpYY8MffJNb3vQB4RdeNbmX4o298dAvA0cOwQknceTyOK7z/hYl6YPN/wCEVv8Ab6buf/Qao3rn/hdFmNv/AC7Y6+5r0nJoA4AfEq7bgeFNQ/En/wCJpP8AhZV4A2fCeoZHuf8A4mu+yfWlycUAcGnxFvJCQPCl/wADPLf/AGNQ/wDCz7jfs/4RTUcn6/8AxNdP4s8T23hLQZtUuUaRYxwi/wARryX/AIaQtQf+QDN/3/H+FAHcy/EW8iAz4Vvzn0bP/stIfiNdj/mVb8/8C/8Asa4Y/tI2uf8AkBTf9/x/hR/w0la/9AKb/v8Aj/CgDtj8S7kKzf8ACK6jx7n/AOJpU+Jd1IuR4U1EAepP/wATXEf8NJWv/QBm/wC/4/wpf+Gk7T/oAzf9/wAf4UAd0fiJdhwv/CK35JOPvH/4mhviJeLIyHwrf5HcN/8AY1P8P/iLbePre5kgtXtmtzhlZs+nt712uTQBwQ+It4zbR4Uv8+7f/Y0//hYF9/0Kt9/33/8AY13WTSZNMDiV8eX0gyPC96PrJ/8AY0knj+9j6+Fr0/R//sa7fJoyaAOJTx7fyDjwteD6yf8A2NH/AAnl/v2/8IveZ/66f/WrtsmjJoA4j/hPr7n/AIpa94/2/wD7GpP+E41DA/4pe8/7+/8A1q7TJoyaQHF/8Jxf9/C93/39/wDrUx/HWpZG3wtdkf8AXX/61dtn3oyaYHEf8JzqP/QrXf8A38/+tSjxzqHfwtd/9/f/AK1dtk0Z96QHFHx1qIHHha7z/wBdf/rVHF441Yhi/ha6Ddv3v/1q7ndjvRn3oA4H/hOdc3/N4WuNv/XQf4U7/hOdXHTwtdf9/f8A61d5k+tGTTA4j/hONU25Hha63f8AXX/61IPHWqg/N4Wuv+/n/wBau4yaMmgDiX8daln5PC13+Mn/ANamHxrrTbivhe4AHrKP8K7nJoyaQHD/APCb6r82fC11/s/vP/rU0eOdYxx4Vuv+/o/wrusmjJpgcT/wnWqbf+RWus/9dP8A61N/4TfV2xt8LXI55zKP8K7jJoyaQHGS+LNfWBpV8Mykdv34z/Kov+E01vyv+RWuPMx/z2GP5V3GTRk+tMDim8Ya4sEbHwvOWY/MBMP8KjXxprRkZW8LXPJ+X96P8K7kE+tLmkBwE/jPxHGNsfhWY47+cP8ACnweLvEk0ZZ/C8q4Gf8AXj/Cu8zQTQBwlp4w8RyXGx/C8uzHB84D+lJd+MPEkG3b4XlJJ7TA/wBK7vJ9aOfWgDiD4v8AEItRKPC8pbOMeeP8KiPjLxONufCsnzf9Nx/hXe5ozQBwTeMvEY8wL4WlzGOf3w5PtxUQ8aeKSm4eFpMennD/AAr0HJoyaAPPv+E28T5H/FKy8jP+uH+FSr4w8UEA/wDCLPyf+e6/4V3mTRk0wODXxh4oeQKPCzjJxkzr/hSt4s8VKV/4pdjn/puv+Fd3k0ZNIDhh4q8Vs+z/AIRdgfX7QuP5U3/hLfFQmMbeFmJHGROuP5V3eaMmmBxB8T+KhHv/AOEY/D7Quf5Uh8UeLFx/xS5OfS4X/Cu4oyaAOEPi3xUvXwsx7cTr/hQPFviphkeFm/7/AK/4V3eTnrS5pAcNH4p8WSqSPC5X2Nwv+FPTxL4tcZ/4Rfp63K121JmmBxo8ReLT08MD/wACkpT4h8WgZPhgf+BSV2NFAHFnxJ4swSPDPT/p5WoP+Eu8Vb1T/hFmy3T9+v8AhXdUvOOppAca3iHxcgy3hkfhdLTY/EniyU4Xwzj63KiuzBJ60tAHEy+J/FcLbW8Llv8AduVP9KUeJvFhGR4X/wDJla7XJoyaYHDr4q8VNP5J8LkN6/aFx/Knv4l8WoQv/CL5z0IuVrtcmikBw/8AwlXioNs/4Rc7vX7QuP5VIfEfi0cf8IyOmf8Aj5Wu0opgcK3izxVGcN4XY/SdT/Sm/wDCX+KT08LP/wB/1/wrvMmjJoA8/m8Z+KIDGW8LSHzGwNswOP0ofxr4oTd/xSkny9cTD/CvQMms3xBq39h6BeamUL/Z03bfWkBzKeKvFbReZ/wi5xjP/Hwuf5VWPjXxQCw/4RWT5ev74f4V5yf2jbzPGlD/AL6FQyftF6oWBj02ML6EigD0xPG3ih+nhWQc45mH+FTjxb4pZyo8Ltx3M6/4V5f/AMNGah30tP8AvoU7/hoy+/6Ba/8AfQoA9PHirxWyMw8LkAetwv8AhUR8ZeKFfYfC0mc4yJh/hXmf/DRmoAf8gxOvqK7f4Z/Fi48b6xc2NxYiERoHVwfegDbh8U+K53kVfDBHlnB3TqM/TimN4v8AFKsR/wAIs/H/AE3X/Cu8zRz60AcAvjLxQWwfC0nX/nsP8KvW/iLxPLJF5vh3y4nbBbz1JX8K7Hn1opgIM4GeuOaKUUUAeWfG5VOiaUCvzfbBhvTpXpNgMWFuD1EYrzP44SMNL0aMdDeDP6V6bZf8eVuf9gUgLFFFFMAooooAK5/xlzoJ/wCui/8AoQroKwPGP/ICP/XRf/QhQBuRf6lPpT6ZF/qU+lPoAKKKKAClB71h+I/FGn+F7VbrUfMELHG5VJA/Kudi+L3haS3E4kuRbltpm8ltoP1xikB3pPNFU9N1Oy1eyS8sLhJ4HGVZTVyhAFFFFMApK5nUvHmkaVfSWcvnzTR/fEETPt+uAa0dD8Sab4jt5JtOlZ0jba25SpB/GkBq0uSKMUlIAooxXP8AijxnpfhKOBtR839+4RNiEjJ9xQB0FLWLqXiW00y8062lhnc3xxGyISF4zzgcVtU0AUYqpqWoW2l6fLe3bhIIxlmP1p9jewajYQ3ts+6GZQyH1FMCeijrRipAM0ua5fxj4307wZbRS30czmZgiBFOM+5xW9p92NQ0+3ukBCTIHAPbNMC3RWEvia3bxU2g/Z7jzhGH80odnfjOMdq3aYBSUtJQAUUUUAFFFFABRRRQBk+Jf+QDcf8AAf5irel/8gq1/wCuYqp4l/5ANx/wH+Yq3pf/ACCrX/rmKALdFFFABRRRQBxPxYvFsPh3qkpQPvjC4YZ7itTwEc+AtGP/AE7j+ZrG+L9u9z8ONSSNdzBQf1FbHgEY8BaKP+ncfzNIDo6KKKYBRRWN4s1h9A8Lahqsab3to9yr6nIH9aANmjP1ryG28b+JtLvNIudRuLG9tNTl2CC3xvj4J7E+npWhe+LvFOranqv/AAj0MC2elvtkMoBMhwDgfgaQHp1A61heEfEC+JfDttqIjMckgxIh/har+q6vaaNafabwuIycZRCx/IUwOCvJGb422ikAbbXg56/Ma9Lrw+/8eaGPi5b3oW4MUcHllvJbJOSeBjNd4PidoBiL/wCmD2+zP/hSA7SiuLPxP8PFN3+mjjOPsr/4U4/Erw+sXm77tucbfsz/AOFAGF8dW2/D9xzzJ/SvlX1r6I+MfjXSNY8ImxtDOZS27Lwso/MivnYGgBD1pKU9aSgApaSl70AfQX7N/wDx76tjpnn9K95r5q+CHi3TvDUepRX4nzKcr5cZf09BXr4+Kfh7zFQi8+bv9mfj9KAO2orj/wDhZfh4qzbrv5T/AM+z/wCFRn4n+Hh3u/8AwFf/AApgdpRXFH4oeHwM/wCl/wDgM/8AhUf/AAtXw/8A3b3/AMBn/wAKAO5ozXGn4neHhFv3XfTOPsz/AOFQ/wDC1fD/ACNt6eP+fZ/8KAO2klSGJpJGCooyzE8AVgHxz4ZyQdYteO28Vx3ij4n6HdeFdShhS9WV4cLm3cDOfXFfME09u9rHGtvtmViXkz94UgPs4+OvDA/5jNr/AN9ik/4T3wuP+Yzbf99iviiigD7Vb4g+FVBP9r2/H+0KP+E/8LFsf2xb/wDfQr4qo4oA+3rHxfoOp3SWlnqUE0znCqrDJrbFfE/gfU10jxjp186yFIpcsIwScYPYV9TR/E3RmHy2uoH1/wBEk/woA7MUtcS/xP0VGwbbUB65tJP8KX/haGjY4tdQOfS0k/woA7WiuLb4oaMMf6JqJB6n7JJx+lOHxM0cjItNRP8A26Sf4UAdlRXGf8LM0j/nz1L/AMA5P/iaP+Fl6R/z56l/4Byf/E0wOzori/8AhZ2jbtv2XUc+n2ST/Cl/4WXpH/PnqX/gJJ/hQB2dFcb/AMLL0j/ny1L/AMBJP8KP+Fl6R/z5al/4CSf4UgOyorjf+Fl6R/z5al/4CSf4UD4k6SelpqI+tpJ/hTA7KiuN/wCFl6SODZ6ifpaSf4Uf8LL0j/ny1L/wEk/wpAdlzRg1xv8AwsvSP+fPUv8AwDk/wpf+Fl6R/wA+epf+Acn+FAHY0lcd/wALL0j/AJ89S/8AAOT/AApp+JmkA/8AHjqR/wC3OT/4mgDs6M1xv/Cy9I/58tS/8BJP8KX/AIWVpH/PlqX/AICSf4UAdjmjNcb/AMLK0j/ny1L/AMBJP8KP+FlaR/z56l/4CSf4UAdnmiuN/wCFlaR/z56l/wCAkn+FH/Cy9I/589S/8BJP8KAOyorjP+Fl6T/z56j/AOAkn+FH/Cy9J/589S/8BJP8KAOzorjf+Fl6R/z56l/4CSf4Un/Cy9J/589R/wDAST/CgDs6K4z/AIWXpP8Az56l/wCAkn+FL/wsvSP+fPUv/AST/CmB2VFcS/xN0hCP9A1M59LST/4mnH4l6RgH7FqX/gJJ/hQB2lHp71xJ+JmkYYix1P8A8BJP/iaiPxR0kuqDT9U+v2ST/wCJoA7uiuGT4o6SWYDT9UG3v9kk5/8AHaZ/wtPScn/iW6r/AOAkn/xNAHeUtcEPippROBpuqj/t0k/+Jpf+FqaUQxOnap8v/TnJz/47SA7ujNcDH8V9KkTP9maqP+3ST/4mhvitpQi3/wBmaqcDOPskn/xNMDv6TNcJH8U9IZA39m6oMjOPskn/AMTQ3xU0lSR/ZuqH/t0k/wDiaQHd0Vwf/C1tJ3Ef2bqnC5/49JP/AImo2+LOkqQf7L1Y5/6dJP8A4mmB6BRXCN8U9KyhOnaoc+lpJx/47UU3xY0qOPeNJ1ZiP4RaSf8AxNAHoFGa84/4XBp3H/El1b3H2WTj/wAdpH+MOm5GNE1Yjv8A6JJ/8TSA9IrmfiH/AMiBrH/XD+orBHxf0oj/AJA+rj/t0k/+JrB8bfE+w1TwfqNjBpeqRyTR7Qz2zqo5HUlaAPmailIxTaACiiigAr2L9nmNn8W37jOFtwSM9fmrx2vSPg74nj8L+ILyeWzuLlZYQm2CMuRznsDQB9bDpzRXnH/C39O76Nq3/gLJ/wDE0v8Awt/TP+gPq3/gLJ/8TQB6NRXnX/C39M/6A+rf+Akn/wATVmz+KWnXt3Bbppepq0pwC1rIAPqdtMZ3lJQGDKCO9GaAPMfjV5Q0PTWZSX+1rtI/CvRrL/jwg/3BXmvxtnKaNpMQx892O30r0qw5063/ANwUhE9FFFMAooooAK5/xl/yAz/10X/0IV0Fc742V30A7GCnzE5/4EKAN6L/AFKfSpKji/1KZ9KkoAKKKKAOI+LMSS/DbVi6BtsYK+3zCvD9L8QJbfBe50v+xpJ2lnP+kbCVX7vtXtfxdvY4vAF/Z7ZWnuVCxrHGWycg9q8z8G+IIdO+Ed7o82n3c17JI2yH7M7DkDnpSA7n4GWSWngRGS9S4MrmQoD/AKvIHFen15J8C/D2qaFol1LqNu0CztmNG4Pbt2r1s9aACg9DRSN9xsehpgeH32o6t8NfG+qXt7pj32kajIXMqDcUBPfrXXaXrej2fhnUPEXhiL7Uly+/7PGu0qxI6iq2m+L4Y59Z03xNa3LQrcusLNbs6snGMcVxlnY6rpej+KdT8PW08Omzyf6NHsKtt3DJC9elIDrF8f61pmt6Pbaq9pLFqnAihxvhOCecE1r6Z4q1qfxtrXh6dIT9kg86B1XqMkDP5V5PeXNk934VvLDSdRkNvIGup5InLMSMY6ZrsbvV5fDfxWvNXm0+6lttRsVWIxxs2GyxwcCgDV8P/Eq6k0nXbnWIFSTS5PL2pxuOQAPzNcp8RbvxPqnhbS9S1FLZLG4uY3WJVG+MEjHOeayNJg1PXdH8WxPp1zBd3U32mNWjIB+YHHT2qXxH4sn1v4f6LpQ0q/a/t5UE+Ld8Lgj2oA9Q1bxNf6Z4n8P6W1jG1resVWZiCeFJ6duld2epryDxnrDSa54MvYrG8byJC8gEDHYGUjnivVrm9jgsJL0q7RrHvwFO4/h1oA86+JF5D4hvo/B0N4lu7oZbh2cKAuDgfmKb8GtXZtGuvD91cJLdabIY1wc5UYAxUHhHS9H8aanqmq6pp10l5LKdnnRsmI+wGR9aw7yKHwJ8XIbjTbG8OmyxhbjyoWYZ55yB9KANnUfH3iyTx5d+GNJ0+3aaIZVnI6c8/pU114z8WxwzRTQWtjcWMIkuHlxtlbPIXkf1rD0u+3/HW41NLW8FnOmxZTbOATk+1QeK724l8aeILbVrG8uUERXT440YoeTyeCOlAEvxD8Rf8JX8H9P1jyQksky5U/3srV6w8Y+LfDsWhtq1hD/ZF0qxx+WQWX0JI/CuXitNR1T4LQaXBptyLmzuA8iPGQSBt6cc10V3qNz4vsvDei6ZYXS/ZXVrp5omQKAOnIHcUAdvp3iW6uPH9/pM9oiQwQeZHIMFmGT/AIVyutfEPxDZi81BTa2lpbXHlLazIDJKuQMjkevpUr6obD4wXbNa3Zt3tvKEywMV3jd3x9K43VXvbm0163vtBu73VftRMUroSqICCNvH16GgD3zR78apo9pfBCnnxh9p7Zq9XN+BLm4uvB2nvdWj2kqxhTE/WukpgFFFFABRRRQAUUUUAZPiX/kA3H/Af5irel/8gq1/65iqviP/AJANx/wH+Yq1pf8AyC7X/rmKALdFFFABRRRQBxvxUkaL4eapsOCY8H8xWh4COfAWjEf8+4/maz/itj/hXeqEj/ln/UVoeAv+RD0X/r3H8zSA6KiiimAVxnxSlnTwHfLCpYSALJhc4XIrsqZLBHcwtFNGskbDDKwyDSA+d59A8O6Qvh/UNB1OW61MTgNEZC4+6f4e1dV4U12z8P3XjKHVJhBcSXJlSOQY3goo49ea9EsfBfh7Tr03dppVtHOTkMIx8v0qbUfCuiateR3V/ptvNPH0dkGT9aAMP4XxSjwXbzTReX57GRVxjiuwlginTy5Y1dPRhmljhjhiSKJAkaDCqowAKf3oA8tv9Mtf+Fz2EZs4RCLXIG0cnca9I/syw/58oP8Av2K4LUpD/wALo05OMfZv/ZjXo9AFX+zLD/nyg/79ik/svT85+xW//fsVbopgeV/G7S7RfAM08NtBG0bdQgB/CvlkV9afGwA/Di9JGcdPbkV8likAh60cGg9aM0AWJ7G4toIZ5YiscwzGx7iq/epZbu4nijilmd44xhFZshR7VF3oA99/Z1s7a5tdWM9vFKQwALqDjpXuQ0vThx9ht/8Av2K8T/Zv/wCPbVx/tf4V7vQBV/svT/8Anyt/+/Yo/srT/wDnxt/+/Yq3RTAqf2Vp/wDz42//AH7FJ/ZWn/8APjb/APfsVcooAqf2Vp//AD42/wD37FH9l6f/AM+Vv/37FW6KAOV8cabYJ4I1ZltIVKwcEIMjkV8XMfmP1r7V+IJI8Cavg4PkenuK+KT1pALRSUUALSUUtAHV/DRVf4gaSjqGUzcgj2NfZgghTGyJB9BXxp8M/wDkoWkf9dv6Gvs8dfwoAia2t3JLwxsT1JWgW0C9IYxj/ZqWimBH9nhxjykwevFKIox0RR9BT6KAG7E/uj8qNif3R+VOooAj+zw7t3lJu9cU7y0/uL+VOpDQAmxP7i/lRsT+4v5U7FFADdif3F/Kjy0/uL+VOooAaI0H8C/lRsT+4v5U6igBuxP7i/lRtX+6v5U6ilYBuxP7q/lRsT+6Pyp1FMBvlp/cX8qNif3F/KnUUANKJ/cX8qTYv9xfyp9FADdif3F/KjYn9xfyp1FADNi/3F/KjYv9xfyp9FADdiY+4v5Umxf7i/lT6KAGbF/uL+VKET+4v5U6igBuxP7q/lRsX+4v5U6igBuxf7o/KjYmPuj8qdRQA3Yn90flRsT0FKeleS/HfXtT0Hw9pzabdyW7zTlXaNiDjbnrQB6ztT0WjanotfFP/Cd+Kl/5jt8c/wDTZv8AGmf8Jx4p/wCg9f8A/f8AakB9sbYx0C0ERHn5eOtfE3/CceKP+g9f/wDf9qP+E38T4/5Dt/z/ANN2/wAaAPtdWgdvlMR9QCKeUTqFXFfEMfjDxHExKa1eqT1ImNe4fAfxXq+tzahZaleyXKRRh1MhLEcgdTQB7dsT+6Pyo2J/dH5U76UUwE2qP4V/Kjav90flS0UAJsX+6Pyo2r/dH5UtFACbF/uj8q5X4i7V8Bav2/c9QPcV1RrlviNlfh9rBAz+5/qKQHxfk7cU2l7UUAJRRRQAV7H+zxIB4t1BSgO63HPp81eOV7J+zsm7xZqDZAAt14P+9QB9JbVPO0flUgRMfdH5UmMU4UAJsT+4v5UoRf7o/KlopgAGOlFFFAHlXxwjP9kaPKCRtvB/SvTbA506375QV5j8cFl/srRmU5jF4Ny/lXp1j/yD7ft8gpAWKKKKYBRRRQAVh+K4TNojKOzqf1FblZHid/L8PXTgfMu0j/voUAakX+qX6U+obQlrOJj3UVNQAUUUUAQzW8M+BNCkgHTcM0kNnbQcw28UZPXauKmopAFLSUtCAKKKKYEU1tBcACaFJAOm5c07Yix+WEUJjG3HFPpKQEaQQogRYY1VegC9Kc0UbMrMisy9CR0p9FMBFRFztUDPXAqMW0KklYUGTk4HWpaKAGlAeqg07tjtRRQAgVQcgAUmxe6j8qdRQA0Ig6KBj2pDDEZPMMamTGN2OafRQA1UVRhQAD6UJGkZJRQueTgdadRQAhVT1UflS4Gc4oooAKKKKACiiigAooooAKKKKAMrxJ/yAbj/AID/ADFWtL/5Bdr/ANcxVXxJ/wAgG4/4D/MVa0v/AJBdr/1zFIC3RRRTAKKKKAOJ+LTlPhzqZAz8g/mK1PAXPgPRT/07j+ZrK+LZI+HWo4xjaM/mK1fAf/IiaN/17j+ZpAdFRRRTASszXdbi0DTjezQzTKDjbEhY/kBWnSNs2EvjaBk5pAefS/GDRreSKOexvojK2xd0LDJ/KtHV/iboej3otJBPNIoDS+VEzCMe+BXOaJLH4/8AHl5dywr/AGXo7lLddv35MdT68NTPA9taXEvjhrpY3f7WyMXxkLsX9M0AeoWN7b6lYQ3lrIJIJV3Iw7ip2ZVALMFHqTXD/Cgt/wAIVGgJMaORH9K6rVtLj1ewe0lmliDdHibaw/GgDz7UXT/hdunEPGFFvySw55NemefB/wA94v8AvsV4rqngK0j+J2nWx1S+bzot24zHeOT3rtx8MrBVIbVNUOTn/j6NAHZ+fCf+W0f/AH2KaZ4B1niH1cVy0nw802QjZfamuBz/AKUeaY3w20xwM3+pHHXNyeaAMn4z3Ns3w4vkWaJ2bGAHBPUV8mivon4qeBbHRfBNzeQ3N5K6twJJiwH4V87UAIetJS0lABS9TSU4Y70Ae/fs5zwRQaskkyqxOcMcccV7v9ptsf8AHxD/AN9ivm/4H+GLPxHHqn2q4uYjGAqiCQp6cmvY1+G+kb8/bNSKAYx9pNAHW/arb/n4h/77FJ9qtv8An5h/7+CuRb4Z6UxyL7UgOw+0mnP8ONIOF+06jnuftJ5oA637VbYz9oh/77FBubcDJuIgPXeK5KT4baS0i7bzUkUdQLk804/DjSXREN5qWFOT/pR5oA6r7Za/8/UH/fwUfbLX/n6g/wC/grkx8MtGV9xutRxjGPtJpz/DnRCuwTagDjqLk/4UATePRFfeCdUt4r+CJ2hOCZB6j3r4vcFXKnqDivqzxd8ONKh8J38qXV80scZZd85I/GvlJuHYe9ACUUUUAFLSUtAHWfDUgfEDSWZlVRNyWOAODX2R9stM8XUHT/noK+Mvh9YQ6n4106znLCOSTDFTg9D3r6nX4daEoyHvue/2g0AdP9rtf+fmH/v4KBeWp6XUB/7aCubHw+0UH/WXx+twaX/hX+igYDXgGMcTmmB0f2u1/wCfmH/v4KPtlr/z9Qf9/BXNf8K80Q9Zb/8A8CDSf8K70P8A56X/AP4EGgDpvtlr/wA/UH/fwUhu7Xr9qg/7+Cua/wCFd6H/AM9L/wD8CDR/wrvRMY8y/wAH/p4NAHR/bbTAP2u356fvRS/bbQcm7tx/20Fc3/wrrQfLCZvMDp+/PFH/AArrQuMtesB2NwcUgOl+22ZHF3b8df3gpPt1n/z92/8A39Fc0PhzoSqyg3uGOT/pB/wpv/CtdAzndfZ/6+DQB0w1GxPS9tj9JV/xp/2y07XUH/fwVzH/AArbw8BgJdD3E3NPX4eaHHjD3vByM3BpgdIbu2HW5h/7+Cka+s1GWu7cfWQVht4G0dw2TdfN/wBNjUE/w80KdGWT7WQTn/XmkB0Qv7IjIvLcj2lWgX9kRkXluR/11X/GuWHwz8PKML9tAPpcGpB8OPD4RUC3YC9P31AHTfbbPn/S4OOv7wUfbbTGftcGP+ugrnl8AaGsjPi6ywwQZuKQ/D7Qyu0m8x/13NAHRfb7P/n7t/8Av6KDfWfa7t/+/grm/wDhXeggY/0vpj/XU4fD7QgAMXXH/TagDoft1n/z+W//AH9FAv7I9Ly3/wC/q/41hR+BNDiYsI5yT13SZpw8DaGCSIZQT/t0Abn220/5+4P+/gpPt1n/AM/lv/39FYv/AAhOi/8APOb6+ZSL4H0RCSIpuTn/AFlMDb+32Q63lv8A9/V/xo+3WeM/bLfA/wCmorEbwPoburmGXIGPv0r+CdEdGRoZdrdfnoA2V1GxcZW+tm+kqn+tL9vsgcG9tgT0Hmr/AI1gW3gDQLVdsUEuPd80r+A9BkmWVoZdynIxJxQBvfb7LP8Ax+W/H/TVf8ab/amnZx/aFp/3+X/GsZvA2hsCDDKM9SHqH/hXfhzOfsr5/wB6kB0H9o2OM/brbH/XVf8AGj+0bHn/AE2246/vV/xrAk+H3h+UAGCUAHPyyYqT/hBNB5/0d+evz9aYG1/aenf9BC0/7/L/AI0f2np4639r/wB/l/xrnx8OvDgk8wW0mf8Af4/lSyfD3w7IjI1tJg9w/NAG+dU07H/IQtP+/wAv+NeL/tEXNtP4d0nyLiKXFy2djhsfKfSvQP8AhWHhnao8m4wowP3v/wBavKfjp4Y0vQNG01rBJVaScht75GNtIDwyikooAKKKKAFr2v8AZ4njt9b1Rp7iKKM2648yQLk7h614nXsnwQ0HSdfv7qO8jdmihB+U45zQB9Hf2np//P8A2v8A3+X/ABo/tTTsZ/tC0/7/AC/41z6/Dnw4Mn7NIcjHL1G3w18Ns4YwTcdvM4/lQB0n9p6fjP2+1x/12X/Gj+09P/5/7X/v8v8AjXPf8K58ObCn2aTBOfv1F/wrLw1gDyJzjofN/wDrUwOm/tPT/wDn/tf+/wAv+NH9p6f/AM/9r/3+X/GucPw28Nn/AJYTf9/P/rVI/wAPPDjptNtJj2ekBvf2rp3/AEELT/v8v+Nc549v7GfwJq8cd7au7QcATKSeR70z/hWHhk/8u8//AH9/+tXP+Ofh14fs/Bmp3VvHOksMW5T5nuKAPlSiiigAooooAK9i/Z8ntYPFOovcTRxf6MoUyOFGd3vXjtek/BfRbPXfFsttfIzReVnCtjvQB9Tf2np3/QQtP+/6/wCNL/aen/8AQQtP+/y/41zkfw08NIhUW8xB7mTn+VH/AArTw1tA+zzccZ8ygDpP7T07/oIWn/f5f8acuo2DMFW+tiT0AmXn9a51Phz4bRdotZD7l8mpYvAPh+GVJY7eRXQ5Uh6AOlBB6UtIAAAB0FLTA8q+N7zDSdIVB+7+1jd+lem2Jzp1uf8AYFeY/HCRl0vR0B4a7GRj6V6dY/8AIOt/9wUgLFFFFMAooooAKxvFX/ItXn0T/wBDFbNY3ir/AJFm9+if+higDTsv+PGH/dFTVBZf8eMP+6KnoAKKKUUAVNQv7bTLGW8u5FjhiXczE1wul+PtY8UtNceHNH82wibaJpZAu/6A1R+PUskXgLEbsoeXDBTjI461rfB+KKL4a6Z5WCXQM3H8WKQDtD+ID6r4sfw7daVLZ3ca7nLNkHr049q7qs59FsW1ZdW8kfbVXYJPb/JrR44xQAU2QsI2KruYDgetOo70wOBg8e6lJ4y/4RttI23IG5m80YC88/pXf9O9eUYZvj1MqMFY2QwcdDlqyrKx8aeIPFGt2I8S+TFp85VSqH5iCOOtID2rI9RS4NeD+KNU1vSnvp9X1iZL1HH2OCzclcZ/jCk44z1ro73xhqd9pPhfTopxbXmqoDPMOSBjPGPpQB6qDnpRXkGpDVfC/wASfD+mw6vc3FndsRJHM5Yn5SfX2r2A9aYCUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBleI/+QDcf8B/mKtaX/yC7X/rmKqeJP8AkA3H/Af5irel/wDIKtf+uYoAt0UUUAFFFFAHDfF5JH+G+peXjIQZz9RWt4BOfAWi/wDXuP5ms34rhj8O9TC8/u/6itPwF/yIejf9e4/maQHRUUUUwCoriAXNtJCSQHUrkdqlpCQqlmIAHJJoAwfC/hez8J6c9nZlmMj+Y7uckmsLVvhxb3+r3F9Y389gl2f9LiiYgS/l9BXS23ibRrzUHs4dRt2uE4KBxz9PWn32v6VplykF5fQQyyHAVnGfx9KQEukaTa6JpUGn2SbIIVwoPU1fHNNR0kRXRwykZDA5Bp1AHm+pH/i8+nA4P+j8fma9Gx7153qCZ+M+nsen2Xjj3NejYOelABSClwfSj8KAPOfjaufhzeEEjB6evSvkrNfW/wAbB/xbi94PHt9K+SOO1ACUUUUAFLSUvWgD6A/ZuHyau30H8q97x6V4J+zfnZrA4xx/7LXveDQAUEZowfSjB9KYBRRg+lGD6UAByaKMH0owfSgDn/HIB8Eatk4/cH+Yr4kPWvtjx7geBtXypI8j+or4nPU/WkAlFFFABS0lLQB1vw0J/wCFg6SAesv9DX2aM9PavjD4a5/4WDpG1ST539DX2hjIB9qACkpcGjB9KACijB9KPwpgFFGD6UYPpQAUUYNGD6UAGaM0YoIPYUAFFGDRg0AFFFFABRRzRg+lABRRg+lGDQAUUYPpRg+lABRRg0uKAEpKXB9KMH0pMBKKXB9KMH0pAFFGD6UfhVAFFH4UYPpQAUUYNGDQAUUYPpRg+lABXh/7SH/ID0g/9PLD/wAdNe4YPpXiP7SAH9gaQf8Ap5b/ANBNAHzjRRRSAKWkpaACvcf2ckP9s6owYkfZ1yPfdXh9e4/s4y/8TbVYwp/1IOe33hQB9E0UuP8AOKMUwEopcUYoASilxRigBK5n4h/8k/1n/rh/UV0+K5n4hD/igNZzx+4/qKAPintSUvakpAFFFFABXrf7PyE+NZ2z0hH868kr1r9n8n/hOJh6w80AfUNLRijB9KYBRRg+lGDQAUUd6KAPLfjdEG0TSpMnK3g/pXpVj/yD7f8A3BXnHxuIHh3TT6Xi/wBK9G08g6bbH1jFICzRRRTAKKKKACsbxV/yLN79E/8AQxWzWN4r/wCRYvPon/oYoA0rL/jxh/3BU9QWX/HjD/uCp6AClFJRQBg+MvDNv4s8OXGmTDDOuY2/utXnfg8+MPAGm/2Nd6N9ttkc+VLFIBx9Oa9i3UE5pAct4ffxJqOoNfaqkdnagYjtRhmPuSK6k0lLQAUjMVQsF3EDIHrS0UwPJodM8Uj4pSeJDo6GxMflAeeucDOD+taHhLTfEdj4v1y5vdMWK01KRnSQTKSmfYV6TxjFJnA4pAeJS+CvGUM2vW0dna3P21y8d5MVZgMg4GTkdP1qeTwN4pfw9oOoQiFdZ0rAWA42suMdc4zya9nBoHIyaAPDdUl1+4+KXhSbXY4YHYnbFHglTtbqRXuXc1zGq+BrDWddt9XuZ7j7Tbtui2vgLXTKCByc0ALRRRTAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDJ8S/8gG4/4D/MVa0r/kFWv/XMVT8UHb4euT6bf5irekc6RaH/AKZCkBdooopgFFFFAHFfFcMfhzqm04Pl/wBRWl4B/wCRC0X/AK9x/M1R+KeP+Fd6plgP3ff6irnw+BHgHRssT/o/c+5pAdLRRRTAK5D4napJpPgPUZ4WZZSm1GU4I5FdfWD4w0A+JvDF7pakLJKn7tiOAcg/0pAeKaJLpxfTDeeHrrToWfMOpKfmZ8HlsDOK6Tw/4dsfFN74wu9XU3MsNwYoXbkoAikY9OasNoXjfW7LT9BvoLe2sbVh5twpBLgegB4qxN4W8XeH9T1SPw8YJrLVW3MZMZibAGeT6CgDofhZc3E/gu3jnkMpgYxqzHJxW14qj1uXRJF8Pyxx3x+6ZBkfzqLwboDeGfDVtp0knmTqMyuO7VvjpQB823lv8Rk8f2drNcwHVNn7p1IxtyevNdcNK+L2wr/aFpn14/8Aiq19UEafGzS2z8zQY6+5r0zAHYUAeOJpHxdVgW1K1I7jj/4qibS/i9nKX1rjsOP/AIqvZcccUYoA+cfHFl8Sk8NyjXZ7d7FztkVWH+NeJyLtcj0r62+NOF+HN8STu/hwfpXyQxyaAG0UYoxQAUtJiloA9J+Fdr4uupLweFp4omA/e7z9PcV6adI+L+f+Qla/p/8AFVifs4vF5urR/wDLUrnp2yK9+UetAHjn9j/F/wD6CVr+n/xVL/Y3xf8A+gla/p/8VXsvFLTA8Z/sb4wf9BG0/T/4qj+xfjB/0EbT9P8A4qvZqKQHjP8AYvxg/wCgjafp/wDFU5tH+Ly9NTsz74H/AMVXslJj15oA8G8S6V8VB4dvDf3trJa+XmVVABxn/er59YEMQeua+1viBcNa+BdWkVdx8k/zFfFJ+8frQA2iiigApaSigDc8JLqL+JrJNJdUvi/7pm6A4Ne+f2P8X2A/4mVoOPb/AOKrxP4a/wDJQNJ/67f0NfaGOn0oA8eh0b4uh/n1G02/Qf8AxVNk0f4vBjs1K0I7cD/4qvZKKAPHE0P4utjOrWi/8B/+yqRdA+LW7B1q0/74/wDsq9f+lH40AeRf2F8W/LJ/tmz3Y6bf/sqjXQPi2Rk61ag+m3/7KvYcCloA8ebQvi2yFTq1plhjcABj/wAeqvcaD8U4pwf+Ejs+ByCwUfkWr2fGM/SvkX4k+ItZj8e6vAupXKRRzFURJCABQB6mmm/FJi2fEWmqMfKd68/+PUn9mfFAOceJdNJ7guvH/j1fP39v6thR/aV2FXoBKaQ67qhct/aF1lhgnzTzQB9Aix+KJbD+IdMVfUyL/wDFUNZfEofJ/wAJPpXXk+YvH/j9fPj63qjgBtRuiB6ymom1K+PJu5+f9s0AfRT6R8TpigTxLpxQH7yMvP8A49U3/CMfFeVhnxBbKvYhf/sq+erLXtWhnhSPUbpV3rwJTjrX2robNLoVlI7MWaIEljzQB5dJ4W+K7Pj+37fGeoGP/ZqT/hGPiyf+Y9BwMY7f+hV7FtzS7cd6APHYfDfxawxOu26nGORn/wBmqWPw38WAB/xPrTnrlM4/8er13HvRyDQB5N/wjnxX/wChgs/+/f8A9lSP4X+KrDH/AAkdqPdY8f8As1etc0detAHkknhT4pv/AMzNbDjtGf8A4qo18HfFJf8AmaYf++T/APFV69j3pMH1oA8jbwt8VWZVPiK2CqfvbOv/AI9U3/CM/FRm58RWgwcjEfX/AMer1bHvTqAPKB4Y+Kfzf8VHafN6xdP/AB6om8JfFNlx/wAJRb/hGf8A4qvXKWgDyJfC3xUQbR4ktmHqU/8AsqF8JfFPfuPie3+hQkf+hV65tz1pQCKAPJ28L/FJv+ZktBx/zyP/AMVUTeEvikU2/wDCT2/TGRGc/wDoVeu8+tNOaAPHT4H+KJIP/CWIMegP/wAVUv8AwhvxSC7f+EqhP1Q//FV65k07JoA8dfwT8UWwf+EsTgdgR/7NTP8AhBvil/0NoH5//FV7Lk0UAeNf8IL8Uf8Aobh+v/xVcB8VfDvi3RtKspfEWsrfxPKVjXBypx9TX1Ga8T/aOJ/4R3SAf+flv/QTQB84UUUUAFLSUtABXoPwv0nxRq2pXUPhu++xMsYaWQnGVz9R3rz6vcP2dZC2t6nHk4Fsv/oVAHTf8IN8USc/8Jav6/8AxVJ/wgvxR/6G0fr/APFV7LgUbRQB41/wgvxR/wChtH6//FUf8IL8Uf8AobR+v/xVey4FLgUAeM/8IN8Uv+hsH6//ABVJ/wAIL8Uv+hsH6/8AxVez4FFAHjH/AAgvxSx/yNgz9T/8VWV4k8FfEODw9fTan4mEtnHHukTk7hnp96vfOK5v4gKz+AtYVBljB/UUAfFBpKXtSUAFFFFABXafDTTNe1TxG0GgXws7nZlpfQfmK4uvWfgBn/hOJfTyv60Ad7/wg3xS/wChsX9f/iqP+EG+KX/Q2L+v/wAVXs3FLigDxj/hBfij/wBDYv6//FVYsPBfxLt7+GafxOssSuC6HPzD/vqvX8UtAEaAhQG+9jk06g0UwPK/jlLt0PSo+MtdjqOe1el6d/yDLb18sV5l8cEP9l6PINp23Y4PXtXp1h/yDrf/AHBSAsUUUUwCiiigArG8V/8AIsXn0T/0MVs1jeK/+RYvPon/AKGKANKy/wCPGH/cFT1BZf8AHjD/ALgqegAooooAMcZpccVyXxDl1iz8Lz3+j3iW81uu5t65DD86898B6v438ZeH7jU49bhSWFjtiaIkNgfWkB7bS15h8P8A4mza5qtxoGtQiHU7dtpZejEV6cKAFooopgGDSV5n8T9c8QeH7nTTpt+kUV5OI2VoySv613Eup2miWMI1bUIlkCgF3YLuPsDSA1KUVVi1Gxmsxdx3kDW5GRJ5g2/nUcetaZJdR20d/bPNIu5UWVSSPzoAv9qSq93qNlY7ftd3BBv+75sgXP50fb7MQC4N3AIW+7IZBtP40wLFFU01XTpLgW6X1s0x6RrKpY/hmrlABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAY3iv/AJFy6/4D/wChCrmkf8gez/65CqnigZ8O3I/3f5irekDGkWg/6ZCkBdooopgFFFFAHG/FOMS/DvVFI3fu+mPcVe8ALt8BaMMg/wCjjoPc1V+Jkqw+AdUY8fuuPzFXPAX/ACIejf8AXuP5mkB0VFFFMBKWkrH8VahLpXhbUL6B1SWGLcrN0ByKQG1gmj9Ca8S8Ma1rGuahYs/je3Ejnc9s1qybuvyhi2KvT33ijxVqmuTaZqq2UGkyeXHHsJ8xgAeeR2NAHrtKDXN+B9em8R+F7W+uFC3ONswA43Vpa1rEOhac17PDNKi/wwoXb8gKAOF1mNB8aNGdSrsYfmA6ry1emD5jXz7f/EGzn+J+n6v/AGXqEcUSbSnkPvbr2xmu6f4v2KQxsmhas7t1H2aQY/8AHaAPSR1pa80b4w2YPGhat1/59pOn/fNOHxh0/HOiatn/AK9ZP/iaAH/G1Wb4d3e0gY65FfJJr6A+J3xFt/EPhKfToNK1CF5Dw0sLqP1Ar5/2tgnacDrxQAlFFFABRRS0Ae+/s4RI39rzY+cYX8OK985r5a+DnjT/AIRSe+WTT7q7hmHPkRMxB49Aa9hHxe04lANG1YZ6/wCiycf+O0AeiA07Nean4wWKruGhaqeeR9mk/wDiaP8AhcVhg/8AEh1bPb/RpP8A4mgD0vNFeaD4w2OwE6Hq27PI+zSf/E1MPjBpX/QI1f8A8A5P/iaYHolLXmdx8YrNMfZ9C1aTJ5zbSD/2WnTfGGyjVDHoequT1H2aQY/8doA6zxqFPgzVdwBHkH+Yr4hP3j9a+lfFHxaS/wDDV9aR+HtTUyxbd7RMoXnvla+aT1NIBKKKKACiiigDrPhr/wAj/pP/AF2/oa+0BwK+IfBmo/2V4s0+98iSbypM7Ixkng19Hn4w4Kj/AIRnUzu6Hym/+JoA9Qory9/i+UkMZ8MamXHYRtj89tP/AOFs3QIz4U1AKeQcHp/3zQB6bRXmjfFedTz4Y1EfRWP/ALLQvxZ3ANH4b1Ng3AzGw5/75oA9LzRmvNW+Kl35iqPCt/g98H/4mg/FO4U4PhfUM/Q//E0Aeklhj8K+L/iU4k+IetEZGLgjBPsK9/PxekwQ/hXU92ccI3T/AL5r5z8a3x1LxfqV4bd4DNMW8txgj60AYFFFFAC0U+DyvOQzZMefmA64qS9+zfa5PsYYW+fkDHJxQA21/wCPuH/rov8AOvujRSp0OyK9PKGK+FYG2TxvjO1gcevNfUmk/E+9XSbRY/Ct6yCMAMCef/HaAPVaK85X4oXuPm8K3w/E/wDxNK3xPvMfL4Wvj+f/AMTTA9EorzofE69JwfCt8B68/wDxNSH4l3OPl8M3x/A//E0Aeg0V56Pibdd/C9/+v/xNL/wsu4HTwzf/AJH/AOJoA9Borz//AIWXPn/kWr/8j/8AE0yT4nXSn934XvnHvkf+y0Aeh0V51/ws29/6Fa+568nj/wAdo/4WbeDp4Xvz+f8A8TQB6NilrzofE68xz4Xv8/j/APE1H/wtC/z/AMipffmf/iaAPSaK85HxOvSOfC18PxP/AMTQPidd/wAXha/H0z/8TQM9Gpprzs/E28zx4Yv8fj/8TS/8LMuv+hYv/wBf/iaQj0GnV5y3xPvh93wrfN+f/wATSN8Tb0BSvhW/JP3hk8f+O0Aej0V5v/ws7UM/8ipffmf/AImkf4n6jt+XwnfFvTJ/+JpgekZ5xXiP7R7D+wtIXv8AaW/9BNdM/wAUdRX7vhC+bj+93/75ry/4weLbzxHotgl5oVxprRzkqZTkMNv0FIDxyiiigAozRRQAte5/s7R7dZ1F/wC9ar/6FXhdeofBzxNc+H9WvHh0ya+8yEKVj/h5z6GgD6sorzZPijqDO2fCd8FHQ5PP/jtSD4nXmwH/AIRa/wB3cc//ABNMD0WivM/+Fo6pvx/wiF9t7Hd/9jUh+J2oLjb4Uv2Pfk//ABNAHpFJ3rzVvijqu4bfCF9jv83/ANjSf8LS1XeoHg6+Ixyd/T/x2gD0vvWN4t58Jann/nia466+J2sQkeX4OvXLDIPmf/Y1h+JviZrV54Zvrd/CV5biSLa0pfhf0pAfNj/eP1ptKeeaSgAooooAK9Y+AHHjmQf9Mq8nr0D4T65caD4mku7fTpb4+XgpF1HP0NAH15S15c/xT1kHC+DL4++//wCxpB8U9cz/AMiXe4/66f8A2NMD1OivObf4k6rNGzt4RvVVevz8/wDoNFl8SdUur+K3k8J3sUbtjzC3AHr92gD0Q0UgYtzjFLQB5X8bZkTTNHjKAs92MN6dK9Msf+PC3/3BXmfxuhVtK0eRv4bwY/SvTbL/AI8IP9wUgJ6KKKYBRRRQAVjeK/8AkWLz6J/6GK2axvFf/IsXn0T/ANDFAGlZf8eMP+4KnqCy/wCPGH/cFT0AFFFFAHG/FR5I/hvrDoSCIx0/3hXG/s/Mq+EL124USMSfbAr0Lxl4cn8U6HJpSXf2eGbiU4zkVyOifCrUdA0+bTtP18xWkx/eAKdxz15zSA4XwqY9U+Pt/dWEZe3WZizAcDrzX0VgDpXNeFPBGkeEbdksEYzycyzucs/410goAWjgdTgUUyWPzYXjJI3qVyO2aYHl3xhxMfD3lESf6aPunPpVXx3Z211462ujancfZj5dgThI+G+Yk8f/AKq3NN+GjWmsRXF3q015ZwSmWKCUklWIx1NW9f8Ah8us+Jv7at9Sns5XiEMvlsQWXn0+tIDyTRLSab4Q+IhcTSxfY7krFHHJwhyoxx1FT6h4Mt9I+HWi+LLG7uY9Si8ss5lJ3gkDA9OprpfEPgOz8D+AfETJqc0iXe0qkrnAO4evU1Z8FeD38Q+C9GF7rBuNNiVXFuoPUdic89qAMvWpLbW9daWbfqt6tnuFgeEt25ySTxWPb21xqfwOmkeaRZrW82ookwFX5Rj9a9Fv/hZBP4mn1mx1K4szcgrMiMRuHPHFVP8AhUKwaBdaTZ6xOkNxL5hDsSByD09eKAOY1nwlaaBonhzxDYyzrqLSIJHZ87gcf417uetcDq3w/vtW0LS9Mm1cBLFg24Ifmx+Ndxbo8dvHHK++RRhn/vUAS0UUUwCiiigAooooAKKKKACiiigAooooAKKKKACiiigDI8T/APIvXP8AwH+Yq1pJ/wCJRaf9chVTxRz4duv+A/8AoQq5pOP7ItP+uQpAXKKKKYBRRRQBx3xRTf8AD3VB/wBM/wCoq/4DGPAmjY/59x/M1S+Jp/4oDVMHH7r+oq74D/5ETRv+vcfzNAHRUUUUAJWB41ma38J30gsPt6KmXt8ffGRxXQUEBgQQCD2NIDwDWtY0HxNZaPp/hvRZrTUxMCzLashh4PVsCtG08Q/8IDf+JdO1S0uZJ72TzrZoomcPlVXGQD6GvZYLCzt5mkhtYY3bksqAEmlnsrS4ZHuLaKV1PyllBIoA5f4a6ddad4MtRdr5c837xkI+7ntXX4yP8aNoGMdBS9TSA841cRr8YNH/ANWzmHkDGV5avRSvsv5V5rqnlJ8a9M2KGdoPm+Tpye9emUwGbf8AZX8qNo/uD8qfRQB518Z4V/4V5eTqdskXzKR+VfJwmbymQt945r60+NJz8NtQA9P6ivkWgBaKSigBaUU2lHJ4oA98/Zywz6sCOi9Me4r3wRqewrwD9nCQi51ePHG0HP4ivoIUAN8pPQflR5Seg/KnmkpgM8tf7oo8tfQflT6KAGeWv90flR5a91H5U+igDB8YrGvg7VMxgr5ByBx3FfEbkGRiOASa+2fHRZfA2rleT5B/mK+JT1OaQCUUUUAFFFFAHWfDRA/j/SVJIzN2+hr7Q2IB0HFfGPwy/wCShaR/12/oa+zj1H0oATYvXAz9KDt/u9KWigBDj+7SYwMBR+VOoosAg6ZwM/SgDPJx+VLRTACAVPA6elfF3xJJPxD1vJzi5IHHTgV9o9j9K+MvieAPiJrIDA/vyeBikByFFFFABRRRQBNa/wDH5Dxn94v86+59GC/2JZYUKPKHA7V8MWv/AB9w/wDXRf51906P/wAgazx/zyFAF3gdhS/hSUUwF/Cjj0FJRQAUUUUAGBRiiigAxRxRRQAcUYoooAMUYoooAMUYoooAMUYoooAMUYoooAM47V4n+0gT/wAI5o//AF8t/wCgmvbK8S/aQ/5AGkf9fLf+gmkB84UUUUAFFFFABXt37OJ/4qDVV6j7Mp/8erxGvbf2cf8AkYtV/wCvZf8A0KgD6O2r2FL07UUUwDPtRn2oooAM0UUUAI3Nc54+OPAWsE5A8jqPqK6SsHxrF53gzVUIyDAeM470gPiLtSU5uCfrTaACiiigAr179nyXb4yukxkNAB+teQ163+z9/wAjxP8A9cf60AfUOeaKO9GKYCbiOlLk4H60YooAOaKKKAPLvjbNGmiaVEx+d7xdvH0r0qy/48IP9wV5r8bYFfQ9KlIG5Lwd/pXpVj/x4Qf7gpAT0UUUwCiiigArG8V/8ixef8A/9DFbNYvi048L3n/AP/QxQBp2X/HjD/uCp6gs/wDjxg/3BU9ABRRRQAUVDPdW9qoa4njiUnALsB/Oq7azpiY3aha89P3q/wCNAF6ioobmC5TfBNHKvqjBv5VLQAUUUEgDJIA9TQAUdO1Rx3NvKxWKeJ2HZXBNSZoAz9Y0XTtes/smpWyzwZzsYZGak0zS7LRrJLLT7dILdPuooxUgv7RpvJW5iaT+4HBNWKQBRSUjEKpZiAo5JNFwHUVBbXltdoXtriOZQcExsGGfwqegAooopgFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAGR4m/5F+5/wCA/wAxVvSf+QRaf9chVLxW/l+Grx/QA/qKsaDL53h+wlIxuhU0AaNFFFABRRRQBx3xQC/8IBqe44Hl/wBRV/wF/wAiHo3/AF7j+ZrO+KcL3HgO/iSQIzL94nHcVoeAv+RE0cdcQYz+JoA6OiiigApCcDNLXP8AjW+v7DwteS6ZA012U2xqo6GgDBk+I0E/xFtfDGnosyFsTzDkA88D9Kh1f4iXyare22iaQ19Dpx/0uXeBj6Aj3Feb2GpReHNe8PND4fukuvNLXEkn3pWIbocf5xXZeB720gk8bfapEhc3bOUkO07di+vvSA9H0DWrfxBodrqltnyp03bT1HtV+WeK3TfNKka9mdgBXF/ClceC4ZApWKRy0YPpXV6lpttq1p9lvE3xE5OOtAHl+sanZr8dNIMd4mGgw5Eg29TXqf8AaVgTxfWp/wC2y/4147rHhbRLb4u6RYRWs22eL94xkz69OOK76H4ceHYpNyRXGSc8y0AdKNRsSu4X1sQOp81f8aP7RsCMi9tsevnL/jWCPAPh9EaNYJNrdRvqM/Dzw/18qcL/AHRLx/KgDB+Ml9YyfDm/VLuB3YfKEkBJPHpXyYTmvp34peD9E0jwHf3dtbyGRRldz8A5HtXzG1ACUUUUAFKOtJRQB7p+ztfQW15qsc9xDEpQMPMYLnkete/f2np3/P8A2v8A3+X/ABr5t+BHh/T9c1PURfxGQRxfKAcdxXuo+H3h1f8Al0b/AL6oA3v7SsP+f61/7/L/AI0n9p6f/wBBC1/7/L/jWH/wgfh//n2f/vqm/wDCAeHf+fVv++v/AK1AG9/aen/9BC1/7/L/AI0f2pp3/QQtP+/y/wCNYP8Awr/w4f8Al0b/AL6o/wCFeeHP+fVv++qAN7+1NO/6CFp/3+X/ABpP7T07/oIWn/f5f8awv+FeeHP+fVv++qP+Fe+HP+fRv++qYEPjzVtOXwRqqf2ja7nhwoEikk5HvXxkfvH619aeNfAfh628HanPHZkyRw7lJOcHIr5LPBIpAJRRRQAUUUUAdR8O7mCz8daVPcyLHEkuWZjwODX2QNV01grDULUqRx++X/GvjPwHYwal4002zuoxJBLLh1Pfg19YD4feHAigWjADoN3/ANagDe/tTTv+gha/9/l/xpP7T0/tqFp/3+X/ABrC/wCFfeHM/wDHo3/fX/1qX/hX/h1Tn7G3/fX/ANagDZOs6WJPLOpWm4jIHnL/AI0SazpcUe99StAvr5y/41hn4deGt242RJ9c/wD1qU/Dnw06hWsyVHYn/wCtQBtNrWlJEJG1K02nofOX/GoB4m0MytGNVtdynBHmr/jWdH8P/DaN/wAg8MB0VsEflio2+G/hZnMn9mIGJycY/wAKANc+I9FWZYTqlr5jjIHmr/jXyH8SbmK8+IGrzQOrRmc7WXoa+pD8NvC5O/8As8bgOGyMj9K+U/HlnDp3jfVrOCPZDFOVRc9OlAHN0UUUAFFFFAEtsQt1ET0DqT+dfamk+J9DGj2mdUtgfKHBkGf518V2w3XMQPQuAfzr7A0b4d+GTplpM+mxs5jBPAwfwxQB0p8Q6MpUHU7XLHA/er/jUB8V6CCQdVtcj/poP8aqP4E8NsQTpkRx/sjj9Km/4Qnw0FwNFsjgdTCuaALP/CTaJsRv7UtcOMr+9X/GkXxPobx+YNUtducf61f8apt4H8NuBnR7XjoBGOP0qJPh/wCGVzjSoOe20Y/lQBo/8JNof/QUtf8Av6v+NIninQpDhNUtScZ/1g/xqkvgPwyDn+ybf8UH+FKngrwzC2F0a14P/PIf4UAXG8U6Gj7W1S2Bzj/WDr+dH/CU6Ft3f2pbYxn/AFo/xqrJ4I8NScnR7U854jH+FIPBPhrduGi2vTGDGMfyoAuJ4m0R03rqlqV6f6xf8aRfFGhvIUXU7YsOv7wf41Cvg7w4Fx/Y1mB6CEUo8G+Gw2Ro1mD6iIUASf8ACU6Fgn+1LXAOD+8H+NLJ4p0KOURtqltuP/TQf41XHgvw0MgaLZ8/9Mh/hS/8IX4bYhm0azLepiGaAJH8W6BHCZm1W2CA4J8wf41X/wCE68M/9Bi2/wC+xUh8FeGSpVtEsip5wYVx/Kmf8IH4U/6AGn/9+F/woAT/AITrwz/0GLb/AL7FH/CdeGf+gxbf99inf8IJ4U/6AGn/APfhf8KT/hA/Cn/QA0//AL8L/hQAHxz4aABOr23IyPnFJ/wnXhn/AKDFt/32KP8AhBPCp66DYHHT9wv+FL/wgfhT/oAWH/fhf8KAHHxt4bWISnV7bYTgHeOtR/8ACeeGP+gxbf8AfYp3/CC+FdoQ6FYbQcgeQuP5UHwF4T/6AGn/APfhf8KAG/8ACd+GP+gxbf8AfYrx/wCPniHSdZ0fS0068iuGSclgjZwNpr2H/hAvCf8A0ANP/wC/C/4V458efDmj6JpWnTabp8Fq0s5DGKMLn5T6UAeEUUUUAFFFFABXr3wF1rTtG13UpdQuUgR7cBSxxk7q8hr174C6Jp2ta1qkepWcNzGlupUSoGAO73oA99/4TrwzgH+17YZ6ZcUDxz4ZJx/bFt/32KavgPwrjB0KwOPWBf8ACl/4QTwqBkaDp+f+uC/4UAB8deGR/wAxi2/77FL/AMJ14Zxn+17bH++KT/hA/Cp/5gOn/wDfhf8ACj/hA/CuMf2DYf8Afhf8KYCf8J54Y/6DFv8A99ij/hPPDH/QYtv++xS/8IH4V76Bp/8A34X/AAo/4QTwr/0L+n/9+F/wpAA8d+GP+gxbf99isfxb408NXPhPUoU1WF2eEgKjjJNbH/CB+Ff+hf0//vwv+FYvivwF4X/4RjUGi0a0hkWIlXjiAIP5UAfILfeb602nMNrMOwNJQAlFFFABXp/wP1Sy0nxhNPf3CQRmLAZzgV5hXpnwS0qw1fxi8Go2sVzEI87JFDCgD6NPjzwxn/kMW3/fYpf+E78Mf9Be2/77FOHgTwnj/kX9P/8AAdf8KP8AhBPCvbw/p/8A34X/AAoAb/wnfhn/AKC9t/32Kkh8aeHbiZYYdVt3kc4VQ45pv/CCeFf+hf0//vwv+FOh8E+GbaZZodDsY5EOVZYVBH6UAboOelLQoxxjilpgeWfG10Gj6SrdTdjHH0r0ux/48ID/ALArzT43QmTRtKYITtuwSc9OlelWGDp1uQeNgpAWKKO9FMAooooAKxPF3/Ir3n/AP/QxW3WL4t/5Fe8/4B/6GKANOz/48YP9wVPUFl/x4Qf7gqegAooooA4/4labBf8AgrUGk3K8Me5HU4KnNeS/DL+wZPBN5f8AiCQTSLLsQNIN5zgcZ5717H8QpYovA2qeZIiZi43MBnmvCvh94NsfE/gaeQXUcGoQXAeMySALgFTyD+NID1/4eeGrnw7cX+HlOn3B8y3WV9zKCeld7XL6B4rtdU1iTR7YrPJawhppY2BUHOMDFdRjHfNABTJI1ljaN/usMGn0cd+lMDwXX7i48FfFWG9s5Jv7MBAnjMmQMkjOPqRXq3i/X49K8K3F/A4ZpY8QY53E+lcrrOmaf4k1vxLpjNGbhrRWjYOM5DZGPyrlPAU+p+J/L0zWI2W30CNg7SHh22kc/pSAn+B1q9xc6vqGqzSy3UDFSZJMhMV6I3xI8Ox36Wj3Eo3tsWYxN5bH/e6frXl/gGYzaP42htZlFyxcxhGG48jpUXhZPCWpeA7G21fUZ2u4Cu60DEMH46CgD1i9+Inh3T9bXSbmeZLliQuYW2t9DjBqS28Z6HrNnqQhlmMNqrJMxiYAdjg9+tcF8TLSx1fStL03TIt2tqm+La3zxqB/EfoDWt8PNV0u/wDAFzYlYVvraF0u0fG5nC8k+tAGx4Dg8P6T4YkvtIupGsJXMjSTt3wPWr1l8QNBvNSjsFmlSWX/AFRkiZVf6E8GvK9NvYp/gXLHZuXktpx50cZ5ABXPHpXXQ654S1TSdEmiRLm+jjxbRRj5kbb3HagDqtT8caNpl/JZPJNLNHzIsMTPs+uOlamja1Ya/p0d9p0wlhf8CPYjtXl3w11S0g1nxRZa4Y4NUe4kd2m+UMh7Anr3rS+E0Bh1HxE9vu+wNdN5H93t0oA9PooopgFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAZHicBvDt0p6EL/ADFWdHQR6LZoOgiUCq3ib/kXrn/gP8xVvSv+QRaf9chQBcooooAKKKKAOJ+LMZk+HmpYOCEz+orT8A/8iFo3/XuP5mqPxT/5J9qn/XP+oq94B/5ELRv+vcfzNIDo6KKKYBRzmio554raB5p5FjjQZZmOABQBTvdHs7++tLyeMPNaNujPp1/xrD1v4f6Frmo/bbiGWKZv9YYX2iT2YY5qWz+IHhnUNQWzt9QBnZtqhlIDH2Jq5q3i7RNGvI7W+v445nONo+bH1x0/GkBp2NnBp9jDaWsSxwRLtRQOgqwOtMiniuIklhdXjcZVlOQafQB5rrcaj4z6K27BMPT8Wr0ivOdfiJ+MWguWPEXTb/vV6QVOaAEFLRjBowaYHAfGb/kmmpf7o/mK+Qq+v/jGrN8NNTAUn5ew9xXyBSAKKKKACgUUUAe5/s4/8hXVP+uQ/mK+ia+d/wBnEE6rqnBx5Q5/EV9EYOaACijn0owfSmAUUc+lHPpQAUUYPpRz6UAcv8RGkTwHqxiIDeT3HuK+LGJLEnrmvtnx4M+BtX4J/cHt7iviY/eP1pAJRRRQAUUUUAdd8Mv+ShaR/wBdv6Gvs/Pb2r4t+G43ePtJAOD53X8DX2jtPWgBc0UmDRz6GmAtFHNJzQAUUc+lGD6UAH8J+lfGHxM/5KJrX/Xwf5Cvs/naeO1fGPxLfd8RdZ4PFwRz+FIDkqSg9aKACiiigCa0/wCPyD/rov8AOvurSf8AkD2n/XIV8K2n/H5D/wBdF/nX3XpI/wCJPaf9chQBbopcUmKYBRRg0c+hoAKKOfSjn0oAKKOfSjn0oAKKOfSjB9KACijB9KOfSgAoowfSjB9KACijn0oxQAUUYoxQAUUm4etBIHUgfWgBa8R/aPP/ABIdIH/Ty3/oJr24Y9R+deH/ALSBB0TR8EH/AEhhwf8AZNID5zooooAKKKKACvbP2ct58R6qoPy/Zlz/AN9V4oK9t/Zz+TxFqpJxm1XGf96gD6O+tFIDuGaXrTAKKKM8ZyKACikyPUfnS8ZwSM+maACsjxV/yKupf9cDWsSB1IH1NZHillPhTUyGBHkHnNAHw/Ics31qOntyWPvTKQBRRRQAV6z8AP8AkeZf+uX9a8mr1j4AkDxxISQP3Xc0AfUtLTQyngMpPsaRmCnBYD6mmA+im7lAyWXH1pQwPQg/Q0DFpKWkNAHmHxrulh0LTYe8t2o6fSvRbFQLC329NgxXm3xvx/YOl8Df9sGD+Vek6dn+zrfP9wUhFmiiimAUUUUAFYvi3/kV7z/gH/oYrarD8X8eF7z/AIB/6GKANWy/48IP9wVPUFl/x4wf7gqegAooooAztW0LT9dtxBqMImiH8B6Gsm3+H/hqzRktrAQo3DLHwDXUDpSYpAZGi+GNH8PPM+l2aQNMMOVA5rXHFJS0AFIyhlKnoRg0tFMDEtfCWjWepf2hDbkXR6yE8n61a/sLTlW6SO2WNbpi02wY3k1o0lIDA03wV4f0e5a5sLCOGVxhmUDn61GngPwzFqf9pR6TbrdbtwfYOtdHRQBlx+HdLi1iTVUtVF7Iu1pCOcen61XtvBug2dxcT29ikclwCJSoA3Z9a3aOaYGHpvhDQtIjmisbGOKOYYkUAYaodK8D+HdEvXvNP0yKKdujBRx9PSuiooAw9Q8I6Hql59rvLCN5z1fAzWlp+m2ml2iWtlAkMK9FUYq1RQAdKKKKACiiigAooooAKKKKACiiigAooooAKKKKAMbxW/l+Grt/QA/qKs6DL5+gWEv9+FTVPxj/AMipff7o/mKm8L/8itpf/Xuv8qANaiiigAooooA474pn/i3uqcEny/6ir3gH/kQtG/69x/M1R+KbiP4e6o3cx4/UVe8AgjwHo2Tn/Rx/M0gOjooopgFZPiXTLXWNBubC8uDBBKuGcPt71rVjeKtEfxB4du9OilMMsi/u5PQ5FAHkHjOzTSJ9KtI9Ajs7G0nB/tKMAswweTgZ6mtbwjouneIJPGN3qMK3UguDGkkgyVXYp4z05q5P4T8c67Z2uja1cWq6ZER5kkYG6QD8aluvBPiXSrzUI/DV5CljqRzOJVy0ZwBkc+gpAbXwqlZvBUMTSM6wuUQscnFdB4kstUv9Hkg0i7W0vD92RhkfzFR+EvD6eGPD1tpiyeY8a/vHP8TetbfegD5+1LRfG9p8QdFt7nXoZL6VMRSBDhRz1G6usfwl8SWlcr4ogxnI/dn/AOKqTX9v/C7tBBz/AKvI47/NXqOOaAPJv+EP+Jp3Z8UwDcf+eZ4/8ep48I/EtUCf8JPCQ33jsPH/AI9Xq1FMDwfxzoPjrR/B93c3uvx3dsg/exlDyPxavnxiSxJ719e/GPd/wrbU1HVl/qK+Q260gG0UUUAFA60UtAHpXwj03xJqt9ew+H9TWxKJudiCd3I46ivWz4O+JDNvbxVECB90RnGf++q479nFx/aeqJt58sHP4ivoegDyh/BvxFl4PitVAPG1COP++qkg8FfECNh5ni0Fe+UY/wDs1ep0UwPLZvB/xDuFH/FUxpg5yqEZ/wDHqX/hEviIYlC+KIvf92f/AIqvUaAAOlAHlH/CF/EbO7/hK03HttOB/wCPVD/wgvxIQMV8XKSfVT/8VXrtFIDxLxN4V+IFt4av57zxLFLCsWJI9pG5cjvur5xb7x+tfbHjwRnwLq+4fKYPTPcV8TnqaAEooooAKKKKANrwnZ3t/wCJrG20+4+z3TyYjl/unFfQzeAviICMeMTj6N/8VXhfw0/5KBpI/wCm39DX2gev4UAeSp4B+IBjG/xg27vgN/8AFU8eAfHv8XjB/wAm/wDiq9XopgeU/wDCA+PO3jB/yb/4qj/hAPHv/Q4v+Tf/ABVerUUAeUf8ID4+B/5HF/yb/wCKp3/CB+Pcf8ji/wCTf/FV6rRQB5T/AMIH4+Cn/isW6ejf/FV87+L7a7svFWo219ci5uo5SJJcfeNfbvZvpXxp8TQg+IesBQAPPPT14pAcfRQetFABRRRQA+IEzIFOGLDB9K+mNI8FeNrvRbK4h8XSRK8QIQq3H/j1fNVt/wAfUP8Avr/OvuXQXEmgWLYHMI6UAeeL4D8ebxnxk+3vw3/xVKfAfjrcf+KxkC9uG/8Aiq9TopgeW/8ACB+N8/N4ylx7Bv8A4qj/AIQPxzwP+Eykx9G/+Kr1KikB5YvgPxyQS/jKQenDf/FVI/gPxnhdvjKbOPm4br/31Xp9FMDzFvAPjTLbfGcvXjhun/fVEPgDxmVPm+M5c9sBv/iq9OopAeY/8IB406f8JnLj6N/8VViLwF4pU/vfGNwwx23f416NRTA8yb4f+Ly+V8ZzYHThv/iqV/AXjHI2+MpsHrkN/wDFV6ZRQB5n/wAIF4wHB8ZTH8G/+Kpy+AfFe35vGc+e+A//AMVXpVFAHmj+AfFhZQvjOfHfhv8A4qo/+Fd+LFIKeMpzn72d3+Nen0UAeW/8K88YrHhfGM2T1+9/8VUo+Hvizj/is5+nPDf/ABVem0UAeX/8K48TfLjxlc9efv8A+NLL8NPE06oG8Z3OBz/H/jXp9FIDyw/DjxYDtj8Yz+X2zuz/ADrzD4ueEdY8PadZT6nrcmoCSYqqvn5eOvJr6irxL9pH/kXtH9ftLf8AoJoA+cKKKKACiiigAr0j4VaJqmuancwaTq7WMyxBnIB5GenUV5vXtf7Oaq3iPVCwGRbLtz/vUAd8Phv4p2Z/4TO43nr97/Gl/wCFd+LMk/8ACZzgg8cN/wDFV6kBRimB5g/w78Wl8r4xnKnr97/Gkf4c+KSuE8Y3AHvu/wAa9QooA8mT4aeL0kZv+ExmyTn+L/4qp0+GviiSXzJvGVxlRgbdw/rXqVFAHlf/AArLxPMzeb4yudueMbun51na/wDDzxDp/hu+l/4Su4miSPLxsW+YfnXstYvi7/kUtT/64mgD4hbaMgZ61HTn++31ptIAooooAK7H4baXe6x4qisbG/eylkH+sQnPf0rjq9I+CH/JSbL6H+RoA9Xg+F/iyCUyf8JhcDHTlj/Wrc/wy8RzhfM8ZXRwOxb/ABr1I9aKAPLJPhh4heNVHjK62j3f/GrFl8Ntes7iORvF91IituZCW+b9a9LooASMFY1BJOB1NOpKKYHmPxth3eGrG4LACG6Vj78gV6JpjiTSrVx0aMGuF+NEcL+BWMmdyzIUwM87hXZeHyf+Ee0/PJ8haQGlRRRTAKKKKACsPxh/yK159U/9DFblYfjD/kVrz/gH/oYoA1bL/jyh/wBwVPUFl/x5Q/7gqegAooooApajq9jpEQkv51hQ9GbpWaPG/hx13JqcLD1U5qt8RLW3uvAuqefCkm2LK7lzjmvCPh74k8PaB4Pk/tDT47u+muBHErw7uCQOuPrSA+j9N1rTtYR3sLpJwhw2w5xWhXLeFPClvoF7fXloESC+PmCFBgISa6kUAFBIAJPQDJooPIxTAxW8W6Et39lbUI1nBx5ZPzflWwrB1DL908ivIfEGm2S/HHSytnD81sHYbB8x+bmtS9+KN3Frt5o1h4dnnntSA3z4AGcZ6UgPS6K83uviZeytdjTtIbbp6B7tp3EY64IXcOfwpNQ+LttaaHperJpM8tvfkBMNghvTpRYD0qiuB074kSXHiW20i/0Waw+1E+RK75D8E9McdK749aYBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAGbr8K3Gg3kT9Cn8qj8MceFtM/691/lU2uMU0S7YYz5Z61D4X58LaX/wBe6/yoA1qKKKACiiigDhvi+Gb4eX4V9vAz+Yre8HwrB4P0uJPurAMVhfFtVPw9v92e3T6iui8L4/4RbTcdPJFIDWooopgFGaKwvF7ap/wjV2mjIWvpF2xkHG3kc0Abayo7bUkRiOoDZxRvRMBmVcnjJxmvDdT0nUfAU+kajB4huLrUbmYLNZvKXD8E9M1amstc8e6prl9/as9iulP5drFE5ALABskA89TSA9qx6UVzPgDWLjW/CNrcXfN0g2Sn1Iq/4i1+38N6Y1/dQzSxL1WFCx/ICgDidbJPxq0TJHEPTHu1enV8/wCqfEzS7v4k6dqyabfLHbptwYm3P16DGe9defjfpA/5hGp/+A7/APxNAHqFFeZH42aH/DpmpFvT7O//AMTQPjXo2ws2l6kMHAAgc/8AstAF74zcfDTUiOu0fzFfIbV9B/ET4oab4l8E3unWun38c0owDJCwUcjuRXz2aACiiigApaSlHWgD3L9nJcaxqnP/ACyGPzFfRNfJ/wAIvGNr4S1W8mubO5uPNi25gUtjkdgDXsi/GnSWYAaPqmD3Fu5/9loA9MorzSf40aTCVzpGpkEcnyH4/wDHaZ/wunSiNw0fVNvY/ZpOf/HaYHp3aivMv+F1aQFy2kaoP+3d/wD4mn/8Lo0dhlNI1Vvpayf/ABNID0qivMm+NWlA4GjaoW9Ps7//ABNA+M+m4BfQ9VX1H2d+P/HaYHY+Ml8zwdqqn7pgI/UV8QyDErD0Jr6X8S/F/SdQ8N6hZx6XqSPLFtBaF1A5HfbXzQ5BdiOhNIBtFFFABRRRQB1nw1Kr8QNILHA87+hr7Q96+IfB+oxaT4r0+9mhaaOKTcUUZJ4PSvpBPjNYmMsNB1UkcAC3f/4mgD06ivMh8ZLbdz4d1YLjr9nf/wCJpzfGWxC/8gHVt2eB9mk/+Jpgel0V5mvxktP4vD2rD/t3f/4mkb4yWmPl8P6sT/17Sf8AxNAHptFeX/8AC5Yd3/It6rj18h//AIml/wCFywbsN4c1bZ2PkP8A/E0Aendj9K+NPiegT4iazg5zOT/Kven+M0IU7PDWqn0zA4/9lr548banHrXivUNRjheATSFvLk+8PrSA5yiiigAooooAmtubiEesi/zr7k8Pp5Xh6wTOcQjnFfDMD+XcRPjO1wcfjX05p/xjRNNt0/4RvU22xgbliYg/T5aAPXM0V5nH8Y7M7fM8P6sv97/RpDj/AMdpG+Mdrn5fD2rFfX7O/wD8TTA9NorzM/GS0AH/ABT2q5P/AE7v/wDE01fjJbFyD4d1XHY+Q/P/AI7QB6dRXmjfGK0A+Xw9qx/7d3/+JqIfGSHPPhvVR/2wf/4mgD1CjNeYn4yW+OPDurbuw+zv/wDE0L8ZLfHz+HNVU9v9Hc/+y0AenUV5b/wuVf8AoWNV9v3L/wDxNO/4XPBgf8U1q27uPIf/AOJoA9QorzP/AIXFbHn/AIR3Vvb/AEd//iaY/wAZIVb5fDeqkevkP/8AE0Aen0V5fJ8ZYAoMfhzVWbHI8hx/7LTF+NCFct4Y1Uf9sX/+JoA9Tory4fGWM/d8M6qf+2L/APxNO/4XEoALeGNUAJ6iJz/7LQB6fRXl7/GSEEbPDmqsM9fIcf8AstM/4XMuM/8ACMarnHTyX/8AiaAPU6K8rb4zqBx4X1Y/9sX/APiaQfGj/qVdV/79P/8AE0Aeq14l+0h/yLuj/wDX03/oBrZHxoUnB8L6qP8Ati//AMTXmnxe8dSeLdLsIG0e7sVhmLh51I3fLjHIFIDyKiiigAooooAK9w/Z2ZH13UFOAyWy4wME/NXh9ek/CPxSPCerXl0+mXN550IRVgQsRznPANAH1nRXlf8AwucEZPhfVR/2xf8A+Jpf+Fzr/wBCxqv/AH5f/wCJpgep0V5Z/wALm/6lfVcf9cn/APiaP+Fzrjjwxqv/AH5f/wCJoA9Toryo/GjB/wCRW1XHr5T/APxNJ/wuj95x4V1Xb6+U/wD8TQB6tWJ4wbb4Q1QgdIDXC/8AC6Dt/wCRV1XPf90//wATWT4i+LcmpaBfWf8AwjGpRLNHt8xkYAf+O0AfOT8k8d6jpTnOKSkAUUUUAFenfAm2M3xChlBwIULH8iK8xrufhf4kbwz4ma9SynvCUx5cIJP6A0AfYfeivJo/jRNu/e+E9UUevlsf/ZaU/GiTzDjwpqmzsfKbn/x2gD1iivLB8ZwRz4X1Uf8AbJ//AImpbL4vNe38dqPDGpp5jYDtGwA/8dpgenUUincitjGRmloA82+NcuzwUkYJ3SXCgAd+RXc6EpTQLFGGGEK5FcJ8aR/xTen/APX2v8xXodj/AMg+3/3BSAsUUUUwCiiigArF8WjPhe8/4B/6GK2qxfFv/Ir3n/AP/QxQBp2X/HlD/uCp6gsv+PKH/cFT0AFFFFAHK/EW7htfAupCViC8W1QBkk5FeSfCrwzpviTwVcadegRXf2gPGzJhxgqePyr326srW+j8u6t45k/uuuRUNvo2mWcoltbGCFx/EiAUgLcKeVCkY/hXFPpKWhAFIxCqSegpaOCMEZpgeOa5rFmfjdpU4d/KjtwjPsOAfm4q/wCGtVs3+LniGNWJeRMISpAYhicZr0R9D0uSfzn0+2aTOdxjGacmi6ZHdfaY7C3WfOfMWMA/nSA8P1nV4dT13xPa65HcwCEMltBbRMBKQepwOf8A61U21bT5Phj4TtDHMtzbXCqwaJhhsDJ6civf30yxkuDcPZwPMRguyAmopND0qZFSTTrZlT7oMY4oA868b6tYt428HlZNwimZnZV+6ChAz+Neq5B5HINZzaDpTyK76fbsy8KxjGRWgAFGB0HSmAtFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAY/ihkXw3emTdsCDO04PWneGMf8Ivpm3p9nXH5VD4w3f8IrfbRn5Rx+IqXwtz4U0v8A69k/lQBr0UUUAFFFFAHA/GJ3T4e3hTHbOfqK6bwr/wAirpvGP3A71y3xmYr8N75h2x/MV0XgiV5vBGkSOcs1uCfzNIDfooopgFcx4+1u90Hwrc3OnQvLdsNkYRSSD68V09NdFkGHUMPQ0AeD+FLrSrW/g1HWLHVr/Vm/5aTROyRsf7oK8VrRahqfg7Utft5NHuLoarKZrWSIEjJAGDwcdDXsAijHAjUY9qfxxwODx7UgOW+HmkXejeE7eG9G25k/eSLn7pPauodElUpKodT1UjIpelFIDy/UoLQfGbSofIiVRb5VQowTk16ObCyJ5tIP++BXAa2I4vjFobsgLyR7VOen3q9IpgVRpthnP2KDP+4KX+z7H/nzg/74FWaKQHnnxdtoLX4c6lJb28MbhfvKgB6ivkg9a+vfjLz8NNS/3f6ivkN/vUwG0UUUAFKDzSUDrQB7h+ztbQz6rqhmhjkHlcbgD3FfQosrVRhbaID2UV89/s4oTrWqMG48kcfiK+i6AIDY2jfetoT9UFOFlaiMILeMKOg2jFS0uaYEBsbQrtNtER7oKVLW3jGEgiUeyipqSgCA2VqX3m2i3euwU5raBusMZ+q1LRQBzfjSzto/BurSJawbxASDsHqK+KGOWJ9TX2342BfwRqyg8mA8k+4r4lcbXYehpANooooAKKKWgDqvhuiyePtJV1DKZuQRweDX2cIokHyRIPoK+M/hp/yUHSf+u39DX2e33RQA3aCeg/Kjy0/uKfqKUUtMBuxP7o/Kl2r/AHR+VLRQAm1c52ik2Ln7o/KnUUANKIwwUXgelfGfxNgW3+IOsKowpuCcflX2d6/Svjb4qf8AJRdXwP8Alse9IDjKKKKACiiigCa1x9qhz/fX+dfc2ixRpodkqKuwRDGBXwxbDN1EPVx/OvubQI/K8P2CZJ2wgc9aANDav90UbV9BS0UwG+Wn90flR5af3RTqKAGlFP8ACKAij+EflTqKAE2r/dH5UbV/uj8qWigBMD0H5UbF/uj8qWigBNq/3R+VBVT1UflS0UAN2Ln7o/KjYv8AdH5U6igBNq/3R+VGF/uj8qWigBNq/wB0flRtX+6PypaKAE2r6Cjav90flS0UAG1f7o/KvEv2jlUeHdIwAD9pbp/umvba8S/aP/5F7R/+vlv/AEE0gPnCiiigAooooAWvav2eyf8AhIr0Scr9nG0H/erxWvaf2dyT4m1BW5Atxj2+agD6R2rjoPypNi/3RTh0opgJtX+6PyoKqewpaKAG7F/uil2r/dH5UtFABtX+6PyrD8YKv/CIaoNo/wBQe1blYvi4qPCOqbgSPIPSgD4ff7x+tNp74LNtz170ykAUUUUAFeqfAQj/AIToqQDmP0ryuvVfgGrHx4SOgj5/WgD6kEaDtTsL/dH5UpHNGKYCbV/uj8qMD0FLRQAUUUUAeY/G6Ty/DGnsegu1z+Yr0TTXD6XauOhjFeb/AB3/AOROtP8Ar6X+Yr0LQs/2DYH/AKYrSA0KKKKYBRRRQAVieLjjwtef8A/9DFbdYvi0f8Uve/8AAP8A0MUAadl/x5Q/7gqeoLL/AI8oP9wVPQAUUUUAFFMklSGJpZGCogyzE4AFcfD8SdKvr6a10y2ub0w8NJEh2/njFAHZ0Vyei/EHSNc1o6RAk8d6oy8csZXb+YrrKACiiigAorltV8d6bpepvpwhuLq5jG6RYELbB74Bq14c8Xaf4nNytkkyNbnEiyoVIP4igDfopAaWgAooooAKK5PUPHdlYeLrTw69vN9puSdrlSF6E9ce1dZQAUUUh4oAWiiigAooooAKKKKACiiigAooooAKKKKACiiigDN18gaDebhkbKj8Mf8AIraZ/wBe6/yqfWgG0W7B6eWag8Mf8ivpn/Xuv8qANaiiigAooooA89+NP/JNdQ+g/mK6DwF/yIei/wDXuP5msP4xwtN8N9QVeyg/qK3PAX/Ih6N/17j+ZpAdFRRRTAKiuZ4rW2kuJmKxxjcxxnipaZJGkyGORQ0bcMpHBoA4vw98RrHxN4uudH06N2t4IPMMzqVJO7GMGqesfEW+TUr630PR2voNOOLuXeBjp0BHPUVBpFpa2fxqv4rW3SFP7MztRcDO+qXgu6trSfxxHdzxwt9sZtrsFO3YvPNID0PQNbt/EWi22p2ufLnXO09VPoa0mdEGXZVHqxxXEfCZWXwVE+D5buWTPcV1Wr6VBrNg1pcPKino0T7WH40AebeIbyE/Gzw8Eli2hPmYODj71eom7te91B/38FeLat4G0+y+KWg2iS3bxTJl3aYlv4u9eiH4d6J3kv8A/wACDQB032q2/wCfmH/v4KT7Xa5x9qg/7+CuY/4V1ovmBxNqHAxj7SaX/hXWiZyZdQP/AG8mgDK+MU8Mvw41GOOaJ2YYADjnkV8jkY69a+lPib4H03R/Cl9qMNxfyMBhYWmLDPFfNcgxI3BHPQ0ANpaSigBaKVCoYbhxTpjG0zGFSseflBOSKAPav2dbqCLWtTjklRCYQQGIGeRX0R9rtcf8fUH/AH8FfMvwL8OWOvarqH2tpl8qPgxSbT1Fe6f8K60P/npf/wDgQaAOm+2Wv/P1B/38FJ9stf8An6g/7+Cua/4V1of/AD0v/wDwINH/AArrQ/8Anpf/APgQaAOl+2Wv/P1B/wB/BR9rtP8An7g/7+Cua/4V1of/AD0v/wDwINH/AArrQ/8Anpf/APgQaAOl+12v/P1B/wB/BR9stf8An6g/7+CuZ/4V1of/AD0v/wDwINL/AMK60P8A56X/AP4EGgB3jrUbOLwVqubiFiYcBRICeor4ub7x+tfWni34daGnhfUp1kvA6QkgtOSOtfJbgB2A6A0AJRRRQAUopKWgDqfh3MIfHmkyEqAJuSzAAcGvsk6nYH/l+teOv75f8a+MvAenQan4002zug5hllwdjYPQ19Rf8Kt8N7mO28y3X9//APWoA6oajYNyL61P/bZf8ad/aFiBk3tsB/11X/GuVX4X+G0GFW8GOn7/AP8ArVIfhr4eK7St0R7zUAdL/aVh/wA/1r/3+X/GkOpWCnBvrYH085f8a5n/AIVl4bwvyXXy9D51L/wrXw75hkKXTMRjJmzTA6b+0bDIBvrbJ6fvl5/Wj+0bHGftttj181f8a5p/ht4dkuEmaO53IMKPO4p//Cu/D4TaI7jHp5tAHQNqengEG/tRx/z2X/Gvj74nSxzfELVnidXQzHDKcg19OP8ADLw1ICWhuDx182vl34h6db6V421GztQwhjkIUMcmkBytFFFABRRRQBJbnbcRN6OD+tfa3hnWbObwzp0k2oWvmNCCczKD/OviiIAyoDyCw/nX1r4d+Hfh2/8ADWm3E0Eu9oATtfAoA7kanp+M/b7XA/6bL/jS/wBp2GM/brbHr5y/41zS/DTw2ikCG4weo83/AOtSn4a+HGUqY7nae3ncUAdJ/amnf9BC0/7/AC/40f2pp3/QQtP+/wAv+Ncyvwz8NKpAgnwfWWpP+FceHB0t5ef9v/61MDojqVgOt9ajPrMv+NJ/amnf9BC0/wC/y/41hSfD7w9Lt3W8uF6DfTf+Fd+HP+fV/wDvr/61AHQf2pp3/QQtP+/y/wCNc74i+I3hnwyyrf36l2GQsQ3/AMqcfh34c/59X/76/wDrV89/GzS7TR/FsMFnGUjEPQnPc0gPYD8dvBuzcJ5ycdPKb/ClX47eDiMmeYf9s2/wr5RBoPNAH1Y/x48HK4CyzsD1bymGP0ob47+Dg+FlnYdz5bD+lfKdGeaAPrY/G3wV8mL6X5j/AM8W4/Suv03xLo2rWMd5a6jbmGQZXdIFP5GvhoV9Q/C7wZoep+A7C6ubYtK65Yg4zQB6h/aen/8AP/a/9/l/xo/tPT/+f+1/7/L/AI1gf8K98Of8+j/99Uf8K98Of8+j/wDfVMDf/tPT/wDn/tf+/wAv+NH9p6f/AM/9r/3+X/GsD/hXvhz/AJ9H/wC+qP8AhXvhz/n0f/vqgDf/ALT0/wD5/wC1/wC/y/40f2np/wDz/wBr/wB/l/xrA/4V74c/59H/AO+qP+Fe+HP+fR/++qAN/wDtPT/+f+1/7/L/AI14t+0Ne2V34f0tYLqGV0uWyI3DY+X2r0v/AIV74c/59G/76ryX48+GdM0TRNNmsIPLaS4IY56jaaQHgtFFFABRRRigBa9l+AU1vZ+I7t5riOPzLcD52CgfN7141XrnwP0Wx1zWbyK9jDpHADjvnNAH0p/amnf9BC0/7/L/AI0v9qad/wBBC0/7/L/jWCPh74cx/wAejf8AfX/1qX/hX/hz/n0b/vqgDd/tPT/+ghaf9/l/xpP7U0//AKCFp/3+X/GsL/hX3hz/AJ9G/wC+qP8AhX3hz/n0b/vqgDd/tTT/APoIWn/f5f8AGkOraaOuoWn/AH/X/GsP/hX3hz/n0b/vqg/D3w2cZszx/tUAbn9r6ZnH9o2mcZ/16/41keKdU05/CupIt/aljCcATLz+tQ/8K88N5z9jOf8Ae/8ArVk+KPAfh638MahMlowZISwO7v8AlTA+RpM72J7mo6e5ycDtTKQBRRRQAV6l8C7uGz8cE3E0cStHjLsAO/rXltd98INLs9X8dW9pexmSNgeAcdjQB9Z/2ppx5/tC15/6bL/jR/amnf8AP/af9/1/xrD/AOFe+Hcf8ejf99Un/CvfDn/Po3/fVAG7/aunZx/aFp/3+X/GlGpWJIH2+1JPYTL/AI1g/wDCvfDmc/ZGz/vU+LwF4fhlWRLRtynIy1MDpc56UU1RtUL2HSnUAeW/Hf8A5E20/wCvpf5ivQtC/wCRfsP+uK/yrz746oW8GWxGfluVJwPcV3/h8g+HdPI/54rSA0qKKKYBRRRQAVi+Lj/xS95/wD/0MVtVieL/APkVrz/gH/oYoA1LL/jyg/3BU9V7L/jxg/3BVigAooooA85+NWr3OkeApvszFWuG8ssDggcVD8Fbe2sPhxb3IVY/MYvI578Cui+IXhY+LvCV1pyECfG6EnpmuC+Het/8IxoE3hjxRY3MTQsQGELOjr6ZAxSA7cQeGZPF0WuQajaLeFPLYK6/P19/euwHSvnXwt4ffVPizNfwaZOmjJKWjEkZRR1xgEV9EigBaMZ4oopgeJ+LJtf+Hfjm68R2Nm15peocTqq7ivOfwrpNF8QWet+HNV8SeF0SO/dcy27joRyeOPzpT4qutL1jV7PxBptxPp8k7eQ6RmQbfTABrM+HWiOPF2t6xZ2clnod2u2KB1K5OeflOMce1ICmfiD4n1D4by+JLKWzguLWXbPHIgORwOOfeujtfFur32i+GpLeW3a81Ebpzt4VQucgZ46VyEvw9vpPHeoaJGZI/DdwGuWQZwSc4GenUCtP4ZeE9TtdQ1JdSLi3sw1tZBh0HTI/A0ALqvxI1S7vdUh0i8trZdOYoBLFv84jrjkYqW2+J2p6v4c0dbO3WHVr+Uwt5i4VcDJYD0rk9Pjv/APibU7TVfDR1Wzupi1vKsW8gn1ODitbxNpmvW39i+Ko9LWNbWbe9pAvKIRjoOp5oANbtdasPi14ZXV76G7QFirxx7P4G68mtDX/AIi6u9zqc2kXtrDDYSmMQSQ72mwecHNZOv61feJ/HuhahaaJeJbRBss6FT8ykdxx1qCynufBevahpup+FzqkdzMZLadYtxyePmOD6UAbGr/EnxN/wjmjaxp8EMSXriJopY/mD9/w5rc0zxL4qsvHVvoXiAWzx3ib4TCgGzgnB5OelYfjf+038P6LayaT+/W4WZ1t04iXjjjvxWhrd/cXPxM0LUodPuWtIV+d9p4yGHp70AepjOOaWkX7opaYBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAFDWiBo11n/nmag8Mf8itpn/Xuv8AKpNfjMuhXag4ynWo/DH/ACK2l/8AXuv8qANaiiigAooooA4f4tI8nw51MIQuEBOfqK1fAOf+EC0bd1+zj+Zql8UFibwDqXmBimzkKcdxV/wJgeBdHx0+zjH5mkB0NFFFMAooooAy49AsYfEUmuqH+2SQ+STu425z0rI1n4eeH9d1Fr65hmSZ/wDWeTJsEn+8Mc11dZl74g0nTbhILy/hilc4Cs4B/GgC3ZWVvp1lFaWsaxwRLtRFHAFWKakiyKHRgyHkMpyDTqAPNPEMpX4x+HlDD5kwR7fNXpdeYeI0UfGfw42fmKnj/vqvT6ACijI9aMj1oA4X4uy+T8PNRlBw6LleM88V8fyM0js7dScmvr/4whm+G+pBFBJT09xXyA3WkA2ilxRigBKXNGKMUAe5/s4D/iaaqf8ApkP5ivojvXzx+zh/yEtV/wCuY/mK+h6YBRRRQAUUUUAFFFHFAGH402nwZq2enkH+dfEDfeP1r7f8ZDf4N1ZVGSYDxXxAeCQeuaQCUUUUAFKKSigDsPho5PxC0cdhN/Q19m18YfDL/koWkf8AXb+hr7NJ56UALRSd+lLwaYBRR0ooAKKQnFKc4oAP4T9K+Ofixx8RdUx/z1NfYo54r48+LQ2fEfVMf89CaQHD0Uck0UAFFFFAD4f9fH/vD+dfb/hH/kUdL/64CviCH/Xx/wC8P519v+Ef+RR0v/r3FAG1RRmlxTASiiigAooxnvR1FAB9a+Y/2gwP+Evtz3MP9TX003TFfMv7QcZXxbbMc8w+nuaQHj9LSUtABSUtJQAd6+wPg9/yTjTf92vj/vX2D8Hv+Scab/u0Ad5ijFApc0xiYoxS0UAJijFLRQAmK8W/aMj3eGtMbkbbg9v9mvaq8Z/aIZh4WsQOhnOeP9mkI+Z6KKKAClpKKAFr2H9npZT4tviCQggG73+avHa9i/Z8mdfFl1GB8pgGffmgD6ZHSlpN3tS0wCiikJ5xigBaKMGigArG8WDPhTU/+uBrZrH8VD/ilNT/AOuBoA+HW+8frTaewJLfWm4pAJRS0UAJXo/wQJHxIsvof5GvOa9F+CX/ACUiy/H+RoA+uKaadTTTGFFFFAgooooA4P4vWgufh9etnmIqw/76FbvgmSSbwZpTynLGBeaxvi5MkPw81DcSN+0DH+8K1vAZB8E6Tg/8u60gOiooopgFFFFABWN4rGfDF5/wD/0MVs1jeK/+RZvf+Af+higDSs/+PKH/AHBU9QWX/HjB/uCp6ACiiigA5qKW3hnAE0SSY/vLmpaKAEVVQYVQo9AKWiigAooooARkjf7yg/UUm1V+6MUtFIA7YxSgAdOKSikAMFbqM0pwww3I9KSigA2rkYGMdKNq+gNLRTAbsU9QDQEVRgDinUUwCiiigAooooAKKKKACiiigAooooAKKKKACiiigChrX/IGuv8Armag8Mf8itpf/Xun8qn1r/kDXX/XM1B4Y/5FbS/+vdP5UAa1FFFABRRRQBx3xR/5J9qf+5/UVf8AAf8AyImjf9e4/may/izL5Pw61JvVMfqK0vAH/Ig6Lzn/AEcfzNIDpKKKKYBRRRQAdQfYV43oWgWfinUfGV3q0f2iaG5aGFm/5ZgKp49Oa9krynWPCPi7SdZ1JvC80DWOrtunEuMxscAkZPoKQHQfCu5uJvBMCXEhkMLGNWJ5IrptYfUU0920uKOS5x8quRj9aqeFdBXw34etdND73jX52/vN61t0AeD69e+Mm+JGhT3OlW8d6Bi3jEinf97kkfjXZTap8TQf3WjWZHcGVP8AGus1Dw1aah4h0/WpGcXFkMRgHg9ev51tUAeaRaj8UJJlWTR7FE7t5iH+tTS3fxMDOY9PsSM/KNy8/rXouaKYHk+uW3xE17RrrS7zTbPy7hdm5XUY9+teZL8AvFjDO63H/Ah/jX1IRk5pelAHy5/woHxZ/ft/++h/jSf8KB8Wf37f/vof419SUUAfLf8AwoHxZ/ft/wDvof40f8KB8Wf37f8A76H+NfUlFAHg3gj4d+OfA91cXFktrI0ybSGYEdc+tds138TVGFsrFvxUf1r0OigDzyO6+Jhba9lYqvrlT/Wk+2fE0SFfsFjs/v7l/lmvRKKAPG/EPjzx/wCHL6ytLvT7QvePsiI28nk+vtWwmp/FF+V0uy/77T/Gu01rw1p+vT2U96jNJZyeZEQcYOCP61rbcdKQHA/aPiSxXNrYqCuT93g+nWo5br4mxw5isrGRs/dyo/XNeiUUwPMLofEzUtNuLWaysIhMu08qf615W/wE8WO7MTbgk5OGH+NfUfWigD5a/wCFA+LP71v/AN9D/Gl/4UD4s/vW/wD30P8AGvqSigD5cP7P/irtJb/99D/Gm/8ACgPFf963/wC+h/jX1LRQB82aD8GPGOga1balAbZpIG3AFh/jXqLXPxM422tgQP8Ad/xr0KigDzs3PxOYf8etgv8A3z/jUTT/ABRCfLbafuz/ALP+Nek0UAeV6tqnxM0vT7i/e3sPJt13uMLlh+dR+H/EHxF8QaLBqNva2IimG5SdvI/OvUL6zi1Cxms7gboZl2sPaotJ0q00XTIbCyj2QQrtUUgOB3/FbzD8um7Ow2L/AI1IW+KJmGP7O2d/kX/GvR6KYHmRHxXWb5DppTP/ADzX/wCKrh/FHwY8XeItVm1a4urNriY5ZEUKP519C0mD60gPmQfs9eJmVWN3bBj1HHH61J/wzt4i2bv7Qtt393b/APXr6X59aXFAHzSP2dfEGOdRth/wH/69H/DOniD/AKCVr/3x/wDXr6WxRigD5qH7O3iFGDLqVrkHI+T/AOvXodlonxP0zT4LSDUNMeOFNqgwDP8A6FXqWKKAPM5E+KzKAraYpA5zGpyf++qaLb4tsoBvtKXn/n3Bx/49Xp1FMDzX7P8AFbaVN9pWBzv+zjn/AMerL0TWfiZ4hu72G3uNOt1s5PKd3gB3Nx0+b3r16qVjpVppr3D2sexriTzJOerUgOHXT/iiDk6rpX/gKP8A4qnPZfFLcCup6Vtz0+zD/wCKr0L6UvNAHmRt/iw93tW70tI/75gB/TdXMeKvhL4z8Y3qXeq6vZNKi7V2Q7QB/wB9V7nS80AfNX/DOevf9BS2/wC+P/r0v/DOevf9BS1/79//AF6+lOaXmgD5q/4Zz17/AKClr/37/wDr0n/DOevf9BS1/wC+P/r19K80c0AfNf8Awznr3/QUtf8Avj/69d7oHhH4i+G9Ih0yw1fThbxDC77fJ/8AQq9X5o5oA87/ALO+KX/QY0r/AMBf/sqP7O+KP/QY0r/wF/8Asq9E5o5oA88On/E8Jxq+lk+n2b/7KsTTtQ+KGoa5e6U19pkMtqu4sYAQwzj+9XrvPbrVSHSrW31Ca/jTFxMu12z1HWgDh/7O+KX/AEGNK/8AAX/7Kj+z/il/0GNK/wDAX/7KvROaOfWmB539g+KX/QX0r/wF/wDsqwPFngDx/wCMtOhs9T1bTzHG27EcG3n/AL6r2Pn1o59aQHzT/wAM6eIP+gna/wDfP/16P+Gc/EH/AEE7X/vj/wCvX0tz60c+tAHzV/wznr//AEE7b/vj/wCvSf8ADOfiD/oJ2v8A3x/9evpbn1o59aAPmx/2c9cCrs1S2J/i+Tp+tbPhn4UeN/B1697pV9YtO67D5kYIA/76r3rn1pKAPODYfFURlhqmlM3Zfsw/+KposviuYwzalpQb+79nH/xVek0UAeaTWfxYVgItQ0tlx/zwA/8AZq5rxF4o+Jfhm7s7a+uNPLXknlxMkIxn869wrL1Tw9putz2s1/D5j2z74vY9KAOGS1+LHm5/tDTNrc5MA4/DdT5LT4sDOzUdKbI/59x/8VXpJXnrSigDzddP+KggYnVdL8wdB9mHP/j1Ur7w/wDFG906S0l1bTmWcbZP3PIHsd1erUUwPmo/s7+Ii4H9pWxU9Tt/+vS/8M567/0FLf8A74/+vX0pRSA+av8AhnPX/wDoJ23/AHx/9ek/4Zz1/wD6Cdr/AN8f/Xr6YooA+Zj+zt4iQjZqFq2evy9P1rX0L4L+LvC+sxajpWpWnnIOrpkZ+ma+gce9GaAPNlsviqWYf2jpSrjgm3B/9mqKGw+K+75tR0sdsmAH/wBmr03NFMDzeSw+KysNmraUwx/z7Af+zVR1ab4qaJpcuoSX+lzxwrudBbgED67q9WqG7tIb60ltbhN8Mq7XX1FIDnfh/wCJp/FnhK21S5jVJn4cL0zXUVn6NotjoGnJYadD5VunRa0KYHB/GCNX+Hd8Wz8pUj/voVs+BECeCdIx0+zrWR8Xc/8ACutQ/wCA/wDoQra8D/8AIk6T/wBe60gOgooopgFFFFABWH4vdY/C14W77B/4+K3KwvGShvCd57bD/wCPigDVsf8Ajwg/3BViq2nHdptu3qgqzQAUUUUAYfirW7nw9o0mowWf2lYuZF3hcCua8FfEO88bQXFxa6QUgiB/eNKOT6Yrc8f/APIi6r/1y/rXi/wd8Ta1pGgXMNhoEmowmQkukoTB49RSA7uz+LN3deLD4cGikXyybGHmjAx74r1FSSoLDDY5r5t8J3c9/wDHiW4ubQ2szyMWhLbivXvX0n3NABTZGZY2ZV3MBwM9TTqO9MDz618f6lL4xXw3PoxjucbmIlBAXnn9K3fGHiG88NWKXVrpxvELhX2sAVzwK4+LP/C/pR/05j+bV23i5gNDbLAfOvf/AGhSAy9T8a3Ok2enRT6bu1TUG2w2yyDrjPJqOz8cXv8Awk1noOqaNJaXVxkrIJAy4wT1A9qzviL4W1XVl03WdClRdT0470jY/fGMY/U1n+FvHkHiDxBZ6f4lsG0/XLNiUZhhZGIwccfWgD1C8uUsrGa6kICRIXOfasrwp4ntfFmiR6naDCscFc5wa534n6zHBp1rorTmFtSk8t3H8Kjkn9K5L4Y6jaeGfHWqeEre482xkPmWrluvP+AoA9ropADjmlpgFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBQ1r/kDXX/AFzNQeGP+RW0v/r3T+VWNZ/5A13/ANczVfwx/wAitpf/AF7p/KgDWooooAKKKKAOK+K8Rm+Hepqq7iEHH4itLwCAvgLRgO1uP5mqXxO3DwBqRTO7y/XHcVb+HysvgLRwxyfI9fc0gOlooopgFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFIzpEjPIwVAMlicAVwV58X/AA3aas9ji5lWNtrzxwsyA/UDFAHfUVWsL+21Kyiu7OVZYJBlWB61ZoAKKKKACiiigAooooAKKbI6xRNI5CqoySe1cbp/xS8Naj4hbRo7hkuA21WdSFc+xPFAHaUVyOr/ABG0LR9YXTLmSRpB/rJI0LLH/vEcCuqgniuYEngdXicZVlOQRQBJRRRQAUUUUAFFFFABRRRQAUUUUAFFFYfiXxTY+F7Brm7SWQ4+WOJCxP5UAblFcj4b+Iuh+JNHuNRt5TElqu6dZBgp/nIpfDXxA0rxNeSWkAkglUboxKCvmL0yM9aAOtooFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABS0lVNTvl0zTZ72VS0cK7iB1oAuUlZuk6xFrGhwapAhWGWPzACeQKTQ9ai1zTUvYUKqxxg0AadFFFABRRRQAUUUUAFFFFABRRRQAUUVV1G9TTtOnvHBKwpvIHpQBaoryeH442lxGZYdCv5IQeZEjYqPxC16Poes2uv6RBqNm26KYZGeooA0aKKKACiiigAooooAKKKKACiiigAFOpKR22Rs+M7QTigY6jNeQXPxtkj1W8tbbwzf3S27lC8eSMj6LXZ+BvF83i6wmuJ9JudPaNtuycHJ/MCkI6ykpe1JTGJRRRQIKKKKACiiigDivixj/hW2rHH3UU/wDjwq78Obn7X8PtFnAxut1qn8VRn4b6xxn92vH/AAIVN8MI2h+G2hxtwwtlyKQHXUUUUwCiiigArD8YnHhS++if+hCtysDxoceEr8noApx/wIUAaulknSrYkgnyx06VarP0KRZNDsZFXarRAgelaFABRRRQBzHxB+2SeEbu2sbNrqeddgUHGPeuG+DtlrPhXSb2w1HSpEOTIjBvvH0r2Cl5pAeA6Xo/iOH4sv4lfRZFtZ5TwXGVBz/jXvv45peaSmAUUUUAeaeJvDutaZ4+t/FmkQi7jEey4g3AHHPT86sahNrnjK4tbNdJewsEkDzySSAsQOcDp3Feh9KU9KQHD+JoPEdv4mstT0aD7RbQpiaIyBdwwfXvzXPX2jap408Y6bqh0f8As6Kw/ePI7AtIcHjtXrFB6UAedadouqav49vNU8RaOjWAQJZq8iuE5POPXBrO8c+C9QHiLS9X8K6RAk9q26V0ZYwy+mK9VFOzQBU025mvLCKee3MErjLRFs7TVqk70tMAooooAKKKKACiiigAooooAKKKKACiiigAooo70AFFFFAFHWf+QNd/9czVfwuc+FdL/wCvdP5VY1r/AJAt3/1zNVvCv/IqaX/17L/KgDXooooAKKKKAOO+KJA+Heq8/wDLP+oq74A/5ELRv+vf+prG+L8pj+Ht7g43YB9+RXSeFI0h8J6ZGgwqwDFIDZopKKYC0UlFAC0UlFAC0UlFAC0UlFAC0UlFAC0UlFAHE/Fm8nsvh9fy27sjFQCy9cZFSeD9D0RfAdiFtIHhmt90kjICW9STXS6tpdrrOlz2F7H5kEy7WWvP0+HOv2ds2maf4mMOkH5RA0bFwvoGzx+VIDrfB8Wj2+jGDRJS9pG+OTnB9BXQ1keHdAtPDejxadZjEaD5mPVj6mtamAtFJRQAtFJRQAtFJRQBBdQJd20lvKf3TjDc44rxTxNoGka542sLbSI7aytNLP8ApV2HVMnngdMnkV7VfW/2uymtt7R+au3zFOCv0rzOP4IaWJd7atfupfe6GY4Y+9IDhvElheeE7fxI99ELq21gD7NODnJyvb/gNev/AAwjuYfh5pKXQYSCEYDDBAyaS48AWV9fQy6hcTXNvbnMFuW+RfwrrURY0VEUKqjAAHAoAcCPWjI9R+dYs2hyyahd3K386rPD5YjDnCHOcj3qmfCk5i01Tq13mzOWIlP73r97160wOmyPUUuR6iubk8MzyQ6hF/alyv2t9wIkOY+n3fTp+tXI9FMd3Hcm9uG2Q+V5Zc4Pvj1oA18j1H50BgTgEE/WuYHhJzYfZv7Xvcmfzt/mnPTG36VoafoxsdWur43k0onXaI3clV+goA2KKSigBaKSigBaxPEdt9q064itWtV1F4ysHn4P5A/jW1XK+KPBEPiXUbO/+33NrPbcKYZCvr6fWgD5+hm1DR/C3iTQ5LMRXKTA3MydxuXjjtXYXAKePfADWPyq9qN5ToR8/WvVbfwPpMWlXVlNGZ2uxi4mkOXk+p/AVT0D4eadoOqRX3nzXEkKeXbiV8iJc54/M0AdmTjOcAetN3pkDeuT0Garaja/2hp81qJXiMi43ocEfSsaPwqqXFhO2oXTNaw+Vgyn5+vJ9TzSA6LzI8Z8xMeu6nFlzjcPXrXLr4PjTTJLEaheFXm84yGU7h04z6cVbn8PedcXUy31yv2iIRbRIcJznI96ANvenHzrz0560eYmCd68deelc4PCSL/Zbf2jeZsOmZT+84P3vXrTZPCKyRXkQ1C7UXM/nEiU5XpwPbimB0+c0VHHGIoljBJCjGScmn0ALRSUUALRSUUALRSUUALWN4v/AORR1P8A64n+YrYqnqdiNU0y4smbasybSfSgDyPw6fiJ/wAIXYjTGsfsfkHG9BuI5967T4XeafBFr5+PNz8+PWt/RtETSNCt9KWQtHDGUDetO0TSItC01bG3YsinOTSA1KKaOlLTAWikooAWikooAWikooAWikooAWsnxNC9x4Z1GKP77QNitWormEXNrNATgSIVJ+tAHgPgC18ZXPw5uY9HnsktiWG2VAWIx65r0P4PXELeC0tEUrPbPsmycgtgdKzLH4OvYKYLfxHfw2rHJiilZRXd+GvDln4X0oWFnkrnczMcsx9SaQGzRSUUwFopKKAFopKKAFopKKAFopKKAFpJeYZAP7popThlI9RigDwLwtF47bVvEJ8ONZ/Zvt7hzOgJ3YHTJHtXsnhZdcTRlHiFoDfZ58lQFx+Zpnhzw3b+Hf7Q8mRn+2XLXDZPQkAf0rcoAWkozSUALRSUUALRSUUALRSUUAch8UZFi+HWrMegRf8A0IVP8Op0n8A6M69DbKap/Fj/AJJnrP8A1zX/ANCFL8KiD8NNEx2t1FAHaUUlFAC0UlFAC1keKIlm8NXyN0KDP5itao5oY7iJopVDRsMMp6EUAYWhaxpcXh/TkOoWy4iC4Mq/41oTa/pFucSajag/9dV/xqt/wiOgYAGl2wA6fuxQ3hDw+/L6Tat9YxSAm/4SbRf+glbf9/V/xpf+El0T/oJ2v/f1f8arf8Id4cz/AMge0/79Cj/hDvDn/QHs/wDv0KYFn/hJdF/6Cdr/AN/R/jR/wk2i/wDQTtf+/i/41W/4Q7w5/wBAez/79D/Cj/hDvDn/AEB7P/v0KALP/CTaL/0E7X/v4v8AjSjxHo7fd1C3b6SCqv8Awh3hz/oD2f8A36FSR+FdAi+5pVqv0jFAE/8Ab+l5x9siz6bhSDxBpJBxfwnHX5xxR/wj+jh940633YxnYKYPDWiKWK6ZbDf9792OaQD/APhINJ6/2hAR2O8U7+39KPH22L6bhUP/AAjOiAKo0y2Cr0Hlin/8I9pG7cNPts/9cxQA867pf/P5F/30KT+3tL/5/I/++hR/YGk/9A+3/wC/Yo/sDSP+gfb/APfsUAA13S/+fyP8xS/29pf/AD+R/nSf2DpXbT7f/vgUv9g6V/0D7f8A74FAC/29pf8Az+R/99Uf29pf/P5H/wB9Ck/sHSv+gfb/APfApP7B0r/oH2//AHwKAF/t7S/+fyP/AL6FH9vaX/z+R/8AfQpP7B0r/oH2/wD3wKP7B0r/AKB9v/3wKAF/t7S/+fyP/voUf29pf/P5H/30KT+wdK/6B9v/AN8Cj+wdK/6B9v8A98CgBf7e0v8A5/I/++hR/b2l/wDP5H+YpP7B0r/oH2//AHwKP7B0r/oH2/8A3wKAF/t7S/8An8j/ADFH9vaX/wA/kX503+wtK/6B9v8A98ClGg6V/wBA+3/74FAAfEGlD/l8j/OoX8T6LCcNfRjJx1qY6BpB66fb/wDfsU1vDmiN97TLY/WMUARy+KdEgAL30Yz0oj8T6NJjbfR9M1IfDmiMPm0y1OPWMUDw5ow6abaj/tkKAD/hI9JyR9tj4OOtMn8T6NbYMt9GM+9Sf8I/o/X+zrbP/XMU1/DujSf6zTbVvrGKAK3/AAmWgH/mIJS/8JloH/QQSpf+EY0P/oE2f/foUv8AwjGh/wDQJs/+/QoAzdV8XaHNpVzHHeqzMhAAHJNaXhbjwrpYIIIt14IwelKvhvREYMulWgI6ERCtRVVFCqAqgYAHamA6ikooAWikooA8++Mhx8PLw/7Q/mK6rwwf+KX03/rgK5X4xjPw4v8AjOMH9RXReDZRL4N0l/WAUgN7NGabmjNMB2aM03NGaAHZozTc0ZoAdmjNNzRmgB2aM03NGaAHZozTc0ZoAdmjNNzRmgB1FNzRmgB2aM03NGaAFzRupM0ZoAXdRupM0ZoAXdRupM0ZoAM5pRSZozQA6jNNzRmgB2aM03NGaAFopM0ZoAWkPT6UZozQBDaXcV3GzRhxtbad6lf51YzTOBS5oAdmjNNzRmgB2aKbmjNADqQ89aTNGaAHUlJmjNAC0ucU3NGaAF60tNzRmgB1GabmjNADs0ZpuaM0AOzRmm5ozQA7NGabmjNADqSkzRmgB2aM03NGaAHZozTc0ZoAdmjNNzRmgB2aM03NGaAHZozTc0ZoAdmjNNzRmgB2aM03NGaAHZozTM0ZpAOzRmm5ozRcB+aM0zNG4UwH5ozTc0ZoAdmjNNzRmgB2aM03NGaAHZozTc0ZoAdmjNNzRmgB2aM03NGaAHZpM0maM0ALmjNNzRmkA/NGabmjNMDjfiv/AMk01n/rmP8A0IUz4SHPw00j/rkP5U/4pq0vw51aNf4ox2/2hUXwkyPhrpGe8QxSA7nNGabmjNMB2aM03NGaAHZozTc0ZoAdmjNNzRmgB2aM03NGaAHZozTc0ZoAdmjNNzRmgB2aM03NGaAHZozTc0ZoAdmjNNzRmgB2aM03NGaAHZpKTNGaAFopM0ZoAWikzRmgBaXNNzRmgB2aM03NGaAHZozTc0ZoAdmjNNzRmgB2aM03NGaAHZozTc0ZoAdmjNNzRmgB2aM03NGaAHZopuaKAOJ+KdjJqPgHUIIvv7QQM4zyK53w58R7DSvDdhYTWcokgi2Nhsj+VFFIDV/4Wzpn/PpL+f8A9agfFfSyebWX8/8A61FFMAPxY0pTj7JMffd/9agfFjSj/wAus35//WoopAMf4uaapwLCZh/v4/pTf+Fu6b/0Dpv+/n/1qKKAD/hbum/9A6b/AL+f/WoPxf07H/IPmz6b/wD61FFAFY/GSzD4/sibHr5w/wAKd/wuO0xkaPNj/ruP8KKKAGp8ZbR2x/Y03/f4f4VJJ8YLeNc/2LNjH/Pcf4UUUARD4z2p66NN/wB/h/hVofFaIoGXRJSD/wBPC/4UUUAWR8R3JXGhyDcf+flf8KD8R2D7f7Dkz/18r/hRRQA7/hY7bsf2HJn/AK+V/wAKX/hYkv8A0An/APAlf8KKKAD/AIWLL/0An/8AAlf8KP8AhYsv/QCf/wACV/woopjD/hYsv/QCf/wJX/Cj/hYsv/QCf/wJX/CiigA/4WLL/wBAJ/8AwJX/AAo/4WLL/wBAJ/8AwJX/AAoooAP+Fiy/9AJ//Alf8KP+Fiy/9AJ//Alf8KKKAD/hYsv/AEAn/wDAlf8ACj/hYsv/AEAn/wDAlf8ACiigA/4WLL/0An/8CV/wo/4WLL/0An/8CV/woooAP+Fiy/8AQCf/AMCV/wAKP+Fiy/8AQCf/AMCV/wAKKKAGn4izZGNCfB6/6Sv+FNPxFut+BoLbf+vlf8KKKQhn/CxL8lyNC4A+X/SV6/lSp8Q77Hz6CQ3tcr/hRRQAP8RbxYzs0JvM7ZuVx/KoZPiPqmF8vQBn+LNyv+FFFACP8QtajjSRtAXD9P8ASVqMfEjWNwH9gLz/ANPK0UUASj4ha2ZfL/4R9c/9fS0+Px3rsh+Xw+vP/T0lFFAEg8a+ImUsugJgf9PSUf8ACa+IQVz4fT5jgf6UlFFAE0Hi7xHcZ2eH4zj/AKekqX/hJPFHbw9H/wCBaUUUADeJvEypuPh6P/wLSmR+KfE8nI8PR/8AgWlFFADz4l8T/wDQvR/+BaUf8JL4o/6F6P8A8C0oooAP+El8Uf8AQvR/+BaUf8JL4o/6F6P/AMC0oooAP+El8Uf9C9H/AOBaUf8ACS+KP+hej/8AAtKKKAD/AISXxR/0L0f/AIFpR/wkvij/AKF6P/wLSiigA/4SXxR/0L0f/gWlH/CS+KP+hej/APAtKKKAD/hJfFH/AEL0f/gWlH/CS+KP+hej/wDAtKKKAD/hJfFH/QvR/wDgWlH/AAkvij/oXo//AALSiigA/wCEl8Uf9C9H/wCBaUf8JL4o/wChej/8C0oooAP+El8Uf9C9H/4FpR/wkvij/oXo/wDwLSiigA/4SXxR/wBC9H/4FpR/wkvij/oXo/8AwLSiigA/4SXxR/0L0f8A4FpSf8JL4p/6F6P/AMC0oooAX/hJPFP/AEL0f/gWlH/CSeKcf8i9F/4FpRRQA3/hJfFe3/kXYs/9faUi+JPFv/Quw9f+ftKKKAHN4j8WeXlfD0O7P/P2lMPiLxeQmPDsPX5v9MSiigBZPEnitV+Tw7Fn3u0qNvEfjHycr4dg356fa0oooAafEXjd3Aj8PW4GOSbtKRfEPjkP83h23K+12lFFADX8S+Odx2+HLfHveJTP+El8ef8AQuW3/gWlFFAC/wDCSePP+hctv/AtKUeIvHh/5l22H/b2lFFAAviLx4fveHbYf9vaUp8SeO+3hy2P/b4lFFADf+Ek8ef9C3bf+BkdJ/wknj7/AKFu2/8AAyOiigBP+Ek8f/8AQt23/gZHR/wknj//AKFu2/8AAyOiimDF/wCEl8eD73hu2/8AAyOl/wCEk8dkfL4ctvxvI6KKBAviLx6OX8OW2Pa8jpzeJfHJ+54ct/xvEoopDGr4k8ebhu8N22P+vyOnSeJPHOf3fhy3P1vEoopjMrX7zx3r2g3emPoNtCJ127xdocc12PgTSrrRPBWl6ddhVmghCsFORn60UUAdHmjNFFAgzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRmiigAzRRRQB//Z"
+     ]
+    }
+   },
+   "questions": [
+    {
+     "order": 21,
+     "questionType": "multiple_choice",
+     "prompt": "21. Ted and Cleo's research results will be presented as a",
+     "options": [
+      "A poster",
+      "B survey",
+      "C graph"
+     ],
+     "answer": "A poster",
+     "explanation": "Survey và graph chỉ là các bước trung gian; SẢN PHẨM TRÌNH BÀY cuối cùng là một tấm áp phích (poster).",
+     "evidence": "I suggest we do a survey of international students, collate the responses, make a graph, and exhibit our findings in the form of a poster.",
+     "points": 1
+    },
+    {
+     "order": 22,
+     "questionType": "multiple_choice",
+     "prompt": "22. They will select foreign students",
+     "options": [
+      "A from the language school",
+      "B from the business school",
+      "C randomly on campus"
+     ],
+     "answer": "C randomly on campus",
+     "explanation": "Cả trường ngôn ngữ lẫn trường kinh doanh đều bị Ted gạt đi; anh chốt lấy MẪU NGẪU NHIÊN sinh viên nước ngoài trong khuôn viên trường để có nhiều câu trả lời đa dạng hơn.",
+     "evidence": "But I think a random sample from foreign students on campus might give us a better range of answers.",
+     "points": 1
+    },
+    {
+     "order": 23,
+     "questionType": "multiple_choice",
+     "prompt": "23. The foreign students will have to",
+     "options": [
+      "A collate the answers",
+      "B rank the answers",
+      "C know a lot about the answers"
+     ],
+     "answer": "B rank the answers",
+     "explanation": "Sinh viên được yêu cầu XẾP HẠNG 10 lý do theo mức độ quan trọng; việc tổng hợp (collate) là do Ted và Cleo làm.",
+     "evidence": "It would be better if we made up, say, ten reasons, and asked each respondent to place them in order of importance.",
+     "points": 1
+    },
+    {
+     "order": 24,
+     "questionType": "note_completion",
+     "prompt": "Câu 24",
+     "answer": [
+      "chance to travel",
+      "the chance to travel",
+      "a chance to travel"
+     ],
+     "explanation": "Lý do số hai Cleo nêu: du học cho bạn CƠ HỘI ĐI DU LỊCH.",
+     "evidence": "I know: \"Study abroad gives you the chance to travel.\"",
+     "points": 1
+    },
+    {
+     "order": 25,
+     "questionType": "note_completion",
+     "prompt": "Câu 25",
+     "answer": [
+      "develop new skills",
+      "to develop new skills"
+     ],
+     "explanation": "Việc đối mặt thử thách, thích nghi tình huống mới được tách thành một lý do riêng: buộc bạn PHÁT TRIỂN KỸ NĂNG MỚI.",
+     "evidence": "How about \"Study abroad... um... will compel you to develop new skills.\"?",
+     "points": 1
+    },
+    {
+     "order": 26,
+     "questionType": "note_completion",
+     "prompt": "Câu 26",
+     "answer": [
+      "learn about yourself",
+      "to learn about yourself"
+     ],
+     "explanation": "Một lý do khác là du học tạo cơ hội HIỂU VỀ CHÍNH MÌNH (nhìn lại niềm tin, giá trị của bản thân).",
+     "evidence": "We could make the next one and call it something like \"Study abroad provides the opportunity to learn about yourself.\"",
+     "points": 1
+    },
+    {
+     "order": 27,
+     "questionType": "note_completion",
+     "prompt": "Câu 27",
+     "answer": [
+      "study different subjects",
+      "to study different subjects"
+     ],
+     "explanation": "Ted rút gọn ý \"mở rộng học thuật\" thành cơ hội HỌC CÁC MÔN KHÁC NHAU.",
+     "evidence": "Let's simplify it. Make it \"the opportunity to study different subjects\".",
+     "points": 1
+    },
+    {
+     "order": 28,
+     "questionType": "note_completion",
+     "prompt": "Câu 28",
+     "answer": [
+      "employment opportunities",
+      "job opportunities"
+     ],
+     "explanation": "Lý do gần cuối: du học làm tăng CƠ HỘI VIỆC LÀM (\"enhances employment opportunities\").",
+     "evidence": "\"Study abroad enhances employment opportunities.\"",
+     "points": 1
+    },
+    {
+     "order": 29,
+     "questionType": "matching",
+     "prompt": "Cột thứ hai trong biểu đồ (câu 29)",
+     "options": [
+      "A Afghanistan",
+      "B Saudi Arabia",
+      "C Iraq",
+      "D Japan",
+      "E Mexico",
+      "F Iran",
+      "G Sweden",
+      "H USA"
+     ],
+     "answer": "A Afghanistan",
+     "explanation": "Cột 29 cao 83%. Ted nói 83% sinh viên Mỹ không tìm được AFGHANISTAN trên bản đồ.",
+     "evidence": "And not surprisingly, I suppose, Afghanistan didn't fare much better: 83% couldn't locate it on the map.",
+     "points": 1
+    },
+    {
+     "order": 30,
+     "questionType": "matching",
+     "prompt": "Cột thứ ba trong biểu đồ (câu 30)",
+     "options": [
+      "A Afghanistan",
+      "B Saudi Arabia",
+      "C Iraq",
+      "D Japan",
+      "E Mexico",
+      "F Iran",
+      "G Sweden",
+      "H USA"
+     ],
+     "answer": "D Japan",
+     "explanation": "Cột 30 cao khoảng 58% — tức \"hơn một nửa\" sinh viên không tìm được NHẬT BẢN trên bản đồ.",
+     "evidence": "But Asia didn't come off much better: over half the students couldn't find Japan on the map.",
+     "points": 1
+    }
+   ],
+   "transcript": "Announcer: Now turn to Section 3.\nSection 3. You will hear a conversation between two students in the education department who are discussing their first assignment. First, you have some time to look at questions 21 to 28.\n(Pause)\nListen carefully and answer questions 21 to 28.\nCleo: Hey, Ted, what are we going to do about this assignment?\nTed: Well, Cleo, I think it's pretty straightforward.\nCleo: Oh?\nTed: Yeah. The topic is \"Why study abroad?\". I suggest we do a survey of international students, collate the responses, make a graph, and exhibit our findings in the form of a poster.\nCleo: Wow, you have given this some thought, haven't you?\nTed: Of course. This is only the first assignment. There will be a lot more to come, so let's get this one out of the way quickly.\nCleo: Well, how do we do the survey?\nTed: I think we need to find a good selection of foreign students.\nCleo: So, how about we go over to the English language school at lunchtime and talk to some of the students there?\nTed: That's not a bad idea, but we shouldn't limit ourselves to that department.\nCleo: Why not?\nTed: Well, think about it. They'll all give the same reason: to learn English.\nCleo: Of course, you're right. Well, one of us could cover the language school, and the other could go around the business school.\nTed: Yes, I know there are a lot of internationals there, too. But I think a random sample from foreign students on campus might give us a better range of answers.\nCleo: Hm. What are we going to ask them? \"Why are you studying abroad?\"\nTed: An open question like that could mean we get hundreds of different responses. It would be better if we made up, say, ten reasons, and asked each respondent to place them in order of importance.\nCleo: You're right. That would certainly make collation easier. Any ideas about what these ten reasons might be?\nTed: Sure. I've got enough foreign friends to know quite a lot about what motivates them.\nCleo: Okay. Number one is...\nTed: I think that's obvious. How about \"Study abroad is the best way to learn a language.\"? And number two is obvious as well.\nCleo: I know: \"Study abroad gives you the chance to travel.\"\nTed: What's third?\nCleo: It's either culture or friendship.\nTed: Okay, let's go for culture. \"Study abroad gives you first-hand experience of a different culture.\"\nCleo: Not just that, but it gives you new experiences as well. Not all of them are good, but it's meeting those challenges and adapting to new situations and solving problems, and so on.\nTed: Let's make that a separate reason. How about \"Study abroad... um... will compel you to develop new skills.\"?\nCleo: Sounds good. Then \"Study abroad promotes international friendship.\"\nTed: What are we up to now?\nCleo: Um, wait. That was number five.\nTed: Do you think learning about yourself is the same as developing new skills?\nCleo: No, I think it's quite different. Probably more closely related to culture. You really mean embracing new concepts and perceptions, don't you?\nTed: Yes, and reconsidering one's own beliefs and values. Or at least seeing them through new eyes.\nCleo: We could make the next one and call it something like \"Study abroad provides the opportunity to learn about yourself.\"\nTed: We ought to throw in a few about study and work, because I'm sure that rates highly with many foreign students.\nCleo: Of course. \"Study abroad gives you the opportunity to expand your academic... um...\"\nTed: Academic what? Let's simplify it. Make it \"the opportunity to study different subjects\".\nCleo: Yes, good. It can also enhance the value of your degree.\nTed: How's that?\nCleo: Well, I think you can take courses you would never have had the opportunity to take on your home campus. And employers will know, also, that your language skills have been given quite a boost.\nTed: Isn't that the same as number seven?\nCleo: No, I think it's a separate issue.\nTed: All right, keep it. Now, I think this next one is more important.\nCleo: Shall I change the order?\nTed: No, no need. The students are going to rank them according to their views.\nCleo: So what is it?\nTed: \"Study abroad enhances employment opportunities.\"\nCleo: Ugh, why didn't I think of that? Anyway, there's one even more obvious than that.\nTed: Let me guess. \"Study abroad broadens your mind.\"?\nCleo: Exactly.\nTed: Okay. Now we have ten, let's print off 100 questionnaires and go and do the survey.\n(Pause)\nAnnouncer: Before you hear the rest of the conversation, you have some time to look at questions 29 to 30.\n(Pause)\nNow listen and answer questions 29 to 30.\nCleo: Did you hear about the National Geographic survey of American students between the ages of 18 and 24?\nTed: Yes. It sounds as if they could benefit from study abroad. Did you know that only 1% of US students currently study abroad? Anyway, back to that National Geographic survey. It was carried out internationally, and it was Sweden that came out on top.\nCleo: It's really amazing, isn't it? When given a map of the world, only 13% of American students were able to find Iraq, and the same for Iran.\nTed: I know. And not surprisingly, I suppose, Afghanistan didn't fare much better: 83% couldn't locate it on the map. There must be something about that region: 76% couldn't identify Saudi Arabia either.\nCleo: But Asia didn't come off much better: over half the students couldn't find Japan on the map. But do you know what's really incredible?\nTed: Yes, I do. 11% of them couldn't even find their own country!\nCleo: It's no wonder the USA scored near the bottom, only two points above Mexico, which was ranked last.\nAnnouncer: That is the end of Section 3. You now have half a minute to check your answers.\n(Pause)"
+  },
+  {
+   "unitType": "listening_part",
+   "unitNumber": 4,
+   "title": "Listening Part 4 – Charles Willson Peale",
+   "instructions": "Nghe bài giảng của giảng viên khoa lịch sử nghệ thuật về hoạ sĩ Mỹ Charles Willson Peale. Câu 31–36 điền bảng; câu 37–40 điền tóm tắt.",
+   "content": "Nghe audio ở đầu trang và trả lời các câu hỏi bên dưới.",
+   "defaultTimeLimitMinutes": 10,
+   "metadata": {
+    "groupTitles": {},
+    "tableBody": "# Charles William Peale\n| Slide | Painting | Date | Notes |\n| --- | --- | --- | --- |\n| 1 | Pitt as a Roman Senator | [[31]] | Elaborate, symbolical portrait of British parliamentarian |\n| 2 | George Washington | 1772 | [[32]] of many Washington portraits |\n| 3 | The Peale Family | 1773 | Family portrait – shows exuberance & [[33]] |\n| 4 | The [[34]] | 1795 | 'trompe l'oeil' style – double portraits of sons – Raphaelle & Titian |\n| 5 | Rachel Weeping | 1772 | Wife and dead [[35]] |\n| 6 | James | [[36]] | Brother James – in darkness but face illuminated |",
+    "noteBody": "Primarily, Peale was a painter but he was also a politician, scientist and [[37]] with many successful patents. He worked with Thomas Jefferson on the polygraph which was a desk that could be used for copying a [[38]]. He wrote academic papers on different subjects and tried to make movies, spectacles and a velocipede (a kind of [[39]]). Peale was also a naturalist and taxidermist and he helped unearth the skeleton of mastodon which was the best [[40]] in his museum.",
+    "groupInstructions": {
+     "31": "Complete the table below. Write NO MORE THAN TWO WORDS AND OR A NUMBER for each answer.",
+     "37": "Complete the summary below. Write NO MORE THAN ONE WORD for each answer."
+    }
+   },
+   "questions": [
+    {
+     "order": 31,
+     "questionType": "table_completion",
+     "prompt": "Câu 31",
+     "answer": [
+      "1768"
+     ],
+     "explanation": "Bức \"Pitt as a Roman Senator\" được Peale vẽ năm 1768 khi ông đang học ở London.",
+     "evidence": "Whilst there, he painted this portrait in 1768, see Slide 1, \"Pitt as a Roman Senator\".",
+     "points": 1
+    },
+    {
+     "order": 32,
+     "questionType": "table_completion",
+     "prompt": "Câu 32",
+     "answer": [
+      "first",
+      "first ever",
+      "the first",
+      "First (ever)",
+      "first (ever)"
+     ],
+     "explanation": "Năm 1772 ông vẽ bức chân dung ĐẦU TIÊN từ trước tới nay của George Washington.",
+     "evidence": "He returned to America, and in 1772 painted the first ever portrait of George Washington, see Slide 2.",
+     "points": 1
+    },
+    {
+     "order": 33,
+     "questionType": "table_completion",
+     "prompt": "Câu 33",
+     "answer": [
+      "warmth"
+     ],
+     "explanation": "Bức \"The Peale Family\" toát lên sự hân hoan (exuberance) và SỰ ẤM ÁP mà các thành viên dành cho nhau.",
+     "evidence": "And you can almost feel the exuberance of the family and their warmth towards one another.",
+     "points": 1
+    },
+    {
+     "order": 34,
+     "questionType": "table_completion",
+     "prompt": "Câu 34",
+     "answer": [
+      "Staircase Group",
+      "staircase group"
+     ],
+     "explanation": "Bức vẽ hai con trai Raphaelle và Titian leo cầu thang, vẽ năm 1795, có tên \"The Staircase Group\".",
+     "evidence": "This painting, \"The Staircase Group\" (1795), was exhibited in a doorway as a trompe l'oeil.",
+     "points": 1
+    },
+    {
+     "order": 35,
+     "questionType": "table_completion",
+     "prompt": "Câu 35",
+     "answer": [
+      "daughter"
+     ],
+     "explanation": "\"Rachel Weeping\" vẽ người vợ đầu khóc bên xác đứa CON GÁI Margaret.",
+     "evidence": "It's a rather macabre portrait of his first wife crying over the death of one of their children, their daughter Margaret.",
+     "points": 1
+    },
+    {
+     "order": 36,
+     "questionType": "table_completion",
+     "prompt": "Câu 36",
+     "answer": [
+      "1822"
+     ],
+     "explanation": "Bức chân dung em trai James ngồi bên bàn trong đêm được vẽ muộn hơn nhiều, vào năm 1822.",
+     "evidence": "This was painted much later than the others, in 1822.",
+     "points": 1
+    },
+    {
+     "order": 37,
+     "questionType": "note_completion",
+     "prompt": "Câu 37",
+     "answer": [
+      "inventor"
+     ],
+     "explanation": "Ngoài hoạ sĩ, chính trị gia và nhà khoa học, Peale còn là NHÀ PHÁT MINH với nhiều bằng sáng chế (lò sưởi, răng giả bằng sứ, cầu gỗ).",
+     "evidence": "He was also an inventor who gained patents for a fireplace, porcelain false teeth, and a new kind of wooden bridge.",
+     "points": 1
+    },
+    {
+     "order": 38,
+     "questionType": "note_completion",
+     "prompt": "Câu 38",
+     "answer": [
+      "manuscript"
+     ],
+     "explanation": "Chiếc polygraph là bàn viết có thể sao ra nhiều bản của một BẢN THẢO cùng lúc.",
+     "evidence": "But it wasn't any ordinary desk: this one could make several copies of a manuscript at once.",
+     "points": 1
+    },
+    {
+     "order": 39,
+     "questionType": "note_completion",
+     "prompt": "Câu 39",
+     "answer": [
+      "bicycle",
+      "bike"
+     ],
+     "explanation": "Velocipede được giải thích là tiền thân của XE ĐẠP.",
+     "evidence": "and a velocipede, which is a precursor to the bicycle.",
+     "points": 1
+    },
+    {
+     "order": 40,
+     "questionType": "note_completion",
+     "prompt": "Câu 40",
+     "answer": [
+      "exhibit"
+     ],
+     "explanation": "Bộ xương mastodon là HIỆN VẬT trưng bày lộng lẫy nhất trong bảo tàng của ông.",
+     "evidence": "His most magnificent exhibit, however, was the complete skeleton of an extinct mammal known as a mastodon, which he helped excavate.",
+     "points": 1
+    }
+   ],
+   "transcript": "Announcer: Now turn to Section 4.\nSection 4. You will hear a talk given by a lecturer in the art history department. First, you have some time to look at questions 31 to 40.\n(Pause)\nListen carefully and answer questions 31 to 40.\nLecturer: In this lecture today, I'm going to introduce you to an American painter, Charles Willson Peale. You may be familiar with his portraits, but did you know that he never even saw a painting till he was a grown man?\nHe was born in Maryland in 1741. His father died when he was nine, and the family struggled financially for the next few years, and Charles became a saddler's apprentice. One day, he went to Norfolk for supplies, and there, he saw paintings for the first time. He thought they were so bad that he felt sure he could do better, so he decided to make painting his career.\nIn 1766, he went to London to study painting with Benjamin West. Whilst there, he painted this portrait in 1768, see Slide 1, \"Pitt as a Roman Senator\". Notice how elaborately symbolical this portrait is. The symbolism arises, of course, from Pitt's famous speech to the British Parliament, where he draws an analogy between the ancient Roman Senate's view of a barbaric Britain and the prevailing European view of the time of a barbaric African continent fueling the slavery trade. Perhaps you didn't know that the Romans used Britons as slaves, but I digress. Back to Peale.\nHe returned to America, and in 1772 painted the first ever portrait of George Washington, see Slide 2. In 1773, he painted a group portrait of himself, his wife, mother, brothers, sister, his old nurse, and an unidentified baby. Just look at the slide. This painting is simply called \"The Peale Family\". And you can almost feel the exuberance of the family and their warmth towards one another.\nHe enjoyed great success as a portraitist prior to the Revolution, and served with distinction in the Revolution. During this time, he became friends with George Washington, Benjamin Franklin, and Thomas Jefferson.\nAfter the war, he continued to paint. And when his wife died in the 1790s as a result of her eleventh pregnancy, he remarried. He had 17 children in all, naming the sons after famous painters or scientists.\nAlthough perhaps best known for his portraits of famous people, Peale liked novelty. Look at this slide of his two sons, Raphaelle and Titian, life-size, climbing a narrow stairway. This painting, \"The Staircase Group\" (1795), was exhibited in a doorway as a trompe l'oeil. And it is said that it did, in fact, fool the eye of George Washington.\nEven as far back as 1772, we can see his desire for difference in \"Rachel Weeping\". It's a rather macabre portrait of his first wife crying over the death of one of their children, their daughter Margaret.\nI'd like to show you one more slide to demonstrate his innovative approach. This is a portrait of his brother James, sitting at his desk at night, with only his face illuminated by a lamp. This was painted much later than the others, in 1822.\nYou know, Peale believed anyone could learn to paint, and he taught painting to his brothers, sisters, sons, daughters, nephews, nieces, and other relatives. Four of his sons—Titian, Rubens, Rembrandt, and Raphaelle—became painters, as did his brother James.\nBefore I finish, I'd like to tell you a bit more about Peale. He was active in politics for several years, and throughout his life, he maintained a lively interest in many branches of science. He was also an inventor who gained patents for a fireplace, porcelain false teeth, and a new kind of wooden bridge. He collaborated with Thomas Jefferson on what was known as the polygraph, a kind of portable writing desk. But it wasn't any ordinary desk: this one could make several copies of a manuscript at once. He also wrote papers on a wide variety of subjects, from hygiene to engineering. Oh, and he also tried his hand at inventing a fairly primitive, but innovative motion picture technique, new types of eyeglasses, and a velocipede, which is a precursor to the bicycle. Now, some of the original velocipedes had pedals, and some didn't. You sort of scooted along on them using your feet. Unfortunately, I can't remember which type it was that Peale worked on.\nHe's also remembered for his work as a naturalist. He established the first scientific museum in America, and he even invented his own system of taxidermy. For those of you who aren't sure what taxidermy is, it's the art of preparing, stuffing, and presenting dead animals so that they appear lifelike. He was also well ahead of his time in that he placed his animals in a simulated natural environment.\nHis most magnificent exhibit, however, was the complete skeleton of an extinct mammal known as a mastodon, which he helped excavate. The event was memorialized in his extraordinary painting \"The Exhuming of the Mastodon\".\nAnnouncer: That is the end of Section 4. You now have half a minute to check your answers.\n(Pause)"
+  }
+ ]
+}

@@ -206,6 +206,7 @@ export function ResultAnswers({
   const [active, setActive] = useState(0);
   const [activeOrder, setActiveOrder] = useState<number | null>(null);
   const desktopScrollRef = useRef<HTMLDivElement | null>(null);
+  const answersScrollRef = useRef<HTMLDivElement | null>(null);
   const mobileDetailsRef = useRef<HTMLDetailsElement | null>(null);
 
   // Lưu ý: các hook dưới đây phải gọi vô điều kiện (không đặt sau early return)
@@ -256,6 +257,11 @@ export function ResultAnswers({
       anchor?.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [activeOrder]);
+
+  // Đổi part thì kéo khung câu hỏi bên phải về đầu (khung cuộn riêng, không cuộn trang).
+  useEffect(() => {
+    answersScrollRef.current?.scrollTo({ top: 0 });
+  }, [active]);
 
   if (!part) {
     return (
@@ -321,7 +327,15 @@ export function ResultAnswers({
           </>
         ) : null}
 
-        <div className="space-y-4">
+        {/* Desktop: cột câu hỏi cũng cuộn riêng như transcript, giữ header luôn hiển thị */}
+        <div
+          ref={answersScrollRef}
+          className={`space-y-4 ${
+            showSource
+              ? `lg:sticky lg:max-h-[82vh] lg:self-start lg:overflow-auto lg:overscroll-contain lg:p-1 ${stickyTopClass}`
+              : ""
+          }`}
+        >
           {part.answers.map((answer) => (
             <AnswerCard
               key={answer.id}

@@ -22,11 +22,12 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
   student: [
     { href: "/student", label: "Tổng quan", hint: "Bài được giao", icon: "home" },
     { href: "/student/history", label: "Lịch sử", hint: "Kết quả & bài đã làm", icon: "clock" },
+    { href: "/student/stats", label: "Tiến bộ", hint: "Biểu đồ & điểm yếu", icon: "chart" },
     { href: "/student/ranking", label: "Xếp hạng", hint: "So với bạn cùng lớp", icon: "trophy" }
   ]
 };
 
-type IconName = "home" | "users" | "book" | "clipboard" | "check" | "clock" | "trophy" | "menu" | "close" | "calendar";
+type IconName = "home" | "users" | "book" | "clipboard" | "check" | "clock" | "trophy" | "menu" | "close" | "calendar" | "chart";
 
 function Icon({ name }: { name: IconName }) {
   const common = {
@@ -97,6 +98,13 @@ function Icon({ name }: { name: IconName }) {
         <svg {...common} aria-hidden="true">
           <rect x="3.5" y="5" width="17" height="15" rx="2" />
           <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" />
+        </svg>
+      );
+    case "chart":
+      return (
+        <svg {...common} aria-hidden="true">
+          <path d="M4 19.5h16" />
+          <path d="M5 15.5l4.5-4.5 3.5 3 5.5-6.5" />
         </svg>
       );
     case "menu":

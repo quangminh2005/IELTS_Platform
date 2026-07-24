@@ -90,6 +90,7 @@ export function ProgressLineChart({
           className="w-full"
           role="img"
           aria-label="Biểu đồ % đúng theo thời gian"
+          onPointerLeave={() => setActive(null)}
         >
           {[0, 25, 50, 75, 100].map((tick) => (
             <g key={tick}>

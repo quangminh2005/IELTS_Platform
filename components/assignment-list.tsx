@@ -1,4 +1,5 @@
 import { deleteAssignment, updateAssignment } from "@/lib/actions/assignments";
+import Link from "next/link";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { DueDateField } from "@/components/due-date-field";
 import { SkillTimeInputs } from "@/components/skill-time-inputs";
@@ -142,6 +143,12 @@ export function AssignmentList({
                     ) : null}
                   </div>
                   <div className="flex flex-col items-start gap-1.5 sm:items-end">
+                    <Link
+                      href={`/teacher/assignments/${assignment.id}/stats`}
+                      className="inline-flex items-center rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-semibold text-primary transition hover:border-primary"
+                    >
+                      Thống kê
+                    </Link>
                     <span
                       className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${
                         fullySubmitted

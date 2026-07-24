@@ -8,6 +8,12 @@ import { ProctorFlag } from "@/components/proctor-flag";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
+import { ProgressLineChart } from "@/components/progress-line-chart";
+import { QuestionTypeStats } from "@/components/question-type-stats";
+import {
+  buildProgressSeries,
+  questionTypeStatsBySkill
+} from "@/lib/question-stats";
 
 type StudentPageProps = {
   params: {
@@ -84,6 +90,9 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                   isCorrect: true,
                   assignableUnit: {
                     select: { skill: true }
+                  },
+                  question: {
+                    select: { questionType: true }
                   }
                 }
               }
@@ -100,6 +109,29 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
   if (!student) {
     notFound();
   }
+
+  // Gom các lần làm đã nộp của học sinh này (mọi bài giao) cho biểu đồ tiến bộ
+  // và thống kê dạng câu — dùng lại đúng logic của trang "Tiến bộ" học sinh.
+  const submittedAttempts = student.recipients.flatMap((recipient) =>
+    recipient.attempts
+      .filter(
+        (attempt) => attempt.status === "submitted" || attempt.status === "reviewed"
+      )
+      .map((attempt) => ({
+        title: recipient.assignment.title,
+        submittedAt: attempt.submittedAt ?? attempt.startedAt,
+        answers: attempt.answers.map((answer) => ({
+          isCorrect: answer.isCorrect,
+          skill: answer.assignableUnit.skill,
+          questionType: answer.question?.questionType ?? null
+        }))
+      }))
+  );
+
+  const progressSeries = buildProgressSeries(submittedAttempts);
+  const typeStats = questionTypeStatsBySkill(
+    submittedAttempts.flatMap((attempt) => attempt.answers)
+  );
 
   return (
     <div className="space-y-8">
@@ -146,6 +178,21 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           ))}
         </div>
       </section>
+
+      {submittedAttempts.length > 0 ? (
+        <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+          <div className="border-b border-border px-5 py-4">
+            <h3 className="text-base font-semibold">Tiến bộ & điểm yếu</h3>
+          </div>
+          <ProgressLineChart
+            listening={progressSeries.listening}
+            reading={progressSeries.reading}
+          />
+          <div className="border-t border-border">
+            <QuestionTypeStats stats={typeStats} subject={student.displayName} />
+          </div>
+        </section>
+      ) : null}
 
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="border-b border-border px-5 py-4">

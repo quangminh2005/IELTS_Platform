@@ -49,6 +49,9 @@ export function QuestionTypeStats({
 
       {hasData ? (
         <div className="mt-4 grid gap-3">
+          {/* Bảng tính trên TOÀN BỘ bài đã nộp (khác biểu đồ chỉ vẽ 20 bài gần
+              nhất) — ghi rõ để khỏi nhầm hai khung dữ liệu. */}
+          <p className="text-xs text-muted-foreground">Tính trên toàn bộ bài đã nộp.</p>
           {rows.map((row) => {
             const isWeakest = weakest !== null && row.key === weakest.key;
             const lowData = row.total > 0 && row.total < LOW_DATA_THRESHOLD;

@@ -97,6 +97,15 @@ export default async function AssignmentStatsPage({ params }: StatsPageProps) {
     submittedCount
   );
 
+  // Nhãn phần cho danh sách "Top câu sai": số câu tính theo từng phần nên có thể
+  // trùng "Câu 1" ở hai phần khác nhau — kèm nhãn Nghe/Đọc · tên phần cho rõ.
+  const unitOfQuestion = new Map<string, { skill: string; title: string }>();
+  for (const unit of stats.units) {
+    for (const question of unit.questions) {
+      unitOfQuestion.set(question.questionId, { skill: unit.skill, title: unit.unitTitle });
+    }
+  }
+
   return (
     <div className="space-y-8">
       <header>
@@ -130,20 +139,30 @@ export default async function AssignmentStatsPage({ params }: StatsPageProps) {
                 <h3 className="text-base font-semibold">Top câu sai nhiều nhất</h3>
               </div>
               <div className="divide-y divide-border">
-                {stats.top.map((question) => (
-                  <div
-                    key={question.questionId}
-                    className="flex items-center justify-between gap-4 px-5 py-3"
-                  >
-                    <p className="min-w-0 text-sm">
-                      <span className="font-semibold">Câu {question.order}.</span>{" "}
-                      {shorten(question.prompt)}
-                    </p>
-                    <span className="shrink-0 rounded-full border border-red-400/50 bg-red-500/10 px-2.5 py-0.5 text-xs font-semibold tabular-nums text-red-600 dark:text-red-300">
-                      {question.wrongCount}/{question.totalCount} sai · {question.percentWrong}%
-                    </span>
-                  </div>
-                ))}
+                {stats.top.map((question) => {
+                  const unit = unitOfQuestion.get(question.questionId);
+                  return (
+                    <div
+                      key={question.questionId}
+                      className="flex items-center justify-between gap-4 px-5 py-3"
+                    >
+                      <div className="min-w-0">
+                        {unit ? (
+                          <p className="text-xs font-medium text-muted-foreground">
+                            {SKILL_SHORT_LABELS[unit.skill] ?? unit.skill} · {unit.title}
+                          </p>
+                        ) : null}
+                        <p className="text-sm">
+                          <span className="font-semibold">Câu {question.order}.</span>{" "}
+                          {shorten(question.prompt)}
+                        </p>
+                      </div>
+                      <span className="shrink-0 rounded-full border border-red-400/50 bg-red-500/10 px-2.5 py-0.5 text-xs font-semibold tabular-nums text-red-600 dark:text-red-300">
+                        {question.wrongCount}/{question.totalCount} sai · {question.percentWrong}%
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </section>
           ) : null}

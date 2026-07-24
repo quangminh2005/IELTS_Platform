@@ -84,7 +84,10 @@ export function ProgressLineChart({
             </span>
           ))}
       </div>
-      <div className="relative px-2 pb-4">
+      <div className="px-2 pb-4">
+        {/* Bọc SVG trong một lớp relative KHÔNG padding để toạ độ % của tooltip
+            khớp đúng với hộp vẽ (padding px-2/pb-4 nằm ở lớp ngoài, không lệch). */}
+        <div className="relative">
         <svg
           viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
           className="w-full"
@@ -176,6 +179,7 @@ export function ProgressLineChart({
             </p>
           </div>
         ) : null}
+        </div>
       </div>
     </div>
   );

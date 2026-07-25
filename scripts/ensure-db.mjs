@@ -40,6 +40,8 @@ const statements = [
   // tabSwitchCount đã có trong schema từ đầu nhưng chưa từng được ghi — thêm cho
   // chắc, câu lệnh idempotent nên chạy lại vô hại.
   'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "tabSwitchCount" INTEGER NOT NULL DEFAULT 0;',
+  // Mail nhắc bài sắp hết hạn: đánh dấu đã nhắc để không gửi trùng
+  'ALTER TABLE "AssignmentRecipient" ADD COLUMN IF NOT EXISTS "reminderSentAt" TIMESTAMP(3);',
 ];
 
 const prisma = new PrismaClient();

@@ -173,6 +173,9 @@ model AssignmentRecipient {
   status       String         @default("assigned")
   assignedAt   DateTime       @default(now())
   submittedAt  DateTime?
+  // Thời điểm đã gửi mail nhắc "sắp hết hạn" cho bài này. Null = chưa nhắc.
+  // Chỉ đặt sau khi gửi thành công, nên gửi lỗi thì hôm sau cron thử lại.
+  reminderSentAt DateTime?
   assignment   Assignment     @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
   student      StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
   attempts     Attempt[]

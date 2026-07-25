@@ -67,4 +67,5 @@ Unit tests (`tests/`, vitest) are largely **structural/behavioral assertions ove
 ## Conventions
 - Keep user-facing text and code comments in Vietnamese, consistent with the existing files.
 - Every server action starts with a `requireTeacher()`/`requireStudent()` ownership check — never trust `FormData` ids without scoping the Prisma query to the authenticated user.
+- **Pages** under `app/teacher/` use `requireTeacherPage()` (`lib/teacher-page.ts`) instead — it redirects to `/login`, whereas `requireTeacher()` throws and would show visitors a raw server-error screen. Actions keep `requireTeacher()`. `tests/teacher-page-guard.test.ts` enforces this for every `page.tsx` under `app/teacher/`.
 - When adding a String-enum value, keep three places in sync: the schema comment, the zod `z.enum(...)` in the relevant action, and any structural test that lists it.

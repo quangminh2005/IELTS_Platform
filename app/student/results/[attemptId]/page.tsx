@@ -74,7 +74,9 @@ export default async function StudentResultPage({ params, searchParams }: Result
               transcript: true,
               content: true,
               // Dùng cho thanh nghe lại ở trang kết quả (Listening).
-              audioUrl: true
+              audioUrl: true,
+              // Bấm câu trong transcript -> tua audio tới đoạn đó.
+              transcriptTimingJson: true
             }
           },
           annotations: {

@@ -42,6 +42,8 @@ const statements = [
   'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "tabSwitchCount" INTEGER NOT NULL DEFAULT 0;',
   // Mail nhắc bài sắp hết hạn: đánh dấu đã nhắc để không gửi trùng
   'ALTER TABLE "AssignmentRecipient" ADD COLUMN IF NOT EXISTS "reminderSentAt" TIMESTAMP(3);',
+  // Mốc thời gian transcript<->audio (bấm transcript để tua audio ở trang kết quả)
+  'ALTER TABLE "AssignableUnit" ADD COLUMN IF NOT EXISTS "transcriptTimingJson" TEXT;',
 ];
 
 const prisma = new PrismaClient();

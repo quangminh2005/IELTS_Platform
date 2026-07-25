@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
-import { AudioPlayer } from "@/components/audio-player";
+import { AudioPlayer, type AudioPlayerControls } from "@/components/audio-player";
 import {
   buildEvidenceSegments,
   buildEvidenceTargets,
@@ -11,6 +11,13 @@ import {
 } from "@/lib/answer-evidence";
 import { isAudioUrl } from "@/lib/question-interactions";
 import { SKILL_LABELS } from "@/lib/skills";
+import {
+  buildSentenceTimes,
+  evidenceOrderTimes,
+  groupSegmentsBySentence,
+  parseTranscriptTiming,
+  seekTime
+} from "@/lib/transcript-timing";
 
 export type PartAnswer = {
   id: string;
@@ -34,6 +41,9 @@ export type ResultPart = {
   sourceText: string | null;
   // File nghe của phần (Listening). Bài Đọc/Viết/Nói = null.
   audioUrl: string | null;
+  // Mốc thời gian từng từ của transcript trong audio (bấm câu -> tua audio).
+  // Chưa đồng bộ = null -> transcript hiển thị như cũ, không bấm được.
+  transcriptTimingJson: string | null;
   answers: PartAnswer[];
   answerStrings: string[];
   answersByOrder: Record<number, string>;
@@ -55,43 +65,69 @@ function correctnessClass(value: boolean | null) {
   return "border-accent/50 bg-accent/10 text-accent-foreground dark:text-accent";
 }
 
-// Render transcript theo các đoạn đã gắn số câu. Chỉ tô khi có activeOrder: câu văn
-// chứa đáp án (nền xanh) + đúng từ đáp án (đậm/gạch chân) + badge [n] ở đầu câu.
+// Render transcript theo các nhóm câu (mỗi nhóm gồm các đoạn đã gắn số câu). Tô khi
+// có activeOrder: câu văn chứa đáp án (nền xanh) + đúng từ đáp án (đậm/gạch chân) +
+// badge [n] ở đầu câu. Nhóm có mốc thời gian + onSeek -> bấm để tua audio tới câu đó.
 function EvidenceTranscript({
-  segments,
-  activeOrder
+  groups,
+  activeOrder,
+  onSeek
 }: {
-  segments: EvidenceSegment[];
+  groups: Array<{ t: number | null; segments: EvidenceSegment[] }>;
   activeOrder: number | null;
+  onSeek?: (seconds: number) => void;
 }) {
   let badgeShown = false;
   return (
     <>
-      {segments.map((seg, index) => {
-        const inSentence = activeOrder !== null && seg.sentenceOrders.includes(activeOrder);
-        const isAnswer = activeOrder !== null && seg.answerOrders.includes(activeOrder);
-        const showBadge = inSentence && !badgeShown;
-        if (showBadge) badgeShown = true;
-        const markClass = [
-          inSentence ? "rounded bg-emerald-500/15 dark:bg-emerald-400/15" : "",
-          isAnswer
-            ? "font-semibold text-emerald-800 underline decoration-emerald-500 dark:text-emerald-200"
-            : ""
-        ]
-          .filter(Boolean)
-          .join(" ");
-        return (
-          <span key={index}>
-            {showBadge ? (
-              <span
-                data-evidence-order={activeOrder as number}
-                className="mx-0.5 inline-flex items-center rounded-full bg-emerald-600 px-1.5 py-0.5 align-middle text-[11px] font-bold leading-none text-white"
-              >
-                [{activeOrder}]
-              </span>
-            ) : null}
-            <span className={markClass || undefined}>{seg.text}</span>
+      {groups.map((group, groupIndex) => {
+        const clickable = onSeek !== undefined && group.t !== null;
+        const rendered = group.segments.map((seg, index) => {
+          const inSentence = activeOrder !== null && seg.sentenceOrders.includes(activeOrder);
+          const isAnswer = activeOrder !== null && seg.answerOrders.includes(activeOrder);
+          const showBadge = inSentence && !badgeShown;
+          if (showBadge) badgeShown = true;
+          const markClass = [
+            inSentence ? "rounded bg-emerald-500/15 dark:bg-emerald-400/15" : "",
+            isAnswer
+              ? "font-semibold text-emerald-800 underline decoration-emerald-500 dark:text-emerald-200"
+              : ""
+          ]
+            .filter(Boolean)
+            .join(" ");
+          return (
+            <span key={index}>
+              {showBadge ? (
+                <span
+                  data-evidence-order={activeOrder as number}
+                  className="mx-0.5 inline-flex items-center rounded-full bg-emerald-600 px-1.5 py-0.5 align-middle text-[11px] font-bold leading-none text-white"
+                >
+                  [{activeOrder}]
+                </span>
+              ) : null}
+              <span className={markClass || undefined}>{seg.text}</span>
+            </span>
+          );
+        });
+        return clickable ? (
+          <span
+            key={groupIndex}
+            role="button"
+            tabIndex={0}
+            title="Bấm để nghe từ câu này"
+            onClick={() => onSeek(group.t as number)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onSeek(group.t as number);
+              }
+            }}
+            className="cursor-pointer rounded transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+          >
+            {rendered}
           </span>
+        ) : (
+          <span key={groupIndex}>{rendered}</span>
         );
       })}
     </>
@@ -102,12 +138,15 @@ function AnswerCard({
   answer,
   isLinked,
   isActive,
-  onSelect
+  onSelect,
+  onPlayEvidence
 }: {
   answer: PartAnswer;
   isLinked: boolean;
   isActive: boolean;
   onSelect: (order: number) => void;
+  // Bấm ▶ -> tua audio tới câu dẫn chứng của câu này (chỉ Listening đã đồng bộ).
+  onPlayEvidence: (() => void) | null;
 }) {
   const interactive = isLinked && answer.order !== null;
   const activate = () => {
@@ -134,9 +173,28 @@ function AnswerCard({
         : {})}
     >
       <div className="flex items-start justify-between gap-3">
-        <h4 className="text-lg font-semibold">
-          {answer.order !== null ? `Câu ${answer.order}` : "Câu chưa liên kết"}
-        </h4>
+        <span className="flex items-center gap-2">
+          <h4 className="text-lg font-semibold">
+            {answer.order !== null ? `Câu ${answer.order}` : "Câu chưa liên kết"}
+          </h4>
+          {onPlayEvidence ? (
+            <button
+              type="button"
+              title="Nghe đoạn audio chứa đáp án"
+              aria-label="Nghe đoạn audio chứa đáp án"
+              onClick={(event) => {
+                // Không cho lan lên thẻ: thẻ đang chọn mà bấm ▶ lần nữa sẽ bỏ chọn mất.
+                event.stopPropagation();
+                onPlayEvidence();
+              }}
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5 translate-x-[1px]" aria-hidden="true">
+                <path d="M8 5.14v13.72a1 1 0 0 0 1.53.85l10.79-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14Z" />
+              </svg>
+            </button>
+          ) : null}
+        </span>
         <span
           className={`shrink-0 rounded-full border px-3 py-1 text-sm font-medium ${correctnessClass(
             answer.isCorrect
@@ -211,6 +269,8 @@ export function ResultAnswers({
   const desktopScrollRef = useRef<HTMLDivElement | null>(null);
   const answersScrollRef = useRef<HTMLDivElement | null>(null);
   const mobileDetailsRef = useRef<HTMLDetailsElement | null>(null);
+  // Điều khiển thanh nghe lại từ transcript/thẻ câu hỏi (bấm -> tua audio).
+  const playerControlRef = useRef<AudioPlayerControls | null>(null);
 
   // Lưu ý: các hook dưới đây phải gọi vô điều kiện (không đặt sau early return)
   // để không vi phạm rules-of-hooks — dùng `part` có thể null thay vì return sớm.
@@ -228,6 +288,22 @@ export function ResultAnswers({
     return buildEvidenceSegments(filledSource, targets, part.answersByOrder);
   }, [showSource, filledSource, part]);
   const linkedSet = useMemo(() => new Set(linkedOrders), [linkedOrders]);
+
+  // Mốc thời gian transcript<->audio (chỉ Listening đã đồng bộ). Gom các đoạn dẫn
+  // chứng lại theo câu; mỗi câu biết giây bắt đầu -> bấm là tua audio tới đó.
+  const timing = useMemo(
+    () => (part?.skill === "listening" ? parseTranscriptTiming(part.transcriptTimingJson) : null),
+    [part]
+  );
+  const sentenceGroups = useMemo(() => {
+    if (!timing || !filledSource) return null;
+    const sentences = buildSentenceTimes(filledSource, timing.words);
+    return groupSegmentsBySentence(segments, sentences);
+  }, [timing, filledSource, segments]);
+  const orderTimes = useMemo(
+    () => (sentenceGroups ? evidenceOrderTimes(sentenceGroups) : {}),
+    [sentenceGroups]
+  );
 
   // Nhãn tab: mỗi kỹ năng đánh số phần lại từ 1 (giống đề thi). Bài có từ 2 kỹ năng
   // trở lên thì thêm tên kỹ năng để không nhầm "Phần 1" của Nghe với của Đọc.
@@ -253,6 +329,15 @@ export function ResultAnswers({
           : ""
       }`
     : "";
+
+  // Bấm câu trong transcript / nút ▶ trên thẻ câu -> tua sớm 1 giây rồi phát luôn.
+  // Chỉ bật khi part có thanh nghe lại VÀ đã đồng bộ mốc thời gian.
+  const canSeek = !!replayAudioUrl && sentenceGroups !== null;
+  const seekAndPlay = (t: number) => {
+    playerControlRef.current?.seekTo(seekTime(t), { play: true });
+  };
+  // Không có timing -> một nhóm duy nhất không bấm được (transcript như cũ).
+  const transcriptGroups = sentenceGroups ?? [{ t: null, segments }];
 
   // Cuộn cột trái tới câu dẫn chứng đang chọn (cuộn trong khung, không cuộn cả trang).
   useEffect(() => {
@@ -324,7 +409,11 @@ export function ResultAnswers({
                 {sourceLabel}
               </summary>
               <p className="whitespace-pre-wrap px-5 pb-4 text-lg leading-8">
-                <EvidenceTranscript segments={segments} activeOrder={activeOrder} />
+                <EvidenceTranscript
+                  groups={transcriptGroups}
+                  activeOrder={activeOrder}
+                  onSeek={canSeek ? seekAndPlay : undefined}
+                />
               </p>
             </details>
             {/* Desktop: cột trái dính, cuộn riêng */}
@@ -336,7 +425,11 @@ export function ResultAnswers({
                 {sourceLabel}
               </div>
               <p className="whitespace-pre-wrap px-5 py-4 text-lg leading-8">
-                <EvidenceTranscript segments={segments} activeOrder={activeOrder} />
+                <EvidenceTranscript
+                  groups={transcriptGroups}
+                  activeOrder={activeOrder}
+                  onSeek={canSeek ? seekAndPlay : undefined}
+                />
               </p>
             </div>
           </>
@@ -351,15 +444,30 @@ export function ResultAnswers({
               : ""
           }`}
         >
-          {part.answers.map((answer) => (
-            <AnswerCard
-              key={answer.id}
-              answer={answer}
-              isLinked={answer.order !== null && linkedSet.has(answer.order)}
-              isActive={answer.order !== null && answer.order === activeOrder}
-              onSelect={(order) => setActiveOrder((current) => (current === order ? null : order))}
-            />
-          ))}
+          {part.answers.map((answer) => {
+            // Giây bắt đầu của câu dẫn chứng (chỉ Listening đã đồng bộ mốc audio).
+            const order = answer.order;
+            const evidenceTime =
+              canSeek && order !== null ? orderTimes[order] : undefined;
+            return (
+              <AnswerCard
+                key={answer.id}
+                answer={answer}
+                isLinked={order !== null && linkedSet.has(order)}
+                isActive={order !== null && order === activeOrder}
+                onSelect={(o) => setActiveOrder((current) => (current === o ? null : o))}
+                onPlayEvidence={
+                  evidenceTime !== undefined
+                    ? () => {
+                        // Vừa tô câu dẫn chứng trong transcript vừa phát audio đoạn đó.
+                        setActiveOrder(order);
+                        seekAndPlay(evidenceTime);
+                      }
+                    : null
+                }
+              />
+            );
+          })}
         </div>
       </div>
 
@@ -368,7 +476,13 @@ export function ResultAnswers({
           dừng hẳn và thanh về 0:00 của file mới (không phát chồng hai phần). */}
       {replayAudioUrl ? (
         <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-card/95 px-3 py-2 backdrop-blur sm:px-6 lg:px-8">
-          <AudioPlayer key={part.unitId} src={replayAudioUrl} showSpeed label={replayLabel} />
+          <AudioPlayer
+            key={part.unitId}
+            src={replayAudioUrl}
+            showSpeed
+            label={replayLabel}
+            controlRef={playerControlRef}
+          />
         </div>
       ) : null}
     </section>

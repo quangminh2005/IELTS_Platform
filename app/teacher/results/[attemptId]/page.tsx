@@ -49,8 +49,16 @@ export default async function TeacherResultPage({ params }: ResultPageProps) {
             select: { order: true, prompt: true, points: true, answerEvidence: true }
           },
           assignableUnit: {
-            // audioUrl dùng cho thanh nghe lại ở trang kết quả (Listening).
-            select: { title: true, skill: true, transcript: true, content: true, audioUrl: true }
+            // audioUrl dùng cho thanh nghe lại; transcriptTimingJson cho bấm
+            // câu trong transcript -> tua audio (Listening).
+            select: {
+              title: true,
+              skill: true,
+              transcript: true,
+              content: true,
+              audioUrl: true,
+              transcriptTimingJson: true
+            }
           },
           annotations: {
             orderBy: { startOffset: "asc" },

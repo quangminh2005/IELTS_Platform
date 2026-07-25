@@ -58,6 +58,8 @@ export default async function MaterialPreviewPage({ params }: MaterialPreviewPag
         content: unit.content,
         audioUrl: unit.audioUrl,
         transcript: unit.transcript,
+        // Cho màn kết quả xem trước bấm câu trong transcript để tua audio.
+        transcriptTimingJson: unit.transcriptTimingJson,
         defaultTimeLimitMinutes: unit.defaultTimeLimitMinutes,
         metadataJson: unit.metadataJson,
         questions: unit.questions.map((question) => ({

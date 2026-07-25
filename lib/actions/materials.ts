@@ -8,6 +8,7 @@ import { requireTeacher } from "@/lib/actions/classes";
 import { normalizeAnswer } from "@/lib/grading";
 import { materialNoticePath } from "@/lib/material-notices";
 import { prisma } from "@/lib/prisma";
+import { syncTranscriptTiming } from "@/lib/transcript-sync";
 
 const skills = ["listening", "reading", "writing", "speaking"] as const;
 const unitTypes = ["listening_part", "reading_passage", "writing_task", "speaking_part"] as const;
@@ -79,6 +80,30 @@ const idSchema = z.string().trim().min(1);
 
 function optionalText(value?: string) {
   return value ? value : null;
+}
+
+// Chạy đồng bộ mốc thời gian audio<->transcript cho phần nghe (nếu đủ điều kiện)
+// và trả chuỗi ghi chú nối vào thông báo lưu. KHÔNG ném lỗi — đồng bộ hỏng thì
+// việc lưu vẫn thành công, chỉ nhắn nhẹ để giáo viên biết.
+async function syncTimingNote(unit: {
+  id: string;
+  skill: string;
+  audioUrl: string | null;
+  transcript: string | null;
+}): Promise<string> {
+  if (unit.skill !== "listening" || !unit.audioUrl || !unit.transcript) {
+    return "";
+  }
+  try {
+    const result = await syncTranscriptTiming(unit.id);
+    if (result.ok) {
+      return ` Đã đồng bộ mốc audio (khớp ${Math.round(result.matchRatio * 100)}%).`;
+    }
+    return ` Chưa đồng bộ được mốc audio: ${result.error}`;
+  } catch (error) {
+    console.warn("Đồng bộ mốc audio thất bại:", (error as Error).message);
+    return " Chưa đồng bộ được mốc audio (lỗi hệ thống).";
+  }
 }
 
 function optionalJson(value: string | undefined, label: string) {
@@ -312,7 +337,7 @@ export async function createUnit(formData: FormData): Promise<ActionResult> {
       throw new Error("Không tìm thấy tài liệu của giáo viên này.");
     }
 
-    await prisma.assignableUnit.create({
+    const created = await prisma.assignableUnit.create({
       data: {
         materialId: material.id,
         skill: material.skill,
@@ -325,11 +350,16 @@ export async function createUnit(formData: FormData): Promise<ActionResult> {
         transcript: optionalText(parsed.data.transcript),
         defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
         metadataJson: buildUnitMetadata(parsed.data.metadataJson, parsed.data.imageUrlsJson)
-      }
+      },
+      select: { id: true, skill: true, audioUrl: true, transcript: true }
     });
 
+    // Phần nghe có đủ audio + transcript -> đồng bộ mốc thời gian để trang kết quả
+    // bấm transcript là tua audio. Lỗi đồng bộ không làm hỏng việc tạo phần.
+    const syncNote = await syncTimingNote(created);
+
     revalidatePath("/teacher/materials");
-    return actionOk(`Đã tạo phần "${parsed.data.title}".`);
+    return actionOk(`Đã tạo phần "${parsed.data.title}".${syncNote}`);
   } catch (error) {
     return actionFail(error, "Tạo phần");
   }
@@ -373,6 +403,19 @@ export async function updateUnit(formData: FormData): Promise<ActionResult> {
       throw new Error("Không tìm thấy tài liệu của giáo viên này.");
     }
 
+    // Đọc audio/transcript cũ để biết có cần đồng bộ lại mốc thời gian không.
+    const existing = await prisma.assignableUnit.findFirst({
+      where: { id, material: { teacherId: teacher.id } },
+      select: { audioUrl: true, transcript: true, transcriptTimingJson: true }
+    });
+
+    const newAudioUrl = optionalText(parsed.data.audioUrl);
+    const newTranscript = optionalText(parsed.data.transcript);
+    const timingInputsChanged =
+      !existing ||
+      existing.audioUrl !== newAudioUrl ||
+      existing.transcript !== newTranscript;
+
     const result = await prisma.assignableUnit.updateMany({
       where: {
         id,
@@ -388,10 +431,12 @@ export async function updateUnit(formData: FormData): Promise<ActionResult> {
         title: parsed.data.title,
         instructions: optionalText(parsed.data.instructions),
         content: parsed.data.content ?? "",
-        audioUrl: optionalText(parsed.data.audioUrl),
-        transcript: optionalText(parsed.data.transcript),
+        audioUrl: newAudioUrl,
+        transcript: newTranscript,
         defaultTimeLimitMinutes: parsed.data.defaultTimeLimitMinutes ?? null,
-        metadataJson: buildUnitMetadata(parsed.data.metadataJson, parsed.data.imageUrlsJson)
+        metadataJson: buildUnitMetadata(parsed.data.metadataJson, parsed.data.imageUrlsJson),
+        // Audio/transcript đổi -> mốc cũ không còn đúng, xóa để đồng bộ lại bên dưới.
+        ...(timingInputsChanged ? { transcriptTimingJson: null } : {})
       }
     });
 
@@ -399,8 +444,18 @@ export async function updateUnit(formData: FormData): Promise<ActionResult> {
       throw new Error("Không tìm thấy phần này.");
     }
 
+    const syncNote =
+      timingInputsChanged || !existing?.transcriptTimingJson
+        ? await syncTimingNote({
+            id,
+            skill: material.skill,
+            audioUrl: newAudioUrl,
+            transcript: newTranscript
+          })
+        : "";
+
     revalidatePath("/teacher/materials");
-    return actionOk(`Đã lưu phần "${parsed.data.title}".`);
+    return actionOk(`Đã lưu phần "${parsed.data.title}".${syncNote}`);
   } catch (error) {
     return actionFail(error, "Lưu phần");
   }
@@ -806,7 +861,7 @@ export async function importMaterial(
 
   const questionCount = data.units.reduce((sum, unit) => sum + unit.questions.length, 0);
 
-  await prisma.material.create({
+  const createdMaterial = await prisma.material.create({
     data: {
       teacherId: teacher.id,
       skill: data.skill,
@@ -849,12 +904,41 @@ export async function importMaterial(
     }
   });
 
+  // Đồng bộ mốc thời gian audio<->transcript cho các phần nghe vừa import (để
+  // trang kết quả bấm transcript là tua audio). Chạy song song; phần nào lỗi thì
+  // bỏ qua — import vẫn thành công, backfill/lưu lại phần đó sẽ đồng bộ sau.
+  const listeningUnits = await prisma.assignableUnit.findMany({
+    where: {
+      materialId: createdMaterial.id,
+      skill: "listening",
+      audioUrl: { not: null },
+      transcript: { not: null }
+    },
+    select: { id: true }
+  });
+  let syncedCount = 0;
+  if (listeningUnits.length > 0) {
+    const results = await Promise.all(
+      listeningUnits.map((unit) =>
+        syncTranscriptTiming(unit.id).catch((error) => {
+          console.warn("Đồng bộ mốc audio thất bại:", (error as Error).message);
+          return { ok: false as const, error: "lỗi hệ thống" };
+        })
+      )
+    );
+    syncedCount = results.filter((result) => result.ok).length;
+  }
+  const syncNote =
+    listeningUnits.length > 0
+      ? ` Đồng bộ mốc audio: ${syncedCount}/${listeningUnits.length} phần nghe.`
+      : "";
+
   revalidatePath("/teacher");
   revalidatePath("/teacher/materials");
   redirect(
     materialNoticePath(
       "success",
-      `Đã import "${data.title}": ${data.units.length} phần, ${questionCount} câu hỏi.`
+      `Đã import "${data.title}": ${data.units.length} phần, ${questionCount} câu hỏi.${syncNote}`
     )
   );
 }

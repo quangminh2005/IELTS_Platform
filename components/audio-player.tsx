@@ -72,6 +72,12 @@ const VolumeIcon = ({ muted }: { muted: boolean }) => (
   </svg>
 );
 
+// Điều khiển từ ngoài (trang kết quả: bấm transcript -> tua audio). Chỉ truyền
+// controlRef ở trang kết quả; trang làm bài KHÔNG truyền để giữ hành vi thi thật.
+export type AudioPlayerControls = {
+  seekTo: (seconds: number, options?: { play?: boolean }) => void;
+};
+
 type AudioPlayerProps = {
   src: string;
   // Tự phát khi vào bài. Nếu trình duyệt chặn autoplay (chưa có thao tác người
@@ -82,9 +88,16 @@ type AudioPlayerProps = {
   showSpeed?: boolean;
   // Nhãn ngắn cho biết đang nghe phần nào (ví dụ "Nghe · Phần 1 · Câu 1–10").
   label?: string;
+  controlRef?: React.MutableRefObject<AudioPlayerControls | null>;
 };
 
-export function AudioPlayer({ src, autoPlay = false, showSpeed = false, label }: AudioPlayerProps) {
+export function AudioPlayer({
+  src,
+  autoPlay = false,
+  showSpeed = false,
+  label,
+  controlRef
+}: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -140,6 +153,27 @@ export function AudioPlayer({ src, autoPlay = false, showSpeed = false, label }:
       window.removeEventListener("pointerdown", playOnFirstGesture);
     };
   }, [autoPlay]);
+
+  // Cho bên ngoài tua tới một mốc (bấm câu trong transcript ở trang kết quả).
+  const seekTo = useCallback((seconds: number, options?: { play?: boolean }) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const limit = Number.isFinite(audio.duration) ? audio.duration : seconds;
+    const target = Math.max(0, Math.min(seconds, limit));
+    audio.currentTime = target;
+    setCurrentTime(target);
+    if (options?.play && audio.paused) {
+      void audio.play().catch(() => undefined);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!controlRef) return;
+    controlRef.current = { seekTo };
+    return () => {
+      controlRef.current = null;
+    };
+  }, [controlRef, seekTo]);
 
   const togglePlay = useCallback(() => {
     const audio = audioRef.current;

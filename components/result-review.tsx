@@ -34,6 +34,8 @@ type Answer = {
     transcript?: string | null;
     content?: string | null;
     audioUrl?: string | null;
+    // Mốc thời gian transcript<->audio (bấm câu trong transcript -> tua audio).
+    transcriptTimingJson?: string | null;
   };
 };
 
@@ -137,6 +139,8 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
         sourceText,
         // Chỉ Listening mới có thanh nghe lại ở trang kết quả.
         audioUrl: unit.skill === "listening" ? unit.audioUrl ?? null : null,
+        transcriptTimingJson:
+          unit.skill === "listening" ? unit.transcriptTimingJson ?? null : null,
         answers: [],
         answerStrings: [],
         answersByOrder: {},

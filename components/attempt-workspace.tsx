@@ -96,6 +96,9 @@ type AssignmentUnit = {
     content: string;
     audioUrl: string | null;
     transcript: string | null;
+    // Mốc thời gian transcript<->audio — chỉ phòng xem trước cần (bấm câu trong
+    // transcript ở màn kết quả xem trước để tua audio). Trang làm bài không truyền.
+    transcriptTimingJson?: string | null;
     defaultTimeLimitMinutes: number | null;
     metadataJson: string | null;
     questions: Question[];
@@ -161,6 +164,7 @@ type PreviewResultAnswer = {
     transcript?: string | null;
     content?: string | null;
     audioUrl?: string | null;
+    transcriptTimingJson?: string | null;
   };
 };
 
@@ -2284,6 +2288,7 @@ export function AttemptWorkspace({
         transcript: string | null;
         content: string | null;
         audioUrl: string | null;
+        transcriptTimingJson: string | null;
       }
     >();
     for (const assignmentUnit of activeUnits) {
@@ -2294,7 +2299,9 @@ export function AttemptWorkspace({
         transcript: unit.transcript,
         content: unit.content,
         // Để phòng xem trước cũng có thanh nghe lại như trang kết quả thật.
-        audioUrl: unit.audioUrl
+        audioUrl: unit.audioUrl,
+        // ...và bấm câu trong transcript để tua audio như trang kết quả thật.
+        transcriptTimingJson: unit.transcriptTimingJson ?? null
       });
       for (const question of unit.questions) {
         questionMeta.set(question.id, {
@@ -2325,7 +2332,14 @@ export function AttemptWorkspace({
       question: questionMeta.get(row.questionId) ?? null,
       assignableUnit:
         unitMeta.get(row.assignableUnitId) ??
-        { title: "", skill: "", transcript: null, content: null, audioUrl: null }
+        {
+          title: "",
+          skill: "",
+          transcript: null,
+          content: null,
+          audioUrl: null,
+          transcriptTimingJson: null
+        }
     }));
 
     setPreviewResult({

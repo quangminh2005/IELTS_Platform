@@ -106,6 +106,8 @@ model AssignableUnit {
   content                 String
   audioUrl                String?
   transcript              String?
+  // JSON mốc thời gian từng từ của transcript trong audio (xem lib/transcript-timing.ts)
+  transcriptTimingJson    String?
   defaultTimeLimitMinutes Int?
   metadataJson            String?
   createdAt               DateTime         @default(now())

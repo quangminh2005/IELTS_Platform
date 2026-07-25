@@ -72,7 +72,9 @@ export default async function StudentResultPage({ params, searchParams }: Result
               title: true,
               skill: true,
               transcript: true,
-              content: true
+              content: true,
+              // Dùng cho thanh nghe lại ở trang kết quả (Listening).
+              audioUrl: true
             }
           },
           annotations: {

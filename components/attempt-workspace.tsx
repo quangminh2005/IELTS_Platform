@@ -160,6 +160,7 @@ type PreviewResultAnswer = {
     skill: string;
     transcript?: string | null;
     content?: string | null;
+    audioUrl?: string | null;
   };
 };
 
@@ -2277,7 +2278,13 @@ export function AttemptWorkspace({
     >();
     const unitMeta = new Map<
       string,
-      { title: string; skill: string; transcript: string | null; content: string | null }
+      {
+        title: string;
+        skill: string;
+        transcript: string | null;
+        content: string | null;
+        audioUrl: string | null;
+      }
     >();
     for (const assignmentUnit of activeUnits) {
       const unit = assignmentUnit.assignableUnit;
@@ -2285,7 +2292,9 @@ export function AttemptWorkspace({
         title: unit.title,
         skill: unit.skill,
         transcript: unit.transcript,
-        content: unit.content
+        content: unit.content,
+        // Để phòng xem trước cũng có thanh nghe lại như trang kết quả thật.
+        audioUrl: unit.audioUrl
       });
       for (const question of unit.questions) {
         questionMeta.set(question.id, {
@@ -2316,7 +2325,7 @@ export function AttemptWorkspace({
       question: questionMeta.get(row.questionId) ?? null,
       assignableUnit:
         unitMeta.get(row.assignableUnitId) ??
-        { title: "", skill: "", transcript: null, content: null }
+        { title: "", skill: "", transcript: null, content: null, audioUrl: null }
     }));
 
     setPreviewResult({

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
+import { AudioPlayer } from "@/components/audio-player";
 import {
   buildEvidenceSegments,
   buildEvidenceTargets,
@@ -31,6 +32,8 @@ export type ResultPart = {
   title: string;
   skill: string;
   sourceText: string | null;
+  // File nghe của phần (Listening). Bài Đọc/Viết/Nói = null.
+  audioUrl: string | null;
   answers: PartAnswer[];
   answerStrings: string[];
   answersByOrder: Record<number, string>;
@@ -239,6 +242,18 @@ export function ResultAnswers({
     });
   }, [parts]);
 
+  // Thanh nghe lại: chỉ có với phần Listening đã kèm file nghe. Nhãn ghép từ tên
+  // tab + khoảng số câu để biết đang nghe phần nào.
+  const activeIndex = parts.length > 0 ? Math.min(active, parts.length - 1) : 0;
+  const replayAudioUrl = part?.skill === "listening" ? part.audioUrl : null;
+  const replayLabel = part
+    ? `${tabLabels[activeIndex]}${
+        part.minOrder !== null && part.maxOrder !== null
+          ? ` · Câu ${part.minOrder}–${part.maxOrder}`
+          : ""
+      }`
+    : "";
+
   // Cuộn cột trái tới câu dẫn chứng đang chọn (cuộn trong khung, không cuộn cả trang).
   useEffect(() => {
     if (activeOrder === null) return;
@@ -347,6 +362,15 @@ export function ResultAnswers({
           ))}
         </div>
       </div>
+
+      {/* Nghe lại bài nghe — thanh dính đáy màn hình, luôn thấy dù đang cuộn
+          transcript hay cột câu hỏi. `key` theo phần để khi đổi tab thì audio cũ
+          dừng hẳn và thanh về 0:00 của file mới (không phát chồng hai phần). */}
+      {replayAudioUrl ? (
+        <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-card/95 px-3 py-2 backdrop-blur sm:px-6 lg:px-8">
+          <AudioPlayer key={part.unitId} src={replayAudioUrl} showSpeed label={replayLabel} />
+        </div>
+      ) : null}
     </section>
   );
 }

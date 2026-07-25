@@ -33,6 +33,7 @@ type Answer = {
     skill: string;
     transcript?: string | null;
     content?: string | null;
+    audioUrl?: string | null;
   };
 };
 
@@ -134,6 +135,8 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
         title: unit.title,
         skill: unit.skill,
         sourceText,
+        // Chỉ Listening mới có thanh nghe lại ở trang kết quả.
+        audioUrl: unit.skill === "listening" ? unit.audioUrl ?? null : null,
         answers: [],
         answerStrings: [],
         answersByOrder: {},
@@ -187,8 +190,12 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
     (a, b) => skillRank(a.skill) - skillRank(b.skill) || byOrder(a.minOrder, b.minOrder)
   );
 
+  // Có thanh nghe lại dính đáy màn hình -> chừa khoảng trống để nó không che
+  // phần nội dung cuối trang ("Đoạn đã tô").
+  const hasReplayAudio = parts.some((part) => part.audioUrl);
+
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${hasReplayAudio ? "pb-24" : ""}`}>
       {review ? (
         <section className="rounded-xl border border-primary/30 bg-primary/5 p-5 shadow-card">
           <div className="flex flex-wrap items-center justify-between gap-3">

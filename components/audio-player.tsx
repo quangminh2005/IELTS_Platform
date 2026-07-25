@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { formatPlaybackRate, nextPlaybackRate } from "@/lib/playback-rate";
 
 function formatTime(seconds: number): string {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
@@ -76,15 +77,21 @@ type AudioPlayerProps = {
   // Tự phát khi vào bài. Nếu trình duyệt chặn autoplay (chưa có thao tác người
   // dùng trên trang), sẽ phát ngay ở lần bấm chuột/chạm đầu tiên bất kỳ.
   autoPlay?: boolean;
+  // Nút đổi tốc độ phát. Chỉ dùng ở trang kết quả (nghe lại) — lúc thi thật KHÔNG
+  // được cho đổi tốc độ nên mặc định tắt.
+  showSpeed?: boolean;
+  // Nhãn ngắn cho biết đang nghe phần nào (ví dụ "Nghe · Phần 1 · Câu 1–10").
+  label?: string;
 };
 
-export function AudioPlayer({ src, autoPlay = false }: AudioPlayerProps) {
+export function AudioPlayer({ src, autoPlay = false, showSpeed = false, label }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
   const [muted, setMuted] = useState(false);
+  const [rate, setRate] = useState(1);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -171,6 +178,14 @@ export function AudioPlayer({ src, autoPlay = false }: AudioPlayerProps) {
     setMuted(value === 0);
   }, []);
 
+  const cycleRate = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const next = nextPlaybackRate(audio.playbackRate);
+    audio.playbackRate = next;
+    setRate(next);
+  }, []);
+
   const toggleMute = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -187,6 +202,13 @@ export function AudioPlayer({ src, autoPlay = false }: AudioPlayerProps) {
       <audio ref={audioRef} src={src} preload="metadata" controlsList="nodownload">
         <track kind="captions" />
       </audio>
+
+      {/* Đang nghe phần nào (chỉ trang kết quả truyền vào) */}
+      {label ? (
+        <span className="hidden max-w-[15rem] shrink-0 truncate text-xs font-semibold text-muted-foreground lg:block">
+          {label}
+        </span>
+      ) : null}
 
       {/* Nút phát/dừng chính */}
       <button
@@ -240,6 +262,18 @@ export function AudioPlayer({ src, autoPlay = false }: AudioPlayerProps) {
       >
         <Forward5Icon />
       </button>
+
+      {/* Tốc độ phát — bấm để đổi lần lượt 1x → 1.25x → 1.5x → 0.75x */}
+      {showSpeed ? (
+        <button
+          type="button"
+          onClick={cycleRate}
+          aria-label={`Tốc độ phát ${formatPlaybackRate(rate)}, bấm để đổi`}
+          className="shrink-0 rounded-full border border-border px-2.5 py-1 text-xs font-bold tabular-nums text-muted-foreground transition-colors hover:border-primary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
+          {formatPlaybackRate(rate)}
+        </button>
+      ) : null}
 
       {/* Âm lượng */}
       <div className="hidden items-center gap-2 md:flex">

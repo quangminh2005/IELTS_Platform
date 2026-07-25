@@ -1982,8 +1982,14 @@ export function AttemptWorkspace({
     setActiveSkill(skill);
   }
 
+  // Form bài làm chỉ thực sự nằm trên màn hình khi đã mount và đã qua màn kiểm tra
+  // âm thanh. Trước khi đó `answers` mới chỉ là state khởi tạo — tuyệt đối không
+  // được đẩy lên server, vì một nhịp tự lưu với state rỗng từng xoá sạch bài làm
+  // của học sinh (24/07/2026: nộp 40 câu trống sau 28 phút làm bài).
+  const formOnScreen = mounted && !needsSoundCheck;
+
   const persistDraft = useCallback(async () => {
-    if (previewMode || !activeSkill) {
+    if (previewMode || !activeSkill || !formOnScreen) {
       return;
     }
     setSaveState("saving");
@@ -2005,7 +2011,7 @@ export function AttemptWorkspace({
     } catch {
       setSaveState("error");
     }
-  }, [answers, attempt.id, snapshotPartTimes, activeSkill, previewMode]);
+  }, [answers, attempt.id, snapshotPartTimes, activeSkill, previewMode, formOnScreen]);
 
   // Khoá cuộn nền khi đang ở chế độ làm bài toàn màn hình.
   useEffect(() => {
@@ -2040,14 +2046,14 @@ export function AttemptWorkspace({
   // Heartbeat: định kỳ lưu tiến độ (đáp án + thời gian làm thực) kể cả khi học sinh
   // chỉ ngồi đọc không gõ, để mất mạng/đóng tab thì mở lại tiếp tục đúng chỗ.
   useEffect(() => {
-    if (previewMode || !activeSkill) {
+    if (previewMode || !activeSkill || !formOnScreen) {
       return;
     }
     const intervalId = window.setInterval(() => {
       void persistDraft();
     }, 10000);
     return () => window.clearInterval(intervalId);
-  }, [previewMode, activeSkill, persistDraft]);
+  }, [previewMode, activeSkill, persistDraft, formOnScreen]);
 
   // Ghi nhận hành vi đáng ngờ: CHỈ ĐẾM, KHÔNG CHẶN. Cố ý không gọi preventDefault để
   // ô tìm kiếm vẫn mở bình thường và học viên không biết mình bị ghi nhận — tính năng
@@ -2128,7 +2134,10 @@ export function AttemptWorkspace({
     }
 
     autoSubmittedRef.current = false;
-    consumedRef.current = activeSkillRow?.elapsedSeconds ?? 0;
+    // Lấy max chứ không gán đè: effect này chạy lại mỗi khi đóng/mở màn kiểm tra
+    // âm thanh hay khi giới hạn giờ đổi, mà giá trị trong DB thường vẫn là 0 —
+    // gán đè sẽ kéo đồng hồ về 0 và khiến tự-nộp-hết-giờ không bao giờ chạy.
+    consumedRef.current = Math.max(consumedRef.current, activeSkillRow?.elapsedSeconds ?? 0);
     const budgetSeconds = activeSkillLimit != null ? activeSkillLimit * 60 : null;
     let lastTick = Date.now();
 

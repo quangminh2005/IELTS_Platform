@@ -13,6 +13,7 @@ import { sanitizePartTimesJson } from "@/lib/skill-times";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
 import { isSkillTimeUp, skillBudgetSeconds } from "@/lib/active-time";
 import { mergeCount } from "@/lib/proctor-signals";
+import { planDraftWrite } from "@/lib/draft-answers";
 import { prisma } from "@/lib/prisma";
 
 const highlightSchema = z.object({
@@ -312,7 +313,10 @@ export async function submitSkill(formData: FormData) {
       data: {
         status: "submitted",
         submittedAt,
-        elapsedSeconds: parsed.data.elapsedSeconds,
+        // Lấy max chứ không ghi đè: trường ẩn elapsedSeconds trên form bị RSC
+        // render lại đặt về defaultValue (giá trị cũ trong DB, thường là 0), nên
+        // nộp ngay sau một lần render lại sẽ xoá mất giờ mà heartbeat đã tích.
+        elapsedSeconds: Math.max(parsed.data.elapsedSeconds, skillRow?.elapsedSeconds ?? 0),
         score: manualSkill ? null : skillGrade.score,
         scorePercent: manualSkill ? null : skillGrade.scorePercent
       }
@@ -395,8 +399,7 @@ export async function saveAttemptDraft(formData: FormData) {
   const attempt = await prisma.attempt.findFirst({
     where: {
       id: attemptId,
-      studentId: student.id,
-      status: "in_progress"
+      studentId: student.id
     },
     include: {
       assignmentRecipient: {
@@ -421,6 +424,13 @@ export async function saveAttemptDraft(formData: FormData) {
     throw new Error("Attempt not found for this student.");
   }
 
+  // Bài đã nộp rồi: nhịp tự lưu 10 giây đang treo sẵn vẫn bắn thêm một lần SAU khi
+  // học sinh bấm Nộp (đo được ~0.4–1 giây sau). Trước đây chỗ này ném lỗi nên mỗi
+  // lượt nộp sinh một log 500 vô nghĩa. Thoát im lặng — không còn gì để lưu nữa.
+  if (attempt.status !== "in_progress") {
+    return;
+  }
+
   const submittedSkillRows = await prisma.attemptSkill.findMany({
     where: { attemptId: attempt.id, status: "submitted" },
     select: { skill: true }
@@ -433,18 +443,37 @@ export async function saveAttemptDraft(formData: FormData) {
     .filter((assignmentUnit) => submittedSkills.has(assignmentUnit.assignableUnit.skill))
     .map((assignmentUnit) => assignmentUnit.assignableUnitId);
 
-  const draftRows = units
+  // CHỈ lấy những câu client thực sự gửi lên (`formData.has`). Trước đây chỗ này
+  // đọc mọi câu của bài và coi câu thiếu là "" — nên một nhịp tự lưu từ trang vừa
+  // mount lại (state rỗng) xoá sạch bài làm đã lưu. Xem lib/draft-answers.ts.
+  const sentRows = units
     .filter((assignmentUnit) => !submittedSkills.has(assignmentUnit.assignableUnit.skill))
     .flatMap((assignmentUnit) =>
-      assignmentUnit.assignableUnit.questions.map((question) => ({
-        attemptId: attempt.id,
-        studentId: student.id,
-        questionId: question.id,
-        assignableUnitId: assignmentUnit.assignableUnitId,
-        value: String(formData.get(`q_${question.id}`) ?? "").trim()
-      }))
-    )
-    .filter((row) => row.value !== "");
+      assignmentUnit.assignableUnit.questions
+        .filter((question) => formData.has(`q_${question.id}`))
+        .map((question) => ({
+          questionId: question.id,
+          assignableUnitId: assignmentUnit.assignableUnitId,
+          value: String(formData.get(`q_${question.id}`) ?? "").trim()
+        }))
+    );
+
+  // Số câu ĐÃ LƯU còn nội dung (chỉ tính kỹ năng chưa nộp) — để nhận ra payload
+  // "trống hết" đáng ngờ và bỏ qua thay vì xoá mất bài của học sinh.
+  const savedNonEmptyCount = await prisma.answer.count({
+    where: {
+      attemptId: attempt.id,
+      value: { not: "" },
+      ...(lockedUnitIds.length > 0 ? { assignableUnitId: { notIn: lockedUnitIds } } : {})
+    }
+  });
+
+  const plan = planDraftWrite({ sent: sentRows, savedNonEmptyCount });
+  const draftRows = plan.createRows.map((row) => ({
+    ...row,
+    attemptId: attempt.id,
+    studentId: student.id
+  }));
 
   // Lưu kèm thời gian theo phần (nếu client gửi) để đóng/mở lại bài không bị mất.
   // Chỉ cập nhật khi form thực sự có trường này — tránh ghi đè null mất dữ liệu cũ.
@@ -501,16 +530,20 @@ export async function saveAttemptDraft(formData: FormData) {
     `
   ];
 
+  // Ghi đáp án: chỉ xoá đúng những câu client vừa gửi (không còn deleteMany cả
+  // attempt), và bỏ qua hẳn khi payload không đáng tin. Giờ làm bài + tín hiệu
+  // gian lận vẫn luôn được lưu vì chúng chỉ tăng, không bao giờ mất dữ liệu.
+  const answerWrites = plan.skip
+    ? []
+    : [
+        prisma.answer.deleteMany({
+          where: { attemptId: attempt.id, questionId: { in: plan.deleteQuestionIds } }
+        }),
+        ...(draftRows.length > 0 ? [prisma.answer.createMany({ data: draftRows })] : [])
+      ];
+
   await prisma.$transaction([
-    prisma.answer.deleteMany({
-      where: {
-        attemptId: attempt.id,
-        ...(lockedUnitIds.length > 0 ? { assignableUnitId: { notIn: lockedUnitIds } } : {})
-      }
-    }),
-    ...(draftRows.length > 0
-      ? [prisma.answer.createMany({ data: draftRows })]
-      : []),
+    ...answerWrites,
     ...partTimesUpdate,
     ...skillElapsedUpdate,
     ...proctorUpdate
@@ -537,8 +570,7 @@ export async function saveHighlight(formData: FormData) {
   const attempt = await prisma.attempt.findFirst({
     where: {
       id: parsed.data.attemptId,
-      studentId: student.id,
-      status: "in_progress"
+      studentId: student.id
     },
     include: {
       assignmentRecipient: {
@@ -549,6 +581,12 @@ export async function saveHighlight(formData: FormData) {
 
   if (!attempt) {
     throw new Error("Attempt not found for this student.");
+  }
+
+  // Đã nộp: thao tác tô màu đến muộn (bấm ngay trước lúc nộp) — bỏ qua, không
+  // ném lỗi 500. Client tự quản lý highlight nên không cần báo lại.
+  if (attempt.status !== "in_progress") {
+    return { id: "" };
   }
 
   const assignmentUnit = await prisma.assignmentUnit.findFirst({

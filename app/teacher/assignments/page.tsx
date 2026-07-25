@@ -111,7 +111,6 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
       prisma.assignment.findMany({
         where: { teacherId: teacher.id },
         orderBy: { createdAt: "desc" },
-        take: 8,
         include: assignmentInclude
       })
     ]);
@@ -121,6 +120,7 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
 
   const assignmentItems: AssignmentItem[] = assignments.map((assignment) => ({
     id: assignment.id,
+    createdAt: assignment.createdAt,
     title: assignment.title,
     instructions: assignment.instructions,
     deadline: assignment.deadline,

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { deleteStudent, requireTeacher } from "@/lib/actions/classes";
+import { deleteStudent } from "@/lib/actions/classes";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { resetRecipientAttempts } from "@/lib/actions/attempts";
 import { ActionDeleteButton, ActionForm } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
@@ -46,7 +47,7 @@ function statusLabel(status: string) {
 }
 
 export default async function TeacherStudentPage({ params }: StudentPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
   const student = await prisma.studentProfile.findFirst({
     where: {
       id: params.studentId,

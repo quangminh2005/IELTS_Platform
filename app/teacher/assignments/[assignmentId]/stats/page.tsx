@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { notFound } from "next/navigation";
-import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
 import { SKILL_SHORT_LABELS } from "@/lib/band-score";
 import {
@@ -31,7 +31,7 @@ function wrongValuesLabel(question: QuestionMissStat) {
 }
 
 export default async function AssignmentStatsPage({ params }: StatsPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
 
   const assignment = await prisma.assignment.findFirst({
     where: { id: params.assignmentId, teacherId: teacher.id },

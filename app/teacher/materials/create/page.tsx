@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { MaterialEditor } from "@/components/material-editor";
 import { MaterialImport } from "@/components/material-import";
-import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
 
 export default async function CreateMaterialPage() {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
   const materials = await prisma.material.findMany({
     where: { teacherId: teacher.id },
     orderBy: { createdAt: "desc" },

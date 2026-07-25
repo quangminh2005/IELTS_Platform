@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import {
   addStudent,
   deleteClass,
-  removeStudentFromClass,
-  requireTeacher
+  removeStudentFromClass
 } from "@/lib/actions/classes";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { ActionDeleteButton, ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { prisma } from "@/lib/prisma";
@@ -17,7 +17,7 @@ type ClassDetailPageProps = {
 };
 
 export default async function TeacherClassDetailPage({ params }: ClassDetailPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
   const classItem = await prisma.class.findFirst({
     where: { id: params.classId, teacherId: teacher.id },
     include: {

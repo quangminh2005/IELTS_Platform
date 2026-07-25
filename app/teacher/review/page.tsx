@@ -1,11 +1,11 @@
 import { ReviewQueue } from "@/components/review-queue";
-import { requireTeacher } from "@/lib/actions/classes";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { isSubmissionLate } from "@/lib/assignment-calendar";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
 
 export default async function TeacherReviewPage() {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
   const attempts = await prisma.attempt.findMany({
     where: {
       status: { in: ["submitted", "reviewed"] },

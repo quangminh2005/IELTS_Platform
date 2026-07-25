@@ -1,8 +1,8 @@
 import type { Prisma } from "@prisma/client";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { AssignmentBuilder } from "@/components/assignment-builder";
 import { AssignmentList, type AssignmentItem } from "@/components/assignment-list";
 import { NoticeToast } from "@/components/notice-toast";
-import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
 
 const materialInclude = {
@@ -89,7 +89,7 @@ type TeacherAssignmentsPageProps = {
 };
 
 export default async function TeacherAssignmentsPage({ searchParams }: TeacherAssignmentsPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
   const assignmentsMessage = searchParams?.assignmentsMessage;
   const assignmentsStatus = searchParams?.assignmentsStatus === "success" ? "success" : "error";
   // Đổi sau mỗi lần tạo bài thành công → truyền cho form để remount, xoá sạch

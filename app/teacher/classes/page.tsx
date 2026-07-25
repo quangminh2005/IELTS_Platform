@@ -2,7 +2,8 @@ import Link from "next/link";
 import type { Prisma } from "@prisma/client";
 import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { NoticeToast } from "@/components/notice-toast";
-import { createClass, updateClassWeeklyGoal, requireTeacher } from "@/lib/actions/classes";
+import { createClass, updateClassWeeklyGoal } from "@/lib/actions/classes";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { prisma } from "@/lib/prisma";
 
 const classInclude = {
@@ -25,7 +26,7 @@ type TeacherClassesPageProps = {
 };
 
 export default async function TeacherClassesPage({ searchParams }: TeacherClassesPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
   const classes: TeacherClass[] = await prisma.class.findMany({
     where: { teacherId: teacher.id },
     orderBy: { createdAt: "desc" },

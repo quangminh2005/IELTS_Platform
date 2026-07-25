@@ -1,9 +1,9 @@
 import Link from "next/link";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { notFound } from "next/navigation";
 import { AnnotatedAnswer } from "@/components/annotated-answer";
 import { ReviewForm } from "@/components/review-form";
 import { TranscribeButton } from "@/components/transcribe-button";
-import { requireTeacher } from "@/lib/actions/classes";
 import { isAudioUrl } from "@/lib/question-interactions";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
@@ -25,7 +25,7 @@ function reviewSkill(skills: string[]): string {
 }
 
 export default async function ReviewDetailPage({ params }: DetailPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
 
   const attempt = await prisma.attempt.findFirst({
     where: {

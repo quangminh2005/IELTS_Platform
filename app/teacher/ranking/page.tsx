@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireTeacher } from "@/lib/actions/classes";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { prisma } from "@/lib/prisma";
 import { getClassRanking } from "@/lib/class-ranking";
 import { ClassRankingBoard } from "@/components/class-ranking-board";
@@ -11,7 +11,7 @@ type TeacherRankingPageProps = {
 };
 
 export default async function TeacherRankingPage({ searchParams }: TeacherRankingPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
 
   const classes = await prisma.class.findMany({
     where: { teacherId: teacher.id },

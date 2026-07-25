@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { prisma } from "@/lib/prisma";
-import { requireTeacher } from "@/lib/actions/classes";
 
 const GRADEABLE = ["writing", "speaking"] as const;
 
@@ -17,7 +17,7 @@ function formatDateTime(value: Date | null) {
 }
 
 export default async function TeacherDashboardPage() {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
 
   const [
     classCount,

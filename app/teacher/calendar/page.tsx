@@ -1,5 +1,5 @@
 import { AssignmentCalendar } from "@/components/assignment-calendar";
-import { requireTeacher } from "@/lib/actions/classes";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import {
   buildSkillProgress,
   countGradedAnswers,
@@ -11,7 +11,7 @@ import { orderedSkillsOfAssignment } from "@/lib/skill-sessions";
 import { prisma } from "@/lib/prisma";
 
 export default async function TeacherCalendarPage() {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
 
   const [classes, assignments] = await Promise.all([
     prisma.class.findMany({

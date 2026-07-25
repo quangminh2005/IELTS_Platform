@@ -1,9 +1,9 @@
 import type { Prisma } from "@prisma/client";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import Link from "next/link";
 import { ActionDeleteButton, ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { MaterialUnitsPanel } from "@/components/material-units-panel";
 import { MaterialsBrowser, type MaterialBrowserItem } from "@/components/materials-browser";
-import { requireTeacher } from "@/lib/actions/classes";
 import {
   deleteMaterial,
   deleteQuestion,
@@ -141,7 +141,7 @@ type TeacherMaterialsPageProps = {
 };
 
 export default async function TeacherMaterialsPage({ searchParams }: TeacherMaterialsPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
   const materialsMessage = searchParams?.materialsMessage;
   const materialsStatus = searchParams?.materialsStatus === "success" ? "success" : "error";
   const materials: TeacherMaterial[] = await prisma.material.findMany({

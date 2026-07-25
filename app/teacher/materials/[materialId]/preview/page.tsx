@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { AttemptWorkspace } from "@/components/attempt-workspace";
-import { requireTeacher } from "@/lib/actions/classes";
 import { detectMultiSelectGroups } from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
@@ -15,7 +15,7 @@ type MaterialPreviewPageProps = {
 // KHÔNG tạo assignment/attempt/học sinh nào trong DB. AttemptWorkspace chạy ở
 // previewMode: không lưu nháp, không ghi highlight, nút nộp chỉ đóng lại.
 export default async function MaterialPreviewPage({ params }: MaterialPreviewPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
 
   // Chỉ cho xem trước tài liệu của chính giáo viên đang đăng nhập.
   const material = await prisma.material.findFirst({

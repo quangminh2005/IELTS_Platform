@@ -1,8 +1,8 @@
 import Link from "next/link";
+import { requireTeacherPage } from "@/lib/teacher-page";
 import { notFound } from "next/navigation";
 import { ResultReview } from "@/components/result-review";
 import { SkillTimeSummary } from "@/components/skill-time-summary";
-import { requireTeacher } from "@/lib/actions/classes";
 import { formatDuration } from "@/lib/format-duration";
 import { proctorSummary } from "@/lib/proctor-signals";
 import { prisma } from "@/lib/prisma";
@@ -15,7 +15,7 @@ type ResultPageProps = {
 };
 
 export default async function TeacherResultPage({ params }: ResultPageProps) {
-  const teacher = await requireTeacher();
+  const teacher = await requireTeacherPage();
 
   const attempt = await prisma.attempt.findFirst({
     where: {

@@ -7,6 +7,31 @@ export type StudentScore = {
   rankingScore: number;
 };
 
+// Thang band IELTS 0–9, dùng để quy band về thang 100 cho điểm xếp hạng.
+const MAX_BAND = 9;
+
+/**
+ * % dùng để tính điểm xếp hạng của MỘT lần làm bài.
+ * - Bài có câu tự chấm (Nghe/Đọc): dùng đúng % chấm tự động.
+ * - Bài Viết/Nói: không có câu tự chấm nên `scorePercent` là null. Nếu giáo viên
+ *   đã chấm thì quy band sang thang 100 (band 9 = 100%); chưa chấm thì trả null
+ *   để bài đó KHÔNG bị tính là 0% và kéo tụt điểm trung bình.
+ */
+export function rankingScorePercent(attempt: {
+  scorePercent: number | null;
+  overallBand: number | null;
+}): number | null {
+  if (attempt.scorePercent !== null) {
+    return attempt.scorePercent;
+  }
+
+  if (attempt.overallBand !== null) {
+    return (attempt.overallBand / MAX_BAND) * 100;
+  }
+
+  return null;
+}
+
 function average(values: number[]) {
   if (values.length === 0) {
     return 0;

@@ -44,6 +44,16 @@ const statements = [
   'ALTER TABLE "AssignmentRecipient" ADD COLUMN IF NOT EXISTS "reminderSentAt" TIMESTAMP(3);',
   // Mốc thời gian transcript<->audio (bấm transcript để tua audio ở trang kết quả)
   'ALTER TABLE "AssignableUnit" ADD COLUMN IF NOT EXISTS "transcriptTimingJson" TEXT;',
+  // Sửa dữ liệu cũ: bài CHỈ có Viết/Nói từng bị lưu score/scorePercent = 0 (điểm
+  // giả) thay vì null, làm điểm trung bình ở bảng xếp hạng bị kéo tụt. Chỉ đụng
+  // tới bài không có câu tự chấm nào — bài Nghe/Đọc sai hết vẫn giữ nguyên 0%.
+  `UPDATE "Attempt" a
+     SET "score" = NULL, "scorePercent" = NULL
+   WHERE a."scorePercent" = 0
+     AND NOT EXISTS (
+       SELECT 1 FROM "Answer" ans
+       WHERE ans."attemptId" = a."id" AND ans."isCorrect" IS NOT NULL
+     );`,
 ];
 
 const prisma = new PrismaClient();

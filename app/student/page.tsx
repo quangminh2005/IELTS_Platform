@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { SkillTags } from "@/components/skill-tags";
 import { ProgressRing } from "@/components/progress-ring";
 import { calculateWeekStreak } from "@/lib/streak";
-import { studentRankingScore } from "@/lib/student-score";
+import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
 import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
 
@@ -104,7 +104,15 @@ export default async function StudentDashboardPage() {
 
   const attempts = await prisma.attempt.findMany({
     where: { studentId: student.id },
-    select: { scorePercent: true, startedAt: true, submittedAt: true, status: true }
+    select: {
+      scorePercent: true,
+      startedAt: true,
+      submittedAt: true,
+      status: true,
+      // Band giáo viên chấm (Viết/Nói) — để bài chấm tay cũng được tính vào điểm
+      // xếp hạng ở đây giống trang Xếp hạng, không bị bỏ trắng.
+      review: { select: { overallBand: true } }
+    }
   });
 
   const membership = await prisma.classStudent.findFirst({
@@ -129,7 +137,12 @@ export default async function StudentDashboardPage() {
 
   const score = studentRankingScore({
     scorePercents: attempts
-      .map((attempt) => attempt.scorePercent)
+      .map((attempt) =>
+        rankingScorePercent({
+          scorePercent: attempt.scorePercent,
+          overallBand: attempt.review?.overallBand ?? null
+        })
+      )
       .filter((value): value is number => value !== null),
     statuses: recipients.map((recipient) => recipient.status),
     attemptTimes: attempts.map((attempt) => ({

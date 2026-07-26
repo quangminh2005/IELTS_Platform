@@ -1,5 +1,24 @@
 import { describe, expect, it } from "vitest";
-import { studentRankingScore } from "../lib/student-score";
+import { rankingScorePercent, studentRankingScore } from "../lib/student-score";
+
+describe("rankingScorePercent", () => {
+  it("bài có câu tự chấm -> dùng đúng % chấm tự động", () => {
+    expect(rankingScorePercent({ scorePercent: 75, overallBand: null })).toBe(75);
+  });
+
+  it("bài Viết/Nói đã chấm -> quy band sang thang 100 (band 9 = 100%)", () => {
+    expect(rankingScorePercent({ scorePercent: null, overallBand: 9 })).toBe(100);
+    expect(rankingScorePercent({ scorePercent: null, overallBand: 6.5 })).toBeCloseTo(72.2, 1);
+  });
+
+  it("bài Viết/Nói chưa chấm -> null để không kéo tụt điểm trung bình", () => {
+    expect(rankingScorePercent({ scorePercent: null, overallBand: null })).toBeNull();
+  });
+
+  it("bài Nghe/Đọc có band giáo viên chấm vẫn ưu tiên % tự chấm (không tính hai lần)", () => {
+    expect(rankingScorePercent({ scorePercent: 60, overallBand: 8 })).toBe(60);
+  });
+});
 
 describe("studentRankingScore", () => {
   const now = new Date("2026-07-08T10:00:00+07:00");

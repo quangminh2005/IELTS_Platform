@@ -352,7 +352,11 @@ export async function submitSkill(formData: FormData) {
       const autoGraded = savedAnswers.filter((a) => a.isCorrect !== null);
       const totalScore = autoGraded.reduce((sum, a) => sum + (a.pointsAwarded ?? 0), 0);
       const maxScore = autoGraded.reduce((sum, a) => sum + (a.question?.points ?? 1), 0);
-      const scorePercent = maxScore === 0 ? 0 : Math.round((totalScore / maxScore) * 100);
+      // Bài chỉ có Viết/Nói: không có câu tự chấm nào -> lưu null ("chờ chấm"),
+      // KHÔNG lưu 0. Số 0 giả đó từng bị tính vào điểm trung bình của bảng xếp
+      // hạng, khiến học viên càng làm bài Viết/Nói càng tụt hạng.
+      const manualOnly = maxScore === 0;
+      const scorePercent = manualOnly ? null : Math.round((totalScore / maxScore) * 100);
 
       await tx.attempt.update({
         where: { id: attempt.id },
@@ -363,7 +367,7 @@ export async function submitSkill(formData: FormData) {
           // Tổng thời gian làm bài = tổng elapsedSeconds của từng kỹ năng (skills
           // đã đọc lại ở trên nên đã có giá trị mới nhất của kỹ năng vừa nộp).
           elapsedSeconds: skills.reduce((sum, row) => sum + (row.elapsedSeconds ?? 0), 0),
-          score: totalScore,
+          score: manualOnly ? null : totalScore,
           scorePercent,
           autoGradedAt: submittedAt
         }

@@ -67,12 +67,28 @@ export function ClassRankingBoard({
     );
   }
 
-  const topThree = students.slice(0, 3);
-  const rest = students.slice(3);
+  // Chưa nộp bài nào thì chưa có gì để xếp hạng: tách hẳn xuống nhóm riêng, không
+  // gắn hạng và không gắn bậc (tránh cảnh học viên mới đứng bét với 0 điểm).
+  const ranked = students.filter((student) => student.hasSubmitted);
+  const notStarted = students.filter((student) => !student.hasSubmitted);
+
+  const topThree = ranked.slice(0, 3);
+  const rest = ranked.slice(3);
 
   // Thứ tự hiển thị trực quan: hạng 2 (trái) - hạng 1 (giữa) - hạng 3 (phải).
   // Chỉ lấy các vị trí thực sự có học viên (lớp ít người sẽ có 1-2 bục).
   const podiumOrder = [1, 0, 2].filter((rankIndex) => topThree[rankIndex]);
+
+  if (ranked.length === 0) {
+    return (
+      <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
+        <p className="text-sm font-medium">Chưa có ai nộp bài</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Bảng xếp hạng sẽ xuất hiện sau bài nộp đầu tiên của lớp.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -218,6 +234,51 @@ export function ClassRankingBoard({
                 </article>
               );
             })}
+          </div>
+        </section>
+      ) : null}
+
+      {notStarted.length > 0 ? (
+        <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+          <div className="border-b border-border bg-muted/50 px-5 py-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Chưa có bài nào
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Vào bảng xếp hạng ngay sau bài nộp đầu tiên.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-x-6 gap-y-3 px-5 py-4">
+            {notStarted.map((rankedStudent) => (
+              <div key={rankedStudent.id} className="flex min-w-0 items-center gap-3">
+                {rankedStudent.avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={rankedStudent.avatarUrl}
+                    alt=""
+                    referrerPolicy="no-referrer"
+                    className="h-9 w-9 shrink-0 rounded-full object-cover opacity-70"
+                  />
+                ) : (
+                  <span
+                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white opacity-70 ${avatarColor(
+                      rankedStudent.displayName
+                    )}`}
+                    aria-hidden="true"
+                  >
+                    {initials(rankedStudent.displayName)}
+                  </span>
+                )}
+                <p className="truncate text-sm font-medium text-muted-foreground">
+                  {rankedStudent.displayName}
+                  {rankedStudent.id === highlightStudentId ? (
+                    <span className="ml-2 rounded-full bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">
+                      Bạn
+                    </span>
+                  ) : null}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
       ) : null}

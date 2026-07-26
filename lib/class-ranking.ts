@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { attemptBand, averageBand } from "@/lib/band-score";
-import { studentRankingScore } from "@/lib/student-score";
+import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
 
 export type RankedClassStudent = {
   id: string;
@@ -11,6 +11,9 @@ export type RankedClassStudent = {
   completionRate: number;
   recentActivityPercent: number;
   rankingScore: number;
+  // Đã nộp ít nhất một bài chưa. Chưa nộp -> không có dữ liệu để xếp hạng, luôn
+  // đứng cuối và được tách thành nhóm riêng ở bảng.
+  hasSubmitted: boolean;
 };
 
 // Dữ liệu thô của một học viên trong lớp, đã gỡ khỏi hình dạng Prisma để
@@ -34,8 +37,9 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
   return rows
     .map((row) => {
       const scorePercents = row.attempts
-        .map((attempt) => attempt.scorePercent)
+        .map((attempt) => rankingScorePercent(attempt))
         .filter((scorePercent): scorePercent is number => scorePercent !== null);
+      const hasSubmitted = row.attempts.some((attempt) => attempt.submittedAt !== null);
       // Band trung bình: gộp band của từng lần làm (band giáo viên chấm hoặc
       // band tự động bài đủ 40 câu). Không có band nào -> null (hiển thị % thay thế).
       const attemptBands = row.attempts
@@ -59,10 +63,18 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
         averageBandValue: averageBand(attemptBands),
         completionRate: score.completionRate,
         recentActivityPercent: score.recentActivityPercent,
-        rankingScore: score.rankingScore
+        rankingScore: score.rankingScore,
+        hasSubmitted
       };
     })
-    .sort((a, b) => b.rankingScore - a.rankingScore || a.displayName.localeCompare(b.displayName));
+    .sort(
+      (a, b) =>
+        // Chưa nộp bài nào thì luôn xuống cuối, kể cả khi điểm "hoạt động gần đây"
+        // đang cho họ vài điểm lẻ — chưa có bài thì chưa có gì để xếp hạng.
+        Number(b.hasSubmitted) - Number(a.hasSubmitted) ||
+        b.rankingScore - a.rankingScore ||
+        a.displayName.localeCompare(b.displayName)
+    );
 }
 
 // Nguồn sự thật duy nhất cho bảng xếp hạng, dùng chung cho cả trang học viên

@@ -75,4 +75,107 @@ describe("rankClassmates", () => {
   it("lớp rỗng -> mảng rỗng", () => {
     expect(rankClassmates([], now)).toEqual([]);
   });
+
+  it("bài Viết/Nói chưa chấm không bị tính 0% vào điểm trung bình", () => {
+    const rows: ClassmateRow[] = [
+      {
+        id: "a",
+        displayName: "An",
+        avatarUrl: null,
+        attempts: [
+          {
+            scorePercent: 80,
+            startedAt: new Date("2026-06-01T08:00:00+07:00"),
+            submittedAt: new Date("2026-06-01T09:00:00+07:00"),
+            overallBand: null,
+            answers: [{ isCorrect: true, skill: "reading" }]
+          },
+          {
+            // Bài Viết: không có câu tự chấm nên scorePercent = null, chưa chấm nên chưa có band.
+            scorePercent: null,
+            startedAt: new Date("2026-06-02T08:00:00+07:00"),
+            submittedAt: new Date("2026-06-02T09:00:00+07:00"),
+            overallBand: null,
+            answers: [{ isCorrect: null, skill: "writing" }]
+          }
+        ],
+        statuses: ["submitted", "submitted"]
+      }
+    ];
+
+    expect(rankClassmates(rows, now)[0].averageScorePercent).toBe(80);
+  });
+
+  it("bài Viết/Nói đã chấm được quy band sang % và tính vào điểm trung bình", () => {
+    const rows: ClassmateRow[] = [
+      {
+        id: "a",
+        displayName: "An",
+        avatarUrl: null,
+        attempts: [
+          {
+            scorePercent: 60,
+            startedAt: new Date("2026-06-01T08:00:00+07:00"),
+            submittedAt: new Date("2026-06-01T09:00:00+07:00"),
+            overallBand: null,
+            answers: [{ isCorrect: true, skill: "reading" }]
+          },
+          {
+            scorePercent: null,
+            startedAt: new Date("2026-06-02T08:00:00+07:00"),
+            submittedAt: new Date("2026-06-02T09:00:00+07:00"),
+            overallBand: 9,
+            answers: [{ isCorrect: null, skill: "writing" }]
+          }
+        ],
+        statuses: ["reviewed", "reviewed"]
+      }
+    ];
+
+    // (60 + 100) / 2 = 80
+    expect(rankClassmates(rows, now)[0].averageScorePercent).toBe(80);
+  });
+
+  it("học viên chưa nộp bài nào luôn xếp cuối và được đánh dấu chưa có dữ liệu", () => {
+    const rows: ClassmateRow[] = [
+      {
+        // Mới vào lớp: có mở bài hôm qua (hoạt động gần đây = 100 -> 10 điểm) nhưng chưa nộp.
+        id: "moi",
+        displayName: "Mới",
+        avatarUrl: null,
+        attempts: [
+          {
+            scorePercent: null,
+            startedAt: new Date("2026-07-24T08:00:00+07:00"),
+            submittedAt: null,
+            overallBand: null,
+            answers: []
+          }
+        ],
+        statuses: ["in_progress"]
+      },
+      {
+        // Đã nộp 1/20 bài, điểm 0 -> chỉ 1 điểm xếp hạng, vẫn phải đứng trên "Mới".
+        id: "cham",
+        displayName: "Chăm",
+        avatarUrl: null,
+        attempts: [
+          {
+            scorePercent: 0,
+            startedAt: new Date("2026-06-01T08:00:00+07:00"),
+            submittedAt: new Date("2026-06-01T09:00:00+07:00"),
+            overallBand: null,
+            answers: [{ isCorrect: false, skill: "reading" }]
+          }
+        ],
+        statuses: ["submitted", ...Array.from({ length: 19 }, () => "assigned")]
+      }
+    ];
+
+    const ranked = rankClassmates(rows, now);
+
+    expect(ranked.map((student) => student.displayName)).toEqual(["Chăm", "Mới"]);
+    expect(ranked[0].hasSubmitted).toBe(true);
+    expect(ranked[1].hasSubmitted).toBe(false);
+  });
 });

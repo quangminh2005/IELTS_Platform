@@ -1,5 +1,6 @@
 import { formatBand } from "@/lib/band-score";
 import { RankTierBadge } from "@/components/rank-tier-badge";
+import { daysAgoLabel } from "@/lib/student-score";
 import type { RankedClassStudent } from "@/lib/class-ranking";
 
 // Chữ cái viết tắt cho avatar (tối đa 2 ký tự, lấy từ đầu các từ trong tên).
@@ -134,6 +135,11 @@ export function ClassRankingBoard({
                 <div className="mt-1">
                   <RankTierBadge score={rankedStudent.rankingScore} />
                 </div>
+                <p className="mt-1 text-center text-[11px] leading-4 text-muted-foreground">
+                  {rankedStudent.submittedCount} bài
+                  <br />
+                  {daysAgoLabel(rankedStudent.daysSinceLastActivity)}
+                </p>
                 <div
                   className={`mt-2 flex w-full items-start justify-center rounded-t-lg ${style.pedestal}`}
                 >
@@ -149,12 +155,13 @@ export function ClassRankingBoard({
 
       {rest.length > 0 ? (
         <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-          <div className="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-3 border-b border-border bg-muted/50 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground md:grid-cols-[3.5rem_minmax(0,1fr)_6rem_6rem_6rem_6rem]">
+          <div className="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-3 border-b border-border bg-muted/50 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground md:grid-cols-[3.5rem_minmax(0,1fr)_6rem_4.5rem_6rem_7.5rem_4.5rem]">
             <span>Hạng</span>
             <span>Học viên</span>
             <span className="hidden md:block">Điểm TB</span>
+            <span className="hidden md:block">Số bài</span>
             <span className="hidden md:block">Hoàn thành</span>
-            <span className="hidden md:block">Gần đây</span>
+            <span className="hidden md:block">Làm gần nhất</span>
             <span className="hidden md:block">Tổng</span>
           </div>
           <div className="divide-y divide-border">
@@ -164,7 +171,7 @@ export function ClassRankingBoard({
               return (
                 <article
                   key={rankedStudent.id}
-                  className={`grid grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-3 px-5 py-4 md:grid-cols-[3.5rem_minmax(0,1fr)_6rem_6rem_6rem_6rem] ${
+                  className={`grid grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-3 px-5 py-4 md:grid-cols-[3.5rem_minmax(0,1fr)_6rem_4.5rem_6rem_7.5rem_4.5rem] ${
                     isHighlighted ? "bg-primary/10" : ""
                   }`}
                 >
@@ -209,8 +216,11 @@ export function ClassRankingBoard({
                             ? `Band ${formatBand(rankedStudent.averageBandValue)}`
                             : `${Math.round(rankedStudent.averageScorePercent)}%`}
                         </span>
+                        <span>Số bài: {rankedStudent.submittedCount}</span>
                         <span>Hoàn thành: {Math.round(rankedStudent.completionRate)}%</span>
-                        <span>Gần đây: {rankedStudent.recentActivityPercent}%</span>
+                        <span>
+                          Làm gần nhất: {daysAgoLabel(rankedStudent.daysSinceLastActivity)}
+                        </span>
                         <span className="font-semibold text-foreground">
                           Tổng: {rankedStudent.rankingScore}
                         </span>
@@ -223,10 +233,13 @@ export function ClassRankingBoard({
                       : `${Math.round(rankedStudent.averageScorePercent)}%`}
                   </p>
                   <p className="hidden text-sm tabular-nums md:block">
+                    {rankedStudent.submittedCount}
+                  </p>
+                  <p className="hidden text-sm tabular-nums md:block">
                     {Math.round(rankedStudent.completionRate)}%
                   </p>
                   <p className="hidden text-sm tabular-nums md:block">
-                    {rankedStudent.recentActivityPercent}%
+                    {daysAgoLabel(rankedStudent.daysSinceLastActivity)}
                   </p>
                   <p className="hidden font-semibold tabular-nums text-primary md:block">
                     {rankedStudent.rankingScore}

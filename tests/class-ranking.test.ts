@@ -3,7 +3,7 @@ import { rankClassmates, type ClassmateRow } from "../lib/class-ranking";
 
 const now = new Date("2026-07-25T10:00:00+07:00");
 
-// Học viên chỉ có 1 lần làm bài cũ (ngoài 7 ngày) -> recentActivityPercent = 0,
+// Học viên chỉ có 1 lần làm bài cũ (ngoài 14 ngày) -> recentActivityPercent = 0,
 // completionRate = 100, nên rankingScore = scorePercent * 0.7 + 20.
 function classmate(id: string, displayName: string, scorePercent: number): ClassmateRow {
   return {
@@ -136,6 +136,47 @@ describe("rankClassmates", () => {
     expect(rankClassmates(rows, now)[0].averageScorePercent).toBe(80);
   });
 
+  it("đếm số bài ĐÃ NỘP, không tính bài đang làm dở", () => {
+    const rows: ClassmateRow[] = [
+      {
+        id: "a",
+        displayName: "An",
+        avatarUrl: null,
+        attempts: [
+          {
+            scorePercent: 70,
+            startedAt: new Date("2026-07-20T08:00:00+07:00"),
+            submittedAt: new Date("2026-07-20T09:00:00+07:00"),
+            overallBand: null,
+            answers: []
+          },
+          {
+            scorePercent: 50,
+            startedAt: new Date("2026-07-22T08:00:00+07:00"),
+            submittedAt: new Date("2026-07-22T09:00:00+07:00"),
+            overallBand: null,
+            answers: []
+          },
+          {
+            // đang làm dở
+            scorePercent: null,
+            startedAt: new Date("2026-07-25T08:00:00+07:00"),
+            submittedAt: null,
+            overallBand: null,
+            answers: []
+          }
+        ],
+        statuses: ["submitted", "submitted", "in_progress"]
+      }
+    ];
+
+    const ranked = rankClassmates(rows, now);
+
+    expect(ranked[0].submittedCount).toBe(2);
+    // Mở bài lúc 25/07 -> mốc hoạt động gần nhất là hôm nay.
+    expect(ranked[0].daysSinceLastActivity).toBe(0);
+  });
+
   it("học viên chưa nộp bài nào luôn xếp cuối và được đánh dấu chưa có dữ liệu", () => {
     const rows: ClassmateRow[] = [
       {
@@ -177,5 +218,6 @@ describe("rankClassmates", () => {
     expect(ranked.map((student) => student.displayName)).toEqual(["Chăm", "Mới"]);
     expect(ranked[0].hasSubmitted).toBe(true);
     expect(ranked[1].hasSubmitted).toBe(false);
+    expect(ranked[1].submittedCount).toBe(0);
   });
 });

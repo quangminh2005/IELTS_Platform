@@ -14,6 +14,9 @@ export type RankedClassStudent = {
   // Đã nộp ít nhất một bài chưa. Chưa nộp -> không có dữ liệu để xếp hạng, luôn
   // đứng cuối và được tách thành nhóm riêng ở bảng.
   hasSubmitted: boolean;
+  // Số bài đã nộp — để nhìn ra "cao điểm nhờ làm 1 bài" và "làm đều 10 bài".
+  submittedCount: number;
+  daysSinceLastActivity: number | null;
 };
 
 // Dữ liệu thô của một học viên trong lớp, đã gỡ khỏi hình dạng Prisma để
@@ -39,7 +42,7 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
       const scorePercents = row.attempts
         .map((attempt) => rankingScorePercent(attempt))
         .filter((scorePercent): scorePercent is number => scorePercent !== null);
-      const hasSubmitted = row.attempts.some((attempt) => attempt.submittedAt !== null);
+      const submittedCount = row.attempts.filter((attempt) => attempt.submittedAt !== null).length;
       // Band trung bình: gộp band của từng lần làm (band giáo viên chấm hoặc
       // band tự động bài đủ 40 câu). Không có band nào -> null (hiển thị % thay thế).
       const attemptBands = row.attempts
@@ -64,7 +67,9 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
         completionRate: score.completionRate,
         recentActivityPercent: score.recentActivityPercent,
         rankingScore: score.rankingScore,
-        hasSubmitted
+        hasSubmitted: submittedCount > 0,
+        submittedCount,
+        daysSinceLastActivity: score.daysSinceLastActivity
       };
     })
     .sort(

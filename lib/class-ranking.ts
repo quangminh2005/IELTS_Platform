@@ -1,5 +1,6 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { attemptBand, averageBand } from "@/lib/band-score";
+import { attemptBandFromCounts, averageBand, type SkillCount } from "@/lib/band-score";
 import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
 
 export type RankedClassStudent = {
@@ -37,7 +38,8 @@ export type ClassmateRow = {
     // Thời điểm giáo viên chấm (Viết/Nói) — để ảnh chụp tuần trước không dùng
     // band mới chấm hôm nay.
     reviewedAt: Date | null;
-    answers: Array<{ isCorrect: boolean | null; skill: string }>;
+    // Số câu đúng/tổng theo kỹ năng (đã gộp sẵn) để quy band.
+    skillCounts: SkillCount[];
   }>;
   recipients: Array<{ assignedAt: Date; submittedAt: Date | null; status: string }>;
 };
@@ -137,7 +139,7 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
       // Band trung bình: gộp band của từng lần làm (band giáo viên chấm hoặc
       // band tự động bài đủ 40 câu). Không có band nào -> null (hiển thị % thay thế).
       const attemptBands = row.attempts
-        .map((attempt) => attemptBand(attempt.overallBand, attempt.answers))
+        .map((attempt) => attemptBandFromCounts(attempt.overallBand, attempt.skillCounts))
         .filter((band): band is number => band !== null);
       const previous = previousPositions.get(row.id) ?? null;
 
@@ -179,9 +181,45 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
     });
 }
 
+// Số câu đúng theo kỹ năng của từng lần làm bài, để database gộp giúp thay vì
+// tải hàng nghìn dòng Answer về chỉ để đếm.
+async function skillCountsByAttempt(attemptIds: string[]) {
+  const byAttempt = new Map<string, SkillCount[]>();
+
+  if (attemptIds.length === 0) {
+    return byAttempt;
+  }
+
+  const rows = await prisma.$queryRaw<
+    Array<{ attemptId: string; skill: string; correct: bigint; total: bigint }>
+  >`
+    SELECT ans."attemptId",
+           unit."skill",
+           count(*) FILTER (WHERE ans."isCorrect") AS correct,
+           count(*) AS total
+      FROM "Answer" ans
+      JOIN "AssignableUnit" unit ON unit."id" = ans."assignableUnitId"
+     WHERE ans."attemptId" IN (${Prisma.join(attemptIds)})
+       AND ans."isCorrect" IS NOT NULL
+     GROUP BY ans."attemptId", unit."skill"
+  `;
+
+  for (const row of rows) {
+    const current = byAttempt.get(row.attemptId) ?? [];
+    current.push({ skill: row.skill, correct: Number(row.correct), total: Number(row.total) });
+    byAttempt.set(row.attemptId, current);
+  }
+
+  return byAttempt;
+}
+
 // Nguồn sự thật duy nhất cho bảng xếp hạng, dùng chung cho cả trang học viên
 // lẫn trang giáo viên. KHÔNG kiểm tra quyền — trang gọi phải tự kiểm tra.
 export async function getClassRanking(classId: string): Promise<RankedClassStudent[]> {
+  // Chỉ tính bài giao của chính lớp này. classId null = bài giao chung cho nhiều
+  // lớp (hoặc bài cũ chưa gắn được lớp) -> vẫn tính, để không mất dữ liệu.
+  const ofThisClass = { assignment: { OR: [{ classId }, { classId: null }] } };
+
   const classmates = await prisma.classStudent.findMany({
     where: { classId },
     orderBy: { joinedAt: "asc" },
@@ -192,22 +230,19 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
             select: { image: true }
           },
           attempts: {
+            where: { assignmentRecipient: ofThisClass },
             select: {
+              id: true,
               scorePercent: true,
               startedAt: true,
               submittedAt: true,
               review: {
                 select: { overallBand: true, reviewedAt: true }
-              },
-              answers: {
-                select: {
-                  isCorrect: true,
-                  assignableUnit: { select: { skill: true } }
-                }
               }
             }
           },
           recipients: {
+            where: ofThisClass,
             select: {
               status: true,
               assignedAt: true,
@@ -218,6 +253,10 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
       }
     }
   });
+
+  const skillCounts = await skillCountsByAttempt(
+    classmates.flatMap((classmate) => classmate.student.attempts.map((attempt) => attempt.id))
+  );
 
   return rankClassmates(
     classmates.map((classmate) => ({
@@ -230,10 +269,7 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
         submittedAt: attempt.submittedAt,
         overallBand: attempt.review?.overallBand ?? null,
         reviewedAt: attempt.review?.reviewedAt ?? null,
-        answers: attempt.answers.map((answer) => ({
-          isCorrect: answer.isCorrect,
-          skill: answer.assignableUnit.skill
-        }))
+        skillCounts: skillCounts.get(attempt.id) ?? []
       })),
       recipients: classmate.student.recipients.map((recipient) => ({
         assignedAt: recipient.assignedAt,

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireTeacher } from "@/lib/actions/classes";
+import { resolveAssignmentClassId } from "@/lib/assignment-class";
 import { parseAssignmentDeadline } from "@/lib/assignment-deadline";
 import { assignmentNoticePath } from "@/lib/assignment-notices";
 import { prisma } from "@/lib/prisma";
@@ -60,6 +61,23 @@ async function verifyUnitsAndStudents(
   if (students.length !== studentIds.length) {
     throw new Error("Một số học viên đã chọn không thuộc lớp của giáo viên này.");
   }
+}
+
+// Lớp của bài giao — suy từ lớp của những học viên được chọn (form giao bài chỉ
+// chọn học viên). Dùng để bảng xếp hạng của lớp không tính bài của lớp khác.
+async function classIdForStudents(studentIds: string[]) {
+  const memberships = await prisma.classStudent.findMany({
+    where: { studentId: { in: studentIds } },
+    select: { studentId: true, classId: true }
+  });
+
+  return resolveAssignmentClassId(
+    studentIds.map((studentId) =>
+      memberships
+        .filter((membership) => membership.studentId === studentId)
+        .map((membership) => membership.classId)
+    )
+  );
 }
 
 function uniqueInOrder(values: string[]) {
@@ -122,6 +140,7 @@ export async function createAssignment(formData: FormData) {
   await prisma.assignment.create({
     data: {
       teacherId: teacher.id,
+      classId: await classIdForStudents(studentIds),
       title: parsed.data.title,
       instructions: optionalText(parsed.data.instructions),
       deadline,
@@ -221,11 +240,13 @@ export async function updateAssignment(formData: FormData) {
 
   const studentIdsToRemove = recipientsToRemove.map((recipient) => recipient.studentId);
   const studentIdsToAdd = studentIds.filter((studentId) => !currentStudentIds.has(studentId));
+  const classId = await classIdForStudents(studentIds);
 
   await prisma.$transaction([
     prisma.assignment.update({
       where: { id: assignment.id },
       data: {
+        classId,
         title: parsed.data.title,
         instructions: optionalText(parsed.data.instructions),
         deadline,

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 import { rankClassmates, type ClassmateRow } from "../lib/class-ranking";
 
 const now = new Date("2026-07-25T10:00:00+07:00");
@@ -29,7 +29,7 @@ function classmate(id: string, displayName: string, scorePercent: number): Class
         submittedAt: new Date("2026-06-01T09:00:00+07:00"),
         overallBand: null,
         reviewedAt: null,
-        answers: []
+        skillCounts: []
       }
     ],
     recipients: [
@@ -82,7 +82,7 @@ describe("rankClassmates", () => {
             submittedAt: new Date("2026-06-01T09:00:00+07:00"),
             overallBand: 6.5,
             reviewedAt: new Date("2026-06-02T09:00:00+07:00"),
-            answers: []
+            skillCounts: []
           }
         ],
         recipients: [
@@ -115,7 +115,7 @@ describe("rankClassmates", () => {
             submittedAt: new Date("2026-06-01T09:00:00+07:00"),
             overallBand: null,
             reviewedAt: null,
-            answers: [{ isCorrect: true, skill: "reading" }]
+            skillCounts: [{ skill: "reading", correct: 1, total: 1 }]
           },
           {
             // Bài Viết: không có câu tự chấm nên scorePercent = null, chưa chấm nên chưa có band.
@@ -124,7 +124,7 @@ describe("rankClassmates", () => {
             submittedAt: new Date("2026-06-02T09:00:00+07:00"),
             overallBand: null,
             reviewedAt: null,
-            answers: [{ isCorrect: null, skill: "writing" }]
+            skillCounts: []
           }
         ],
         recipients: [doneRecipient(54), doneRecipient(53)]
@@ -147,7 +147,7 @@ describe("rankClassmates", () => {
             submittedAt: new Date("2026-06-01T09:00:00+07:00"),
             overallBand: null,
             reviewedAt: null,
-            answers: [{ isCorrect: true, skill: "reading" }]
+            skillCounts: [{ skill: "reading", correct: 1, total: 1 }]
           },
           {
             scorePercent: null,
@@ -155,7 +155,7 @@ describe("rankClassmates", () => {
             submittedAt: new Date("2026-06-02T09:00:00+07:00"),
             overallBand: 9,
             reviewedAt: new Date("2026-06-03T09:00:00+07:00"),
-            answers: [{ isCorrect: null, skill: "writing" }]
+            skillCounts: []
           }
         ],
         recipients: [doneRecipient(54), doneRecipient(53)]
@@ -179,7 +179,7 @@ describe("rankClassmates", () => {
             submittedAt: daysBefore(5, 9),
             overallBand: null,
             reviewedAt: null,
-            answers: []
+            skillCounts: []
           },
           {
             scorePercent: 50,
@@ -187,7 +187,7 @@ describe("rankClassmates", () => {
             submittedAt: daysBefore(3, 9),
             overallBand: null,
             reviewedAt: null,
-            answers: []
+            skillCounts: []
           },
           {
             // đang làm dở
@@ -196,7 +196,7 @@ describe("rankClassmates", () => {
             submittedAt: null,
             overallBand: null,
             reviewedAt: null,
-            answers: []
+            skillCounts: []
           }
         ],
         recipients: [
@@ -228,7 +228,7 @@ describe("rankClassmates", () => {
             submittedAt: null,
             overallBand: null,
             reviewedAt: null,
-            answers: []
+            skillCounts: []
           }
         ],
         recipients: [{ assignedAt: daysBefore(2), submittedAt: null, status: "in_progress" }]
@@ -245,7 +245,7 @@ describe("rankClassmates", () => {
             submittedAt: new Date("2026-06-01T09:00:00+07:00"),
             overallBand: null,
             reviewedAt: null,
-            answers: [{ isCorrect: false, skill: "reading" }]
+            skillCounts: [{ skill: "reading", correct: 0, total: 1 }]
           }
         ],
         recipients: [
@@ -282,7 +282,7 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
         submittedAt: daysBefore(10, 9),
         overallBand: null,
         reviewedAt: null,
-        answers: []
+        skillCounts: []
       },
       {
         scorePercent: 100,
@@ -290,7 +290,7 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
         submittedAt: daysBefore(2, 9),
         overallBand: null,
         reviewedAt: null,
-        answers: []
+        skillCounts: []
       }
     ],
     recipients: [doneRecipient(10), doneRecipient(2)]
@@ -307,7 +307,7 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
         submittedAt: daysBefore(10, 9),
         overallBand: null,
         reviewedAt: null,
-        answers: []
+        skillCounts: []
       }
     ],
     recipients: [doneRecipient(10)]
@@ -333,7 +333,7 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
           submittedAt: daysBefore(1, 9),
           overallBand: null,
           reviewedAt: null,
-          answers: []
+          skillCounts: []
         }
       ],
       recipients: [doneRecipient(1)]

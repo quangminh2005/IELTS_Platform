@@ -118,6 +118,10 @@ export function bandsBySkill(
   }));
 }
 
+// Số câu đúng/tổng của một kỹ năng trong một lần làm bài, đã gộp sẵn (ví dụ do
+// database gộp giúp) — dùng thay cho việc tải về từng câu trả lời.
+export type SkillCount = { skill: string; correct: number; total: number };
+
 // Nhãn ngắn tiếng Việt cho kỹ năng. Viết/Nói không bao giờ ra từ bandsBySkill
 // (chấm tay, không có band) nhưng vẫn cần nhãn ở chỗ liệt kê kỹ năng của bài.
 export const SKILL_SHORT_LABELS: Record<string, string> = {
@@ -148,12 +152,24 @@ export function attemptBand(
   overallBand: number | null,
   answers: Array<{ isCorrect: boolean | null; skill: string }>
 ): number | null {
+  return attemptBandFromCounts(
+    overallBand,
+    bandsBySkill(answers).map(({ skill, correct, total }) => ({ skill, correct, total }))
+  );
+}
+
+// Như attemptBand nhưng nhận số câu đúng đã gộp sẵn theo kỹ năng.
+export function attemptBandFromCounts(
+  overallBand: number | null,
+  counts: SkillCount[]
+): number | null {
   if (overallBand !== null) {
     return overallBand;
   }
 
-  const skillBands = bandsBySkill(answers)
-    .map((row) => row.band)
+  const skillBands = counts
+    .filter((row) => isBandSkill(row.skill))
+    .map((row) => bandScore(row.skill, row.correct, row.total))
     .filter((band): band is number => band !== null);
 
   return averageBand(skillBands);

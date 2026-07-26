@@ -44,6 +44,19 @@ const statements = [
   'ALTER TABLE "AssignmentRecipient" ADD COLUMN IF NOT EXISTS "reminderSentAt" TIMESTAMP(3);',
   // Mốc thời gian transcript<->audio (bấm transcript để tua audio ở trang kết quả)
   'ALTER TABLE "AssignableUnit" ADD COLUMN IF NOT EXISTS "transcriptTimingJson" TEXT;',
+  // Gắn lớp cho các bài giao cũ (Assignment.classId trước đây không bao giờ được
+  // ghi). Chỉ gắn khi mọi học viên nhận bài cùng chung đúng MỘT lớp; bài giao
+  // trải nhiều lớp thì để null = "bài chung", lớp nào cũng tính.
+  `UPDATE "Assignment" a
+     SET "classId" = sub.class_id
+    FROM (
+      SELECT r."assignmentId", min(cs."classId") AS class_id
+        FROM "AssignmentRecipient" r
+        JOIN "ClassStudent" cs ON cs."studentId" = r."studentId"
+       GROUP BY r."assignmentId"
+      HAVING count(DISTINCT cs."classId") = 1
+    ) sub
+   WHERE a."id" = sub."assignmentId" AND a."classId" IS NULL;`,
   // Sửa dữ liệu cũ: bài CHỈ có Viết/Nói từng bị lưu score/scorePercent = 0 (điểm
   // giả) thay vì null, làm điểm trung bình ở bảng xếp hạng bị kéo tụt. Chỉ đụng
   // tới bài không có câu tự chấm nào — bài Nghe/Đọc sai hết vẫn giữ nguyên 0%.

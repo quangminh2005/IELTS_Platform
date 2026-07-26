@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { formatBand } from "@/lib/band-score";
 import { RankTierBadge } from "@/components/rank-tier-badge";
 import { daysAgoLabel } from "@/lib/student-score";
@@ -48,15 +49,80 @@ const podiumStyle = [
   { ring: "ring-amber-600", pedestal: "h-12 bg-amber-600/20", size: "h-16 w-16", shine: "" }
 ];
 
+// Điểm trung bình hiển thị: ưu tiên band, không quy đổi được thì giữ %.
+function averageLabel(student: RankedClassStudent) {
+  return student.averageBandValue !== null
+    ? `Band ${formatBand(student.averageBandValue)}`
+    : `${Math.round(student.averageScorePercent)}%`;
+}
+
+// Mũi tên lên/xuống so với ảnh chụp 7 ngày trước. Tuần trước chưa có mặt trong
+// bảng -> gắn nhãn "mới" thay vì mũi tên (không có gì để so).
+function RankChange({ change, showNew }: { change: number | null; showNew: boolean }) {
+  if (change === null) {
+    // Khi cả lớp đều chưa có dữ liệu tuần trước (bảng vừa mới có bài đầu tiên)
+    // thì không gắn nhãn gì cho đỡ nhiễu — chờ đủ một tuần mới có cái để so.
+    if (!showNew) {
+      return null;
+    }
+
+    return (
+      <span className="text-[11px] font-semibold text-muted-foreground" title="Tuần trước chưa có bài nào">
+        mới
+      </span>
+    );
+  }
+
+  if (change === 0) {
+    return (
+      <span className="text-[11px] font-semibold text-muted-foreground" title="Giữ nguyên hạng so với tuần trước">
+        –
+      </span>
+    );
+  }
+
+  const up = change > 0;
+
+  return (
+    <span
+      className={`text-[11px] font-semibold tabular-nums ${
+        up ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
+      }`}
+      title={`${up ? "Tăng" : "Giảm"} ${Math.abs(change)} hạng so với tuần trước`}
+    >
+      {up ? "▲" : "▼"} {Math.abs(change)}
+    </span>
+  );
+}
+
 // Bục top 3 + bảng từ hạng 4. Dùng chung cho trang Xếp hạng của học viên và
-// của giáo viên; chỉ khác ở chỗ có gắn nhãn "Bạn" hay không.
+// của giáo viên; chỉ khác ở nhãn "Bạn" và ở chỗ giáo viên bấm được vào tên để
+// mở hồ sơ học viên.
 export function ClassRankingBoard({
   students,
-  highlightStudentId = null
+  highlightStudentId = null,
+  linkToProfile = false
 }: {
   students: RankedClassStudent[];
   highlightStudentId?: string | null;
+  linkToProfile?: boolean;
 }) {
+  // Chỉ khu vực giáo viên mới có trang hồ sơ học viên.
+  function StudentName({ student, className = "" }: { student: RankedClassStudent; className?: string }) {
+    if (!linkToProfile) {
+      return <span className={className}>{student.displayName}</span>;
+    }
+
+    return (
+      <Link
+        href={`/teacher/students/${student.id}`}
+        className={`${className} rounded transition hover:text-primary hover:underline`}
+      >
+        {student.displayName}
+      </Link>
+    );
+  }
+
   if (students.length === 0) {
     return (
       <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
@@ -75,6 +141,8 @@ export function ClassRankingBoard({
 
   const topThree = ranked.slice(0, 3);
   const rest = ranked.slice(3);
+  // Có ai đó đã có mặt trong bảng từ tuần trước thì mới đáng gắn nhãn "mới".
+  const hasTrendData = ranked.some((student) => student.rankChange !== null);
 
   // Thứ tự hiển thị trực quan: hạng 2 (trái) - hạng 1 (giữa) - hạng 3 (phải).
   // Chỉ lấy các vị trí thực sự có học viên (lớp ít người sẽ có 1-2 bục).
@@ -101,7 +169,7 @@ export function ClassRankingBoard({
             const isHighlighted = rankedStudent.id === highlightStudentId;
 
             return (
-              <div key={rankedStudent.id} className="flex w-24 flex-col items-center sm:w-28">
+              <div key={rankedStudent.id} className="flex w-28 flex-col items-center sm:w-36">
                 <span className="mb-1 text-2xl">{medals[rankIndex]}</span>
                 {rankedStudent.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -122,23 +190,26 @@ export function ClassRankingBoard({
                   </span>
                 )}
                 <p className="mt-2 max-w-full truncate text-center text-sm font-semibold">
-                  {rankedStudent.displayName}
+                  <StudentName student={rankedStudent} />
                   {isHighlighted ? (
                     <span className="ml-1 rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
                       Bạn
                     </span>
                   ) : null}
                 </p>
-                <p className="text-xs font-semibold tabular-nums text-primary">
+                <p className="flex items-center gap-1.5 text-xs font-semibold tabular-nums text-primary">
                   {rankedStudent.rankingScore} điểm
+                  <RankChange change={rankedStudent.rankChange} showNew={hasTrendData} />
                 </p>
                 <div className="mt-1">
                   <RankTierBadge score={rankedStudent.rankingScore} />
                 </div>
                 <p className="mt-1 text-center text-[11px] leading-4 text-muted-foreground">
-                  {rankedStudent.submittedCount} bài
+                  {averageLabel(rankedStudent)}
                   <br />
-                  {daysAgoLabel(rankedStudent.daysSinceLastActivity)}
+                  {rankedStudent.submittedCount} bài · {daysAgoLabel(rankedStudent.daysSinceLastActivity)}
+                  <br />
+                  Hoàn thành {Math.round(rankedStudent.completionRate)}%
                 </p>
                 <div
                   className={`mt-2 flex w-full items-start justify-center rounded-t-lg ${style.pedestal}`}
@@ -175,8 +246,9 @@ export function ClassRankingBoard({
                     isHighlighted ? "bg-primary/10" : ""
                   }`}
                 >
-                  <p className="text-lg font-bold tabular-nums">
+                  <p className="flex flex-col items-start text-lg font-bold tabular-nums">
                     <span className="text-base text-muted-foreground">{index + 4}</span>
+                    <RankChange change={rankedStudent.rankChange} showNew={hasTrendData} />
                   </p>
                   <div className="flex min-w-0 items-center gap-3">
                     {rankedStudent.avatarUrl ? (
@@ -199,7 +271,7 @@ export function ClassRankingBoard({
                     )}
                     <div className="min-w-0">
                       <p className="truncate font-semibold">
-                        {rankedStudent.displayName}
+                        <StudentName student={rankedStudent} />
                         {isHighlighted ? (
                           <span className="ml-2 rounded-full bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">
                             Bạn
@@ -210,12 +282,7 @@ export function ClassRankingBoard({
                         <RankTierBadge score={rankedStudent.rankingScore} />
                       </div>
                       <p className="mt-2 grid gap-1 text-sm text-muted-foreground md:hidden">
-                        <span>
-                          Điểm TB:{" "}
-                          {rankedStudent.averageBandValue !== null
-                            ? `Band ${formatBand(rankedStudent.averageBandValue)}`
-                            : `${Math.round(rankedStudent.averageScorePercent)}%`}
-                        </span>
+                        <span>Điểm TB: {averageLabel(rankedStudent)}</span>
                         <span>Số bài: {rankedStudent.submittedCount}</span>
                         <span>Hoàn thành: {Math.round(rankedStudent.completionRate)}%</span>
                         <span>
@@ -228,9 +295,7 @@ export function ClassRankingBoard({
                     </div>
                   </div>
                   <p className="hidden text-sm tabular-nums md:block">
-                    {rankedStudent.averageBandValue !== null
-                      ? `Band ${formatBand(rankedStudent.averageBandValue)}`
-                      : `${Math.round(rankedStudent.averageScorePercent)}%`}
+                    {averageLabel(rankedStudent)}
                   </p>
                   <p className="hidden text-sm tabular-nums md:block">
                     {rankedStudent.submittedCount}
@@ -283,7 +348,7 @@ export function ClassRankingBoard({
                   </span>
                 )}
                 <p className="truncate text-sm font-medium text-muted-foreground">
-                  {rankedStudent.displayName}
+                  <StudentName student={rankedStudent} />
                   {rankedStudent.id === highlightStudentId ? (
                     <span className="ml-2 rounded-full bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">
                       Bạn

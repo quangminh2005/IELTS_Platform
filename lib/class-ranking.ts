@@ -17,6 +17,10 @@ export type RankedClassStudent = {
   // Số bài đã nộp — để nhìn ra "cao điểm nhờ làm 1 bài" và "làm đều 10 bài".
   submittedCount: number;
   daysSinceLastActivity: number | null;
+  // Số hạng tăng/giảm so với ảnh chụp 7 ngày trước. Dương = đi lên.
+  // null = tuần trước chưa có bài nào nên chưa có mặt trong bảng.
+  rankChange: number | null;
+  previousRankingScore: number | null;
 };
 
 // Dữ liệu thô của một học viên trong lớp, đã gỡ khỏi hình dạng Prisma để
@@ -30,33 +34,112 @@ export type ClassmateRow = {
     startedAt: Date;
     submittedAt: Date | null;
     overallBand: number | null;
+    // Thời điểm giáo viên chấm (Viết/Nói) — để ảnh chụp tuần trước không dùng
+    // band mới chấm hôm nay.
+    reviewedAt: Date | null;
     answers: Array<{ isCorrect: boolean | null; skill: string }>;
   }>;
-  statuses: string[];
+  recipients: Array<{ assignedAt: Date; submittedAt: Date | null; status: string }>;
 };
+
+const TREND_WINDOW_DAYS = 7;
+
+type Snapshot = { rankingScore: number; hasSubmitted: boolean };
+
+// Điểm xếp hạng tại một thời điểm. `asOf` = null nghĩa là "bây giờ" (dùng hết
+// dữ liệu); truyền mốc cũ thì chỉ tính những gì đã xảy ra trước mốc đó.
+function scoreAt(row: ClassmateRow, now: Date, asOf: Date | null) {
+  const cutoff = asOf ?? now;
+  const attempts = asOf
+    ? row.attempts.filter((attempt) => attempt.startedAt <= cutoff)
+    : row.attempts;
+  const submitted = attempts.filter(
+    (attempt) => attempt.submittedAt !== null && attempt.submittedAt <= cutoff
+  );
+  const recipients = asOf
+    ? row.recipients.filter((recipient) => recipient.assignedAt <= cutoff)
+    : row.recipients;
+
+  const scorePercents = submitted
+    .map((attempt) =>
+      rankingScorePercent({
+        scorePercent: attempt.scorePercent,
+        // Band chấm sau mốc thì coi như lúc đó chưa có.
+        overallBand:
+          attempt.reviewedAt !== null && attempt.reviewedAt > cutoff ? null : attempt.overallBand
+      })
+    )
+    .filter((scorePercent): scorePercent is number => scorePercent !== null);
+
+  const score = studentRankingScore({
+    scorePercents,
+    statuses: recipients.map((recipient) =>
+      // Hiện tại thì dùng đúng trạng thái đang lưu; còn ảnh chụp tuần trước phải
+      // dựng lại từ mốc nộp, vì trạng thái không lưu lịch sử.
+      asOf === null
+        ? recipient.status
+        : recipient.submittedAt !== null && recipient.submittedAt <= cutoff
+          ? "submitted"
+          : "assigned"
+    ),
+    attemptTimes: attempts.map((attempt) => ({
+      startedAt: attempt.startedAt,
+      submittedAt:
+        attempt.submittedAt !== null && attempt.submittedAt <= cutoff ? attempt.submittedAt : null
+    })),
+    now: cutoff
+  });
+
+  return { score, submittedCount: submitted.length };
+}
+
+// Thứ hạng (1-based) của từng học viên tại một mốc. Học viên chưa nộp bài nào
+// không có mặt trong bảng nên cũng không có thứ hạng.
+function positionsAt(rows: ClassmateRow[], now: Date, asOf: Date): Map<string, Snapshot & { position: number }> {
+  const snapshots = rows.map((row) => {
+    const { score, submittedCount } = scoreAt(row, now, asOf);
+    return {
+      id: row.id,
+      displayName: row.displayName,
+      rankingScore: score.rankingScore,
+      hasSubmitted: submittedCount > 0
+    };
+  });
+
+  const positions = new Map<string, Snapshot & { position: number }>();
+
+  snapshots
+    .filter((snapshot) => snapshot.hasSubmitted)
+    .sort(
+      (a, b) => b.rankingScore - a.rankingScore || a.displayName.localeCompare(b.displayName)
+    )
+    .forEach((snapshot, index) => {
+      positions.set(snapshot.id, {
+        rankingScore: snapshot.rankingScore,
+        hasSubmitted: true,
+        position: index + 1
+      });
+    });
+
+  return positions;
+}
 
 // Quy đổi + xếp hạng. Giữ nguyên công thức của trang Xếp hạng học viên.
 export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStudent[] {
+  const today = now ?? new Date();
+  const weekAgo = new Date(today);
+  weekAgo.setDate(weekAgo.getDate() - TREND_WINDOW_DAYS);
+  const previousPositions = positionsAt(rows, today, weekAgo);
+
   return rows
     .map((row) => {
-      const scorePercents = row.attempts
-        .map((attempt) => rankingScorePercent(attempt))
-        .filter((scorePercent): scorePercent is number => scorePercent !== null);
-      const submittedCount = row.attempts.filter((attempt) => attempt.submittedAt !== null).length;
+      const { score, submittedCount } = scoreAt(row, today, null);
       // Band trung bình: gộp band của từng lần làm (band giáo viên chấm hoặc
       // band tự động bài đủ 40 câu). Không có band nào -> null (hiển thị % thay thế).
       const attemptBands = row.attempts
         .map((attempt) => attemptBand(attempt.overallBand, attempt.answers))
         .filter((band): band is number => band !== null);
-      const score = studentRankingScore({
-        scorePercents,
-        statuses: row.statuses,
-        attemptTimes: row.attempts.map((attempt) => ({
-          startedAt: attempt.startedAt,
-          submittedAt: attempt.submittedAt
-        })),
-        now
-      });
+      const previous = previousPositions.get(row.id) ?? null;
 
       return {
         id: row.id,
@@ -69,7 +152,10 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
         rankingScore: score.rankingScore,
         hasSubmitted: submittedCount > 0,
         submittedCount,
-        daysSinceLastActivity: score.daysSinceLastActivity
+        daysSinceLastActivity: score.daysSinceLastActivity,
+        previousPosition: previous?.position ?? null,
+        previousRankingScore: previous?.rankingScore ?? null,
+        rankChange: null as number | null
       };
     })
     .sort(
@@ -79,7 +165,18 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
         Number(b.hasSubmitted) - Number(a.hasSubmitted) ||
         b.rankingScore - a.rankingScore ||
         a.displayName.localeCompare(b.displayName)
-    );
+    )
+    .map((student, index) => {
+      // Thứ hạng hiện tại chỉ đếm trong nhóm đã nộp bài, khớp với cách bảng hiển thị.
+      const position = index + 1;
+      const { previousPosition, ...rest } = student;
+
+      return {
+        ...rest,
+        rankChange:
+          student.hasSubmitted && previousPosition !== null ? previousPosition - position : null
+      };
+    });
 }
 
 // Nguồn sự thật duy nhất cho bảng xếp hạng, dùng chung cho cả trang học viên
@@ -100,7 +197,7 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
               startedAt: true,
               submittedAt: true,
               review: {
-                select: { overallBand: true }
+                select: { overallBand: true, reviewedAt: true }
               },
               answers: {
                 select: {
@@ -112,7 +209,9 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
           },
           recipients: {
             select: {
-              status: true
+              status: true,
+              assignedAt: true,
+              submittedAt: true
             }
           }
         }
@@ -130,12 +229,17 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
         startedAt: attempt.startedAt,
         submittedAt: attempt.submittedAt,
         overallBand: attempt.review?.overallBand ?? null,
+        reviewedAt: attempt.review?.reviewedAt ?? null,
         answers: attempt.answers.map((answer) => ({
           isCorrect: answer.isCorrect,
           skill: answer.assignableUnit.skill
         }))
       })),
-      statuses: classmate.student.recipients.map((recipient) => recipient.status)
+      recipients: classmate.student.recipients.map((recipient) => ({
+        assignedAt: recipient.assignedAt,
+        submittedAt: recipient.submittedAt,
+        status: recipient.status
+      }))
     }))
   );
 }

@@ -1,8 +1,12 @@
 // Nén lại audio Listening trên Vercel Blob cho nhẹ đi.
 //
 // Vì sao: toàn bộ 88 file giáo viên upload đều là stereo, 20 file ở 320 kbps.
-// Với giọng nói thì đó là lãng phí thuần tuý. Đo thật: file nặng nhất 11,8 MB
-// còn 2,4 MB sau khi nén (-80%); cả kho 688 MB -> ~286 MB.
+// Với giọng nói thì đó là lãng phí thuần tuý — và chính nó đã làm store Blob
+// vượt hạn mức 10 GB/tháng và bị khoá một lần (học viên mất audio).
+//
+// Mức 96 kbps mono là do giáo viên chọn sau khi nghe thử mẫu 30 giây ở 64k.
+// File nào vốn đã ở 96 kbps trở xuống sẽ được bỏ qua (xem chốt "không đáng
+// encode lại" bên dưới) — phần tiết kiệm dồn vào nhóm 320/128 kbps.
 //
 // MONO CÓ MẤT TIẾNG KHÔNG? Không. File mono được mọi trình duyệt/điện thoại
 // nhân đôi ra cả hai tai, nghe cân giữa. Và `-ac 1` của ffmpeg là TRỘN hai kênh
@@ -53,9 +57,13 @@ if (!blobToken) {
 
 const prisma = new PrismaClient({ datasources: { db: { url: databaseUrl } } });
 
-const MONO_BITRATE = "64k";
-// Dùng khi file có nội dung stereo thật — giữ 2 kênh nên cần nhiều bit hơn.
-const STEREO_BITRATE = "96k";
+// 96k chứ không phải 64k: giáo viên nghe thử cả hai mẫu 30 giây và chọn mức này.
+// Đây là bài thi, nghe rõ quan trọng hơn tiết kiệm băng thông — 64k cũng đủ rõ
+// nhưng không có lý do gì phải bám sát ranh giới.
+const MONO_BITRATE = "96k";
+// Dùng khi file có nội dung stereo thật — 2 kênh chia nhau nên cần nhiều bit hơn
+// để giữ cùng chất lượng mỗi kênh.
+const STEREO_BITRATE = "128k";
 // Phần khác biệt (L−R) phải thấp hơn bản trộn mono ít nhất ngần này thì mới coi
 // là "stereo giả" (hai kênh y hệt nhau) và cho phép gộp về mono. 20 dB = biên độ
 // chênh lệch chỉ còn 1/10 tín hiệu — tai người không nhận ra khi nó biến mất.
@@ -80,8 +88,17 @@ async function probe(input) {
   return {
     channels: Number(get("channels")),
     duration: Number(get("duration")),
-    size: Number(get("size"))
+    size: Number(get("size")),
+    bitRate: Number(get("bit_rate"))
   };
+}
+
+// Nén xong có nhẹ đi đáng kể không? Ước lượng từ thời lượng và bitrate đích.
+// Dùng để bỏ qua SỚM, trước khi tải, những file vốn đã ở mức bitrate đích trở
+// xuống — không thì mỗi file như vậy là vài MB băng thông Blob đổ đi vô ích.
+function worthReencoding({ duration, size }) {
+  const targetBytes = (duration * Number.parseInt(MONO_BITRATE, 10) * 1000) / 8;
+  return targetBytes <= size * 0.9;
 }
 
 // Mức âm lượng trung bình (dB) sau khi áp một bộ lọc pan. Trả về NaN nếu ffmpeg
@@ -192,6 +209,23 @@ for (const unit of units) {
   };
 
   if (!localSource) {
+    // Đọc phần header qua mạng (vài chục KB) để loại sớm file không đáng nén,
+    // thay vì tải trọn file rồi mới biết.
+    try {
+      const remote = await probe(unit.audioUrl);
+      if (!worthReencoding(remote)) {
+        console.log(
+          `${label} bỏ qua (đã ${Math.round(remote.bitRate / 1000)} kbps, không đáng encode lại)`
+        );
+        skipped += 1;
+        continue;
+      }
+    } catch (error) {
+      console.log(`${label} LỖI đọc header: ${String(error.message).split("\n")[0]}`);
+      failed += 1;
+      continue;
+    }
+
     // Tải về một lần rồi đo + nén tại chỗ. Nếu để ffmpeg đọc thẳng URL thì mỗi
     // lượt đo là một lượt tải lại cả file — ở đây cần 3 lượt đọc.
     try {

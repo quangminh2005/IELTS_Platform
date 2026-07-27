@@ -4,9 +4,9 @@
 // Với giọng nói thì đó là lãng phí thuần tuý — và chính nó đã làm store Blob
 // vượt hạn mức 10 GB/tháng và bị khoá một lần (học viên mất audio).
 //
-// Mức 96 kbps mono là do giáo viên chọn sau khi nghe thử mẫu 30 giây ở 64k.
-// File nào vốn đã ở 96 kbps trở xuống sẽ được bỏ qua (xem chốt "không đáng
-// encode lại" bên dưới) — phần tiết kiệm dồn vào nhóm 320/128 kbps.
+// QUY TẮC: file TRÊN 128 kbps thì hạ về 128 kbps; từ 128 kbps trở xuống thì để
+// nguyên, không đụng vào. Giáo viên chốt mức này sau khi nghe thử mẫu 30 giây.
+// Thực tế chỉ nhóm 320 kbps (20 file, 309 MB) bị đụng tới: 688 MB -> ~503 MB.
 //
 // MONO CÓ MẤT TIẾNG KHÔNG? Không. File mono được mọi trình duyệt/điện thoại
 // nhân đôi ra cả hai tai, nghe cân giữa. Và `-ac 1` của ffmpeg là TRỘN hai kênh
@@ -57,13 +57,13 @@ if (!blobToken) {
 
 const prisma = new PrismaClient({ datasources: { db: { url: databaseUrl } } });
 
-// 96k chứ không phải 64k: giáo viên nghe thử cả hai mẫu 30 giây và chọn mức này.
-// Đây là bài thi, nghe rõ quan trọng hơn tiết kiệm băng thông — 64k cũng đủ rõ
-// nhưng không có lý do gì phải bám sát ranh giới.
-const MONO_BITRATE = "96k";
-// Dùng khi file có nội dung stereo thật — 2 kênh chia nhau nên cần nhiều bit hơn
-// để giữ cùng chất lượng mỗi kênh.
-const STEREO_BITRATE = "128k";
+// Quy tắc do giáo viên chốt: file trên 128 kbps thì hạ về 128, từ 128 trở xuống
+// thì để yên. Đây là bài thi — nghe rõ quan trọng hơn tiết kiệm băng thông.
+const TARGET_BITRATE = "128k";
+// Ngưỡng "coi như đã ở 128 kbps". File 128 kbps thật đo ra 128010–128041 bps chứ
+// không tròn 128000, nên phải có dung sai, không thì chúng lọt qua và bị nén lại
+// một cách vô nghĩa.
+const SKIP_ABOVE_BPS = 128_000 * 1.05;
 // Phần khác biệt (L−R) phải thấp hơn bản trộn mono ít nhất ngần này thì mới coi
 // là "stereo giả" (hai kênh y hệt nhau) và cho phép gộp về mono. 20 dB = biên độ
 // chênh lệch chỉ còn 1/10 tín hiệu — tai người không nhận ra khi nó biến mất.
@@ -93,12 +93,11 @@ async function probe(input) {
   };
 }
 
-// Nén xong có nhẹ đi đáng kể không? Ước lượng từ thời lượng và bitrate đích.
-// Dùng để bỏ qua SỚM, trước khi tải, những file vốn đã ở mức bitrate đích trở
-// xuống — không thì mỗi file như vậy là vài MB băng thông Blob đổ đi vô ích.
-function worthReencoding({ duration, size }) {
-  const targetBytes = (duration * Number.parseInt(MONO_BITRATE, 10) * 1000) / 8;
-  return targetBytes <= size * 0.9;
+// Có đáng nén không? Chỉ khi file đang ở TRÊN 128 kbps. Kiểm tra này chạy trên
+// header đọc qua mạng (vài chục KB) để loại sớm, trước khi tải trọn file —
+// không thì mỗi file bị loại là vài MB băng thông Blob đổ đi vô ích.
+function worthReencoding({ bitRate }) {
+  return Number.isFinite(bitRate) && bitRate > SKIP_ABOVE_BPS;
 }
 
 // Mức âm lượng trung bình (dB) sau khi áp một bộ lọc pan. Trả về NaN nếu ffmpeg
@@ -208,24 +207,27 @@ for (const unit of units) {
     rmSync(outPath, { force: true });
   };
 
-  if (!localSource) {
-    // Đọc phần header qua mạng (vài chục KB) để loại sớm file không đáng nén,
-    // thay vì tải trọn file rồi mới biết.
-    try {
-      const remote = await probe(unit.audioUrl);
-      if (!worthReencoding(remote)) {
-        console.log(
-          `${label} bỏ qua (đã ${Math.round(remote.bitRate / 1000)} kbps, không đáng encode lại)`
-        );
-        skipped += 1;
-        continue;
-      }
-    } catch (error) {
-      console.log(`${label} LỖI đọc header: ${String(error.message).split("\n")[0]}`);
-      failed += 1;
-      continue;
-    }
+  // Đọc thông số trước đã. Có bản gốc trên máy thì đọc từ đó; không thì đọc
+  // header qua mạng (vài chục KB) — rẻ hơn nhiều so với tải trọn file rồi mới
+  // phát hiện là không cần đụng tới.
+  let before;
+  try {
+    before = await probe(localSource ?? unit.audioUrl);
+  } catch (error) {
+    console.log(`${label} LỖI đọc file gốc: ${String(error.message).split("\n")[0]}`);
+    failed += 1;
+    continue;
+  }
 
+  // Quy tắc: chỉ đụng vào file TRÊN 128 kbps. Đây cũng là thứ khiến chạy lại
+  // nhiều lần vô hại — sau lần chạy đầu file đã ở 128 kbps nên bị bỏ qua.
+  if (!worthReencoding(before)) {
+    console.log(`${label} bỏ qua (đã ${Math.round(before.bitRate / 1000)} kbps)`);
+    skipped += 1;
+    continue;
+  }
+
+  if (!localSource) {
     // Tải về một lần rồi đo + nén tại chỗ. Nếu để ffmpeg đọc thẳng URL thì mỗi
     // lượt đo là một lượt tải lại cả file — ở đây cần 3 lượt đọc.
     try {
@@ -235,44 +237,34 @@ for (const unit of units) {
       failed += 1;
       continue;
     }
-  }
-
-  // Đo trên file nguồn đang có sẵn — không tốn thêm lượt đọc Blob nào.
-  let before;
-  try {
-    before = await probe(srcPath);
-  } catch (error) {
-    console.log(`${label} LỖI đọc file gốc: ${String(error.message).split("\n")[0]}`);
-    failed += 1;
-    cleanup();
-    continue;
-  }
-
-  if (!localSource) {
     bytesDownloaded += before.size;
   }
 
-  if (before.channels === 1) {
-    console.log(`${label} bỏ qua (đã mono)`);
-    skipped += 1;
-    cleanup();
-    continue;
-  }
-
-  // Đo xem gộp về mono có làm mất nội dung không.
-  let stereoInfo;
-  try {
-    stereoInfo = await stereoDifferenceDb(srcPath);
-  } catch {
-    stereoInfo = null;
+  // Đo xem gộp về mono có làm mất nội dung không. File vốn đã mono thì khỏi đo
+  // (bộ lọc pan sẽ lỗi vì không có kênh c1).
+  let stereoInfo = null;
+  if (before.channels > 1) {
+    try {
+      stereoInfo = await stereoDifferenceDb(srcPath);
+    } catch {
+      stereoInfo = null;
+    }
   }
 
   // Không đo được -> chọn phương án an toàn (giữ stereo), thà nhẹ ít còn hơn hỏng.
   const canGoMono =
-    stereoInfo !== null && stereoInfo.marginDb >= MONO_SAFE_MARGIN_DB;
+    before.channels === 1 ||
+    (stereoInfo !== null && stereoInfo.marginDb >= MONO_SAFE_MARGIN_DB);
   const mode = canGoMono ? "mono" : "stereo";
-  const bitrate = canGoMono ? MONO_BITRATE : STEREO_BITRATE;
-  const marginText = stereoInfo ? `L−R thấp hơn ${stereoInfo.marginDb.toFixed(0)}dB` : "không đo được";
+  // Bitrate đích như nhau cho cả hai: quy tắc là "trên 128 thì hạ về 128". Ở mức
+  // này mono không nhẹ hơn stereo chút nào — nó chỉ dồn toàn bộ bit cho một kênh
+  // nên nghe rõ hơn, và chỉ làm vậy khi đã đo được hai kênh giống hệt nhau.
+  const bitrate = TARGET_BITRATE;
+  const marginText = stereoInfo
+    ? `L−R thấp hơn ${stereoInfo.marginDb.toFixed(0)}dB`
+    : before.channels === 1
+      ? "vốn đã mono"
+      : "không đo được";
 
   try {
     await run("ffmpeg", [

@@ -91,19 +91,45 @@ describe("foundation slice", () => {
   });
 
   it("does not prefill teacher credentials on the login page", () => {
-    const loginPage = readProjectFile("app/(auth)/login/page.tsx");
+    const loginPage = readProjectFile("app/(auth)/login/teacher/page.tsx");
 
     expect(loginPage).not.toContain('useState("teacher@example.com")');
     expect(loginPage).not.toContain('useState("teacher123")');
   });
 
   it("presents the remembered Google account with a branded Google logo", () => {
-    const loginPage = readProjectFile("app/(auth)/login/page.tsx");
+    const loginPage = readProjectFile("app/(auth)/login/student/page.tsx");
 
     expect(loginPage).toContain("LAST_GOOGLE_ACCOUNT_KEY");
     expect(loginPage).toContain("GoogleLogo");
     expect(loginPage).toContain("Tiếp tục với");
     expect(loginPage).not.toContain(">G</span>");
+  });
+
+  it("asks for the role before showing a login form", () => {
+    const rolePage = readProjectFile("app/(auth)/login/page.tsx");
+
+    expect(rolePage).toContain("Bạn đăng nhập với vai trò nào?");
+    expect(rolePage).toContain("readPreferredRole");
+    expect(rolePage).toContain("savePreferredRole");
+    // Trang chọn vai trò không được chứa form đăng nhập.
+    expect(rolePage).not.toContain('type="password"');
+    expect(rolePage).not.toContain('signIn("google"');
+  });
+
+  it("remembers the teacher email but never the password", () => {
+    const preferences = readProjectFile("lib/auth-preferences.ts");
+    const teacherPage = readProjectFile("app/(auth)/login/teacher/page.tsx");
+
+    expect(preferences).toContain("PREFERRED_ROLE_KEY");
+    expect(preferences).toContain("REMEMBERED_TEACHER_EMAIL_KEY");
+    expect(preferences).not.toMatch(/password/i);
+
+    expect(teacherPage).toContain("saveRememberedTeacherEmail(email)");
+    expect(teacherPage).not.toContain("saveRememberedTeacherEmail(password)");
+    // Mật khẩu do trình duyệt lưu — form phải có name + autoComplete để nó nhận diện.
+    expect(teacherPage).toContain('autoComplete="current-password"');
+    expect(teacherPage).toContain('name="password"');
   });
 
   it("links assigned student work to the practice workspace", () => {

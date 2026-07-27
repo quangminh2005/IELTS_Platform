@@ -84,6 +84,27 @@ body {
   background: hsl(var(--primary) / 0.22);
 }
 
+/*
+  Tô màu khối câu hỏi (components/highlight-region.tsx) qua CSS Custom Highlight
+  API. Màu khớp với các lớp bg-*-400/45 mà <mark> của đoạn văn đang dùng, để hai
+  cột nhìn giống nhau. Trình duyệt không hỗ trợ thì chỉ đơn giản là không tô.
+*/
+::highlight(ielts-hl-yellow) {
+  background-color: rgb(250 204 21 / 0.45);
+}
+
+::highlight(ielts-hl-green) {
+  background-color: rgb(52 211 153 / 0.45);
+}
+
+::highlight(ielts-hl-blue) {
+  background-color: rgb(56 189 248 / 0.45);
+}
+
+::highlight(ielts-hl-pink) {
+  background-color: rgb(244 114 182 / 0.45);
+}
+
 /* Vòng focus rõ ràng, dễ thấy trên mọi nền — hỗ trợ thao tác bàn phím. */
 :focus-visible {
   outline: 2px solid hsl(var(--ring));

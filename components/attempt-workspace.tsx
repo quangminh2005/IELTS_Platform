@@ -19,6 +19,7 @@ import {
   submitSkill
 } from "@/lib/actions/attempts";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
+import { HighlightRegion } from "@/components/highlight-region";
 import { SkillPicker } from "@/components/skill-picker";
 import { ResultReview } from "@/components/result-review";
 import { type Annotation } from "@/components/annotated-answer";
@@ -2518,6 +2519,9 @@ export function AttemptWorkspace({
         const isWriting = unit.unitType === "writing_task" || unit.skill === "writing";
         const sourceText = inlineCompletionConsumesContent ? "" : unit.content;
         const sourceType = "content";
+        // Cột câu hỏi cũng tô màu được, nhưng lưu riêng để offset của hai cột
+        // không lẫn vào nhau.
+        const questionSourceType = "questions";
         const images = parseUnitImages(unit.metadataJson);
         const groupInstructions = parseGroupInstructions(unit.metadataJson);
         const groupTitles = parseGroupTitles(unit.metadataJson);
@@ -2582,6 +2586,11 @@ export function AttemptWorkspace({
         const unitHighlights = highlights.filter(
           (highlight) =>
             highlight.assignableUnitId === unit.id && highlight.sourceType === sourceType
+        );
+        const questionHighlights = highlights.filter(
+          (highlight) =>
+            highlight.assignableUnitId === unit.id &&
+            highlight.sourceType === questionSourceType
         );
 
         // Chế độ khoá audio: KHÔNG hiện thanh phát theo phần — audio phát nối tiếp
@@ -2972,7 +2981,14 @@ export function AttemptWorkspace({
         orderedSections.sort((a, b) => a.order - b.order);
 
         const questionsContent = (
-          <>
+          <HighlightRegion
+            className="space-y-4"
+            highlights={questionHighlights}
+            onHighlight={(payload) =>
+              createHighlight(unit.id, questionSourceType, payload)
+            }
+            onRemoveHighlight={removeHighlight}
+          >
             {orderedSections.length > 0 ? (
               orderedSections.map((section) => section.node)
             ) : (
@@ -2980,7 +2996,7 @@ export function AttemptWorkspace({
                 Phần này không có câu hỏi tự động chấm.
               </p>
             )}
-          </>
+          </HighlightRegion>
         );
 
         return (

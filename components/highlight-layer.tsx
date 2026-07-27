@@ -2,6 +2,14 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 
+import {
+  HighlightPopup,
+  markClass,
+  type HighlightPayload
+} from "@/components/highlight-popup";
+
+export type { HighlightPayload };
+
 type Highlight = {
   id: string;
   selectedText: string;
@@ -10,14 +18,6 @@ type Highlight = {
   sourceType: string;
   startOffset?: number;
   endOffset?: number;
-};
-
-export type HighlightPayload = {
-  selectedText: string;
-  startOffset: number;
-  endOffset: number;
-  color: string;
-  note: string;
 };
 
 type HighlightLayerProps = {
@@ -46,17 +46,6 @@ type PendingSelection = {
 type Popup =
   | { kind: "new"; x: number; y: number }
   | { kind: "existing"; x: number; y: number; id: string };
-
-const colors = [
-  { label: "Vàng", value: "yellow", swatch: "bg-yellow-300", mark: "bg-yellow-400/45" },
-  { label: "Xanh lá", value: "green", swatch: "bg-emerald-300", mark: "bg-emerald-400/45" },
-  { label: "Xanh dương", value: "blue", swatch: "bg-sky-300", mark: "bg-sky-400/45" },
-  { label: "Hồng", value: "pink", swatch: "bg-pink-300", mark: "bg-pink-400/45" }
-];
-
-function markClass(color: string) {
-  return colors.find((item) => item.value === color)?.mark ?? "bg-yellow-400/45";
-}
 
 function getSelectionOffsets(container: HTMLElement, range: Range) {
   const preSelectionRange = range.cloneRange();
@@ -336,58 +325,19 @@ export function HighlightLayer({
       </div>
 
       {popup ? (
-        <div
-          ref={popupRef}
-          style={{
-            position: "fixed",
-            left: popup.x,
-            top: Math.max(popup.y, 56),
-            transform: "translate(-50%, calc(-100% - 8px))",
-            zIndex: 60
-          }}
-          className="flex flex-col gap-2 rounded-xl border border-border bg-card p-2 shadow-pop"
-          onMouseDown={(event) => event.stopPropagation()}
-        >
-          <div className="flex items-center gap-1.5">
-            {colors.map((color) => (
-              <button
-                key={color.value}
-                type="button"
-                title={color.label}
-                onClick={() =>
-                  popup.kind === "new" ? applyNew(color.value) : recolor(popup.id, color.value)
-                }
-                className={`h-6 w-6 rounded-full border border-white/50 transition hover:scale-110 ${color.swatch}`}
-              >
-                <span className="sr-only">{color.label}</span>
-              </button>
-            ))}
-            {popup.kind === "existing" ? (
-              <button
-                type="button"
-                onClick={() => remove(popup.id)}
-                title="Xoá đánh dấu"
-                className="ml-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-border text-muted-foreground transition hover:border-red-400 hover:text-red-500"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-3.5 w-3.5" aria-hidden="true">
-                  <path d="M5 7h14M10 7V5h4v2M6 7l1 13h10l1-13" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span className="sr-only">Xoá đánh dấu</span>
-              </button>
-            ) : null}
-          </div>
-
-          {popup.kind === "new" ? (
-            <input
-              value={note}
-              onChange={(event) => setNote(event.target.value)}
-              placeholder="Ghi chú (tuỳ chọn)"
-              className="w-52 rounded-md border border-border bg-background px-2 py-1 text-xs outline-none focus:border-primary"
-            />
-          ) : activeNote ? (
-            <p className="max-w-52 text-xs text-muted-foreground">{activeNote}</p>
-          ) : null}
-        </div>
+        <HighlightPopup
+          popupRef={popupRef}
+          kind={popup.kind}
+          x={popup.x}
+          y={popup.y}
+          note={note}
+          onNoteChange={setNote}
+          activeNote={activeNote}
+          onPickColor={(color) =>
+            popup.kind === "new" ? applyNew(color) : recolor(popup.id, color)
+          }
+          onRemove={() => popup.kind === "existing" && remove(popup.id)}
+        />
       ) : null}
 
       {error ? <p className="text-xs text-red-500">{error}</p> : null}

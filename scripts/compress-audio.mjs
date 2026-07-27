@@ -21,7 +21,7 @@
 //
 // Chạy:  node scripts/compress-audio.mjs [--limit N] [--dry-run]
 import { execFile } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { promisify } from "node:util";
@@ -38,6 +38,10 @@ const limit = limitArg >= 0 ? Number(args[limitArg + 1]) : Infinity;
 // đợi hết cả kho.
 const onlyArg = args.indexOf("--only");
 const only = onlyArg >= 0 ? args[onlyArg + 1] : null;
+// Thư mục chứa file gốc trên máy. Có bản gốc thì KHÔNG tải từ Blob nữa — băng
+// thông Blob là thứ đã làm store bị khoá một lần rồi (10 GB/tháng gói Hobby).
+const localArg = args.indexOf("--local-dir");
+const localDir = localArg >= 0 ? args[localArg + 1] : null;
 
 const databaseUrl = process.env.DATABASE_URL_PROD ?? process.env.DATABASE_URL;
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
@@ -116,6 +120,36 @@ async function download(url, dest) {
   writeFileSync(dest, Buffer.from(await response.arrayBuffer()));
 }
 
+// Tên file gốc lúc upload = phần trước hậu tố ngẫu nhiên Blob thêm vào.
+// Ví dụ "test20_part2-HZthNJgz9Gj9sEPTmPlbyLT0aDvMHW.mp3" -> "test20_part2".
+function blobBaseName(audioUrl) {
+  const path = decodeURIComponent(new URL(audioUrl).pathname.slice(1));
+  return path.replace(/-[A-Za-z0-9]{20,}\.(mp3|m4a|wav|ogg)$/i, "").replace(/\.(mp3|m4a|wav|ogg)$/i, "");
+}
+
+// Chỉ mục file gốc trên máy, tra theo tên không đuôi (không phân biệt hoa thường).
+function indexLocalFiles(dir) {
+  const index = new Map();
+  const walk = (current) => {
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      const full = join(current, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+      } else if (/\.(mp3|m4a|wav|ogg)$/i.test(entry.name)) {
+        index.set(entry.name.replace(/\.[^.]+$/, "").toLowerCase(), full);
+      }
+    }
+  };
+  walk(dir);
+  return index;
+}
+
+const localIndex = localDir ? indexLocalFiles(localDir) : new Map();
+
+if (localDir) {
+  console.log(`Thư mục gốc trên máy: ${localDir} (${localIndex.size} file)`);
+}
+
 const workDir = mkdtempSync(join(tmpdir(), "ielts-audio-"));
 
 const units = await prisma.assignableUnit.findMany({
@@ -135,44 +169,61 @@ let monoCount = 0;
 let stereoCount = 0;
 let bytesBefore = 0;
 let bytesAfter = 0;
+// Băng thông Blob đã tiêu để tải file gốc — thứ cần theo dõi sát.
+let bytesDownloaded = 0;
 
 for (const unit of units) {
   if (done >= limit) break;
 
   const label = `${unit.title}`.slice(0, 48).padEnd(48);
 
+  const localSource = localIndex.get(blobBaseName(unit.audioUrl).toLowerCase()) ?? null;
+  const downloadedPath = join(workDir, `${unit.id}-src.mp3`);
+  const outPath = join(workDir, `${unit.id}.mp3`);
+  // Có bản gốc trên máy thì dùng thẳng, KHÔNG tải từ Blob.
+  const srcPath = localSource ?? downloadedPath;
+
+  // Chỉ xoá file tạm. Bản gốc của giáo viên trên máy thì tuyệt đối không đụng vào.
+  const cleanup = () => {
+    if (!localSource) {
+      rmSync(downloadedPath, { force: true });
+    }
+    rmSync(outPath, { force: true });
+  };
+
+  if (!localSource) {
+    // Tải về một lần rồi đo + nén tại chỗ. Nếu để ffmpeg đọc thẳng URL thì mỗi
+    // lượt đo là một lượt tải lại cả file — ở đây cần 3 lượt đọc.
+    try {
+      await download(unit.audioUrl, downloadedPath);
+    } catch (error) {
+      console.log(`${label} LỖI tải: ${String(error.message).split("\n")[0]}`);
+      failed += 1;
+      continue;
+    }
+  }
+
+  // Đo trên file nguồn đang có sẵn — không tốn thêm lượt đọc Blob nào.
   let before;
   try {
-    before = await probe(unit.audioUrl);
+    before = await probe(srcPath);
   } catch (error) {
     console.log(`${label} LỖI đọc file gốc: ${String(error.message).split("\n")[0]}`);
     failed += 1;
+    cleanup();
     continue;
+  }
+
+  if (!localSource) {
+    bytesDownloaded += before.size;
   }
 
   if (before.channels === 1) {
     console.log(`${label} bỏ qua (đã mono)`);
     skipped += 1;
+    cleanup();
     continue;
   }
-
-  const srcPath = join(workDir, `${unit.id}-src.mp3`);
-  const outPath = join(workDir, `${unit.id}.mp3`);
-
-  // Tải về một lần rồi đo + nén tại chỗ. Nếu để ffmpeg đọc thẳng URL thì mỗi lần
-  // đo là một lần tải lại cả file — ở đây cần 3 lượt đọc nên phải tải trước.
-  try {
-    await download(unit.audioUrl, srcPath);
-  } catch (error) {
-    console.log(`${label} LỖI tải: ${String(error.message).split("\n")[0]}`);
-    failed += 1;
-    continue;
-  }
-
-  const cleanup = () => {
-    rmSync(srcPath, { force: true });
-    rmSync(outPath, { force: true });
-  };
 
   // Đo xem gộp về mono có làm mất nội dung không.
   let stereoInfo;
@@ -230,7 +281,8 @@ for (const unit of units) {
 
   const sizeText =
     `${(before.size / 1e6).toFixed(1)}MB -> ${(newSize / 1e6).toFixed(1)}MB (-${pct}%)` +
-    `  ${mode} ${bitrate} (${marginText})`;
+    `  ${mode} ${bitrate} (${marginText})` +
+    `  [${localSource ? "gốc trên máy" : "tải từ Blob"}]`;
 
   if (dryRun) {
     console.log(`${label} ${sizeText}  [dry-run]`);
@@ -284,6 +336,7 @@ await prisma.$disconnect();
 console.log(
   `\nXong: ${done} file đã nén (${monoCount} gộp mono, ${stereoCount} giữ stereo), ` +
     `${skipped} bỏ qua, ${failed} lỗi.\n` +
+    `Băng thông Blob đã tiêu để tải file gốc: ${(bytesDownloaded / 1e6).toFixed(0)} MB.\n` +
     `Tổng: ${(bytesBefore / 1e6).toFixed(0)} MB -> ${(bytesAfter / 1e6).toFixed(0)} MB ` +
     `(giảm ${bytesBefore > 0 ? Math.round((1 - bytesAfter / bytesBefore) * 100) : 0}%).\n` +
     `Blob cũ KHÔNG bị xoá — dọn sau bằng scripts/blob-orphans.mjs khi đã chắc chắn.`

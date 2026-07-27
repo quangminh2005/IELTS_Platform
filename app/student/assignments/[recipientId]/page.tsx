@@ -44,39 +44,47 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
   // Đảm bảo có đủ hàng AttemptSkill (một hàng mỗi kỹ năng) trước khi nạp để dựng
   // màn chọn kỹ năng + đồng hồ theo kỹ năng.
   await ensureAttemptSkills(attempt.id);
-  const recipient = await prisma.assignmentRecipient.findFirst({
-    where: {
-      id: params.recipientId,
-      studentId: student.id
-    },
-    include: {
-      assignment: {
-        include: {
-          units: {
-            orderBy: { order: "asc" },
-            include: {
-              assignableUnit: {
-                include: {
-                  questions: {
-                    orderBy: { order: "asc" }
+  // Đề bài và bài làm đã lưu không phụ thuộc nhau (đều chỉ cần attempt.id đã có ở
+  // trên) — tải song song để bớt một lượt đi/về database ở đúng trang nặng nhất.
+  const [recipient, savedAnswerRows] = await Promise.all([
+    prisma.assignmentRecipient.findFirst({
+      where: {
+        id: params.recipientId,
+        studentId: student.id
+      },
+      include: {
+        assignment: {
+          include: {
+            units: {
+              orderBy: { order: "asc" },
+              include: {
+                assignableUnit: {
+                  include: {
+                    questions: {
+                      orderBy: { order: "asc" }
+                    }
                   }
                 }
               }
             }
           }
-        }
-      },
-      attempts: {
-        where: { id: attempt.id },
-        include: {
-          highlights: {
-            orderBy: { createdAt: "desc" }
-          },
-          skills: true
+        },
+        attempts: {
+          where: { id: attempt.id },
+          include: {
+            highlights: {
+              orderBy: { createdAt: "desc" }
+            },
+            skills: true
+          }
         }
       }
-    }
-  });
+    }),
+    prisma.answer.findMany({
+      where: { attemptId: attempt.id },
+      select: { questionId: true, value: true }
+    })
+  ]);
 
   if (!recipient || !recipient.attempts[0]) {
     notFound();
@@ -87,11 +95,6 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
   if (activeAttempt.status === "submitted") {
     redirect(`/student/results/${activeAttempt.id}`);
   }
-
-  const savedAnswerRows = await prisma.answer.findMany({
-    where: { attemptId: activeAttempt.id },
-    select: { questionId: true, value: true }
-  });
 
   const savedAnswers: Record<string, string> = {};
   savedAnswerRows.forEach((row) => {

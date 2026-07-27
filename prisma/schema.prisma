@@ -58,6 +58,12 @@ model StudentProfile {
   reviews     TeacherReview[]
 }
 
+// LƯU Ý VỀ INDEX: Postgres (và Prisma) KHÔNG tự tạo index cho cột khoá ngoại —
+// khác MySQL. Không có @@index thì mọi truy vấn "lấy con theo cha" (đáp án của
+// một lượt làm, câu hỏi của một phần…) đều quét toàn bảng. Khi thêm quan hệ mới,
+// nhớ thêm @@index cho cột khoá ngoại, TRỪ khi cột đó đã là cột ĐẦU TIÊN của một
+// @@unique (vd AssignmentRecipient.assignmentId) — lúc đó index unique đã lo rồi.
+
 model Class {
   id          String         @id @default(cuid())
   teacherId   String
@@ -69,6 +75,8 @@ model Class {
   teacher     TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   students    ClassStudent[]
   assignments Assignment[]
+
+  @@index([teacherId])
 }
 
 model ClassStudent {
@@ -80,6 +88,7 @@ model ClassStudent {
   student   StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([classId, studentId])
+  @@index([studentId])
 }
 
 model Material {
@@ -93,6 +102,8 @@ model Material {
   updatedAt   DateTime         @updatedAt
   teacher     TeacherProfile   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   units       AssignableUnit[]
+
+  @@index([teacherId])
 }
 
 model AssignableUnit {
@@ -116,6 +127,8 @@ model AssignableUnit {
   assignmentUnits         AssignmentUnit[]
   answers                 Answer[]
   highlights              Highlight[]
+
+  @@index([materialId])
 }
 
 model Question {
@@ -131,29 +144,35 @@ model Question {
   points            Int            @default(1)
   assignableUnit    AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
   answers           Answer[]
+
+  // Gộp cả `order` vì câu hỏi luôn được lấy theo phần rồi sắp theo số câu.
+  @@index([assignableUnitId, order])
 }
 
 model Assignment {
-  id               String                @id @default(cuid())
-  teacherId        String
-  classId          String?
-  title            String
-  instructions     String?
-  deadline         DateTime?
-  timeLimitMinutes Int?
+  id                  String                @id @default(cuid())
+  teacherId           String
+  classId             String?
+  title               String
+  instructions        String?
+  deadline            DateTime?
+  timeLimitMinutes    Int?
   // Thời gian làm bài theo từng kỹ năng: JSON { "listening": 30, "reading": 60 } (phút).
   // Kỹ năng không có khóa = không đếm ngược. timeLimitMinutes giữ làm fallback/1 kỹ năng.
   skillTimeLimitsJson String?
   // Chế độ thi thật cho Listening: ẩn thanh audio (không play/pause/tua), audio tự
   // phát liên tục, học viên chỉ chỉnh được âm lượng; có màn kiểm tra âm thanh trước.
-  lockAudio        Boolean               @default(false)
-  mode             String                @default("homework")
-  createdAt        DateTime              @default(now())
-  updatedAt        DateTime              @updatedAt
-  teacher          TeacherProfile        @relation(fields: [teacherId], references: [id], onDelete: Cascade)
-  class            Class?                @relation(fields: [classId], references: [id], onDelete: SetNull)
-  units            AssignmentUnit[]
-  recipients       AssignmentRecipient[]
+  lockAudio           Boolean               @default(false)
+  mode                String                @default("homework")
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  teacher             TeacherProfile        @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  class               Class?                @relation(fields: [classId], references: [id], onDelete: SetNull)
+  units               AssignmentUnit[]
+  recipients          AssignmentRecipient[]
+
+  @@index([teacherId])
+  @@index([classId])
 }
 
 model AssignmentUnit {
@@ -166,23 +185,25 @@ model AssignmentUnit {
   assignableUnit         AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
 
   @@unique([assignmentId, assignableUnitId])
+  @@index([assignableUnitId])
 }
 
 model AssignmentRecipient {
-  id           String         @id @default(cuid())
-  assignmentId String
-  studentId    String
-  status       String         @default("assigned")
-  assignedAt   DateTime       @default(now())
-  submittedAt  DateTime?
+  id             String         @id @default(cuid())
+  assignmentId   String
+  studentId      String
+  status         String         @default("assigned")
+  assignedAt     DateTime       @default(now())
+  submittedAt    DateTime?
   // Thời điểm đã gửi mail nhắc "sắp hết hạn" cho bài này. Null = chưa nhắc.
   // Chỉ đặt sau khi gửi thành công, nên gửi lỗi thì hôm sau cron thử lại.
   reminderSentAt DateTime?
-  assignment   Assignment     @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
-  student      StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  attempts     Attempt[]
+  assignment     Assignment     @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  student        StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  attempts       Attempt[]
 
   @@unique([assignmentId, studentId])
+  @@index([studentId])
 }
 
 model Attempt {
@@ -210,6 +231,9 @@ model Attempt {
   highlights            Highlight[]
   skills                AttemptSkill[]
   review                TeacherReview?
+
+  @@index([assignmentRecipientId])
+  @@index([studentId])
 }
 
 // Trạng thái làm bài theo từng kỹ năng trong một Attempt. Mỗi kỹ năng là một phiên
@@ -250,6 +274,11 @@ model Answer {
   assignableUnit        AssignableUnit     @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
   question              Question?          @relation(fields: [questionId], references: [id], onDelete: SetNull)
   annotations           AnswerAnnotation[]
+
+  @@index([attemptId])
+  @@index([studentId])
+  @@index([questionId])
+  @@index([assignableUnitId])
 }
 
 // Ghi chú inline của giáo viên trên bài làm của học sinh: bôi đen một đoạn
@@ -267,6 +296,7 @@ model AnswerAnnotation {
   teacher     TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
 
   @@index([answerId])
+  @@index([teacherId])
 }
 
 model Highlight {
@@ -284,6 +314,10 @@ model Highlight {
   attempt          Attempt        @relation(fields: [attemptId], references: [id], onDelete: Cascade)
   student          StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
   assignableUnit   AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
+
+  @@index([attemptId])
+  @@index([studentId])
+  @@index([assignableUnitId])
 }
 
 model TeacherReview {
@@ -303,6 +337,8 @@ model TeacherReview {
   student            StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([attemptId])
+  @@index([teacherId])
+  @@index([studentId])
 }
 
 // Ngân hàng nhận xét mẫu của giáo viên: các câu nhận xét dùng lại nhiều lần khi

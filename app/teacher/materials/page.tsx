@@ -144,11 +144,22 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
   const teacher = await requireTeacherPage();
   const materialsMessage = searchParams?.materialsMessage;
   const materialsStatus = searchParams?.materialsStatus === "success" ? "success" : "error";
-  const materials: TeacherMaterial[] = await prisma.material.findMany({
-    where: { teacherId: teacher.id },
-    orderBy: { createdAt: "desc" },
-    select: materialSelect
-  });
+  // Hai truy vấn chỉ cần teacher.id, không phụ thuộc nhau -> chạy song song.
+  const [materials, assignmentUnits] = await Promise.all([
+    prisma.material.findMany({
+      where: { teacherId: teacher.id },
+      orderBy: { createdAt: "desc" },
+      select: materialSelect
+    }) as Promise<TeacherMaterial[]>,
+    // Ngày "giao gần nhất" mỗi tài liệu — dùng cho sắp xếp "Giao gần đây".
+    prisma.assignmentUnit.findMany({
+      where: { assignment: { teacherId: teacher.id } },
+      select: {
+        assignableUnit: { select: { materialId: true } },
+        assignment: { select: { createdAt: true } }
+      }
+    })
+  ]);
 
   const totalUnits = materials.reduce((sum, material) => sum + material._count.units, 0);
   const totalQuestions = materials.reduce(
@@ -156,15 +167,6 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
       sum + material.units.reduce((unitSum, unit) => unitSum + unit._count.questions, 0),
     0
   );
-
-  // Ngày "giao gần nhất" mỗi tài liệu — dùng cho sắp xếp "Giao gần đây".
-  const assignmentUnits = await prisma.assignmentUnit.findMany({
-    where: { assignment: { teacherId: teacher.id } },
-    select: {
-      assignableUnit: { select: { materialId: true } },
-      assignment: { select: { createdAt: true } }
-    }
-  });
   const lastAssignedByMaterial = new Map<string, number>();
   for (const link of assignmentUnits) {
     const materialId = link.assignableUnit.materialId;

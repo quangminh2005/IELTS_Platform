@@ -66,33 +66,54 @@ export default async function StudentDashboardPage() {
     redirect("/waiting");
   }
 
-  const recipients = await prisma.assignmentRecipient.findMany({
-    where: { studentId: student.id },
-    orderBy: { assignedAt: "desc" },
-    include: {
-      assignment: {
-        include: {
-          _count: {
-            select: { units: true }
-          },
-          units: {
-            select: {
-              assignableUnit: { select: { skill: true } }
+  // Ba truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
+  // một lượt đi/về database thay vì ba lượt nối tiếp.
+  const [recipients, attempts, membership] = await Promise.all([
+    prisma.assignmentRecipient.findMany({
+      where: { studentId: student.id },
+      orderBy: { assignedAt: "desc" },
+      include: {
+        assignment: {
+          include: {
+            _count: {
+              select: { units: true }
+            },
+            units: {
+              select: {
+                assignableUnit: { select: { skill: true } }
+              }
             }
           }
-        }
-      },
-      attempts: {
-        orderBy: { startedAt: "desc" },
-        take: 1,
-        select: {
-          id: true,
-          status: true,
-          scorePercent: true
+        },
+        attempts: {
+          orderBy: { startedAt: "desc" },
+          take: 1,
+          select: {
+            id: true,
+            status: true,
+            scorePercent: true
+          }
         }
       }
-    }
-  });
+    }),
+    prisma.attempt.findMany({
+      where: { studentId: student.id },
+      select: {
+        scorePercent: true,
+        startedAt: true,
+        submittedAt: true,
+        status: true,
+        // Band giáo viên chấm (Viết/Nói) — để bài chấm tay cũng được tính vào điểm
+        // xếp hạng ở đây giống trang Xếp hạng, không bị bỏ trắng.
+        review: { select: { overallBand: true } }
+      }
+    }),
+    prisma.classStudent.findFirst({
+      where: { studentId: student.id },
+      orderBy: { joinedAt: "desc" },
+      include: { class: { select: { weeklyGoal: true } } }
+    })
+  ]);
 
   const pendingCount = recipients.filter(
     (recipient) => recipient.status !== "submitted" && recipient.status !== "reviewed"
@@ -101,25 +122,6 @@ export default async function StudentDashboardPage() {
   const completedCount = recipients.filter(
     (recipient) => recipient.status === "submitted" || recipient.status === "reviewed"
   ).length;
-
-  const attempts = await prisma.attempt.findMany({
-    where: { studentId: student.id },
-    select: {
-      scorePercent: true,
-      startedAt: true,
-      submittedAt: true,
-      status: true,
-      // Band giáo viên chấm (Viết/Nói) — để bài chấm tay cũng được tính vào điểm
-      // xếp hạng ở đây giống trang Xếp hạng, không bị bỏ trắng.
-      review: { select: { overallBand: true } }
-    }
-  });
-
-  const membership = await prisma.classStudent.findFirst({
-    where: { studentId: student.id },
-    orderBy: { joinedAt: "desc" },
-    include: { class: { select: { weeklyGoal: true } } }
-  });
 
   const weeklyGoal = membership?.class.weeklyGoal ?? 3;
 

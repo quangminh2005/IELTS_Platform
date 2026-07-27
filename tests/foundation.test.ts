@@ -12,15 +12,17 @@ describe("foundation slice", () => {
   it("defines the required Prisma domain enums and models", () => {
     const schema = readProjectFile("prisma/schema.prisma");
 
-    expect(schema).toContain("role           String");
-    expect(schema).toContain("skill       String");
-    expect(schema).toContain("unitType                String");
-    expect(schema).toContain('mode             String                @default("homework")');
+    // Dùng regex `\s+` chứ không so chuỗi cứng: `prisma format` canh lại cột mỗi
+    // khi tên trường dài nhất trong model đổi, nên so cứng sẽ vỡ vì lý do vô nghĩa.
+    expect(schema).toMatch(/role\s+String/);
+    expect(schema).toMatch(/skill\s+String/);
+    expect(schema).toMatch(/unitType\s+String/);
+    expect(schema).toMatch(/mode\s+String\s+@default\("homework"\)/);
     expect(schema).toMatch(/status\s+String\s+@default\("assigned"\)/);
-    expect(schema).toContain('status                String              @default("in_progress")');
-    expect(schema).toContain("submitReason          String?");
-    expect(schema).toContain("answerEvidence    String?");
-    expect(schema).toContain("evidenceSnapshot      String?");
+    expect(schema).toMatch(/status\s+String\s+@default\("in_progress"\)/);
+    expect(schema).toMatch(/submitReason\s+String\?/);
+    expect(schema).toMatch(/answerEvidence\s+String\?/);
+    expect(schema).toMatch(/evidenceSnapshot\s+String\?/);
 
     for (const modelName of [
       "User",

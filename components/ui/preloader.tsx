@@ -7,11 +7,15 @@ import { Component } from "@/components/ui/loader-1";
  * Màn hình chờ (splash) toàn trang khi mở app.
  *
  * Hiện ngay từ lúc render đầu (kể cả trước khi React hydrate) nên không bị "nháy"
- * nội dung. Khi trang đã tải xong (sự kiện `load`) và qua thời gian hiển thị tối
- * thiểu, overlay sẽ mờ dần rồi tự gỡ khỏi DOM. Hiện lại mỗi lần tải/reload trang.
+ * nội dung, rồi mờ dần đi NGAY khi React hydrate xong — tức là đúng lúc trang đã
+ * bấm được. Hiện lại mỗi lần tải/reload trang.
+ *
+ * Trước đây chỗ này chờ sự kiện `window.load` và giữ splash tối thiểu 600ms. Cả
+ * hai đều là thời gian chờ tự chuốc: `load` chỉ bắn khi MỌI tài nguyên tải xong,
+ * kể cả thẻ <audio> — nên ở trang làm bài chế độ thi (audio preload="auto", file
+ * MP3 vài MB) splash treo lại vài giây dù đề đã render sẵn ở dưới.
  */
-const MIN_VISIBLE_MS = 600; // giữ splash tối thiểu để không chớp tắt quá nhanh
-const FADE_MS = 400; // khớp với thời lượng transition mờ dần bên dưới
+const FADE_MS = 200; // khớp với thời lượng transition mờ dần bên dưới
 
 export const Preloader = () => {
   // Bắt đầu ở trạng thái hiển thị để splash có mặt ngay trong HTML đầu tiên.
@@ -19,23 +23,16 @@ export const Preloader = () => {
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    const startedAt = Date.now();
+    // useEffect chạy = React đã hydrate = trang đã tương tác được. Gỡ splash luôn.
+    // requestAnimationFrame để trình duyệt kịp vẽ một khung có opacity 1 trước,
+    // nếu không thì transition không chạy và splash biến mất giật cục.
+    const frame = window.requestAnimationFrame(() => setFading(true));
+    const timer = window.setTimeout(() => setVisible(false), FADE_MS);
 
-    const beginHide = () => {
-      const elapsed = Date.now() - startedAt;
-      const wait = Math.max(0, MIN_VISIBLE_MS - elapsed);
-      window.setTimeout(() => {
-        setFading(true);
-        window.setTimeout(() => setVisible(false), FADE_MS);
-      }, wait);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
     };
-
-    if (document.readyState === "complete") {
-      beginHide();
-    } else {
-      window.addEventListener("load", beginHide, { once: true });
-      return () => window.removeEventListener("load", beginHide);
-    }
   }, []);
 
   if (!visible) {
@@ -44,7 +41,7 @@ export const Preloader = () => {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-background text-primary transition-opacity duration-[400ms] ease-out"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-background text-primary transition-opacity duration-200 ease-out"
       style={{ opacity: fading ? 0 : 1 }}
       role="status"
       aria-live="polite"

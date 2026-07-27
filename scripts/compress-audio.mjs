@@ -244,7 +244,12 @@ for (const unit of units) {
     await run("ffmpeg", [
       "-v", "error",
       "-i", srcPath,
-      "-ac", canGoMono ? "1" : "2",
+      // KHÔNG dùng `-ac 1`: ffmpeg trộn stereo->mono bằng ma trận bảo toàn CÔNG
+      // SUẤT (×0,707 mỗi kênh), mà ở đây hai kênh gần như giống hệt nhau nên
+      // cộng lại thành +3 dB. Đo thật: bản gốc đỉnh -3,9 dB, sau `-ac 1` còn
+      // -1,4 dB — file nào đỉnh sẵn gần 0 sẽ bị vỡ tiếng. `pan` dưới đây giữ
+      // nguyên biên độ: đo lại chỉ lệch 0,5 dB so với bản gốc.
+      ...(canGoMono ? ["-af", "pan=mono|c0=0.5*c0+0.5*c1"] : ["-ac", "2"]),
       "-c:a", "libmp3lame",
       "-b:a", bitrate,
       "-map_metadata", "-1",

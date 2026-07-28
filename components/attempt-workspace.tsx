@@ -2523,6 +2523,17 @@ export function AttemptWorkspace({
         // không lẫn vào nhau.
         const questionSourceType = "questions";
         const images = parseUnitImages(unit.metadataJson);
+        // Ảnh của phần nằm ở ĐÂU:
+        // - Trong khối note (bên phải, ngay trên các dòng nhãn) với dạng
+        //   label-the-diagram / label-the-map: khối note dùng chính unit.content
+        //   (không có cột đoạn văn) hoặc có fence ":::map".
+        // - Ngược lại — đề tách riêng noteBody, vd bài Writing điền chỗ trống có
+        //   biểu đồ — ảnh thuộc về cột trái, cạnh đề bài.
+        const noteSegments =
+          noteCompletionQuestions.length > 0 ? splitNoteSegments(noteBodyContent) : [];
+        const hasMapSegment = noteSegments.some((seg) => seg.kind === "map");
+        const imagesInNoteBlock =
+          noteCompletionQuestions.length > 0 && (!noteBody || hasMapSegment);
         const groupInstructions = parseGroupInstructions(unit.metadataJson);
         const groupTitles = parseGroupTitles(unit.metadataJson);
         const groupImages = parseGroupImages(unit.metadataJson);
@@ -2845,8 +2856,6 @@ export function AttemptWorkspace({
           });
         }
         if (noteCompletionQuestions.length > 0) {
-          const noteSegments = splitNoteSegments(noteBodyContent);
-          const hasMapSegment = noteSegments.some((seg) => seg.kind === "map");
           let mapImageIndex = 0;
           let plainImagesAssigned = false;
           noteSegments.forEach((seg, segIndex) => {
@@ -2861,7 +2870,7 @@ export function AttemptWorkspace({
             if (seg.kind === "map") {
               segImages = images[mapImageIndex] ? [images[mapImageIndex]] : [];
               mapImageIndex += 1;
-            } else if (!hasMapSegment && !plainImagesAssigned) {
+            } else if (imagesInNoteBlock && !hasMapSegment && !plainImagesAssigned) {
               segImages = images;
               plainImagesAssigned = true;
             }
@@ -3024,11 +3033,11 @@ export function AttemptWorkspace({
               <SplitPane
                 left={
                   <>
-                    {/* Ảnh sơ đồ của phần điền-chỗ-trống hiển thị TRONG khối note
-                        (bên phải, ngay trên các dòng nhãn) giống chin.edu.vn, nên
-                        không lặp lại ở cột trái. Ảnh biểu đồ Writing/Reading khác
+                    {/* Ảnh sơ đồ của dạng label-the-diagram/map hiển thị TRONG khối
+                        note (bên phải, ngay trên các dòng nhãn) giống chin.edu.vn,
+                        nên không lặp lại ở cột trái. Ảnh biểu đồ Writing/Reading
                         vẫn hiện bên trái như cũ. */}
-                    {images.length > 0 && noteCompletionQuestions.length === 0 ? (
+                    {images.length > 0 && !imagesInNoteBlock ? (
                       <div className="space-y-3">
                         {images.map((src, index) => (
                           // eslint-disable-next-line @next/next/no-img-element

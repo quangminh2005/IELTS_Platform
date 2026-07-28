@@ -3008,6 +3008,36 @@ export function AttemptWorkspace({
           </HighlightRegion>
         );
 
+        // Ảnh sơ đồ của dạng label-the-diagram/map hiển thị TRONG khối note (bên
+        // phải, ngay trên các dòng nhãn) giống chin.edu.vn nên không lặp lại ở cột
+        // trái; ảnh biểu đồ Writing / hình minh hoạ Reading thì hiện ở cột trái.
+        const imageBlock =
+          images.length > 0 && !imagesInNoteBlock ? (
+            <div className="space-y-3">
+              {images.map((src, index) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={`${src}-${index}`}
+                  src={src}
+                  alt={`Hình ${index + 1}`}
+                  className="w-full rounded-md border border-border bg-white"
+                />
+              ))}
+            </div>
+          ) : null;
+        const sourceBlock = sourceText ? (
+          isWriting ? (
+            <SourceContent content={sourceText} />
+          ) : (
+            <HighlightLayer
+              text={sourceText}
+              highlights={unitHighlights}
+              onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
+              onRemoveHighlight={removeHighlight}
+            />
+          )
+        ) : null;
+
         return (
           <section
             key={assignmentUnit.id}
@@ -3033,35 +3063,11 @@ export function AttemptWorkspace({
               <SplitPane
                 left={
                   <>
-                    {/* Ảnh sơ đồ của dạng label-the-diagram/map hiển thị TRONG khối
-                        note (bên phải, ngay trên các dòng nhãn) giống chin.edu.vn,
-                        nên không lặp lại ở cột trái. Ảnh biểu đồ Writing/Reading
-                        vẫn hiện bên trái như cũ. */}
-                    {images.length > 0 && !imagesInNoteBlock ? (
-                      <div className="space-y-3">
-                        {images.map((src, index) => (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            key={`${src}-${index}`}
-                            src={src}
-                            alt={`Hình ${index + 1}`}
-                            className="w-full rounded-md border border-border bg-white"
-                          />
-                        ))}
-                      </div>
-                    ) : null}
-                    {sourceText ? (
-                      isWriting ? (
-                        <SourceContent content={sourceText} />
-                      ) : (
-                        <HighlightLayer
-                          text={sourceText}
-                          highlights={unitHighlights}
-                          onHighlight={(payload) => createHighlight(unit.id, sourceType, payload)}
-                          onRemoveHighlight={removeHighlight}
-                        />
-                      )
-                    ) : null}
+                    {/* Bài Viết: đề bài ("The line graph below shows…") nằm TRÊN
+                        biểu đồ đúng như đề gốc. Reading giữ nếp cũ: ảnh minh hoạ
+                        trên, đoạn văn dưới. */}
+                    {isWriting ? sourceBlock : imageBlock}
+                    {isWriting ? imageBlock : sourceBlock}
                   </>
                 }
                 right={questionsContent}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export type UnitPickerTestUnit = {
   id: string;
@@ -27,6 +27,19 @@ export function UnitPickerTest({ label, units, selectedUnitIds, padY }: UnitPick
   const initial = useMemo(() => new Set(selectedUnitIds), [selectedUnitIds]);
   const [checked, setChecked] = useState<Set<string>>(initial);
   const [open, setOpen] = useState(initial.size > 0);
+  const rootRef = useRef<HTMLDetailsElement>(null);
+  const mounted = useRef(false);
+
+  // Nút "Chọn tất cả" đổi tick bằng React state nên trình duyệt KHÔNG bắn sự
+  // kiện "change" — ô "Thời gian mỗi kỹ năng" (nghe form change) sẽ không cập
+  // nhật. Bắn thủ công một sự kiện nổi bọt lên form sau mỗi lần đổi lựa chọn.
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+    rootRef.current?.dispatchEvent(new Event("change", { bubbles: true }));
+  }, [checked]);
 
   const selectedCount = checked.size;
   const allChecked = units.length > 0 && units.every((unit) => checked.has(unit.id));
@@ -46,6 +59,7 @@ export function UnitPickerTest({ label, units, selectedUnitIds, padY }: UnitPick
 
   return (
     <details
+      ref={rootRef}
       open={open}
       onToggle={(event) => setOpen((event.currentTarget as HTMLDetailsElement).open)}
       className="rounded-md border border-border/60 bg-background/60"

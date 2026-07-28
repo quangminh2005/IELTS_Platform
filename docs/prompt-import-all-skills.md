@@ -158,6 +158,15 @@ PHẦN RIÊNG THEO KỸ NĂNG — chỉ giữ lại phần đúng với kỹ nă
 - MỖI task có ĐÚNG 1 câu hỏi: questionType = "writing_task", KHÔNG có options, KHÔNG có answer,
   prompt = "Viết bài của bạn vào ô soạn thảo bên phải." , points = 9.
 - instructions nhắc học sinh gõ bài vào ô soạn thảo; giáo viên chấm tay.
+- DẠNG ĐIỀN CHỖ TRỐNG VÀO BÀI MẪU ("Fill in the gaps to complete the sample answer"): vẫn để
+  skill="writing", unitType="writing_task", nhưng KHÔNG dùng "writing_task" cho câu hỏi —
+  mỗi chỗ trống là MỘT câu questionType="note_completion" có "answer" như Reading:
+    • content = đề bài gốc ("The line graph below shows…"); ảnh biểu đồ upload vào phần sau khi import.
+    • metadata.noteBody = NGUYÊN VĂN bài mẫu, đặt [[order]] tại mỗi chỗ trống.
+    • metadata.groupInstructions."1" = câu lệnh nguyên văn tiếng Anh của đề.
+    • Chỗ trống chấp nhận nhiều cách viết → answer là MẢNG (vd ["sharp","dramatic","significant"]).
+  Vì câu có đáp án nên hệ thống TỰ CHẤM ngay (ra % + đúng/sai + giải thích), bài KHÔNG vào hàng
+  đợi "Chấm bài". Bài Viết chỉ vào hàng đợi chấm tay khi có câu "writing_task".
 
 [ SPEAKING ]  skill="speaking", unitType="speaking_part"
 - 3 part. content = danh sách câu hỏi/cue card của part đó.

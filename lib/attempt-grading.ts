@@ -63,6 +63,22 @@ function isManualGradedSkill(skill: string): boolean {
   return skill === "writing" || skill === "speaking";
 }
 
+// Câu chấm tay = bài luận Writing / phần ghi âm Speaking. Các dạng khác nằm trong
+// bài Viết/Nói (vd bài Writing kiểu điền chỗ trống vào bài mẫu) vẫn TỰ CHẤM miễn
+// là đề có đáp án — nếu không có đáp án thì giữ nguyên nếp cũ: chờ giáo viên chấm.
+export function isManualGradedQuestion(
+  skill: string,
+  question: Pick<QuestionForGrading, "questionType" | "correctAnswerJson">
+): boolean {
+  if (question.questionType === "writing_task" || question.questionType === "speaking_task") {
+    return true;
+  }
+  return (
+    isManualGradedSkill(skill) &&
+    parseCorrectAnswers(question.correctAnswerJson).length === 0
+  );
+}
+
 // Chấm một tập unit (cùng hoặc khác kỹ năng). getValue trả giá trị học sinh nhập
 // theo questionId. Trả về answerRows (ghi DB) + gradeItems (gộp điểm bằng gradeAttempt).
 export function gradeUnits(
@@ -74,7 +90,9 @@ export function gradeUnits(
 
   for (const unit of units) {
     const questions = unit.questions;
-    const isManualSkill = isManualGradedSkill(unit.skill);
+    const autoQuestions = questions.filter(
+      (question) => !isManualGradedQuestion(unit.skill, question)
+    );
 
     // Nguồn dò dẫn chứng: bài đọc (Reading) hoặc transcript (Listening).
     const evidenceSource = unit.transcript ?? unit.content ?? null;
@@ -86,40 +104,40 @@ export function gradeUnits(
         evidenceSource
       );
 
+    // Nhóm chọn-nhiều chỉ xét trong các câu tự chấm; câu chấm tay không bao giờ
+    // ghép nhóm.
     const groupResult = new Map<string, { isCorrect: boolean; pointsAwarded: number }>();
-    if (!isManualSkill) {
-      const groups = detectMultiSelectGroups(
-        questions.map((q) => ({
-          id: q.id,
-          questionType: q.questionType,
-          options: parseQuestionOptions(q.optionsJson),
-          correctAnswers: parseCorrectAnswers(q.correctAnswerJson)
-        }))
-      );
+    const groups = detectMultiSelectGroups(
+      autoQuestions.map((q) => ({
+        id: q.id,
+        questionType: q.questionType,
+        options: parseQuestionOptions(q.optionsJson),
+        correctAnswers: parseCorrectAnswers(q.correctAnswerJson)
+      }))
+    );
 
-      for (const group of groups) {
-        const slotValues = group.questionIds.map((id) => getValue(id).trim());
-        const firstMember = questions.find((q) => q.id === group.questionIds[0]);
-        const correctSet = parseCorrectAnswers(firstMember?.correctAnswerJson ?? null);
-        // Ô "joined": một số câu chứa cả N chữ → đúng/sai trọn gói.
-        const marks =
-          group.mode === "joined"
-            ? [gradeMultiPickValue(slotValues[0] ?? "", correctSet)]
-            : gradeMultiSelectGroup(slotValues, correctSet);
-        group.questionIds.forEach((id, index) => {
-          const points = questions.find((q) => q.id === id)?.points ?? 1;
-          groupResult.set(id, {
-            isCorrect: marks[index],
-            pointsAwarded: marks[index] ? points : 0
-          });
+    for (const group of groups) {
+      const slotValues = group.questionIds.map((id) => getValue(id).trim());
+      const firstMember = questions.find((q) => q.id === group.questionIds[0]);
+      const correctSet = parseCorrectAnswers(firstMember?.correctAnswerJson ?? null);
+      // Ô "joined": một số câu chứa cả N chữ → đúng/sai trọn gói.
+      const marks =
+        group.mode === "joined"
+          ? [gradeMultiPickValue(slotValues[0] ?? "", correctSet)]
+          : gradeMultiSelectGroup(slotValues, correctSet);
+      group.questionIds.forEach((id, index) => {
+        const points = questions.find((q) => q.id === id)?.points ?? 1;
+        groupResult.set(id, {
+          isCorrect: marks[index],
+          pointsAwarded: marks[index] ? points : 0
         });
-      }
+      });
     }
 
     for (const question of questions) {
       const value = getValue(question.id).trim();
 
-      if (isManualSkill) {
+      if (isManualGradedQuestion(unit.skill, question)) {
         answerRows.push({
           questionId: question.id,
           assignableUnitId: unit.assignableUnitId,

@@ -24,6 +24,22 @@ const writingUnit = {
   ]
 };
 
+// Bài Writing kiểu "điền chỗ trống vào bài mẫu": vẫn thuộc kỹ năng writing nhưng
+// mỗi ô có đáp án nên phải TỰ CHẤM, không đẩy sang hàng đợi chấm tay.
+const writingGapFillUnit = {
+  assignableUnitId: "u4",
+  skill: "writing",
+  content: "The line graph illustrates the [[1]] of people listening to the radio.",
+  transcript: null,
+  questions: [
+    { id: "g1", order: 1, questionType: "note_completion", optionsJson: null,
+      correctAnswerJson: JSON.stringify(["percentage", "proportion"]),
+      explanation: null, answerEvidence: null, points: 1 },
+    { id: "g2", order: 2, questionType: "writing_task", optionsJson: null,
+      correctAnswerJson: null, explanation: null, answerEvidence: null, points: 9 }
+  ]
+};
+
 // Một số câu Listening yêu cầu tick HAI đáp án (vd Test 16 câu 11): cả hai chữ
 // lưu chung một ô, nối bằng " | ", và chỉ được điểm khi đúng cả hai.
 const multiPickUnit = {
@@ -80,6 +96,18 @@ describe("gradeUnits", () => {
     expect(result.answerRows[0].isCorrect).toBeNull();
     expect(result.answerRows[0].pointsAwarded).toBeNull();
     expect(result.gradeItems).toHaveLength(0);
+  });
+
+  it("tự chấm ô điền chỗ trống trong bài Writing, vẫn để bài luận chờ chấm", () => {
+    const values: Record<string, string> = { g1: "Proportion", g2: "Bài luận của em" };
+    const result = gradeUnits([writingGapFillUnit], (id) => values[id] ?? "");
+
+    const [gap, essay] = result.answerRows;
+    expect(gap.isCorrect).toBe(true);
+    expect(gap.pointsAwarded).toBe(1);
+    expect(gap.correctAnswerSnapshot).toBe("percentage | proportion");
+    expect(essay.isCorrect).toBeNull();
+    expect(result.gradeItems).toHaveLength(1);
   });
 
   it("tự dò dẫn chứng từ content khi answerEvidence trống", () => {

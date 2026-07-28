@@ -289,10 +289,11 @@ export async function submitSkill(formData: FormData) {
     studentId: student.id
   }));
   const skillGrade = gradeAttempt(graded.gradeItems);
-  // Kỹ năng chấm tay (Viết/Nói) không có câu tự chấm nào — gradeAttempt([]) sẽ
-  // trả score/scorePercent = 0, gây hiểu nhầm là "0%". Lưu null để trang kết quả
-  // hiển thị "chờ chấm" thay vì điểm giả.
-  const manualSkill = parsed.data.skill === "writing" || parsed.data.skill === "speaking";
+  // Kỹ năng không có câu tự chấm nào (bài luận Viết / ghi âm Nói) — gradeAttempt([])
+  // sẽ trả score/scorePercent = 0, gây hiểu nhầm là "0%". Lưu null để trang kết quả
+  // hiển thị "chờ chấm" thay vì điểm giả. Ngược lại, bài Viết dạng điền chỗ trống
+  // (có đáp án) vẫn ra điểm ngay như Nghe/Đọc.
+  const manualSkill = graded.gradeItems.length === 0;
 
   const submittedAt = new Date();
   // Đánh dấu khi đây là lần nộp làm hoàn tất cả Attempt (kỹ năng cuối cùng), để

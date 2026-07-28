@@ -267,30 +267,34 @@ export function assignmentQuestionStats(
   }
 
   const unitStats: UnitQuestionStats[] = units.map((unit) => {
-    const manual = unit.skill === "writing" || unit.skill === "speaking";
-    const questions = manual
-      ? []
-      : unit.questions.map((question) => {
-          const answered = byQuestion.get(question.id) ?? [];
-          const wrong = answered.filter((a) => a.isCorrect === false);
-          const correctAnswer =
-            answered.find((a) => a.correctAnswerSnapshot)?.correctAnswerSnapshot ??
-            (parseCorrectAnswers(question.correctAnswerJson).join(" | ") || null);
+    // Bài Viết/Nói có thể chứa câu tự chấm (vd Writing dạng điền chỗ trống vào bài
+    // mẫu) — chỉ bỏ những câu KHÔNG có đáp án (bài luận/ghi âm do giáo viên chấm).
+    const manualSkill = unit.skill === "writing" || unit.skill === "speaking";
+    const gradableQuestions = manualSkill
+      ? unit.questions.filter(
+          (question) => parseCorrectAnswers(question.correctAnswerJson).length > 0
+        )
+      : unit.questions;
+    const manual = gradableQuestions.length === 0;
+    const questions = gradableQuestions.map((question) => {
+      const answered = byQuestion.get(question.id) ?? [];
+      const wrong = answered.filter((a) => a.isCorrect === false);
+      const correctAnswer =
+        answered.find((a) => a.correctAnswerSnapshot)?.correctAnswerSnapshot ??
+        (parseCorrectAnswers(question.correctAnswerJson).join(" | ") || null);
 
-          return {
-            questionId: question.id,
-            order: question.order,
-            prompt: question.prompt,
-            correctAnswer,
-            wrongCount: wrong.length,
-            totalCount: submittedCount,
-            percentWrong:
-              submittedCount === 0
-                ? 0
-                : Math.round((wrong.length / submittedCount) * 100),
-            wrongValues: tallyWrongAnswers(wrong.map((a) => a.value))
-          };
-        });
+      return {
+        questionId: question.id,
+        order: question.order,
+        prompt: question.prompt,
+        correctAnswer,
+        wrongCount: wrong.length,
+        totalCount: submittedCount,
+        percentWrong:
+          submittedCount === 0 ? 0 : Math.round((wrong.length / submittedCount) * 100),
+        wrongValues: tallyWrongAnswers(wrong.map((a) => a.value))
+      };
+    });
 
     return {
       unitId: unit.id,

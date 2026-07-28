@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { prisma } from "@/lib/prisma";
-
-const GRADEABLE = ["writing", "speaking"] as const;
+import { manualGradedUnitWhere } from "@/lib/manual-grading";
 
 function formatDateTime(value: Date | null) {
   if (!value) {
@@ -41,7 +40,7 @@ export default async function TeacherDashboardPage() {
         assignmentRecipient: {
           assignment: {
             teacherId: teacher.id,
-            units: { some: { assignableUnit: { skill: { in: [...GRADEABLE] } } } }
+            units: { some: { assignableUnit: manualGradedUnitWhere } }
           }
         }
       }
@@ -59,7 +58,7 @@ export default async function TeacherDashboardPage() {
         assignmentRecipient: {
           assignment: {
             teacherId: teacher.id,
-            units: { some: { assignableUnit: { skill: { in: [...GRADEABLE] } } } }
+            units: { some: { assignableUnit: manualGradedUnitWhere } }
           }
         }
       },

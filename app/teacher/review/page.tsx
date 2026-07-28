@@ -2,6 +2,7 @@ import { ReviewQueue } from "@/components/review-queue";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { isSubmissionLate } from "@/lib/assignment-calendar";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
+import { manualGradedUnitWhere } from "@/lib/manual-grading";
 import { prisma } from "@/lib/prisma";
 
 export default async function TeacherReviewPage() {
@@ -12,13 +13,9 @@ export default async function TeacherReviewPage() {
       assignmentRecipient: {
         assignment: {
           teacherId: teacher.id,
-          units: {
-            some: {
-              assignableUnit: {
-                skill: { in: ["writing", "speaking"] }
-              }
-            }
-          }
+          // Chỉ bài THỰC SỰ cần chấm tay (có câu viết luận / ghi âm). Bài Viết dạng
+          // điền chỗ trống đã tự chấm nên không vào hàng đợi.
+          units: { some: { assignableUnit: manualGradedUnitWhere } }
         }
       }
     },

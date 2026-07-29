@@ -46,7 +46,9 @@ const questionTypeOptions = [
   { value: "inline_gap_fill", label: "Inline gap fill" },
   { value: "table_completion", label: "Table completion" },
   { value: "note_completion", label: "Note / summary completion" },
-  { value: "true_false_not_given", label: "True / False / Not Given" }
+  { value: "true_false_not_given", label: "True / False / Not Given" },
+  { value: "writing_task", label: "Bài Viết (chấm tay)" },
+  { value: "speaking_task", label: "Bài Nói (chấm tay)" }
 ];
 
 type TypeMeta = {
@@ -111,6 +113,18 @@ const typeMeta: Record<string, TypeMeta> = {
     blankIn: "content",
     hint: "Điền ô trong đoạn ghi chú. Đặt [[order]] trong Content của unit.",
     answerHint: "Đáp án cho ô [[order]] này."
+  },
+  // Writing/Speaking: học sinh viết/nói bài dài, không có đáp án đúng — giáo viên
+  // chấm tay ở màn Chấm bài. Để trống Đáp án thì câu mới ở trạng thái "chờ chấm".
+  writing_task: {
+    showOptions: false,
+    hint: "Bài Viết dài (Task 1 / Task 2). Không có đáp án — giáo viên chấm tay.",
+    answerHint: "Để trống. Có đáp án thì hệ thống sẽ tự chấm thay vì đưa vào hàng đợi Chấm bài."
+  },
+  speaking_task: {
+    showOptions: false,
+    hint: "Bài Nói (Part 1/2/3). Không có đáp án — giáo viên chấm tay.",
+    answerHint: "Để trống. Có đáp án thì hệ thống sẽ tự chấm thay vì đưa vào hàng đợi Chấm bài."
   }
 };
 

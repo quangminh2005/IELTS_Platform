@@ -6,6 +6,7 @@ import { ReviewForm, type ReviewTaskInput } from "@/components/review-form";
 import { TranscribeButton } from "@/components/transcribe-button";
 import { isAudioUrl, parseWritingBrief } from "@/lib/question-interactions";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
+import { formatBand } from "@/lib/band-score";
 import { resolveWritingTaskNumber } from "@/lib/writing-review";
 import { prisma } from "@/lib/prisma";
 
@@ -202,6 +203,33 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
           taskNumber: entry.taskNumber
         }));
 
+  // Vài band gần nhất CÙNG KỸ NĂNG của học viên này, để canh điểm cho đều tay —
+  // chấm mà không nhớ lần trước cho mấy thì rất dễ lệch.
+  const pastBands = await prisma.teacherReview.findMany({
+    where: {
+      studentId: attempt.studentId,
+      teacherId: teacher.id,
+      attemptId: { not: attempt.id },
+      overallBand: { not: null },
+      attempt: {
+        answers: { some: { assignableUnit: { skill } } }
+      }
+    },
+    orderBy: { reviewedAt: "desc" },
+    take: 3,
+    select: {
+      overallBand: true,
+      reviewedAt: true,
+      attempt: {
+        select: {
+          assignmentRecipient: {
+            select: { assignment: { select: { title: true } } }
+          }
+        }
+      }
+    }
+  });
+
   // Comment Bank không được phép làm sập trang chấm: nếu bảng/cột chưa có trên DB
   // (vd production chưa chạy migration) thì coi như danh sách rỗng.
   let snippets: Array<{ id: string; text: string }> = [];
@@ -278,15 +306,32 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
               ) : null}
             </p>
           </div>
-          <span
-            className={`h-fit rounded-full border px-3 py-1 text-xs font-medium ${
-              attempt.status === "reviewed"
-                ? "border-emerald-400/50 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300"
-                : "border-amber-400/50 bg-amber-500/10 text-amber-600 dark:text-amber-300"
-            }`}
-          >
-            {attempt.status === "reviewed" ? "Đã chấm" : "Chưa chấm"}
-          </span>
+          <div className="flex flex-col items-start gap-2 lg:items-end">
+            <span
+              className={`h-fit rounded-full border px-3 py-1 text-xs font-medium ${
+                attempt.status === "reviewed"
+                  ? "border-emerald-400/50 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300"
+                  : "border-amber-400/50 bg-amber-500/10 text-amber-600 dark:text-amber-300"
+              }`}
+            >
+              {attempt.status === "reviewed" ? "Đã chấm" : "Chưa chấm"}
+            </span>
+
+            {pastBands.length > 0 ? (
+              <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+                <span>Band {skill === "speaking" ? "Nói" : "Viết"} gần đây:</span>
+                {pastBands.map((row, index) => (
+                  <span
+                    key={index}
+                    title={`${row.attempt.assignmentRecipient.assignment.title} · ${row.reviewedAt.toLocaleDateString("vi-VN")}`}
+                    className="rounded-md border border-border bg-muted/40 px-2 py-0.5 font-semibold tabular-nums text-foreground"
+                  >
+                    {formatBand(row.overallBand)}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
       </header>
 

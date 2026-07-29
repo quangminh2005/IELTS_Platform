@@ -1,8 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
+  BAND_OPTIONS,
+  BAND_OPTIONS_COMMON,
+  BAND_OPTIONS_LOW,
   WRITING_CRITERIA,
   SPEAKING_CRITERIA,
   criteriaForScores,
+  hasLowBand,
   overallBandFromTasks,
   parseReviewCriteria,
   resolveWritingTaskNumber,
@@ -175,6 +179,25 @@ describe("parseReviewCriteria / serializeReviewCriteria", () => {
     expect(parseReviewCriteria("không phải json")).toEqual([]);
     expect(parseReviewCriteria("{}")).toEqual([]);
     expect(parseReviewCriteria('{"taskAchievement":"giỏi"}')).toEqual([]);
+  });
+});
+
+describe("dải band cho hàng nút bấm", () => {
+  it("dải hay dùng là 4.0 → 9.0 (11 nút, vừa một hàng)", () => {
+    expect(BAND_OPTIONS_COMMON).toHaveLength(11);
+    expect(BAND_OPTIONS_COMMON[0]).toBe(4);
+    expect(BAND_OPTIONS_COMMON.at(-1)).toBe(9);
+  });
+
+  it("dải thấp 0.0 → 3.5 giấu sau nút mở rộng, hai dải ghép lại là đủ 19 mức", () => {
+    expect(BAND_OPTIONS_LOW).toHaveLength(8);
+    expect([...BAND_OPTIONS_LOW, ...BAND_OPTIONS_COMMON]).toEqual(BAND_OPTIONS);
+  });
+
+  it("hasLowBand mở sẵn dải thấp cho bài đã chấm dưới 4.0", () => {
+    expect(hasLowBand({ taskAchievement: 3.5, coherence: 5 })).toBe(true);
+    expect(hasLowBand({ taskAchievement: 4, coherence: 6 })).toBe(false);
+    expect(hasLowBand({})).toBe(false);
   });
 });
 

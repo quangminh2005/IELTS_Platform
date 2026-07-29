@@ -28,6 +28,17 @@ export const SPEAKING_CRITERIA: Criterion[] = [
 // Các mức band hợp lệ: 0 → 9, bước 0.5.
 export const BAND_OPTIONS = Array.from({ length: 19 }, (_, index) => index * 0.5);
 
+// Hàng nút bấm nhanh chỉ hiện dải hay dùng (4.0 → 9.0); dải dưới 4.0 hiếm khi
+// dùng nên giấu sau nút mở rộng để hàng nút không bị dài lê thê.
+export const BAND_OPTIONS_COMMON = BAND_OPTIONS.filter((band) => band >= 4);
+export const BAND_OPTIONS_LOW = BAND_OPTIONS.filter((band) => band < 4);
+
+// Bài đã chấm dưới 4.0 thì mở sẵn dải thấp, nếu không giáo viên mở lại sẽ không
+// thấy nút nào đang được chọn.
+export function hasLowBand(scores: TaskScores): boolean {
+  return Object.values(scores).some((value) => Number.isFinite(value) && value < 4);
+}
+
 export function criteriaForSkill(skill: string): Criterion[] {
   return skill === "speaking" ? SPEAKING_CRITERIA : WRITING_CRITERIA;
 }

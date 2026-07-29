@@ -8,31 +8,70 @@ export type Snippet = {
   text: string;
 };
 
-type CommentBankProps = {
+// Ngân hàng nhận xét tách làm HAI phần vì lý do kỹ thuật: phần thêm/xoá câu mẫu
+// cần <form> riêng, mà HTML không cho lồng form trong form. Nên phần bấm-để-chèn
+// (chỉ là nút thường) nằm TRONG phiếu chấm, ngay dưới ô "Nhận xét chi tiết";
+// còn phần quản lý nằm NGOÀI phiếu chấm, thu gọn lại.
+
+export function CommentBankChips({
+  snippets,
+  onInsert
+}: {
+  snippets: Snippet[];
+  onInsert: (text: string) => void;
+}) {
+  if (snippets.length === 0) {
+    return (
+      <p className="text-xs text-muted-foreground">
+        Chưa có câu mẫu nào. Thêm ở mục “Quản lý câu mẫu” bên dưới để lần sau chèn nhanh.
+      </p>
+    );
+  }
+
+  return (
+    <div className="grid gap-1.5">
+      <p className="text-xs text-muted-foreground">Bấm một câu để chèn vào ô trên:</p>
+      <div className="flex flex-wrap gap-1.5">
+        {snippets.map((snippet) => (
+          <button
+            key={snippet.id}
+            type="button"
+            onClick={() => onInsert(snippet.text)}
+            title={snippet.text}
+            className="max-w-full truncate rounded-full border border-border bg-card px-2.5 py-1 text-xs transition hover:border-primary hover:text-primary"
+          >
+            {snippet.text}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function CommentBankManager({
+  snippets,
+  attemptId
+}: {
   snippets: Snippet[];
   attemptId: string;
-  onInsert: (text: string) => void;
-};
-
-export function CommentBank({ snippets, attemptId, onInsert }: CommentBankProps) {
+}) {
   return (
-    <section className="rounded-lg border border-border bg-muted/30 p-4">
-      <h4 className="text-sm font-semibold">Ngân hàng nhận xét</h4>
-      <p className="mt-0.5 text-xs text-muted-foreground">
-        Click một câu để chèn vào ô &quot;Nhận xét chi tiết&quot;.
+    <details className="rounded-lg border border-border bg-muted/30 p-4">
+      <summary className="cursor-pointer text-sm font-semibold">
+        Quản lý câu mẫu{snippets.length > 0 ? ` (${snippets.length})` : ""}
+      </summary>
+
+      <p className="mt-2 text-xs text-muted-foreground">
+        Những câu hay dùng khi chấm. Lưu ở đây rồi bấm để chèn vào “Nhận xét chi tiết”.
       </p>
 
       {snippets.length > 0 ? (
         <ul className="mt-3 space-y-2">
           {snippets.map((snippet) => (
             <li key={snippet.id} className="flex items-start gap-2">
-              <button
-                type="button"
-                onClick={() => onInsert(snippet.text)}
-                className="flex-1 rounded-md border border-border bg-background px-3 py-2 text-left text-sm leading-6 transition hover:border-primary"
-              >
+              <span className="flex-1 rounded-md border border-border bg-background px-3 py-2 text-sm leading-6">
                 {snippet.text}
-              </button>
+              </span>
               <ActionForm action={deleteCommentSnippet}>
                 <input type="hidden" name="snippetId" value={snippet.id} />
                 <input type="hidden" name="attemptId" value={attemptId} />
@@ -47,11 +86,7 @@ export function CommentBank({ snippets, attemptId, onInsert }: CommentBankProps)
             </li>
           ))}
         </ul>
-      ) : (
-        <p className="mt-3 text-sm text-muted-foreground">
-          Chưa có câu mẫu nào. Thêm những câu hay dùng để chèn nhanh khi chấm.
-        </p>
-      )}
+      ) : null}
 
       <ActionForm action={createCommentSnippet} className="mt-3 flex gap-2">
         <input type="hidden" name="attemptId" value={attemptId} />
@@ -68,6 +103,6 @@ export function CommentBank({ snippets, attemptId, onInsert }: CommentBankProps)
           Thêm
         </button>
       </ActionForm>
-    </section>
+    </details>
   );
 }

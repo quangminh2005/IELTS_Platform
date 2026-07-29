@@ -4,13 +4,15 @@ import {
   countBlankParts,
   parseMarkdownTable,
   parseQuestionOptions,
+  parseWritingBrief,
   promptHasGap,
   splitCellLines,
   splitCompositeParts,
   splitPromptIntoGapSegments,
   splitPromptIntoSegments,
   tableBlankPartIndexes,
-  usesDragDropAnswer
+  usesDragDropAnswer,
+  writingBriefLine
 } from "../lib/question-interactions";
 
 describe("parseQuestionOptions", () => {
@@ -214,5 +216,43 @@ describe("splitCellLines", () => {
       "0-1-1-1": 0,
       "0-1-1-3": 1
     });
+  });
+});
+
+describe("parseWritingBrief", () => {
+  it("đọc nhãn dạng bài và số từ tối thiểu từ metadata", () => {
+    expect(
+      parseWritingBrief('{"taskTag":"DATA DESCRIPTION","minWords":150,"images":[]}')
+    ).toEqual({ taskTag: "DATA DESCRIPTION", minWords: 150 });
+  });
+
+  it("bỏ qua nhãn rỗng và số từ không hợp lệ", () => {
+    expect(parseWritingBrief('{"taskTag":"  ","minWords":0}')).toEqual({
+      taskTag: null,
+      minWords: null
+    });
+    expect(parseWritingBrief('{"minWords":"nhiều"}')).toEqual({
+      taskTag: null,
+      minWords: null
+    });
+  });
+
+  it("trả về rỗng khi thiếu metadata hoặc JSON hỏng", () => {
+    expect(parseWritingBrief(null)).toEqual({ taskTag: null, minWords: null });
+    expect(parseWritingBrief("not json")).toEqual({ taskTag: null, minWords: null });
+  });
+});
+
+describe("writingBriefLine", () => {
+  it("ghép câu yêu cầu bằng tiếng Anh", () => {
+    expect(writingBriefLine(20, 150)).toBe(
+      "You should spend about 20 minutes on this task. Write at least 150 words."
+    );
+  });
+
+  it("chỉ hiện phần có dữ liệu", () => {
+    expect(writingBriefLine(20, null)).toBe("You should spend about 20 minutes on this task.");
+    expect(writingBriefLine(null, 150)).toBe("Write at least 150 words.");
+    expect(writingBriefLine(null, null)).toBe("");
   });
 });

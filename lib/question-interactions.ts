@@ -173,6 +173,53 @@ export function parseUnitImages(metadataJson: string | null | undefined): string
   return [];
 }
 
+// Thông tin đầu đề của một phần Writing, lưu trong metadata của phần:
+//   metadata.taskTag  = nhãn dạng bài, vd "DATA DESCRIPTION" (hiện thành badge)
+//   metadata.minWords = số từ tối thiểu, vd 150
+// Cả hai đều không bắt buộc — thiếu cái nào thì ẩn cái đó. Số phút không khai ở
+// đây mà lấy thẳng từ defaultTimeLimitMinutes của phần.
+export type WritingBrief = {
+  taskTag: string | null;
+  minWords: number | null;
+};
+
+export function parseWritingBrief(metadataJson: string | null | undefined): WritingBrief {
+  const empty: WritingBrief = { taskTag: null, minWords: null };
+
+  if (!metadataJson) {
+    return empty;
+  }
+
+  try {
+    const parsed = JSON.parse(metadataJson) as { taskTag?: unknown; minWords?: unknown };
+
+    const rawTag = typeof parsed?.taskTag === "string" ? parsed.taskTag.trim() : "";
+    const rawWords = Number(parsed?.minWords);
+
+    return {
+      taskTag: rawTag.length > 0 ? rawTag : null,
+      minWords: Number.isFinite(rawWords) && rawWords > 0 ? Math.round(rawWords) : null
+    };
+  } catch {
+    return empty;
+  }
+}
+
+// Dòng yêu cầu ở đầu bài Viết, giữ nguyên tiếng Anh như đề thi thật.
+export function writingBriefLine(minutes: number | null, minWords: number | null): string {
+  const parts: string[] = [];
+
+  if (minutes && minutes > 0) {
+    parts.push(`You should spend about ${minutes} minutes on this task.`);
+  }
+
+  if (minWords && minWords > 0) {
+    parts.push(`Write at least ${minWords} words.`);
+  }
+
+  return parts.join(" ");
+}
+
 export function splitPromptIntoSegments(prompt: string): PromptSegment[] {
   const segments: PromptSegment[] = [];
   const placeholderPattern = /\[\[(\d+)\]\]/g;

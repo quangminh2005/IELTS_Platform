@@ -44,13 +44,15 @@ import {
   parseQuestionOptions,
   parseUnitImages,
   parseUnitMetaString,
+  parseWritingBrief,
   promptHasGap,
   splitCellLines,
   splitCompositeParts,
   splitPromptIntoGapSegments,
   splitPromptIntoSegments,
   tableBlankPartIndexes,
-  usesDragDropAnswer
+  usesDragDropAnswer,
+  writingBriefLine
 } from "@/lib/question-interactions";
 import {
   formatMultiPickValue,
@@ -177,6 +179,21 @@ type PreviewResult = {
   highlights: never[];
 };
 
+// Nhãn trạng thái tự động lưu — dùng chung cho thanh dưới cùng và chân khung
+// soạn thảo bài Viết.
+function saveStateLabel(state: SaveState) {
+  if (state === "saving") {
+    return "Đang lưu…";
+  }
+  if (state === "saved") {
+    return "Đã lưu tất cả";
+  }
+  if (state === "error") {
+    return "Lưu lỗi — đang thử lại";
+  }
+  return "";
+}
+
 function usesLongAnswer(questionType: string) {
   return (
     questionType.includes("essay") ||
@@ -288,6 +305,74 @@ function LongAnswerInput({
         {countWords(value)} từ
       </div>
     </div>
+  );
+}
+
+// Khung soạn thảo bài Viết: chiếm trọn cột phải, có thanh tiêu đề, ô nhập cao
+// hết khung và chân khung hiện trạng thái lưu + số từ (bố cục theo chin.edu.vn).
+function WritingEditorPane({
+  question,
+  initialValue,
+  onAnswerChange,
+  isFlagged,
+  onToggleFlag,
+  saveLabel
+}: {
+  question: Question;
+  initialValue: string;
+  onAnswerChange: AnswerChange;
+  isFlagged: boolean;
+  onToggleFlag: (questionId: string) => void;
+  saveLabel: string;
+}) {
+  const [value, setValue] = useState(initialValue);
+  const fieldName = `q_${question.id}`;
+
+  return (
+    <article
+      id={`question-${question.id}`}
+      className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-border bg-background/40"
+    >
+      <div className="flex shrink-0 items-center justify-between gap-2 border-b border-border bg-muted/50 px-4 py-2">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          Trình soạn thảo
+        </p>
+        <button
+          type="button"
+          onClick={() => onToggleFlag(question.id)}
+          aria-pressed={isFlagged}
+          className={
+            isFlagged
+              ? "rounded-md border border-amber-400/70 bg-amber-400/15 px-2 py-1 text-xs font-medium text-amber-600 dark:text-amber-300"
+              : "rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground hover:border-primary"
+          }
+        >
+          {isFlagged ? "★ Đã đánh dấu" : "☆ Đánh dấu"}
+        </button>
+      </div>
+
+      {question.prompt ? (
+        <p className="shrink-0 border-b border-border px-4 py-2 text-sm leading-6 text-muted-foreground">
+          {question.prompt}
+        </p>
+      ) : null}
+
+      <textarea
+        name={fieldName}
+        value={value}
+        onChange={(event) => {
+          setValue(event.target.value);
+          onAnswerChange(question.id, event.target.value);
+        }}
+        placeholder="Nhập bài viết của bạn tại đây…"
+        className="min-h-0 w-full flex-1 resize-none bg-transparent px-4 py-3 text-sm leading-7 outline-none"
+      />
+
+      <div className="flex shrink-0 items-center justify-between gap-2 border-t border-border bg-muted/40 px-4 py-2 text-xs text-muted-foreground">
+        <span aria-live="polite">{saveLabel}</span>
+        <span className="font-medium">{countWords(value)} từ</span>
+      </div>
+    </article>
   );
 }
 
@@ -1698,11 +1783,15 @@ function CountdownTimer({ remainingSeconds }: { remainingSeconds: number }) {
 function SplitPane({
   left,
   right,
-  fontScale
+  fontScale,
+  rightFill = false
 }: {
   left: React.ReactNode;
   right: React.ReactNode;
   fontScale: number;
+  // Cột phải lấp đầy chiều cao thay vì cuộn theo nội dung — dùng cho khung soạn
+  // thảo bài Viết (ô nhập cao hết màn hình giống chin.edu.vn).
+  rightFill?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef(false);
@@ -1773,8 +1862,17 @@ function SplitPane({
         <div className="h-10 w-0.5 rounded-full bg-muted-foreground/50" />
       </div>
 
-      <div className="space-y-4 p-5 lg:h-full lg:flex-1 lg:overflow-y-auto">
-        <div style={zoomStyle} className="space-y-4">
+      <div
+        className={
+          rightFill
+            ? "flex min-h-[26rem] flex-col p-5 lg:h-full lg:min-h-0 lg:flex-1 lg:overflow-hidden"
+            : "space-y-4 p-5 lg:h-full lg:flex-1 lg:overflow-y-auto"
+        }
+      >
+        <div
+          style={zoomStyle}
+          className={rightFill ? "flex min-h-0 flex-1 flex-col" : "space-y-4"}
+        >
           {right}
         </div>
       </div>
@@ -2517,6 +2615,17 @@ export function AttemptWorkspace({
         // để tô màu chỉ áp dụng cho Reading: là nội dung bài đọc (khi không bị
         // bảng/ghi chú "ăn" mất content).
         const isWriting = unit.unitType === "writing_task" || unit.skill === "writing";
+        // Bài Viết "thuần" (mọi câu đều là ô viết dài) dùng khung soạn thảo chiếm
+        // trọn cột phải. Bài Viết điền chỗ trống không rơi vào nhánh này nên giữ
+        // nguyên bố cục cũ.
+        const isEssayWriting =
+          isWriting &&
+          unit.questions.length > 0 &&
+          unit.questions.every((question) => usesLongAnswer(question.questionType));
+        const writingBrief = parseWritingBrief(unit.metadataJson);
+        const briefLine = isWriting
+          ? writingBriefLine(unit.defaultTimeLimitMinutes, writingBrief.minWords)
+          : "";
         const sourceText = inlineCompletionConsumesContent ? "" : unit.content;
         const sourceType = "content";
         // Cột câu hỏi cũng tô màu được, nhưng lưu riêng để offset của hai cột
@@ -2989,7 +3098,21 @@ export function AttemptWorkspace({
         });
         orderedSections.sort((a, b) => a.order - b.order);
 
-        const questionsContent = (
+        const questionsContent = isEssayWriting ? (
+          <div className="flex min-h-0 flex-1 flex-col gap-4">
+            {unit.questions.map((question) => (
+              <WritingEditorPane
+                key={question.id}
+                question={question}
+                initialValue={answers[question.id] ?? ""}
+                onAnswerChange={handleAnswerChange}
+                isFlagged={flagged.has(question.id)}
+                onToggleFlag={toggleFlag}
+                saveLabel={saveStateLabel(saveState)}
+              />
+            ))}
+          </div>
+        ) : (
           <HighlightRegion
             className="space-y-4"
             highlights={questionHighlights}
@@ -3027,7 +3150,11 @@ export function AttemptWorkspace({
           ) : null;
         const sourceBlock = sourceText ? (
           isWriting ? (
-            <SourceContent content={sourceText} />
+            // Đề bài nằm trong khung viền trái đậm màu, tách bạch với ảnh biểu đồ
+            // phía dưới (giống chin.edu.vn).
+            <div className="rounded-lg border border-border border-l-4 border-l-primary bg-primary/5 px-4 py-3">
+              <SourceContent content={sourceText} />
+            </div>
           ) : (
             <HighlightLayer
               text={sourceText}
@@ -3048,10 +3175,20 @@ export function AttemptWorkspace({
             }
           >
             <div className="shrink-0 border-b border-border bg-muted/50 px-5 py-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-                Phần {assignmentUnit.order} · {unit.skill.replaceAll("_", " ")}
-              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+                  Phần {assignmentUnit.order} · {unit.skill.replaceAll("_", " ")}
+                </p>
+                {writingBrief.taskTag ? (
+                  <span className="rounded-full border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
+                    {writingBrief.taskTag}
+                  </span>
+                ) : null}
+              </div>
               <h3 className="mt-0.5 text-lg font-semibold">{unit.title}</h3>
+              {briefLine ? (
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">{briefLine}</p>
+              ) : null}
               {unit.instructions ? (
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">{unit.instructions}</p>
               ) : null}
@@ -3072,6 +3209,7 @@ export function AttemptWorkspace({
                 }
                 right={questionsContent}
                 fontScale={fontScale}
+                rightFill={isEssayWriting}
               />
             ) : (
               <div className="min-h-0 flex-1 overflow-y-auto">
@@ -3149,15 +3287,7 @@ export function AttemptWorkspace({
                 <span className="font-semibold text-foreground">
                   Đã trả lời {answeredCount}/{totalQuestions}
                 </span>
-                <span aria-live="polite">
-                  {saveState === "saving"
-                    ? "Đang lưu…"
-                    : saveState === "saved"
-                      ? "Đã lưu tất cả"
-                      : saveState === "error"
-                        ? "Lưu lỗi — đang thử lại"
-                        : ""}
-                </span>
+                <span aria-live="polite">{saveStateLabel(saveState)}</span>
               </div>
 
               <button

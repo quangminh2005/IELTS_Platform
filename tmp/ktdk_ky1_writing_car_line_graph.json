@@ -1,0 +1,27 @@
+{
+  "title": "Kiểm tra định kỳ kỳ 1 – Writing (Line graph: households with a car)",
+  "skill": "writing",
+  "sourceLabel": "Kiểm tra định kỳ kỳ 1",
+  "description": "Bài Writing mô tả biểu đồ đường: tỉ lệ hộ gia đình ở Anh sử dụng ô tô thường xuyên, 1971–2007. Học viên viết 1 câu mở bài + 2–3 câu cho mỗi đường. Giáo viên chấm tay. SAU KHI IMPORT nhớ upload ẢNH BIỂU ĐỒ cho phần này (Sửa phần → Ảnh minh hoạ).",
+  "units": [
+    {
+      "unitType": "writing_task",
+      "unitNumber": 1,
+      "title": "Line graph – Households with a regular use of a car (1971–2007)",
+      "content": "The line graph below gives information on households with a regular use of a car in Great Britain from 1971 to 2007.\n\nWrite 2-3 sentences to describe the changes each line experienced in the period. You should also include an introductory sentence.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "taskTag": "LINE GRAPH",
+        "images": []
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "writing_task",
+          "prompt": "Write your answer here.",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

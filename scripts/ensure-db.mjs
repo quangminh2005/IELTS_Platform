@@ -44,6 +44,8 @@ const statements = [
   'ALTER TABLE "AssignmentRecipient" ADD COLUMN IF NOT EXISTS "reminderSentAt" TIMESTAMP(3);',
   // Mốc thời gian transcript<->audio (bấm transcript để tua audio ở trang kết quả)
   'ALTER TABLE "AssignableUnit" ADD COLUMN IF NOT EXISTS "transcriptTimingJson" TEXT;',
+  // Câu nhận xét mẫu gắn theo tiêu chí chấm (null = nhận xét chung)
+  'ALTER TABLE "CommentSnippet" ADD COLUMN IF NOT EXISTS "criterion" TEXT;',
   // Gắn lớp cho các bài giao cũ (Assignment.classId trước đây không bao giờ được
   // ghi). Chỉ gắn khi mọi học viên nhận bài cùng chung đúng MỘT lớp; bài giao
   // trải nhiều lớp thì để null = "bài chung", lớp nào cũng tính.

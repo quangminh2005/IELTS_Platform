@@ -13,6 +13,8 @@ datasource db {
 // enum AssignmentMode: homework | practice | mock_test
 // enum RecipientStatus: assigned | in_progress | submitted | reviewed
 // enum SubmitReason: manual | auto_timeout
+// enum ReviewCriterion (CommentSnippet.criterion, null = nhận xét chung):
+//   taskAchievement | coherence | fluency | lexicalResource | grammar | pronunciation
 
 model User {
   id             String          @id @default(cuid())
@@ -347,6 +349,9 @@ model CommentSnippet {
   id        String         @id @default(cuid())
   teacherId String
   text      String
+  // Tiêu chí mà câu mẫu này nói về (xem ReviewCriterion ở đầu file). Null = câu
+  // nhận xét chung, không gắn tiêu chí nào.
+  criterion String?
   createdAt DateTime       @default(now())
   teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
 

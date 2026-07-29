@@ -419,7 +419,7 @@ export function ReviewForm({
               className="resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
             />
           </label>
-          <CommentBankChips snippets={snippets} onInsert={insertSnippet} />
+          <CommentBankChips snippets={snippets} criteria={criteria} onInsert={insertSnippet} />
         </div>
 
         <div className="grid gap-2">
@@ -451,7 +451,7 @@ export function ReviewForm({
         </div>
       </ActionForm>
 
-      <CommentBankManager snippets={snippets} attemptId={attemptId} />
+      <CommentBankManager snippets={snippets} criteria={criteria} attemptId={attemptId} />
     </div>
   );
 }

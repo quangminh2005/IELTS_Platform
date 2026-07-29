@@ -232,12 +232,12 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
 
   // Comment Bank không được phép làm sập trang chấm: nếu bảng/cột chưa có trên DB
   // (vd production chưa chạy migration) thì coi như danh sách rỗng.
-  let snippets: Array<{ id: string; text: string }> = [];
+  let snippets: Array<{ id: string; text: string; criterion: string | null }> = [];
   try {
     snippets = await prisma.commentSnippet.findMany({
       where: { teacherId: teacher.id },
       orderBy: { createdAt: "desc" },
-      select: { id: true, text: true }
+      select: { id: true, text: true, criterion: true }
     });
   } catch (error) {
     console.error("commentSnippet query failed (bảng chưa tồn tại?):", error);
@@ -375,7 +375,9 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                         ) : null}
                       </p>
                       {answer.question ? (
-                        <p className="mt-1 text-sm leading-7 text-muted-foreground">
+                        // Đề bài đọc kỹ chứ không phải chú thích phụ — để
+                        // text-muted-foreground trên nền muted thì mờ quá ở dark mode.
+                        <p className="mt-1 text-sm leading-7 text-foreground/90">
                           {answer.question.prompt}
                         </p>
                       ) : null}

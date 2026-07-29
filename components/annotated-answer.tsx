@@ -115,6 +115,15 @@ export function AnnotatedAnswer({
 
   return (
     <div className="relative">
+      {/* Gợi ý đặt TRƯỚC bài làm và có khung màu: bản cũ là chữ xám nhạt nằm dưới
+          cuối bài nên gần như không ai thấy — tính năng ghi chú lỗi coi như ẩn. */}
+      {editable ? (
+        <p className="mb-3 flex items-center gap-1.5 rounded-md border border-amber-400/40 bg-amber-500/10 px-2.5 py-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
+          <span aria-hidden>✍️</span>
+          Bôi đen một đoạn trong bài để thêm ghi chú lỗi ngay tại chỗ.
+        </p>
+      ) : null}
+
       <div
         ref={containerRef}
         onMouseUp={editable ? handleMouseUp : undefined}
@@ -137,12 +146,6 @@ export function AnnotatedAnswer({
           )
         )}
       </div>
-
-      {editable ? (
-        <p className="mt-2 text-xs text-muted-foreground">
-          Bôi đen một đoạn trong bài để thêm ghi chú lỗi.
-        </p>
-      ) : null}
 
       {annotations.length > 0 ? (
         <ol className="mt-3 space-y-2">

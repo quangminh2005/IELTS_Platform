@@ -420,3 +420,20 @@ body {
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+
+/* Phiếu chấm bài (trang /teacher/review/[id]) tự chia 2 cột khi CỘT CHẤM đủ rộng.
+   Phải dùng container query chứ không dùng breakpoint theo màn hình: bề rộng cột
+   chấm còn phụ thuộc bài đó có sidebar danh sách học sinh hay không, nên cùng một
+   độ rộng màn hình có thể ra hai bề rộng cột khác nhau. */
+.review-form-shell {
+  container-type: inline-size;
+  container-name: reviewform;
+}
+
+@container reviewform (min-width: 760px) {
+  .review-form-split {
+    grid-template-columns: minmax(300px, 420px) minmax(320px, 1fr);
+    column-gap: 1.5rem;
+    align-items: start;
+  }
+}

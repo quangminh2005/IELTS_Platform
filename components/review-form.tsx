@@ -300,13 +300,18 @@ export function ReviewForm({
         </div>
       ) : null}
 
-      <ActionForm action={saveTeacherReview} className="grid gap-5">
+      {/* Cột chấm rộng thì tách đôi: tiêu chí bên trái, nhận xét bên phải. Vừa
+          dùng hết chỗ trống vừa rút ngắn phiếu chấm còn một nửa nên đỡ phải cuộn
+          trong panel dính — rõ nhất khi bài có 2 task (8 hàng band). Chia theo
+          container query, xem .review-form-split trong app/globals.css. */}
+      <ActionForm action={saveTeacherReview} className="review-form-split grid gap-5">
         <input type="hidden" name="attemptId" value={attemptId} />
         <input type="hidden" name="criteriaScoresJson" value={criteriaJson} />
         {nextAttemptId ? (
           <input type="hidden" name="nextAttemptId" value={nextAttemptId} />
         ) : null}
 
+        <div className="grid content-start gap-5">
         {tasks.map((task) => {
           const band = taskBand(toNumericScores(scores[task.unitId]), criteria);
           const showLow = lowRange[task.unitId] ?? false;
@@ -395,7 +400,9 @@ export function ReviewForm({
             ) : null}
           </span>
         </label>
+        </div>
 
+        <div className="grid content-start gap-5">
         <label className="grid gap-2 text-sm">
           <span className="font-medium">Nhận xét tổng quan</span>
           <textarea
@@ -448,6 +455,7 @@ export function ReviewForm({
               — nháp chỉ nằm trên máy này, vẫn phải bấm Lưu để học viên thấy.
             </p>
           ) : null}
+        </div>
         </div>
       </ActionForm>
 

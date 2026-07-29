@@ -241,7 +241,7 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
         <AnimatedThemeToggle />
       </header>
 
-      <div className={`mx-auto flex w-full ${isWidePage ? "max-w-[1800px]" : "max-w-7xl"}`}>
+      <div className={`mx-auto flex w-full ${isWidePage ? "max-w-[2200px]" : "max-w-7xl"}`}>
         {/* Sidebar cố định cho màn hình lớn */}
         <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col border-r border-border bg-card/60 px-4 py-5 backdrop-blur lg:flex">
           <div className="flex items-center justify-between gap-2">

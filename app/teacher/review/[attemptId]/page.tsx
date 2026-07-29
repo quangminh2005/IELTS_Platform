@@ -337,10 +337,10 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
 
       <div className="flex flex-col gap-6 xl:flex-row">
         <div className="min-w-0 flex-1">
-          {/* Bề ngang có trần: dòng chữ bài luận giữ khoảng 70 ký tự — rộng hơn
-              nữa thì mắt khó bắt đầu dòng kế. Khung chấm chặn ở 400px cho vừa 2
-              cột select. Nhờ vậy bài có 1 hay 10 học viên đều dàn giống nhau. */}
-          <div className="grid max-w-[1040px] gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
+          {/* Cột bài luận có TRẦN (dòng chữ giữ khoảng 70 ký tự — rộng hơn nữa
+              thì mắt khó bắt đầu dòng kế), phần còn lại nhường hết cho khung
+              chấm; khung chấm đủ rộng sẽ tự tách hai cột. */}
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,620px)_minmax(360px,1fr)]">
             <div className="min-w-0 space-y-4">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                 Bài làm của học viên
@@ -497,7 +497,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
 
             {/* Khung chấm dính theo màn hình: đọc tới đâu cho điểm tới đó, không
                 phải cuộn ngược lên tìm nút Lưu. */}
-            <div className="lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
+            <div className="review-form-shell min-w-0 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:self-start lg:overflow-y-auto lg:overflow-x-hidden lg:pr-1">
               <ReviewForm
                 attemptId={attempt.id}
                 skill={skill}

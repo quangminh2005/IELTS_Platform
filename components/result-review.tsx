@@ -3,6 +3,7 @@ import { ResultAnswers, type ResultPart } from "@/components/result-answers";
 import { bandsBySkill, formatBand } from "@/lib/band-score";
 import { formatDuration } from "@/lib/format-duration";
 import { skillRank } from "@/lib/skills";
+import { criteriaForScores, parseReviewCriteria, taskBand } from "@/lib/writing-review";
 
 type Highlight = {
   id: string;
@@ -75,18 +76,28 @@ const CRITERIA_LABELS: Record<string, string> = {
   pronunciation: "Pronunciation"
 };
 
-function parseCriteria(json: string | null): Array<{ label: string; value: number }> {
-  if (!json) {
-    return [];
-  }
-  try {
-    const parsed = JSON.parse(json) as Record<string, unknown>;
-    return Object.entries(parsed)
-      .map(([key, value]) => ({ label: CRITERIA_LABELS[key] ?? key, value: Number(value) }))
-      .filter((row) => Number.isFinite(row.value));
-  } catch {
-    return [];
-  }
+// Một lần nộp Writing có thể được chấm theo TỪNG task (Task 1 + Task 2), nên
+// điểm tiêu chí về đây là danh sách nhóm. Bài một phần (và mọi bản ghi cũ) chỉ
+// có một nhóm không tên → hiện y như trước.
+function criteriaGroups(json: string | null): Array<{
+  key: string;
+  label: string;
+  band: number | null;
+  rows: Array<{ label: string; value: number }>;
+}> {
+  return parseReviewCriteria(json).map((task, index) => {
+    const criteria = criteriaForScores(task.scores);
+
+    return {
+      key: task.unitId || String(index),
+      label: task.label,
+      band: taskBand(task.scores, criteria),
+      rows: Object.entries(task.scores).map(([key, value]) => ({
+        label: CRITERIA_LABELS[key] ?? key,
+        value
+      }))
+    };
+  });
 }
 
 const STATUS_LABELS: Record<string, string> = {
@@ -117,7 +128,7 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
   const correctLabel = gradedTotal > 0 ? `${correctCount}/${gradedTotal}` : "—";
 
   const review = attempt.review;
-  const criteriaRows = parseCriteria(review?.criteriaScoresJson ?? null);
+  const criteriaBlocks = criteriaGroups(review?.criteriaScoresJson ?? null);
 
   // Gom đáp án theo từng part (assignableUnit), giữ thứ tự xuất hiện. Nguồn cột trái:
   // Listening = transcript, Reading = content, còn lại = null (hiện một cột).
@@ -211,19 +222,31 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
             ) : null}
           </div>
 
-          {criteriaRows.length > 0 ? (
-            <dl className="mt-4 grid gap-2 sm:grid-cols-2">
-              {criteriaRows.map((row) => (
-                <div
-                  key={row.label}
-                  className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2 text-sm"
-                >
-                  <dt className="text-muted-foreground">{row.label}</dt>
-                  <dd className="font-semibold tabular-nums">{row.value.toFixed(1)}</dd>
-                </div>
-              ))}
-            </dl>
-          ) : null}
+          {criteriaBlocks.map((block) => (
+            <div key={block.key} className="mt-4">
+              {block.label ? (
+                <p className="mb-2 flex flex-wrap items-center gap-2 text-sm font-semibold">
+                  <span>{block.label}</span>
+                  {block.band !== null ? (
+                    <span className="rounded-full border border-primary/40 bg-card px-2 py-0.5 text-xs font-semibold tabular-nums text-primary">
+                      Band {formatBand(block.band)}
+                    </span>
+                  ) : null}
+                </p>
+              ) : null}
+              <dl className="grid gap-2 sm:grid-cols-2">
+                {block.rows.map((row) => (
+                  <div
+                    key={row.label}
+                    className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2 text-sm"
+                  >
+                    <dt className="text-muted-foreground">{row.label}</dt>
+                    <dd className="font-semibold tabular-nums">{row.value.toFixed(1)}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))}
 
           {review.summaryFeedback ? (
             <div className="mt-4">

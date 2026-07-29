@@ -4,10 +4,29 @@ import { useMemo, useState } from "react";
 import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { CommentBank, type Snippet } from "@/components/comment-bank";
 import { saveTeacherReview } from "@/lib/actions/reviews";
+import {
+  BAND_OPTIONS,
+  criteriaForSkill,
+  overallBandFromTasks,
+  parseReviewCriteria,
+  serializeReviewCriteria,
+  taskBand,
+  type ReviewTask,
+  type TaskScores
+} from "@/lib/writing-review";
+
+// Một phần cần chấm. Writing có thể có 2 phần (Task 1 + Task 2), Speaking chỉ
+// một phần duy nhất cho cả 3 part (unitId rỗng).
+export type ReviewTaskInput = {
+  unitId: string;
+  label: string;
+  taskNumber: number | null;
+};
 
 type ReviewFormProps = {
   attemptId: string;
   skill: string;
+  tasks: ReviewTaskInput[];
   // Khi có bài kế tiếp chưa chấm, hiện thêm nút "Lưu & chấm bài tiếp".
   nextAttemptId?: string | null;
   snippets?: Snippet[];
@@ -19,63 +38,47 @@ type ReviewFormProps = {
   } | null;
 };
 
-type Criterion = {
-  key: string;
-  label: string;
-};
+type ScoreState = Record<string, Record<string, string>>;
 
-// Bốn tiêu chí chấm của IELTS, khác nhau giữa Writing và Speaking.
-const WRITING_CRITERIA: Criterion[] = [
-  { key: "taskAchievement", label: "Task Achievement / Response" },
-  { key: "coherence", label: "Coherence & Cohesion" },
-  { key: "lexicalResource", label: "Lexical Resource" },
-  { key: "grammar", label: "Grammatical Range & Accuracy" }
-];
+// Ghép điểm đã lưu vào đúng phần đang chấm: ưu tiên khớp unitId, còn bản ghi cũ
+// (dạng phẳng, không có unitId) thì gán theo thứ tự.
+function seedScores(tasks: ReviewTaskInput[], stored: ReviewTask[]): ScoreState {
+  const byUnit = new Map(stored.filter((task) => task.unitId).map((task) => [task.unitId, task]));
+  const seeded: ScoreState = {};
 
-const SPEAKING_CRITERIA: Criterion[] = [
-  { key: "fluency", label: "Fluency & Coherence" },
-  { key: "lexicalResource", label: "Lexical Resource" },
-  { key: "grammar", label: "Grammatical Range & Accuracy" },
-  { key: "pronunciation", label: "Pronunciation" }
-];
+  tasks.forEach((task, index) => {
+    const matched = byUnit.get(task.unitId) ?? (byUnit.size === 0 ? stored[index] : undefined);
+    const scores: Record<string, string> = {};
 
-// Các mức band hợp lệ: 0 → 9, bước 0.5.
-const BAND_OPTIONS = Array.from({ length: 19 }, (_, index) => index * 0.5);
-
-function criteriaForSkill(skill: string): Criterion[] {
-  return skill === "speaking" ? SPEAKING_CRITERIA : WRITING_CRITERIA;
-}
-
-function parseCriteria(json: string | null): Record<string, number> {
-  if (!json) {
-    return {};
-  }
-
-  try {
-    const parsed = JSON.parse(json) as Record<string, unknown>;
-    const result: Record<string, number> = {};
-
-    for (const [key, value] of Object.entries(parsed)) {
-      const num = Number(value);
-      if (Number.isFinite(num)) {
-        result[key] = num;
-      }
+    for (const [key, value] of Object.entries(matched?.scores ?? {})) {
+      scores[key] = String(value);
     }
 
-    return result;
-  } catch {
-    return {};
-  }
+    seeded[task.unitId] = scores;
+  });
+
+  return seeded;
 }
 
-// Quy tắc IELTS: band tổng = trung bình 4 tiêu chí, làm tròn về 0.5 gần nhất.
-function roundToHalf(value: number): number {
-  return Math.round(value * 2) / 2;
+function toNumericScores(raw: Record<string, string> | undefined): TaskScores {
+  const scores: TaskScores = {};
+
+  for (const [key, value] of Object.entries(raw ?? {})) {
+    if (value !== "") {
+      const number = Number(value);
+      if (Number.isFinite(number)) {
+        scores[key] = number;
+      }
+    }
+  }
+
+  return scores;
 }
 
 export function ReviewForm({
   attemptId,
   skill,
+  tasks,
   nextAttemptId,
   snippets = [],
   review
@@ -86,46 +89,48 @@ export function ReviewForm({
   function insertSnippet(text: string) {
     setDetailed((current) => (current.trim() ? `${current}\n${text}` : text));
   }
-  const initialScores = useMemo(
-    () => parseCriteria(review?.criteriaScoresJson ?? null),
+
+  const storedTasks = useMemo(
+    () => parseReviewCriteria(review?.criteriaScoresJson ?? null),
     [review?.criteriaScoresJson]
   );
 
-  const [scores, setScores] = useState<Record<string, string>>(() => {
-    const seed: Record<string, string> = {};
-    for (const criterion of criteria) {
-      const value = initialScores[criterion.key];
-      seed[criterion.key] = value === undefined ? "" : String(value);
-    }
-    return seed;
-  });
+  const [scores, setScores] = useState<ScoreState>(() => seedScores(tasks, storedTasks));
 
-  const numericValues = criteria
-    .map((criterion) => scores[criterion.key])
-    .filter((value) => value !== "")
-    .map((value) => Number(value));
+  // Dữ liệu chuẩn hoá dùng chung cho: band từng phần, band tổng và ô hidden gửi lên.
+  const reviewTasks: ReviewTask[] = useMemo(
+    () =>
+      tasks.map((task) => ({
+        unitId: task.unitId,
+        label: task.label,
+        taskNumber: task.taskNumber,
+        scores: toNumericScores(scores[task.unitId])
+      })),
+    [tasks, scores]
+  );
 
-  const autoOverall =
-    numericValues.length === criteria.length && criteria.length > 0
-      ? roundToHalf(
-          numericValues.reduce((total, value) => total + value, 0) / criteria.length
-        )
-      : null;
+  const { band: autoOverall, weighted } = overallBandFromTasks(reviewTasks, criteria);
+  const criteriaJson = useMemo(() => serializeReviewCriteria(reviewTasks), [reviewTasks]);
 
-  const criteriaJson = useMemo(() => {
-    const payload: Record<string, number> = {};
-    for (const criterion of criteria) {
-      const raw = scores[criterion.key];
-      if (raw !== "") {
-        payload[criterion.key] = Number(raw);
-      }
-    }
-    return Object.keys(payload).length > 0 ? JSON.stringify(payload) : "";
-  }, [criteria, scores]);
-
-  function updateScore(key: string, value: string) {
-    setScores((current) => ({ ...current, [key]: value }));
+  function updateScore(unitId: string, key: string, value: string) {
+    setScores((current) => ({
+      ...current,
+      [unitId]: { ...(current[unitId] ?? {}), [key]: value }
+    }));
   }
+
+  const multiTask = tasks.length > 1;
+
+  const overallHint =
+    autoOverall !== null
+      ? weighted
+        ? `Tự tính theo IELTS: (Task 1 + Task 2 × 2) ÷ 3 = ${autoOverall.toFixed(1)}. Bạn có thể chỉnh tay nếu muốn.`
+        : multiTask
+          ? `Tự tính: trung bình band của ${tasks.length} phần = ${autoOverall.toFixed(1)}. Bạn có thể chỉnh tay nếu muốn.`
+          : `Tự tính từ 4 tiêu chí: ${autoOverall.toFixed(1)}. Bạn có thể chỉnh tay nếu muốn.`
+      : multiTask
+        ? "Chấm đủ 4 tiêu chí cho từng phần để tự tính, hoặc nhập tay band tổng."
+        : "Điền đủ 4 tiêu chí để tự tính, hoặc nhập tay band tổng.";
 
   return (
     <div className="grid gap-5">
@@ -136,33 +141,65 @@ export function ReviewForm({
         <input type="hidden" name="nextAttemptId" value={nextAttemptId} />
       ) : null}
 
-      <fieldset className="grid gap-3">
-        <legend className="text-sm font-medium">Điểm từng tiêu chí</legend>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {criteria.map((criterion) => (
-            <label key={criterion.key} className="grid gap-1.5 text-sm">
-              <span className="text-xs font-medium text-muted-foreground">
-                {criterion.label}
-              </span>
-              <select
-                value={scores[criterion.key] ?? ""}
-                onChange={(event) => updateScore(criterion.key, event.target.value)}
-                className="rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
-              >
-                <option value="">—</option>
-                {BAND_OPTIONS.map((band) => (
-                  <option key={band} value={band}>
-                    {band.toFixed(1)}
-                  </option>
-                ))}
-              </select>
-            </label>
-          ))}
-        </div>
-        <p className="text-xs text-muted-foreground">
+      {tasks.map((task) => {
+        const band = taskBand(toNumericScores(scores[task.unitId]), criteria);
+
+        return (
+          <fieldset
+            key={task.unitId}
+            className={
+              multiTask
+                ? "grid gap-3 rounded-lg border border-border bg-muted/30 p-3"
+                : "grid gap-3"
+            }
+          >
+            <legend
+              className={
+                multiTask
+                  ? "flex items-center gap-2 px-1 text-sm font-semibold"
+                  : "text-sm font-medium"
+              }
+            >
+              <span>{multiTask ? task.label : "Điểm từng tiêu chí"}</span>
+              {multiTask ? (
+                <span className="rounded-full border border-border bg-card px-2 py-0.5 text-xs font-semibold tabular-nums text-primary">
+                  {band !== null ? band.toFixed(1) : "—"}
+                </span>
+              ) : null}
+            </legend>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {criteria.map((criterion) => (
+                <label key={criterion.key} className="grid gap-1.5 text-sm">
+                  <span className="text-xs font-medium text-muted-foreground">
+                    {criterion.label}
+                  </span>
+                  <select
+                    value={scores[task.unitId]?.[criterion.key] ?? ""}
+                    onChange={(event) =>
+                      updateScore(task.unitId, criterion.key, event.target.value)
+                    }
+                    className="rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
+                  >
+                    <option value="">—</option>
+                    {BAND_OPTIONS.map((option) => (
+                      <option key={option} value={option}>
+                        {option.toFixed(1)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        );
+      })}
+
+      {!multiTask ? (
+        <p className="-mt-2 text-xs text-muted-foreground">
           Chọn band cho từng tiêu chí. Band tổng sẽ tự tính theo trung bình (làm tròn 0.5).
         </p>
-      </fieldset>
+      ) : null}
 
       <label className="grid gap-2 text-sm">
         <span className="font-medium">Band điểm tổng</span>
@@ -181,11 +218,7 @@ export function ReviewForm({
           }
           className="rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
         />
-        <span className="text-xs text-muted-foreground">
-          {autoOverall !== null
-            ? `Tự tính từ 4 tiêu chí: ${autoOverall.toFixed(1)}. Bạn có thể chỉnh tay nếu muốn.`
-            : "Điền đủ 4 tiêu chí để tự tính, hoặc nhập tay band tổng."}
-        </span>
+        <span className="text-xs text-muted-foreground">{overallHint}</span>
       </label>
 
       <label className="grid gap-2 text-sm">

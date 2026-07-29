@@ -220,6 +220,11 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
     return <div className="min-h-screen bg-background">{children}</div>;
   }
 
+  // Trang chấm bài chi tiết giữ menu điều hướng nhưng cần bề ngang tối đa: bài
+  // luận + khung chấm + danh sách học sinh nằm cạnh nhau, bó trong max-w-5xl thì
+  // cột đọc bài chỉ còn ~270px (hẹp hơn cả khung chấm).
+  const isWidePage = /^\/teacher\/review\/[^/]+$/.test(pathname);
+
   return (
     <div className="min-h-screen">
       {/* Thanh trên cùng cho điện thoại / máy tính bảng */}
@@ -236,7 +241,7 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
         <AnimatedThemeToggle />
       </header>
 
-      <div className="mx-auto flex w-full max-w-7xl">
+      <div className={`mx-auto flex w-full ${isWidePage ? "max-w-[1800px]" : "max-w-7xl"}`}>
         {/* Sidebar cố định cho màn hình lớn */}
         <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col border-r border-border bg-card/60 px-4 py-5 backdrop-blur lg:flex">
           <div className="flex items-center justify-between gap-2">
@@ -299,7 +304,11 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
 
         {/* Nội dung chính */}
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
-          <div className="mx-auto w-full max-w-5xl animate-fade-in">{children}</div>
+          <div
+            className={`mx-auto w-full animate-fade-in ${isWidePage ? "" : "max-w-5xl"}`}
+          >
+            {children}
+          </div>
         </main>
       </div>
     </div>

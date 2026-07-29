@@ -32,6 +32,22 @@ export function usesDragDropAnswer(questionType: string, options: string[]) {
   return dragDropTypes.has(questionType) && options.length > 0;
 }
 
+// Dạng ghép: một lựa chọn có được dùng cho NHIỀU câu không?
+// - Ít lựa chọn hơn số câu (phân loại A/B/C) → chắc chắn phải dùng lại.
+// - Đề ghi rõ "NB You may use any letter/location more than once" → cũng dùng lại,
+//   dù hộp có nhiều lựa chọn hơn số câu (vd 7 địa điểm cho 5 câu, London 2 lần).
+export function matchingAllowsReuse(
+  instructionText: string | null | undefined,
+  optionCount: number,
+  questionCount: number
+) {
+  if (optionCount < questionCount) {
+    return true;
+  }
+
+  return /more than once/i.test(instructionText ?? "");
+}
+
 // Đọc một map { "<order câu đầu nhóm>": "chuỗi" } từ một field trong metadata.
 function parseOrderStringMap(
   metadataJson: string | null | undefined,

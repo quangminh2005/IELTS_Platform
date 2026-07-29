@@ -37,6 +37,7 @@ import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 import {
   combineCompositeParts,
   countBlankParts,
+  matchingAllowsReuse,
   parseGroupImages,
   parseGroupInstructions,
   parseGroupTitles,
@@ -1117,11 +1118,13 @@ function NoteCompletionQuestionSet({
 function MatchingQuestionSet({
   questions,
   savedAnswers,
-  onAnswerChange
+  onAnswerChange,
+  instructionText
 }: {
   questions: Question[];
   savedAnswers: Record<string, string>;
   onAnswerChange: AnswerChange;
+  instructionText?: string;
 }) {
   const sharedOptions = useMemo(() => {
     const seen = new Set<string>();
@@ -1161,8 +1164,9 @@ function MatchingQuestionSet({
   // Mỗi lựa chọn chỉ dùng một lần: đáp án đã gán cho một câu sẽ biến mất khỏi
   // hộp (giống chin.edu.vn). Xoá đáp án ở một câu thì lựa chọn quay lại hộp.
   // NGOẠI LỆ: dạng phân loại (vd "xếp nhóm vào làn sóng A/B/C") có ít lựa chọn
-  // hơn số câu → một chữ cái dùng cho nhiều câu, nên KHÔNG rút khỏi hộp.
-  const allowReuse = sharedOptions.length < questions.length;
+  // hơn số câu, hoặc đề ghi rõ "may use any letter more than once" → một lựa chọn
+  // dùng cho nhiều câu, nên KHÔNG rút khỏi hộp.
+  const allowReuse = matchingAllowsReuse(instructionText, sharedOptions.length, questions.length);
   const usedOptions = new Set(
     Object.values(selections).filter((value) => value.length > 0)
   );
@@ -3038,6 +3042,7 @@ export function AttemptWorkspace({
                     questions={run}
                     savedAnswers={answers}
                     onAnswerChange={handleAnswerChange}
+                    instructionText={groupInstructions[minOrder(run)]}
                   />
                 </div>
               )

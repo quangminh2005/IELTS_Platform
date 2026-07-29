@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   combineCompositeParts,
   countBlankParts,
+  matchingAllowsReuse,
   parseMarkdownTable,
   parseQuestionOptions,
   parseWritingBrief,
@@ -36,6 +37,29 @@ describe("usesDragDropAnswer", () => {
 
   it("keeps ordinary multiple choice questions as radio inputs", () => {
     expect(usesDragDropAnswer("multiple_choice", ["A", "B"])).toBe(false);
+  });
+});
+
+describe("matchingAllowsReuse", () => {
+  it("cho dùng lại khi ít lựa chọn hơn số câu (phân loại A/B/C)", () => {
+    expect(matchingAllowsReuse("Classify the following as typical of", 3, 6)).toBe(true);
+  });
+
+  it("cho dùng lại khi đề ghi rõ may use any ... more than once", () => {
+    expect(
+      matchingAllowsReuse(
+        "Match each solution with one location.\nNB You may use any location more than once.",
+        7,
+        5
+      )
+    ).toBe(true);
+  });
+
+  it("giữ mỗi lựa chọn dùng một lần cho matching headings thường", () => {
+    expect(matchingAllowsReuse("Choose the correct heading for sections B, C, E and F.", 11, 4)).toBe(
+      false
+    );
+    expect(matchingAllowsReuse(undefined, 7, 4)).toBe(false);
   });
 });
 

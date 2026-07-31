@@ -19,6 +19,8 @@ type AssignmentWizardProps = {
   settingsRight: ReactNode;
   canCreate: boolean;
   disabledReason: string | null;
+  // id phần -> tên phần, để hiện chip "đã chọn" ở bước 1.
+  unitTitles: Record<string, string>;
 };
 
 const EMPTY_COUNTS: WizardCounts = { units: 0, students: 0 };
@@ -32,11 +34,13 @@ export function AssignmentWizard({
   settingsLeft,
   settingsRight,
   canCreate,
-  disabledReason
+  disabledReason,
+  unitTitles
 }: AssignmentWizardProps) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<WizardStep>(1);
   const [counts, setCounts] = useState<WizardCounts>(EMPTY_COUNTS);
+  const [selectedUnitIds, setSelectedUnitIds] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -52,8 +56,12 @@ export function AssignmentWizard({
       return;
     }
     const recount = () => {
+      const units = Array.from(
+        form.querySelectorAll<HTMLInputElement>('input[name="unitIds"]:checked')
+      );
+      setSelectedUnitIds(units.map((input) => input.value));
       setCounts({
-        units: form.querySelectorAll('input[name="unitIds"]:checked').length,
+        units: units.length,
         students: form.querySelectorAll('input[name="studentIds"]:checked').length
       });
     };
@@ -70,6 +78,7 @@ export function AssignmentWizard({
     setOpen(false);
     setStep(1);
     setCounts(EMPTY_COUNTS);
+    setSelectedUnitIds([]);
     triggerRef.current?.focus();
   }, [counts]);
 
@@ -103,6 +112,16 @@ export function AssignmentWizard({
       document.body.style.overflow = previousOverflow;
     };
   }, [open]);
+
+  // Bỏ chọn 1 phần từ chip: bấm vào chính checkbox để React nhận onChange —
+  // gán checked trực tiếp sẽ làm DOM lệch với state controlled trong
+  // UnitPickerTest.
+  function unselectUnit(unitId: string) {
+    const input = formRef.current?.querySelector<HTMLInputElement>(
+      `input[name="unitIds"][value="${unitId}"]`
+    );
+    input?.click();
+  }
 
   const blocker = stepBlocker(step, counts);
   const reachable = maxReachableStep(counts);
@@ -206,6 +225,26 @@ export function AssignmentWizard({
 
               <div className="min-h-0 flex-1 overflow-y-auto bg-muted/30 px-5 py-4">
                 <div data-wizard-step="1" className={step === 1 ? "" : "hidden"}>
+                  {selectedUnitIds.length > 0 ? (
+                    <div className="mb-3 flex flex-wrap gap-1.5">
+                      {selectedUnitIds.map((unitId) => (
+                        <span
+                          key={unitId}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-xs"
+                        >
+                          {unitTitles[unitId] ?? "Phần đã chọn"}
+                          <button
+                            type="button"
+                            aria-label={`Bỏ chọn ${unitTitles[unitId] ?? "phần này"}`}
+                            onClick={() => unselectUnit(unitId)}
+                            className="text-muted-foreground transition hover:text-red-500"
+                          >
+                            ✕
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
                   {unitStep}
                 </div>
                 <div data-wizard-step="2" className={step === 2 ? "" : "hidden"}>

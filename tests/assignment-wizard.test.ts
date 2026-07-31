@@ -171,3 +171,27 @@ describe("bố cục trang giao bài", () => {
     expect(source).not.toContain("<form");
   });
 });
+
+describe("bước 1 — cây chọn đề", () => {
+  it("cây gắn data-search cho cả 4 cấp", () => {
+    const picker = readSource("components/unit-picker.tsx");
+    const test = readSource("components/unit-picker-test.tsx");
+    expect(picker).toContain('data-wizard-node="book"');
+    expect(picker).toContain('data-wizard-node="skill"');
+    expect(test).toContain('data-wizard-node="test"');
+    expect(test).toContain('data-wizard-node="unit"');
+  });
+
+  it("lớp lọc đọc data-search và mở nhánh khớp", () => {
+    const source = readSource("components/unit-search-filter.tsx");
+    expect(source).toContain("matchesSearch");
+    expect(source).toContain("data-wizard-node");
+    expect(source).toContain("hidden");
+  });
+
+  it("chip bỏ chọn bấm vào chính checkbox để React cập nhật state", () => {
+    const source = readSource("components/assignment-wizard.tsx");
+    expect(source).toContain('input[name="unitIds"][value=');
+    expect(source).toContain(".click()");
+  });
+});

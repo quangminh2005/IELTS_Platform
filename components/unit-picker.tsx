@@ -21,6 +21,8 @@ type UnitPickerProps = {
   materials: UnitPickerMaterial[];
   selectedUnitIds?: string[];
   compact?: boolean;
+  // Bố cục rộng cho modal giao bài: các phần trong một đề xếp 2 cột.
+  wide?: boolean;
 };
 
 // Thứ tự hiển thị kỹ năng trong 1 bộ đề (chuẩn IELTS).
@@ -108,7 +110,12 @@ function buildTree(materials: UnitPickerMaterial[]): BookNode[] {
 // Cây gập/mở 3 cấp: Bộ đề -> Kỹ năng -> Test. Mặc định gập hết cho gọn;
 // khi sửa bài đã giao sẽ tự mở các nhánh đang chứa phần đã chọn.
 // Checkbox luôn nằm trong DOM nên vẫn gửi được dù nhánh đang gập.
-export function UnitPicker({ materials, selectedUnitIds, compact = false }: UnitPickerProps) {
+export function UnitPicker({
+  materials,
+  selectedUnitIds,
+  compact = false,
+  wide = false
+}: UnitPickerProps) {
   const selected = new Set(selectedUnitIds ?? []);
   const tree = buildTree(materials);
 
@@ -142,6 +149,8 @@ export function UnitPicker({ materials, selectedUnitIds, compact = false }: Unit
           <details
             key={bookNode.book}
             open={bookSelected > 0}
+            data-wizard-node="book"
+            data-search={bookNode.book}
             className="rounded-md border border-border bg-background/40"
           >
             <summary className="flex cursor-pointer items-center justify-between gap-2 px-3 py-2.5 text-sm">
@@ -162,6 +171,8 @@ export function UnitPicker({ materials, selectedUnitIds, compact = false }: Unit
                   <details
                     key={skillNode.skill}
                     open={skillSelected > 0}
+                    data-wizard-node="skill"
+                    data-search={`${bookNode.book} ${skillLabel(skillNode.skill)}`}
                     className="rounded-md border border-border/70 bg-background/40"
                   >
                     <summary className="flex cursor-pointer items-center justify-between gap-2 px-3 py-2 text-sm">
@@ -188,6 +199,8 @@ export function UnitPicker({ materials, selectedUnitIds, compact = false }: Unit
                             units={material.units}
                             selectedUnitIds={testSelectedIds}
                             padY={padY}
+                            wide={wide}
+                            searchText={`${bookNode.book} ${skillLabel(skillNode.skill)} ${test.label}`}
                           />
                         );
                       })}

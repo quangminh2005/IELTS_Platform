@@ -15,6 +15,9 @@ type UnitPickerTestProps = {
   units: UnitPickerTestUnit[];
   selectedUnitIds: string[];
   padY: string;
+  // Text dùng để lọc, đã gộp tên bộ đề + kỹ năng + tên đề.
+  searchText?: string;
+  wide?: boolean;
 };
 
 function formatLabel(value: string) {
@@ -23,7 +26,14 @@ function formatLabel(value: string) {
 
 // 1 đề trong cây chọn phần: quản lý trạng thái tick của các phần để có nút
 // "Chọn tất cả" (tích nhanh cả 4 part) đồng thời cập nhật badge "Đã chọn N".
-export function UnitPickerTest({ label, units, selectedUnitIds, padY }: UnitPickerTestProps) {
+export function UnitPickerTest({
+  label,
+  units,
+  selectedUnitIds,
+  padY,
+  searchText = "",
+  wide = false
+}: UnitPickerTestProps) {
   const initial = useMemo(() => new Set(selectedUnitIds), [selectedUnitIds]);
   const [checked, setChecked] = useState<Set<string>>(initial);
   const [open, setOpen] = useState(initial.size > 0);
@@ -62,6 +72,8 @@ export function UnitPickerTest({ label, units, selectedUnitIds, padY }: UnitPick
       ref={rootRef}
       open={open}
       onToggle={(event) => setOpen((event.currentTarget as HTMLDetailsElement).open)}
+      data-wizard-node="test"
+      data-search={searchText}
       className="rounded-md border border-border/60 bg-background/60"
     >
       <summary className="flex cursor-pointer items-center justify-between gap-2 px-3 py-2 text-sm">
@@ -87,9 +99,20 @@ export function UnitPickerTest({ label, units, selectedUnitIds, padY }: UnitPick
         </span>
       </summary>
 
-      <div className="divide-y divide-border border-t border-border/60">
+      <div
+        className={
+          wide
+            ? "grid gap-x-4 border-t border-border/60 sm:grid-cols-2"
+            : "divide-y divide-border border-t border-border/60"
+        }
+      >
         {units.map((unit) => (
-          <label key={unit.id} className={`flex gap-3 px-3 text-sm ${padY}`}>
+          <label
+            key={unit.id}
+            data-wizard-node="unit"
+            data-search={`${searchText} ${unit.title}`}
+            className={`flex gap-3 px-3 text-sm ${padY} ${wide ? "border-b border-border/60" : ""}`}
+          >
             <input
               name="unitIds"
               value={unit.id}

@@ -6,6 +6,7 @@ import {
   type StudentPickerStudent
 } from "@/components/student-picker";
 import { UnitPicker, type UnitPickerMaterial } from "@/components/unit-picker";
+import { UnitSearchFilter } from "@/components/unit-search-filter";
 import { AssignmentWizard } from "@/components/assignment-wizard";
 import { ResetOnToken } from "@/components/reset-on-token";
 
@@ -39,9 +40,11 @@ export function AssignmentBuilder({
       : null;
 
   const unitSkills: Record<string, string> = {};
+  const unitTitles: Record<string, string> = {};
   materials.forEach((material) =>
     material.units.forEach((unit) => {
       unitSkills[unit.id] = unit.skill;
+      unitTitles[unit.id] = unit.title;
     })
   );
 
@@ -50,7 +53,12 @@ export function AssignmentBuilder({
       <AssignmentWizard
         canCreate={canCreate}
         disabledReason={disabledReason}
-        unitStep={<UnitPicker materials={materials} />}
+        unitTitles={unitTitles}
+        unitStep={
+          <UnitSearchFilter>
+            <UnitPicker materials={materials} wide />
+          </UnitSearchFilter>
+        }
         studentStep={<StudentPicker students={students} classOptions={classOptions} />}
         settingsLeft={
           <>

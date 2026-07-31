@@ -219,3 +219,25 @@ describe("bước 1 — cây chọn đề", () => {
     expect(source).toContain(".click()");
   });
 });
+
+describe("bước 2 — chọn học viên", () => {
+  const source = readSource("components/student-picker.tsx");
+
+  it("có chế độ rộng cho modal, mặc định tắt", () => {
+    expect(source).toContain("wide = false");
+  });
+
+  it("giữ ô select tích nhanh theo lớp cho form sửa bài", () => {
+    expect(source).toContain("+ Tích nhanh theo lớp…");
+  });
+
+  it("chế độ rộng lọc theo tên bằng matchesSearch", () => {
+    expect(source).toContain("matchesSearch");
+  });
+
+  it("builder bật chế độ rộng", () => {
+    expect(readSource("components/assignment-builder.tsx")).toMatch(
+      /<StudentPicker[^>]*\swide\s*\/>/
+    );
+  });
+});

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { matchesSearch } from "@/lib/assignment-wizard";
 
 export type StudentPickerStudent = {
   id: string;
@@ -20,17 +21,21 @@ type StudentPickerProps = {
   classOptions: StudentPickerClass[];
   selectedStudentIds?: string[];
   compact?: boolean;
+  // Bố cục rộng cho modal giao bài: chip lớp + ô tìm + danh sách 2 cột.
+  wide?: boolean;
 };
 
 export function StudentPicker({
   students,
   classOptions,
   selectedStudentIds,
-  compact = false
+  compact = false,
+  wide = false
 }: StudentPickerProps) {
   const [selected, setSelected] = useState<Set<string>>(
     () => new Set(selectedStudentIds ?? [])
   );
+  const [query, setQuery] = useState("");
 
   const allSelected = students.length > 0 && selected.size === students.length;
 
@@ -76,6 +81,22 @@ export function StudentPicker({
     });
   }
 
+  // Chip lớp: bấm lần đầu chọn cả lớp, bấm lại bỏ cả lớp.
+  function toggleClass(classId: string) {
+    const ids = studentsByClass.get(classId) ?? [];
+    setSelected((current) => {
+      const next = new Set(current);
+      const allIn = ids.length > 0 && ids.every((id) => next.has(id));
+      ids.forEach((id) => (allIn ? next.delete(id) : next.add(id)));
+      return next;
+    });
+  }
+
+  const classFullySelected = (classId: string) => {
+    const ids = studentsByClass.get(classId) ?? [];
+    return ids.length > 0 && ids.every((id) => selected.has(id));
+  };
+
   if (students.length === 0) {
     return (
       <p className="rounded-md border border-border bg-background/40 px-4 py-5 text-sm text-muted-foreground">
@@ -86,57 +107,127 @@ export function StudentPicker({
 
   const padY = compact ? "py-2" : "py-3";
 
+  // Chỉ lọc theo tên ở chế độ rộng (modal giao bài); form sửa bài giữ nguyên
+  // danh sách đầy đủ như cũ.
+  const visibleStudentIds = wide
+    ? new Set(
+        students
+          .filter((student) => matchesSearch(`${student.displayName} ${student.email}`, query))
+          .map((student) => student.id)
+      )
+    : null;
+
   return (
     <div className="space-y-3">
       {/* Các id đã chọn vẫn được gửi qua các input ẩn (checkbox controlled bên dưới) */}
-      <div className="flex flex-wrap items-center gap-2">
-        {classOptions.length > 0 ? (
-          <select
-            defaultValue=""
-            onChange={(event) => {
-              selectClass(event.target.value);
-              event.currentTarget.value = "";
-            }}
-            className="rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
-          >
-            <option value="">+ Tích nhanh theo lớp…</option>
-            {classOptions.map((classItem) => (
-              <option key={classItem.id} value={classItem.id}>
-                {classItem.name}
-              </option>
-            ))}
-          </select>
-        ) : null}
-        <button
-          type="button"
-          onClick={toggleAll}
-          className="rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium transition hover:border-primary"
-        >
-          {allSelected ? "Bỏ chọn tất cả" : "Chọn tất cả"}
-        </button>
-        <span className="text-xs text-muted-foreground">Đã chọn {selected.size}/{students.length}</span>
-      </div>
-
-      <div className="divide-y divide-border rounded-md border border-border bg-background/40">
-        {students.map((student) => (
-          <label key={student.id} className={`flex gap-3 px-4 text-sm ${padY}`}>
+      {wide ? (
+        <div className="space-y-2">
+          {classOptions.length > 0 ? (
+            <div className="flex flex-wrap gap-1.5">
+              {classOptions.map((classItem) => (
+                <button
+                  key={classItem.id}
+                  type="button"
+                  onClick={() => toggleClass(classItem.id)}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                    classFullySelected(classItem.id)
+                      ? "border-primary bg-primary/10 text-primary"
+                      : "border-border bg-background hover:border-primary"
+                  }`}
+                >
+                  {classItem.name}
+                </button>
+              ))}
+            </div>
+          ) : null}
+          <div className="flex flex-wrap items-center gap-2">
             <input
-              name="studentIds"
-              value={student.id}
-              type="checkbox"
-              checked={selected.has(student.id)}
-              onChange={() => toggle(student.id)}
-              className="mt-1 h-4 w-4 rounded border-border accent-primary"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Tìm học viên…"
+              className="min-w-[12rem] flex-1 rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
             />
-            <span>
-              <span className="block font-medium">{student.displayName}</span>
-              <span className="mt-1 block text-xs text-muted-foreground">
-                {student.email}
-                {student.classNames.length > 0 ? ` | ${student.classNames.join(", ")}` : ""}
-              </span>
+            <button
+              type="button"
+              onClick={toggleAll}
+              className="rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium transition hover:border-primary"
+            >
+              {allSelected ? "Bỏ chọn tất cả" : "Chọn tất cả"}
+            </button>
+            <span className="text-xs text-muted-foreground">
+              Đã chọn {selected.size}/{students.length}
             </span>
-          </label>
-        ))}
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-wrap items-center gap-2">
+          {classOptions.length > 0 ? (
+            <select
+              defaultValue=""
+              onChange={(event) => {
+                selectClass(event.target.value);
+                event.currentTarget.value = "";
+              }}
+              className="rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
+            >
+              <option value="">+ Tích nhanh theo lớp…</option>
+              {classOptions.map((classItem) => (
+                <option key={classItem.id} value={classItem.id}>
+                  {classItem.name}
+                </option>
+              ))}
+            </select>
+          ) : null}
+          <button
+            type="button"
+            onClick={toggleAll}
+            className="rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium transition hover:border-primary"
+          >
+            {allSelected ? "Bỏ chọn tất cả" : "Chọn tất cả"}
+          </button>
+          <span className="text-xs text-muted-foreground">
+            Đã chọn {selected.size}/{students.length}
+          </span>
+        </div>
+      )}
+
+      <div
+        className={
+          wide
+            ? "grid rounded-md border border-border bg-background/40 sm:grid-cols-2"
+            : "divide-y divide-border rounded-md border border-border bg-background/40"
+        }
+      >
+        {students.map((student) => {
+          // Học viên bị lọc CHỈ được ẩn bằng class, không được gỡ khỏi DOM —
+          // nếu gỡ, học viên đã tick mà bị lọc đi sẽ mất khỏi FormData khi Giao bài.
+          const hiddenBySearch = visibleStudentIds !== null && !visibleStudentIds.has(student.id);
+          return (
+            <label
+              key={student.id}
+              className={`flex gap-3 px-4 text-sm ${padY} ${
+                wide ? "border-b border-border" : ""
+              } ${hiddenBySearch ? "hidden" : ""}`}
+            >
+              <input
+                name="studentIds"
+                value={student.id}
+                type="checkbox"
+                checked={selected.has(student.id)}
+                onChange={() => toggle(student.id)}
+                className="mt-1 h-4 w-4 rounded border-border accent-primary"
+              />
+              <span>
+                <span className="block font-medium">{student.displayName}</span>
+                <span className="mt-1 block text-xs text-muted-foreground">
+                  {student.email}
+                  {student.classNames.length > 0 ? ` | ${student.classNames.join(", ")}` : ""}
+                </span>
+              </span>
+            </label>
+          );
+        })}
       </div>
     </div>
   );

@@ -59,7 +59,7 @@ export function AssignmentBuilder({
             <UnitPicker materials={materials} wide />
           </UnitSearchFilter>
         }
-        studentStep={<StudentPicker students={students} classOptions={classOptions} />}
+        studentStep={<StudentPicker students={students} classOptions={classOptions} wide />}
         settingsLeft={
           <>
             <div>

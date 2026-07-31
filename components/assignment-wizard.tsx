@@ -73,7 +73,18 @@ export function AssignmentWizard({
     triggerRef.current?.focus();
   }, [counts]);
 
-  // Esc đóng, khoá cuộn nền, đưa focus vào modal khi mở.
+  // requestClose đổi identity mỗi khi counts đổi (tức là mỗi lần tick 1
+  // checkbox). Cập nhật ref này mỗi lần render để effect Esc/scroll-lock bên
+  // dưới KHÔNG cần đưa requestClose vào dependency array — nếu đưa vào, effect
+  // sẽ chạy lại theo mỗi lần tick và panelRef.current?.focus() sẽ cướp focus
+  // khỏi checkbox vừa bấm, hỏng thao tác Tab + Space chọn nhiều mục liên tiếp
+  // bằng bàn phím. Đọc qua ref vẫn luôn thấy counts mới nhất vì requestClose
+  // được tạo lại (và gán vào ref) ngay trong lần render có counts mới.
+  const requestCloseRef = useRef(requestClose);
+  requestCloseRef.current = requestClose;
+
+  // Esc đóng, khoá cuộn nền, đưa focus vào modal — chỉ phụ thuộc [open] nên
+  // chỉ chạy đúng 1 lần khi mở/đóng, không chạy lại theo mỗi lần tick chọn.
   useEffect(() => {
     if (!open) {
       return;
@@ -81,7 +92,7 @@ export function AssignmentWizard({
     panelRef.current?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        requestClose();
+        requestCloseRef.current();
       }
     };
     document.addEventListener("keydown", onKeyDown);
@@ -91,7 +102,7 @@ export function AssignmentWizard({
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = previousOverflow;
     };
-  }, [open, requestClose]);
+  }, [open]);
 
   const blocker = stepBlocker(step, counts);
   const reachable = maxReachableStep(counts);

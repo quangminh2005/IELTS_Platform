@@ -126,7 +126,21 @@ describe("components/assignment-wizard.tsx", () => {
 
   it("ẩn bước bằng class chứ không render có điều kiện (giữ input trong DOM)", () => {
     expect(source).toContain('"hidden"');
-    expect(source).not.toMatch(/step === 1 \? \(?\s*</);
+    for (const step of [1, 2, 3]) {
+      // Bẫy cả hai dạng render-có-điều-kiện bọc quanh khối data-wizard-step="n":
+      // ternary `{step === n ? (<div data-wizard-step="n" ...>` và
+      // `&&` `{step === n && <div data-wizard-step="n" ...>`. Cả hai đều gỡ
+      // input khỏi DOM khi step khác n, chỉ khác cú pháp. Neo theo
+      // `data-wizard-step="n"` để không bắt nhầm ternary khác trong file (ví
+      // dụ ternary đổi nhãn nút submit ở bước 3, vốn không liên quan tới việc
+      // ẩn/hiện nội dung bước).
+      expect(source).not.toMatch(
+        new RegExp(`\\{\\s*step === ${step}\\s*\\?\\s*\\(?\\s*<div\\s+data-wizard-step="${step}"`)
+      );
+      expect(source).not.toMatch(
+        new RegExp(`\\{\\s*step === ${step}\\s*&&\\s*\\(?\\s*<div\\s+data-wizard-step="${step}"`)
+      );
+    }
   });
 
   it("nút điều hướng không được submit form", () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { matchesSearch } from "@/lib/assignment-wizard";
+import { matchesSearch, toggleClassChip } from "@/lib/assignment-wizard";
 
 export type StudentPickerStudent = {
   id: string;
@@ -36,16 +36,19 @@ export function StudentPicker({
     () => new Set(selectedStudentIds ?? [])
   );
   const [query, setQuery] = useState("");
+  // Chip lớp nào đang bật (chỉ dùng ở chế độ wide) — theo dõi riêng, không suy
+  // ra từ selected, vì một học viên có thể thuộc nhiều lớp cùng lúc.
+  const [activeClassIds, setActiveClassIds] = useState<string[]>([]);
 
   const allSelected = students.length > 0 && selected.size === students.length;
 
   const studentsByClass = useMemo(() => {
-    const map = new Map<string, string[]>();
+    const map: Record<string, string[]> = {};
     for (const student of students) {
       for (const classId of student.classIds) {
-        const list = map.get(classId) ?? [];
+        const list = map[classId] ?? [];
         list.push(student.id);
-        map.set(classId, list);
+        map[classId] = list;
       }
     }
     return map;
@@ -64,16 +67,21 @@ export function StudentPicker({
   }
 
   function toggleAll() {
-    setSelected((current) =>
-      current.size === students.length ? new Set() : new Set(students.map((s) => s.id))
-    );
+    if (allSelected) {
+      setSelected(new Set());
+      setActiveClassIds([]);
+      return;
+    }
+    setSelected(new Set(students.map((s) => s.id)));
+    // Mọi học viên đều đã được chọn nên coi như mọi chip lớp đều đang "bật".
+    setActiveClassIds(classOptions.map((c) => c.id));
   }
 
   function selectClass(classId: string) {
     if (!classId) {
       return;
     }
-    const ids = studentsByClass.get(classId) ?? [];
+    const ids = studentsByClass[classId] ?? [];
     setSelected((current) => {
       const next = new Set(current);
       ids.forEach((id) => next.add(id));
@@ -81,21 +89,20 @@ export function StudentPicker({
     });
   }
 
-  // Chip lớp: bấm lần đầu chọn cả lớp, bấm lại bỏ cả lớp.
-  function toggleClass(classId: string) {
-    const ids = studentsByClass.get(classId) ?? [];
-    setSelected((current) => {
-      const next = new Set(current);
-      const allIn = ids.length > 0 && ids.every((id) => next.has(id));
-      ids.forEach((id) => (allIn ? next.delete(id) : next.add(id)));
-      return next;
+  // Chip lớp (chế độ wide): học viên có thể thuộc nhiều lớp, nên bỏ chip của
+  // một lớp chỉ được gỡ những học viên không còn thuộc lớp nào khác đang bật —
+  // logic thật nằm ở hàm thuần toggleClassChip (lib/assignment-wizard.ts) để
+  // test được.
+  function handleClassChipClick(classId: string) {
+    const result = toggleClassChip({
+      selected: Array.from(selected),
+      activeClassIds,
+      classId,
+      studentsByClass
     });
+    setSelected(new Set(result.selected));
+    setActiveClassIds(result.activeClassIds);
   }
-
-  const classFullySelected = (classId: string) => {
-    const ids = studentsByClass.get(classId) ?? [];
-    return ids.length > 0 && ids.every((id) => selected.has(id));
-  };
 
   if (students.length === 0) {
     return (
@@ -128,9 +135,9 @@ export function StudentPicker({
                 <button
                   key={classItem.id}
                   type="button"
-                  onClick={() => toggleClass(classItem.id)}
+                  onClick={() => handleClassChipClick(classItem.id)}
                   className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
-                    classFullySelected(classItem.id)
+                    activeClassIds.includes(classItem.id)
                       ? "border-primary bg-primary/10 text-primary"
                       : "border-border bg-background hover:border-primary"
                   }`}

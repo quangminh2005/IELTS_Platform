@@ -6,7 +6,8 @@ import {
   normalizeSearch,
   stepBlocker,
   submitLabel,
-  summaryLabel
+  summaryLabel,
+  toggleClassChip
 } from "../lib/assignment-wizard";
 
 describe("WIZARD_STEPS", () => {
@@ -239,5 +240,131 @@ describe("bước 2 — chọn học viên", () => {
     expect(readSource("components/assignment-builder.tsx")).toMatch(
       /<StudentPicker[^>]*\swide\s*\/>/
     );
+  });
+});
+
+// Học viên có thể thuộc nhiều lớp cùng lúc (vd. Minh ở cả K1 và K2). Bấm chip
+// K1 rồi bấm chip K2 rồi tắt K1 không được làm mất tick của Minh, và không
+// được làm chip K2 tự tối đi — Minh vẫn còn được K2 "che". Tách hàm thuần để
+// test được đủ các trường hợp mà không cần dựng component.
+describe("toggleClassChip", () => {
+  const studentsByClass = {
+    k1: ["minh", "an"], // an chỉ học K1
+    k2: ["minh", "binh"] // binh chỉ học K2
+  };
+
+  it("bật một lớp: chọn hết học viên lớp đó, chip vào activeClassIds", () => {
+    const result = toggleClassChip({
+      selected: [],
+      activeClassIds: [],
+      classId: "k1",
+      studentsByClass
+    });
+    expect(new Set(result.selected)).toEqual(new Set(["minh", "an"]));
+    expect(result.activeClassIds).toEqual(["k1"]);
+  });
+
+  it("bật K1 rồi bật K2 (Minh ở cả hai): Minh chỉ xuất hiện một lần trong selected", () => {
+    const afterK1 = toggleClassChip({
+      selected: [],
+      activeClassIds: [],
+      classId: "k1",
+      studentsByClass
+    });
+    const afterK2 = toggleClassChip({
+      selected: afterK1.selected,
+      activeClassIds: afterK1.activeClassIds,
+      classId: "k2",
+      studentsByClass
+    });
+    const minhCount = afterK2.selected.filter((id) => id === "minh").length;
+    expect(minhCount).toBe(1);
+    expect(new Set(afterK2.selected)).toEqual(new Set(["minh", "an", "binh"]));
+    expect(new Set(afterK2.activeClassIds)).toEqual(new Set(["k1", "k2"]));
+  });
+
+  it("bật K1, bật K2, rồi tắt K1: Minh vẫn còn, K2 vẫn bật, an (chỉ K1) bị gỡ", () => {
+    const afterK1 = toggleClassChip({
+      selected: [],
+      activeClassIds: [],
+      classId: "k1",
+      studentsByClass
+    });
+    const afterK2 = toggleClassChip({
+      selected: afterK1.selected,
+      activeClassIds: afterK1.activeClassIds,
+      classId: "k2",
+      studentsByClass
+    });
+    const afterOffK1 = toggleClassChip({
+      selected: afterK2.selected,
+      activeClassIds: afterK2.activeClassIds,
+      classId: "k1",
+      studentsByClass
+    });
+    expect(afterOffK1.selected).toContain("minh");
+    expect(afterOffK1.selected).toContain("binh");
+    expect(afterOffK1.selected).not.toContain("an");
+    expect(afterOffK1.activeClassIds).toEqual(["k2"]);
+  });
+
+  it("tắt lớp cuối cùng: selected rỗng, activeClassIds rỗng", () => {
+    const afterK1 = toggleClassChip({
+      selected: [],
+      activeClassIds: [],
+      classId: "k1",
+      studentsByClass
+    });
+    const afterK2 = toggleClassChip({
+      selected: afterK1.selected,
+      activeClassIds: afterK1.activeClassIds,
+      classId: "k2",
+      studentsByClass
+    });
+    const afterOffK1 = toggleClassChip({
+      selected: afterK2.selected,
+      activeClassIds: afterK2.activeClassIds,
+      classId: "k1",
+      studentsByClass
+    });
+    const afterOffK2 = toggleClassChip({
+      selected: afterOffK1.selected,
+      activeClassIds: afterOffK1.activeClassIds,
+      classId: "k2",
+      studentsByClass
+    });
+    expect(afterOffK2.selected).toEqual([]);
+    expect(afterOffK2.activeClassIds).toEqual([]);
+  });
+
+  it("không làm thay đổi mảng đầu vào", () => {
+    const selected = ["an"];
+    const activeClassIds = ["k1"];
+    const selectedCopy = [...selected];
+    const activeClassIdsCopy = [...activeClassIds];
+    toggleClassChip({ selected, activeClassIds, classId: "k2", studentsByClass });
+    expect(selected).toEqual(selectedCopy);
+    expect(activeClassIds).toEqual(activeClassIdsCopy);
+  });
+});
+
+describe("student-picker: học viên bị lọc không được rời DOM", () => {
+  const source = readSource("components/student-picker.tsx");
+
+  it("render toàn bộ students, không phải một mảng đã lọc riêng", () => {
+    // Vòng lặp danh sách phải chạy trên students (mảng gốc đầy đủ) — nếu ai đó
+    // đổi sang render từ một mảng đã .filter() theo ô tìm, học viên đã tick mà
+    // bị lọc khỏi màn hình sẽ rơi khỏi FormData khi bấm Giao bài.
+    expect(source).toMatch(/\{students\.map\(/);
+    expect(source).not.toMatch(/\{(visibleStudents|filteredStudents)\.map\(/);
+    expect(source).not.toMatch(/students\s*\.filter\([^)]*\)\s*\.map\(/);
+  });
+
+  it("học viên bị lọc chỉ ẩn bằng class \"hidden\", không dùng thuộc tính hidden", () => {
+    // Tailwind đặt [hidden] ở @layer base nên không thắng được class
+    // "flex"/"grid" cùng phần tử — Task 3 đã mất một vòng sửa vì đúng lỗi này.
+    expect(source).toContain('${hiddenBySearch ? "hidden" : ""}');
+    expect(source).not.toMatch(/<label[^>]*\shidden=\{[^}]*\}/);
+    expect(source).not.toMatch(/<label[^>]*\shidden(\s|>)/);
   });
 });

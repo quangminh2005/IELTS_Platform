@@ -74,3 +74,44 @@ export function matchesSearch(haystack: string, query: string): boolean {
   }
   return normalizeSearch(haystack).includes(needle);
 }
+
+// Bấm chip lớp trong bước chọn học viên. Học viên có thể thuộc nhiều lớp —
+// khi tắt một chip, chỉ gỡ những học viên KHÔNG còn thuộc lớp nào khác đang
+// bật, để không làm rơi oan học viên vẫn được lớp khác "che" (và không làm
+// chip lớp khác tự tối đi ngoài ý muốn người dùng).
+export function toggleClassChip(params: {
+  selected: string[];
+  activeClassIds: string[];
+  classId: string;
+  studentsByClass: Record<string, string[]>;
+}): { selected: string[]; activeClassIds: string[] } {
+  const { selected, activeClassIds, classId, studentsByClass } = params;
+  const classStudentIds = studentsByClass[classId] ?? [];
+  const isActive = activeClassIds.includes(classId);
+
+  if (!isActive) {
+    // Bật chip: thêm lớp vào danh sách đang bật + thêm học viên của lớp (không
+    // trùng lặp nếu học viên đã được chọn từ trước).
+    const nextActiveClassIds = [...activeClassIds, classId];
+    const nextSelected = new Set(selected);
+    for (const id of classStudentIds) {
+      nextSelected.add(id);
+    }
+    return { selected: Array.from(nextSelected), activeClassIds: nextActiveClassIds };
+  }
+
+  // Tắt chip: bỏ lớp khỏi danh sách đang bật, rồi chỉ gỡ học viên của lớp này
+  // nếu họ không còn thuộc lớp nào khác vẫn đang bật.
+  const nextActiveClassIds = activeClassIds.filter((id) => id !== classId);
+  const stillCoveredIds = new Set<string>();
+  for (const activeId of nextActiveClassIds) {
+    for (const studentId of studentsByClass[activeId] ?? []) {
+      stillCoveredIds.add(studentId);
+    }
+  }
+  const classStudentIdSet = new Set(classStudentIds);
+  const nextSelected = selected.filter(
+    (id) => !classStudentIdSet.has(id) || stillCoveredIds.has(id)
+  );
+  return { selected: nextSelected, activeClassIds: nextActiveClassIds };
+}

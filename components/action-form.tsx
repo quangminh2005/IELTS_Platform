@@ -29,7 +29,8 @@ function isNextControlFlowError(error: unknown) {
 async function runAndNotify(
   action: ServerAction,
   formData: FormData,
-  notify: (result: ActionResult) => void
+  notify: (result: ActionResult) => void,
+  onResult?: (result: ActionResult) => void
 ) {
   let result: ActionResult | undefined;
 
@@ -40,6 +41,7 @@ async function runAndNotify(
       throw error; // để Next tự điều hướng
     }
     notify(NETWORK_FAIL);
+    onResult?.(NETWORK_FAIL);
     return;
   }
 
@@ -47,22 +49,29 @@ async function runAndNotify(
   // → không bắn toast.
   if (result) {
     notify(result);
+    onResult?.(result);
   }
 }
 
 export function ActionForm({
   action,
   className,
+  onResult,
   children
 }: {
   action: ServerAction;
   className?: string;
+  // Cho phép nơi gọi biết action đã chạy xong để đóng form sửa, dọn state…
+  onResult?: (result: ActionResult) => void;
   children: ReactNode;
 }) {
   const { notify } = useToast();
 
   return (
-    <form className={className} action={(formData) => runAndNotify(action, formData, notify)}>
+    <form
+      className={className}
+      action={(formData) => runAndNotify(action, formData, notify, onResult)}
+    >
       {children}
     </form>
   );

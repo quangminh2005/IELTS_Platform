@@ -13,6 +13,10 @@ const classSchema = z.object({
   description: z.string().trim().optional()
 });
 
+const classInfoSchema = classSchema.extend({
+  classId: z.string().trim().min(1, "Thiếu mã lớp.")
+});
+
 const studentSchema = z.object({
   classId: z.string().trim().min(1, "Chọn một lớp."),
   email: z.string().trim().email("Nhập email hợp lệ.").toLowerCase(),
@@ -76,6 +80,42 @@ export async function createClass(formData: FormData): Promise<ActionResult> {
     return actionOk(`Đã tạo lớp "${parsed.data.name}".`);
   } catch (error) {
     return actionFail(error, "Tạo lớp");
+  }
+}
+
+export async function updateClassInfo(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
+
+  try {
+    const parsed = classInfoSchema.safeParse({
+      classId: formData.get("classId"),
+      name: formData.get("name"),
+      description: formData.get("description")
+    });
+
+    if (!parsed.success) {
+      throw new Error(parsed.error.issues[0]?.message ?? "Thông tin lớp chưa hợp lệ.");
+    }
+
+    // Lọc kèm teacherId để không sửa được lớp của giáo viên khác.
+    const result = await prisma.class.updateMany({
+      where: { id: parsed.data.classId, teacherId: teacher.id },
+      data: {
+        name: parsed.data.name,
+        description: parsed.data.description || null
+      }
+    });
+
+    if (result.count === 0) {
+      throw new Error("Không tìm thấy lớp này.");
+    }
+
+    revalidatePath("/teacher");
+    revalidatePath("/teacher/classes");
+    revalidatePath(`/teacher/classes/${parsed.data.classId}`);
+    return actionOk(`Đã cập nhật lớp "${parsed.data.name}".`);
+  } catch (error) {
+    return actionFail(error, "Cập nhật lớp");
   }
 }
 

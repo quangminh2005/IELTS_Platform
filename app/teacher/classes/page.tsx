@@ -1,8 +1,8 @@
-import Link from "next/link";
 import type { Prisma } from "@prisma/client";
 import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { NoticeToast } from "@/components/notice-toast";
-import { createClass, updateClassWeeklyGoal } from "@/lib/actions/classes";
+import { TeacherClassCard } from "@/components/teacher-class-card";
+import { createClass } from "@/lib/actions/classes";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { prisma } from "@/lib/prisma";
 
@@ -51,53 +51,16 @@ export default async function TeacherClassesPage({ searchParams }: TeacherClasse
         <div className="space-y-4">
           {classes.length > 0 ? (
             classes.map((classItem) => (
-              <div
+              <TeacherClassCard
                 key={classItem.id}
-                className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
-              >
-                <Link
-                  href={`/teacher/classes/${classItem.id}`}
-                  className="block px-5 py-4 transition hover:bg-muted/40"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="min-w-0">
-                      <h3 className="truncate text-base font-semibold">{classItem.name}</h3>
-                      {classItem.description ? (
-                        <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
-                          {classItem.description}
-                        </p>
-                      ) : null}
-                    </div>
-                    <div className="flex shrink-0 items-center gap-3">
-                      <span className="inline-flex w-fit rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-                        {classItem._count.students} học viên
-                      </span>
-                      <span className="text-sm font-semibold text-primary">Mở →</span>
-                    </div>
-                  </div>
-                </Link>
-                <ActionForm
-                  action={updateClassWeeklyGoal}
-                  className="flex items-center gap-2 border-t border-border px-5 py-3"
-                >
-                  <input type="hidden" name="classId" value={classItem.id} />
-                  <label className="text-sm text-muted-foreground" htmlFor={`goal-${classItem.id}`}>
-                    Chỉ tiêu bài/tuần
-                  </label>
-                  <input
-                    id={`goal-${classItem.id}`}
-                    name="weeklyGoal"
-                    type="number"
-                    min={1}
-                    max={50}
-                    defaultValue={classItem.weeklyGoal ?? 3}
-                    className="w-20 rounded-lg border border-border bg-background px-3 py-1.5 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
-                  />
-                  <ActionSubmitButton className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-semibold text-primary transition hover:border-primary">
-                    Lưu
-                  </ActionSubmitButton>
-                </ActionForm>
-              </div>
+                classItem={{
+                  id: classItem.id,
+                  name: classItem.name,
+                  description: classItem.description,
+                  weeklyGoal: classItem.weeklyGoal,
+                  studentCount: classItem._count.students
+                }}
+              />
             ))
           ) : (
             <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">

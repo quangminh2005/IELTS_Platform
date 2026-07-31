@@ -117,8 +117,10 @@ export function AssignmentWizard({
   // gán checked trực tiếp sẽ làm DOM lệch với state controlled trong
   // UnitPickerTest.
   function unselectUnit(unitId: string) {
+    // CSS.escape phòng khi unitId chứa ký tự đặc biệt với cú pháp selector
+    // (hiện luôn là cuid nên an toàn, nhưng escape cho chắc).
     const input = formRef.current?.querySelector<HTMLInputElement>(
-      `input[name="unitIds"][value="${unitId}"]`
+      `input[name="unitIds"][value="${CSS.escape(unitId)}"]`
     );
     input?.click();
   }

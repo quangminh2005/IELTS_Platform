@@ -182,11 +182,35 @@ describe("bước 1 — cây chọn đề", () => {
     expect(test).toContain('data-wizard-node="unit"');
   });
 
+  it("data-search mỗi cấp phải gộp text của tổ tiên (không thì gõ tên bộ đề sẽ làm rỗng nhánh con)", () => {
+    const picker = readSource("components/unit-picker.tsx");
+    const test = readSource("components/unit-picker-test.tsx");
+
+    // Cấp kỹ năng: data-search phải chứa cả tên bộ đề (bookNode.book) lẫn nhãn
+    // kỹ năng, không chỉ riêng nhãn kỹ năng.
+    expect(picker).toContain('data-search={`${bookNode.book} ${skillLabel(skillNode.skill)}`}');
+
+    // searchText truyền xuống UnitPickerTest phải gộp đủ cả 3 cấp trên: tên bộ
+    // đề, nhãn kỹ năng và tên đề (test.label).
+    expect(picker).toContain(
+      "searchText={`${bookNode.book} ${skillLabel(skillNode.skill)} ${test.label}`}"
+    );
+
+    // Cấp phần (unit) trong 1 đề: data-search phải chứa cả searchText nhận từ
+    // cha (đã gộp bộ đề + kỹ năng + tên đề) lẫn tiêu đề riêng của phần.
+    expect(test).toContain('data-search={`${searchText} ${unit.title}`}');
+  });
+
   it("lớp lọc đọc data-search và mở nhánh khớp", () => {
     const source = readSource("components/unit-search-filter.tsx");
     expect(source).toContain("matchesSearch");
     expect(source).toContain("data-wizard-node");
     expect(source).toContain("hidden");
+  });
+
+  it("lớp lọc toggle cả class Tailwind \"hidden\" cạnh thuộc tính hidden (utility flex ở @layer utilities đè [hidden]:display:none của @layer base nên chỉ set thuộc tính là không đủ)", () => {
+    const source = readSource("components/unit-search-filter.tsx");
+    expect(source).toContain('classList.toggle("hidden"');
   });
 
   it("chip bỏ chọn bấm vào chính checkbox để React cập nhật state", () => {

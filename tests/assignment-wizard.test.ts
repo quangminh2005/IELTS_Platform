@@ -155,6 +155,18 @@ describe("components/assignment-wizard.tsx", () => {
     expect(source).toContain("preventDefault");
   });
 
+  it("chỉ chặn Enter cho ô nhập văn bản, không chặn mọi phần tử", () => {
+    // Bản lỗi cũ chặn Enter cho MỌI target trong <form> (kể cả <button> và
+    // <summary>), làm chết phím Enter trên nút "Tiếp tục", chip lớp, "Chọn
+    // tất cả", nút đóng, và cây mở/gập đề. Bản đúng phải kiểm target là
+    // <input> (loại trừ checkbox/radio) trước khi preventDefault — thiếu một
+    // trong hai điều kiện dưới đây thì test này phải FAIL.
+    expect(source).toMatch(/tagName\s*!==\s*"INPUT"/);
+    expect(source).toMatch(
+      /inputType\s*===\s*"checkbox"\s*\|\|\s*inputType\s*===\s*"radio"/
+    );
+  });
+
   it("có thuộc tính a11y của hộp thoại", () => {
     expect(source).toContain('role="dialog"');
     expect(source).toContain('aria-modal="true"');
@@ -402,6 +414,16 @@ describe("bước 3 — cài đặt & xuất bản", () => {
 
   it("wizard render hộp tóm tắt ở bước cuối", () => {
     expect(readSource("components/assignment-wizard.tsx")).toContain("Sẽ giao");
+  });
+
+  it("effect ẩn/hiện khối when-skill toggle class \"hidden\", không chỉ đặt thuộc tính hidden", () => {
+    // Tailwind đặt [hidden] ở @layer base nên utility display (flex/grid) ở
+    // layer sau vẫn thắng nếu chỉ set thuộc tính hidden — đúng lỗi đã làm mất
+    // một vòng sửa ở unit-search-filter.tsx trong nhánh này. Phải toggle cả
+    // class "hidden" thì mới chắc chắn ẩn được.
+    expect(readSource("components/assignment-wizard.tsx")).toContain(
+      'classList.toggle("hidden"'
+    );
   });
 });
 

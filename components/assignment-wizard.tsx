@@ -58,13 +58,17 @@ export function AssignmentWizard({
     setMounted(true);
   }, []);
 
-  // Đếm lại số phần / học viên, và đọc tiêu đề, mỗi khi có ô nào đổi trạng
-  // thái tick hoặc người dùng gõ vào ô Tiêu đề. Nghe trên <form> nên không cần
-  // nâng state của hai picker lên đây. Nghe cả "input" lẫn "change": các nút
-  // "Chọn tất cả"/chip lớp (StudentPicker, UnitPickerTest) đổi tick bằng React
-  // state rồi tự bắn "change" nổi bọt (không có "input" thật từ trình duyệt),
-  // còn gõ tiêu đề chỉ bắn "input" (input text không bắn "change" cho tới khi
-  // blur) — phải nghe cả hai mới bắt đủ mọi trường hợp.
+  // Đếm lại số phần / học viên khi có checkbox đổi tick, và cập nhật riêng
+  // trạng thái "tiêu đề đã có chữ chưa" khi người dùng gõ. Nghe trên <form>
+  // nên không cần nâng state của hai picker lên đây. TÁCH theo loại sự kiện
+  // thay vì gọi chung một hàm cho cả hai: "change" → đếm lại phần/học viên
+  // (checkbox không bắn "input" thật từ trình duyệt — nút "Chọn tất
+  // cả"/chip lớp ở StudentPicker, UnitPickerTest đổi tick bằng React state rồi
+  // tự bắn "change" nổi bọt); "input" (gõ tiêu đề, gõ ô tìm đề/tìm học viên,
+  // Hướng dẫn, giờ, thời gian kỹ năng...) chỉ đọc lại ô Tiêu đề — KHÔNG chạy
+  // lại phép đếm units/students hay tạo mới mảng selectedUnitIds, để mỗi phím
+  // gõ không kéo effect data-wizard-when-skill (phụ thuộc selectedUnitIds)
+  // chạy lại vô ích.
   useEffect(() => {
     if (!open) {
       return;
@@ -73,7 +77,7 @@ export function AssignmentWizard({
     if (!form) {
       return;
     }
-    const recount = () => {
+    const recountSelection = () => {
       const units = Array.from(
         form.querySelectorAll<HTMLInputElement>('input[name="unitIds"]:checked')
       );
@@ -82,17 +86,20 @@ export function AssignmentWizard({
         units: units.length,
         students: form.querySelectorAll('input[name="studentIds"]:checked').length
       });
+    };
+    const recountTitle = () => {
       const titleInput = form.querySelector<HTMLInputElement>('input[name="title"]');
       // Khớp với zod .trim().min(2) ở server — minLength={2} của trình duyệt
       // vẫn cho qua chuỗi toàn khoảng trắng nên phải tự trim ở đây.
       setTitleFilled(Boolean(titleInput && titleInput.value.trim().length >= 2));
     };
-    recount();
-    form.addEventListener("change", recount);
-    form.addEventListener("input", recount);
+    recountSelection();
+    recountTitle();
+    form.addEventListener("change", recountSelection);
+    form.addEventListener("input", recountTitle);
     return () => {
-      form.removeEventListener("change", recount);
-      form.removeEventListener("input", recount);
+      form.removeEventListener("change", recountSelection);
+      form.removeEventListener("input", recountTitle);
     };
   }, [open]);
 
@@ -167,6 +174,24 @@ export function AssignmentWizard({
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = previousOverflow;
     };
+  }, [open]);
+
+  // Cờ "đang gửi" (và trạng thái đã điền tiêu đề) chỉ có ý nghĩa cho MỘT lần
+  // mở modal. Nếu không reset, kịch bản sau kẹt nút vĩnh viễn: bấm "Giao bài",
+  // mạng chậm (submitting=true), bấm Esc/✕ đóng modal trước khi server action
+  // phản hồi, mở lại modal → submitting vẫn true, nút khoá cứng với nhãn
+  // "Đang giao bài…", không có cách nào gỡ ngoài tải lại trang. Đặt thành
+  // effect riêng theo [open] (thay vì reset trong requestClose) để chắc chắn
+  // chạy với MỌI cách modal đóng, kể cả nếu sau này có thêm đường đóng khác
+  // ngoài requestClose. Chỉ set khi open ĐÃ chuyển sang false — không đụng cờ
+  // lúc modal còn đang mở, nên không mở khoá nhầm nút giữa lúc server action
+  // vẫn đang chạy dở (đúng cái submitting sinh ra để chặn).
+  useEffect(() => {
+    if (open) {
+      return;
+    }
+    setSubmitting(false);
+    setTitleFilled(false);
   }, [open]);
 
   // Bỏ chọn 1 phần từ chip: bấm vào chính checkbox để React nhận onChange —

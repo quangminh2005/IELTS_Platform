@@ -151,19 +151,20 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
       <NoticeToast message={assignmentsMessage} status={assignmentsStatus} />
 
 
-      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_25rem]">
+      <section>
         <AssignmentList
           assignments={assignmentItems}
           materials={materials}
           students={students}
           classOptions={classOptions}
-        />
-
-        <AssignmentBuilder
-          resetToken={builderResetKey}
-          materials={materials}
-          students={students}
-          classOptions={classOptions}
+          headerAction={
+            <AssignmentBuilder
+              resetToken={builderResetKey}
+              materials={materials}
+              students={students}
+              classOptions={classOptions}
+            />
+          }
         />
       </section>
     </div>

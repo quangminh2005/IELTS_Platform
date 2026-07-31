@@ -97,3 +97,63 @@ describe("matchesSearch", () => {
     expect(matchesSearch("Cambridge IELTS 20", "master")).toBe(false);
   });
 });
+
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+function readSource(relativePath: string): string {
+  return readFileSync(join(process.cwd(), relativePath), "utf8");
+}
+
+describe("components/assignment-wizard.tsx", () => {
+  const source = readSource("components/assignment-wizard.tsx");
+
+  it("dùng đúng server action cũ", () => {
+    expect(source).toContain("action={createAssignment}");
+  });
+
+  it("render đủ 4 slot, mỗi slot đúng một lần", () => {
+    for (const slot of ["{unitStep}", "{studentStep}", "{settingsLeft}", "{settingsRight}"]) {
+      expect(source.split(slot).length - 1).toBe(1);
+    }
+  });
+
+  it("đánh dấu đủ 3 bước", () => {
+    for (const step of ["1", "2", "3"]) {
+      expect(source).toContain(`data-wizard-step="${step}"`);
+    }
+  });
+
+  it("ẩn bước bằng class chứ không render có điều kiện (giữ input trong DOM)", () => {
+    expect(source).toContain('"hidden"');
+    expect(source).not.toMatch(/step === 1 \? \(?\s*</);
+  });
+
+  it("nút điều hướng không được submit form", () => {
+    expect(source).toContain("Tiếp tục");
+    expect(source).toContain("Quay lại");
+    expect(source.split('type="button"').length - 1).toBeGreaterThanOrEqual(3);
+  });
+
+  it("chặn Enter submit sớm khi chưa ở bước cuối", () => {
+    expect(source).toContain("onKeyDown");
+    expect(source).toContain("preventDefault");
+  });
+
+  it("có thuộc tính a11y của hộp thoại", () => {
+    expect(source).toContain('role="dialog"');
+    expect(source).toContain('aria-modal="true"');
+  });
+});
+
+describe("bố cục trang giao bài", () => {
+  it("trang không còn lưới 2 cột 25rem", () => {
+    expect(readSource("app/teacher/assignments/page.tsx")).not.toContain("25rem");
+  });
+
+  it("builder không còn tự render form riêng", () => {
+    const source = readSource("components/assignment-builder.tsx");
+    expect(source).toContain("AssignmentWizard");
+    expect(source).not.toContain("<form");
+  });
+});

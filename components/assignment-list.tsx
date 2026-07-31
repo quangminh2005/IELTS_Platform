@@ -1,5 +1,6 @@
 import { deleteAssignment, updateAssignment } from "@/lib/actions/assignments";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { DueDateField } from "@/components/due-date-field";
 import { SkillTimeInputs } from "@/components/skill-time-inputs";
@@ -34,6 +35,8 @@ type AssignmentListProps = {
   materials: UnitPickerMaterial[];
   students: StudentPickerStudent[];
   classOptions: StudentPickerClass[];
+  // Nút "+ Tạo bài giao" đặt ngay ở header thẻ danh sách.
+  headerAction?: ReactNode;
 };
 
 const fieldClass =
@@ -381,7 +384,8 @@ export function AssignmentList({
   assignments,
   materials,
   students,
-  classOptions
+  classOptions,
+  headerAction
 }: AssignmentListProps) {
   const unitSkills: Record<string, string> = {};
   materials.forEach((material) =>
@@ -396,11 +400,14 @@ export function AssignmentList({
     <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-5 py-4">
         <h3 className="text-base font-semibold">Bài đã giao</h3>
-        {assignments.length > 0 ? (
-          <span className="text-xs text-muted-foreground">
-            {assignments.length} bài · {groups.length} ngày
-          </span>
-        ) : null}
+        <div className="flex flex-wrap items-center gap-3">
+          {assignments.length > 0 ? (
+            <span className="text-xs text-muted-foreground">
+              {assignments.length} bài · {groups.length} ngày
+            </span>
+          ) : null}
+          {headerAction}
+        </div>
       </div>
       {groups.length > 0 ? (
         <div className="divide-y divide-border">

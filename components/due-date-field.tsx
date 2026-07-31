@@ -9,6 +9,8 @@ type DueDateFieldProps = {
   // Giá trị mặc định dạng yyyy-mm-dd (khớp với <input type="date"> cũ).
   defaultValue?: string;
   id?: string;
+  // Chip chọn nhanh Hôm nay / Ngày mai / +3 ngày (chỉ dùng ở modal giao bài).
+  quickPicks?: boolean;
 };
 
 function parseYmd(value?: string): Date | undefined {
@@ -36,7 +38,12 @@ function toDisplay(date: Date): string {
   return `${day}/${month}/${date.getFullYear()}`;
 }
 
-export function DueDateField({ name = "dueDate", defaultValue, id }: DueDateFieldProps) {
+export function DueDateField({
+  name = "dueDate",
+  defaultValue,
+  id,
+  quickPicks = false
+}: DueDateFieldProps) {
   const [selected, setSelected] = useState<Date | undefined>(() => parseYmd(defaultValue));
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -90,6 +97,29 @@ export function DueDateField({ name = "dueDate", defaultValue, id }: DueDateFiel
           </button>
         ) : null}
       </div>
+
+      {quickPicks ? (
+        <div className="mt-1.5 flex flex-wrap gap-1.5">
+          {[
+            { label: "Hôm nay", days: 0 },
+            { label: "Ngày mai", days: 1 },
+            { label: "+3 ngày", days: 3 }
+          ].map((pick) => (
+            <button
+              key={pick.label}
+              type="button"
+              onClick={() => {
+                const date = new Date();
+                date.setDate(date.getDate() + pick.days);
+                setSelected(date);
+              }}
+              className="rounded-full border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground transition hover:border-primary hover:text-primary"
+            >
+              {pick.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       {open ? (
         <div

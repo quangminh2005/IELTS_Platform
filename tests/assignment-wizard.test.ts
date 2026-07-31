@@ -383,3 +383,25 @@ describe("student-picker: chip lớp không được giữ state riêng", () => 
     expect(source).not.toMatch(/const\s*\[\s*activeClassIds\s*,\s*setActiveClassIds\s*\]/);
   });
 });
+
+describe("bước 3 — cài đặt & xuất bản", () => {
+  it("DueDateField có chip nhanh, mặc định tắt", () => {
+    const source = readSource("components/due-date-field.tsx");
+    expect(source).toContain("quickPicks = false");
+    expect(source).toContain("Hôm nay");
+    expect(source).toContain("Ngày mai");
+  });
+
+  it("khối ẩn thanh audio được đánh dấu để chỉ hiện khi có Listening", () => {
+    expect(readSource("components/assignment-builder.tsx")).toContain(
+      'data-wizard-when-skill="listening"'
+    );
+    expect(readSource("components/assignment-wizard.tsx")).toContain(
+      "data-wizard-when-skill"
+    );
+  });
+
+  it("wizard render hộp tóm tắt ở bước cuối", () => {
+    expect(readSource("components/assignment-wizard.tsx")).toContain("Sẽ giao");
+  });
+});

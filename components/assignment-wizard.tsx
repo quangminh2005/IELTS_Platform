@@ -21,6 +21,8 @@ type AssignmentWizardProps = {
   disabledReason: string | null;
   // id phần -> tên phần, để hiện chip "đã chọn" ở bước 1.
   unitTitles: Record<string, string>;
+  // id phần -> kỹ năng, để chỉ hiện "Ẩn thanh audio" khi có phần Listening.
+  unitSkills: Record<string, string>;
 };
 
 const EMPTY_COUNTS: WizardCounts = { units: 0, students: 0 };
@@ -35,7 +37,8 @@ export function AssignmentWizard({
   settingsRight,
   canCreate,
   disabledReason,
-  unitTitles
+  unitTitles,
+  unitSkills
 }: AssignmentWizardProps) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<WizardStep>(1);
@@ -69,6 +72,31 @@ export function AssignmentWizard({
     form.addEventListener("change", recount);
     return () => form.removeEventListener("change", recount);
   }, [open]);
+
+  // Khối nào có data-wizard-when-skill chỉ hiện khi kỹ năng đó đang được chọn.
+  // Khi ẩn thì bỏ tick luôn để không gửi lên cấu hình thừa.
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+    const form = formRef.current;
+    if (!form) {
+      return;
+    }
+    const skills = new Set(selectedUnitIds.map((unitId) => unitSkills[unitId]));
+    form.querySelectorAll<HTMLElement>("[data-wizard-when-skill]").forEach((node) => {
+      const needed = node.dataset.wizardWhenSkill ?? "";
+      const visible = skills.has(needed);
+      node.hidden = !visible;
+      if (!visible) {
+        node
+          .querySelectorAll<HTMLInputElement>('input[type="checkbox"]')
+          .forEach((input) => {
+            input.checked = false;
+          });
+      }
+    });
+  }, [open, selectedUnitIds, unitSkills]);
 
   const requestClose = useCallback(() => {
     const dirty = counts.units > 0 || counts.students > 0;
@@ -255,7 +283,20 @@ export function AssignmentWizard({
                 <div data-wizard-step="3" className={step === 3 ? "" : "hidden"}>
                   <div className="grid gap-5 lg:grid-cols-2">
                     <div className="space-y-4">{settingsLeft}</div>
-                    <div className="space-y-4">{settingsRight}</div>
+                    <div className="space-y-4">
+                      {settingsRight}
+                      <div className="rounded-lg border border-border bg-background p-3">
+                        <p className="text-sm font-semibold">Sẽ giao</p>
+                        <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
+                          {selectedUnitIds.map((unitId) => (
+                            <li key={unitId}>· {unitTitles[unitId] ?? "Phần đã chọn"}</li>
+                          ))}
+                        </ul>
+                        <p className="mt-2 text-xs text-muted-foreground">
+                          Cho {counts.students} học viên
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

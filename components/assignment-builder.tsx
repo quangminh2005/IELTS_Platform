@@ -54,6 +54,7 @@ export function AssignmentBuilder({
         canCreate={canCreate}
         disabledReason={disabledReason}
         unitTitles={unitTitles}
+        unitSkills={unitSkills}
         unitStep={
           <UnitSearchFilter>
             <UnitPicker materials={materials} wide />
@@ -86,7 +87,7 @@ export function AssignmentBuilder({
                   >
                     Ngày
                   </label>
-                  <DueDateField id="dueDate" name="dueDate" />
+                  <DueDateField id="dueDate" name="dueDate" quickPicks />
                 </div>
                 <div>
                   <label
@@ -119,7 +120,7 @@ export function AssignmentBuilder({
               </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset data-wizard-when-skill="listening">
               <legend className="text-sm font-semibold">Chế độ thi thật (Listening)</legend>
               <label className="mt-2 flex cursor-pointer items-start gap-2.5 rounded-lg border border-border bg-background p-3">
                 <input

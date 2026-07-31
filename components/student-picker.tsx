@@ -36,9 +36,6 @@ export function StudentPicker({
     () => new Set(selectedStudentIds ?? [])
   );
   const [query, setQuery] = useState("");
-  // Chip lớp nào đang bật (chỉ dùng ở chế độ wide) — theo dõi riêng, không suy
-  // ra từ selected, vì một học viên có thể thuộc nhiều lớp cùng lúc.
-  const [activeClassIds, setActiveClassIds] = useState<string[]>([]);
 
   const allSelected = students.length > 0 && selected.size === students.length;
 
@@ -53,6 +50,19 @@ export function StudentPicker({
     }
     return map;
   }, [students]);
+
+  // Chip lớp nào đang bật (chỉ dùng ở chế độ wide) — SUY ra từ danh sách đang
+  // chọn mỗi lần render, không lưu state riêng: một lớp coi là "đang bật" khi
+  // mọi học viên của lớp đó đều đang được chọn (lớp rỗng thì không bao giờ
+  // tính là đang bật). Nhờ vậy chip không thể lệch màu với danh sách tick tay.
+  const activeClassIds = useMemo(() => {
+    return classOptions
+      .filter((classItem) => {
+        const ids = studentsByClass[classItem.id] ?? [];
+        return ids.length > 0 && ids.every((id) => selected.has(id));
+      })
+      .map((classItem) => classItem.id);
+  }, [classOptions, studentsByClass, selected]);
 
   function toggle(id: string) {
     setSelected((current) => {
@@ -69,12 +79,9 @@ export function StudentPicker({
   function toggleAll() {
     if (allSelected) {
       setSelected(new Set());
-      setActiveClassIds([]);
       return;
     }
     setSelected(new Set(students.map((s) => s.id)));
-    // Mọi học viên đều đã được chọn nên coi như mọi chip lớp đều đang "bật".
-    setActiveClassIds(classOptions.map((c) => c.id));
   }
 
   function selectClass(classId: string) {
@@ -100,8 +107,9 @@ export function StudentPicker({
       classId,
       studentsByClass
     });
+    // Chỉ cần lấy phần selected — activeClassIds đã suy ra ở trên, không lưu
+    // trùng lặp nữa.
     setSelected(new Set(result.selected));
-    setActiveClassIds(result.activeClassIds);
   }
 
   if (students.length === 0) {

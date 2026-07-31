@@ -368,3 +368,18 @@ describe("student-picker: học viên bị lọc không được rời DOM", () 
     expect(source).not.toMatch(/<label[^>]*\shidden(\s|>)/);
   });
 });
+
+// Vòng sửa trước để chip lớp tự nhớ state activeClassIds riêng, tách khỏi
+// selected — hậu quả: tự tay bỏ tick một học viên của lớp đang bật thì chip
+// vẫn sáng (nói dối là cả lớp còn được chọn), vì màu chip đọc state cũ chứ
+// không đọc lại danh sách đang chọn. Sửa đúng là XOÁ HẲN state đó và suy ra
+// activeClassIds từ selected mỗi lần render, nên test này chặn không cho ai
+// thêm lại state trùng lặp đó.
+describe("student-picker: chip lớp không được giữ state riêng", () => {
+  const source = readSource("components/student-picker.tsx");
+
+  it("không còn useState cho activeClassIds (phải suy ra từ selected, không lưu state)", () => {
+    expect(source).not.toMatch(/useState[^;]*activeClassIds/);
+    expect(source).not.toMatch(/const\s*\[\s*activeClassIds\s*,\s*setActiveClassIds\s*\]/);
+  });
+});

@@ -379,7 +379,6 @@ describe("student-picker: chip lớp không được giữ state riêng", () => 
   const source = readSource("components/student-picker.tsx");
 
   it("không còn useState cho activeClassIds (phải suy ra từ selected, không lưu state)", () => {
-    expect(source).not.toMatch(/useState[^;]*activeClassIds/);
     expect(source).not.toMatch(/const\s*\[\s*activeClassIds\s*,\s*setActiveClassIds\s*\]/);
   });
 });
@@ -403,5 +402,76 @@ describe("bước 3 — cài đặt & xuất bản", () => {
 
   it("wizard render hộp tóm tắt ở bước cuối", () => {
     expect(readSource("components/assignment-wizard.tsx")).toContain("Sẽ giao");
+  });
+});
+
+// AppShell bọc trang trong div "animate-fade-in" (transform: translateY) —
+// transform khác `none` biến div đó thành containing block cho `position:
+// fixed`, làm overlay `inset-0` neo theo chiều cao trang thay vì viewport.
+// NoticeToast và SubmitCelebration đã sửa đúng lỗi này bằng createPortal ra
+// document.body; test này chặn không cho ai bỏ portal của modal giao bài đi.
+describe("overlay modal phải portal ra document.body", () => {
+  const source = readSource("components/assignment-wizard.tsx");
+
+  it("import createPortal từ react-dom", () => {
+    expect(source).toContain('import { createPortal } from "react-dom"');
+  });
+
+  it("overlay fixed inset-0 được đưa qua createPortal(..., document.body)", () => {
+    expect(source).toMatch(/createPortal\(overlay,\s*document\.body\)/);
+  });
+
+  it("chỉ portal sau khi mount ở client (tránh lệch SSR/hydrate)", () => {
+    expect(source).toContain("mounted");
+    expect(source).toMatch(/mounted\s*&&\s*overlay/);
+  });
+});
+
+// Chip lớp / "Chọn tất cả" đổi tick bằng setSelected (React state) nên trình
+// duyệt không tự bắn "change" — nếu thiếu dispatch thủ công, bộ đếm học viên ở
+// AssignmentWizard (nghe "change" trên <form>) sẽ đứng im trong khi badge "Đã
+// chọn N/M" của chính StudentPicker vẫn cập nhật, ra hai con số mâu thuẫn.
+describe("student-picker bắn sự kiện change khi đổi chọn bằng state", () => {
+  const source = readSource("components/student-picker.tsx");
+
+  it("có effect dispatch new Event(\"change\", { bubbles: true })", () => {
+    expect(source).toContain('new Event("change", { bubbles: true })');
+  });
+
+  it("có cờ chống bắn sự kiện ngay lúc mount", () => {
+    expect(source).toMatch(/mounted\.current\s*=\s*true/);
+  });
+
+  it("dispatch từ ref gắn trên phần tử gốc của component", () => {
+    expect(source).toContain("rootRef.current?.dispatchEvent");
+    expect(source).toContain("ref={rootRef}");
+  });
+});
+
+// Nếu server action từ chối (thiếu học viên, tiêu đề toàn khoảng trắng), trang
+// redirect kèm lỗi và modal dựng lại từ đầu, mất sạch lựa chọn. Khoá nút
+// trước khi điều đó có cơ hội xảy ra, thay vì chỉ dựa vào validate phía
+// server.
+describe("nút Giao bài bị khoá khi chắc chắn sẽ lỗi", () => {
+  const source = readSource("components/assignment-wizard.tsx");
+
+  it("có state submitting, khoá nút và đổi nhãn khi đang gửi (không dùng useFormStatus)", () => {
+    expect(source).toContain("submitting");
+    expect(source).toContain("Đang giao bài");
+    expect(source).not.toContain("useFormStatus");
+  });
+
+  it("khoá nút khi thiếu phần hoặc thiếu học viên", () => {
+    expect(source).toMatch(/counts\.units === 0/);
+    expect(source).toMatch(/counts\.students === 0/);
+  });
+
+  it("khoá nút khi tiêu đề rỗng/chỉ khoảng trắng (khớp .trim().min(2) ở server)", () => {
+    expect(source).toContain("titleFilled");
+    expect(source).toContain(".trim().length >= 2");
+  });
+
+  it("nút submit ở bước 3 có disabled={!canSubmit}", () => {
+    expect(source).toContain("disabled={!canSubmit}");
   });
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { matchesSearch, toggleClassChip } from "@/lib/assignment-wizard";
 
 export type StudentPickerStudent = {
@@ -36,6 +36,23 @@ export function StudentPicker({
     () => new Set(selectedStudentIds ?? [])
   );
   const [query, setQuery] = useState("");
+  // Neo trên phần tử gốc để bắn sự kiện "change" nổi bọt lên <form> cha.
+  const rootRef = useRef<HTMLDivElement>(null);
+  const mounted = useRef(false);
+
+  // Chip lớp và "Chọn tất cả"/"Bỏ chọn tất cả" đổi tick bằng React state
+  // (setSelected) nên trình duyệt KHÔNG tự bắn sự kiện "change" như khi người
+  // dùng tick tay từng checkbox — bộ đếm học viên ở AssignmentWizard (nghe
+  // "change" trên <form>) sẽ đứng im dù danh sách chọn đã đổi. Bắn thủ công
+  // một sự kiện "change" nổi bọt sau mỗi lần `selected` đổi, giống cách
+  // UnitPickerTest đã làm cho nút "Chọn tất cả" ở bước 1.
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+    rootRef.current?.dispatchEvent(new Event("change", { bubbles: true }));
+  }, [selected]);
 
   const allSelected = students.length > 0 && selected.size === students.length;
 
@@ -133,7 +150,7 @@ export function StudentPicker({
     : null;
 
   return (
-    <div className="space-y-3">
+    <div ref={rootRef} className="space-y-3">
       {/* Các id đã chọn vẫn được gửi qua các input ẩn (checkbox controlled bên dưới) */}
       {wide ? (
         <div className="space-y-2">

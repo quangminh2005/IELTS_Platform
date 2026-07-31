@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { createAssignment } from "@/lib/actions/assignments";
 import {
   WIZARD_STEPS,
@@ -44,12 +45,26 @@ export function AssignmentWizard({
   const [step, setStep] = useState<WizardStep>(1);
   const [counts, setCounts] = useState<WizardCounts>(EMPTY_COUNTS);
   const [selectedUnitIds, setSelectedUnitIds] = useState<string[]>([]);
+  const [titleFilled, setTitleFilled] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // Đếm lại số phần / học viên mỗi khi có ô nào đổi trạng thái tick. Nghe trên
-  // <form> nên không cần nâng state của hai picker lên đây.
+  // Chỉ dựng portal sau khi mount ở client (document.body đã sẵn sàng) — tránh
+  // lệch nội dung SSR/hydrate giống NoticeToast/SubmitCelebration.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Đếm lại số phần / học viên, và đọc tiêu đề, mỗi khi có ô nào đổi trạng
+  // thái tick hoặc người dùng gõ vào ô Tiêu đề. Nghe trên <form> nên không cần
+  // nâng state của hai picker lên đây. Nghe cả "input" lẫn "change": các nút
+  // "Chọn tất cả"/chip lớp (StudentPicker, UnitPickerTest) đổi tick bằng React
+  // state rồi tự bắn "change" nổi bọt (không có "input" thật từ trình duyệt),
+  // còn gõ tiêu đề chỉ bắn "input" (input text không bắn "change" cho tới khi
+  // blur) — phải nghe cả hai mới bắt đủ mọi trường hợp.
   useEffect(() => {
     if (!open) {
       return;
@@ -67,10 +82,18 @@ export function AssignmentWizard({
         units: units.length,
         students: form.querySelectorAll('input[name="studentIds"]:checked').length
       });
+      const titleInput = form.querySelector<HTMLInputElement>('input[name="title"]');
+      // Khớp với zod .trim().min(2) ở server — minLength={2} của trình duyệt
+      // vẫn cho qua chuỗi toàn khoảng trắng nên phải tự trim ở đây.
+      setTitleFilled(Boolean(titleInput && titleInput.value.trim().length >= 2));
     };
     recount();
     form.addEventListener("change", recount);
-    return () => form.removeEventListener("change", recount);
+    form.addEventListener("input", recount);
+    return () => {
+      form.removeEventListener("change", recount);
+      form.removeEventListener("input", recount);
+    };
   }, [open]);
 
   // Khối nào có data-wizard-when-skill chỉ hiện khi kỹ năng đó đang được chọn.
@@ -88,6 +111,11 @@ export function AssignmentWizard({
       const needed = node.dataset.wizardWhenSkill ?? "";
       const visible = skills.has(needed);
       node.hidden = !visible;
+      // Đặt thêm class "hidden" y như UnitSearchFilter: khối này hiện chỉ vì
+      // <fieldset> không mang class display nào — nếu sau này ai thêm class
+      // "flex"/"grid" vào đây, thuộc tính [hidden] ở @layer base sẽ bị đè bởi
+      // utility ở layer sau. Giữ cả hai để toàn tính năng chỉ còn một cách ẩn.
+      node.classList.toggle("hidden", !visible);
       if (!visible) {
         node
           .querySelectorAll<HTMLInputElement>('input[type="checkbox"]')
@@ -156,23 +184,27 @@ export function AssignmentWizard({
   const blocker = stepBlocker(step, counts);
   const reachable = maxReachableStep(counts);
 
-  return (
-    <>
-      <button
-        ref={triggerRef}
-        type="button"
-        onClick={() => setOpen(true)}
-        disabled={!canCreate}
-        title={disabledReason ?? undefined}
-        className="rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        + Tạo bài giao
-      </button>
-      {disabledReason ? (
-        <span className="text-xs text-muted-foreground">{disabledReason}</span>
-      ) : null}
+  // Lý do khoá nút Giao bài ở bước cuối — chặn TRƯỚC khi submit thay vì để
+  // server action từ chối rồi redirect, vì redirect làm modal dựng lại từ đầu
+  // và mất sạch lựa chọn (không sửa được ở đây vì không được đụng
+  // lib/actions/assignments.ts).
+  const submitBlockReason = submitting
+    ? null
+    : counts.units === 0
+      ? "Chọn ít nhất 1 phần"
+      : counts.students === 0
+        ? "Chọn ít nhất 1 học viên"
+        : !titleFilled
+          ? "Nhập tiêu đề (tối thiểu 2 ký tự)"
+          : null;
+  const canSubmit = !submitting && Boolean(counts.units) && Boolean(counts.students) && titleFilled;
+  const footerReason = step === 3 ? submitBlockReason : blocker;
 
-      {open ? (
+  // Overlay + panel — được portal thẳng ra <body> bên dưới (xem biến
+  // `overlay`), TÁCH khỏi nút bấm và khỏi vị trí trong cây trang. Chỉ overlay
+  // cần portal vì nó là phần tử `fixed inset-0`; nút "+ Tạo bài giao" vẫn nằm
+  // nguyên tại chỗ.
+  const overlay = open ? (
         <div
           className="fixed inset-0 z-50 flex items-stretch justify-center bg-black/50 sm:items-center sm:p-6"
           onMouseDown={(event) => {
@@ -194,15 +226,28 @@ export function AssignmentWizard({
               action={createAssignment}
               className="flex min-h-0 flex-1 flex-col"
               onKeyDown={(event) => {
-                // Enter ở bước 1–2 sẽ submit sớm cả form → chặn lại.
+                // Ý định gốc: chặn Enter trong Ô NHẬP VĂN BẢN để nó không
+                // submit sớm cả form ở bước 1–2. Enter còn là cách kích hoạt
+                // mặc định của <button>/<summary> (và xuống dòng của
+                // <textarea>) — preventDefault ở đó sẽ làm bàn phím không bấm
+                // được "Tiếp tục", chip lớp, "Chọn tất cả", nút đóng, hay
+                // mở/gập cây đề. Chỉ chặn khi target đúng là <input> kiểu nhập
+                // văn bản (bỏ qua checkbox/radio); mọi thẻ khác giữ hành vi
+                // Enter mặc định.
                 if (event.key !== "Enter" || step === 3) {
                   return;
                 }
-                if ((event.target as HTMLElement).tagName === "TEXTAREA") {
+                const target = event.target as HTMLElement;
+                if (target.tagName !== "INPUT") {
+                  return;
+                }
+                const inputType = (target as HTMLInputElement).type;
+                if (inputType === "checkbox" || inputType === "radio") {
                   return;
                 }
                 event.preventDefault();
               }}
+              onSubmit={() => setSubmitting(true)}
             >
               <div className="border-b border-border px-5 pb-3 pt-4">
                 <div className="flex items-center justify-between gap-3">
@@ -304,8 +349,10 @@ export function AssignmentWizard({
               <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-3">
                 <span className="text-xs text-muted-foreground">{summaryLabel(counts)}</span>
                 <div className="flex items-center gap-2">
-                  {blocker ? (
-                    <span className="text-xs text-amber-600 dark:text-amber-300">{blocker}</span>
+                  {footerReason ? (
+                    <span className="text-xs text-amber-600 dark:text-amber-300">
+                      {footerReason}
+                    </span>
                   ) : null}
                   <button
                     type="button"
@@ -316,8 +363,11 @@ export function AssignmentWizard({
                     Quay lại
                   </button>
                   {step === 3 ? (
-                    <button className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
-                      {submitLabel(counts)}
+                    <button
+                      disabled={!canSubmit}
+                      className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {submitting ? "Đang giao bài…" : submitLabel(counts)}
                     </button>
                   ) : (
                     <button
@@ -334,7 +384,39 @@ export function AssignmentWizard({
             </form>
           </div>
         </div>
+  ) : null;
+
+  return (
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={() => setOpen(true)}
+        disabled={!canCreate}
+        title={disabledReason ?? undefined}
+        className="rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        + Tạo bài giao
+      </button>
+      {disabledReason ? (
+        <span className="text-xs text-muted-foreground">{disabledReason}</span>
       ) : null}
+      {/*
+        Portal overlay ra document.body: AppShell (components/app-shell.tsx)
+        bọc nội dung trang trong một div có class "animate-fade-in"
+        (tailwind.config.ts), keyframe cuối là `transform: translateY(0)`. Một
+        phần tử có `transform` khác `none` trở thành CONTAINING BLOCK cho mọi
+        con `position: fixed` bên trong nó — nghĩa là overlay `fixed inset-0`
+        của modal này sẽ neo theo chiều cao của div đó (toàn bộ nội dung trang)
+        chứ không phải theo viewport. Ở trang có nhiều bài đã giao (nội dung
+        cao hơn màn hình), `sm:items-center` sẽ canh modal ra giữa TRANG, tít
+        dưới khu vực đang xem, trong khi overflow:hidden trên body chặn cuộn
+        xuống đó — giáo viên bấm "+ Tạo bài giao" chỉ thấy nền tối, không thấy
+        hộp thoại. NoticeToast và SubmitCelebration đã dính đúng lỗi này —
+        portal ra <body> là cách sửa đã được xác nhận, ĐỪNG "dọn cho gọn" bằng
+        cách bỏ portal.
+      */}
+      {mounted && overlay ? createPortal(overlay, document.body) : null}
     </>
   );
 }

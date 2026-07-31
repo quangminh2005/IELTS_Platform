@@ -287,7 +287,7 @@ export function AssignmentWizard({
                   </button>
                 </div>
 
-                <ol className="mt-3 flex flex-wrap items-center gap-1.5">
+                <ol className="mt-3.5 flex flex-wrap items-center gap-2">
                   {WIZARD_STEPS.map((item) => {
                     const active = item.id === step;
                     const usable = item.id <= reachable;
@@ -297,14 +297,14 @@ export function AssignmentWizard({
                           type="button"
                           disabled={!usable}
                           onClick={() => setStep(item.id)}
-                          className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-sm transition ${
+                          className={`flex items-center gap-2.5 rounded-full px-4 py-2.5 text-base transition ${
                             active
                               ? "bg-primary/10 font-semibold text-primary"
                               : "text-muted-foreground hover:text-foreground disabled:hover:text-muted-foreground"
                           } disabled:cursor-not-allowed disabled:opacity-60`}
                         >
                           <span
-                            className={`flex size-5 items-center justify-center rounded-full text-xs ${
+                            className={`flex size-7 items-center justify-center rounded-full text-sm ${
                               active
                                 ? "bg-primary text-primary-foreground"
                                 : "border border-border"

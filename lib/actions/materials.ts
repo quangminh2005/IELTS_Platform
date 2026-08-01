@@ -676,7 +676,9 @@ const importScalar = z.union([z.string(), z.number(), z.boolean()]);
 const importQuestionSchema = z.object({
   order: z.number().int().min(1),
   questionType: z.enum(questionTypes),
-  prompt: z.string().trim().min(1),
+  // Cho phép prompt rỗng: dạng "Choose TWO letters" tách 1 câu hỏi thành 2 câu con,
+  // đề thật nằm ở metadata.groupInstructions nên câu con không có phần dẫn riêng.
+  prompt: z.string().trim(),
   options: z.array(importScalar).optional(),
   answer: z.union([importScalar, z.array(importScalar)]).optional(),
   explanation: z.string().trim().optional(),

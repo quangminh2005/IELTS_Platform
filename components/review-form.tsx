@@ -407,11 +407,11 @@ export function ReviewForm({
           <span className="font-medium">Nhận xét tổng quan</span>
           <textarea
             name="summaryFeedback"
-            rows={3}
+            rows={7}
             required
             value={summary}
             onChange={(event) => setSummary(event.target.value)}
-            className="resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
+            className="min-h-[11rem] resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
           />
         </label>
 
@@ -420,10 +420,10 @@ export function ReviewForm({
             <span className="font-medium">Nhận xét chi tiết</span>
             <textarea
               name="detailedFeedback"
-              rows={5}
+              rows={14}
               value={detailed}
               onChange={(event) => setDetailed(event.target.value)}
-              className="resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
+              className="min-h-[21rem] resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
             />
           </label>
           <CommentBankChips snippets={snippets} criteria={criteria} onInsert={insertSnippet} />

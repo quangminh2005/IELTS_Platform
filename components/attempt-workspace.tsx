@@ -1779,8 +1779,10 @@ function CountdownTimer({
             bar: "bg-amber-500"
           }
         : {
-            box: "border-accent/50 bg-accent/10 text-accent-foreground dark:text-accent",
-            bar: "bg-accent"
+            // Dùng màu xanh (primary) chứ KHÔNG dùng accent: accent của theme vốn
+            // là màu hổ phách, trùng với mức "sắp hết giờ" nên sẽ không phân biệt được.
+            box: "border-primary/50 bg-primary/10 text-primary",
+            bar: "bg-primary"
           };
 
   return (

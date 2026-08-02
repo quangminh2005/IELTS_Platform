@@ -1748,36 +1748,82 @@ function ChoiceGridQuestionSet({
   );
 }
 
-function CountdownTimer({ remainingSeconds }: { remainingSeconds: number }) {
-  const totalSeconds = Math.max(0, Math.floor(remainingSeconds));
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  const expired = totalSeconds <= 0;
-  const low = totalSeconds <= 60;
+// Đồng hồ đếm ngược — cố tình làm TO và nổi bật vì học viên hay quên nhìn giờ.
+// Ba mức: bình thường → sắp hết (còn ≤ 5 phút, màu hổ phách) → gấp (còn ≤ 1 phút,
+// màu đỏ + nhấp nháy). Thanh mảnh dưới đáy cho thấy phần thời gian còn lại.
+function CountdownTimer({
+  remainingSeconds,
+  budgetSeconds
+}: {
+  remainingSeconds: number;
+  budgetSeconds: number | null;
+}) {
+  const left = Math.max(0, Math.floor(remainingSeconds));
+  const minutes = Math.floor(left / 60);
+  const seconds = left % 60;
+  const expired = left <= 0;
+  const critical = left <= 60;
+  const warning = !critical && left <= 300;
+  const percentLeft =
+    budgetSeconds && budgetSeconds > 0 ? Math.min(100, (left / budgetSeconds) * 100) : null;
+
+  const tone =
+    expired || critical
+      ? {
+          box: "border-red-500/70 bg-red-500/15 text-red-600 shadow-[0_0_0_4px_rgba(239,68,68,0.15)] dark:text-red-300",
+          bar: "bg-red-500"
+        }
+      : warning
+        ? {
+            box: "border-amber-500/70 bg-amber-500/15 text-amber-600 shadow-[0_0_0_4px_rgba(245,158,11,0.15)] dark:text-amber-300",
+            bar: "bg-amber-500"
+          }
+        : {
+            box: "border-accent/50 bg-accent/10 text-accent-foreground dark:text-accent",
+            bar: "bg-accent"
+          };
 
   return (
     <div
+      role="timer"
+      aria-label={expired ? "Hết giờ" : `Còn lại ${minutes} phút ${seconds} giây`}
       className={[
-        "inline-flex shrink-0 items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold tabular-nums",
-        expired || low
-          ? "border-red-400/60 bg-red-500/10 text-red-600 dark:text-red-300"
-          : "border-accent/40 bg-accent/10 text-accent-foreground dark:text-accent"
+        "relative flex shrink-0 items-center gap-2.5 overflow-hidden rounded-xl border-2 px-3.5 py-1.5 tabular-nums",
+        tone.box,
+        expired || critical ? "animate-pulse" : ""
       ].join(" ")}
     >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        className="h-6 w-6 sm:h-7 sm:w-7"
+        aria-hidden="true"
+      >
         <circle cx="12" cy="12" r="9" />
         <path d="M12 7v5l3 2" strokeLinecap="round" />
       </svg>
       {expired ? (
-        <span className="font-semibold uppercase tracking-wide">Hết giờ</span>
+        <span className="text-xl font-extrabold uppercase tracking-wide sm:text-2xl">Hết giờ</span>
       ) : (
-        <>
-          <span className="hidden text-[11px] font-medium uppercase tracking-wide opacity-80 sm:inline">
+        <div className="leading-none">
+          <span className="block text-[10px] font-bold uppercase tracking-[0.14em] opacity-70">
             Còn lại
           </span>
-          {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
-        </>
+          <span className="mt-0.5 block text-2xl font-extrabold leading-none sm:text-3xl">
+            {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
+          </span>
+        </div>
       )}
+      {percentLeft != null ? (
+        <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-black/10 dark:bg-white/10">
+          <span
+            className={`block h-full ${tone.bar} transition-[width] duration-1000 ease-linear`}
+            style={{ width: `${percentLeft}%` }}
+          />
+        </span>
+      ) : null}
     </div>
   );
 }
@@ -2579,7 +2625,7 @@ export function AttemptWorkspace({
             />
           ) : null}
           {activeSkillLimit != null && remaining != null ? (
-            <CountdownTimer remainingSeconds={remaining} />
+            <CountdownTimer remainingSeconds={remaining} budgetSeconds={activeSkillLimit * 60} />
           ) : null}
         </div>
       </header>

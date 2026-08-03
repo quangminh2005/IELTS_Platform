@@ -1,3 +1,5 @@
+"use client";
+
 import { UnitPickerTest } from "@/components/unit-picker-test";
 
 export type UnitPickerUnit = {

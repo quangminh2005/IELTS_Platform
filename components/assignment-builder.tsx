@@ -22,9 +22,9 @@ type AssignmentBuilderProps = {
 const fieldClass =
   "mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2";
 
-// Dựng sẵn nội dung từng bước ở phía server rồi truyền vào vỏ modal client —
-// nhờ vậy cây chọn đề (UnitPicker) vẫn là server component, không phải đẩy
-// toàn bộ danh sách đề sang trình duyệt.
+// Dựng sẵn nội dung từng bước ở phía server rồi truyền vào vỏ modal client.
+// Danh sách đề gửi sang trình duyệt chỉ gồm vài field ngắn (xem materialSelect
+// ở app/teacher/assignments/page.tsx), không kèm nội dung bài.
 export function AssignmentBuilder({
   materials,
   students,

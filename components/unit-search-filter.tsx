@@ -3,8 +3,8 @@
 import { useRef, useState, type ReactNode } from "react";
 import { matchesSearch } from "@/lib/assignment-wizard";
 
-// Ô tìm kiếm lọc cây chọn đề. Cây do server render nên ở đây chỉ ẩn/hiện các
-// nhánh theo data-search — checkbox vẫn nằm nguyên trong DOM, không mất lựa chọn.
+// Ô tìm kiếm lọc cây chọn đề. Chỉ ẩn/hiện các nhánh theo data-search —
+// checkbox vẫn nằm nguyên trong DOM, không mất lựa chọn.
 export function UnitSearchFilter({ children }: { children: ReactNode }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");

@@ -5,22 +5,50 @@ import { AssignmentList, type AssignmentItem } from "@/components/assignment-lis
 import { NoticeToast } from "@/components/notice-toast";
 import { prisma } from "@/lib/prisma";
 
-const materialInclude = {
+// Cây chọn phần chỉ cần vài field ngắn. KHÔNG dùng include (lấy cả content,
+// transcript, transcriptTimingJson, metadataJson) — riêng phần đó đã ~5MB và bị
+// nhét hết vào payload gửi xuống trình duyệt, làm trang đơ.
+const materialSelect = {
+  id: true,
+  title: true,
+  skill: true,
+  sourceLabel: true,
   units: {
-    orderBy: [{ unitNumber: "asc" }, { createdAt: "asc" }]
+    orderBy: [{ unitNumber: "asc" }, { createdAt: "asc" }],
+    select: {
+      id: true,
+      title: true,
+      skill: true,
+      unitType: true,
+      unitNumber: true,
+      defaultTimeLimitMinutes: true
+    }
   }
-} satisfies Prisma.MaterialInclude;
+} satisfies Prisma.MaterialSelect;
 
-const classInclude = {
+const classSelect = {
+  id: true,
+  name: true,
   students: {
-    include: {
-      student: true
-    },
-    orderBy: { joinedAt: "desc" }
+    orderBy: { joinedAt: "desc" },
+    select: {
+      student: {
+        select: { id: true, displayName: true, email: true }
+      }
+    }
   }
-} satisfies Prisma.ClassInclude;
+} satisfies Prisma.ClassSelect;
 
-const assignmentInclude = {
+const assignmentSelect = {
+  id: true,
+  createdAt: true,
+  title: true,
+  instructions: true,
+  deadline: true,
+  timeLimitMinutes: true,
+  skillTimeLimitsJson: true,
+  lockAudio: true,
+  mode: true,
   _count: {
     select: {
       units: true,
@@ -29,7 +57,8 @@ const assignmentInclude = {
   },
   units: {
     orderBy: { order: "asc" },
-    include: {
+    select: {
+      assignableUnitId: true,
       assignableUnit: {
         select: {
           title: true
@@ -43,11 +72,11 @@ const assignmentInclude = {
       status: true
     }
   }
-} satisfies Prisma.AssignmentInclude;
+} satisfies Prisma.AssignmentSelect;
 
-type TeacherMaterial = Prisma.MaterialGetPayload<{ include: typeof materialInclude }>;
-type TeacherClass = Prisma.ClassGetPayload<{ include: typeof classInclude }>;
-type RecentAssignment = Prisma.AssignmentGetPayload<{ include: typeof assignmentInclude }>;
+type TeacherMaterial = Prisma.MaterialGetPayload<{ select: typeof materialSelect }>;
+type TeacherClass = Prisma.ClassGetPayload<{ select: typeof classSelect }>;
+type RecentAssignment = Prisma.AssignmentGetPayload<{ select: typeof assignmentSelect }>;
 
 function flattenStudents(classes: TeacherClass[]) {
   const students = new Map<
@@ -101,17 +130,17 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
       prisma.material.findMany({
         where: { teacherId: teacher.id },
         orderBy: { createdAt: "desc" },
-        include: materialInclude
+        select: materialSelect
       }),
       prisma.class.findMany({
         where: { teacherId: teacher.id },
         orderBy: { createdAt: "desc" },
-        include: classInclude
+        select: classSelect
       }),
       prisma.assignment.findMany({
         where: { teacherId: teacher.id },
         orderBy: { createdAt: "desc" },
-        include: assignmentInclude
+        select: assignmentSelect
       })
     ]);
 

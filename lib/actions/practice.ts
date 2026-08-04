@@ -5,6 +5,7 @@ import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { requireStudent } from "@/lib/actions/attempts";
 import { PRACTICE_MODE, decideAttemptStart, practiceScopeKey, practiceSkillTimeLimits } from "@/lib/practice";
+import { practiceNoticePath } from "@/lib/practice-notices";
 import { prisma } from "@/lib/prisma";
 
 const startPracticeSchema = z.object({
@@ -27,7 +28,11 @@ export async function startPractice(formData: FormData): Promise<never> {
   });
 
   if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Dữ liệu không hợp lệ.");
+    // redirect() hoạt động bằng cách ném exception riêng (digest NEXT_REDIRECT) —
+    // không được đặt trong try/catch, nếu không sẽ bị nuốt mất (xem cuối file).
+    redirect(
+      practiceNoticePath("error", parsed.error.issues[0]?.message ?? "Dữ liệu không hợp lệ.")
+    );
   }
 
   const unitId = parsed.data.unitId && parsed.data.unitId.length > 0 ? parsed.data.unitId : null;
@@ -52,13 +57,24 @@ export async function startPractice(formData: FormData): Promise<never> {
   });
 
   if (!material) {
-    throw new Error("Đề này không có trong thư viện tự luyện.");
+    // Tình huống thường ngày, không phải cạnh hiếm: giáo viên tắt "Cho tự luyện"
+    // trong lúc học viên đang mở sẵn /student/practice (trang RSC, không tự làm
+    // mới) rồi bấm luyện — KHÔNG throw ra màn hình lỗi đỏ, redirect kèm toast.
+    redirect(
+      practiceNoticePath("error", "Đề này vừa được giáo viên gỡ khỏi thư viện tự luyện.")
+    );
   }
 
   const units = unitId ? material.units.filter((unit) => unit.id === unitId) : material.units;
 
   if (units.length === 0) {
-    throw new Error("Không tìm thấy phần cần luyện.");
+    // Cũng là tình huống thường ngày: đề vừa mở tự luyện nhưng chưa có phần nào,
+    // hoặc phần học viên bấm vừa bị xoá/đổi khỏi đề. Trang liệt kê đã tự lọc bỏ
+    // đề rỗng (app/student/practice/page.tsx) nên đây chủ yếu là lưới an toàn
+    // cho các tình huống đua (race) tương tự nhánh material ở trên.
+    redirect(
+      practiceNoticePath("error", "Phần luyện này hiện không có sẵn. Hãy quay lại thư viện và thử đề khác.")
+    );
   }
 
   const scopeKey = practiceScopeKey(student.id, material.id, unitId);
@@ -73,6 +89,13 @@ export async function startPractice(formData: FormData): Promise<never> {
   let assignmentId: string;
 
   if (existingAssignment) {
+    // CỐ Ý không cập nhật lại title/units của assignment đã có: bộ luyện được
+    // đóng băng tại thời điểm tạo, để lịch sử các lượt làm cũ (Attempt/Answer)
+    // luôn khớp với đúng nội dung đã làm. Nếu giáo viên sau đó đổi tên đề hoặc
+    // thêm/bớt phần, bộ luyện cũ vẫn giữ nguyên — trong khi thẻ ở
+    // /student/practice hiện số phần/số câu SỐNG, đọc trực tiếp từ Material nên
+    // có thể tạm thời lệch với bộ luyện đã đóng băng. Đây là đánh đổi có chủ đích,
+    // không phải thiếu sót.
     assignmentId = existingAssignment.id;
   } else {
     // skillTimeLimitsJson của lượt đầu tiên được set luôn ở nhánh "tạo lượt mới" bên
@@ -121,20 +144,21 @@ export async function startPractice(formData: FormData): Promise<never> {
     }
   }
 
-  // Assignment đã có nhưng thiếu AssignmentRecipient của đúng học viên này (ví dụ dữ
-  // liệu cũ từ trước khi hai bước này được gộp) — tạo bù, không rơi xuống nhánh tạo
-  // Assignment mới (sẽ đâm vào ràng buộc unique practiceScopeKey và kẹt vĩnh viễn).
-  let recipient = await prisma.assignmentRecipient.findFirst({
-    where: { assignmentId, studentId: student.id },
+  // Assignment đã có nhưng có thể thiếu AssignmentRecipient của đúng học viên này
+  // (ví dụ dữ liệu cũ từ trước khi hai bước này được gộp) — tạo bù, không rơi
+  // xuống nhánh tạo Assignment mới (sẽ đâm vào ràng buộc unique practiceScopeKey
+  // và kẹt vĩnh viễn). Dùng upsert theo khoá ghép @@unique([assignmentId,
+  // studentId]) thay vì findFirst + create: bấm nút "Luyện" hai lần gần như
+  // đồng thời (nhấp đúp) khiến cả hai request cùng không thấy recipient (giống
+  // race của assignment ở nhánh create phía trên) — findFirst + create sẽ để
+  // request thứ hai đụng P2002 thô; upsert gộp đọc/ghi thành một câu nguyên tử
+  // nên hết race, lại bớt một round-trip.
+  const recipient = await prisma.assignmentRecipient.upsert({
+    where: { assignmentId_studentId: { assignmentId, studentId: student.id } },
+    create: { assignmentId, studentId: student.id },
+    update: {},
     select: { id: true }
   });
-
-  if (!recipient) {
-    recipient = await prisma.assignmentRecipient.create({
-      data: { assignmentId, studentId: student.id },
-      select: { id: true }
-    });
-  }
 
   // Nêu rõ ý định thứ tự: lượt mới nhất theo SỐ LƯỢT trước, rồi mới đến thời điểm bắt
   // đầu — không dựa một mình vào startedAt (rủi ro nếu sau này có backfill/giờ lệch).

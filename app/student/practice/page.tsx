@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { NoticeToast } from "@/components/notice-toast";
 import { PracticeLibrary } from "@/components/practice-library";
 import { auth } from "@/lib/auth";
 import { onlyPracticeRecipient } from "@/lib/practice";
@@ -9,7 +10,16 @@ import {
 } from "@/lib/practice-library";
 import { prisma } from "@/lib/prisma";
 
-export default async function StudentPracticePage() {
+type StudentPracticePageProps = {
+  searchParams?: {
+    practiceMessage?: string;
+    practiceStatus?: string;
+  };
+};
+
+export default async function StudentPracticePage({ searchParams }: StudentPracticePageProps) {
+  const practiceMessage = searchParams?.practiceMessage;
+  const practiceStatus = searchParams?.practiceStatus === "success" ? "success" : "error";
   const session = await auth();
 
   if (!session?.user?.id || session.user.role !== "student") {
@@ -69,32 +79,38 @@ export default async function StudentPracticePage() {
     }))
   );
 
-  const items: PracticeMaterialItem[] = materials.map((material) => {
-    const questionCount = material.units.reduce(
-      (total, unit) => total + unit._count.questions,
-      0
-    );
-    const progress = progressByMaterial.get(material.id);
+  // Đề chưa có phần nào (giáo viên bật "Cho tự luyện" trước khi thêm phần) không
+  // có gì để bấm vào luyện — lọc bỏ ngay ở đây thay vì bày ra thứ mà bấm vào là
+  // văng lỗi (startPractice cũng tự chặn units.length === 0, đây là lớp lọc UI
+  // cho tình huống thường gặp).
+  const items: PracticeMaterialItem[] = materials
+    .filter((material) => material.units.length > 0)
+    .map((material) => {
+      const questionCount = material.units.reduce(
+        (total, unit) => total + unit._count.questions,
+        0
+      );
+      const progress = progressByMaterial.get(material.id);
 
-    return {
-      id: material.id,
-      title: material.title,
-      skill: material.skill,
-      sourceLabel: material.sourceLabel,
-      unitCount: material.units.length,
-      questionCount,
-      progressLabel: practiceProgressLabel(
-        progress?.rounds ?? 0,
-        progress?.bestCorrect ?? null,
-        questionCount
-      ),
-      units: material.units.map((unit) => ({
-        id: unit.id,
-        title: unit.title,
-        questionCount: unit._count.questions
-      }))
-    };
-  });
+      return {
+        id: material.id,
+        title: material.title,
+        skill: material.skill,
+        sourceLabel: material.sourceLabel,
+        unitCount: material.units.length,
+        questionCount,
+        progressLabel: practiceProgressLabel(
+          progress?.rounds ?? 0,
+          progress?.bestCorrect ?? null,
+          questionCount
+        ),
+        units: material.units.map((unit) => ({
+          id: unit.id,
+          title: unit.title,
+          questionCount: unit._count.questions
+        }))
+      };
+    });
 
   return (
     <div className="space-y-6">
@@ -105,6 +121,7 @@ export default async function StudentPracticePage() {
           kết quả và giải thích ngay sau khi nộp.
         </p>
       </header>
+      <NoticeToast message={practiceMessage} status={practiceStatus} />
       <PracticeLibrary items={items} />
     </div>
   );

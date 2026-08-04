@@ -46,6 +46,15 @@ const statements = [
   'ALTER TABLE "AssignableUnit" ADD COLUMN IF NOT EXISTS "transcriptTimingJson" TEXT;',
   // Câu nhận xét mẫu gắn theo tiêu chí chấm (null = nhận xét chung)
   'ALTER TABLE "CommentSnippet" ADD COLUMN IF NOT EXISTS "criterion" TEXT;',
+  // Thư viện tự luyện: cờ mở đề, khoá bộ luyện, số thứ tự lượt làm. Đặt TRƯỚC hai
+  // câu UPDATE khối lớn bên dưới — nếu một câu UPDATE nặng phía dưới bị timeout
+  // (Neon cold-start) thì các cột này vẫn kịp lên prod trước khi vòng lặp dừng
+  // lại (xem catch trong vòng lặp: một câu lỗi không còn chặn các câu sau, nhưng
+  // đặt cột nền tảng lên trước vẫn an toàn hơn là để cuối mảng).
+  'ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "practiceOpen" BOOLEAN NOT NULL DEFAULT false;',
+  'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "practiceScopeKey" TEXT;',
+  'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "attemptRound" INTEGER NOT NULL DEFAULT 1;',
+  'CREATE UNIQUE INDEX IF NOT EXISTS "Assignment_practiceScopeKey_key" ON "Assignment"("practiceScopeKey");',
   // Gắn lớp cho các bài giao cũ (Assignment.classId trước đây không bao giờ được
   // ghi). Chỉ gắn khi mọi học viên nhận bài cùng chung đúng MỘT lớp; bài giao
   // trải nhiều lớp thì để null = "bài chung", lớp nào cũng tính.
@@ -58,7 +67,13 @@ const statements = [
        GROUP BY r."assignmentId"
       HAVING count(DISTINCT cs."classId") = 1
     ) sub
-   WHERE a."id" = sub."assignmentId" AND a."classId" IS NULL;`,
+   WHERE a."id" = sub."assignmentId" AND a."classId" IS NULL
+     -- Bài giao ẢO của thư viện tự luyện (Assignment.mode = "practice", xem
+     -- lib/practice.ts) luôn có đúng 1 recipient thuộc đúng 1 lớp -> nếu không
+     -- loại, câu UPDATE này sẽ đóng dấu classId cho MỌI bài tự luyện, phá bất
+     -- biến "bài tự luyện luôn classId = null" mà lib/actions/practice.ts cố
+     -- tình đặt và lib/class-ranking.ts đang dựa vào.
+     AND a."mode" <> 'practice';`,
   // Sửa dữ liệu cũ: bài CHỈ có Viết/Nói từng bị lưu score/scorePercent = 0 (điểm
   // giả) thay vì null, làm điểm trung bình ở bảng xếp hạng bị kéo tụt. Chỉ đụng
   // tới bài không có câu tự chấm nào — bài Nghe/Đọc sai hết vẫn giữ nguyên 0%.
@@ -96,27 +111,43 @@ const statements = [
   'CREATE INDEX IF NOT EXISTS "AnswerAnnotation_teacherId_idx" ON "AnswerAnnotation"("teacherId");',
   'CREATE INDEX IF NOT EXISTS "TeacherReview_teacherId_idx" ON "TeacherReview"("teacherId");',
   'CREATE INDEX IF NOT EXISTS "TeacherReview_studentId_idx" ON "TeacherReview"("studentId");',
-  // Thư viện tự luyện: cờ mở đề, khoá bộ luyện, số thứ tự lượt làm
-  'ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "practiceOpen" BOOLEAN NOT NULL DEFAULT false;',
-  'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "practiceScopeKey" TEXT;',
-  'CREATE UNIQUE INDEX IF NOT EXISTS "Assignment_practiceScopeKey_key" ON "Assignment"("practiceScopeKey");',
-  'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "attemptRound" INTEGER NOT NULL DEFAULT 1;',
 ];
 
 const prisma = new PrismaClient();
 
-try {
-  for (const sql of statements) {
+// try/catch nằm TRONG vòng lặp (thay vì bọc cả mảng bằng một try/catch DUY
+// NHẤT như trước) — trước đây câu thứ k lỗi (Neon cold-start timeout, khoá
+// bảng, thiếu quyền…) là mọi câu k+1..n bị BỎ QUA HOÀN TOÀN, build vẫn xanh,
+// deploy vẫn thành công nhưng cột mới ở cuối mảng chưa từng được tạo trên
+// prod — Prisma Client không kiểm schema lúc chạy nên lỗi chỉ lộ ra khi có
+// request đụng đúng cột thiếu (500 rải rác nhiều trang). Giờ một câu hỏng chỉ
+// mất đúng câu đó, các câu còn lại vẫn chạy.
+let failCount = 0;
+
+for (const sql of statements) {
+  try {
     await prisma.$executeRawUnsafe(sql);
+  } catch (error) {
+    failCount += 1;
+    console.warn(
+      "[ensure-db] Bỏ qua 1 câu lệnh (lỗi hoặc DB chưa kết nối được lúc build?):",
+      sql.slice(0, 80).replace(/\s+/g, " "),
+      "-",
+      String(error?.message ?? error).split("\n")[0]
+    );
   }
+}
+
+if (failCount === 0) {
   console.log("[ensure-db] OK: các cột bổ sung đã sẵn sàng.");
-} catch (error) {
-  console.warn(
-    "[ensure-db] Bỏ qua (DB chưa kết nối được lúc build?):",
-    String(error?.message ?? error).split("\n")[0]
-  );
-} finally {
+} else {
+  console.warn(`[ensure-db] Hoàn tất, nhưng ${failCount}/${statements.length} câu lệnh bị bỏ qua — xem log phía trên.`);
+}
+
+try {
   await prisma.$disconnect();
+} catch {
+  // Không để lỗi ngắt kết nối làm fail build.
 }
 
 process.exit(0);

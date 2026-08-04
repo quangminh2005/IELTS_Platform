@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { createPortal } from "react-dom";
+import { createPortal, useFormStatus } from "react-dom";
 import { startPractice } from "@/lib/actions/practice";
 import type { PracticeMaterialItem } from "@/lib/practice-library";
 import { SKILL_LABELS } from "@/lib/skills";
@@ -170,24 +170,24 @@ function TimeChoiceDialog({
             <input type="hidden" name="materialId" value={target.materialId} />
             <input type="hidden" name="unitId" value={target.unitId ?? ""} />
             <input type="hidden" name="timed" value="1" />
-            <button
-              type="submit"
+            <PracticeSubmitButton
               className="w-full rounded-md bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground"
+              pendingLabel="Đang mở bài…"
             >
               Tính giờ như thi thật
-            </button>
+            </PracticeSubmitButton>
           </form>
 
           <form action={startPractice}>
             <input type="hidden" name="materialId" value={target.materialId} />
             <input type="hidden" name="unitId" value={target.unitId ?? ""} />
             <input type="hidden" name="timed" value="0" />
-            <button
-              type="submit"
+            <PracticeSubmitButton
               className="w-full rounded-md border border-border px-3 py-2.5 text-sm font-semibold hover:border-primary"
+              pendingLabel="Đang mở bài…"
             >
               Không tính giờ
-            </button>
+            </PracticeSubmitButton>
           </form>
         </div>
 
@@ -201,5 +201,32 @@ function TimeChoiceDialog({
       </div>
     </div>,
     document.body
+  );
+}
+
+// Cùng idiom với ActionSubmitButton (components/action-form.tsx): useFormStatus
+// phải nằm TRONG <form> nên tách component con riêng, không dùng chung được với
+// ActionSubmitButton vì action ở đây (startPractice) redirect thay vì trả
+// ActionResult. Khoá nút trong lúc chờ để nhấp đúp không mở hai lượt tự luyện
+// song song (đóng luôn cửa sổ race dẫn tới P2002 ở AssignmentRecipient).
+function PracticeSubmitButton({
+  className,
+  pendingLabel,
+  children
+}: {
+  className?: string;
+  pendingLabel: string;
+  children: string;
+}) {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className={`${className ?? ""} disabled:cursor-not-allowed disabled:opacity-60`}
+    >
+      {pending ? pendingLabel : children}
+    </button>
   );
 }

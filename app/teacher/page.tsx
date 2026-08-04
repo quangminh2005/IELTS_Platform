@@ -2,7 +2,7 @@ import Link from "next/link";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { prisma } from "@/lib/prisma";
 import { manualGradedUnitWhere } from "@/lib/manual-grading";
-import { PRACTICE_MODE } from "@/lib/practice";
+import { PRACTICE_MODE, excludePracticeAssignment, onlyPracticeAssignment } from "@/lib/practice";
 
 function formatDateTime(value: Date | null) {
   if (!value) {
@@ -24,6 +24,7 @@ export default async function TeacherDashboardPage() {
     studentMemberships,
     materialCount,
     pendingReviewCount,
+    pendingPracticeReviewCount,
     recentClasses,
     recentSubmissions
   ] = await Promise.all([
@@ -34,14 +35,32 @@ export default async function TeacherDashboardPage() {
       select: { studentId: true }
     }),
     prisma.material.count({ where: { teacherId: teacher.id } }),
-    // Bài CHỜ chấm: đã nộp, chưa chấm, thuộc kỹ năng giáo viên chấm tay (Writing/Speaking).
+    // Bài CHỜ chấm (bài GIAO): đã nộp, chưa chấm, thuộc kỹ năng giáo viên chấm tay
+    // (Writing/Speaking). Loại bài tự luyện — con số này gắn với thẻ dẫn sang
+    // /teacher/review, mà tab mặc định của trang đó chỉ liệt kê bài giao. Không
+    // loại thì bấm vào sẽ thấy danh sách trống dù số hiện > 0.
     prisma.attempt.count({
       where: {
         status: "submitted",
         assignmentRecipient: {
           assignment: {
             teacherId: teacher.id,
-            units: { some: { assignableUnit: manualGradedUnitWhere } }
+            units: { some: { assignableUnit: manualGradedUnitWhere } },
+            ...excludePracticeAssignment
+          }
+        }
+      }
+    }),
+    // Bài tự luyện chờ chấm: đếm riêng để hiện dòng phụ, link sang đúng tab "Tự
+    // luyện" — giáo viên vẫn chọn chấm bài tự luyện nên không giấu hẳn con số.
+    prisma.attempt.count({
+      where: {
+        status: "submitted",
+        assignmentRecipient: {
+          assignment: {
+            teacherId: teacher.id,
+            units: { some: { assignableUnit: manualGradedUnitWhere } },
+            ...onlyPracticeAssignment
           }
         }
       }
@@ -116,27 +135,38 @@ export default async function TeacherDashboardPage() {
           </article>
         ))}
 
-        {/* Thẻ "Cần hành động": làm nổi bật số bài đang chờ chấm. */}
-        <Link
-          href="/teacher/review"
+        {/* Thẻ "Cần hành động": làm nổi bật số bài đang chờ chấm. Không dùng <Link>
+            bọc ngoài vì dòng phụ bên dưới cũng là link riêng — lồng hai thẻ <a> là
+            HTML không hợp lệ. */}
+        <div
           className={`rounded-xl border p-5 shadow-card transition ${
             pendingReviewCount > 0
               ? "border-amber-400/50 bg-amber-500/10 hover:border-amber-400"
               : "border-border bg-card hover:border-primary/40"
           }`}
         >
-          <p className="text-sm text-muted-foreground">Bài chờ chấm</p>
-          <p
-            className={`mt-2 text-3xl font-bold tabular-nums ${
-              pendingReviewCount > 0 ? "text-amber-600 dark:text-amber-300" : "text-muted-foreground"
-            }`}
-          >
-            {pendingReviewCount}
-          </p>
-          <p className="mt-1 text-sm font-medium text-primary">
-            {pendingReviewCount > 0 ? "Vào chấm ngay →" : "Không có bài chờ"}
-          </p>
-        </Link>
+          <Link href="/teacher/review" className="block">
+            <p className="text-sm text-muted-foreground">Bài chờ chấm</p>
+            <p
+              className={`mt-2 text-3xl font-bold tabular-nums ${
+                pendingReviewCount > 0 ? "text-amber-600 dark:text-amber-300" : "text-muted-foreground"
+              }`}
+            >
+              {pendingReviewCount}
+            </p>
+            <p className="mt-1 text-sm font-medium text-primary">
+              {pendingReviewCount > 0 ? "Vào chấm ngay →" : "Không có bài chờ"}
+            </p>
+          </Link>
+          {pendingPracticeReviewCount > 0 ? (
+            <Link
+              href="/teacher/review?tab=practice"
+              className="mt-1 block text-xs text-muted-foreground hover:text-primary hover:underline"
+            >
+              · {pendingPracticeReviewCount} bài tự luyện
+            </Link>
+          ) : null}
+        </div>
       </section>
 
       <div className="grid gap-5 lg:grid-cols-2">

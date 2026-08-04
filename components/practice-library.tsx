@@ -26,10 +26,12 @@ type PracticeTarget = {
 
 export function PracticeLibrary({
   items,
-  noticeMessage
+  noticeMessage,
+  noticeNonce
 }: {
   items: PracticeMaterialItem[];
   noticeMessage?: string;
+  noticeNonce?: string;
 }) {
   const [search, setSearch] = useState("");
   const [skill, setSkill] = useState("all");
@@ -40,12 +42,17 @@ export function PracticeLibrary({
   // thì redirect MỀM về chính trang này kèm practiceMessage — cây component
   // không unmount nên state `target` (hộp thoại đang mở) còn nguyên, khiến hộp
   // thoại cũ đứng im dưới toast lỗi và học viên bấm lại đúng nút vừa lỗi. Đóng
-  // hộp thoại mỗi khi nhận được thông báo mới từ server.
+  // hộp thoại mỗi khi nhận được thông báo mới từ server. Phụ thuộc thêm
+  // `noticeNonce` (giá trị luôn MỚI mỗi lần redirect, xem lib/practice-notices.ts)
+  // chứ không chỉ mình `noticeMessage`: hai lần lỗi liên tiếp trùng y nội dung
+  // (bấm trúng đúng nút vừa lỗi) sẽ cho `noticeMessage` giống hệt lần trước, effect
+  // sẽ không chạy lại nếu chỉ so theo message — nonce đảm bảo luôn nhận ra "đây là
+  // lần mới".
   useEffect(() => {
     if (noticeMessage) {
       setTarget(null);
     }
-  }, [noticeMessage]);
+  }, [noticeMessage, noticeNonce]);
 
   const visible = useMemo(() => {
     const query = search.trim().toLowerCase();

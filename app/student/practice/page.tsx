@@ -14,12 +14,14 @@ type StudentPracticePageProps = {
   searchParams?: {
     practiceMessage?: string;
     practiceStatus?: string;
+    practiceNonce?: string;
   };
 };
 
 export default async function StudentPracticePage({ searchParams }: StudentPracticePageProps) {
   const practiceMessage = searchParams?.practiceMessage;
   const practiceStatus = searchParams?.practiceStatus === "success" ? "success" : "error";
+  const practiceNonce = searchParams?.practiceNonce;
   const session = await auth();
 
   if (!session?.user?.id || session.user.role !== "student") {
@@ -121,8 +123,12 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
           kết quả và giải thích ngay sau khi nộp.
         </p>
       </header>
-      <NoticeToast message={practiceMessage} status={practiceStatus} />
-      <PracticeLibrary items={items} noticeMessage={practiceMessage} />
+      {/* key=practiceNonce: ép NoticeToast mount lại mỗi lần có thông báo mới, kể
+          cả khi hai lần lỗi liên tiếp trùng y nội dung — nếu không, effect bên
+          trong so theo message/status không thấy gì đổi nên toast lần hai sẽ
+          không hiện lại. */}
+      <NoticeToast key={practiceNonce} message={practiceMessage} status={practiceStatus} />
+      <PracticeLibrary items={items} noticeMessage={practiceMessage} noticeNonce={practiceNonce} />
     </div>
   );
 }

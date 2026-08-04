@@ -1,6 +1,11 @@
-﻿import { describe, expect, it, vi } from "vitest";
+﻿import { beforeEach, describe, expect, it, vi } from "vitest";
 import { rankClassmates, getClassRanking, type ClassmateRow } from "../lib/class-ranking";
-import { countsForStats, onlyPracticeAssignment, PRACTICE_MODE } from "../lib/practice";
+import {
+  countsForStats,
+  excludePracticeAssignment,
+  onlyPracticeAssignment,
+  PRACTICE_MODE
+} from "../lib/practice";
 
 // Mock ở đúng specifier mà lib/class-ranking.ts dùng (@/lib/prisma) để chắc chắn
 // Vite phân giải về cùng một module — theo đúng cách tests/auth.test.ts đã làm.
@@ -371,6 +376,13 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
 });
 
 describe("getClassRanking - hình dạng truy vấn Prisma với bài tự luyện", () => {
+  // Không dọn mock thì test sau (nếu ai thêm vào describe này) sẽ làm
+  // toHaveBeenCalledTimes(1) bên dưới sai vì lý do chẳng liên quan gì tới
+  // quy tắc đang kiểm ở đây.
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("chỉ OR lượt-đầu-tự-luyện vào attempts, và loại bài tự luyện khỏi recipients", async () => {
     // Lớp rỗng -> skillCountsByAttempt ngắn mạch (attemptIds = []), không cần
     // mock $queryRaw. Ta chỉ cần xem prisma.classStudent.findMany được gọi với
@@ -396,6 +408,20 @@ describe("getClassRanking - hình dạng truy vấn Prisma với bài tự luy�
     // là lượt 1 nên không cần lọc, và lọc nhầm sẽ ẩn attempt hợp lệ.
     expect(attemptsWhere.OR[0]).not.toHaveProperty("attemptRound");
     expect(attemptsWhere.OR[0].assignmentRecipient.assignment).not.toHaveProperty("attemptRound");
+
+    // Khẳng định dương trên trọn hình dạng OR[0]: phải mang đúng
+    // excludePracticeAssignment, không chỉ "không có attemptRound". Bỏ mất
+    // excludePracticeAssignment mà vẫn giữ recipients.where nguyên vẹn là kịch
+    // bản hỏng nặng nhất — mọi lượt luyện lại tràn vào điểm trung bình và
+    // "hoạt động gần đây".
+    expect(attemptsWhere.OR[0]).toEqual({
+      assignmentRecipient: {
+        assignment: { OR: [{ classId: "class-1" }, { classId: null }], ...excludePracticeAssignment }
+      }
+    });
+
+    // Đúng 2 nhánh — thêm một nhánh thứ ba không lọc gì vẫn phải bị bắt.
+    expect(attemptsWhere.OR).toHaveLength(2);
 
     // Tỉ lệ hoàn thành (recipients) phải loại hẳn bài tự luyện, không đếm bất
     // kỳ lượt nào của nó — kể cả lượt đầu.

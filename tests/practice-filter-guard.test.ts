@@ -10,7 +10,8 @@ const mustExcludePractice = [
   "app/teacher/assignments/page.tsx",
   "app/teacher/calendar/page.tsx",
   "app/student/page.tsx",
-  "lib/actions/assignments.ts"
+  "lib/actions/assignments.ts",
+  "app/teacher/students/[studentId]/page.tsx"
 ];
 
 function read(relative: string): string {

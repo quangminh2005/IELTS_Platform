@@ -24,11 +24,28 @@ type PracticeTarget = {
   label: string;
 };
 
-export function PracticeLibrary({ items }: { items: PracticeMaterialItem[] }) {
+export function PracticeLibrary({
+  items,
+  noticeMessage
+}: {
+  items: PracticeMaterialItem[];
+  noticeMessage?: string;
+}) {
   const [search, setSearch] = useState("");
   const [skill, setSkill] = useState("all");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [target, setTarget] = useState<PracticeTarget | null>(null);
+
+  // startPractice gặp lỗi (đề vừa bị gỡ khỏi thư viện, đề chưa có phần nào...)
+  // thì redirect MỀM về chính trang này kèm practiceMessage — cây component
+  // không unmount nên state `target` (hộp thoại đang mở) còn nguyên, khiến hộp
+  // thoại cũ đứng im dưới toast lỗi và học viên bấm lại đúng nút vừa lỗi. Đóng
+  // hộp thoại mỗi khi nhận được thông báo mới từ server.
+  useEffect(() => {
+    if (noticeMessage) {
+      setTarget(null);
+    }
+  }, [noticeMessage]);
 
   const visible = useMemo(() => {
     const query = search.trim().toLowerCase();

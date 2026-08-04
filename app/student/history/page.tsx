@@ -144,7 +144,14 @@ export default async function StudentHistoryPage({
                 className="flex flex-col gap-3 px-5 py-4 transition hover:bg-muted/60 sm:flex-row sm:items-center sm:justify-between"
               >
                 <div className="min-w-0">
-                  <p className="font-semibold">{attempt.assignmentRecipient.assignment.title}</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="font-semibold">{attempt.assignmentRecipient.assignment.title}</p>
+                    {isPractice ? (
+                      <span className="inline-flex rounded-full border border-border bg-muted px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+                        Lượt {attempt.attemptRound}
+                      </span>
+                    ) : null}
+                  </div>
                   <div className="mt-2">
                     <SkillTags
                       skills={attempt.assignmentRecipient.assignment.units.map(

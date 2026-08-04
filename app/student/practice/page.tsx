@@ -122,7 +122,7 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
         </p>
       </header>
       <NoticeToast message={practiceMessage} status={practiceStatus} />
-      <PracticeLibrary items={items} />
+      <PracticeLibrary items={items} noticeMessage={practiceMessage} />
     </div>
   );
 }

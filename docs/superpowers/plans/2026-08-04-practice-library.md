@@ -1809,8 +1809,10 @@ Dùng `computer {action: "screenshot"}` cho trang `/student/practice` và trang 
 
 - [ ] **Step 7: Commit nếu có sửa gì trong lúc kiểm**
 
+Liệt kê từng file đã sửa — **tuyệt đối không dùng `git add -A` hay `git add .`**: cây làm việc đang có hàng chục file `tmp/*.json` và `tsconfig.tsbuildinfo` chưa commit, không thuộc tính năng này.
+
 ```bash
-git add -A
+git add <đường-dẫn-từng-file-đã-sửa>
 git commit -m "fix(tu-luyen): sua loi phat hien khi kiem tren trinh duyet"
 ```
 

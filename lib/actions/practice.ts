@@ -1,9 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { requireStudent } from "@/lib/actions/attempts";
-import { PRACTICE_MODE, practiceScopeKey, practiceSkillTimeLimits } from "@/lib/practice";
+import { PRACTICE_MODE, decideAttemptStart, practiceScopeKey, practiceSkillTimeLimits } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 
 const startPracticeSchema = z.object({
@@ -14,8 +15,9 @@ const startPracticeSchema = z.object({
 });
 
 // Học viên bấm luyện một đề (hoặc một phần). Tạo ngầm "bài giao ảo" cho riêng em đó
-// rồi chuyển thẳng vào phòng làm bài quen thuộc. Gọi lại lần sau sẽ dùng lại đúng bài
-// giao ảo cũ — startAttempt lo việc mở lượt mới.
+// (nếu chưa có) rồi TỰ quyết định mở lượt mới hay tiếp tục lượt đang dở — đây là nơi
+// duy nhất được phép mở lượt tự luyện mới, vì ý định của học viên rõ ràng (một request
+// POST do bấm nút, không phải tác dụng phụ của việc mở trang như startAttempt).
 export async function startPractice(formData: FormData): Promise<never> {
   const student = await requireStudent();
   const parsed = startPracticeSchema.safeParse({
@@ -63,53 +65,129 @@ export async function startPractice(formData: FormData): Promise<never> {
   const skillTimeLimitsJson = practiceSkillTimeLimits(units, parsed.data.timed === "1");
   const title = unitId ? `${material.title} — ${units[0].title}` : material.title;
 
-  const existing = await prisma.assignment.findUnique({
+  const existingAssignment = await prisma.assignment.findUnique({
     where: { practiceScopeKey: scopeKey },
-    select: { id: true, recipients: { where: { studentId: student.id }, select: { id: true } } }
+    select: { id: true }
   });
 
-  const existingRecipientId = existing?.recipients[0]?.id;
+  let assignmentId: string;
 
-  if (existing && existingRecipientId) {
-    // Lượt luyện mới có thể chọn chế độ giờ khác lượt trước — cập nhật lại.
-    await prisma.assignment.update({
-      where: { id: existing.id },
+  if (existingAssignment) {
+    assignmentId = existingAssignment.id;
+  } else {
+    // skillTimeLimitsJson của lượt đầu tiên được set luôn ở nhánh "tạo lượt mới" bên
+    // dưới (mọi assignment vừa tạo đều chưa có Attempt nào => decideAttemptStart luôn
+    // trả "new") — ở đây chỉ cần tạo khung Assignment, chưa cần set giờ.
+    try {
+      const created = await prisma.assignment.create({
+        data: {
+          teacherId: material.teacherId,
+          classId: null,
+          title,
+          deadline: null,
+          mode: PRACTICE_MODE,
+          practiceScopeKey: scopeKey,
+          units: {
+            create: units.map((unit, index) => ({
+              assignableUnitId: unit.id,
+              order: index
+            }))
+          }
+        },
+        select: { id: true }
+      });
+
+      assignmentId = created.id;
+    } catch (error) {
+      // Bấm nút "Luyện" hai lần gần như đồng thời: cả hai request cùng không thấy
+      // assignment (findUnique ở trên chưa kịp thấy bản ghi của nhau) nên cùng cố
+      // tạo — request thứ hai đụng ràng buộc unique practiceScopeKey và Prisma ném
+      // P2002. Coi như request kia đã tạo xong, đọc lại rồi đi tiếp bình thường thay
+      // vì để lỗi Prisma thô văng ra màn hình học viên.
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+        const recovered = await prisma.assignment.findUnique({
+          where: { practiceScopeKey: scopeKey },
+          select: { id: true }
+        });
+
+        if (!recovered) {
+          throw error;
+        }
+
+        assignmentId = recovered.id;
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  // Assignment đã có nhưng thiếu AssignmentRecipient của đúng học viên này (ví dụ dữ
+  // liệu cũ từ trước khi hai bước này được gộp) — tạo bù, không rơi xuống nhánh tạo
+  // Assignment mới (sẽ đâm vào ràng buộc unique practiceScopeKey và kẹt vĩnh viễn).
+  let recipient = await prisma.assignmentRecipient.findFirst({
+    where: { assignmentId, studentId: student.id },
+    select: { id: true }
+  });
+
+  if (!recipient) {
+    recipient = await prisma.assignmentRecipient.create({
+      data: { assignmentId, studentId: student.id },
+      select: { id: true }
+    });
+  }
+
+  // Nêu rõ ý định thứ tự: lượt mới nhất theo SỐ LƯỢT trước, rồi mới đến thời điểm bắt
+  // đầu — không dựa một mình vào startedAt (rủi ro nếu sau này có backfill/giờ lệch).
+  const latestAttempt = await prisma.attempt.findFirst({
+    where: { assignmentRecipientId: recipient.id, studentId: student.id },
+    orderBy: [{ attemptRound: "desc" }, { startedAt: "desc" }]
+  });
+
+  const decision = decideAttemptStart(
+    PRACTICE_MODE,
+    latestAttempt
+      ? {
+          id: latestAttempt.id,
+          status: latestAttempt.status,
+          attemptRound: latestAttempt.attemptRound
+        }
+      : null
+  );
+
+  if (decision.kind === "resume") {
+    // Lượt đang làm dở: KHÔNG đụng skillTimeLimitsJson. Ngân sách thời gian không
+    // được chụp lại vào Attempt mà submitSkill đọc sống từ assignment mỗi lần nộp —
+    // đổi giờ ở đây giữa chừng có thể khiến lượt đang dở bị auto-nộp oan ngay khi mở
+    // lại (đổi từ "không tính giờ" sang "tính giờ" với thời gian đã làm vượt ngân sách
+    // mới). Chỉ redirect vào đúng phòng đang làm.
+    redirect(`/student/assignments/${recipient.id}`);
+  }
+
+  // Lượt mới: áp lựa chọn tính giờ CỦA LẦN BẤM NÀY rồi mới tạo Attempt, gộp trong một
+  // transaction để không bao giờ có Attempt mới với skillTimeLimitsJson của lượt cũ.
+  const recipientId = recipient.id;
+  await prisma.$transaction(async (tx) => {
+    await tx.assignment.update({
+      where: { id: assignmentId },
       data: { skillTimeLimitsJson }
     });
 
-    redirect(`/student/assignments/${existingRecipientId}`);
-  }
-
-  const recipientId = await prisma.$transaction(async (tx) => {
-    const assignment = await tx.assignment.create({
+    await tx.attempt.create({
       data: {
-        teacherId: material.teacherId,
-        classId: null,
-        title,
-        deadline: null,
-        skillTimeLimitsJson,
-        mode: PRACTICE_MODE,
-        practiceScopeKey: scopeKey,
-        units: {
-          create: units.map((unit, index) => ({
-            assignableUnitId: unit.id,
-            order: index
-          }))
-        }
-      },
-      select: { id: true }
+        assignmentRecipientId: recipientId,
+        studentId: student.id,
+        status: "in_progress",
+        attemptRound: decision.attemptRound
+      }
     });
 
-    const recipient = await tx.assignmentRecipient.create({
-      data: {
-        assignmentId: assignment.id,
-        studentId: student.id
-      },
-      select: { id: true }
+    await tx.assignmentRecipient.update({
+      where: { id: recipientId },
+      data: { status: "in_progress" }
     });
-
-    return recipient.id;
   });
 
+  // redirect() ném exception để Next chuyển hướng — KHÔNG đặt trong try/catch ở trên,
+  // nếu không catch sẽ nuốt mất nó.
   redirect(`/student/assignments/${recipientId}`);
 }

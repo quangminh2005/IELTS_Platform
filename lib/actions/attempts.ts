@@ -6,7 +6,6 @@ import { z } from "zod";
 import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { requireTeacher } from "@/lib/actions/classes";
 import { auth } from "@/lib/auth";
-import { decideAttemptStart } from "@/lib/practice";
 import { gradeAttempt } from "@/lib/grading";
 import { gradeUnits } from "@/lib/attempt-grading";
 import { allSkillsSubmitted, orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
@@ -51,6 +50,13 @@ function optionalText(value?: string) {
   return value ? value : null;
 }
 
+// Được gọi mỗi lần trang phòng làm bài render (GET) — kể cả khi học viên bấm nút
+// Back hay link "‹ Về chọn kỹ năng" ở trang kết quả rồi lỡ quay lại URL này. Vì vậy
+// hàm này TUYỆT ĐỐI không được tự quyết định mở lượt mới: nó chỉ tạo lượt đầu tiên
+// khi recipient chưa có lượt nào, còn lại luôn trả về lượt gần nhất (đang làm dở
+// hoặc đã nộp) — y hệt hành vi trước Task 4. Việc mở lượt tự luyện mới (khi bấm nút
+// "Luyện lại") thuộc về startPractice (lib/actions/practice.ts), nơi ý định của học
+// viên rõ ràng vì là một request POST riêng, không phải tác dụng phụ của việc mở trang.
 export async function startAttempt(recipientId: string) {
   const student = await requireStudent();
   const recipient = await prisma.assignmentRecipient.findFirst({
@@ -60,8 +66,7 @@ export async function startAttempt(recipientId: string) {
     },
     select: {
       id: true,
-      status: true,
-      assignment: { select: { mode: true } }
+      status: true
     }
   });
 
@@ -69,8 +74,9 @@ export async function startAttempt(recipientId: string) {
     throw new Error("Assignment not found for this student.");
   }
 
-  // Bài giao chỉ làm MỘT lần: đã nộp thì trang tự chuyển sang xem kết quả.
-  // Bài tự luyện thì nộp xong bấm lại là mở lượt mới (xem lib/practice.ts).
+  // Mỗi bài chỉ làm MỘT lần: nếu đã có lần làm nào (đang làm hoặc đã nộp) thì
+  // trả về lần đó — KHÔNG tạo lần làm mới. Lần đang làm thì tiếp tục; lần đã nộp
+  // thì trang sẽ tự chuyển sang xem kết quả (không cho làm lại).
   const latestAttempt = await prisma.attempt.findFirst({
     where: {
       assignmentRecipientId: recipient.id,
@@ -79,18 +85,7 @@ export async function startAttempt(recipientId: string) {
     orderBy: { startedAt: "desc" }
   });
 
-  const decision = decideAttemptStart(
-    recipient.assignment.mode,
-    latestAttempt
-      ? {
-          id: latestAttempt.id,
-          status: latestAttempt.status,
-          attemptRound: latestAttempt.attemptRound
-        }
-      : null
-  );
-
-  if (decision.kind === "resume" && latestAttempt) {
+  if (latestAttempt) {
     if (latestAttempt.status === "in_progress" && recipient.status !== "in_progress") {
       await prisma.assignmentRecipient.update({
         where: { id: recipient.id },
@@ -101,15 +96,12 @@ export async function startAttempt(recipientId: string) {
     return latestAttempt;
   }
 
-  const attemptRound = decision.kind === "new" ? decision.attemptRound : 1;
-
   return prisma.$transaction(async (tx) => {
     const attempt = await tx.attempt.create({
       data: {
         assignmentRecipientId: recipient.id,
         studentId: student.id,
-        status: "in_progress",
-        attemptRound
+        status: "in_progress"
       }
     });
 

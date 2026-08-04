@@ -4,13 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { startPractice } from "@/lib/actions/practice";
 import type { PracticeMaterialItem } from "@/lib/practice-library";
+import { SKILL_LABELS } from "@/lib/skills";
 
-const SKILL_LABELS: Record<string, string> = {
+// Nhãn cho chip lọc: "Tất cả" (không lọc) + nhãn kỹ năng chuẩn từ lib/skills.ts —
+// dùng chung một nguồn với các trang học viên khác (Nghe/Đọc/Viết/Nói).
+const FILTER_LABELS: Record<string, string> = {
   all: "Tất cả",
-  listening: "Listening",
-  reading: "Reading",
-  writing: "Writing",
-  speaking: "Speaking"
+  ...SKILL_LABELS
 };
 
 const chipClass =
@@ -51,14 +51,14 @@ export function PracticeLibrary({ items }: { items: PracticeMaterialItem[] }) {
           className="w-64 rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
         />
         <div className="flex flex-wrap items-center gap-1.5">
-          {Object.keys(SKILL_LABELS).map((key) => (
+          {Object.keys(FILTER_LABELS).map((key) => (
             <button
               key={key}
               type="button"
               onClick={() => setSkill(key)}
               className={skill === key ? activeChipClass : chipClass}
             >
-              {SKILL_LABELS[key]}
+              {FILTER_LABELS[key]}
             </button>
           ))}
         </div>

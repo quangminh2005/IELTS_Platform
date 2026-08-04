@@ -2,7 +2,11 @@ import { redirect } from "next/navigation";
 import { PracticeLibrary } from "@/components/practice-library";
 import { auth } from "@/lib/auth";
 import { onlyPracticeRecipient } from "@/lib/practice";
-import { practiceProgressLabel, type PracticeMaterialItem } from "@/lib/practice-library";
+import {
+  practiceProgressLabel,
+  summarizePracticeAttempts,
+  type PracticeMaterialItem
+} from "@/lib/practice-library";
 import { prisma } from "@/lib/prisma";
 
 export default async function StudentPracticePage() {
@@ -56,30 +60,21 @@ export default async function StudentPracticePage() {
     })
   ]);
 
-  // Gộp số lượt và điểm cao nhất theo từng đề (mọi phạm vi của đề đó).
-  const rounds = new Map<string, number>();
-  const best = new Map<string, number>();
-
-  for (const attempt of attempts) {
-    const key = attempt.assignmentRecipient.assignment.practiceScopeKey;
-    if (!key) continue;
-    // Khoá có dạng studentId:materialId:unitId|all
-    const materialId = key.split(":")[1];
-    if (!materialId) continue;
-
-    rounds.set(materialId, (rounds.get(materialId) ?? 0) + 1);
-
-    // score là Float (điểm có thể lẻ ở bài chấm tay) — làm tròn để nhãn đọc gọn.
-    if (attempt.score !== null) {
-      best.set(materialId, Math.max(best.get(materialId) ?? 0, Math.round(attempt.score)));
-    }
-  }
+  // Gộp số lượt và điểm cao nhất theo từng đề (chỉ lượt luyện CẢ ĐỀ mới tính vào
+  // điểm cao nhất — xem summarizePracticeAttempts).
+  const progressByMaterial = summarizePracticeAttempts(
+    attempts.map((attempt) => ({
+      practiceScopeKey: attempt.assignmentRecipient.assignment.practiceScopeKey,
+      score: attempt.score
+    }))
+  );
 
   const items: PracticeMaterialItem[] = materials.map((material) => {
     const questionCount = material.units.reduce(
       (total, unit) => total + unit._count.questions,
       0
     );
+    const progress = progressByMaterial.get(material.id);
 
     return {
       id: material.id,
@@ -89,8 +84,8 @@ export default async function StudentPracticePage() {
       unitCount: material.units.length,
       questionCount,
       progressLabel: practiceProgressLabel(
-        rounds.get(material.id) ?? 0,
-        best.get(material.id) ?? null,
+        progress?.rounds ?? 0,
+        progress?.bestCorrect ?? null,
         questionCount
       ),
       units: material.units.map((unit) => ({

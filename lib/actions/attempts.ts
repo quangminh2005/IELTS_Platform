@@ -6,6 +6,7 @@ import { z } from "zod";
 import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { requireTeacher } from "@/lib/actions/classes";
 import { auth } from "@/lib/auth";
+import { decideAttemptStart } from "@/lib/practice";
 import { gradeAttempt } from "@/lib/grading";
 import { gradeUnits } from "@/lib/attempt-grading";
 import { allSkillsSubmitted, orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
@@ -59,7 +60,8 @@ export async function startAttempt(recipientId: string) {
     },
     select: {
       id: true,
-      status: true
+      status: true,
+      assignment: { select: { mode: true } }
     }
   });
 
@@ -67,9 +69,8 @@ export async function startAttempt(recipientId: string) {
     throw new Error("Assignment not found for this student.");
   }
 
-  // Mỗi bài chỉ làm MỘT lần: nếu đã có lần làm nào (đang làm hoặc đã nộp) thì
-  // trả về lần đó — KHÔNG tạo lần làm mới. Lần đang làm thì tiếp tục; lần đã nộp
-  // thì trang sẽ tự chuyển sang xem kết quả (không cho làm lại).
+  // Bài giao chỉ làm MỘT lần: đã nộp thì trang tự chuyển sang xem kết quả.
+  // Bài tự luyện thì nộp xong bấm lại là mở lượt mới (xem lib/practice.ts).
   const latestAttempt = await prisma.attempt.findFirst({
     where: {
       assignmentRecipientId: recipient.id,
@@ -78,7 +79,18 @@ export async function startAttempt(recipientId: string) {
     orderBy: { startedAt: "desc" }
   });
 
-  if (latestAttempt) {
+  const decision = decideAttemptStart(
+    recipient.assignment.mode,
+    latestAttempt
+      ? {
+          id: latestAttempt.id,
+          status: latestAttempt.status,
+          attemptRound: latestAttempt.attemptRound
+        }
+      : null
+  );
+
+  if (decision.kind === "resume" && latestAttempt) {
     if (latestAttempt.status === "in_progress" && recipient.status !== "in_progress") {
       await prisma.assignmentRecipient.update({
         where: { id: recipient.id },
@@ -89,12 +101,15 @@ export async function startAttempt(recipientId: string) {
     return latestAttempt;
   }
 
+  const attemptRound = decision.kind === "new" ? decision.attemptRound : 1;
+
   return prisma.$transaction(async (tx) => {
     const attempt = await tx.attempt.create({
       data: {
         assignmentRecipientId: recipient.id,
         studentId: student.id,
-        status: "in_progress"
+        status: "in_progress",
+        attemptRound
       }
     });
 

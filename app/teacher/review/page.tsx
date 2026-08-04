@@ -1,50 +1,93 @@
+import Link from "next/link";
 import { ReviewQueue } from "@/components/review-queue";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { isSubmissionLate } from "@/lib/assignment-calendar";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { manualGradedUnitWhere } from "@/lib/manual-grading";
+import { excludePracticeAssignment, onlyPracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 
-export default async function TeacherReviewPage() {
+const tabClass =
+  "rounded-full border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground hover:border-primary";
+const activeTabClass =
+  "rounded-full border border-primary bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary";
+
+export default async function TeacherReviewPage({
+  searchParams
+}: {
+  searchParams?: { tab?: string };
+}) {
   const teacher = await requireTeacherPage();
-  const attempts = await prisma.attempt.findMany({
-    where: {
-      status: { in: ["submitted", "reviewed"] },
-      assignmentRecipient: {
-        assignment: {
-          teacherId: teacher.id,
-          // Chỉ bài THỰC SỰ cần chấm tay (có câu viết luận / ghi âm). Bài Viết dạng
-          // điền chỗ trống đã tự chấm nên không vào hàng đợi.
-          units: { some: { assignableUnit: manualGradedUnitWhere } }
-        }
-      }
-    },
-    // FIFO: bài nộp trước nằm trên để chấm trước.
-    orderBy: [{ submittedAt: "asc" }, { startedAt: "asc" }],
-    include: {
-      student: {
-        select: { displayName: true, email: true }
-      },
-      review: {
-        select: { reviewedAt: true }
-      },
-      assignmentRecipient: {
-        include: {
+
+  // Tab "Tự luyện" tách bài tự luyện ra khỏi hàng đợi chấm bài giao chính;
+  // giá trị tab lạ rơi về mặc định (bài giao).
+  const isPractice = searchParams?.tab === "practice";
+
+  const [attempts, homeworkCount, practiceCount] = await Promise.all([
+    prisma.attempt.findMany({
+      where: {
+        status: { in: ["submitted", "reviewed"] },
+        assignmentRecipient: {
           assignment: {
-            include: {
-              class: { select: { name: true } },
-              units: {
-                orderBy: { order: "asc" },
-                include: {
-                  assignableUnit: { select: { skill: true } }
+            teacherId: teacher.id,
+            ...(isPractice ? onlyPracticeAssignment : excludePracticeAssignment),
+            // Chỉ bài THỰC SỰ cần chấm tay (có câu viết luận / ghi âm). Bài Viết dạng
+            // điền chỗ trống đã tự chấm nên không vào hàng đợi.
+            units: { some: { assignableUnit: manualGradedUnitWhere } }
+          }
+        }
+      },
+      // FIFO: bài nộp trước nằm trên để chấm trước.
+      orderBy: [{ submittedAt: "asc" }, { startedAt: "asc" }],
+      include: {
+        student: {
+          select: { displayName: true, email: true }
+        },
+        review: {
+          select: { reviewedAt: true }
+        },
+        assignmentRecipient: {
+          include: {
+            assignment: {
+              include: {
+                class: { select: { name: true } },
+                units: {
+                  orderBy: { order: "asc" },
+                  include: {
+                    assignableUnit: { select: { skill: true } }
+                  }
                 }
               }
             }
           }
         }
       }
-    }
-  });
+    }),
+    prisma.attempt.count({
+      where: {
+        status: { in: ["submitted", "reviewed"] },
+        assignmentRecipient: {
+          assignment: {
+            teacherId: teacher.id,
+            ...excludePracticeAssignment,
+            units: { some: { assignableUnit: manualGradedUnitWhere } }
+          }
+        }
+      }
+    }),
+    prisma.attempt.count({
+      where: {
+        status: { in: ["submitted", "reviewed"] },
+        assignmentRecipient: {
+          assignment: {
+            teacherId: teacher.id,
+            ...onlyPracticeAssignment,
+            units: { some: { assignableUnit: manualGradedUnitWhere } }
+          }
+        }
+      }
+    })
+  ]);
 
   const rows = attempts.map((attempt) => {
     const assignment = attempt.assignmentRecipient.assignment;
@@ -90,6 +133,15 @@ export default async function TeacherReviewPage() {
           chọn bài để chấm. Bài nộp trước được xếp lên trên.
         </p>
       </header>
+
+      <div className="flex items-center gap-1.5">
+        <Link href="/teacher/review" className={!isPractice ? activeTabClass : tabClass}>
+          Bài giao ({homeworkCount})
+        </Link>
+        <Link href="/teacher/review?tab=practice" className={isPractice ? activeTabClass : tabClass}>
+          Tự luyện ({practiceCount})
+        </Link>
+      </div>
 
       <ReviewQueue rows={rows} />
     </div>

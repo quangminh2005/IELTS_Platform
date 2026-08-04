@@ -4,6 +4,12 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { attemptBand, formatBand } from "@/lib/band-score";
 import { SkillTags } from "@/components/skill-tags";
+import { excludePracticeRecipient, onlyPracticeRecipient } from "@/lib/practice";
+
+const tabClass =
+  "rounded-full border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground hover:border-primary";
+const activeTabClass =
+  "rounded-full border border-primary bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary";
 
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
@@ -40,7 +46,11 @@ function formatScore(score: number | null, scorePercent: number | null) {
   return score !== null ? `${score}` : `${Math.round(scorePercent ?? 0)}%`;
 }
 
-export default async function StudentHistoryPage() {
+export default async function StudentHistoryPage({
+  searchParams
+}: {
+  searchParams?: { tab?: string };
+}) {
   const session = await auth();
 
   if (!session?.user?.id || session.user.role !== "student") {
@@ -56,12 +66,18 @@ export default async function StudentHistoryPage() {
     redirect("/waiting");
   }
 
+  // Tab "Tự luyện" tách bài tự luyện (Assignment.mode = "practice") ra khỏi bài giao;
+  // giá trị tab lạ rơi về mặc định (bài giao).
+  const isPractice = searchParams?.tab === "practice";
+  const recipientFilter = isPractice ? onlyPracticeRecipient : excludePracticeRecipient;
+
   // Lịch sử chỉ hiển thị bài ĐÃ NỘP / ĐÃ CHẤM — ẩn bài đang làm dở (đã có ở
   // trang Tổng quan) để hai trang không bị trùng lặp danh sách.
   const attempts = await prisma.attempt.findMany({
     where: {
       studentId: student.id,
-      status: { in: ["submitted", "reviewed"] }
+      status: { in: ["submitted", "reviewed"] },
+      assignmentRecipient: recipientFilter
     },
     orderBy: { startedAt: "desc" },
     include: {
@@ -100,6 +116,15 @@ export default async function StudentHistoryPage() {
           Các bài đã nộp và đã chấm được lưu tại đây để bạn xem lại.
         </p>
       </header>
+
+      <div className="flex items-center gap-1.5">
+        <Link href="/student/history" className={!isPractice ? activeTabClass : tabClass}>
+          Bài giao
+        </Link>
+        <Link href="/student/history?tab=practice" className={isPractice ? activeTabClass : tabClass}>
+          Tự luyện
+        </Link>
+      </div>
 
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="divide-y divide-border">

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { prisma } from "@/lib/prisma";
 import { manualGradedUnitWhere } from "@/lib/manual-grading";
+import { PRACTICE_MODE } from "@/lib/practice";
 
 function formatDateTime(value: Date | null) {
   if (!value) {
@@ -70,7 +71,7 @@ export default async function TeacherDashboardPage() {
         submittedAt: true,
         student: { select: { displayName: true } },
         assignmentRecipient: {
-          select: { assignment: { select: { title: true } } }
+          select: { assignment: { select: { title: true, mode: true } } }
         }
       }
     })
@@ -162,15 +163,22 @@ export default async function TeacherDashboardPage() {
                       {formatDateTime(attempt.submittedAt)}
                     </p>
                   </div>
-                  <span
-                    className={`shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-medium ${
-                      attempt.status === "reviewed"
-                        ? "border-emerald-400/50 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300"
-                        : "border-amber-400/50 bg-amber-500/10 text-amber-600 dark:text-amber-300"
-                    }`}
-                  >
-                    {attempt.status === "reviewed" ? "Đã chấm" : "Chưa chấm"}
-                  </span>
+                  <div className="flex shrink-0 items-center gap-2">
+                    {attempt.assignmentRecipient.assignment.mode === PRACTICE_MODE ? (
+                      <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                        Tự luyện
+                      </span>
+                    ) : null}
+                    <span
+                      className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${
+                        attempt.status === "reviewed"
+                          ? "border-emerald-400/50 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300"
+                          : "border-amber-400/50 bg-amber-500/10 text-amber-600 dark:text-amber-300"
+                      }`}
+                    >
+                      {attempt.status === "reviewed" ? "Đã chấm" : "Chưa chấm"}
+                    </span>
+                  </div>
                 </Link>
               ))
             ) : (

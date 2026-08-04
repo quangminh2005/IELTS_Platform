@@ -90,7 +90,7 @@ export async function startPractice(formData: FormData): Promise<never> {
           units: {
             create: units.map((unit, index) => ({
               assignableUnitId: unit.id,
-              order: index
+              order: index + 1
             }))
           }
         },

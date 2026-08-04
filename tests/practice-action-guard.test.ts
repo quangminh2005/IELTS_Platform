@@ -36,4 +36,16 @@ describe("chốt chặn quyền + ranh giới mở lượt mới của thư vi�
     // trong lúc render trang GET), test này phải đỏ ngay.
     expect(attemptsSource).not.toContain("decideAttemptStart");
   });
+
+  // Lỗi B (đã xảy ra thật, phát hiện khi kiểm bằng trình duyệt): practice.ts tạo
+  // AssignmentUnit với order: index (bắt đầu từ 0), lệch với quy ước order: index + 1
+  // dùng ở assignments.ts (cả hàm tạo bài giao lẫn hàm sửa bài giao). Phòng làm bài
+  // (components/attempt-workspace.tsx) render thẳng giá trị order này ra nhãn "Phần
+  // {order}", nên lệch 1 khiến học viên tự luyện thấy "PHẦN 0" thay vì "PHẦN 1" trong
+  // khi bài giao thật (qua assignments.ts) vẫn đúng "PHẦN 1".
+  it("practice.ts đánh số order bắt đầu từ 1, khớp quy ước index + 1 của assignments.ts", () => {
+    const assignmentsSource = read("lib/actions/assignments.ts");
+    expect(practiceSource).toContain("order: index + 1");
+    expect(assignmentsSource).toContain("order: index + 1");
+  });
 });

@@ -100,6 +100,8 @@ model Material {
   title       String
   description String?
   sourceLabel String?
+  // Đề có nằm trong thư viện tự luyện của học viên không (mở là mở cho MỌI học viên).
+  practiceOpen Boolean @default(false)
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   teacher     TeacherProfile   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
@@ -166,6 +168,9 @@ model Assignment {
   // phát liên tục, học viên chỉ chỉnh được âm lượng; có màn kiểm tra âm thanh trước.
   lockAudio           Boolean               @default(false)
   mode                String                @default("homework")
+  // Chỉ có ở "bài giao ảo" của thư viện tự luyện: khoá studentId:materialId:unitId|all.
+  // Đảm bảo mỗi (học viên × đề × phạm vi) chỉ sinh đúng một bài giao ảo.
+  practiceScopeKey    String?               @unique
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   teacher             TeacherProfile        @relation(fields: [teacherId], references: [id], onDelete: Cascade)
@@ -216,6 +221,9 @@ model Attempt {
   submittedAt           DateTime?
   status                String              @default("in_progress")
   submitReason          String?
+  // Lượt thứ mấy của bài này. Bài giao luôn = 1. Lượt tự luyện thứ hai trở đi = 2, 3...
+  // Xếp hạng và thống kê chỉ tính lượt 1 (xem lib/practice.ts).
+  attemptRound          Int                 @default(1)
   elapsedSeconds        Int                 @default(0)
   // Thời gian làm bài tách theo từng phần: JSON { [assignableUnitId]: số giây }.
   // Null với các bài nộp trước khi có tính năng này (không thể tính ngược).

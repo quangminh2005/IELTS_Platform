@@ -96,6 +96,11 @@ const statements = [
   'CREATE INDEX IF NOT EXISTS "AnswerAnnotation_teacherId_idx" ON "AnswerAnnotation"("teacherId");',
   'CREATE INDEX IF NOT EXISTS "TeacherReview_teacherId_idx" ON "TeacherReview"("teacherId");',
   'CREATE INDEX IF NOT EXISTS "TeacherReview_studentId_idx" ON "TeacherReview"("studentId");',
+  // Thư viện tự luyện: cờ mở đề, khoá bộ luyện, số thứ tự lượt làm
+  'ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "practiceOpen" BOOLEAN NOT NULL DEFAULT false;',
+  'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "practiceScopeKey" TEXT;',
+  'CREATE UNIQUE INDEX IF NOT EXISTS "Assignment_practiceScopeKey_key" ON "Assignment"("practiceScopeKey");',
+  'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "attemptRound" INTEGER NOT NULL DEFAULT 1;',
 ];
 
 const prisma = new PrismaClient();

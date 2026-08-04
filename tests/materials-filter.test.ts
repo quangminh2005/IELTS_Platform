@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   computeStatus,
+  defaultMaterialFilters,
   deriveSeries,
   filterAndSortMaterials,
+  filterMaterials,
   type MaterialFilters,
   type MaterialMeta
 } from "../lib/materials-filter";
@@ -99,6 +101,7 @@ function meta(overrides: Partial<MaterialMeta>): MaterialMeta {
       isComplete: true
     },
     searchText: "title",
+    practiceOpen: false,
     ...overrides
   };
 }
@@ -108,6 +111,7 @@ const baseFilters: MaterialFilters = {
   skill: "all",
   series: "all",
   status: "all",
+  practice: "all",
   sort: "newest"
 };
 
@@ -157,5 +161,37 @@ describe("filterAndSortMaterials", () => {
     const before = items.map((m) => m.id);
     filterAndSortMaterials(items, { ...baseFilters, sort: "questions" });
     expect(items.map((m) => m.id)).toEqual(before);
+  });
+});
+
+describe("lọc theo thư viện tự luyện", () => {
+  const base = {
+    skill: "reading",
+    series: "Cambridge",
+    unitCount: 3,
+    questionCount: 40,
+    createdAtMs: 0,
+    lastAssignedAtMs: null,
+    status: {
+      isEmpty: false,
+      missingAudio: false,
+      missingQuestions: false,
+      isComplete: true
+    }
+  };
+
+  const metas = [
+    { ...base, id: "m1", title: "Đề mở", searchText: "đề mở", practiceOpen: true },
+    { ...base, id: "m2", title: "Đề đóng", searchText: "đề đóng", practiceOpen: false }
+  ];
+
+  it("mặc định hiện cả đề mở lẫn đề đóng", () => {
+    const result = filterMaterials(metas, defaultMaterialFilters);
+    expect(result.map((meta) => meta.id)).toEqual(["m1", "m2"]);
+  });
+
+  it('chọn "open" thì chỉ còn đề đang mở tự luyện', () => {
+    const result = filterMaterials(metas, { ...defaultMaterialFilters, practice: "open" });
+    expect(result.map((meta) => meta.id)).toEqual(["m1"]);
   });
 });

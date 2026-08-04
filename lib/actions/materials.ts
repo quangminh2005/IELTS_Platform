@@ -944,3 +944,49 @@ export async function importMaterial(
     )
   );
 }
+
+const practiceOpenSchema = z.object({
+  materialId: z.string().trim().min(1, "Thiếu tài liệu."),
+  practiceOpen: z.enum(["0", "1"], "Giá trị không hợp lệ.")
+});
+
+// Bật/tắt việc đưa một đề vào thư viện tự luyện. Mở là mở cho MỌI học viên.
+// Tắt chỉ khiến đề biến khỏi thư viện — lượt đã làm và kết quả giữ nguyên.
+export async function setPracticeOpen(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher();
+  const parsed = practiceOpenSchema.safeParse({
+    materialId: formData.get("materialId"),
+    practiceOpen: formData.get("practiceOpen")
+  });
+
+  if (!parsed.success) {
+    return actionFail(
+      new Error(parsed.error.issues[0]?.message ?? "Dữ liệu không hợp lệ."),
+      "Cập nhật tự luyện"
+    );
+  }
+
+  const material = await prisma.material.findFirst({
+    where: { id: parsed.data.materialId, teacherId: teacher.id },
+    select: { id: true, title: true }
+  });
+
+  if (!material) {
+    return actionFail(new Error("Không tìm thấy tài liệu."), "Cập nhật tự luyện");
+  }
+
+  const practiceOpen = parsed.data.practiceOpen === "1";
+
+  await prisma.material.update({
+    where: { id: material.id },
+    data: { practiceOpen }
+  });
+
+  revalidatePath("/teacher/materials");
+
+  return actionOk(
+    practiceOpen
+      ? `Đã mở "${material.title}" cho học viên tự luyện.`
+      : `Đã gỡ "${material.title}" khỏi thư viện tự luyện.`
+  );
+}

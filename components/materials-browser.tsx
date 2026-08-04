@@ -6,6 +6,7 @@ import {
   filterAndSortMaterials,
   type MaterialFilters,
   type MaterialMeta,
+  type PracticeFilter,
   type SortKey,
   type StatusFilter
 } from "@/lib/materials-filter";
@@ -28,6 +29,11 @@ const statusOptions: { value: StatusFilter; label: string }[] = [
   { value: "missing_audio", label: "Thiếu audio" },
   { value: "missing_questions", label: "Thiếu câu hỏi" },
   { value: "empty", label: "Chưa có phần" }
+];
+
+const practiceOptions: { value: PracticeFilter; label: string }[] = [
+  { value: "all", label: "Mọi đề" },
+  { value: "open", label: "Đang mở tự luyện" }
 ];
 
 const sortOptions: { value: SortKey; label: string }[] = [
@@ -75,7 +81,8 @@ export function MaterialsBrowser({ items }: { items: MaterialBrowserItem[] }) {
     filters.search.trim() !== "" ||
     filters.skill !== "all" ||
     filters.series !== "all" ||
-    filters.status !== "all";
+    filters.status !== "all" ||
+    filters.practice !== "all";
 
   const update = (patch: Partial<MaterialFilters>) =>
     setFilters((prev) => ({ ...prev, ...patch }));
@@ -137,6 +144,21 @@ export function MaterialsBrowser({ items }: { items: MaterialBrowserItem[] }) {
             aria-label="Lọc theo trạng thái"
           >
             {statusOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={filters.practice}
+            onChange={(event) =>
+              update({ practice: event.target.value as PracticeFilter })
+            }
+            className={controlClass}
+            aria-label="Lọc theo thư viện tự luyện"
+          >
+            {practiceOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>

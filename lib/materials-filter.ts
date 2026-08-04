@@ -37,13 +37,18 @@ export type MaterialMeta = {
   status: MaterialStatusFlags;
   // Chuỗi thường-hoá để search (title + sourceLabel), tránh tính lại mỗi lần gõ.
   searchText: string;
+  // Đề có đang nằm trong thư viện tự luyện của học viên không.
+  practiceOpen: boolean;
 };
+
+export type PracticeFilter = "all" | "open";
 
 export type MaterialFilters = {
   search: string;
   skill: string; // "all" hoặc một kỹ năng
   series: string; // "all" hoặc tên bộ sách
   status: StatusFilter;
+  practice: PracticeFilter; // "all" hoặc "open"
   sort: SortKey;
 };
 
@@ -52,6 +57,7 @@ export const defaultMaterialFilters: MaterialFilters = {
   skill: "all",
   series: "all",
   status: "all",
+  practice: "all",
   sort: "newest"
 };
 
@@ -131,6 +137,7 @@ export function filterMaterials(
     if (query && !meta.searchText.includes(query)) return false;
     if (filters.skill !== "all" && meta.skill !== filters.skill) return false;
     if (filters.series !== "all" && meta.series !== filters.series) return false;
+    if (filters.practice === "open" && !meta.practiceOpen) return false;
     if (!matchesStatus(meta, filters.status)) return false;
     return true;
   });

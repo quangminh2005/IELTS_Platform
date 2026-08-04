@@ -8,6 +8,7 @@ import {
   deleteMaterial,
   deleteQuestion,
   deleteUnit,
+  setPracticeOpen,
   updateMaterial,
   updateQuestion,
   updateUnit
@@ -27,6 +28,7 @@ const materialSelect = {
   title: true,
   skill: true,
   sourceLabel: true,
+  practiceOpen: true,
   description: true,
   createdAt: true,
   units: {
@@ -248,7 +250,8 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                 createdAtMs: material.createdAt.getTime(),
                 lastAssignedAtMs: lastAssignedByMaterial.get(material.id) ?? null,
                 status,
-                searchText: `${material.title} ${material.sourceLabel ?? ""}`.toLowerCase()
+                searchText: `${material.title} ${material.sourceLabel ?? ""}`.toLowerCase(),
+                practiceOpen: material.practiceOpen
               };
               return {
                 meta,
@@ -281,16 +284,35 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         {material.description}
                       </p>
                     ) : null}
-                    {material._count.units > 0 ? (
-                      <Link
-                        href={`/teacher/materials/${material.id}/preview`}
-                        target="_blank"
-                        className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-primary/50 bg-primary/10 px-3 py-2 text-sm font-semibold text-primary transition hover:bg-primary/15"
-                      >
-                        <EyeIcon className="size-4" />
-                        Xem trước (làm thử)
-                      </Link>
-                    ) : null}
+                    <div className="mt-4 flex flex-wrap items-center gap-2">
+                      {material._count.units > 0 ? (
+                        <Link
+                          href={`/teacher/materials/${material.id}/preview`}
+                          target="_blank"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-primary/50 bg-primary/10 px-3 py-2 text-sm font-semibold text-primary transition hover:bg-primary/15"
+                        >
+                          <EyeIcon className="size-4" />
+                          Xem trước (làm thử)
+                        </Link>
+                      ) : null}
+                      <ActionForm action={setPracticeOpen}>
+                        <input type="hidden" name="materialId" value={material.id} />
+                        <input
+                          type="hidden"
+                          name="practiceOpen"
+                          value={material.practiceOpen ? "0" : "1"}
+                        />
+                        <ActionSubmitButton
+                          className={
+                            material.practiceOpen
+                              ? "rounded-md border border-primary/50 bg-primary/10 px-3 py-2 text-sm font-semibold text-primary"
+                              : secondaryButtonClass
+                          }
+                        >
+                          {material.practiceOpen ? "Đang cho tự luyện" : "Cho tự luyện"}
+                        </ActionSubmitButton>
+                      </ActionForm>
+                    </div>
                     <details className="mt-4 rounded-lg border border-border bg-muted/60 p-4 transition-colors hover:border-primary/40 hover:bg-muted">
                       <summary className="cursor-pointer text-sm font-semibold">
                         <PencilIcon className="mr-1.5 -mt-0.5 inline-block size-4 align-middle text-muted-foreground" />

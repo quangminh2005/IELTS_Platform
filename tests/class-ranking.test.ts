@@ -1,4 +1,6 @@
-﻿import { describe, expect, it } from "vitest";
+﻿import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { describe, expect, it } from "vitest";
 import { rankClassmates, type ClassmateRow } from "../lib/class-ranking";
 
 const now = new Date("2026-07-25T10:00:00+07:00");
@@ -355,5 +357,26 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
     // Tuần trước An mới chỉ có bài 60%, thấp hơn bài 70% của Bình. Nếu ảnh chụp
     // tuần trước tính nhầm cả bài 100% vừa nộp thì An sẽ cao hơn.
     expect(anPrevious).toBeLessThan(binhPrevious as number);
+  });
+});
+
+describe("xếp hạng và bài tự luyện", () => {
+  const source = readFileSync(join(process.cwd(), "lib", "class-ranking.ts"), "utf8");
+
+  // Bài giao ảo có classId = null nên rơi đúng vào nhánh "bài chung" của
+  // ofThisClass — không chặn thì mọi lượt luyện đều đẩy hạng.
+  it("chặn bài tự luyện lọt vào nhánh classId null", () => {
+    expect(source).toContain('from "@/lib/practice"');
+    expect(source).toContain("excludePracticeAssignment");
+  });
+
+  // Làm lại không giới hạn nhưng chỉ lượt ĐẦU của mỗi đề được tính điểm.
+  it("chỉ lấy lượt đầu của bài tự luyện", () => {
+    expect(source).toContain("countsForStats");
+  });
+
+  // Tỉ lệ hoàn thành đo việc nộp bài GIAO, không dính tự luyện.
+  it("tỉ lệ hoàn thành không đếm recipient của bài tự luyện", () => {
+    expect(source).toContain("excludePracticeAssignment");
   });
 });

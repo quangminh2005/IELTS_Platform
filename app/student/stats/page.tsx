@@ -8,6 +8,7 @@ import {
   buildProgressSeries,
   questionTypeStatsBySkill
 } from "@/lib/question-stats";
+import { countsForStats } from "@/lib/practice";
 
 export default async function StudentStatsPage() {
   const session = await auth();
@@ -26,7 +27,12 @@ export default async function StudentStatsPage() {
   }
 
   const attempts = await prisma.attempt.findMany({
-    where: { studentId: student.id, status: { in: ["submitted", "reviewed"] } },
+    // Lượt luyện lại (round ≥ 2) không phản ánh năng lực thật -> không vào thống kê.
+    where: {
+      studentId: student.id,
+      status: { in: ["submitted", "reviewed"] },
+      ...countsForStats
+    },
     select: {
       submittedAt: true,
       startedAt: true,

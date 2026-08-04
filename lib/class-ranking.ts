@@ -2,6 +2,11 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { attemptBandFromCounts, averageBand, type SkillCount } from "@/lib/band-score";
 import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
+import {
+  countsForStats,
+  excludePracticeAssignment,
+  onlyPracticeAssignment
+} from "@/lib/practice";
 
 export type RankedClassStudent = {
   id: string;
@@ -217,8 +222,16 @@ async function skillCountsByAttempt(attemptIds: string[]) {
 // lẫn trang giáo viên. KHÔNG kiểm tra quyền — trang gọi phải tự kiểm tra.
 export async function getClassRanking(classId: string): Promise<RankedClassStudent[]> {
   // Chỉ tính bài giao của chính lớp này. classId null = bài giao chung cho nhiều
-  // lớp (hoặc bài cũ chưa gắn được lớp) -> vẫn tính, để không mất dữ liệu.
-  const ofThisClass = { assignment: { OR: [{ classId }, { classId: null }] } };
+  // lớp (hoặc bài cũ chưa gắn được lớp) -> vẫn tính, để không mất dữ liệu. Bài
+  // tự luyện cũng có classId = null nên phải loại riêng ở đây, không thì mọi
+  // lượt luyện lại đều lọt vào nhánh "bài chung".
+  const ofThisClass = {
+    assignment: { OR: [{ classId }, { classId: null }], ...excludePracticeAssignment }
+  };
+
+  // Bài tự luyện không thuộc lớp nào nhưng vẫn tính vào điểm — chỉ LƯỢT ĐẦU của mỗi
+  // đề, để làm lại nhiều lần không đẩy được hạng.
+  const firstPracticeRound = { assignment: onlyPracticeAssignment };
 
   const classmates = await prisma.classStudent.findMany({
     where: { classId },
@@ -230,7 +243,12 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
             select: { image: true }
           },
           attempts: {
-            where: { assignmentRecipient: ofThisClass },
+            where: {
+              OR: [
+                { assignmentRecipient: ofThisClass },
+                { assignmentRecipient: firstPracticeRound, ...countsForStats }
+              ]
+            },
             select: {
               id: true,
               scorePercent: true,
@@ -241,6 +259,7 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
               }
             }
           },
+          // Tỉ lệ hoàn thành chỉ đo việc nộp bài GIAO — không đếm bài tự luyện.
           recipients: {
             where: ofThisClass,
             select: {

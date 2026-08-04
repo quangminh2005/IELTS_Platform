@@ -105,6 +105,7 @@ export default async function StudentDashboardPage() {
         startedAt: true,
         submittedAt: true,
         status: true,
+        attemptRound: true,
         // Band giáo viên chấm (Viết/Nói) — để bài chấm tay cũng được tính vào điểm
         // xếp hạng ở đây giống trang Xếp hạng, không bị bỏ trắng.
         review: { select: { overallBand: true } }
@@ -139,8 +140,11 @@ export default async function StudentDashboardPage() {
 
   const streak = calculateWeekStreak({ submittedAt: submittedDates, weeklyGoal, now });
 
+  // Chuỗi hoạt động tính MỌI lượt (kể cả luyện lại); điểm xếp hạng chỉ lượt đầu.
+  const scoringAttempts = attempts.filter((attempt) => attempt.attemptRound === 1);
+
   const score = studentRankingScore({
-    scorePercents: attempts
+    scorePercents: scoringAttempts
       .map((attempt) =>
         rankingScorePercent({
           scorePercent: attempt.scorePercent,
@@ -149,7 +153,7 @@ export default async function StudentDashboardPage() {
       )
       .filter((value): value is number => value !== null),
     statuses: recipients.map((recipient) => recipient.status),
-    attemptTimes: attempts.map((attempt) => ({
+    attemptTimes: scoringAttempts.map((attempt) => ({
       startedAt: attempt.startedAt,
       submittedAt: attempt.submittedAt
     })),

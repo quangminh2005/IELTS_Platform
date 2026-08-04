@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Prisma } from "@prisma/client";
 import { ReviewQueue } from "@/components/review-queue";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { isSubmissionLate } from "@/lib/assignment-calendar";
@@ -11,6 +12,30 @@ const tabClass =
   "rounded-full border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground hover:border-primary";
 const activeTabClass =
   "rounded-full border border-primary bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary";
+
+// Dựng chung một hình dạng where cho cả truy vấn danh sách lẫn hai truy vấn đếm
+// (homeworkCount/practiceCount) của hàng đợi chấm bài — chỉ khác mảnh lọc mode
+// (bài giao / tự luyện). Nếu để ba khối where chép tay riêng lẻ, sau này ai thêm
+// bộ lọc mới (theo lớp, theo ngày...) vào truy vấn danh sách mà quên sửa hai truy
+// vấn đếm thì số hiển thị trên tab sẽ lệch khỏi số dòng thật trong danh sách — sai
+// âm thầm, khó phát hiện. Gom về một hàm để chỉ còn một nơi giữ hình dạng điều kiện.
+function buildReviewQueueWhere(
+  teacherId: string,
+  modeFilter: typeof excludePracticeAssignment | typeof onlyPracticeAssignment
+): Prisma.AttemptWhereInput {
+  return {
+    status: { in: ["submitted", "reviewed"] },
+    assignmentRecipient: {
+      assignment: {
+        teacherId,
+        ...modeFilter,
+        // Chỉ bài THỰC SỰ cần chấm tay (có câu viết luận / ghi âm). Bài Viết dạng
+        // điền chỗ trống đã tự chấm nên không vào hàng đợi.
+        units: { some: { assignableUnit: manualGradedUnitWhere } }
+      }
+    }
+  };
+}
 
 export default async function TeacherReviewPage({
   searchParams
@@ -25,18 +50,10 @@ export default async function TeacherReviewPage({
 
   const [attempts, homeworkCount, practiceCount] = await Promise.all([
     prisma.attempt.findMany({
-      where: {
-        status: { in: ["submitted", "reviewed"] },
-        assignmentRecipient: {
-          assignment: {
-            teacherId: teacher.id,
-            ...(isPractice ? onlyPracticeAssignment : excludePracticeAssignment),
-            // Chỉ bài THỰC SỰ cần chấm tay (có câu viết luận / ghi âm). Bài Viết dạng
-            // điền chỗ trống đã tự chấm nên không vào hàng đợi.
-            units: { some: { assignableUnit: manualGradedUnitWhere } }
-          }
-        }
-      },
+      where: buildReviewQueueWhere(
+        teacher.id,
+        isPractice ? onlyPracticeAssignment : excludePracticeAssignment
+      ),
       // FIFO: bài nộp trước nằm trên để chấm trước.
       orderBy: [{ submittedAt: "asc" }, { startedAt: "asc" }],
       include: {
@@ -64,28 +81,10 @@ export default async function TeacherReviewPage({
       }
     }),
     prisma.attempt.count({
-      where: {
-        status: { in: ["submitted", "reviewed"] },
-        assignmentRecipient: {
-          assignment: {
-            teacherId: teacher.id,
-            ...excludePracticeAssignment,
-            units: { some: { assignableUnit: manualGradedUnitWhere } }
-          }
-        }
-      }
+      where: buildReviewQueueWhere(teacher.id, excludePracticeAssignment)
     }),
     prisma.attempt.count({
-      where: {
-        status: { in: ["submitted", "reviewed"] },
-        assignmentRecipient: {
-          assignment: {
-            teacherId: teacher.id,
-            ...onlyPracticeAssignment,
-            units: { some: { assignableUnit: manualGradedUnitWhere } }
-          }
-        }
-      }
+      where: buildReviewQueueWhere(teacher.id, onlyPracticeAssignment)
     })
   ]);
 

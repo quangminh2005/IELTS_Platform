@@ -4,6 +4,7 @@ import { AssignmentBuilder } from "@/components/assignment-builder";
 import { AssignmentList, type AssignmentItem } from "@/components/assignment-list";
 import { NoticeToast } from "@/components/notice-toast";
 import { prisma } from "@/lib/prisma";
+import { excludePracticeAssignment } from "@/lib/practice";
 
 // Cây chọn phần chỉ cần vài field ngắn. KHÔNG dùng include (lấy cả content,
 // transcript, transcriptTimingJson, metadataJson) — riêng phần đó đã ~5MB và bị
@@ -138,7 +139,8 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
         select: classSelect
       }),
       prisma.assignment.findMany({
-        where: { teacherId: teacher.id },
+        // Bài giao ảo của thư viện tự luyện không phải bài giáo viên giao — ẩn đi.
+        where: { teacherId: teacher.id, ...excludePracticeAssignment },
         orderBy: { createdAt: "desc" },
         select: assignmentSelect
       })

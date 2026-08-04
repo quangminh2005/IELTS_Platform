@@ -9,6 +9,7 @@ import {
 import { attemptBand } from "@/lib/band-score";
 import { orderedSkillsOfAssignment } from "@/lib/skill-sessions";
 import { prisma } from "@/lib/prisma";
+import { excludePracticeAssignment } from "@/lib/practice";
 
 export default async function TeacherCalendarPage() {
   const teacher = await requireTeacherPage();
@@ -24,7 +25,8 @@ export default async function TeacherCalendarPage() {
       }
     }),
     prisma.assignment.findMany({
-      where: { teacherId: teacher.id },
+      // Lịch chỉ theo dõi bài giáo viên giao, không có bài tự luyện.
+      where: { teacherId: teacher.id, ...excludePracticeAssignment },
       orderBy: { createdAt: "desc" },
       include: {
         _count: { select: { units: true } },

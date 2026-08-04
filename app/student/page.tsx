@@ -8,6 +8,7 @@ import { calculateWeekStreak } from "@/lib/streak";
 import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
 import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
+import { excludePracticeAssignment } from "@/lib/practice";
 
 function statusClasses(status: string) {
   if (status === "reviewed") {
@@ -70,7 +71,8 @@ export default async function StudentDashboardPage() {
   // một lượt đi/về database thay vì ba lượt nối tiếp.
   const [recipients, attempts, membership] = await Promise.all([
     prisma.assignmentRecipient.findMany({
-      where: { studentId: student.id },
+      // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
+      where: { studentId: student.id, assignment: excludePracticeAssignment },
       orderBy: { assignedAt: "desc" },
       include: {
         assignment: {

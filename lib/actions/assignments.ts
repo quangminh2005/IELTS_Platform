@@ -8,6 +8,7 @@ import { resolveAssignmentClassId } from "@/lib/assignment-class";
 import { parseAssignmentDeadline } from "@/lib/assignment-deadline";
 import { assignmentNoticePath } from "@/lib/assignment-notices";
 import { prisma } from "@/lib/prisma";
+import { excludePracticeAssignment } from "@/lib/practice";
 import { serializeSkillTimeLimits } from "@/lib/skill-parse";
 import { SKILL_TIME_ORDER } from "@/lib/skill-times";
 
@@ -204,7 +205,9 @@ export async function updateAssignment(formData: FormData) {
   const assignment = await prisma.assignment.findFirst({
     where: {
       id,
-      teacherId: teacher.id
+      teacherId: teacher.id,
+      // Phòng thân: bài giao ảo của thư viện tự luyện không được sửa/xoá qua đây.
+      ...excludePracticeAssignment
     },
     select: {
       id: true,
@@ -291,7 +294,9 @@ export async function deleteAssignment(formData: FormData) {
   const assignment = await prisma.assignment.findFirst({
     where: {
       id,
-      teacherId: teacher.id
+      teacherId: teacher.id,
+      // Phòng thân: bài giao ảo của thư viện tự luyện không được sửa/xoá qua đây.
+      ...excludePracticeAssignment
     },
     select: {
       id: true

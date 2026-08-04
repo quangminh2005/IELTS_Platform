@@ -15,6 +15,7 @@ import {
   buildProgressSeries,
   questionTypeStatsBySkill
 } from "@/lib/question-stats";
+import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 
 type StudentPageProps = {
   params: {
@@ -73,10 +74,14 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           joinedAt: "desc"
         }
       },
+      // Danh sách "bài tập & lần làm bài" chỉ hiện bài GIAO thật — bài tự luyện
+      // (Assignment.mode = "practice") có teacherId của chính giáo viên này nên
+      // phải loại riêng, không thì mỗi lượt luyện lại hiện thành 1 dòng ở đây.
       recipients: {
         where: {
           assignment: {
-            teacherId: teacher.id
+            teacherId: teacher.id,
+            ...excludePracticeAssignment
           }
         },
         include: {
@@ -111,23 +116,44 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
     notFound();
   }
 
-  // Gom các lần làm đã nộp của học sinh này (mọi bài giao) cho biểu đồ tiến bộ
-  // và thống kê dạng câu — dùng lại đúng logic của trang "Tiến bộ" học sinh.
-  const submittedAttempts = student.recipients.flatMap((recipient) =>
-    recipient.attempts
-      .filter(
-        (attempt) => attempt.status === "submitted" || attempt.status === "reviewed"
-      )
-      .map((attempt) => ({
-        title: recipient.assignment.title,
-        submittedAt: attempt.submittedAt ?? attempt.startedAt,
-        answers: attempt.answers.map((answer) => ({
-          isCorrect: answer.isCorrect,
-          skill: answer.assignableUnit.skill,
-          questionType: answer.question?.questionType ?? null
-        }))
-      }))
-  );
+  // Thống kê NĂNG LỰC (biểu đồ tiến bộ, dạng câu hay sai) chỉ tính lượt ĐẦU của
+  // mỗi đề — kể cả lượt đầu bài tự luyện, chỉ loại lượt luyện lại (round ≥ 2) —
+  // đúng quy tắc đã áp cho trang "Tiến bộ" của học sinh (app/student/stats/page.tsx).
+  // Đây là truy vấn riêng, KHÔNG dùng lại `student.recipients` ở trên vì recipients
+  // đã loại hẳn bài tự luyện (cho danh sách bài giao) trong khi thống kê năng lực
+  // vẫn cần lượt đầu của bài tự luyện.
+  const statsAttempts = await prisma.attempt.findMany({
+    where: {
+      studentId: student.id,
+      status: { in: ["submitted", "reviewed"] },
+      assignmentRecipient: { assignment: { teacherId: teacher.id } },
+      ...countsForStats
+    },
+    select: {
+      submittedAt: true,
+      startedAt: true,
+      assignmentRecipient: {
+        select: { assignment: { select: { title: true } } }
+      },
+      answers: {
+        select: {
+          isCorrect: true,
+          assignableUnit: { select: { skill: true } },
+          question: { select: { questionType: true } }
+        }
+      }
+    }
+  });
+
+  const submittedAttempts = statsAttempts.map((attempt) => ({
+    title: attempt.assignmentRecipient.assignment.title,
+    submittedAt: attempt.submittedAt ?? attempt.startedAt,
+    answers: attempt.answers.map((answer) => ({
+      isCorrect: answer.isCorrect,
+      skill: answer.assignableUnit.skill,
+      questionType: answer.question?.questionType ?? null
+    }))
+  }));
 
   const progressSeries = buildProgressSeries(submittedAttempts);
   const typeStats = questionTypeStatsBySkill(

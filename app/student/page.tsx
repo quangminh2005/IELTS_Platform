@@ -8,7 +8,7 @@ import { calculateWeekStreak } from "@/lib/streak";
 import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
 import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
-import { excludePracticeAssignment } from "@/lib/practice";
+import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 
 function statusClasses(status: string) {
   if (status === "reviewed") {
@@ -141,7 +141,9 @@ export default async function StudentDashboardPage() {
   const streak = calculateWeekStreak({ submittedAt: submittedDates, weeklyGoal, now });
 
   // Chuỗi hoạt động tính MỌI lượt (kể cả luyện lại); điểm xếp hạng chỉ lượt đầu.
-  const scoringAttempts = attempts.filter((attempt) => attempt.attemptRound === 1);
+  const scoringAttempts = attempts.filter(
+    (attempt) => attempt.attemptRound === countsForStats.attemptRound
+  );
 
   const score = studentRankingScore({
     scorePercents: scoringAttempts

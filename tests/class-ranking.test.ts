@@ -1,7 +1,17 @@
-﻿import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import { describe, expect, it } from "vitest";
-import { rankClassmates, type ClassmateRow } from "../lib/class-ranking";
+﻿import { describe, expect, it, vi } from "vitest";
+import { rankClassmates, getClassRanking, type ClassmateRow } from "../lib/class-ranking";
+import { countsForStats, onlyPracticeAssignment, PRACTICE_MODE } from "../lib/practice";
+
+// Mock ở đúng specifier mà lib/class-ranking.ts dùng (@/lib/prisma) để chắc chắn
+// Vite phân giải về cùng một module — theo đúng cách tests/auth.test.ts đã làm.
+// vi.mock được Vitest hoist lên đầu file (trước mọi import) nên khi
+// lib/class-ranking.ts được import tĩnh ở trên, nó đã thấy bản mock này.
+const prismaMock = vi.hoisted(() => ({
+  classStudent: { findMany: vi.fn() },
+  $queryRaw: vi.fn()
+}));
+
+vi.mock("@/lib/prisma", () => ({ prisma: prismaMock }));
 
 const now = new Date("2026-07-25T10:00:00+07:00");
 
@@ -360,23 +370,35 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
   });
 });
 
-describe("xếp hạng và bài tự luyện", () => {
-  const source = readFileSync(join(process.cwd(), "lib", "class-ranking.ts"), "utf8");
+describe("getClassRanking - hình dạng truy vấn Prisma với bài tự luyện", () => {
+  it("chỉ OR lượt-đầu-tự-luyện vào attempts, và loại bài tự luyện khỏi recipients", async () => {
+    // Lớp rỗng -> skillCountsByAttempt ngắn mạch (attemptIds = []), không cần
+    // mock $queryRaw. Ta chỉ cần xem prisma.classStudent.findMany được gọi với
+    // where/include gì.
+    prismaMock.classStudent.findMany.mockResolvedValueOnce([]);
 
-  // Bài giao ảo có classId = null nên rơi đúng vào nhánh "bài chung" của
-  // ofThisClass — không chặn thì mọi lượt luyện đều đẩy hạng.
-  it("chặn bài tự luyện lọt vào nhánh classId null", () => {
-    expect(source).toContain('from "@/lib/practice"');
-    expect(source).toContain("excludePracticeAssignment");
-  });
+    await getClassRanking("class-1");
 
-  // Làm lại không giới hạn nhưng chỉ lượt ĐẦU của mỗi đề được tính điểm.
-  it("chỉ lấy lượt đầu của bài tự luyện", () => {
-    expect(source).toContain("countsForStats");
-  });
+    expect(prismaMock.classStudent.findMany).toHaveBeenCalledTimes(1);
+    const call = prismaMock.classStudent.findMany.mock.calls[0][0];
+    const attemptsWhere = call.include.student.include.attempts.where;
+    const recipientsWhere = call.include.student.include.recipients.where;
 
-  // Tỉ lệ hoàn thành đo việc nộp bài GIAO, không dính tự luyện.
-  it("tỉ lệ hoàn thành không đếm recipient của bài tự luyện", () => {
-    expect(source).toContain("excludePracticeAssignment");
+    // Nhánh lượt-đầu-tự-luyện: đúng bài tự luyện (onlyPracticeAssignment) VÀ
+    // đúng attemptRound = 1 (countsForStats). Sai một trong hai là mọi lượt
+    // luyện lại lại tràn vào xếp hạng.
+    expect(attemptsWhere.OR[1]).toEqual({
+      assignmentRecipient: { assignment: onlyPracticeAssignment },
+      ...countsForStats
+    });
+
+    // Nhánh bài giao của lớp KHÔNG được mang attemptRound — bài giao thật luôn
+    // là lượt 1 nên không cần lọc, và lọc nhầm sẽ ẩn attempt hợp lệ.
+    expect(attemptsWhere.OR[0]).not.toHaveProperty("attemptRound");
+    expect(attemptsWhere.OR[0].assignmentRecipient.assignment).not.toHaveProperty("attemptRound");
+
+    // Tỉ lệ hoàn thành (recipients) phải loại hẳn bài tự luyện, không đếm bất
+    // kỳ lượt nào của nó — kể cả lượt đầu.
+    expect(recipientsWhere.assignment.mode).toEqual({ not: PRACTICE_MODE });
   });
 });

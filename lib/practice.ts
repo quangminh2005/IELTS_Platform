@@ -65,6 +65,21 @@ export function practiceSkillTimeLimits(
   return JSON.stringify(Object.fromEntries(totals));
 }
 
+// Học viên bấm luyện lại một bộ đang có lượt LÀM DỞ: bộ luyện dùng chung một
+// Assignment cho mọi lượt, nên lựa chọn tính giờ của lần bấm này chỉ được phép NỚI
+// đồng hồ, không được siết.
+//   - Chọn "không tính giờ" → gỡ giới hạn. An toàn tuyệt đối: submitSkill bỏ qua
+//     submitReason "auto_timeout" khi kỹ năng không có ngân sách thời gian, nên gỡ
+//     đồng hồ không thể làm bài bị tự nộp oan.
+//   - Chọn "tính giờ" → giữ nguyên. Áp ngân sách mới lên một lượt đã làm quá lâu
+//     (nhất là lượt vốn không tính giờ) sẽ khiến bài bị tự nộp ngay khi mở lại.
+export function shouldClearTimeLimitsOnResume(
+  currentSkillTimeLimitsJson: string | null,
+  timed: boolean
+): boolean {
+  return !timed && currentSkillTimeLimitsJson !== null;
+}
+
 export type LatestAttempt = {
   id: string;
   status: string;

@@ -4,7 +4,13 @@ import { redirect } from "next/navigation";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { requireStudent } from "@/lib/actions/attempts";
-import { PRACTICE_MODE, decideAttemptStart, practiceScopeKey, practiceSkillTimeLimits } from "@/lib/practice";
+import {
+  PRACTICE_MODE,
+  decideAttemptStart,
+  practiceScopeKey,
+  practiceSkillTimeLimits,
+  shouldClearTimeLimitsOnResume
+} from "@/lib/practice";
 import { practiceNoticePath } from "@/lib/practice-notices";
 import { prisma } from "@/lib/prisma";
 
@@ -78,15 +84,19 @@ export async function startPractice(formData: FormData): Promise<never> {
   }
 
   const scopeKey = practiceScopeKey(student.id, material.id, unitId);
-  const skillTimeLimitsJson = practiceSkillTimeLimits(units, parsed.data.timed === "1");
+  const timed = parsed.data.timed === "1";
+  const skillTimeLimitsJson = practiceSkillTimeLimits(units, timed);
   const title = unitId ? `${material.title} — ${units[0].title}` : material.title;
 
   const existingAssignment = await prisma.assignment.findUnique({
     where: { practiceScopeKey: scopeKey },
-    select: { id: true }
+    select: { id: true, skillTimeLimitsJson: true }
   });
 
   let assignmentId: string;
+  // Giờ đang gắn trên bộ luyện (của lượt trước) — chỉ dùng cho nhánh "làm tiếp" phía
+  // dưới. Bộ luyện vừa tạo mới thì chưa có giờ.
+  let currentSkillTimeLimitsJson: string | null = existingAssignment?.skillTimeLimitsJson ?? null;
 
   if (existingAssignment) {
     // CỐ Ý không cập nhật lại title/units của assignment đã có: bộ luyện được
@@ -130,7 +140,7 @@ export async function startPractice(formData: FormData): Promise<never> {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
         const recovered = await prisma.assignment.findUnique({
           where: { practiceScopeKey: scopeKey },
-          select: { id: true }
+          select: { id: true, skillTimeLimitsJson: true }
         });
 
         if (!recovered) {
@@ -138,6 +148,7 @@ export async function startPractice(formData: FormData): Promise<never> {
         }
 
         assignmentId = recovered.id;
+        currentSkillTimeLimitsJson = recovered.skillTimeLimitsJson;
       } else {
         throw error;
       }
@@ -179,11 +190,18 @@ export async function startPractice(formData: FormData): Promise<never> {
   );
 
   if (decision.kind === "resume") {
-    // Lượt đang làm dở: KHÔNG đụng skillTimeLimitsJson. Ngân sách thời gian không
-    // được chụp lại vào Attempt mà submitSkill đọc sống từ assignment mỗi lần nộp —
-    // đổi giờ ở đây giữa chừng có thể khiến lượt đang dở bị auto-nộp oan ngay khi mở
-    // lại (đổi từ "không tính giờ" sang "tính giờ" với thời gian đã làm vượt ngân sách
-    // mới). Chỉ redirect vào đúng phòng đang làm.
+    // Lượt đang làm dở: ngân sách thời gian không được chụp lại vào Attempt mà
+    // submitSkill đọc sống từ assignment mỗi lần nộp, nên đổi giờ ở đây là đổi cho cả
+    // lượt đang dở. Chỉ được NỚI, không được siết (xem shouldClearTimeLimitsOnResume):
+    // học viên bấm "Không tính giờ" thì phải gỡ được đồng hồ của lượt dở — nếu không,
+    // em chọn không tính giờ mà vào phòng vẫn thấy đếm ngược của lần bấm trước.
+    if (shouldClearTimeLimitsOnResume(currentSkillTimeLimitsJson, timed)) {
+      await prisma.assignment.update({
+        where: { id: assignmentId },
+        data: { skillTimeLimitsJson: null }
+      });
+    }
+
     redirect(`/student/assignments/${recipient.id}`);
   }
 

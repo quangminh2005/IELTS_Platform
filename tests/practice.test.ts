@@ -7,7 +7,8 @@ import {
   excludePracticeAssignment,
   onlyPracticeAssignment,
   practiceScopeKey,
-  practiceSkillTimeLimits
+  practiceSkillTimeLimits,
+  shouldClearTimeLimitsOnResume
 } from "@/lib/practice";
 
 const root = process.cwd();
@@ -91,6 +92,24 @@ describe("decideAttemptStart", () => {
   it("bài tự luyện đã nộp thì tạo lượt kế tiếp", () => {
     const latest = { id: "a1", status: "submitted", attemptRound: 2 };
     expect(decideAttemptStart("practice", latest)).toEqual({ kind: "new", attemptRound: 3 });
+  });
+});
+
+// Lỗi đã xảy ra thật: học viên bấm "Không tính giờ" nhưng vào phòng vẫn thấy đồng hồ
+// đếm ngược. Nguyên nhân: bộ luyện còn một lượt làm dở (tính giờ) từ lần trước nên
+// startPractice đi nhánh "resume" và bỏ qua hoàn toàn lựa chọn của lần bấm này.
+describe("shouldClearTimeLimitsOnResume", () => {
+  it("lượt đang dở đang tính giờ + chọn không tính giờ → gỡ đồng hồ", () => {
+    expect(shouldClearTimeLimitsOnResume('{"writing":60}', false)).toBe(true);
+  });
+
+  it("lượt đang dở vốn đã không tính giờ → không cần ghi lại", () => {
+    expect(shouldClearTimeLimitsOnResume(null, false)).toBe(false);
+  });
+
+  it("chọn tính giờ thì GIỮ NGUYÊN giới hạn cũ (không siết giờ giữa chừng)", () => {
+    expect(shouldClearTimeLimitsOnResume(null, true)).toBe(false);
+    expect(shouldClearTimeLimitsOnResume('{"reading":60}', true)).toBe(false);
   });
 });
 

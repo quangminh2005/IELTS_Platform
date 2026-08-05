@@ -24,6 +24,8 @@ type PracticeTarget = {
   label: string;
   // Lượt đang làm dở của đúng phạm vi này (null = mở lượt mới).
   resume: PracticeResumeState | null;
+  // Học viên bấm "Làm lại": bỏ lượt dở, làm lại từ đầu với lựa chọn giờ mới.
+  restart: boolean;
 };
 
 export function PracticeLibrary({
@@ -37,7 +39,6 @@ export function PracticeLibrary({
 }) {
   const [search, setSearch] = useState("");
   const [skill, setSkill] = useState("all");
-  const [expanded, setExpanded] = useState<string | null>(null);
   const [target, setTarget] = useState<PracticeTarget | null>(null);
 
   // startPractice gặp lỗi (đề vừa bị gỡ khỏi thư viện, đề chưa có phần nào...)
@@ -115,30 +116,62 @@ export function PracticeLibrary({
                 ) : null}
               </div>
 
+              {/* Mở/đóng danh sách phần bằng checkbox ẩn + CSS, KHÔNG bằng state
+                  React: nút cũ là <button onClick> nên bấm trước lúc trang hydrate
+                  xong là mất cú bấm (đã gặp thật khi kiểm bằng trình duyệt). Cả hai
+                  nhãn và <ul> đều phải là ANH EM RUỘT ngay sau ô checkbox thì biến
+                  thể peer-checked mới ăn — nên <ul> nằm trong luôn hàng nút và dùng
+                  w-full để tự xuống dòng riêng. */}
               <div className="mt-3 flex flex-wrap items-center gap-2">
+                <input
+                  type="checkbox"
+                  id={`practice-units-${item.id}`}
+                  className="peer sr-only"
+                />
                 <PracticeStartButton
                   target={{
                     materialId: item.id,
                     unitId: null,
                     label: item.title,
-                    resume: item.resume
+                    resume: item.resume,
+                    restart: false
                   }}
                   onOpenDialog={setTarget}
                   className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground"
                 >
                   {item.resume ? "Làm tiếp cả đề" : "Luyện cả đề"}
                 </PracticeStartButton>
-                <button
-                  type="button"
-                  onClick={() => setExpanded(expanded === item.id ? null : item.id)}
-                  className="rounded-md border border-border px-3 py-2 text-sm font-semibold hover:border-primary"
+                {item.resume ? (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setTarget({
+                        materialId: item.id,
+                        unitId: null,
+                        label: item.title,
+                        resume: item.resume,
+                        restart: true
+                      })
+                    }
+                    className="rounded-md border border-border px-3 py-2 text-sm font-semibold text-muted-foreground hover:border-primary hover:text-foreground"
+                  >
+                    Làm lại
+                  </button>
+                ) : null}
+                <label
+                  htmlFor={`practice-units-${item.id}`}
+                  className="cursor-pointer select-none rounded-md border border-border px-3 py-2 text-sm font-semibold hover:border-primary peer-checked:hidden"
                 >
-                  {expanded === item.id ? "Ẩn các phần" : "Luyện từng phần"}
-                </button>
-              </div>
+                  Luyện từng phần
+                </label>
+                <label
+                  htmlFor={`practice-units-${item.id}`}
+                  className="hidden cursor-pointer select-none rounded-md border border-border px-3 py-2 text-sm font-semibold hover:border-primary peer-checked:inline-block"
+                >
+                  Ẩn các phần
+                </label>
 
-              {expanded === item.id ? (
-                <ul className="mt-3 space-y-1.5 border-t border-border pt-3">
+                <ul className="hidden w-full space-y-1.5 border-t border-border pt-3 peer-checked:block">
                   {item.units.map((unit) => (
                     <li key={unit.id} className="flex items-center justify-between gap-2">
                       <span className="text-sm">
@@ -147,22 +180,42 @@ export function PracticeLibrary({
                           ({unit.questionCount} câu)
                         </span>
                       </span>
-                      <PracticeStartButton
-                        target={{
-                          materialId: item.id,
-                          unitId: unit.id,
-                          label: `${item.title} — ${unit.title}`,
-                          resume: unit.resume
-                        }}
-                        onOpenDialog={setTarget}
-                        className="rounded-md border border-border px-2.5 py-1.5 text-xs font-semibold hover:border-primary"
-                      >
-                        {unit.resume ? "Làm tiếp" : "Luyện phần này"}
-                      </PracticeStartButton>
+                      <span className="flex shrink-0 items-center gap-1.5">
+                        <PracticeStartButton
+                          target={{
+                            materialId: item.id,
+                            unitId: unit.id,
+                            label: `${item.title} — ${unit.title}`,
+                            resume: unit.resume,
+                            restart: false
+                          }}
+                          onOpenDialog={setTarget}
+                          className="rounded-md border border-border px-2.5 py-1.5 text-xs font-semibold hover:border-primary"
+                        >
+                          {unit.resume ? "Làm tiếp" : "Luyện phần này"}
+                        </PracticeStartButton>
+                        {unit.resume ? (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setTarget({
+                                materialId: item.id,
+                                unitId: unit.id,
+                                label: `${item.title} — ${unit.title}`,
+                                resume: unit.resume,
+                                restart: true
+                              })
+                            }
+                            className="rounded-md border border-border px-2.5 py-1.5 text-xs font-semibold text-muted-foreground hover:border-primary hover:text-foreground"
+                          >
+                            Làm lại
+                          </button>
+                        ) : null}
+                      </span>
                     </li>
                   ))}
                 </ul>
-              ) : null}
+              </div>
             </li>
           ))}
         </ul>
@@ -237,33 +290,43 @@ function TimeChoiceDialog({
       <div className="w-full max-w-md rounded-lg border border-border bg-card p-5 shadow-lg">
         <p className="text-sm font-semibold">{target.label}</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          {target.resume
-            ? "Em đang làm dở bài này và đồng hồ vẫn đang đếm ngược."
-            : "Em muốn làm bài này thế nào?"}
+          {/* Ba tình huống, ba câu hỏi khác nhau — hộp thoại không bao giờ được hỏi
+              một câu mà server không thực hiện được (xem PracticeStartButton). */}
+          {target.restart
+            ? "Làm lại từ đầu sẽ XOÁ bài em đang làm dở. Em muốn làm lại thế nào?"
+            : target.resume
+              ? "Em đang làm dở bài này và đồng hồ vẫn đang đếm ngược."
+              : "Em muốn làm bài này thế nào?"}
         </p>
 
         <div className="mt-4 space-y-2">
           <form action={startPractice}>
             <input type="hidden" name="materialId" value={target.materialId} />
             <input type="hidden" name="unitId" value={target.unitId ?? ""} />
+            <input type="hidden" name="restart" value={target.restart ? "1" : "0"} />
             <input type="hidden" name="timed" value="1" />
             <PracticeSubmitButton
               className="w-full rounded-md bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground"
               pendingLabel="Đang mở bài…"
             >
-              {target.resume ? "Làm tiếp, giữ đồng hồ" : "Tính giờ như thi thật"}
+              {target.resume && !target.restart
+                ? "Làm tiếp, giữ đồng hồ"
+                : "Tính giờ như thi thật"}
             </PracticeSubmitButton>
           </form>
 
           <form action={startPractice}>
             <input type="hidden" name="materialId" value={target.materialId} />
             <input type="hidden" name="unitId" value={target.unitId ?? ""} />
+            <input type="hidden" name="restart" value={target.restart ? "1" : "0"} />
             <input type="hidden" name="timed" value="0" />
             <PracticeSubmitButton
               className="w-full rounded-md border border-border px-3 py-2.5 text-sm font-semibold hover:border-primary"
               pendingLabel="Đang mở bài…"
             >
-              {target.resume ? "Làm tiếp, bỏ đồng hồ" : "Không tính giờ"}
+              {target.resume && !target.restart
+                ? "Làm tiếp, bỏ đồng hồ"
+                : "Không tính giờ"}
             </PracticeSubmitButton>
           </form>
         </div>

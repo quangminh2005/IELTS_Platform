@@ -18,7 +18,9 @@ const startPracticeSchema = z.object({
   materialId: z.string().trim().min(1, "Thiếu đề luyện."),
   // Rỗng = luyện cả đề.
   unitId: z.string().trim().optional(),
-  timed: z.enum(["0", "1"])
+  timed: z.enum(["0", "1"]),
+  // "1" = bỏ hẳn lượt đang làm dở để làm lại từ đầu. Vắng mặt = làm tiếp như thường.
+  restart: z.enum(["0", "1"]).optional()
 });
 
 // Học viên bấm luyện một đề (hoặc một phần). Tạo ngầm "bài giao ảo" cho riêng em đó
@@ -30,7 +32,8 @@ export async function startPractice(formData: FormData): Promise<never> {
   const parsed = startPracticeSchema.safeParse({
     materialId: formData.get("materialId"),
     unitId: formData.get("unitId") ?? undefined,
-    timed: formData.get("timed")
+    timed: formData.get("timed"),
+    restart: formData.get("restart") ?? undefined
   });
 
   if (!parsed.success) {
@@ -186,7 +189,8 @@ export async function startPractice(formData: FormData): Promise<never> {
           status: latestAttempt.status,
           attemptRound: latestAttempt.attemptRound
         }
-      : null
+      : null,
+    parsed.data.restart === "1"
   );
 
   if (decision.kind === "resume") {
@@ -208,7 +212,15 @@ export async function startPractice(formData: FormData): Promise<never> {
   // Lượt mới: áp lựa chọn tính giờ CỦA LẦN BẤM NÀY rồi mới tạo Attempt, gộp trong một
   // transaction để không bao giờ có Attempt mới với skillTimeLimitsJson của lượt cũ.
   const recipientId = recipient.id;
+  const droppedAttemptId = decision.kind === "restart" ? decision.attemptId : null;
   await prisma.$transaction(async (tx) => {
+    if (droppedAttemptId) {
+      // "Làm lại": xoá hẳn lượt dở (Answer/AttemptSkill/Highlight/TeacherReview đều
+      // onDelete: Cascade nên đi theo). Nằm trong CÙNG transaction với việc tạo lượt
+      // mới để không bao giờ có khoảnh khắc học viên không còn lượt nào.
+      await tx.attempt.delete({ where: { id: droppedAttemptId } });
+    }
+
     await tx.assignment.update({
       where: { id: assignmentId },
       data: { skillTimeLimitsJson }

@@ -88,16 +88,30 @@ export type LatestAttempt = {
 
 export type StartDecision =
   | { kind: "resume"; attemptId: string }
+  | { kind: "restart"; attemptId: string; attemptRound: number }
   | { kind: "new"; attemptRound: number };
 
 // Bài giao: một lần duy nhất (đã nộp thì trang tự chuyển sang xem kết quả).
-// Bài tự luyện: nộp xong bấm lại là mở lượt mới. Lượt đang làm dở luôn được tiếp tục.
-export function decideAttemptStart(mode: string, latest: LatestAttempt): StartDecision {
+// Bài tự luyện: nộp xong bấm lại là mở lượt mới. Lượt đang làm dở luôn được tiếp tục,
+// trừ khi học viên chủ động bấm "Làm lại" (restart) để bỏ lượt dở đó đi.
+export function decideAttemptStart(
+  mode: string,
+  latest: LatestAttempt,
+  restart: boolean = false
+): StartDecision {
   if (latest === null) {
     return { kind: "new", attemptRound: 1 };
   }
 
   if (latest.status === "in_progress") {
+    // Chỉ bài TỰ LUYỆN mới được tự làm lại. Bài giao thì việc cho làm lại là quyền
+    // của giáo viên (resetRecipientAttempts) — học viên gửi restart cũng vô hiệu.
+    if (restart && mode === PRACTICE_MODE) {
+      // Giữ nguyên số lượt: lượt dở chưa nộp nên chưa được tính vào thống kê/xếp
+      // hạng nào cả, làm lại mà tăng số lượt là đốt oan (countsForStats = lượt 1).
+      return { kind: "restart", attemptId: latest.id, attemptRound: latest.attemptRound };
+    }
+
     return { kind: "resume", attemptId: latest.id };
   }
 

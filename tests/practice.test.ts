@@ -95,6 +95,45 @@ describe("decideAttemptStart", () => {
   });
 });
 
+// Học viên bấm "Làm lại" ở thư viện: bỏ hẳn bài đang làm dở để bắt đầu lại từ đầu,
+// và nhân đó chọn lại tính giờ hay không.
+describe("decideAttemptStart — làm lại", () => {
+  it("bài tự luyện đang làm dở thì bỏ lượt đó, làm lại ĐÚNG số lượt cũ", () => {
+    const latest = { id: "a1", status: "in_progress", attemptRound: 2 };
+    // Lượt dở chưa nộp nên chưa từng được tính vào đâu cả — làm lại vẫn là lượt 2,
+    // không đốt oan một số lượt (quan trọng với countsForStats = lượt 1).
+    expect(decideAttemptStart("practice", latest, true)).toEqual({
+      kind: "restart",
+      attemptId: "a1",
+      attemptRound: 2
+    });
+  });
+
+  it("BÀI GIAO đang làm dở thì KHÔNG cho làm lại — vẫn làm tiếp", () => {
+    // Chỉ giáo viên mới được cho làm lại bài giao (resetRecipientAttempts).
+    const latest = { id: "a1", status: "in_progress", attemptRound: 1 };
+    expect(decideAttemptStart("homework", latest, true)).toEqual({
+      kind: "resume",
+      attemptId: "a1"
+    });
+  });
+
+  it("đã nộp rồi thì 'làm lại' cũng chỉ là mở lượt kế tiếp như thường", () => {
+    const latest = { id: "a1", status: "submitted", attemptRound: 2 };
+    expect(decideAttemptStart("practice", latest, true)).toEqual({
+      kind: "new",
+      attemptRound: 3
+    });
+  });
+
+  it("chưa có lượt nào mà bấm làm lại thì vẫn là lượt 1", () => {
+    expect(decideAttemptStart("practice", null, true)).toEqual({
+      kind: "new",
+      attemptRound: 1
+    });
+  });
+});
+
 // Lỗi đã xảy ra thật: học viên bấm "Không tính giờ" nhưng vào phòng vẫn thấy đồng hồ
 // đếm ngược. Nguyên nhân: bộ luyện còn một lượt làm dở (tính giờ) từ lần trước nên
 // startPractice đi nhánh "resume" và bỏ qua hoàn toàn lựa chọn của lần bấm này.

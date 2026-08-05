@@ -359,22 +359,11 @@ function PracticeSubmitButton({
   children: string;
 }) {
   const { pending } = useFormStatus();
-  // Cũng khoá cho tới khi React gắn xong sự kiện (đã kiểm bằng trình duyệt: bấm
-  // ngay lúc trang vừa hiện là mất cú bấm). Server action chỉ chạy qua JS; bấm
-  // sớm thì trình duyệt POST thẳng vào chính URL trang, không đi đâu cả và học
-  // viên không thấy phản hồi gì. Thà nút xám vài trăm mili-giây còn hơn nuốt cú
-  // bấm. Giá trị khởi tạo false để render trên server và lần render đầu ở client
-  // khớp nhau (không cảnh báo hydration), effect mới bật lên.
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setReady(true);
-  }, []);
 
   return (
     <button
       type="submit"
-      disabled={pending || !ready}
+      disabled={pending}
       className={`${className ?? ""} disabled:cursor-not-allowed disabled:opacity-60`}
     >
       {pending ? pendingLabel : children}

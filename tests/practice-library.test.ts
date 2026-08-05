@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { practiceProgressLabel, summarizePracticeAttempts } from "@/lib/practice-library";
+import {
+  practiceProgressLabel,
+  summarizePracticeAttempts,
+  summarizeUnfinishedPractice
+} from "@/lib/practice-library";
 
 describe("practiceProgressLabel", () => {
   it("chưa luyện lần nào", () => {
@@ -12,6 +16,47 @@ describe("practiceProgressLabel", () => {
 
   it("đã luyện nhưng chưa có điểm cả-đề (chờ chấm hoặc mới luyện lẻ từng phần)", () => {
     expect(practiceProgressLabel(1, null, 2)).toBe("Đã luyện 1 lần");
+  });
+});
+
+// Thư viện phải biết phạm vi nào còn lượt LÀM DỞ (và lượt đó có đồng hồ không) thì
+// mới hỏi đúng câu hỏi: hỏi "tính giờ hay không" cho một lượt đang dở là hỏi thừa —
+// startPractice chỉ nới được đồng hồ chứ không siết được (xem lib/practice.ts).
+describe("summarizeUnfinishedPractice", () => {
+  it("gộp theo phạm vi, nhớ phạm vi nào đang có đồng hồ", () => {
+    const unfinished = summarizeUnfinishedPractice([
+      { practiceScopeKey: "student1:material1:all", skillTimeLimitsJson: '{"writing":60}' },
+      { practiceScopeKey: "student1:material2:unitA", skillTimeLimitsJson: null }
+    ]);
+
+    expect(unfinished.get("student1:material1:all")).toEqual({ timed: true });
+    expect(unfinished.get("student1:material2:unitA")).toEqual({ timed: false });
+  });
+
+  it("phạm vi không có lượt dở thì vắng mặt trong bản đồ", () => {
+    const unfinished = summarizeUnfinishedPractice([
+      { practiceScopeKey: "student1:material1:all", skillTimeLimitsJson: null }
+    ]);
+
+    expect(unfinished.has("student1:material1:unitA")).toBe(false);
+  });
+
+  it("khoá null bị bỏ qua, không làm sập", () => {
+    const unfinished = summarizeUnfinishedPractice([
+      { practiceScopeKey: null, skillTimeLimitsJson: '{"reading":60}' },
+      { practiceScopeKey: "", skillTimeLimitsJson: null }
+    ]);
+
+    expect(unfinished.size).toBe(0);
+  });
+
+  it("trùng phạm vi: chỉ cần MỘT lượt còn đồng hồ là coi như đang tính giờ", () => {
+    const unfinished = summarizeUnfinishedPractice([
+      { practiceScopeKey: "student1:material1:all", skillTimeLimitsJson: null },
+      { practiceScopeKey: "student1:material1:all", skillTimeLimitsJson: '{"reading":60}' }
+    ]);
+
+    expect(unfinished.get("student1:material1:all")).toEqual({ timed: true });
   });
 });
 

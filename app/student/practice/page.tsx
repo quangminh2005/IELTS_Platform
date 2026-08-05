@@ -2,10 +2,11 @@ import { redirect } from "next/navigation";
 import { NoticeToast } from "@/components/notice-toast";
 import { PracticeLibrary } from "@/components/practice-library";
 import { auth } from "@/lib/auth";
-import { onlyPracticeRecipient } from "@/lib/practice";
+import { onlyPracticeRecipient, practiceScopeKey } from "@/lib/practice";
 import {
   practiceProgressLabel,
   summarizePracticeAttempts,
+  summarizeUnfinishedPractice,
   type PracticeMaterialItem
 } from "@/lib/practice-library";
 import { prisma } from "@/lib/prisma";
@@ -38,7 +39,7 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
   }
 
   // select (KHÔNG include): content/transcript/metadataJson của unit rất nặng.
-  const [materials, attempts] = await Promise.all([
+  const [materials, attempts, unfinishedAttempts] = await Promise.all([
     prisma.material.findMany({
       where: { practiceOpen: true },
       orderBy: [{ skill: "asc" }, { title: "asc" }],
@@ -69,6 +70,23 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
           select: { assignment: { select: { practiceScopeKey: true } } }
         }
       }
+    }),
+    // Lượt còn dở: quyết định thẻ hiện "Làm tiếp" hay "Luyện", và hộp thoại hỏi câu
+    // nào. Lấy luôn skillTimeLimitsJson vì lượt dở CÓ đồng hồ là trường hợp duy nhất
+    // còn phải hỏi (để học viên gỡ được đồng hồ nếu muốn).
+    prisma.attempt.findMany({
+      where: {
+        studentId: student.id,
+        status: "in_progress",
+        assignmentRecipient: onlyPracticeRecipient
+      },
+      select: {
+        assignmentRecipient: {
+          select: {
+            assignment: { select: { practiceScopeKey: true, skillTimeLimitsJson: true } }
+          }
+        }
+      }
     })
   ]);
 
@@ -78,6 +96,13 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
     attempts.map((attempt) => ({
       practiceScopeKey: attempt.assignmentRecipient.assignment.practiceScopeKey,
       score: attempt.score
+    }))
+  );
+
+  const unfinishedByScope = summarizeUnfinishedPractice(
+    unfinishedAttempts.map((attempt) => ({
+      practiceScopeKey: attempt.assignmentRecipient.assignment.practiceScopeKey,
+      skillTimeLimitsJson: attempt.assignmentRecipient.assignment.skillTimeLimitsJson
     }))
   );
 
@@ -106,10 +131,12 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
           progress?.bestCorrect ?? null,
           questionCount
         ),
+        resume: unfinishedByScope.get(practiceScopeKey(student.id, material.id, null)) ?? null,
         units: material.units.map((unit) => ({
           id: unit.id,
           title: unit.title,
-          questionCount: unit._count.questions
+          questionCount: unit._count.questions,
+          resume: unfinishedByScope.get(practiceScopeKey(student.id, material.id, unit.id)) ?? null
         }))
       };
     });

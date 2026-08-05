@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal, useFormStatus } from "react-dom";
 import { startPractice } from "@/lib/actions/practice";
-import type { PracticeMaterialItem } from "@/lib/practice-library";
+import type { PracticeMaterialItem, PracticeResumeState } from "@/lib/practice-library";
 import { SKILL_LABELS } from "@/lib/skills";
 
 // Nhãn cho chip lọc: "Tất cả" (không lọc) + nhãn kỹ năng chuẩn từ lib/skills.ts —
@@ -22,6 +22,8 @@ type PracticeTarget = {
   materialId: string;
   unitId: string | null;
   label: string;
+  // Lượt đang làm dở của đúng phạm vi này (null = mở lượt mới).
+  resume: PracticeResumeState | null;
 };
 
 export function PracticeLibrary({
@@ -101,18 +103,31 @@ export function PracticeLibrary({
                 {item.sourceLabel ? `${item.sourceLabel} · ` : ""}
                 {item.unitCount} phần · {item.questionCount} câu
               </p>
-              <p className="mt-1 text-xs font-medium text-primary">{item.progressLabel}</p>
+              <div className="mt-1 flex flex-wrap items-center gap-2">
+                <p className="text-xs font-medium text-primary">{item.progressLabel}</p>
+                {/* Lượt dở có thể nằm ở một PHẦN (nút "Làm tiếp" khi đó nằm khuất
+                    trong danh sách phần đang thu gọn) — chip này để học viên không
+                    bỏ quên bài đang làm giữa chừng. */}
+                {item.resume || item.units.some((unit) => unit.resume) ? (
+                  <span className="rounded-full border border-amber-400/50 bg-amber-500/10 px-2.5 py-0.5 text-xs font-medium text-amber-600 dark:text-amber-300">
+                    Đang làm dở
+                  </span>
+                ) : null}
+              </div>
 
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setTarget({ materialId: item.id, unitId: null, label: item.title })
-                  }
+                <PracticeStartButton
+                  target={{
+                    materialId: item.id,
+                    unitId: null,
+                    label: item.title,
+                    resume: item.resume
+                  }}
+                  onOpenDialog={setTarget}
                   className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground"
                 >
-                  Luyện cả đề
-                </button>
+                  {item.resume ? "Làm tiếp cả đề" : "Luyện cả đề"}
+                </PracticeStartButton>
                 <button
                   type="button"
                   onClick={() => setExpanded(expanded === item.id ? null : item.id)}
@@ -132,19 +147,18 @@ export function PracticeLibrary({
                           ({unit.questionCount} câu)
                         </span>
                       </span>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setTarget({
-                            materialId: item.id,
-                            unitId: unit.id,
-                            label: `${item.title} — ${unit.title}`
-                          })
-                        }
+                      <PracticeStartButton
+                        target={{
+                          materialId: item.id,
+                          unitId: unit.id,
+                          label: `${item.title} — ${unit.title}`,
+                          resume: unit.resume
+                        }}
+                        onOpenDialog={setTarget}
                         className="rounded-md border border-border px-2.5 py-1.5 text-xs font-semibold hover:border-primary"
                       >
-                        Luyện phần này
-                      </button>
+                        {unit.resume ? "Làm tiếp" : "Luyện phần này"}
+                      </PracticeStartButton>
                     </li>
                   ))}
                 </ul>
@@ -156,6 +170,43 @@ export function PracticeLibrary({
 
       {target ? <TimeChoiceDialog target={target} onClose={() => setTarget(null)} /> : null}
     </div>
+  );
+}
+
+// Nút mở một phạm vi luyện. Chỉ hỏi khi câu hỏi còn nghĩa:
+//   - chưa có lượt dở → hỏi "tính giờ hay không" (lượt mới, chọn sao được vậy);
+//   - lượt dở CÒN đồng hồ → hỏi "giữ hay bỏ đồng hồ" (bỏ thì được, xem
+//     shouldClearTimeLimitsOnResume);
+//   - lượt dở KHÔNG có đồng hồ → không còn gì để hỏi (startPractice cố tình không
+//     siết giờ giữa chừng), vào thẳng phòng làm bài.
+function PracticeStartButton({
+  target,
+  onOpenDialog,
+  className,
+  children
+}: {
+  target: PracticeTarget;
+  onOpenDialog: (target: PracticeTarget) => void;
+  className: string;
+  children: string;
+}) {
+  if (target.resume && !target.resume.timed) {
+    return (
+      <form action={startPractice}>
+        <input type="hidden" name="materialId" value={target.materialId} />
+        <input type="hidden" name="unitId" value={target.unitId ?? ""} />
+        <input type="hidden" name="timed" value="0" />
+        <PracticeSubmitButton className={className} pendingLabel="Đang mở bài…">
+          {children}
+        </PracticeSubmitButton>
+      </form>
+    );
+  }
+
+  return (
+    <button type="button" onClick={() => onOpenDialog(target)} className={className}>
+      {children}
+    </button>
   );
 }
 
@@ -186,7 +237,9 @@ function TimeChoiceDialog({
       <div className="w-full max-w-md rounded-lg border border-border bg-card p-5 shadow-lg">
         <p className="text-sm font-semibold">{target.label}</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Em muốn làm bài này thế nào?
+          {target.resume
+            ? "Em đang làm dở bài này và đồng hồ vẫn đang đếm ngược."
+            : "Em muốn làm bài này thế nào?"}
         </p>
 
         <div className="mt-4 space-y-2">
@@ -198,7 +251,7 @@ function TimeChoiceDialog({
               className="w-full rounded-md bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground"
               pendingLabel="Đang mở bài…"
             >
-              Tính giờ như thi thật
+              {target.resume ? "Làm tiếp, giữ đồng hồ" : "Tính giờ như thi thật"}
             </PracticeSubmitButton>
           </form>
 
@@ -210,7 +263,7 @@ function TimeChoiceDialog({
               className="w-full rounded-md border border-border px-3 py-2.5 text-sm font-semibold hover:border-primary"
               pendingLabel="Đang mở bài…"
             >
-              Không tính giờ
+              {target.resume ? "Làm tiếp, bỏ đồng hồ" : "Không tính giờ"}
             </PracticeSubmitButton>
           </form>
         </div>

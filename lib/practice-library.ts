@@ -74,10 +74,45 @@ export function summarizePracticeAttempts(
   return summary;
 }
 
+// Một lượt tự luyện CHƯA nộp, rút gọn còn đúng 2 trường cần để biết "đang làm dở ở
+// phạm vi nào, có đồng hồ không".
+export type PracticeUnfinishedAttempt = {
+  practiceScopeKey: string | null;
+  skillTimeLimitsJson: string | null;
+};
+
+// Trạng thái "còn dở" của một phạm vi luyện. timed = lượt đang dở đó có đồng hồ đếm
+// ngược hay không.
+export type PracticeResumeState = { timed: boolean };
+
+// Gộp các lượt chưa nộp thành bản đồ theo KHOÁ PHẠM VI (không phải materialId như
+// summarizePracticeAttempts): thư viện cần phân biệt "còn dở cả đề" với "còn dở đúng
+// một phần". Một phạm vi lẽ ra chỉ có tối đa một lượt dở, nhưng nếu dữ liệu cũ có
+// nhiều thì chỉ cần MỘT lượt còn đồng hồ là coi như phạm vi đó đang tính giờ — thà
+// hỏi thừa "bỏ đồng hồ?" còn hơn giấu mất lối gỡ đồng hồ duy nhất của học viên.
+export function summarizeUnfinishedPractice(
+  attempts: PracticeUnfinishedAttempt[]
+): Map<string, PracticeResumeState> {
+  const unfinished = new Map<string, PracticeResumeState>();
+
+  for (const attempt of attempts) {
+    const key = attempt.practiceScopeKey;
+    if (!key) continue;
+
+    const timed = attempt.skillTimeLimitsJson !== null;
+    const current = unfinished.get(key);
+    unfinished.set(key, { timed: timed || (current?.timed ?? false) });
+  }
+
+  return unfinished;
+}
+
 export type PracticeUnitItem = {
   id: string;
   title: string;
   questionCount: number;
+  // null = chưa có lượt nào đang dở ở phần này.
+  resume: PracticeResumeState | null;
 };
 
 export type PracticeMaterialItem = {
@@ -88,5 +123,7 @@ export type PracticeMaterialItem = {
   unitCount: number;
   questionCount: number;
   progressLabel: string;
+  // Lượt đang dở của phạm vi CẢ ĐỀ (phạm vi từng phần nằm ở units[].resume).
+  resume: PracticeResumeState | null;
   units: PracticeUnitItem[];
 };

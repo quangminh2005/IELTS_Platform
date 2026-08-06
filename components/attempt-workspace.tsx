@@ -2049,6 +2049,9 @@ export function AttemptWorkspace({
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [activePart, setActivePart] = useState(0);
+  // Hộp xác nhận trước khi nộp: học sinh hay bấm nhầm nút "Nộp", nên chặn bằng
+  // một hộp thoại trong ứng dụng (thay window.confirm — dễ bấm OK theo phản xạ).
+  const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false);
   // Chế độ xem trước: kết quả chấm tại chỗ (null = đang làm bài, chưa nộp).
   const [previewResult, setPreviewResult] = useState<PreviewResult | null>(null);
   // Số giây còn lại của kỹ năng đang mở (null = không giới hạn / chưa mở kỹ năng).
@@ -2082,6 +2085,20 @@ export function AttemptWorkspace({
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, []);
+
+  // Esc = đóng hộp xác nhận nộp bài (không nộp).
+  useEffect(() => {
+    if (!confirmSubmitOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setConfirmSubmitOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [confirmSubmitOpen]);
 
   const handleAnswerChange = useCallback<AnswerChange>((questionId, value) => {
     setAnswers((previous) => {
@@ -2524,6 +2541,25 @@ export function AttemptWorkspace({
         }))
     };
   });
+
+  // Danh sách câu chưa trả lời (mọi phần) để nhắc trong hộp xác nhận nộp bài.
+  const unansweredEntries = parts.flatMap((part, partIndex) =>
+    part.entries
+      .filter((entry) => (answers[entry.id] ?? "").trim() === "")
+      .map((entry) => ({ ...entry, partIndex }))
+  );
+
+  // Từ hộp xác nhận nhảy về một câu chưa làm: mở đúng phần rồi mới cuộn tới câu
+  // (các phần không mở đang bị `hidden` nên chưa cuộn được ngay).
+  function jumpToUnanswered(entry: { partIndex: number; anchorId: string }) {
+    setConfirmSubmitOpen(false);
+    goToPart(entry.partIndex);
+    window.setTimeout(() => scrollToQuestion(entry.anchorId), 80);
+  }
+
+  const activeSkillLabel = activeSkill
+    ? SKILL_TIME_LABELS[activeSkill] ?? activeSkill
+    : "bài";
 
   const content = (
     <form
@@ -3366,28 +3402,93 @@ export function AttemptWorkspace({
               </button>
 
               <button
-                type={previewMode ? "button" : "submit"}
-                onClick={(event) => {
+                type="button"
+                onClick={() => {
                   if (previewMode) {
                     // Chấm tại chỗ + hiện trang kết quả (không lưu DB). Thoát về Kho
                     // tài liệu dùng link "‹ Kho tài liệu" ở góc trên.
                     gradePreview();
                     return;
                   }
-                  if (!window.confirm("Nộp kỹ năng này? Bạn sẽ không sửa được sau khi nộp.")) {
-                    event.preventDefault();
-                  }
+                  // Không nộp ngay: mở hộp xác nhận (chống bấm nhầm).
+                  setConfirmSubmitOpen(true);
                 }}
                 className="rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
               >
-                {previewMode
-                  ? "Nộp & xem đáp án"
-                  : `Nộp ${activeSkill ? SKILL_TIME_LABELS[activeSkill] ?? activeSkill : ""}`}
+                {previewMode ? "Nộp & xem đáp án" : `Nộp ${activeSkill ? activeSkillLabel : ""}`}
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {confirmSubmitOpen ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="confirm-submit-title"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4"
+          onClick={() => setConfirmSubmitOpen(false)}
+        >
+          <div
+            onClick={(event) => event.stopPropagation()}
+            className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-2xl"
+          >
+            <h2 id="confirm-submit-title" className="text-lg font-bold text-foreground">
+              Nộp {activeSkillLabel}?
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Sau khi nộp em sẽ không sửa được bài nữa.
+            </p>
+
+            <div className="mt-4 rounded-lg border border-border bg-background px-4 py-3 text-sm">
+              <p className="font-semibold text-foreground">
+                Đã trả lời {answeredCount}/{totalQuestions} câu
+              </p>
+              {unansweredEntries.length > 0 ? (
+                <>
+                  <p className="mt-2 font-semibold text-amber-600 dark:text-amber-400">
+                    Còn {unansweredEntries.length} câu chưa trả lời — bấm vào số câu để quay lại làm:
+                  </p>
+                  <div className="mt-2 flex max-h-32 flex-wrap gap-1.5 overflow-y-auto">
+                    {unansweredEntries.map((entry) => (
+                      <button
+                        key={entry.id}
+                        type="button"
+                        onClick={() => jumpToUnanswered(entry)}
+                        className="h-8 min-w-8 rounded-md border border-amber-400/70 bg-background px-2 text-xs font-semibold text-foreground transition hover:border-primary hover:text-primary"
+                      >
+                        {entry.order}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <p className="mt-1 text-emerald-600 dark:text-emerald-400">
+                  Em đã làm hết tất cả các câu.
+                </p>
+              )}
+            </div>
+
+            <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                autoFocus
+                onClick={() => setConfirmSubmitOpen(false)}
+                className="rounded-md border border-border bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary"
+              >
+                Quay lại làm bài
+              </button>
+              <button
+                type="submit"
+                className="rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
+              >
+                Nộp bài
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </form>
   );
 

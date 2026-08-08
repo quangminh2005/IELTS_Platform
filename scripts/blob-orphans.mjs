@@ -46,9 +46,11 @@ if (!token) {
 const doDelete = process.argv.includes("--delete-confirmed");
 
 // --- Danh sách URL đang được dùng: hỏi thẳng DB prod, không tin ảnh chụp cũ ---
-// Đã dò toàn bộ các cột text của schema: URL blob chỉ nằm ở đúng hai chỗ là
-// AssignableUnit.audioUrl và AssignableUnit.metadataJson (ảnh chèn vào đề).
-// Truy vấn dưới đây quét luôn cả hai bằng regex, nên thêm ảnh mới cũng không sót.
+// URL blob nằm ở BA chỗ: AssignableUnit.audioUrl (file nghe của đề),
+// AssignableUnit.metadataJson (ảnh chèn vào đề) và Answer.value (BÀI GHI ÂM
+// SPEAKING CỦA HỌC VIÊN — cột này bị bỏ sót cho tới 2026-08-09, khi đó chưa em
+// nào làm bài Nói; thiếu nó thì mỗi lần dọn là xoá sạch bài nói của học viên).
+// Truy vấn dưới đây quét cả ba bằng regex, nên thêm ảnh/bản ghi mới không sót.
 const prisma = new PrismaClient({
   datasources: { db: { url: process.env.DATABASE_URL_PROD ?? process.env.DATABASE_URL } }
 });
@@ -57,6 +59,7 @@ const rows = await prisma.$queryRawUnsafe(`
   WITH src AS (
     SELECT "audioUrl" AS txt FROM "AssignableUnit"
     UNION ALL SELECT "metadataJson" FROM "AssignableUnit"
+    UNION ALL SELECT "value" FROM "Answer"
   )
   SELECT DISTINCT m[1] AS url
     FROM src, LATERAL regexp_matches(

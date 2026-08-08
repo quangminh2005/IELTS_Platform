@@ -78,13 +78,17 @@ function buildTree(materials: UnitPickerMaterial[]): BookNode[] {
     const source = material.sourceLabel ?? material.title;
     const book = bookLabel(source) || source;
 
+    // Nhãn "Test N" ưu tiên lấy từ sourceLabel; đề nào sourceLabel thiếu số
+    // Test (VD "IELTS Master – Listening") thì dò tiếp trong tên đề.
+    const labelSource = extractTestNumber(source) != null ? source : material.title;
+
     if (!bookMap.has(book)) bookMap.set(book, new Map());
     const skillMap = bookMap.get(book)!;
     if (!skillMap.has(material.skill)) skillMap.set(material.skill, []);
     skillMap.get(material.skill)!.push({
       material,
-      label: testLabel(source, material.title),
-      testNo: extractTestNumber(source)
+      label: testLabel(labelSource, material.title),
+      testNo: extractTestNumber(labelSource)
     });
   });
 

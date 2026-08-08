@@ -1,0 +1,26 @@
+{
+  "title": "IELTS Speaking Part 2 – A shop you enjoy going to",
+  "skill": "speaking",
+  "sourceLabel": "IELTS Speaking – Part 2 (cue card)",
+  "description": "Đề Nói Part 2 (cue card): tả một cửa hàng em thích đến. Học viên ghi âm 1–2 phút, giáo viên nghe và chấm tay theo 4 tiêu chí Speaking.",
+  "units": [
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 2,
+      "title": "Speaking Part 2 – Describe a shop that you enjoy going to",
+      "instructions": "Individual long turn. You have one minute to prepare and make notes, then talk about the topic for one to two minutes.",
+      "content": "Part 2 — Individual long turn (3–4 minutes)\n\nDescribe a shop that you enjoy going to.\n\nYou should say:\n· where it is\n· what it sells\n· how often you go there\n\nand explain why you enjoy visiting this shop.\n\nYou will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.",
+      "metadata": {
+        "taskTag": "PART 2"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "speaking_task",
+          "prompt": "Record your answer: talk about the topic on the card for one to two minutes.",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

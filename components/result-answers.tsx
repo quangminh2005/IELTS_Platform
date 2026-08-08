@@ -149,6 +149,7 @@ function AnswerCard({
   onPlayEvidence: (() => void) | null;
 }) {
   const interactive = isLinked && answer.order !== null;
+  const hasCorrectAnswer = (answer.correctAnswerSnapshot ?? "").trim().length > 0;
   const activate = () => {
     if (answer.order !== null) onSelect(answer.order);
   };
@@ -206,7 +207,7 @@ function AnswerCard({
       {answer.prompt ? (
         <p className="mt-2 text-base leading-7 text-muted-foreground">{answer.prompt}</p>
       ) : null}
-      <dl className="mt-3 grid gap-3 text-base sm:grid-cols-2">
+      <dl className={`mt-3 grid gap-3 text-base ${hasCorrectAnswer ? "sm:grid-cols-2" : ""}`}>
         <div className="rounded-lg border border-border bg-muted/60 p-4">
           <dt className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
             Bạn trả lời
@@ -225,12 +226,16 @@ function AnswerCard({
             )}
           </dd>
         </div>
-        <div className="rounded-lg border border-emerald-400/30 bg-emerald-500/5 p-4">
-          <dt className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-            Đáp án đúng
-          </dt>
-          <dd className="mt-2 whitespace-pre-wrap leading-7">{answer.correctAnswerSnapshot || "Không có"}</dd>
-        </div>
+        {/* Câu chấm tay (bài luận Viết, phần ghi âm Nói) không có đáp án mẫu —
+            ẩn hẳn ô này thay vì hiện "Không có", ô trả lời chiếm trọn hàng. */}
+        {hasCorrectAnswer ? (
+          <div className="rounded-lg border border-emerald-400/30 bg-emerald-500/5 p-4">
+            <dt className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
+              Đáp án đúng
+            </dt>
+            <dd className="mt-2 whitespace-pre-wrap leading-7">{answer.correctAnswerSnapshot}</dd>
+          </div>
+        ) : null}
       </dl>
       {answer.explanationSnapshot ? (
         <div className="mt-4 rounded-lg border border-border bg-muted/60 p-5">

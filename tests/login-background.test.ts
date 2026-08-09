@@ -23,15 +23,28 @@ describe("bảng màu nền đăng nhập", () => {
     expect(getLoginBackgroundPalette("xanh")).toBe(LOGIN_BACKGROUND_PALETTES.light);
   });
 
-  // Màu loang phải trùng nền trang, không thì lộ vệt ở góc dưới trái.
-  it("theme tối lấy màu loang trùng màu đậm (nền tối)", () => {
-    expect(LOGIN_BACKGROUND_PALETTES.dark.fade).toBe(LOGIN_BACKGROUND_PALETTES.dark.color1);
+  // color2 phủ ~80% màn hình, nên màu loang phải trùng nó, không thì lộ vệt ở góc.
+  it("màu loang trùng màu phủ của cả hai theme", () => {
+    for (const palette of Object.values(LOGIN_BACKGROUND_PALETTES)) {
+      expect(palette.fade).toBe(palette.color2);
+    }
   });
 
-  it("hai theme không dùng chung màu đậm", () => {
-    expect(LOGIN_BACKGROUND_PALETTES.dark.color1).not.toBe(
-      LOGIN_BACKGROUND_PALETTES.light.color1
-    );
+  // Nhầm vai trò hai màu là ra nền xanh chói ở theme tối — đã dính một lần.
+  it("theme tối phủ màu tối hơn hẳn màu nhấn", () => {
+    const { color1, color2 } = LOGIN_BACKGROUND_PALETTES.dark;
+    const sang = (hex: string) =>
+      parseInt(hex.slice(1, 3), 16) + parseInt(hex.slice(3, 5), 16) + parseInt(hex.slice(5, 7), 16);
+
+    expect(sang(color2)).toBeLessThan(sang(color1));
+  });
+
+  it("theme sáng phủ màu sáng hơn hẳn màu nhấn", () => {
+    const { color1, color2 } = LOGIN_BACKGROUND_PALETTES.light;
+    const sang = (hex: string) =>
+      parseInt(hex.slice(1, 3), 16) + parseInt(hex.slice(3, 5), 16) + parseInt(hex.slice(5, 7), 16);
+
+    expect(sang(color2)).toBeGreaterThan(sang(color1));
   });
 
   // THREE.Color nhận nhiều định dạng, nhưng giữ hex 6 chữ số cho dễ soi.
@@ -124,6 +137,14 @@ describe("component canvas", () => {
     for (const name of ["uTime", "uResolution", "uColor1", "uColor2", "uFadeColor"]) {
       expect(source).toContain(name);
     }
+  });
+
+  // ShaderMaterial ghi thẳng gl_FragColor nên three không đổi ngược tuyến tính -> sRGB
+  // lúc xuất. Nếu để THREE.Color tự đổi hex sang tuyến tính thì màu lên màn hình tối
+  // và gắt hơn hẳn bảng màu (#2E62C4 từng ra thành #071F8D). Phải đọc hex nguyên trạng.
+  it("đọc màu ở không gian tuyến tính để hex ra đúng như bảng màu", () => {
+    expect(source).toContain("LinearSRGBColorSpace");
+    expect(source).not.toMatch(/\.set\(palette\./);
   });
 
   // Bản gốc khoá dpr ở 1x, nhìn bệt trên màn hình nét cao.

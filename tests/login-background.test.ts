@@ -147,3 +147,36 @@ describe("component canvas", () => {
     }
   });
 });
+
+describe("component điều phối nền", () => {
+  const source = readSource("components", "ui", "login-shader-background.tsx");
+
+  it("là client component", () => {
+    expect(source).toContain('"use client"');
+  });
+
+  // ssr: false -> three không lọt vào bundle máy chủ, trang login hiện ngay.
+  it("nạp canvas trễ, không dựng phía máy chủ", () => {
+    expect(source).toContain("ssr: false");
+    expect(source).toContain("login-shader-canvas");
+  });
+
+  it("tôn trọng cài đặt giảm chuyển động", () => {
+    expect(source).toContain("prefers-reduced-motion: reduce");
+  });
+
+  it("dò WebGL trước khi dựng canvas", () => {
+    expect(source).toContain("getContext");
+    expect(source).toContain("webgl");
+  });
+
+  it("theo dõi data-theme để đổi màu ngay khi bấm nút", () => {
+    expect(source).toContain("MutationObserver");
+    expect(source).toContain('attributeFilter: ["data-theme"]');
+    expect(source).toContain("disconnect()");
+  });
+
+  it("luôn có nền tĩnh làm lớp lót", () => {
+    expect(source).toContain("LoginStaticBackground");
+  });
+});

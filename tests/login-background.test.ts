@@ -77,3 +77,37 @@ describe("nền tĩnh dự phòng", () => {
     expect(config).toContain("fade-in-soft");
   });
 });
+
+describe("mã shader", () => {
+  it("có đủ hai shader và không rỗng", async () => {
+    const { vertexShader, fragmentShader } = await import(
+      "../components/ui/login-shader-source"
+    );
+
+    expect(vertexShader.length).toBeGreaterThan(50);
+    expect(fragmentShader.length).toBeGreaterThan(500);
+  });
+
+  it("giữ nguyên phần tạo hình của bản gốc", async () => {
+    const { fragmentShader } = await import("../components/ui/login-shader-source");
+
+    expect(fragmentShader).toContain("snoise");
+    expect(fragmentShader).toContain("bayerDither4x4");
+  });
+
+  // Bản gốc viết cứng vec3(1.0) -> loang trắng, chói trên theme tối.
+  it("màu loang đã đổi thành uniform", async () => {
+    const { fragmentShader } = await import("../components/ui/login-shader-source");
+
+    expect(fragmentShader).toContain("uniform vec3 uFadeColor;");
+    expect(fragmentShader).toContain("mix(uFadeColor, color, fadeMask)");
+    expect(fragmentShader).not.toContain("mix(vec3(1.0), color, fadeMask)");
+  });
+
+  it("file được sinh tự động, có ghi nguồn", () => {
+    const source = readSource("components", "ui", "login-shader-source.ts");
+
+    expect(source).toContain("scripts/fetch-login-shader.mjs");
+    expect(source).toContain("componentry.dev");
+  });
+});

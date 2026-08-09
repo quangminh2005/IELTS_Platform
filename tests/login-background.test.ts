@@ -111,3 +111,39 @@ describe("mã shader", () => {
     expect(source).toContain("componentry.dev");
   });
 });
+
+describe("component canvas", () => {
+  const source = readSource("components", "ui", "login-shader-canvas.tsx");
+
+  it("là client component và export mặc định", () => {
+    expect(source).toContain('"use client"');
+    expect(source).toContain("export default function LoginShaderCanvas");
+  });
+
+  it("truyền đủ năm uniform", () => {
+    for (const name of ["uTime", "uResolution", "uColor1", "uColor2", "uFadeColor"]) {
+      expect(source).toContain(name);
+    }
+  });
+
+  // Bản gốc khoá dpr ở 1x, nhìn bệt trên màn hình nét cao.
+  it("nâng mật độ điểm ảnh lên 1.5x", () => {
+    expect(source).toContain("dpr={[1, 1.5]}");
+    expect(source).not.toContain("dpr={[1, 1]}");
+  });
+
+  it("chỉ file này được import three", () => {
+    const others = [
+      ["components", "ui", "login-shader-background.tsx"],
+      ["components", "ui", "login-static-background.tsx"],
+      ["app", "(auth)", "login", "layout.tsx"]
+    ];
+
+    for (const parts of others) {
+      const other = readSource(...parts);
+
+      expect(other).not.toMatch(/from "three"/);
+      expect(other).not.toMatch(/@react-three\/fiber/);
+    }
+  });
+});

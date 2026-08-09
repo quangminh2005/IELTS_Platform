@@ -37,10 +37,16 @@ const config: Config = {
         "fade-in": {
           from: { opacity: "0", transform: "translateY(6px)" },
           to: { opacity: "1", transform: "translateY(0)" }
+        },
+        // Bản chỉ đổi độ trong — dùng cho mảng nền, vì translateY sẽ kéo lệch cả lớp.
+        "fade-in-soft": {
+          from: { opacity: "0" },
+          to: { opacity: "1" }
         }
       },
       animation: {
-        "fade-in": "fade-in 0.35s ease both"
+        "fade-in": "fade-in 0.35s ease both",
+        "fade-in-soft": "fade-in-soft 0.9s ease both"
       }
     }
   },

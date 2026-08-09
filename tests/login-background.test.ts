@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import {
   LOGIN_BACKGROUND_PALETTES,
   getLoginBackgroundPalette
@@ -44,5 +46,34 @@ describe("bảng màu nền đăng nhập", () => {
     for (const color of all) {
       expect(color).toMatch(/^#[0-9A-F]{6}$/);
     }
+  });
+});
+
+const root = process.cwd();
+const readSource = (...parts: string[]) => readFileSync(join(root, ...parts), "utf8");
+
+describe("nền tĩnh dự phòng", () => {
+  const source = readSource("components", "ui", "login-static-background.tsx");
+
+  // Dùng biến CSS nên tự đổi theo theme, không cần JS.
+  it("lấy màu từ biến --body-radial", () => {
+    expect(source).toContain("--body-radial");
+  });
+
+  it("không chắn chuột và ẩn với trình đọc màn hình", () => {
+    expect(source).toContain("pointer-events-none");
+    expect(source).toContain('aria-hidden="true"');
+  });
+
+  // Lớp lót phải hiện ngay, không hiệu ứng — và animate-fade-in có kèm
+  // translateY, dùng vào đây sẽ kéo lệch cả mảng nền.
+  it("không gắn hiệu ứng nào", () => {
+    expect(source).not.toContain("animate-");
+  });
+
+  it("tailwind có keyframe mờ dần chỉ đổi độ trong", () => {
+    const config = readSource("tailwind.config.ts");
+
+    expect(config).toContain("fade-in-soft");
   });
 });

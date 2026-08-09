@@ -180,3 +180,38 @@ describe("component điều phối nền", () => {
     expect(source).toContain("LoginStaticBackground");
   });
 });
+
+describe("gắn nền vào trang đăng nhập", () => {
+  it("layout đăng nhập dựng nền động", () => {
+    const source = readSource("app", "(auth)", "login", "layout.tsx");
+
+    expect(source).toContain("LoginShaderBackground");
+    // Canvas phủ toàn khung, phải cắt phần tràn để không sinh thanh cuộn.
+    expect(source).toContain("overflow-hidden");
+    // Nội dung phải nổi lên trên lớp nền.
+    expect(source).toContain("relative z-10");
+  });
+
+  it("giữ nguyên nội dung cột trái", () => {
+    const source = readSource("app", "(auth)", "login", "layout.tsx");
+
+    expect(source).toContain("Không gian luyện thi IELTS cho lớp học của bạn.");
+    expect(source).toContain("Giao bài");
+    expect(source).toContain("Chấm chữa");
+  });
+
+  // Học viên sau khi đăng nhập không được tải thêm gì.
+  it("layout học viên và giáo viên không đụng tới nền động", () => {
+    for (const parts of [
+      ["app", "student", "layout.tsx"],
+      ["app", "teacher", "layout.tsx"],
+      ["app", "layout.tsx"]
+    ]) {
+      const source = readSource(...parts);
+
+      expect(source).not.toContain("LoginShaderBackground");
+      expect(source).not.toMatch(/from "three"/);
+      expect(source).not.toMatch(/@react-three\/fiber/);
+    }
+  });
+});

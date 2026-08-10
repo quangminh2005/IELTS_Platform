@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { warmUpDatabase } from "@/lib/db-warmup";
 import { isEmailConfigured, sendEmail } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
 import {
@@ -10,6 +11,8 @@ import {
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+// Đủ chỗ cho vài lần chờ DB Neon tỉnh dậy (xem warmUpDatabase).
+export const maxDuration = 60;
 
 // Nhắc trước 24 giờ. Cron chạy 12h trưa VN mỗi ngày (0 5 * * * UTC) nên bài giao
 // sau 12h trưa mà hạn trước 12h trưa hôm sau sẽ không kịp nhắc — hạn chế đã biết
@@ -42,6 +45,19 @@ export async function GET(request: Request): Promise<NextResponse> {
   if (!isEmailConfigured()) {
     console.warn("[cron/reminders] Bỏ qua: chưa cấu hình GMAIL_USER / GMAIL_APP_PASSWORD.");
     return NextResponse.json({ skipped: "email_not_configured" });
+  }
+
+  // Đánh thức Neon trước: 12h trưa gần như không có ai vào web nên compute đang ngủ,
+  // truy vấn đầu tiên hay chết vì chưa kết nối kịp.
+  try {
+    const attempts = await warmUpDatabase(() => prisma.$queryRaw`SELECT 1`);
+
+    if (attempts > 1) {
+      console.warn(`[cron/reminders] DB tỉnh sau ${attempts} lần thử.`);
+    }
+  } catch (error) {
+    console.error("[cron/reminders] Không kết nối được database:", error);
+    return NextResponse.json({ error: "database_unreachable" }, { status: 503 });
   }
 
   const now = new Date();

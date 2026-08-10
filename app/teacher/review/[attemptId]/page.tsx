@@ -5,6 +5,7 @@ import { AnnotatedAnswer } from "@/components/annotated-answer";
 import { ReviewForm, type ReviewTaskInput } from "@/components/review-form";
 import { TranscribeButton } from "@/components/transcribe-button";
 import { isAudioUrl, parseWritingBrief } from "@/lib/question-interactions";
+import { speakingAnswerSource } from "@/lib/speaking-upload";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { formatBand } from "@/lib/band-score";
 import { resolveWritingTaskNumber } from "@/lib/writing-review";
@@ -385,7 +386,21 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                         {answer.value ? (
                           isAudioUrl(answer.value) ? (
                             <div className="space-y-2">
-                              <p className="text-xs font-medium text-primary">Bài ghi âm của học viên</p>
+                              <p className="flex flex-wrap items-center gap-2 text-xs font-medium text-primary">
+                                Bài ghi âm của học viên
+                                {/* Nguồn gốc đọc từ tên file trên Blob (xem
+                                    lib/speaking-upload.ts) — bài thu sẵn ở nhà rồi
+                                    tải lên khác hẳn bài nói một mạch tại chỗ. */}
+                                {speakingAnswerSource(answer.value) === "uploaded" ? (
+                                  <span className="rounded-full border border-amber-400/70 bg-amber-400/15 px-2 py-0.5 text-[11px] font-semibold text-amber-700 dark:text-amber-300">
+                                    Học viên tải file lên
+                                  </span>
+                                ) : speakingAnswerSource(answer.value) === "recorded" ? (
+                                  <span className="rounded-full border border-border bg-card px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                                    Ghi trực tiếp
+                                  </span>
+                                ) : null}
+                              </p>
                               <audio controls src={answer.value} className="w-full" preload="metadata">
                                 <track kind="captions" />
                               </audio>

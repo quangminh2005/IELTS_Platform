@@ -42,6 +42,22 @@ describe("chốt chặn nộp bài khi đang ghi âm", () => {
     expect(workspace).toMatch(/blockingRecorder[\s\S]{0,200}preventDefault\(\)/);
   });
 
+  it("file học viên tải lên đi chung một đường với bản ghi trực tiếp", () => {
+    // Hai đường mà hai hàm upload riêng thì sớm muộn cũng lệch: đường này có cờ
+    // bận, đường kia quên. Cả hai phải gọi cùng uploadRecording(...).
+    const uploadCalls = recorder.match(/uploadRecording\([^)]*\)/g) ?? [];
+
+    expect(uploadCalls.filter((call) => call.includes('"recorded"'))).toHaveLength(1);
+    expect(uploadCalls.filter((call) => call.includes('"uploaded"'))).toHaveLength(1);
+    // Chỉ một chỗ gọi upload() của Vercel Blob.
+    expect(recorder.match(/await upload\(/g) ?? []).toHaveLength(1);
+  });
+
+  it("chọn lại đúng file cũ lần hai vẫn chạy", () => {
+    // Không xoá input.value thì onChange không bắn lại, học viên bấm mãi không thấy gì.
+    expect(recorder).toMatch(/event\.target\.value\s*=\s*""/);
+  });
+
   it("hộp xác nhận nói rõ là chưa có bản ghi âm", () => {
     // "Còn 1 câu chưa trả lời" quá mơ hồ với bài Nói — phải nói thẳng.
     expect(workspace).toMatch(/chưa có bản ghi âm/i);

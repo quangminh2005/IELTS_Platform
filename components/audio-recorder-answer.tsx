@@ -1,7 +1,13 @@
 "use client";
 
 import { upload } from "@vercel/blob/client";
-import { useEffect, useRef, useState } from "react";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
+
+import {
+  type SpeakingSource,
+  checkSpeakingFile,
+  speakingUploadName
+} from "@/lib/speaking-upload";
 
 // Trạng thái "bận": bản ghi chưa nằm an toàn trên server. Màn làm bài dùng cờ
 // này để chặn nộp bài — bấm Nộp lúc này là mất trắng bản ghi.
@@ -102,9 +108,10 @@ export function AudioRecorderAnswer({
 
       recorder.onstop = () => {
         stopTracks();
-        const type = mimeType || "audio/webm";
+        // Bỏ ";codecs=…" để khớp allowedContentTypes của route.
+        const type = (mimeType || "audio/webm").split(";")[0];
         const blob = new Blob(chunksRef.current, { type });
-        void uploadRecording(blob, type);
+        void uploadRecording(blob, type, "recorded");
       };
 
       recorder.start();
@@ -128,28 +135,54 @@ export function AudioRecorderAnswer({
     }
   }
 
-  async function uploadRecording(blob: Blob, type: string) {
-    try {
-      const ext = type.includes("mp4") ? "mp4" : type.includes("ogg") ? "ogg" : "webm";
-      const fileName = `speaking-${questionId}-${Date.now()}.${ext}`;
-      // Đặt lại type gọn (bỏ ";codecs=…") để khớp allowedContentTypes.
-      const cleanType = type.split(";")[0] || "audio/webm";
-      const file = new File([blob], fileName, { type: cleanType });
+  // Một đường tải lên duy nhất cho cả bản ghi trực tiếp lẫn file học viên chọn từ
+  // máy — nhờ vậy cờ bận (chặn nộp bài) bảo vệ cả hai như nhau.
+  async function uploadRecording(body: Blob, contentType: string, source: SpeakingSource) {
+    const label = source === "uploaded" ? "Đang tải file lên" : "Đang tải bản ghi lên";
+    setStatus("uploading");
+    setMessage(`${label}… 0%`);
 
-      const result = await upload(file.name, file, {
+    try {
+      const result = await upload(speakingUploadName(questionId, source, contentType), body, {
         access: "public",
         handleUploadUrl: "/api/speaking/upload",
-        contentType: cleanType
+        contentType,
+        onUploadProgress: ({ percentage }) => {
+          // File thu từ điện thoại thường nặng hơn bản ghi trên web — không có %
+          // thì học viên tưởng máy treo rồi bỏ đi.
+          setMessage(`${label}… ${Math.round(percentage)}%`);
+        }
       });
 
       setUrl(result.url);
       onAnswerChange(questionId, result.url);
       setStatus("idle");
-      setMessage("Đã nộp bản ghi.");
+      setMessage(source === "uploaded" ? "Đã nộp file ghi âm." : "Đã nộp bản ghi.");
     } catch (error) {
       setStatus("error");
-      setMessage(`Lỗi tải lên: ${(error as Error).message}`);
+      setMessage(`Lỗi tải lên: ${(error as Error).message}. Em thử lại giúp cô nhé.`);
     }
+  }
+
+  function handleFilePick(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    // Xoá value ngay: không thì chọn lại ĐÚNG file đó lần hai sẽ không kích hoạt
+    // onChange, học viên bấm mãi mà không thấy gì xảy ra.
+    event.target.value = "";
+
+    if (!file) {
+      return;
+    }
+
+    const check = checkSpeakingFile(file);
+
+    if (!check.ok) {
+      setStatus("error");
+      setMessage(check.message);
+      return;
+    }
+
+    void uploadRecording(file, check.contentType, "uploaded");
   }
 
   function clearRecording() {
@@ -158,6 +191,28 @@ export function AudioRecorderAnswer({
     setMessage("");
     setStatus("idle");
   }
+
+  // Nút chọn file: <label> bọc input ẩn, vì input file trần trụi mỗi trình duyệt
+  // hiển thị một kiểu và không tô được theo giao diện phòng thi.
+  const filePicker = (label: string, small: boolean) => (
+    <label
+      className={
+        small
+          ? "cursor-pointer rounded-md border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition hover:border-primary hover:text-foreground"
+          : "inline-flex cursor-pointer items-center gap-2 rounded-md border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground transition hover:border-primary"
+      }
+    >
+      {small ? null : <span aria-hidden="true">⬆</span>}
+      {label}
+      <input
+        type="file"
+        accept="audio/*,.m4a,.mp3,.wav,.ogg,.webm"
+        onChange={handleFilePick}
+        disabled={status === "uploading"}
+        className="sr-only"
+      />
+    </label>
+  );
 
   return (
     <div className="mt-3 space-y-3">
@@ -176,6 +231,7 @@ export function AudioRecorderAnswer({
             >
               Ghi âm lại
             </button>
+            {filePicker("Tải file khác", true)}
             <span className="text-xs text-emerald-600 dark:text-emerald-300">
               Đã lưu bản ghi ✓
             </span>
@@ -206,6 +262,10 @@ export function AudioRecorderAnswer({
             <span className="h-2.5 w-2.5 rounded-full bg-white" />
             {status === "uploading" ? "Đang tải lên…" : "Bắt đầu ghi âm"}
           </button>
+          {/* Đường thứ hai: micro bị chặn hay trình duyệt cũ không ghi được thì
+              học viên vẫn nộp được bằng file thu sẵn trên điện thoại. */}
+          <span className="text-xs text-muted-foreground">hoặc</span>
+          {filePicker("Tải file ghi âm lên", false)}
         </div>
       )}
 

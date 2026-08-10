@@ -3,10 +3,15 @@
 import { upload } from "@vercel/blob/client";
 import { useEffect, useRef, useState } from "react";
 
+// Trạng thái "bận": bản ghi chưa nằm an toàn trên server. Màn làm bài dùng cờ
+// này để chặn nộp bài — bấm Nộp lúc này là mất trắng bản ghi.
+export type RecorderBusy = "recording" | "uploading";
+
 type AudioRecorderAnswerProps = {
   questionId: string;
   initialValue: string;
   onAnswerChange: (questionId: string, value: string) => void;
+  onBusyChange?: (questionId: string, busy: RecorderBusy | null) => void;
 };
 
 // Chọn định dạng ghi âm trình duyệt hỗ trợ (Chrome: webm/opus; Safari: mp4).
@@ -27,7 +32,8 @@ function formatTime(totalSeconds: number): string {
 export function AudioRecorderAnswer({
   questionId,
   initialValue,
-  onAnswerChange
+  onAnswerChange,
+  onBusyChange
 }: AudioRecorderAnswerProps) {
   const [url, setUrl] = useState(initialValue);
   const [status, setStatus] = useState<"idle" | "recording" | "uploading" | "error">("idle");
@@ -57,6 +63,21 @@ export function AudioRecorderAnswer({
       stopTracks();
     };
   }, []);
+
+  // Báo cờ bận ra ngoài mỗi khi đổi trạng thái. "error" KHÔNG tính là bận: upload
+  // hỏng thì phải cho học viên nộp, không được nhốt trong phòng thi.
+  useEffect(() => {
+    onBusyChange?.(
+      questionId,
+      status === "recording" ? "recording" : status === "uploading" ? "uploading" : null
+    );
+  }, [status, questionId, onBusyChange]);
+
+  // Ô ghi âm bị tháo khỏi màn hình (đổi kỹ năng, thoát phòng thi) thì gỡ cờ,
+  // không thì màn làm bài kẹt trạng thái bận vĩnh viễn và không nộp được nữa.
+  useEffect(() => {
+    return () => onBusyChange?.(questionId, null);
+  }, [questionId, onBusyChange]);
 
   async function startRecording() {
     setMessage("");

@@ -30,7 +30,7 @@ import { parseSkillTimeLimits } from "@/lib/skill-parse";
 import { accumulateActiveSeconds, AUTO_SUBMIT_SKILLS } from "@/lib/active-time";
 import { parsePartTimes, SKILL_TIME_LABELS } from "@/lib/skill-times";
 import { AudioPlayer } from "@/components/audio-player";
-import { AudioRecorderAnswer } from "@/components/audio-recorder-answer";
+import { AudioRecorderAnswer, type RecorderBusy } from "@/components/audio-recorder-answer";
 import { LockedListeningAudio, type LockedTrack } from "@/components/locked-audio-player";
 import { SoundCheck } from "@/components/sound-check";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
@@ -2046,6 +2046,11 @@ export function AttemptWorkspace({
   }, [multiSelectGroups]);
 
   const [answers, setAnswers] = useState<Record<string, string>>(savedAnswers);
+  // Ô ghi âm nào đang ghi / đang tải bản ghi lên. Còn tên trong map = bản ghi
+  // chưa nằm an toàn trên server, nộp lúc này là mất trắng.
+  const [recorderBusy, setRecorderBusy] = useState<Record<string, RecorderBusy>>({});
+  // Cảnh báo hiện cạnh nút Nộp khi học viên bấm nộp lúc bản ghi chưa xong.
+  const [recorderWarning, setRecorderWarning] = useState("");
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [activePart, setActivePart] = useState(0);
@@ -2109,6 +2114,31 @@ export function AttemptWorkspace({
       return { ...previous, [questionId]: value };
     });
   }, []);
+
+  const handleRecorderBusyChange = useCallback(
+    (questionId: string, busy: RecorderBusy | null) => {
+      setRecorderBusy((previous) => {
+        if ((previous[questionId] ?? null) === busy) {
+          return previous;
+        }
+
+        const next = { ...previous };
+
+        if (busy) {
+          next[questionId] = busy;
+        } else {
+          delete next[questionId];
+        }
+
+        return next;
+      });
+      // Bản ghi đã xong thì gỡ luôn cảnh báo cũ, khỏi bắt học viên đoán.
+      if (!busy) {
+        setRecorderWarning("");
+      }
+    },
+    []
+  );
 
   const toggleFlag = useCallback((questionId: string) => {
     setFlagged((previous) => {
@@ -2419,6 +2449,19 @@ export function AttemptWorkspace({
     (id) => (answers[id] ?? "").trim() !== ""
   ).length;
 
+  // Còn bản ghi chưa chốt thì KHÔNG cho nộp. "Đang ghi" nặng hơn "đang tải lên":
+  // chưa bấm Dừng thì bản ghi còn chưa tồn tại, nộp là mất sạch.
+  const busyStates = Object.values(recorderBusy);
+  const blockingRecorder: RecorderBusy | null = busyStates.includes("recording")
+    ? "recording"
+    : busyStates.includes("uploading")
+      ? "uploading"
+      : null;
+  const recorderBlockMessage =
+    blockingRecorder === "recording"
+      ? 'Em đang ghi âm. Bấm "Dừng & nộp" ở ô ghi âm, đợi hiện "Đã lưu bản ghi ✓" rồi mới nộp bài.'
+      : 'Bản ghi đang được tải lên. Đợi hiện "Đã lưu bản ghi ✓" rồi hãy nộp bài.';
+
   // Xem trước: chấm toàn bộ đáp án ngay trong trình duyệt (KHÔNG lưu DB) bằng đúng
   // hàm chấm của server (gradeUnits/gradeAttempt), rồi dựng dữ liệu cho <ResultReview>
   // — trang kết quả của học sinh — để giáo viên xem đáp án + giải thích.
@@ -2532,6 +2575,8 @@ export function AttemptWorkspace({
         .map((question) => ({
           id: question.id,
           order: question.order,
+          // Câu Nói bỏ trống nghĩa là CHƯA CÓ BẢN GHI, phải nhắc bằng lời khác.
+          isSpeaking: question.questionType.includes("speaking"),
           anchorId:
             question.questionType === "table_completion"
               ? `tablesection-${assignmentUnit.id}`
@@ -2548,6 +2593,10 @@ export function AttemptWorkspace({
       .filter((entry) => (answers[entry.id] ?? "").trim() === "")
       .map((entry) => ({ ...entry, partIndex }))
   );
+  // Tách hai loại: "chưa điền" (bấm số câu quay lại làm) và "chưa có bản ghi âm"
+  // — nói "còn 1 câu chưa trả lời" với bài Nói thì học viên không hiểu là thiếu gì.
+  const unansweredSpeaking = unansweredEntries.filter((entry) => entry.isSpeaking);
+  const unansweredWritten = unansweredEntries.filter((entry) => !entry.isSpeaking);
 
   // Từ hộp xác nhận nhảy về một câu chưa làm: mở đúng phần rồi mới cuộn tới câu
   // (các phần không mở đang bị `hidden` nên chưa cuộn được ngay).
@@ -2565,7 +2614,20 @@ export function AttemptWorkspace({
     <form
       ref={formRef}
       action={previewMode ? undefined : submitSkill}
-      onSubmit={previewMode ? (event) => event.preventDefault() : undefined}
+      onSubmit={(event) => {
+        if (previewMode) {
+          event.preventDefault();
+          return;
+        }
+
+        // Chốt cuối cùng: nút "Nộp bài" trong hộp xác nhận và requestSubmit()
+        // của đồng hồ đều đi qua đây, nên chặn ở đây là chặn được mọi đường.
+        if (blockingRecorder) {
+          event.preventDefault();
+          setConfirmSubmitOpen(false);
+          setRecorderWarning(recorderBlockMessage);
+        }
+      }}
       onKeyDown={(event) => {
         // Tránh nộp bài ngoài ý muốn: theo mặc định, bấm Enter trong ô <input>
         // sẽ submit form. Chặn Enter trong input (vẫn cho Enter xuống dòng trong
@@ -2997,6 +3059,7 @@ export function AttemptWorkspace({
                     questionId={question.id}
                     initialValue={answers[question.id] ?? ""}
                     onAnswerChange={handleAnswerChange}
+                    onBusyChange={handleRecorderBusyChange}
                   />
                 </>
               ) : isDragDrop ? (
@@ -3317,6 +3380,16 @@ export function AttemptWorkspace({
 
       <div className="shrink-0 border-t border-border bg-card">
         <div className="flex w-full flex-col gap-2 px-4 py-3">
+          {recorderWarning ? (
+            <p
+              role="alert"
+              aria-live="assertive"
+              className="rounded-md border border-amber-400/70 bg-amber-400/15 px-3 py-2 text-sm font-semibold text-amber-700 dark:text-amber-300"
+            >
+              {recorderWarning}
+            </p>
+          ) : null}
+
           {parts.length > 1 ? (
             <div className="flex flex-wrap items-center gap-2">
               {parts.map((part, index) => {
@@ -3410,7 +3483,13 @@ export function AttemptWorkspace({
                     gradePreview();
                     return;
                   }
+                  // Bản ghi chưa chốt: cảnh báo tại chỗ, chưa mở hộp xác nhận.
+                  if (blockingRecorder) {
+                    setRecorderWarning(recorderBlockMessage);
+                    return;
+                  }
                   // Không nộp ngay: mở hộp xác nhận (chống bấm nhầm).
+                  setRecorderWarning("");
                   setConfirmSubmitOpen(true);
                 }}
                 className="rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
@@ -3445,13 +3524,31 @@ export function AttemptWorkspace({
               <p className="font-semibold text-foreground">
                 Đã trả lời {answeredCount}/{totalQuestions} câu
               </p>
-              {unansweredEntries.length > 0 ? (
+              {unansweredSpeaking.length > 0 ? (
+                <p className="mt-2 font-semibold text-amber-600 dark:text-amber-400">
+                  {unansweredSpeaking.length === 1
+                    ? `Câu ${unansweredSpeaking[0].order} chưa có bản ghi âm`
+                    : `${unansweredSpeaking.length} câu chưa có bản ghi âm (câu ${unansweredSpeaking
+                        .map((entry) => entry.order)
+                        .join(", ")})`}{" "}
+                  — nộp bây giờ là nộp bài trống.{" "}
+                  <button
+                    type="button"
+                    onClick={() => jumpToUnanswered(unansweredSpeaking[0])}
+                    className="underline underline-offset-2 hover:text-foreground"
+                  >
+                    Quay lại ghi âm
+                  </button>
+                </p>
+              ) : null}
+
+              {unansweredWritten.length > 0 ? (
                 <>
                   <p className="mt-2 font-semibold text-amber-600 dark:text-amber-400">
-                    Còn {unansweredEntries.length} câu chưa trả lời — bấm vào số câu để quay lại làm:
+                    Còn {unansweredWritten.length} câu chưa trả lời — bấm vào số câu để quay lại làm:
                   </p>
                   <div className="mt-2 flex max-h-32 flex-wrap gap-1.5 overflow-y-auto">
-                    {unansweredEntries.map((entry) => (
+                    {unansweredWritten.map((entry) => (
                       <button
                         key={entry.id}
                         type="button"
@@ -3463,11 +3560,13 @@ export function AttemptWorkspace({
                     ))}
                   </div>
                 </>
-              ) : (
+              ) : null}
+
+              {unansweredEntries.length === 0 ? (
                 <p className="mt-1 text-emerald-600 dark:text-emerald-400">
                   Em đã làm hết tất cả các câu.
                 </p>
-              )}
+              ) : null}
             </div>
 
             <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">

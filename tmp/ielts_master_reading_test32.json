@@ -1,0 +1,662 @@
+{
+  "title": "IELTS Master - Reading Test 32",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master - Reading Practice Test 32",
+  "description": "Đề đọc IELTS Master Test 32: Right and Left-handedness in Humans / Migratory Beekeeping / Tourism.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 - Right and Left-handedness in Humans",
+      "instructions": "Đọc đoạn văn và trả lời câu hỏi 1-12.",
+      "content": "Why do humans, virtually alone among all animal species, display a distinct left or right-handedness? Not even our closest relatives among the apes possess such decided lateral asymmetry, as psychologists call it. Yet about 90 per cent of every human population that has ever lived appears to have been right-handed. Professor Bryan Turner at Deakin University has studied the research literature on left-handedness and found that handedness goes with sidedness. So nine out of ten people are right-handed and eight are right-footed. He noted that this distinctive asymmetry in the human population is itself systematic. \"Humans think in categories: black and white, up and down, left and right. It's a system of signs that enables us to categorise phenomena that are essentially ambiguous.\"\n\nResearch has shown that there is a genetic or inherited element to handedness. But while left-handedness tends to run in families, neither left nor right handers will automatically produce off-spring with the same handedness; in fact about 6 per cent of children with two right-handed parents will be left-handed. However, among two left-handed parents, perhaps 40 per cent of the children will also be left-handed. With one right and one left-handed parent, 15 to 20 per cent of the offspring will be left-handed. Even among identical twins who have exactly the same genes, one in six pairs will differ in their handedness.\n\nWhat then makes people left-handed if it is not simply genetic? Other factors must be at work and researchers have turned to the brain for clues. In the 1860s the French surgeon and anthropologist, Dr Paul Broca, made the remarkable finding that patients who had lost their powers of speech as a result of a stroke (a blood clot in the brain) had paralysis of the right half of their body. He noted that since the left hemisphere of the brain controls the right half of the body, and vice versa, the brain damage must have been in the brain's left hemisphere. Psychologists now believe that among right-handed people, probably 95 per cent have their language centre in the left hemisphere, while 5 per cent have right-side language. Left-handers, however, do not show the reverse pattern but instead a majority also have their language in the left hemisphere. Some 30 per cent have right hemisphere language.\n\nDr Brinkman, a brain researcher at the Australian National University in Canberra, has suggested that evolution of speech went with right-handed preference. According to Brinkman, as the brain evolved, one side became specialised for fine control of movement (necessary for producing speech) and along with this evolution came right-hand preference. According to Brinkman, most left-handers have left hemisphere dominance but also some capacity in the right hemisphere. She has observed that if a left-handed person is brain-damaged in the left hemisphere, the recovery of speech is quite often better and this is explained by the fact that left-handers have a more bilateral speech function.\n\nIn her studies of macaque monkeys, Brinkman has noticed that primates (monkeys) seem to learn a hand preference from their mother in the first year of life but this could be one hand or the other. In humans, however, the specialisation in function of the two hemispheres results in anatomical differences: areas that are involved with the production of speech are usually larger on the left side than on the right. Since monkeys have not acquired the art of speech, one would not expect to see such a variation but Brinkman claims to have discovered a trend in monkeys towards the asymmetry that is evident in the human brain.\n\nTwo American researchers, Geschwind and Galaburda, studied the brains of human embryos and discovered that the left-right asymmetry exists before birth. But as the brain develops, a number of things can affect it. Every brain is initially female in its organisation and it only becomes a male brain when the male foetus begins to secrete hormones. Geschwind and Galaburda knew that different parts of the brain mature at different rates; the right hemisphere develops first, then the left. Moreover, a girl's brain develops somewhat faster than that of a boy. So, if something happens to the brain's development during pregnancy, it is more likely to be affected in a male and the hemisphere more likely to be involved is the left. The brain may become less lateralised and this in turn could result in left-handedness and the development of certain superior skills that have their origins in the left hemisphere such as logic, rationality and abstraction. It should be no surprise then that among mathematicians and architects, left-handers tend to be more common and there are more left-handed males than females.\n\nThe results of this research may be some consolation to left-handers who have for centuries lived in a world designed to suit right-handed people. However, what is alarming, according to Mr. Charles Moore, a writer and journalist, is the way the word \"right\" reinforces its own virtue. Subliminally he says, language tells people to think that anything on the right can be trusted while anything on the left is dangerous or even sinister. We speak of left-handed compliments and according to Moore, \"it is no coincidence that left-handed children, forced to use their right hand, often develop a stammer as they are robbed of their freedom of speech\". However, as more research is undertaken on the causes of left-handedness, attitudes towards left-handed people are gradually changing for the better. Indeed when the champion tennis player Ivan Lendl was asked what the single thing was that he would choose in order to improve his game, he said he would like to become a left-hander.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Use the information in the text to match the people (listed A-E) with the opinions (listed 1-7) below.\nWrite the appropriate letter (A-E) in boxes 1-7 on your answer sheet.\nSome people match more than one opinion.\n:::box\nA Dr Broca\nB Dr Brinkman\nC Geschwind and Galaburda\nD Charles Moore\nE Professor Turner\n:::",
+          "8": "Using the information in the passage, complete the table below.\nWrite your answers in boxes 8-10 on your answer sheet.",
+          "11": "Choose the appropriate letters A-D and write them in boxes 11 and 12 on your answer sheet."
+        },
+        "tableBody": "| Parents | Percentage of children left-handed |\n| --- | --- |\n| One parent left-handed<br>One parent right-handed | [[8]] |\n| Both parents left-handed | [[9]] |\n| Both parents right-handed | [[10]] |"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "matching",
+          "prompt": "Human beings started to show a preference for right-handedness when they first developed language.",
+          "answer": "B Dr Brinkman",
+          "explanation": "Dr Brinkman cho rằng sự tiến hoá của tiếng nói đi cùng với thiên hướng thuận tay phải: khi não tiến hoá, một bên chuyên hoá để điều khiển vận động tinh (cần cho việc nói) và thiên hướng tay phải xuất hiện theo. → B.",
+          "points": 1,
+          "options": [
+            "A Dr Broca",
+            "B Dr Brinkman",
+            "C Geschwind and Galaburda",
+            "D Charles Moore",
+            "E Professor Turner"
+          ],
+          "evidence": "Dr Brinkman, a brain researcher at the Australian National University in Canberra, has suggested that evolution of speech went with right-handed preference."
+        },
+        {
+          "order": 2,
+          "questionType": "matching",
+          "prompt": "Society is prejudiced against left-handed people.",
+          "answer": "D Charles Moore",
+          "explanation": "Charles Moore cảnh báo chính ngôn ngữ đã ngấm ngầm dạy người ta rằng thứ gì bên phải thì đáng tin, còn bên trái thì nguy hiểm, thậm chí xấu xa. → D.",
+          "points": 1,
+          "options": [
+            "A Dr Broca",
+            "B Dr Brinkman",
+            "C Geschwind and Galaburda",
+            "D Charles Moore",
+            "E Professor Turner"
+          ],
+          "evidence": "Subliminally he says, language tells people to think that anything on the right can be trusted while anything on the left is dangerous or even sinister."
+        },
+        {
+          "order": 3,
+          "questionType": "matching",
+          "prompt": "Boys are more likely to be left-handed.",
+          "answer": "C Geschwind and Galaburda",
+          "explanation": "Geschwind và Galaburda giải thích: não bé gái phát triển nhanh hơn bé trai, nên nếu có trục trặc trong thai kỳ thì bé TRAI dễ bị ảnh hưởng hơn, và bán cầu bị ảnh hưởng thường là bán cầu trái — dẫn tới thuận tay trái. → C.",
+          "points": 1,
+          "options": [
+            "A Dr Broca",
+            "B Dr Brinkman",
+            "C Geschwind and Galaburda",
+            "D Charles Moore",
+            "E Professor Turner"
+          ],
+          "evidence": "So, if something happens to the brain's development during pregnancy, it is more likely to be affected in a male and the hemisphere more likely to be involved is the left."
+        },
+        {
+          "order": 4,
+          "questionType": "matching",
+          "prompt": "After a stroke, left-handed people recover their speech more quickly than right-handed people.",
+          "answer": "B Dr Brinkman",
+          "explanation": "Brinkman quan sát thấy người thuận tay trái bị tổn thương bán cầu trái thường hồi phục khả năng nói tốt hơn, vì chức năng ngôn ngữ của họ trải đều hai bán cầu hơn. → B.",
+          "points": 1,
+          "options": [
+            "A Dr Broca",
+            "B Dr Brinkman",
+            "C Geschwind and Galaburda",
+            "D Charles Moore",
+            "E Professor Turner"
+          ],
+          "evidence": "She has observed that if a left-handed person is brain-damaged in the left hemisphere, the recovery of speech is quite often better and this is explained by the fact that left-handers have a more bilateral speech function."
+        },
+        {
+          "order": 5,
+          "questionType": "matching",
+          "prompt": "People who suffer strokes on the left side of the brain usually lose their power of speech.",
+          "answer": "A Dr Broca",
+          "explanation": "Dr Paul Broca phát hiện bệnh nhân mất khả năng nói sau đột quỵ đều bị liệt nửa người bên phải, mà bán cầu trái điều khiển nửa người bên phải — nên tổn thương phải nằm ở bán cầu trái. → A.",
+          "points": 1,
+          "options": [
+            "A Dr Broca",
+            "B Dr Brinkman",
+            "C Geschwind and Galaburda",
+            "D Charles Moore",
+            "E Professor Turner"
+          ],
+          "evidence": "In the 1860s the French surgeon and anthropologist, Dr Paul Broca, made the remarkable finding that patients who had lost their powers of speech as a result of a stroke (a blood clot in the brain) had paralysis of the right half of their body."
+        },
+        {
+          "order": 6,
+          "questionType": "matching",
+          "prompt": "The two sides of the brain develop different functions before birth.",
+          "answer": "C Geschwind and Galaburda",
+          "explanation": "Hai nhà nghiên cứu Mỹ Geschwind và Galaburda nghiên cứu não phôi thai người và phát hiện tính bất đối xứng trái - phải đã tồn tại TRƯỚC khi sinh. → C.",
+          "points": 1,
+          "options": [
+            "A Dr Broca",
+            "B Dr Brinkman",
+            "C Geschwind and Galaburda",
+            "D Charles Moore",
+            "E Professor Turner"
+          ],
+          "evidence": "Two American researchers, Geschwind and Galaburda, studied the brains of human embryos and discovered that the left-right asymmetry exists before birth."
+        },
+        {
+          "order": 7,
+          "questionType": "matching",
+          "prompt": "Asymmetry is a common feature of the human body.",
+          "answer": "E Professor Turner",
+          "explanation": "Giáo sư Bryan Turner thấy thuận tay đi kèm thuận bên: 9/10 người thuận tay phải và 8/10 thuận chân phải; ông gọi đó là sự bất đối xứng mang tính hệ thống của loài người. → E.",
+          "points": 1,
+          "options": [
+            "A Dr Broca",
+            "B Dr Brinkman",
+            "C Geschwind and Galaburda",
+            "D Charles Moore",
+            "E Professor Turner"
+          ],
+          "evidence": "Professor Bryan Turner at Deakin University has studied the research literature on left-handedness and found that handedness goes with sidedness."
+        },
+        {
+          "order": 8,
+          "questionType": "table_completion",
+          "prompt": "Question 8",
+          "answer": [
+            "15-20%",
+            "15 to 20%",
+            "15-20 per cent",
+            "15 to 20 per cent",
+            "15%-20%",
+            "15 - 20%"
+          ],
+          "explanation": "Bài viết: bố mẹ một người thuận tay phải, một người thuận tay trái thì 15 đến 20 phần trăm con cái sẽ thuận tay trái. → 15-20%.",
+          "points": 1,
+          "evidence": "With one right and one left-handed parent, 15 to 20 per cent of the offspring will be left-handed."
+        },
+        {
+          "order": 9,
+          "questionType": "table_completion",
+          "prompt": "Question 9",
+          "answer": [
+            "40%",
+            "40 per cent",
+            "40 percent"
+          ],
+          "explanation": "Bài viết: trong số cặp bố mẹ CÙNG thuận tay trái, khoảng 40 phần trăm con cái cũng thuận tay trái. → 40%.",
+          "points": 1,
+          "evidence": "However, among two left-handed parents, perhaps 40 per cent of the children will also be left-handed."
+        },
+        {
+          "order": 10,
+          "questionType": "table_completion",
+          "prompt": "Question 10",
+          "answer": [
+            "6%",
+            "6 per cent",
+            "6 percent",
+            "about 6%"
+          ],
+          "explanation": "Bài viết: khoảng 6 phần trăm trẻ có cả bố lẫn mẹ thuận tay phải vẫn sẽ thuận tay trái. → 6%.",
+          "points": 1,
+          "evidence": "in fact about 6 per cent of children with two right-handed parents will be left-handed"
+        },
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "A study of monkeys has shown that",
+          "answer": "D monkey brains are asymmetric",
+          "explanation": "Khỉ chưa biết nói nên lẽ ra không có sự chênh lệch giữa hai bán cầu, nhưng Brinkman nói đã phát hiện ở khỉ một xu hướng tiến tới đúng kiểu bất đối xứng thấy ở não người. (A sai vì khỉ học thói quen tay từ mẹ, có thể tay nào cũng được; B, C bài không nói.) → D.",
+          "points": 1,
+          "options": [
+            "A monkeys are not usually right-handed",
+            "B monkeys display a capacity for speech",
+            "C monkey brains are smaller than human brains",
+            "D monkey brains are asymmetric"
+          ],
+          "evidence": "Since monkeys have not acquired the art of speech, one would not expect to see such a variation but Brinkman claims to have discovered a trend in monkeys towards the asymmetry that is evident in the human brain."
+        },
+        {
+          "order": 12,
+          "questionType": "multiple_choice",
+          "prompt": "According to the writer, left-handed people",
+          "answer": "B have undergone hardship for years",
+          "explanation": "Tác giả nói kết quả nghiên cứu phần nào an ủi những người thuận tay trái, vốn suốt bao thế kỷ phải sống trong một thế giới thiết kế cho người thuận tay phải. (A là lời của Moore về trẻ bị ép đổi tay, không phải nhận định chung; C là định kiến bài phê phán; D chỉ là chuyện Ivan Lendl.) → B.",
+          "points": 1,
+          "options": [
+            "A will often develop a stammer",
+            "B have undergone hardship for years",
+            "C are untrustworthy",
+            "D are good tennis players"
+          ],
+          "evidence": "The results of this research may be some consolation to left-handers who have for centuries lived in a world designed to suit right-handed people."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 - Migratory Beekeeping",
+      "instructions": "Đọc đoạn văn và trả lời câu hỏi 13-27.",
+      "content": "Of the 2,000 commercial beekeepers in the United States about half migrate. This pays off in two ways: moving north in the summer and south in the winter lets bees work a longer blooming season, making more honey - and money - for their keepers. Second, beekeepers can carry their hives to farmers who need bees to pollinate their crops. Every spring a migratory beekeeper in California may move up to 160 million bees to flowering fields in Minnesota and every winter his family may haul the hives back to California, where farmers will rent the bees to pollinate almond and cherry trees.\n\nMigratory beekeeping is nothing new. The ancient Egyptians moved clay hives, probably on rafts, down the Nile to follow the bloom and nectar flow as it moved toward Cairo. In the 1880s North American beekeepers experimented with the same idea, moving bees on barges along the Mississippi and on waterways in Florida, but their lighter, wooden hives kept falling into the water. Other keepers tried the railroad and horse-drawn wagons, but that didn't prove practical. Not until the 1920s when cars and trucks became affordable and roads improved, did migratory beekeeping begin to catch on.\n\nFor the Californian beekeeper, the pollination season begins in February. At this time, the beehives are in particular demand by farmers who have almond groves; they need two hives an acre. For the three-week long bloom, beekeepers can hire out their hives for $32 each. It's a bonanza for the bees too. Most people consider almond honey too bitter to eat so the bees get to keep it for themselves.\n\nBy early March it is time to move the bees. It can take up to seven nights to pack the 4,000 or so hives that a beekeeper may own. These are not moved in the middle of the day because too many of the bees would end up homeless. But at night, the hives are stacked onto wooden pallets, back-to-back in sets of four, and lifted onto a truck. It is not necessary to wear gloves or a beekeeper's veil because the hives are not being opened and the bees should remain relatively quiet. Just in case some are still lively, bees can be pacified with a few puffs of smoke blown into each hive's narrow entrance.\n\nIn their new location, the beekeeper will pay the farmer to allow his bees to feed in such places as orange groves. The honey produced here is fragrant and sweet and can be sold by the beekeepers. To encourage the bees to produce as much honey as possible during this period, the beekeepers open the hives and stack extra boxes called supers on top. These temporary hive extensions contain frames of empty comb for the bees to fill with honey. In the brood chamber below, the bees will stash honey to eat later. To prevent the queen from crawling up to the top and laying eggs, a screen can be inserted between the brood chamber and the supers. Three weeks later the honey can be gathered.\n\nFoul smelling chemicals are often used to irritate the bees and drive them down into the hive's bottom boxes, leaving the honey-filled supers more or less bee free. These can then be pulled off the hive. They are heavy with honey and may weigh up to 90 pounds each. The supers are taken to a warehouse. In the extracting room, the frames are tilted out and lowered into an \"uncapper\" where rotating blades shave away the wax that covers each cell. The uncapped frames are put in a carousel that sits on the bottom of a large stainless steel drum. The carousel is filled to capacity with 72 frames. A switch is flipped and the frames begin to whirl at 300 revolutions per minute; centrifugal force throws the honey out of the combs. Finally the honey is poured into barrels for shipment.\n\nAfter this, approximately a quarter of the hives weakened by disease, mites, or an ageing or dead queen, will have to be replaced. To create new colonies, a healthy double hive, teeming with bees, can be separated into two boxes. One half will hold the queen and a young, already mated queen can be put in the other half, to make two hives from one. By the time the flowers bloom, the new queens will be laying eggs, filling each hive with young worker bees. The beekeeper's family will then migrate with them to their summer location.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "13": "The steps below outline the movements of the migratory beekeeper as described in Reading Passage 2.\nComplete the steps. Choose your answers from the box given and write your answers in boxes 13-19 on your answer sheet.\n\nList of Words\n:::box\nSmoke | chemicals | pay\nBarrels | protection | charge\nSet off | light | split\nPollinate | machines | supers\nCombs | screen | prepare\nFull | empty | queens\n:::",
+          "20": "Label the diagram below. Choose ONE OR TWO WORDS from the Reading Passage for each answer.\nWrite your answers in boxes 20-23 on your answer sheet.",
+          "24": "Do the following statements agree with the information given in Reading Passage 2?\nIn boxes 24-27 write\n:::box\nYES if the statement agrees with the information given\nNO if the statement contradicts the information given\nNOT GIVEN if there is no information about this\n:::"
+        },
+        "groupTitles": {
+          "20": "A BEEHIVE"
+        },
+        "groupImages": {
+          "20": [
+            "data:image/jpeg;base64,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PWNy9i05G+KlB5Hz7tOPh8lJLFoOzaWp23S6yioqmd58s+MharUPFV8jjQaapX1E57ocGnlb8wvDTvD67aiqBctV1L5MnLYCeZvzXVLfZqK2U7YqKljja3wAwthg4Gdj5BXNz4q5ERETKZXD+MsoZqS04I5hOwkfJddsb+1slI7zjC2I94q5ERERERERERERERERERERERERERERERERERERERUd0Vj8FvxXzdAx0fGeXmHV7j+oX0mz3G+iuRERERERERERFRwy0jOPitNdNPWu9wmOvo45h5ubkrnN54Oxsc6o09UupJOoDSGrRUV517oyQi4RSV9O04ycu2+SmFo4oWC+Yp7jE6nnOxbK3lH6raVmidNagHtFGIYZzuJ6fBcFA9Raa1zZ6SSK2XOaek3358ux5YCwtHaktdiLW360yCtyM1EkRyfjldmtmprRdYWGjrIiT+APGR8lkV94obbDz1NTHG3/ABuAUBvnEmSskNu01TyVVQ7btS08g+YXhbtA3K5Ftfqy4OlGeYRc4c0LOuOttNaQgNDa4GvqMYDKdvNk/HCjFPZ9U8Qq0S3GeSjtTj3ogcEj0K6Vp7RVn03GBS07efG7uXcqSNBHugAK5oIG6uRERERWn3k8SvnfjLUF2v6GIHoY/su6aeH+rtB/wgtqBvlVREREREREREREREREREREREREREREREREREREREQrzBGCV87VkjW8ZmgDqXfcL6LYf3bfQK5EREREymURERERUdnlOF5EYx138Ari3AwBgHyVktOydnJLG17T4OUSvnDOw3olxpm08h/HE3dQ2o0HqfSU5qdO3GSop49xDM/r8MBe1v4svpKltJqCikpZAcEtYQ0/VS8M0rq6HmDaaoLhtnBIUfuHCaGHmqbDWy0lT1DWENatJTcLb9dawf0ju0slO3wa/OVL+bS2gbd2MZiY5o6sxzuUOffNU8Qat9FQQvobcDjtt2ucOimOmeGVqsQE88YrKw7ulmGTn1U0ZCGNwxgDPLyXsBnCOGfNXN6KqIidVQEHoVVFb4qh6FfNnF4OPEmjJ2H7td+00SdO0Wf7sLbt6KqIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIio7orcZJwvn/AFRRig4x0Lh/FYXH/qC7/Ecwt9ArwqoiIioeipnCZGMlXIiIiIiIiKw4J64K0d40rZ79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G+prqgRRtGe87GVyCu1fqDiBXvttiidDRZ5XTkZyPHcKe6S0DQadpmPmYKmrI70j+8c/NTAtxy7YB2wF7jYBVRERERERERERERERERERERERERERERERERMKh6KwEEei55d7g6t1/Bb3ZEbYw/8AVS+7x0LKR76iGN+WkNDmgjdRPh3pKWzCqq6kBpnc7lixjAzkbLTcTjUU9wop3W4uoGSM5nsaAebmGN1ma1uYbpGlvVITGY25ac9PVdBslQ6qs1JM85c+FpJ+QWwREREREVhzzbKnJk53yqdm/myS3HovOekiqGFksbHsPVr25C55q3hLa71HJPRAUlQdwW90Z+S5jHUa14a1v74TVNE09XAkY+ZXVdJcVbPqWBkcsrKaq2DmSEdfQLoUcrJIw9rgWkdQrsgqqpkBVRERERERWuzzAY2XDePoLKKlP+M/ZTjhNIX6Ogz5D7KeIiIiKmRnGd1Y97BnJ6dUJx1IDVAdZ8TrXpcOpxiarOzY2kZJ6KBW7TGouJVxbcLvM+nt2ciLduR8tl2WzafobFRR09JA0Bo3IAyfmttjAJ5TnyVAzAIb18CV6NzyjPVVRERERERERERERERERERERERERERERERERF5zODIySCfRYwqSGbU7+U+OVDr9a5YtQQXimppHYAa7HkvTUVtuuoHU7oJmsp3jIYAct9SF6WmzXmghnZNVCWQsxE4A4afiveS2111phS3d0c8bXB37tnLuFq9R2p15ipbPTQFtJuJG46BS+3k0lDFAKaVoiaGAE+QwskVbnHHs7/qveM535SPVeiIiIiIiIqHotfWUVPXxuhqI4ZWkYIcwErnd+4M2WpL6u1vnpa47jEpDc+gUTNdxB0JIGujNwoGncsjyQPUlS+xcZ7HX8sFa72KcbOErh1+S6HRXKiucDZqSpZNG/dpYeqygQ04Jx6q9pyrkRERERFQ9QuL8fWNNopXEfjd9lMOFTAzR0G3UA/opyiIiKwncgnGeisJa3uk7rCud0o7TTGasqYoWAZJeuN6l4o3S/XE2bSkRmDu657QHLd6R4TwhwuWou1qK9x5gHOOG+YwV1KmpoaOBsFPGGsaNgF7gbK9EREREREREREREREREREREREREREREREREREVr/d93PwVOTbGNlY5me7ygt+IQMADcMwR5eCcjxjBGPHZVDCXZDcY23VBF5tbzeYCvDFXHwCNBB3KuRERERERFRwJaQDgrzDOYd4bjyTlcHc2PkrJqZs7C17I3NPg5oKgepuE9nv8AFI+GL2aqPR7TgZ9AuUVemtccOqgzUs76qmjOxDSQR8yplpfjjR1HJSXuEwVHulziAF1u2XSjulK2ekmbJGfFp6LNJA6pkKuVQkBVRERFa5ch48wl2naV4BOHuz9FLeGR/wBUKQAbcjfspmiIqFwHUquVY7d2T0Ches+INr0pTPdJMySpIw2MHdccjo9T8V7kZy+SloebxzjHyK7VpPQts0xSMihgD5sZdMd8n57qWAHp4BXnboFTGFciIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiLwnhjnHJLE2Rp8HAFQPU/Cqw31r3RxCCo6gsPLv8lyuq05rbh3Wma3Geqowc53IA8typvpPjXQ1zm0t8xS1I2y4gDPoF1Kjr6WvY2opJBLG4e807LJJz47KoHTlPrleiIiIqOGQuf8W6NlXpCdx/hMLgtjw2Zy6SpR/gH2UwREXnnv5xlqsMjGB0jnYaOpXJOInFQUDpLTZiJasjBLcHCiWj+GV41NXC76hkeIHHm7J+cnx2XfbTaKG1UjaejhDI2jA+K2IwExvlVREREREREREREREREREREREREREREREREREREREREREREREREREREREReZaSTkHboqgEjOMH4rzmhZM3kexrgRuHDIXNNb8IqHUIdUUZbT1XUFowM+gXLmR6z4b13au7aejacE7kY+ZXXNG8U7TqOlZHLK2nqRgODz1K6BFIyZrXNOW9QR4r2DgTgFCQFXKIitOc/BQjieHf0MreUZ/dnKzuHrS3SdHt1jb9lK0VC4DqU5hjOdljyzRUsLnyyBrBuSVyHXHEaSumdYNOsNTM/uudH4L00FwkFFKy73pxmq3Hm5HZ28d8+q64KdgjDGs5Gt6Buy9GtIGD1V2EVURERERERERERERERERERERERERERERERERERERERERERERERERERERERFYT3wq75yFiVtBS1sRjqKdsjXbEEBcq1NwYp56l9ZZqg00xPMGgnr8lGaHUetNC1ns93pZaihaffAA29SuuaZ1tatR0rewqWdv4xZ3CkhaeTIOHeZ3Xs0HAyVXPgqoqFRHiPynRtfn+6KydCY/otR4/u2/ZSZUcAWkHovPdo23AWov2o7bp+gfWV8zYw0Z5Seq4/U3XU3E2tdBbWvprYHYMmOo9Quj6P0DbtLU4wwT1B96R25z81M4wA3YYCuRERERERERERERERERERERERERERERERERERERETOFTKZVURERERERERERERERERFQ+it5SPFVwT4qwsLtnb/ELHrLdTVsJZUxRyMI3y0Lnd/4UQPmNwsNQ+jqm7gcxIPyC1dDru/aTlFJqajfLG04FQ0Bo9V02y6jt98gEtHUMeCMkDwW1yCdjlXBwVcq0nJwoVxPeGaOr9/4RWbw+kD9J0Zz/AA2/ZSnIxlUJBad1CdZ8QaHS9OYuYSVbhhjAdyVzq06Rv3EK7tu1+MkNvLsthJI5h8l2q1WiltFI2CkpxGxoxgDcrODTjmx8l6NBA3VURERERERERERERERERERERERERERERERERERERFQphUHVXIiIiIiIiIiIiIiIiIiIiIqHorSMjbZYtZbqSujLKmmjkBHi0KDXXhsxnNUWSrfRzZz7xIz6KNt1Vq/SFR2V3pH11I0/2zGhoAU603xCsmog1sNUxk56wu6hS1rw7du488qnODkN3I6qDcVXMZoyrLzgujKy+HAa7SFLg/gb9lv7reaKz0j6munZFGwZJJXHL9xNu+pa40GlKd+CeUygZC3mkOGghqW3bUkrqitduGvJwM/BdRZHHC1rGNDB0aGjCyB0VUREREREREREREREREREREREREREREREREREREREREVPFVRERERERERERERERERERERD0VuD47qmM/hKBu2wwvGpoaeshMdREx7T5gLnmpOE1sry+rtjn0dadw5rzjPoFFItS6u0HOKa9wvq6EHAkaMYC6LpriFY7+wNhqmMkP8ADd1C0PGefGkHFjuZrg7oVFLLxWt+ndFQxQuEtU1obyA7g4Uao6bVHFK7ieqMrKDmzgbDC7vpfRtt0zQxxwQtMuN3EZUlLMjDhkK7l6DCuREREREREREREREREREREREREREREREREREREREREVCcJlVRERERERERERERERERERERERERWOznYZWNW2+nr6Z0NRCyQOGO8AVyrU3BuGonNXZql1LUdcNJ3KhmoodS2vTU9uu0rpudpYO5nAWi4f8ADG43+5Ry1sD2UbTzczuhwvpy1WimstJHS0kDWsaMEgLZeKvRERERERERERERERERERERERERERERERERERERERERFa4HbCAFXIiIiIiIiIiIiIiIiIiIiIiIiIrHNcfdOFTlJPTfzVQw4PMcrDlt0E2O1gZJk78wBWRDTRU7OSKNrG+TRhX8rsY8Fdg9FciIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqoiIiIiIiIiIiIiIiIv/2Q=="
+          ]
+        },
+        "noteBody": "# BEEKEEPER MOVEMENTS\nExample: In February, Californian farmers hire bees to help ...pollinate... almond trees.\n\n• In March, beekeepers [[13]] for migration at night when the hives are [[14]] and the bees are generally tranquil. A little [[15]] can ensure that this is the case.\n• They transport their hives to orange groves where farmers [[16]] beekeepers for placing them on their land. Here the bees make honey.\n• After three weeks, the supers can be taken to a warehouse where [[17]] are used to remove the wax and extract the honey from the [[18]].\n• After the honey collection, the old hives are rejected. Good double hives are [[19]] and re-queened and the beekeeper transports them to their summer base.\n:::break\n[[20]]\n[[21]]\n[[22]]\n[[23]]"
+      },
+      "questions": [
+        {
+          "order": 13,
+          "questionType": "note_completion",
+          "prompt": "Question 13",
+          "answer": [
+            "prepare"
+          ],
+          "explanation": "Sang đầu tháng 3 là lúc chuyển ong; người nuôi phải mất tới bảy đêm để ĐÓNG GÓI, CHUẨN BỊ khoảng 4.000 thùng ong. → prepare.",
+          "points": 1,
+          "evidence": "It can take up to seven nights to pack the 4,000 or so hives that a beekeeper may own."
+        },
+        {
+          "order": 14,
+          "questionType": "note_completion",
+          "prompt": "Question 14",
+          "answer": [
+            "full"
+          ],
+          "explanation": "Không chuyển tổ giữa ban ngày vì quá nhiều ong sẽ bị bỏ lại không nhà; ban đêm thì tổ ĐẦY ong nên mới bốc đi được. → full.",
+          "points": 1,
+          "evidence": "These are not moved in the middle of the day because too many of the bees would end up homeless."
+        },
+        {
+          "order": 15,
+          "questionType": "note_completion",
+          "prompt": "Question 15",
+          "answer": [
+            "smoke"
+          ],
+          "explanation": "Nếu vài con còn hiếu động, có thể làm ong dịu lại bằng vài luồng KHÓI thổi vào cửa tổ. → smoke.",
+          "points": 1,
+          "evidence": "Just in case some are still lively, bees can be pacified with a few puffs of smoke blown into each hive's narrow entrance."
+        },
+        {
+          "order": 16,
+          "questionType": "note_completion",
+          "prompt": "Question 16",
+          "answer": [
+            "charge"
+          ],
+          "explanation": "Bài nói người nuôi ong PHẢI TRẢ TIỀN cho nông dân để ong được ăn ở vườn cam — nhìn từ phía nông dân thì họ THU PHÍ người nuôi ong. → charge.",
+          "points": 1,
+          "evidence": "In their new location, the beekeeper will pay the farmer to allow his bees to feed in such places as orange groves."
+        },
+        {
+          "order": 17,
+          "questionType": "note_completion",
+          "prompt": "Question 17",
+          "answer": [
+            "machines"
+          ],
+          "explanation": "Ở phòng quay mật, khung cầu được đưa vào MÁY \"uncapper\" có lưỡi dao quay để gạt lớp sáp, rồi vào máy quay ly tâm. → machines.",
+          "points": 1,
+          "evidence": "In the extracting room, the frames are tilted out and lowered into an \"uncapper\" where rotating blades shave away the wax that covers each cell."
+        },
+        {
+          "order": 18,
+          "questionType": "note_completion",
+          "prompt": "Question 18",
+          "answer": [
+            "combs"
+          ],
+          "explanation": "Khung quay 300 vòng/phút, lực ly tâm hất mật ra khỏi các BÁNH TỔ (combs). → combs.",
+          "points": 1,
+          "evidence": "A switch is flipped and the frames begin to whirl at 300 revolutions per minute; centrifugal force throws the honey out of the combs."
+        },
+        {
+          "order": 19,
+          "questionType": "note_completion",
+          "prompt": "Question 19",
+          "answer": [
+            "split"
+          ],
+          "explanation": "Để tạo đàn mới, một tổ đôi khoẻ mạnh được TÁCH làm hai thùng, mỗi bên một ong chúa. → split.",
+          "points": 1,
+          "evidence": "To create new colonies, a healthy double hive, teeming with bees, can be separated into two boxes."
+        },
+        {
+          "order": 20,
+          "questionType": "note_completion",
+          "prompt": "Question 20",
+          "answer": [
+            "cells",
+            "hexagonal cells",
+            "comb",
+            "the cells"
+          ],
+          "explanation": "Hình phóng to (20) là các ô sáp hình lục giác của bánh tổ — bài nhắc tới lớp sáp phủ TỪNG Ô (each cell). → (hexagonal) cells / comb.",
+          "points": 1,
+          "evidence": "In the extracting room, the frames are tilted out and lowered into an \"uncapper\" where rotating blades shave away the wax that covers each cell."
+        },
+        {
+          "order": 21,
+          "questionType": "note_completion",
+          "prompt": "Question 21",
+          "answer": [
+            "frames",
+            "frames of comb",
+            "the frames"
+          ],
+          "explanation": "Mũi tên (21) chỉ vào các tấm dựng đứng trong thùng super — đó là các KHUNG CẦU chứa bánh tổ rỗng để ong đổ mật vào. → frames (of comb).",
+          "points": 1,
+          "evidence": "These temporary hive extensions contain frames of empty comb for the bees to fill with honey."
+        },
+        {
+          "order": 22,
+          "questionType": "note_completion",
+          "prompt": "Question 22",
+          "answer": [
+            "screen",
+            "a screen",
+            "the screen"
+          ],
+          "explanation": "Tấm phẳng nằm giữa hai tầng thùng chính là TẤM CHẮN đặt để ong chúa không bò lên trên đẻ trứng. → screen.",
+          "points": 1,
+          "evidence": "To prevent the queen from crawling up to the top and laying eggs, a screen can be inserted between the brood chamber and the supers."
+        },
+        {
+          "order": 23,
+          "questionType": "note_completion",
+          "prompt": "Question 23",
+          "answer": [
+            "brood chamber",
+            "the brood chamber"
+          ],
+          "explanation": "Thùng dưới cùng là BUỒNG NUÔI ẤU TRÙNG (brood chamber) — nơi ong tích mật để ăn dần. → brood chamber.",
+          "points": 1,
+          "evidence": "In the brood chamber below, the bees will stash honey to eat later."
+        },
+        {
+          "order": 24,
+          "questionType": "true_false_not_given",
+          "prompt": "The Egyptians keep bees on the banks of the Nile.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói người Ai Cập cổ CHỞ tổ ong bằng bè xuôi sông Nile để đuổi theo mùa hoa, chứ không nói họ NUÔI ong trên bờ sông. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 25,
+          "questionType": "true_false_not_given",
+          "prompt": "First attempts at migratory beekeeping in America were unsuccessful.",
+          "answer": "YES",
+          "explanation": "Thập niên 1880, người Mỹ thử chở ong bằng sà lan nhưng tổ gỗ nhẹ cứ rơi xuống nước; thử tàu hoả và xe ngựa cũng không khả thi. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "In the 1880s North American beekeepers experimented with the same idea, moving bees on barges along the Mississippi and on waterways in Florida, but their lighter, wooden hives kept falling into the water."
+        },
+        {
+          "order": 26,
+          "questionType": "true_false_not_given",
+          "prompt": "Bees keep honey for themselves in the bottom of the hive.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài có nói ong tích mật để ăn dần trong buồng nuôi ấu trùng (brood chamber) nằm phía dưới các thùng super, nhưng không khẳng định đó là ĐÁY tổ — theo bảng đáp án chính thức, câu này là NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 27,
+          "questionType": "true_false_not_given",
+          "prompt": "The honey is spun to make it liquid.",
+          "answer": "NO",
+          "explanation": "Bài nói ngược lại về mục đích: khung cầu được quay 300 vòng/phút để lực ly tâm HẤT MẬT RA khỏi bánh tổ, tức để tách mật chứ không phải để làm mật loãng ra. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "A switch is flipped and the frames begin to whirl at 300 revolutions per minute; centrifugal force throws the honey out of the combs."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 - Tourism",
+      "instructions": "Đọc đoạn văn và trả lời câu hỏi 28-40.",
+      "content": "A Tourism, holidaymaking and travel are these days more significant social phenomena than most commentators have considered. On the face of it there could not be a more trivial subject for a book and indeed since social scientists have had considerable difficulty explaining weightier topics such as work or politics it might be thought that they would have great difficulties in accounting for more trivial phenomena such as holidaymaking. However there are interesting parallels with the study of deviance. This involves the investigation of bizarre and idiosyncratic social practices which happen to be defined as deviant in some societies but not necessarily in others. The assumption is that the investigation of deviance can reveal interesting and significant aspects of normal societies. It could be said that a similar analysis can be applied to tourism.\n\nB Tourism is a leisure activity which presupposes its opposite namely regulated and organised work. It is one manifestation of how work and leisure are organised as separate and regulated spheres of social practice in modern societies. Indeed acting as a tourist is one of the defining characteristics of being modern and the popular concept of tourism is that it is organised within particular places and occurs for regularised periods of time. Tourist relationships arise from a movement of people to and their stay in various destinations. This necessarily involves some movement that is the journey and a period of stay in a new place or places. The journey and the stay are by definition outside the normal places of residence and work and are of a short term and temporary nature and there is a clear intention to return home within a relatively short period of time.\n\nC A substantial proportion of the population of modern societies engages in such tourist practices new socialised forms of provision have developed in order to cope with the mass character of the gazes of tourists as opposed to the individual character of travel. Places are chosen to be visited and be gazed upon because there is an anticipation especially through daydreaming and fantasy of intense pleasures, either on a different scale or involving different senses from those customarily encountered. Such anticipation is constructed and sustained through a variety of non-tourist practices such as films TV literature, magazines records and videos which construct and reinforce this daydreaming.\n\nD Tourists tend to visit features of landscape and townscape which separate them off from everyday experience. Such aspects are viewed because they are taken to be in some sense out of the ordinary. The viewing of these tourist sights often involves different forms of social patterning with a much greater sensitivity to visual elements of landscape or townscape than is normally found in everyday life. People linger over these sights in a way that they would not normally do in their home environment and the vision is objectified or captured through photographs postcards films and so on which enable the memory to be endlessly reproduced and recaptured.\n\nE One of the earliest dissertations on the subject of tourism is Boorstin's analysis of the pseudo event (1964) where he argues that contemporary Americans cannot experience reality directly but thrive on \"pseudo events\". Isolated from the host environment and the local people the mass tourist travels in guided groups and finds pleasure in inauthentic contrived attractions gullibly enjoying the pseudo events and disregarding the real world outside. Over time the images generated of different tourist sights come to constitute a closed self-perpetuating system of illusions which provide the tourist with the basis for selecting and evaluating potential places to visit. Such visits are made says Boorstin, within the \"environmental bubble\" of the familiar American style hotel which insulates the tourist from the strangeness of the host environment.\n\nF To service the burgeoning tourist industry, an array of professionals has developed who attempt to reproduce ever-new objects for the tourist to look at. These objects or places are located in a complex and changing hierarchy. This depends upon the interplay between, on the one hand, competition between interests involved in the provision of such objects and, on the other hand changing class, gender, and generational distinctions of taste within the potential population of visitors. It has been said that to be a tourist is one of the characteristics of the modern experience. Not to go away is like not possessing a car or a nice house. Travel is a marker of status in modern societies and is also thought to be necessary for good health. The role of the professional, therefore, is to cater for the needs and tastes of the tourists in accordance with their class and overall expectations.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "28": "Reading Passage 3 has 6 paragraphs (A-F).\nChoose the most suitable heading for each paragraph from the list of headings below.\nWrite the appropriate numbers (i-ix) in boxes 28-32 on your answer sheet.\nParagraph D has been done for you as an example.\nNB There are more headings than paragraphs so you will not use all of them. You may use any heading more than once.\n\nList of Headings\n:::box\ni The politics of tourism\nii The cost of tourism\niii Justifying the study of tourism\niv Tourism contrasted with travel\nv The essence of modern tourism\nvi Tourism versus leisure\nvii The artificiality of modern tourism\nviii The role of modern tour guides\nix Creating an alternative to the everyday experience\n:::\nExample: Paragraph D - ix",
+          "33": "Do the following statements agree with the views of the writer in Reading Passage 3?\nIn boxes 33-37 write\n:::box\nYES if the statement agrees with the writer\nNO if the statement contradicts the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this\n:::",
+          "38": "Choose one phrase (A-H) from the list of phrases to complete each key point below.\nWrite the appropriate letters (A-H) in boxes 38-40 on your answer sheet.\nThe information in the completed sentences should be an accurate summary of points made by the writer.\nNB There are more phrases A-H than sentences so you will not use them all. You may use any phrase more than once.\n\nList of Phrases\n:::box\nA local people and their environment\nB the expectations of tourists\nC the phenomena of holidaymaking\nD the distinction we make between work and leisure\nE the individual character of travel\nF places seen in everyday life\nG photographs which recapture our holidays\nH sights designed specially for tourists\n:::"
+        }
+      },
+      "questions": [
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "Paragraph A",
+          "answer": "iii Justifying the study of tourism",
+          "explanation": "Đoạn A đặt vấn đề: du lịch thoạt nhìn là đề tài tầm phào, nhưng tác giả lập luận nó đáng nghiên cứu vì có thể soi sáng xã hội bình thường, giống như cách người ta nghiên cứu hành vi lệch chuẩn. Đó là phần BIỆN MINH cho việc nghiên cứu du lịch. → iii.",
+          "points": 1,
+          "options": [
+            "i The politics of tourism",
+            "ii The cost of tourism",
+            "iii Justifying the study of tourism",
+            "iv Tourism contrasted with travel",
+            "v The essence of modern tourism",
+            "vi Tourism versus leisure",
+            "vii The artificiality of modern tourism",
+            "viii The role of modern tour guides",
+            "ix Creating an alternative to the everyday experience"
+          ],
+          "evidence": "The assumption is that the investigation of deviance can reveal interesting and significant aspects of normal societies. It could be said that a similar analysis can be applied to tourism."
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "Paragraph B",
+          "answer": "v The essence of modern tourism",
+          "explanation": "Đoạn B định nghĩa bản chất du lịch hiện đại: hoạt động giải trí đối lập với lao động có tổ chức, gồm chuyến đi và kỳ lưu trú ngắn ngày ngoài nơi ở và nơi làm việc, có ý định rõ ràng là trở về. → v.",
+          "points": 1,
+          "options": [
+            "i The politics of tourism",
+            "ii The cost of tourism",
+            "iii Justifying the study of tourism",
+            "iv Tourism contrasted with travel",
+            "v The essence of modern tourism",
+            "vi Tourism versus leisure",
+            "vii The artificiality of modern tourism",
+            "viii The role of modern tour guides",
+            "ix Creating an alternative to the everyday experience"
+          ],
+          "evidence": "Tourism is a leisure activity which presupposes its opposite namely regulated and organised work."
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "Paragraph C",
+          "answer": "iv Tourism contrasted with travel",
+          "explanation": "Đoạn C đối chiếu du lịch ĐẠI CHÚNG (\"the mass character of the gazes of tourists\") với tính CÁ NHÂN của việc đi lại (\"the individual character of travel\"). → iv.",
+          "points": 1,
+          "options": [
+            "i The politics of tourism",
+            "ii The cost of tourism",
+            "iii Justifying the study of tourism",
+            "iv Tourism contrasted with travel",
+            "v The essence of modern tourism",
+            "vi Tourism versus leisure",
+            "vii The artificiality of modern tourism",
+            "viii The role of modern tour guides",
+            "ix Creating an alternative to the everyday experience"
+          ],
+          "evidence": "new socialised forms of provision have developed in order to cope with the mass character of the gazes of tourists as opposed to the individual character of travel"
+        },
+        {
+          "order": 31,
+          "questionType": "matching",
+          "prompt": "Paragraph E",
+          "answer": "vii The artificiality of modern tourism",
+          "explanation": "Đoạn E trình bày phân tích của Boorstin về \"pseudo events\": khách du lịch đại chúng thích những điểm tham quan dàn dựng, giả tạo, sống trong \"bong bóng môi trường\" của khách sạn kiểu Mỹ. Đó là TÍNH GIẢ TẠO của du lịch hiện đại. → vii.",
+          "points": 1,
+          "options": [
+            "i The politics of tourism",
+            "ii The cost of tourism",
+            "iii Justifying the study of tourism",
+            "iv Tourism contrasted with travel",
+            "v The essence of modern tourism",
+            "vi Tourism versus leisure",
+            "vii The artificiality of modern tourism",
+            "viii The role of modern tour guides",
+            "ix Creating an alternative to the everyday experience"
+          ],
+          "evidence": "Isolated from the host environment and the local people the mass tourist travels in guided groups and finds pleasure in inauthentic contrived attractions gullibly enjoying the pseudo events and disregarding the real world outside."
+        },
+        {
+          "order": 32,
+          "questionType": "matching",
+          "prompt": "Paragraph F",
+          "answer": "viii The role of modern tour guides",
+          "explanation": "Đoạn F nói về đội ngũ chuyên viên của ngành du lịch: họ liên tục tạo ra những đối tượng mới cho khách ngắm và phải chiều theo nhu cầu, thị hiếu của khách theo giai tầng. → viii.",
+          "points": 1,
+          "options": [
+            "i The politics of tourism",
+            "ii The cost of tourism",
+            "iii Justifying the study of tourism",
+            "iv Tourism contrasted with travel",
+            "v The essence of modern tourism",
+            "vi Tourism versus leisure",
+            "vii The artificiality of modern tourism",
+            "viii The role of modern tour guides",
+            "ix Creating an alternative to the everyday experience"
+          ],
+          "evidence": "The role of the professional, therefore, is to cater for the needs and tastes of the tourists in accordance with their class and overall expectations."
+        },
+        {
+          "order": 33,
+          "questionType": "true_false_not_given",
+          "prompt": "Tourism is a trivial subject.",
+          "answer": "NO",
+          "explanation": "Tác giả nói ngược lại ngay câu mở đầu: du lịch, nghỉ mát và đi lại là những hiện tượng xã hội QUAN TRỌNG hơn nhiều so với đánh giá của phần lớn các nhà bình luận. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Tourism, holidaymaking and travel are these days more significant social phenomena than most commentators have considered."
+        },
+        {
+          "order": 34,
+          "questionType": "true_false_not_given",
+          "prompt": "An analysis of deviance can act as a model for the analysis of tourism.",
+          "answer": "YES",
+          "explanation": "Tác giả viết có thể áp dụng lối phân tích TƯƠNG TỰ như phân tích hành vi lệch chuẩn vào du lịch. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "It could be said that a similar analysis can be applied to tourism."
+        },
+        {
+          "order": 35,
+          "questionType": "true_false_not_given",
+          "prompt": "Tourists usually choose to travel overseas.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói chuyến đi diễn ra ngoài nơi cư trú và làm việc thường ngày, hoàn toàn không bàn tới chuyện khách du lịch có hay đi NƯỚC NGOÀI hay không. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 36,
+          "questionType": "true_false_not_given",
+          "prompt": "Tourists focus more on places they visit than those at home.",
+          "answer": "YES",
+          "explanation": "Đoạn D nói khách du lịch nhìn cảnh vật với độ nhạy cảm thị giác cao hơn hẳn ngày thường và nán lại ngắm theo cách họ sẽ không làm ở nơi mình sống. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "People linger over these sights in a way that they would not normally do in their home environment and the vision is objectified or captured through photographs postcards films and so on which enable the memory to be endlessly reproduced and recaptured."
+        },
+        {
+          "order": 37,
+          "questionType": "true_false_not_given",
+          "prompt": "Tour operators try to cheat tourists.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài nói giới chuyên viên du lịch tạo ra những điểm tham quan mới và chiều theo thị hiếu của khách, nhưng không hề quy kết họ LỪA khách. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 38,
+          "questionType": "matching",
+          "prompt": "Our concept of tourism arises from",
+          "answer": "D the distinction we make between work and leisure",
+          "explanation": "Đoạn B: du lịch là hoạt động giải trí, và nó chỉ có nghĩa khi đặt đối lập với lao động có tổ chức — tức khái niệm du lịch sinh ra từ ranh giới ta vạch giữa làm việc và nghỉ ngơi. → D.",
+          "points": 1,
+          "options": [
+            "A local people and their environment",
+            "B the expectations of tourists",
+            "C the phenomena of holidaymaking",
+            "D the distinction we make between work and leisure",
+            "E the individual character of travel",
+            "F places seen in everyday life",
+            "G photographs which recapture our holidays",
+            "H sights designed specially for tourists"
+          ],
+          "evidence": "Tourism is a leisure activity which presupposes its opposite namely regulated and organised work."
+        },
+        {
+          "order": 39,
+          "questionType": "matching",
+          "prompt": "The media can be used to enhance",
+          "answer": "B the expectations of tourists",
+          "explanation": "Đoạn C: phim ảnh, TV, sách báo, tạp chí, băng đĩa dựng nên và củng cố những mơ mộng về nơi sẽ đến — tức truyền thông làm dày thêm KỲ VỌNG của khách du lịch. → B.",
+          "points": 1,
+          "options": [
+            "A local people and their environment",
+            "B the expectations of tourists",
+            "C the phenomena of holidaymaking",
+            "D the distinction we make between work and leisure",
+            "E the individual character of travel",
+            "F places seen in everyday life",
+            "G photographs which recapture our holidays",
+            "H sights designed specially for tourists"
+          ],
+          "evidence": "Such anticipation is constructed and sustained through a variety of non-tourist practices such as films TV literature, magazines records and videos which construct and reinforce this daydreaming."
+        },
+        {
+          "order": 40,
+          "questionType": "matching",
+          "prompt": "People view tourist landscapes in a different way from",
+          "answer": "F places seen in everyday life",
+          "explanation": "Đoạn D: khách du lịch tìm đến những cảnh quan TÁCH họ khỏi trải nghiệm thường ngày và ngắm chúng khác hẳn cách nhìn ở nơi mình sống. → F.",
+          "points": 1,
+          "options": [
+            "A local people and their environment",
+            "B the expectations of tourists",
+            "C the phenomena of holidaymaking",
+            "D the distinction we make between work and leisure",
+            "E the individual character of travel",
+            "F places seen in everyday life",
+            "G photographs which recapture our holidays",
+            "H sights designed specially for tourists"
+          ],
+          "evidence": "Tourists tend to visit features of landscape and townscape which separate them off from everyday experience."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,702 @@
+{
+  "title": "IELTS Master - Reading Test 31",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master - Reading Practice Test 31",
+  "description": "Đề đọc IELTS Master Test 31: Glass - Capturing the Dance of Light / Why Some Women Cross the Finish Line Ahead of Men / Population Viability Analysis.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 - Glass: Capturing the Dance of Light",
+      "instructions": "Đọc đoạn văn và trả lời câu hỏi 1-13.",
+      "content": "A Glass, in one form or another, has long been in noble service to humans. As one of the most widely used of manufactured materials, and certainly the most versatile, it can be as imposing as a telescope mirror the width of a tennis court or as small and simple as a marble rolling across dirt. The uses of this adaptable material have been broadened dramatically by new technologies glass fibre optics - more than eight million miles - carrying telephone and television signals across nations, glass ceramics serving as the nose cones of missiles and as crowns for teeth; tiny glass beads taking radiation doses inside the body to specific organs, even a new type of glass fashioned of nuclear waste in order to dispose of that unwanted material.\n\nB On the horizon are optical computers. These could store programs and process information by means of light - pulses from tiny lasers - rather than electrons and the pulses would travel over glass fibres, not copper wire. These machines could function hundreds of times faster than today's electronic computers and hold vastly more information. Today fibre optics viruses. A new generation of optical instruments is emerging that can provide detailed imaging of the inner workings of cells. It is the surge in fibre optic use and in liquid crystal displays that has set the U.S. glass industry (a 16 billion dollar business employing some 150,000 workers) to building new plants to meet demand.\n\nC But it is not only in technology and commerce that glass has widened its horizons. The use of glass as art, a tradition spins back at least to Roman times, is also booming. Nearly everywhere, it seems, men and women are blowing glass and creating works of art. \"I didn't sell a piece of glass until 1975\", Dale Chihuly said, smiling, for in the 18 years since the end of the dry spell, he has become one of the most financially successful artists of the 20th century. He now has a new commission - a glass sculpture for the headquarters building of a pizza company - for which his fee is half a million dollars.\n\nD But not all the glass technology that touches our lives is ultra-modern. Consider the simple light bulb; at the turn of the century most light bulbs were hand blown, and the cost of one was equivalent to half a day's pay for the average worker. In effect, the invention of the ribbon machine by Corning in the 1920s lighted a nation. The price of a bulb plunged. Small wonder that the machine has been called one of the great mechanical achievements of all time. Yet it is very simple: a narrow ribbon of molten glass travels over a moving belt of steel in which there are holes. The glass sags through the holes and into waiting moulds. Puffs of compressed air then shape the glass. In this way, the envelope of a light bulb is made by a single machine at the rate of 66,000 an hour, as compared with 1,200 a day produced by a team of four glassblowers.\n\nE The secret of the versatility of glass lies in its interior structure. Although it is rigid, and thus like a solid, the atoms are arranged in a random disordered fashion, characteristic of a liquid. In the melting process, the atoms in the raw materials are disturbed from their normal position in the molecular structure; before they can find their way back to crystalline arrangements the glass cools. This looseness in molecular structure gives the material what engineers call tremendous \"formability\" which allows technicians to tailor glass to whatever they need.\n\nF Today, scientists continue to experiment with new glass mixtures and building designers test their imaginations with applications of special types of glass. A London architect, Mike Davies, sees even more dramatic buildings using molecular chemistry. \"Glass is the great building material of the future, the dynamic skin,\" he said. \"Think of glass that has been treated to react to electric currents going through it, glass that will change from clear to opaque at the push of a button, that gives you instant curtains. Think of how the tall buildings in New York could perform a symphony of colours as the glass in them is made to change colours instantly.\" Glass as instant curtains is available now, but the cost is exorbitant. As for the glass changing colours instantly, that may come true. Mike Davies's vision may indeed be on the way to fulfilment.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Reading Passage 1 has six paragraphs (A-F).\nChoose the most suitable heading for each paragraph from the list of headings below.\nWrite the appropriate numbers (i-x) in boxes 1-5 on your answer sheet.\nParagraph A has been done for you as an example.\nNB There are more headings than paragraphs so you will not use all of them. You may use any heading more than once.\n\nList of Headings\n:::box\ni Growth in the market for glass crafts | ii Computers and their dependence on glass\niii What makes glass so adaptable | iv Historical development of glass\nv Scientists' dreams cost millions | vi Architectural experiments with glass\nvii Glass art galleries flourish | viii Exciting innovations in fibre optics\nix A former glass technology | x Everyday uses of glass\n:::",
+          "6": "The diagram below shows the principle of Corning's ribbon machine.\nLabel the diagram by selecting NO MORE THAN THREE WORDS from the Reading Passage to fill each numbered space.\nWrite your answers in boxes 6-8 on your answer sheet.",
+          "9": "Look at the list below of the uses of glass.\nAccording to the passage, state whether these uses exist today, will exist in the future or are not mentioned by the writer.\nIn boxes 9-13 write\n:::box\nA if the uses exist today\nB if the uses will exist in the future\nC if the uses are not mentioned by the writer\n:::"
+        },
+        "groupImages": {
+          "6": [
+            "data:image/jpeg;base64,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"
+          ]
+        },
+        "noteBody": "6 [[6]]\n7 [[7]]\n8 [[8]]"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "matching",
+          "prompt": "Paragraph B",
+          "answer": "viii Exciting innovations in fibre optics",
+          "explanation": "Đoạn B nói về sợi quang: xung ánh sáng chạy trên sợi thuỷ tinh thay cho electron trên dây đồng, rồi kết lại rằng chính \"the surge in fibre optic use\" đang buộc ngành kính Mỹ xây thêm nhà máy. Đó là những đổi mới sôi động của fibre optics. (Không chọn ii vì máy tính quang chỉ là một ví dụ mở đầu.) → viii.",
+          "points": 1,
+          "options": [
+            "i Growth in the market for glass crafts",
+            "ii Computers and their dependence on glass",
+            "iii What makes glass so adaptable",
+            "iv Historical development of glass",
+            "v Scientists' dreams cost millions",
+            "vi Architectural experiments with glass",
+            "vii Glass art galleries flourish",
+            "viii Exciting innovations in fibre optics",
+            "ix A former glass technology",
+            "x Everyday uses of glass"
+          ],
+          "evidence": "It is the surge in fibre optic use and in liquid crystal displays that has set the U.S. glass industry (a 16 billion dollar business employing some 150,000 workers) to building new plants to meet demand."
+        },
+        {
+          "order": 2,
+          "questionType": "matching",
+          "prompt": "Paragraph C",
+          "answer": "i Growth in the market for glass crafts",
+          "explanation": "Đoạn C nói nghệ thuật thuỷ tinh \"is also booming\", khắp nơi người ta thổi thuỷ tinh làm tác phẩm, và Dale Chihuly bán được tác phẩm nửa triệu đô. Đó là sự bùng nổ của THỊ TRƯỜNG đồ mỹ nghệ bằng thuỷ tinh. (Không chọn vii vì bài không nói về các phòng trưng bày.) → i.",
+          "points": 1,
+          "options": [
+            "i Growth in the market for glass crafts",
+            "ii Computers and their dependence on glass",
+            "iii What makes glass so adaptable",
+            "iv Historical development of glass",
+            "v Scientists' dreams cost millions",
+            "vi Architectural experiments with glass",
+            "vii Glass art galleries flourish",
+            "viii Exciting innovations in fibre optics",
+            "ix A former glass technology",
+            "x Everyday uses of glass"
+          ],
+          "evidence": "The use of glass as art, a tradition spins back at least to Roman times, is also booming."
+        },
+        {
+          "order": 3,
+          "questionType": "matching",
+          "prompt": "Paragraph D",
+          "answer": "ix A former glass technology",
+          "explanation": "Đoạn D mở đầu bằng \"not all the glass technology that touches our lives is ultra-modern\" rồi kể về máy băng của Corning những năm 1920 — một công nghệ thuỷ tinh CŨ. → ix.",
+          "points": 1,
+          "options": [
+            "i Growth in the market for glass crafts",
+            "ii Computers and their dependence on glass",
+            "iii What makes glass so adaptable",
+            "iv Historical development of glass",
+            "v Scientists' dreams cost millions",
+            "vi Architectural experiments with glass",
+            "vii Glass art galleries flourish",
+            "viii Exciting innovations in fibre optics",
+            "ix A former glass technology",
+            "x Everyday uses of glass"
+          ],
+          "evidence": "But not all the glass technology that touches our lives is ultra-modern."
+        },
+        {
+          "order": 4,
+          "questionType": "matching",
+          "prompt": "Paragraph E",
+          "answer": "iii What makes glass so adaptable",
+          "explanation": "Đoạn E giải thích bí mật nằm ở cấu trúc bên trong: nguyên tử sắp xếp lộn xộn nên thuỷ tinh có \"formability\" cực lớn, thợ có thể nắn theo ý muốn. Đó chính là điều làm thuỷ tinh DỄ THÍCH ỨNG. → iii.",
+          "points": 1,
+          "options": [
+            "i Growth in the market for glass crafts",
+            "ii Computers and their dependence on glass",
+            "iii What makes glass so adaptable",
+            "iv Historical development of glass",
+            "v Scientists' dreams cost millions",
+            "vi Architectural experiments with glass",
+            "vii Glass art galleries flourish",
+            "viii Exciting innovations in fibre optics",
+            "ix A former glass technology",
+            "x Everyday uses of glass"
+          ],
+          "evidence": "This looseness in molecular structure gives the material what engineers call tremendous \"formability\" which allows technicians to tailor glass to whatever they need."
+        },
+        {
+          "order": 5,
+          "questionType": "matching",
+          "prompt": "Paragraph F",
+          "answer": "vi Architectural experiments with glass",
+          "explanation": "Đoạn F kể về kiến trúc sư Mike Davies và những toà nhà tương lai dùng kính đổi màu, kính làm \"rèm tức thời\" — tức các thử nghiệm KIẾN TRÚC với kính. → vi.",
+          "points": 1,
+          "options": [
+            "i Growth in the market for glass crafts",
+            "ii Computers and their dependence on glass",
+            "iii What makes glass so adaptable",
+            "iv Historical development of glass",
+            "v Scientists' dreams cost millions",
+            "vi Architectural experiments with glass",
+            "vii Glass art galleries flourish",
+            "viii Exciting innovations in fibre optics",
+            "ix A former glass technology",
+            "x Everyday uses of glass"
+          ],
+          "evidence": "Today, scientists continue to experiment with new glass mixtures and building designers test their imaginations with applications of special types of glass."
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Question 6",
+          "answer": [
+            "molten glass",
+            "ribbon of glass",
+            "molten glass ribbon",
+            "ribbon of molten glass",
+            "a ribbon of molten glass",
+            "a narrow ribbon of molten glass",
+            "narrow ribbon of molten glass"
+          ],
+          "explanation": "Mũi tên (6) chỉ vào dải thuỷ tinh nóng chảy rót từ trên xuống: \"a narrow ribbon of molten glass travels over a moving belt of steel\". → molten glass / ribbon of glass / molten glass ribbon.",
+          "points": 1,
+          "evidence": "Yet it is very simple: a narrow ribbon of molten glass travels over a moving belt of steel in which there are holes."
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Question 7",
+          "answer": [
+            "belt of steel",
+            "steel belt",
+            "moving belt",
+            "moving belt of steel",
+            "a moving belt of steel"
+          ],
+          "explanation": "Mũi tên (7) chỉ vào băng tải có đục lỗ đang chạy ngang — chính là \"a moving belt of steel in which there are holes\". → belt of steel / steel belt / moving belt.",
+          "points": 1,
+          "evidence": "Yet it is very simple: a narrow ribbon of molten glass travels over a moving belt of steel in which there are holes."
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Question 8",
+          "answer": [
+            "moulds",
+            "lightbulb moulds",
+            "light bulb moulds",
+            "waiting moulds",
+            "molds",
+            "lightbulb molds"
+          ],
+          "explanation": "Mũi tên (8) chỉ vào các khuôn hình bóng đèn bên dưới băng tải: thuỷ tinh võng qua lỗ rồi rơi vào \"waiting moulds\". → (lightbulb) moulds.",
+          "points": 1,
+          "evidence": "The glass sags through the holes and into waiting moulds."
+        },
+        {
+          "order": 9,
+          "questionType": "matching",
+          "prompt": "dental fittings",
+          "answer": "A the uses exist today",
+          "explanation": "Bài nói gốm thuỷ tinh đang được dùng làm mũi tên lửa VÀ làm mão răng (\"crowns for teeth\") — thì hiện tại, tức đã có hôm nay. → A.",
+          "points": 1,
+          "options": [
+            "A the uses exist today",
+            "B the uses will exist in the future",
+            "C the uses are not mentioned by the writer"
+          ],
+          "evidence": "glass ceramics serving as the nose cones of missiles and as crowns for teeth"
+        },
+        {
+          "order": 10,
+          "questionType": "matching",
+          "prompt": "optical computers",
+          "answer": "B the uses will exist in the future",
+          "explanation": "\"On the horizon are optical computers\" — \"trên đường chân trời\" nghĩa là còn ở phía trước, chưa có. Các động từ đều ở dạng \"could\". → B.",
+          "points": 1,
+          "options": [
+            "A the uses exist today",
+            "B the uses will exist in the future",
+            "C the uses are not mentioned by the writer"
+          ],
+          "evidence": "On the horizon are optical computers."
+        },
+        {
+          "order": 11,
+          "questionType": "matching",
+          "prompt": "sculptures",
+          "answer": "A the uses exist today",
+          "explanation": "Dale Chihuly hiện đang có đơn đặt hàng một tác phẩm điêu khắc bằng thuỷ tinh với thù lao nửa triệu đô — đã tồn tại hôm nay. → A.",
+          "points": 1,
+          "options": [
+            "A the uses exist today",
+            "B the uses will exist in the future",
+            "C the uses are not mentioned by the writer"
+          ],
+          "evidence": "He now has a new commission - a glass sculpture for the headquarters building of a pizza company - for which his fee is half a million dollars."
+        },
+        {
+          "order": 12,
+          "questionType": "matching",
+          "prompt": "fashions",
+          "answer": "C the uses are not mentioned by the writer",
+          "explanation": "Bài đọc hoàn toàn không nhắc tới việc dùng thuỷ tinh trong thời trang. → C (không được đề cập).",
+          "points": 1,
+          "options": [
+            "A the uses exist today",
+            "B the uses will exist in the future",
+            "C the uses are not mentioned by the writer"
+          ]
+        },
+        {
+          "order": 13,
+          "questionType": "matching",
+          "prompt": "curtains",
+          "answer": "B the uses will exist in the future",
+          "explanation": "Ý tưởng kính làm \"rèm tức thời\" nằm trong viễn cảnh tương lai mà Mike Davies mô tả (\"Think of glass that has been treated...\"). Bài có nói hiện đã có nhưng giá \"exorbitant\" (cắt cổ), nên đáp án chính thức xếp vào nhóm sẽ tồn tại trong tương lai. → B.",
+          "points": 1,
+          "options": [
+            "A the uses exist today",
+            "B the uses will exist in the future",
+            "C the uses are not mentioned by the writer"
+          ],
+          "evidence": "Think of glass that has been treated to react to electric currents going through it, glass that will change from clear to opaque at the push of a button, that gives you instant curtains."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 - Why Some Women Cross the Finish Line Ahead of Men",
+      "instructions": "Đọc đoạn văn và trả lời câu hỏi 14-27.",
+      "content": "A Women who apply for jobs in middle or senior management have a higher success rate than men, according to an employment survey. But of course far fewer of them apply for these positions. The study, by recruitment consultants NB Selection, shows that while one in six men who appear on interview shortlists get jobs, the figure rises to one in four for women.\n\nB The study concentrated on applications for management positions in the $45,000 to $110,000 salary range and found that women are more successful than men in both the private and public sectors. Dr Elisabeth Marx from London-based NB Selection described the findings as encouraging for women, in that they send a positive message to them to apply for interesting management positions. But she added, \"We should not lose sight of the fact that significantly fewer women apply for senior positions in comparison with men.\"\n\nC Reasons for higher success rates among women are difficult to isolate. One explanation suggested is that if a woman candidate manages to get on a shortlist, then she has probably already proved herself to be an exceptional candidate. Dr Marx said that when women apply for positions they tend to be better qualified than their male counterparts but are more selective and conservative in their job search. Women tend to research thoroughly before applying for positions or attending interviews. Men, on the other hand, seem to rely on their ability to sell themselves and to convince employers that any shortcomings they have will not prevent them from doing a good job.\n\nD Managerial and executive progress made by women is confirmed by the annual survey of boards of directors carried out by Korn/ Ferry/ Carre/ Orban International. This year the survey shows a doubling of the number of women serving as non-executive directors compared with the previous year. However, progress remains painfully slow and there were still only 18 posts filled by women out of a total of 354 non-executive positions surveyed. Hilary Sears, a partner with Korn/ Ferry, said, \"Women have raised the level of grades we are employed in but we have still not broken through barriers to the top.\"\n\nE In Europe a recent feature of corporate life in the recession has been the delayering of management structures. Sears said that this has halted progress for women in as much as de-layering has taken place either where women are working or in layers they aspire to. Sears also noted a positive trend from the recession, which has been the growing number of women who have started up on their own.\n\nF In business as a whole, there are a number of factors encouraging the prospect of greater equality in the workforce. Demographic trends suggest that the number of women going into employment is steadily increasing. In addition a far greater number of women are now passing through higher education, making them better qualified to move into management positions.\n\nG Organisations such as the European Women's Management Development Network provide a range of opportunities for women to enhance their skills and contacts. Through a series of both pan-European and national workshops and conferences the barriers to women in employment are being broken down. However, Ariane Berthoin Antal, director of the International Institute for Organisational Change of Archamps in France, said that there is only anecdotal evidence of changes in recruitment patterns. And she said, \"It's still so hard for women to even get on to shortlists - there are so many hurdles and barriers.\" Antal agreed that there have been some positive signs but said \"Until there is a belief among employers, until they value the difference, nothing will change.\"",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Reading Passage 2 has 7 paragraphs (A-G).\nState which paragraph discusses each of the points below.\nWrite the appropriate letter (A-G) in boxes 14-19 on your answer sheet.",
+          "20": "The author makes reference to three consultants in the Reading Passage. Which of the list of points below do these consultants make?\nIn boxes 20-23 write\n:::box\nM if the point is made by Dr Marx\nS if the point is made by Hilary Sears\nA if the point is made by Ariane Berthoin Antal\n:::",
+          "24": "Using NO MORE THAN THREE WORDS answer the following questions.\nWrite your answers in boxes 24-27 on your answer sheet."
+        }
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "matching",
+          "prompt": "The drawbacks of current company restructuring patterns.",
+          "answer": "E",
+          "explanation": "Đoạn E nói việc cắt bớt tầng nấc quản lý (de-layering) trong suy thoái đã CHẶN đà tiến của phụ nữ, vì nó diễn ra đúng ở những tầng họ đang làm hoặc muốn vươn tới. → E.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "Sears said that this has halted progress for women in as much as de-layering has taken place either where women are working or in layers they aspire to."
+        },
+        {
+          "order": 15,
+          "questionType": "matching",
+          "prompt": "Associations that provide support for professional women.",
+          "answer": "G",
+          "explanation": "Đoạn G giới thiệu các tổ chức như European Women's Management Development Network — nơi tạo cơ hội cho phụ nữ nâng cao kỹ năng và mở rộng quan hệ. → G.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "Organisations such as the European Women's Management Development Network provide a range of opportunities for women to enhance their skills and contacts."
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "The success rate of female job applicants for management positions.",
+          "answer": "A",
+          "explanation": "Đoạn A đưa con số tỷ lệ trúng tuyển: cứ 6 nam giới vào danh sách phỏng vấn thì 1 người được nhận, còn nữ là 1 trên 4. → A.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "The study, by recruitment consultants NB Selection, shows that while one in six men who appear on interview shortlists get jobs, the figure rises to one in four for women."
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "Male and female approaches to job applications.",
+          "answer": "C",
+          "explanation": "Đoạn C so sánh cách ứng tuyển: phụ nữ tìm hiểu kỹ lưỡng trước khi nộp hồ sơ, còn nam giới thiên về khả năng tự quảng bá bản thân. → C.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "Women tend to research thoroughly before applying for positions or attending interviews. Men, on the other hand, seem to rely on their ability to sell themselves and to convince employers that any shortcomings they have will not prevent them from doing a good job."
+        },
+        {
+          "order": 18,
+          "questionType": "matching",
+          "prompt": "Reasons why more women are being employed in the business sector.",
+          "answer": "F",
+          "explanation": "Đoạn F nêu các yếu tố thúc đẩy bình đẳng: xu hướng nhân khẩu học làm số phụ nữ đi làm tăng đều, và ngày càng nhiều phụ nữ học lên cao. → F.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "Demographic trends suggest that the number of women going into employment is steadily increasing."
+        },
+        {
+          "order": 19,
+          "questionType": "matching",
+          "prompt": "The improvement in female numbers on company management structures.",
+          "answer": "D",
+          "explanation": "Đoạn D dẫn khảo sát hội đồng quản trị: số nữ giám đốc không điều hành năm nay TĂNG GẤP ĐÔI so với năm trước. → D.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "evidence": "This year the survey shows a doubling of the number of women serving as non-executive directors compared with the previous year."
+        },
+        {
+          "order": 20,
+          "questionType": "matching",
+          "prompt": "Selection procedures do not favour women.",
+          "answer": "A the point is made by Ariane Berthoin Antal",
+          "explanation": "Antal nói phụ nữ vẫn rất khó chen chân vào danh sách rút gọn vì \"có quá nhiều rào cản\" — tức quy trình tuyển chọn không có lợi cho họ. → A (Ariane Berthoin Antal).",
+          "points": 1,
+          "options": [
+            "M the point is made by Dr Marx",
+            "S the point is made by Hilary Sears",
+            "A the point is made by Ariane Berthoin Antal"
+          ],
+          "evidence": "It's still so hard for women to even get on to shortlists - there are so many hurdles and barriers."
+        },
+        {
+          "order": 21,
+          "questionType": "matching",
+          "prompt": "The number of female-run businesses is increasing.",
+          "answer": "S the point is made by Hilary Sears",
+          "explanation": "Hilary Sears nhắc tới một xu hướng tích cực từ suy thoái: ngày càng nhiều phụ nữ tự khởi nghiệp. → S (Hilary Sears).",
+          "points": 1,
+          "options": [
+            "M the point is made by Dr Marx",
+            "S the point is made by Hilary Sears",
+            "A the point is made by Ariane Berthoin Antal"
+          ],
+          "evidence": "Sears also noted a positive trend from the recession, which has been the growing number of women who have started up on their own."
+        },
+        {
+          "order": 22,
+          "questionType": "matching",
+          "prompt": "Male applicants exceed female applicants for top posts.",
+          "answer": "M the point is made by Dr Marx",
+          "explanation": "Dr Marx lưu ý rằng số phụ nữ nộp hồ sơ vào các vị trí cấp cao ít hơn hẳn nam giới. → M (Dr Marx).",
+          "points": 1,
+          "options": [
+            "M the point is made by Dr Marx",
+            "S the point is made by Hilary Sears",
+            "A the point is made by Ariane Berthoin Antal"
+          ],
+          "evidence": "We should not lose sight of the fact that significantly fewer women apply for senior positions in comparison with men."
+        },
+        {
+          "order": 23,
+          "questionType": "matching",
+          "prompt": "Women hold higher positions now than they used to.",
+          "answer": "S the point is made by Hilary Sears",
+          "explanation": "Hilary Sears nói phụ nữ đã nâng được CẤP BẬC mà họ được tuyển dụng, dù chưa phá được rào cản lên đến đỉnh. → S (Hilary Sears).",
+          "points": 1,
+          "options": [
+            "M the point is made by Dr Marx",
+            "S the point is made by Hilary Sears",
+            "A the point is made by Ariane Berthoin Antal"
+          ],
+          "evidence": "Women have raised the level of grades we are employed in but we have still not broken through barriers to the top."
+        },
+        {
+          "order": 24,
+          "questionType": "short_answer",
+          "prompt": "What change has there been in the number of women in top management positions detailed in the annual survey?",
+          "answer": [
+            "doubled",
+            "it has doubled",
+            "has doubled",
+            "doubling",
+            "a doubling",
+            "it doubled"
+          ],
+          "explanation": "Khảo sát thường niên cho thấy số phụ nữ làm giám đốc không điều hành TĂNG GẤP ĐÔI so với năm trước. → (it has) doubled / doubling.",
+          "points": 1,
+          "evidence": "This year the survey shows a doubling of the number of women serving as non-executive directors compared with the previous year."
+        },
+        {
+          "order": 25,
+          "questionType": "short_answer",
+          "prompt": "What aspect of company structuring has disadvantaged women?",
+          "answer": [
+            "de-layering",
+            "delayering",
+            "the de-layering",
+            "de-layering of management structures"
+          ],
+          "explanation": "Việc cắt bớt các tầng nấc quản lý (de-layering) đã làm chậm bước tiến của phụ nữ vì nó xảy ra đúng ở những tầng họ đang làm hoặc muốn vươn tới. → de-layering.",
+          "points": 1,
+          "evidence": "Sears said that this has halted progress for women in as much as de-layering has taken place either where women are working or in layers they aspire to."
+        },
+        {
+          "order": 26,
+          "questionType": "short_answer",
+          "prompt": "What information tells us that more women are working nowadays?",
+          "answer": [
+            "demographic trends",
+            "the demographic trends"
+          ],
+          "explanation": "Bài viết: \"Demographic trends suggest that the number of women going into employment is steadily increasing\" — chính các xu hướng nhân khẩu học cho ta biết điều đó. → demographic trends.",
+          "points": 1,
+          "evidence": "Demographic trends suggest that the number of women going into employment is steadily increasing."
+        },
+        {
+          "order": 27,
+          "questionType": "short_answer",
+          "prompt": "Which group of people should change their attitude to recruitment?",
+          "answer": [
+            "employers",
+            "the employers"
+          ],
+          "explanation": "Antal kết luận: chừng nào NHÀ TUYỂN DỤNG chưa thay đổi niềm tin và chưa trân trọng sự khác biệt thì không gì thay đổi cả. → employers.",
+          "points": 1,
+          "evidence": "Until there is a belief among employers, until they value the difference, nothing will change."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 - Population Viability Analysis",
+      "instructions": "Đọc đoạn văn và trả lời câu hỏi 28-40.",
+      "content": "Part A\n\nTo make political decisions about the extent and type of forestry in a region it is important to understand the consequences of those decisions. One tool for assessing the impact of forestry on the ecosystem is population viability analysis (PVA). This is a tool for predicting the probability that a species will become extinct in a particular region over a specific period. It has been successfully used in the United States to provide input into resource exploitation decisions and assist wildlife managers and there is now enormous potential for using population viability to assist wildlife management in Australia's forests.\n\nA species becomes extinct when the last individual dies. This observation is a useful starting point for any discussion of extinction as it highlights the role of luck and chance in the extinction process. To make a prediction about extinction we need to understand the processes that can contribute to it and these fall into four broad categories which are discussed below.\n\nPart B\n\nA Early attempts to predict population viability were based on demographic uncertainty. Whether an individual survives from one year to the next will largely be a matter of chance. Some pairs may produce several young in a single year while others may produce none in that same year. Small populations will fluctuate enormously because of the random nature of birth and death and these chance fluctuations can cause species extinctions even if, on average, the population size should increase. Taking only this uncertainty of ability to reproduce into account, extinction is unlikely if the number of individuals in a population is above about 50 and the population is growing.\n\nB Small populations cannot avoid a certain amount of inbreeding. This is particularly true if there is a very small number of one sex. For example, if there are only 20 individuals of a species and only one is a male, all future individuals in the species must be descended from that one male. For most animal species such individuals are less likely to survive and reproduce. Inbreeding increases the chance of extinction.\n\nC Variation within a species is the raw material upon which natural selection acts. Without genetic variability a species lacks the capacity to evolve and cannot adapt to changes in its environment or to new predators and new diseases. The loss of genetic diversity associated with reductions in population size will contribute to the likelihood of extinction.\n\nD Recent research has shown that other factors need to be considered. Australia's environment fluctuates enormously from year to year. These fluctuations add yet another degree of uncertainty to the survival of many species. Catastrophes such as fire, flood, drought or epidemic may reduce population sizes to a small fraction of their average level. When allowance is made for these two additional elements of uncertainty the population size necessary to be confident of persistence for a few hundred years may increase to several thousand.\n\nPart C\n\nBeside these processes we need to bear in mind the distribution of a population. A species that occurs in five isolated places each containing 20 individuals will not have the same probability of extinction as a species with a single population of 100 individuals in a single locality.\n\nWhere logging occurs (that is, the cutting down of forests for timber) forest dependent creatures in that area will be forced to leave. Ground-dwelling herbivores may return within a decade. However, arboreal marsupials (that is animals which live in trees) may not recover to pre-logging densities for over a century. As more forests are logged, animal population sizes will be reduced further. Regardless of the theory or model that we choose, a reduction in population size decreases the genetic diversity of a population and increases the probability of extinction because of any or all of the processes listed above. It is therefore a scientific fact that increasing the area that is loaded in any region will increase the probability that forest-dependent animals will become extinct.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "28": "Do the following statements agree with the views of the writer in Part A of Reading Passage 3?\nIn boxes 28-31 on your answer sheet write\n:::box\nYES if the statement agrees with the writer\nNO if the statement contradicts the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this\n:::",
+          "32": "These questions are based on Part B of Reading Passage 3. In paragraphs A to D the author describes four processes which may contribute to the extinction of a species. Match the list of processes (i-vi) to the paragraphs.\nWrite the appropriate number (i-vi) in boxes 32-35 on your answer sheet.\nNB There are more processes than paragraphs so you will not use all of them.\n\nProcesses\n:::box\ni Loss of ability to adapt | ii Natural disasters\niii An imbalance of the sexes | iv Human disasters\nv Evolution | vi The haphazard nature of reproduction\n:::",
+          "36": "Based on your reading of Part C, complete the sentences below with words taken from the passage.\nUse NO MORE THAN THREE WORDS for each answer.\nWrite your answers in boxes 36-39 on your answer sheet.",
+          "40": "Choose the appropriate letter A-D and write it in box 40 on your answer sheet."
+        },
+        "noteBody": "While the population of a species may be on the increase, there is always a chance that small isolated groups [[36]]\nSurvival of a species depends on a balance between the size of a population and its [[37]]\nThe likelihood that animals which live in forests will become extinct is increased when [[38]]\nAfter logging herbivores that reside on ground find it easier to return as compared to [[39]]"
+      },
+      "questions": [
+        {
+          "order": 28,
+          "questionType": "true_false_not_given",
+          "prompt": "Scientists are interested in the effect of forestry on native animals.",
+          "answer": "NOT GIVEN",
+          "explanation": "Part A chỉ nói người ra quyết định chính sách và nhà quản lý động vật hoang dã cần hiểu hậu quả của các quyết định lâm nghiệp; bài không hề bàn tới việc CÁC NHÀ KHOA HỌC có quan tâm đến chuyện đó hay không. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 29,
+          "questionType": "true_false_not_given",
+          "prompt": "PVA has been used in Australia for many years.",
+          "answer": "NO",
+          "explanation": "Bài nói ngược lại: PVA đã được dùng thành công ở MỸ, còn ở Úc thì mới chỉ là \"tiềm năng to lớn\" — tức chưa được dùng nhiều năm. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "It has been successfully used in the United States to provide input into resource exploitation decisions and assist wildlife managers and there is now enormous potential for using population viability to assist wildlife management in Australia's forests."
+        },
+        {
+          "order": 30,
+          "questionType": "true_false_not_given",
+          "prompt": "A species is said to be extinct when only one individual exists.",
+          "answer": "NO",
+          "explanation": "Bài viết rõ: một loài tuyệt chủng khi cá thể CUỐI CÙNG chết, chứ không phải khi chỉ còn một cá thể. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "A species becomes extinct when the last individual dies."
+        },
+        {
+          "order": 31,
+          "questionType": "true_false_not_given",
+          "prompt": "Extinction is a naturally occurring phenomenon.",
+          "answer": "NOT GIVEN",
+          "explanation": "Part A bàn về vai trò của may rủi trong quá trình tuyệt chủng, nhưng không đưa ra quan điểm tuyệt chủng có phải là một hiện tượng TỰ NHIÊN hay không. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 32,
+          "questionType": "matching",
+          "prompt": "Paragraph A",
+          "answer": "vi The haphazard nature of reproduction",
+          "explanation": "Đoạn A nói việc một cá thể sống sót từ năm này sang năm khác phần lớn là chuyện may rủi, và \"the random nature of birth and death\" khiến quần thể nhỏ dao động dữ dội. Đó là tính NGẪU NHIÊN của sinh sản. → vi.",
+          "points": 1,
+          "options": [
+            "i Loss of ability to adapt",
+            "ii Natural disasters",
+            "iii An imbalance of the sexes",
+            "iv Human disasters",
+            "v Evolution",
+            "vi The haphazard nature of reproduction"
+          ],
+          "evidence": "Small populations will fluctuate enormously because of the random nature of birth and death and these chance fluctuations can cause species extinctions even if, on average, the population size should increase."
+        },
+        {
+          "order": 33,
+          "questionType": "matching",
+          "prompt": "Paragraph B",
+          "answer": "iii An imbalance of the sexes",
+          "explanation": "Đoạn B lấy ví dụ 20 cá thể mà chỉ có MỘT con đực — tức mất cân bằng giới tính dẫn tới giao phối cận huyết. → iii.",
+          "points": 1,
+          "options": [
+            "i Loss of ability to adapt",
+            "ii Natural disasters",
+            "iii An imbalance of the sexes",
+            "iv Human disasters",
+            "v Evolution",
+            "vi The haphazard nature of reproduction"
+          ],
+          "evidence": "For example, if there are only 20 individuals of a species and only one is a male, all future individuals in the species must be descended from that one male."
+        },
+        {
+          "order": 34,
+          "questionType": "matching",
+          "prompt": "Paragraph C",
+          "answer": "i Loss of ability to adapt",
+          "explanation": "Đoạn C nói thiếu biến dị di truyền thì loài mất khả năng tiến hoá và KHÔNG THÍCH NGHI được với môi trường, kẻ thù hay bệnh mới. → i.",
+          "points": 1,
+          "options": [
+            "i Loss of ability to adapt",
+            "ii Natural disasters",
+            "iii An imbalance of the sexes",
+            "iv Human disasters",
+            "v Evolution",
+            "vi The haphazard nature of reproduction"
+          ],
+          "evidence": "Without genetic variability a species lacks the capacity to evolve and cannot adapt to changes in its environment or to new predators and new diseases."
+        },
+        {
+          "order": 35,
+          "questionType": "matching",
+          "prompt": "Paragraph D",
+          "answer": "ii Natural disasters",
+          "explanation": "Đoạn D kể các thảm hoạ như cháy rừng, lũ lụt, hạn hán hay dịch bệnh — đều là THIÊN TAI, có thể kéo quần thể xuống còn một phần nhỏ. (Không chọn iv vì đây là thảm hoạ tự nhiên, không do con người.) → ii.",
+          "points": 1,
+          "options": [
+            "i Loss of ability to adapt",
+            "ii Natural disasters",
+            "iii An imbalance of the sexes",
+            "iv Human disasters",
+            "v Evolution",
+            "vi The haphazard nature of reproduction"
+          ],
+          "evidence": "Catastrophes such as fire, flood, drought or epidemic may reduce population sizes to a small fraction of their average level."
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Question 36",
+          "answer": [
+            "will not survive",
+            "may not survive",
+            "will become extinct",
+            "may become extinct",
+            "could become extinct",
+            "might not survive",
+            "might become extinct",
+            "do not survive"
+          ],
+          "explanation": "Dù quần thể nói chung có thể đang tăng, những nhóm nhỏ biệt lập vẫn có thể KHÔNG SỐNG SÓT — bài nói dao động ngẫu nhiên có thể gây tuyệt chủng \"even if, on average, the population size should increase\". → will/may not survive (hoặc will/may/could become extinct).",
+          "points": 1,
+          "evidence": "Small populations will fluctuate enormously because of the random nature of birth and death and these chance fluctuations can cause species extinctions even if, on average, the population size should increase."
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Question 37",
+          "answer": [
+            "locality",
+            "distribution",
+            "its distribution",
+            "its locality"
+          ],
+          "explanation": "Part C: ngoài các quá trình trên, còn phải tính đến SỰ PHÂN BỐ của quần thể — 5 nhóm 20 cá thể tách biệt khác hẳn một quần thể 100 cá thể ở cùng MỘT ĐỊA ĐIỂM. → distribution / locality.",
+          "points": 1,
+          "evidence": "Beside these processes we need to bear in mind the distribution of a population."
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Question 38",
+          "answer": [
+            "logging takes place",
+            "logging occurs",
+            "logging happens",
+            "logging occur"
+          ],
+          "explanation": "Bài nói khi KHAI THÁC GỖ diễn ra thì các loài sống phụ thuộc vào rừng buộc phải rời đi, và càng nhiều rừng bị chặt thì xác suất tuyệt chủng càng tăng. → logging takes place / logging occurs.",
+          "points": 1,
+          "evidence": "Where logging occurs (that is, the cutting down of forests for timber) forest dependent creatures in that area will be forced to leave."
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Question 39",
+          "answer": [
+            "arboreal marsupials",
+            "the arboreal marsupials"
+          ],
+          "explanation": "Thú ăn cỏ sống trên mặt đất có thể quay lại trong vòng một thập kỷ, còn thú có túi sống trên cây (arboreal marsupials) phải mất hơn một thế kỷ. → arboreal marsupials.",
+          "points": 1,
+          "evidence": "Ground-dwelling herbivores may return within a decade. However, arboreal marsupials (that is animals which live in trees) may not recover to pre-logging densities for over a century."
+        },
+        {
+          "order": 40,
+          "questionType": "multiple_choice",
+          "prompt": "An alternative heading for the passage could be:",
+          "answer": "B Influential factors in assessing survival probability",
+          "explanation": "Cả bài xoay quanh công cụ PVA và BỐN NHÓM YẾU TỐ (may rủi sinh sản, cận huyết, mất đa dạng di truyền, thiên tai) cộng thêm sự phân bố — tất cả đều là những yếu tố ảnh hưởng tới việc đánh giá xác suất sống sót của một loài. → B.",
+          "points": 1,
+          "options": [
+            "A The protection of native flora and fauna",
+            "B Influential factors in assessing survival probability",
+            "C An economic rationale for the logging of forests",
+            "D Preventive measures for the extinction of a species"
+          ],
+          "evidence": "To make a prediction about extinction we need to understand the processes that can contribute to it and these fall into four broad categories which are discussed below."
+        }
+      ]
+    }
+  ]
+}

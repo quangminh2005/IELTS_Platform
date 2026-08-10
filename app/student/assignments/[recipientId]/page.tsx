@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { AttemptWorkspace } from "@/components/attempt-workspace";
 import { ensureAttemptSkills, startAttempt } from "@/lib/actions/attempts";
 import { auth } from "@/lib/auth";
+import { examUnitsForStudent } from "@/lib/exam-payload";
 import { detectMultiSelectGroups } from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
@@ -116,11 +117,23 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
     )
   );
 
+  // Đáp án đúng/giải thích/dẫn chứng/transcript CHỈ được dùng ở server (ngay phía
+  // trên để dò nhóm "Choose N", và lúc chấm bài) — tuyệt đối không đi kèm xuống
+  // client, vì Next serialize mọi prop của client component vào HTML trang.
+  const examUnits = examUnitsForStudent(recipient.assignment.units);
+
   return (
     <AttemptWorkspace
       recipientId={recipient.id}
       attempt={activeAttempt}
-      assignment={recipient.assignment}
+      assignment={{
+        title: recipient.assignment.title,
+        instructions: recipient.assignment.instructions,
+        timeLimitMinutes: recipient.assignment.timeLimitMinutes,
+        skillTimeLimitsJson: recipient.assignment.skillTimeLimitsJson,
+        lockAudio: recipient.assignment.lockAudio,
+        units: examUnits
+      }}
       highlights={activeAttempt.highlights}
       savedAnswers={savedAnswers}
       multiSelectGroups={multiSelectGroups}

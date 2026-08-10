@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireTeacher } from "@/lib/actions/classes";
+import { isAllowedAudioUrl } from "@/lib/audio-source";
 import { prisma } from "@/lib/prisma";
 
 type TranscribeResult = { ok: true; transcript: string } | { ok: false; error: string };
@@ -30,14 +31,25 @@ export async function transcribeAnswer(answerId: string): Promise<TranscribeResu
   if (!answer) {
     return { ok: false, error: "Không tìm thấy bài làm." };
   }
-  if (!answer.value || !/^https?:\/\//i.test(answer.value)) {
+  if (!answer.value) {
     return { ok: false, error: "Câu này chưa có bản ghi âm để phiên âm." };
   }
+  // Answer.value do client gửi lên nên KHÔNG được tin: chốt đúng nguồn Vercel Blob
+  // trước khi máy chủ đi tải, nếu không đây là đường bắt máy chủ gọi hộ vào mạng
+  // nội bộ (xem lib/audio-source.ts).
+  if (!isAllowedAudioUrl(answer.value)) {
+    return {
+      ok: false,
+      error: "Bản ghi của câu này không nằm ở kho file hợp lệ nên không phiên âm được."
+    };
+  }
 
-  // Tải file audio từ Vercel Blob.
+  // Tải file audio từ Vercel Blob. redirect "error": blob thật trả thẳng 200 không
+  // chuyển hướng, nên nếu có 3xx thì đó là mưu chuyển hướng ngược vào mạng nội bộ
+  // sau khi đã qua được vòng kiểm URL ở trên.
   let audioResponse: Response;
   try {
-    audioResponse = await fetch(answer.value);
+    audioResponse = await fetch(answer.value, { redirect: "error" });
   } catch {
     return { ok: false, error: "Không tải được file ghi âm." };
   }

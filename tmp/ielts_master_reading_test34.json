@@ -1,0 +1,712 @@
+{
+  "title": "IELTS Master - Reading Test 34",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master - Reading Practice Test 34",
+  "description": "Đề đọc IELTS Master Test 34: Implementing the Cycle of Success / The language barrier / What is a Port City?",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 - Implementing the Cycle of Success: A Case Study",
+      "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.",
+      "content": "Within Australia, Australian Hotels Inc (AHI) operates nine hotels and employs over 2000 permanent full-time staff, 300 permanent part-time employees and 100 casual staff. One of its latest ventures, the Sydney Airport hotel (SAH), opened in March 1995. The hotel is the closest to Sydney Airport and is designed to provide the best available accommodation, food and beverage and meeting facilities in Sydney's southern suburbs. Similar to many international hotel chains, however, AHI has experienced difficulties in Australia in providing long-term profits for hotel owners, as a result of the country's high labour-cost structure. In order to develop an economically viable hotel organisation model, AHI decided to implement some new policies and practices at SAH.\n\nThe first of the initiatives was an organisational structure with only three levels of management - compared to the traditional seven. Partly as a result of this change, there are 25 per cent fewer management positions, enabling a significant saving. This change also has other implications. Communication, both up and down the organisation, has greatly improved. Decision-making has been forced down in many cases to front-line employees. As a result, guest requests are usually met without reference to a supervisor, improving both customer and employee satisfaction.\n\nThe hotel also recognised that it would need a different approach to selecting employees who would fit in with its new policies. In its advertisements, the hotel stated a preference for people with some 'service' experience in order to minimise traditional work practices being introduced into the hotel. Over 7000 applicants filled in application forms for the 120 jobs initially offered at SAH. The balance of the positions at the hotel (30 management and 40 shift leader positions) were predominantly filled by transfers from other AHI properties.\n\nA series of tests and interviews were conducted with potential employees, which eventually left 280 applicants competing for the 120 advertised positions. After the final interview, potential recruits were divided into three categories. Category A was for applicants exhibiting strong leadership qualities, Category C was for applicants perceived to be followers, and Category B was for applicants with both leader and follower qualities. Department heads and shift leaders then composed prospective teams using a combination of people from all three categories. Once suitable teams were formed, offers of employment were made to team members.\n\nAnother major initiative by SAH was to adopt a totally multi-skilled workforce. Although there may be some limitations with highly technical jobs such as cooking or maintenance, wherever possible, employees at SAH are able to work in a wide variety of positions. A multi-skilled workforce provides far greater management flexibility during peak and quiet times to transfer employees to needed positions. For example, when office staff are away on holidays during quiet period of the year, employees in either food or beverage or housekeeping departments can temporarily fill in.\n\nThe most crucial way, however, of improving the labour cost structure at SAH was to find better, more productive ways of providing customer service. SAH management concluded this would first require a process of 'benchmarking'. The prime objective of the benchmarking process was to compare a range of service delivery processes across a range of criteria using teams made up of employees from different departments within the hotel which interacted with each other. This process resulted in performance measures that greatly enhanced SAH's ability to improve productivity and quality.\n\nThe front office team discovered through this project that a high proportion of AHI Club member reservations were incomplete. As a result, the service provided to these guests was below the standard promised to them as part of their membership agreement. Reducing the number of incomplete reservations greatly improved guest perceptions of service.\n\nIn addition, a program modelled on an earlier project called 'Take Charge' was implemented. Essentially, Take Charge provides an effective feedback loop from both customers and employees. Customer comments, both positive and negative, are recorded by staff. These are collated regularly to identify opportunities for improvement. Just as importantly, employees are requested to note down their own suggestions for improvement. (AHI has set an expectation that employees will submit at least three suggestions for every one they receive from a customer.)\n\nEmployee feedback is reviewed daily and suggestions are implemented within 48 hours, if possible, or a valid reason is given for non-implementation. If suggestions require analysis or data collection, the Take Charge team has 30 days in which to address the issue and come up with recommendations.\n\nAlthough quantitative evidence of AHI's initiatives at SAH are limited at present, anecdotal evidence clearly suggests that these practices are working. Indeed AHI is progressively rolling out these initiatives in other hotels in Australia, whilst numerous overseas visitors have come to see how the program works.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Choose the appropriate letters A-D and write them in boxes 1-5 on your answer sheet.",
+          "6": "Complete the following summary of the last four paragraphs of Reading Passage 1 using ONE OR TWO words from the passage.\nWrite your answers in boxes 6-13 on your answer sheet."
+        },
+        "noteBody": "# What they did at SAH\nTeams of employees were selected from different hotel departments to participate in a [[6]] exercise. The information collected was used to compare [[7]] processes which, in turn, led to the development of [[8]] that would be used to increase the hotel's capacity to improve [[9]] as well as quality. Also, an older program known as [[10]] was introduced at SAH. In this program, [[11]] is sought from customers and staff. Wherever possible [[12]] suggestions are implemented within 48 hours. Other suggestions are investigated for their feasibility for a period of up to [[13]]"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "multiple_choice",
+          "prompt": "The high costs of running AHI's hotels are related to their",
+          "answer": "C staff",
+          "explanation": "Bài nói AHI khó tạo lợi nhuận dài hạn ở Úc vì cơ cấu CHI PHÍ NHÂN CÔNG cao của nước này — tức chi phí liên quan tới nhân viên. → C.",
+          "points": 1,
+          "options": [
+            "A management",
+            "B size",
+            "C staff",
+            "D policies"
+          ],
+          "evidence": "Similar to many international hotel chains, however, AHI has experienced difficulties in Australia in providing long-term profits for hotel owners, as a result of the country's high labour-cost structure."
+        },
+        {
+          "order": 2,
+          "questionType": "multiple_choice",
+          "prompt": "SAH's new organisational structure requires",
+          "answer": "A 75% of the old management positions",
+          "explanation": "Bài nói số vị trí quản lý GIẢM 25%, tức chỉ còn 75% so với trước. → A.",
+          "points": 1,
+          "options": [
+            "A 75% of the old management positions",
+            "B 25% of the old management positions",
+            "C 25% more management positions",
+            "D 5% fewer management positions"
+          ],
+          "evidence": "Partly as a result of this change, there are 25 per cent fewer management positions, enabling a significant saving."
+        },
+        {
+          "order": 3,
+          "questionType": "multiple_choice",
+          "prompt": "The SAH's approach to organisational structure required changing practices in",
+          "answer": "C hiring staff",
+          "explanation": "Khách sạn nhận ra cần một cách TUYỂN CHỌN nhân viên khác đi để hợp với chính sách mới — tức thay đổi cách tuyển dụng. → C.",
+          "points": 1,
+          "options": [
+            "A industrial relations",
+            "B firing staff",
+            "C hiring staff",
+            "D marketing"
+          ],
+          "evidence": "The hotel also recognised that it would need a different approach to selecting employees who would fit in with its new policies."
+        },
+        {
+          "order": 4,
+          "questionType": "multiple_choice",
+          "prompt": "The total number of jobs advertised at the SAH was ...",
+          "answer": "B 120",
+          "explanation": "Có hơn 7000 người nộp đơn cho 120 vị trí ĐƯỢC ĐĂNG TUYỂN; 70 vị trí còn lại (30 quản lý + 40 tổ trưởng ca) lấy từ điều chuyển nội bộ chứ không đăng tuyển. → B.",
+          "points": 1,
+          "options": [
+            "A 70",
+            "B 120",
+            "C 170",
+            "D 280"
+          ],
+          "evidence": "Over 7000 applicants filled in application forms for the 120 jobs initially offered at SAH."
+        },
+        {
+          "order": 5,
+          "questionType": "multiple_choice",
+          "prompt": "Categories A, B and C were used to select...",
+          "answer": "B new teams",
+          "explanation": "Sau vòng phỏng vấn cuối, ứng viên được chia ba nhóm, rồi trưởng bộ phận và tổ trưởng ca GHÉP ĐỘI bằng cách kết hợp người từ cả ba nhóm. → B.",
+          "points": 1,
+          "options": [
+            "A front office staff",
+            "B new teams",
+            "C department heads",
+            "D new managers"
+          ],
+          "evidence": "Department heads and shift leaders then composed prospective teams using a combination of people from all three categories."
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Question 6",
+          "answer": [
+            "benchmarking",
+            "'benchmarking'",
+            "a benchmarking"
+          ],
+          "explanation": "Ban lãnh đạo SAH kết luận trước hết cần một quy trình gọi là 'benchmarking' (đối sánh chuẩn). → benchmarking.",
+          "points": 1,
+          "evidence": "SAH management concluded this would first require a process of 'benchmarking'."
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Question 7",
+          "answer": [
+            "service delivery",
+            "a range of service delivery",
+            "range of service delivery"
+          ],
+          "explanation": "Mục tiêu chính của việc đối sánh chuẩn là so sánh một loạt quy trình CUNG CẤP DỊCH VỤ theo nhiều tiêu chí. → (a range of) service delivery.",
+          "points": 1,
+          "evidence": "The prime objective of the benchmarking process was to compare a range of service delivery processes across a range of criteria using teams made up of employees from different departments within the hotel which interacted with each other."
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Question 8",
+          "answer": [
+            "performance measures",
+            "measures",
+            "the performance measures"
+          ],
+          "explanation": "Quy trình này cho ra các THƯỚC ĐO HIỆU SUẤT giúp SAH nâng cao năng suất và chất lượng. → (performance) measures.",
+          "points": 1,
+          "evidence": "This process resulted in performance measures that greatly enhanced SAH's ability to improve productivity and quality."
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Question 9",
+          "answer": [
+            "productivity",
+            "the productivity"
+          ],
+          "explanation": "Các thước đo đó tăng khả năng cải thiện NĂNG SUẤT và chất lượng. → productivity.",
+          "points": 1,
+          "evidence": "This process resulted in performance measures that greatly enhanced SAH's ability to improve productivity and quality."
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Question 10",
+          "answer": [
+            "Take Charge",
+            "'Take Charge'",
+            "the Take Charge"
+          ],
+          "explanation": "Một chương trình dựng theo dự án cũ mang tên 'Take Charge' được áp dụng tại SAH. → Take Charge.",
+          "points": 1,
+          "evidence": "In addition, a program modelled on an earlier project called 'Take Charge' was implemented."
+        },
+        {
+          "order": 11,
+          "questionType": "note_completion",
+          "prompt": "Question 11",
+          "answer": [
+            "feedback",
+            "the feedback"
+          ],
+          "explanation": "Take Charge tạo ra một vòng PHẢN HỒI hiệu quả từ cả khách hàng lẫn nhân viên. → feedback.",
+          "points": 1,
+          "evidence": "Essentially, Take Charge provides an effective feedback loop from both customers and employees."
+        },
+        {
+          "order": 12,
+          "questionType": "note_completion",
+          "prompt": "Question 12",
+          "answer": [
+            "employee",
+            "staff",
+            "employees",
+            "employee's"
+          ],
+          "explanation": "Phản hồi của NHÂN VIÊN được xem xét hằng ngày và các đề xuất được thực hiện trong 48 giờ nếu có thể. → employee / staff.",
+          "points": 1,
+          "evidence": "Employee feedback is reviewed daily and suggestions are implemented within 48 hours, if possible, or a valid reason is given for non-implementation."
+        },
+        {
+          "order": 13,
+          "questionType": "note_completion",
+          "prompt": "Question 13",
+          "answer": [
+            "30 days",
+            "thirty days"
+          ],
+          "explanation": "Nếu đề xuất cần phân tích hoặc thu thập dữ liệu, nhóm Take Charge có 30 NGÀY để xử lý và đưa ra khuyến nghị. → 30 days.",
+          "points": 1,
+          "evidence": "If suggestions require analysis or data collection, the Take Charge team has 30 days in which to address the issue and come up with recommendations."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2",
+      "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.",
+      "content": "The discovery that language can be a barrier to communication is quickly made by all who travel, study, govern or sell. Whether the activity is tourism, research, government, policing, business, or data dissemination, the lack of a common language can severely impede progress or can halt it altogether. 'Common language' here usually means a foreign language, but the same point applies in principle to any encounter with unfamiliar dialects or styles within a single language. 'They don't talk the same language' has a major metaphorical meaning alongside its literal one.\n\nAlthough communication problems of this kind must happen thousands of times each day, very few become public knowledge. Publicity comes only when a failure to communicate has major consequences, such as strikes, lost orders, legal problems, or fatal accidents - even, at times, war. One reported instance of communication failure took place in 1970, when several Americans ate a species of poisonous mushroom. No remedy was known, and two of the people died within days. A radio report of the case was heard by a chemist who knew of a treatment that had been successfully used in 1959 and published in 1963. Why had the American doctors not heard of it seven years later? Presumably because the report of the treatment had been published only in journals written in European languages other than English.\n\nSeveral comparable cases have been reported. But isolated examples do not give an impression of the size of the problem - something that can come only from studies of the use or avoidance of foreign-language materials and contacts in different communicative situations. In the English-speaking scientific world, for example, surveys of books and documents consulted in libraries and other information agencies have shown that very little foreign-language material is ever consulted. Library requests in the field of science and technology showed that only 13 per cent were for foreign language periodicals. Studies of the sources cited in publications lead to a similar conclusion: the use of foreign-language sources is often found to be as low as 10 per cent.\n\nThe language barrier presents itself in stark form to firms who wish to market their products in other countries. British industry, in particular, has in recent decades often been criticized for its linguistic insularity - for its assumption that foreign buyers will be happy to communicate in English, and that awareness of other languages is not therefore a priority. In the 1960s, over two-thirds of British firms dealing with non-English-speaking customers were using English for outgoing correspondence; many had their sales literature only in English; and as many as 40 per cent employed no-one able to communicate in the customers' languages. A similar problem was identified in other English-speaking countries, notably the USA, Australia and New Zealand. And non-English-speaking countries were by no means exempt - although the widespread use of English as an alternative language made them less open to the charge of insularity.\n\nThe criticism and publicity given to this problem since the 1960s seems to have greatly improved the situation. Industrial training schemes have promoted an increase in linguistic and cultural awareness. Many firms now have their own translation services; to take just one example in Britain, Rowntree Mackintosh now publish their documents in six languages (English, French, German, Dutch, Italian and Xhosa). Some firms run part-time language courses in the languages of the countries with which they are most involved; some produce their own technical glossaries, to ensure consistency when material is being translated. It is now much more readily appreciated that marketing efforts can be delayed, damaged, or disrupted by a failure to take account of the linguistic needs of the customer.\n\nThe changes in awareness have been most marked in English-speaking countries, where the realisation has gradually dawned that by no means everyone in the world knows English well enough to negotiate in it. This is especially a problem when English is not an official language of public administration, as in most parts of the Far East, Russia, Eastern Europe, the Arab world, Latin America and French speaking Africa. Even in cases where foreign customers can speak English quite well, it is often forgotten that they may not be able to understand it to the required level - bearing in mind the regional and social variation which permeates speech and which can cause major problems of listening comprehension. In securing understanding, how 'we' speak to 'them' is just as important, it appears, as how 'they' speak to 'us'.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Complete each of the following statements (Questions 14-17) with words taken from Reading Passage 2.\nWrite NO MORE THAN THREE WORDS for each answer.\nWrite your answers in boxes 14-17 on your answer sheet.",
+          "18": "Choose the appropriate letters A-D and write them in boxes 18-20 on your answer sheet.",
+          "21": "List the FOUR main ways in which British companies have tried to solve the problems of the language barrier since the 1960s.\nWrite NO MORE THAN THREE WORDS for each answer.\nWrite your answers in boxes 21-24 on your answer sheet.\nYou may write the four ways in any order.",
+          "25": "Choose the appropriate letters A-D and write them in boxes 25 and 26 on your answer sheet."
+        },
+        "noteBody": "Language problems may come to the attention of the public when they have [[14]] such as fatal accidents or social problems.\nEvidence of the extent of the language barrier has been gained from [[15]] of materials used by scientists such as books and periodicals.\nAn example of British linguistic insularity is the use of English for materials such as [[16]]\nAn example of a part of the world where people may have difficulty in negotiating English is [[17]]"
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "note_completion",
+          "prompt": "Question 14",
+          "answer": [
+            "major consequences",
+            "serious consequences"
+          ],
+          "explanation": "Vấn đề ngôn ngữ chỉ được công chúng chú ý khi việc giao tiếp thất bại gây ra HẬU QUẢ LỚN như đình công, mất đơn hàng, kiện tụng hay tai nạn chết người. → major consequences.",
+          "points": 1,
+          "evidence": "Publicity comes only when a failure to communicate has major consequences, such as strikes, lost orders, legal problems, or fatal accidents - even, at times, war."
+        },
+        {
+          "order": 15,
+          "questionType": "note_completion",
+          "prompt": "Question 15",
+          "answer": [
+            "surveys",
+            "studies",
+            "surveys and studies"
+          ],
+          "explanation": "Bằng chứng về quy mô của rào cản ngôn ngữ đến từ các CUỘC KHẢO SÁT về sách và tài liệu được tra cứu trong thư viện. → surveys.",
+          "points": 1,
+          "evidence": "In the English-speaking scientific world, for example, surveys of books and documents consulted in libraries and other information agencies have shown that very little foreign-language material is ever consulted."
+        },
+        {
+          "order": 16,
+          "questionType": "note_completion",
+          "prompt": "Question 16",
+          "answer": [
+            "sales literature",
+            "their sales literature"
+          ],
+          "explanation": "Một biểu hiện của tính khép kín về ngôn ngữ của doanh nghiệp Anh: nhiều hãng chỉ có TÀI LIỆU BÁN HÀNG bằng tiếng Anh. → sales literature.",
+          "points": 1,
+          "evidence": "In the 1960s, over two-thirds of British firms dealing with non-English-speaking customers were using English for outgoing correspondence; many had their sales literature only in English; and as many as 40 per cent employed no-one able to communicate in the customers' languages."
+        },
+        {
+          "order": 17,
+          "questionType": "note_completion",
+          "prompt": "Question 17",
+          "answer": [
+            "Eastern Europe",
+            "the Far East",
+            "Far East",
+            "Russia",
+            "the Arab world",
+            "Arab world",
+            "Latin America",
+            "French speaking Africa",
+            "French-speaking Africa"
+          ],
+          "explanation": "Bài liệt kê những nơi tiếng Anh không phải ngôn ngữ hành chính chính thức nên người ta khó đàm phán bằng tiếng Anh: Viễn Đông, Nga, Đông Âu, thế giới Ả Rập, Mỹ Latinh và châu Phi nói tiếng Pháp. Chỉ cần nêu MỘT nơi. → Eastern Europe / Far East / Russia / Arab world / Latin America / French speaking Africa.",
+          "points": 1,
+          "evidence": "This is especially a problem when English is not an official language of public administration, as in most parts of the Far East, Russia, Eastern Europe, the Arab world, Latin America and French speaking Africa."
+        },
+        {
+          "order": 18,
+          "questionType": "multiple_choice",
+          "prompt": "According to the passage, 'They don't talk the same language' (paragraph 1), can refer to problems in ...",
+          "answer": "C understanding dialect or style",
+          "explanation": "Bài nói \"common language\" thường nghĩa là ngoại ngữ, NHƯNG điều đó cũng đúng với việc gặp phải phương ngữ hay lối nói lạ ngay trong cùng một thứ tiếng. → C.",
+          "points": 1,
+          "options": [
+            "A understanding metaphor",
+            "B learning foreign languages",
+            "C understanding dialect or style",
+            "D dealing with technological change"
+          ],
+          "evidence": "'Common language' here usually means a foreign language, but the same point applies in principle to any encounter with unfamiliar dialects or styles within a single language."
+        },
+        {
+          "order": 19,
+          "questionType": "multiple_choice",
+          "prompt": "The case of the poisonous mushrooms (paragraph 2) suggests that American doctors ...",
+          "answer": "B only read medical articles if they are in English",
+          "explanation": "Bác sĩ Mỹ không biết đến cách chữa dù nó đã công bố từ 1963, có lẽ vì báo cáo chỉ đăng trên các tạp chí viết bằng tiếng châu Âu khác tiếng Anh. → B.",
+          "points": 1,
+          "options": [
+            "A should pay more attention to radio reports",
+            "B only read medical articles if they are in English",
+            "C are sometimes unwilling to try foreign treatments",
+            "D do not always communicate effectively with their patients"
+          ],
+          "evidence": "Presumably because the report of the treatment had been published only in journals written in European languages other than English."
+        },
+        {
+          "order": 20,
+          "questionType": "multiple_choice",
+          "prompt": "According to the writer, the linguistic insularity of British businesses ...",
+          "answer": "C is not as bad now as it used to be in the past",
+          "explanation": "Bài viết những chỉ trích và sự chú ý của dư luận từ thập niên 1960 dường như đã cải thiện tình hình rất nhiều — tức nay đỡ hơn trước. → C.",
+          "points": 1,
+          "options": [
+            "A later spread to other countries",
+            "B had a negative effect on their business",
+            "C is not as bad now as it used to be in the past",
+            "D made non-English-speaking companies turn to other markets"
+          ],
+          "evidence": "The criticism and publicity given to this problem since the 1960s seems to have greatly improved the situation."
+        },
+        {
+          "order": 21,
+          "questionType": "short_answer",
+          "prompt": "",
+          "answer": [
+            "(industrial) training (schemes)",
+            "industrial training schemes",
+            "training schemes",
+            "industrial training",
+            "training",
+            "translation services",
+            "(their own) translation services",
+            "own translation services",
+            "(part time) language course",
+            "part-time language courses",
+            "part time language courses",
+            "language courses",
+            "language course",
+            "(technical) glossaries",
+            "technical glossaries",
+            "glossaries",
+            "own technical glossaries"
+          ],
+          "explanation": "Bốn cách các doanh nghiệp Anh đã dùng từ thập niên 1960: (1) các chương trình đào tạo trong ngành, (2) lập bộ phận dịch thuật riêng, (3) mở khoá học ngoại ngữ bán thời gian, (4) tự biên soạn bảng thuật ngữ kỹ thuật. Ô này chấp nhận bất kỳ cách nào trong bốn cách trên.",
+          "points": 1,
+          "evidence": "Industrial training schemes have promoted an increase in linguistic and cultural awareness."
+        },
+        {
+          "order": 22,
+          "questionType": "short_answer",
+          "prompt": "",
+          "answer": [
+            "(industrial) training (schemes)",
+            "industrial training schemes",
+            "training schemes",
+            "industrial training",
+            "training",
+            "translation services",
+            "(their own) translation services",
+            "own translation services",
+            "(part time) language course",
+            "part-time language courses",
+            "part time language courses",
+            "language courses",
+            "language course",
+            "(technical) glossaries",
+            "technical glossaries",
+            "glossaries",
+            "own technical glossaries"
+          ],
+          "explanation": "Cách thứ hai: nhiều hãng nay có DỊCH VỤ DỊCH THUẬT riêng — ví dụ Rowntree Mackintosh xuất bản tài liệu bằng sáu thứ tiếng. (Ô này chấp nhận bất kỳ cách nào trong bốn cách, không phụ thuộc thứ tự.)",
+          "points": 1,
+          "evidence": "Many firms now have their own translation services; to take just one example in Britain, Rowntree Mackintosh now publish their documents in six languages (English, French, German, Dutch, Italian and Xhosa)."
+        },
+        {
+          "order": 23,
+          "questionType": "short_answer",
+          "prompt": "",
+          "answer": [
+            "(industrial) training (schemes)",
+            "industrial training schemes",
+            "training schemes",
+            "industrial training",
+            "training",
+            "translation services",
+            "(their own) translation services",
+            "own translation services",
+            "(part time) language course",
+            "part-time language courses",
+            "part time language courses",
+            "language courses",
+            "language course",
+            "(technical) glossaries",
+            "technical glossaries",
+            "glossaries",
+            "own technical glossaries"
+          ],
+          "explanation": "Cách thứ ba: một số hãng mở KHOÁ HỌC NGOẠI NGỮ BÁN THỜI GIAN theo ngôn ngữ của các nước họ làm ăn nhiều nhất. (Ô này chấp nhận bất kỳ cách nào trong bốn cách.)",
+          "points": 1,
+          "evidence": "Some firms run part-time language courses in the languages of the countries with which they are most involved; some produce their own technical glossaries, to ensure consistency when material is being translated."
+        },
+        {
+          "order": 24,
+          "questionType": "short_answer",
+          "prompt": "",
+          "answer": [
+            "(industrial) training (schemes)",
+            "industrial training schemes",
+            "training schemes",
+            "industrial training",
+            "training",
+            "translation services",
+            "(their own) translation services",
+            "own translation services",
+            "(part time) language course",
+            "part-time language courses",
+            "part time language courses",
+            "language courses",
+            "language course",
+            "(technical) glossaries",
+            "technical glossaries",
+            "glossaries",
+            "own technical glossaries"
+          ],
+          "explanation": "Cách thứ tư: một số hãng tự làm BẢNG THUẬT NGỮ KỸ THUẬT để bảo đảm dịch thống nhất. (Ô này chấp nhận bất kỳ cách nào trong bốn cách.)",
+          "points": 1,
+          "evidence": "Some firms run part-time language courses in the languages of the countries with which they are most involved; some produce their own technical glossaries, to ensure consistency when material is being translated."
+        },
+        {
+          "order": 25,
+          "questionType": "multiple_choice",
+          "prompt": "According to the writer, English-speaking people need to be aware that...",
+          "answer": "D English-speaking foreigners may have difficulty understanding English",
+          "explanation": "Bài nói ngay cả khi khách nước ngoài nói tiếng Anh khá tốt, người ta vẫn hay quên rằng họ có thể không NGHE HIỂU được ở mức cần thiết, do biến thể vùng miền và xã hội trong lời nói. → D.",
+          "points": 1,
+          "options": [
+            "A some foreigners have never met an English-speaking person",
+            "B many foreigners have no desire to learn English",
+            "C foreign languages may pose a greater problem in the future",
+            "D English-speaking foreigners may have difficulty understanding English"
+          ],
+          "evidence": "Even in cases where foreign customers can speak English quite well, it is often forgotten that they may not be able to understand it to the required level - bearing in mind the regional and social variation which permeates speech and which can cause major problems of listening comprehension."
+        },
+        {
+          "order": 26,
+          "questionType": "multiple_choice",
+          "prompt": "A suitable title for this passage would be ...",
+          "answer": "A Overcoming the language barrier",
+          "explanation": "Bài mở đầu bằng rào cản ngôn ngữ, dẫn ví dụ thiệt hại, rồi dành phần lớn nửa sau nói các cách doanh nghiệp KHẮC PHỤC rào cản đó và kết luận tình hình đã cải thiện. → A.",
+          "points": 1,
+          "options": [
+            "A Overcoming the language barrier",
+            "B How to survive an English-speaking world",
+            "C Global understanding - the key to personal progress",
+            "D The need for a common language"
+          ],
+          "evidence": "The criticism and publicity given to this problem since the 1960s seems to have greatly improved the situation."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 - What is a Port City?",
+      "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.",
+      "content": "A A port must be distinguished from a harbour. They are two very different things. Most ports have poor harbours, and many fine harbours see few ships. Harbour is a physical concept, a shelter for ships; port is an economic concept, a centre of land-sea exchange which requires good access to a hinterland even more than a sea-linked foreland. It is landward access, which is productive of goods for export and which demands imports, that is critical. Poor harbours can be improved with breakwaters and dredging if there is a demand for a port. Madras and Colombo are examples of harbours expensively improved by enlarging, dredging and building breakwaters.\n\nB Port cities become industrial, financial and service centres and political capitals because of their water connections and the urban concentration which arises there and later draws to it railways, highways and air routes. Water transport means cheap access, the chief basis of all port cities. Many of the world's biggest cities, for example, London, New York, Shanghai, Istanbul, Buenos Aires, Tokyo, Jakarta, Calcutta, Philadelphia and San Francisco began as ports - that is, with land-sea exchange as their major function - but they have since grown disproportionately in other respects so that their port functions are no longer dominant. They remain different kinds of places from non-port cities and their port functions account for that difference.\n\nC Port functions, more than anything else, make a city cosmopolitan. A port city is open to the world. In it races, cultures, and ideas, as well as goods from a variety of places, jostle, mix and enrich each other and the life of the city. The smell of the sea and the harbour, the sound of boat whistles or the moving tides are symbols of their multiple links with a wide world, samples of which are present in microcosm within their own urban areas.\n\nD Sea ports have been transformed by the advent of powered vessels, whose size and draught have increased. Many formerly important ports have become economically and physically less accessible as a result. By-passed by most of their former enriching flow of exchange, they have become cultural and economic backwaters or have acquired the character of museums of the past. Examples of these are Charleston, Salem, Bristol, Plymouth, Surat, Galle, Melaka, Soochow, and a long list of earlier prominent port cities in Southeast Asia, Africa and Latin America.\n\nE Much domestic port trade has not been recorded. What evidence we have that domestic trade was greater at all periods than external trade. Shanghai, for example, did most of its trade with other Chinese ports and inland cities. Calcutta traded mainly with other parts of India and so on. Most of any city's population is engaged in providing goods and services for the city itself. Trade outside the city is its basic function. But each basic worker requires food, housing, clothing and other such services. Estimates of the ratio of basic to service workers range from 1:4 to 1:8.\n\nF No city can be simply a port but must be involved in a variety of other activities. The port function of the city draws to it raw materials and distributes them in many other forms. Ports take advantage of the need for breaking up the bulk material where water and land transport meet and where loading and unloading costs can be minimised by refining raw materials or turning them into finished goods. The major examples here are oil refining and ore refining, which are commonly located at ports. It is not easy to draw a line around what is and is not a port function. All ports handle, unload, sort, alter, process, repack, and reship most of what they receive. A city may still be regarded as a port city when it becomes involved in a great range of functions not immediately involved with ships or docks.\n\nG Cities which began as ports retain the chief commercial and administrative centre of the city close to the waterfront. The centre of New York is in lower Manhattan between two river mouths, the City of London is on the Thames, Shanghai along the Bund. This proximity to water is also true of Boston, Philadelphia, Bombay, Calcutta, Madras, Singapore, Bangkok, Hong Kong and Yokohama, where the commercial, financial, and administrative centres are still grouped around their harbours even though each city has expanded into a metropolis. Even a casual visitor cannot mistake them as anything but port cities.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Reading Passage 3 has seven paragraphs A-G. From the list of headings below choose the most suitable headings for paragraphs B-E.\nWrite the appropriate numbers (i-viii) in boxes 27-30 on your answer sheet.\nNB There are more headings than paragraphs, so you will not use them all.\n\nList of headings\n:::box\ni A truly international environment\nii Once a port city, always a port city\niii Good ports make huge profits\niv How the port changes a city's infrastructure\nv Reasons for the decline of ports\nvi Relative significance of trade and service industry\nvii Ports and harbours\nviii The demands of the oil industry\n:::",
+          "31": "Look at the following descriptions of some port cities mentioned in the passage. Match the pairs of cities (A-H) listed below with the descriptions.\nWrite the appropriate letters A-H in boxes 31-34.\nNB There are more pairs of port cities than descriptions so you will not use them all.\n:::box\nA Bombay and Buenos Aires | B Hong Kong and Salem\nC Istanbul and Jakarta | D Madras and Colombo\nE New York and Bristol | F Plymouth and Melaka\nG Singapore and Yokohama | H Surat and London\n:::",
+          "35": "Do the following statements agree with the information given in Reading Passage 3?\nIn boxes 35-40 on your answer sheet write\n:::box\nYES if the statement agrees with the information\nNO if the statement contradicts the information\nNOT GIVEN if there is no information on this in the passage\n:::"
+        }
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "Paragraph B",
+          "answer": "ii Once a port city, always a port city",
+          "explanation": "Đoạn B nói nhiều đô thị lớn khởi đầu là cảng, nay chức năng cảng không còn chiếm ưu thế, NHƯNG chúng vẫn khác hẳn các thành phố không phải cảng và chính chức năng cảng tạo nên sự khác biệt đó — \"đã là thành phố cảng thì mãi là thành phố cảng\". → ii.",
+          "points": 1,
+          "options": [
+            "i A truly international environment",
+            "ii Once a port city, always a port city",
+            "iii Good ports make huge profits",
+            "iv How the port changes a city's infrastructure",
+            "v Reasons for the decline of ports",
+            "vi Relative significance of trade and service industry",
+            "vii Ports and harbours",
+            "viii The demands of the oil industry"
+          ],
+          "evidence": "They remain different kinds of places from non-port cities and their port functions account for that difference."
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "Paragraph C",
+          "answer": "i A truly international environment",
+          "explanation": "Đoạn C nói chức năng cảng làm thành phố mang tính quốc tế: chủng tộc, văn hoá, ý tưởng và hàng hoá từ khắp nơi hoà trộn với nhau. → i.",
+          "points": 1,
+          "options": [
+            "i A truly international environment",
+            "ii Once a port city, always a port city",
+            "iii Good ports make huge profits",
+            "iv How the port changes a city's infrastructure",
+            "v Reasons for the decline of ports",
+            "vi Relative significance of trade and service industry",
+            "vii Ports and harbours",
+            "viii The demands of the oil industry"
+          ],
+          "evidence": "Port functions, more than anything else, make a city cosmopolitan. A port city is open to the world."
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "Paragraph D",
+          "answer": "v Reasons for the decline of ports",
+          "explanation": "Đoạn D giải thích vì sao nhiều cảng lụi tàn: tàu chạy máy ngày càng to và mớn nước sâu khiến các cảng cũ khó tiếp cận, bị dòng giao thương bỏ qua. → v.",
+          "points": 1,
+          "options": [
+            "i A truly international environment",
+            "ii Once a port city, always a port city",
+            "iii Good ports make huge profits",
+            "iv How the port changes a city's infrastructure",
+            "v Reasons for the decline of ports",
+            "vi Relative significance of trade and service industry",
+            "vii Ports and harbours",
+            "viii The demands of the oil industry"
+          ],
+          "evidence": "Many formerly important ports have become economically and physically less accessible as a result."
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "Paragraph E",
+          "answer": "vi Relative significance of trade and service industry",
+          "explanation": "Đoạn E so sánh tỷ trọng giữa buôn bán (nội địa so với ngoại thương) và lực lượng làm dịch vụ cho chính thành phố, kèm tỷ lệ lao động cơ bản trên lao động dịch vụ. → vi.",
+          "points": 1,
+          "options": [
+            "i A truly international environment",
+            "ii Once a port city, always a port city",
+            "iii Good ports make huge profits",
+            "iv How the port changes a city's infrastructure",
+            "v Reasons for the decline of ports",
+            "vi Relative significance of trade and service industry",
+            "vii Ports and harbours",
+            "viii The demands of the oil industry"
+          ],
+          "evidence": "Most of any city's population is engaged in providing goods and services for the city itself."
+        },
+        {
+          "order": 31,
+          "questionType": "matching",
+          "prompt": "required considerable harbor development",
+          "answer": "D Madras and Colombo",
+          "explanation": "Madras và Colombo được nêu làm ví dụ về những bến cảng phải cải tạo tốn kém bằng cách mở rộng, nạo vét và xây đê chắn sóng. → D.",
+          "points": 1,
+          "options": [
+            "A Bombay and Buenos Aires",
+            "B Hong Kong and Salem",
+            "C Istanbul and Jakarta",
+            "D Madras and Colombo",
+            "E New York and Bristol",
+            "F Plymouth and Melaka",
+            "G Singapore and Yokohama",
+            "H Surat and London"
+          ],
+          "evidence": "Madras and Colombo are examples of harbours expensively improved by enlarging, dredging and building breakwaters."
+        },
+        {
+          "order": 32,
+          "questionType": "matching",
+          "prompt": "began as ports but other facilities later dominated",
+          "answer": "C Istanbul and Jakarta",
+          "explanation": "Istanbul và Jakarta nằm trong danh sách các đô thị khởi đầu là cảng nhưng sau phát triển vượt trội ở mặt khác nên chức năng cảng không còn chiếm ưu thế. → C.",
+          "points": 1,
+          "options": [
+            "A Bombay and Buenos Aires",
+            "B Hong Kong and Salem",
+            "C Istanbul and Jakarta",
+            "D Madras and Colombo",
+            "E New York and Bristol",
+            "F Plymouth and Melaka",
+            "G Singapore and Yokohama",
+            "H Surat and London"
+          ],
+          "evidence": "Many of the world's biggest cities, for example, London, New York, Shanghai, Istanbul, Buenos Aires, Tokyo, Jakarta, Calcutta, Philadelphia and San Francisco began as ports - that is, with land-sea exchange as their major function - but they have since grown disproportionately in other respects so that their port functions are no longer dominant."
+        },
+        {
+          "order": 33,
+          "questionType": "matching",
+          "prompt": "lost their prominence when large ships could not be accommodated",
+          "answer": "F Plymouth and Melaka",
+          "explanation": "Plymouth và Melaka nằm trong danh sách các cảng từng quan trọng nhưng trở nên khó tiếp cận khi tàu lớn ra đời, rồi thành \"vùng nước đọng\" về kinh tế - văn hoá. → F.",
+          "points": 1,
+          "options": [
+            "A Bombay and Buenos Aires",
+            "B Hong Kong and Salem",
+            "C Istanbul and Jakarta",
+            "D Madras and Colombo",
+            "E New York and Bristol",
+            "F Plymouth and Melaka",
+            "G Singapore and Yokohama",
+            "H Surat and London"
+          ],
+          "evidence": "Examples of these are Charleston, Salem, Bristol, Plymouth, Surat, Galle, Melaka, Soochow, and a long list of earlier prominent port cities in Southeast Asia, Africa and Latin America."
+        },
+        {
+          "order": 34,
+          "questionType": "matching",
+          "prompt": "maintain their business centres near the port waterfront",
+          "answer": "G Singapore and Yokohama",
+          "explanation": "Singapore và Yokohama thuộc nhóm thành phố mà trung tâm thương mại, tài chính, hành chính vẫn quây quanh bến cảng dù đã bành trướng thành đại đô thị. → G.",
+          "points": 1,
+          "options": [
+            "A Bombay and Buenos Aires",
+            "B Hong Kong and Salem",
+            "C Istanbul and Jakarta",
+            "D Madras and Colombo",
+            "E New York and Bristol",
+            "F Plymouth and Melaka",
+            "G Singapore and Yokohama",
+            "H Surat and London"
+          ],
+          "evidence": "This proximity to water is also true of Boston, Philadelphia, Bombay, Calcutta, Madras, Singapore, Bangkok, Hong Kong and Yokohama, where the commercial, financial, and administrative centres are still grouped around their harbours even though each city has expanded into a metropolis."
+        },
+        {
+          "order": 35,
+          "questionType": "true_false_not_given",
+          "prompt": "Cities cease to be port cities when other functions dominate.",
+          "answer": "NO",
+          "explanation": "Bài nói ngược lại: một thành phố VẪN có thể được coi là thành phố cảng ngay cả khi nó tham gia đủ thứ chức năng chẳng liên quan gì tới tàu bè hay bến bãi. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "A city may still be regarded as a port city when it becomes involved in a great range of functions not immediately involved with ships or docks."
+        },
+        {
+          "order": 36,
+          "questionType": "true_false_not_given",
+          "prompt": "In the past, many port cities did more trade within their own country than with overseas ports.",
+          "answer": "YES",
+          "explanation": "Bài nói bằng chứng cho thấy ở mọi thời kỳ, buôn bán NỘI ĐỊA đều lớn hơn ngoại thương — Thượng Hải, Calcutta là ví dụ. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "What evidence we have that domestic trade was greater at all periods than external trade."
+        },
+        {
+          "order": 37,
+          "questionType": "true_false_not_given",
+          "prompt": "Most people in a port city are engaged in international trade and finance.",
+          "answer": "NO",
+          "explanation": "Bài nói ngược lại: PHẦN LỚN dân cư của bất kỳ thành phố nào cũng làm việc cung cấp hàng hoá và dịch vụ cho chính thành phố đó. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Most of any city's population is engaged in providing goods and services for the city itself."
+        },
+        {
+          "order": 38,
+          "questionType": "true_false_not_given",
+          "prompt": "Ports attract many subsidiary and independent industries.",
+          "answer": "YES",
+          "explanation": "Bài nói không thành phố nào chỉ đơn thuần là cảng: cảng kéo về nguyên liệu thô rồi phân phối dưới nhiều dạng khác, điển hình là lọc dầu và luyện quặng đặt ngay tại cảng. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "The major examples here are oil refining and ore refining, which are commonly located at ports."
+        },
+        {
+          "order": 39,
+          "questionType": "true_false_not_given",
+          "prompt": "Ports have to establish a common language of trade.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài đọc về thành phố cảng hoàn toàn không nhắc gì tới chuyện ngôn ngữ chung trong buôn bán. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 40,
+          "questionType": "true_false_not_given",
+          "prompt": "Ports often have river connections.",
+          "answer": "YES",
+          "explanation": "Đoạn G dẫn hàng loạt ví dụ gắn với sông: New York nằm giữa hai cửa sông, London bên sông Thames, Thượng Hải dọc bến Bund. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "The centre of New York is in lower Manhattan between two river mouths, the City of London is on the Thames, Shanghai along the Bund."
+        }
+      ]
+    }
+  ]
+}

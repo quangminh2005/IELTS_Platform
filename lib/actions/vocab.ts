@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireStudent } from "@/lib/actions/attempts";
+import { requireTeacher } from "@/lib/actions/classes";
 import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { prisma } from "@/lib/prisma";
 import { vietnamDateKey } from "@/lib/vocab-day";
@@ -94,5 +95,70 @@ export async function submitVocabQuiz(formData: FormData): Promise<ActionResult>
     return actionOk(`Bạn đúng ${correct}/${total} câu.`);
   } catch (error) {
     return actionFail(error, "Nộp bài từ vựng");
+  }
+}
+
+const hideSchema = z.object({
+  wordId: z.string().min(1),
+  hidden: z.enum(["true", "false"])
+});
+
+export async function hideVocabWord(formData: FormData): Promise<ActionResult> {
+  try {
+    await requireTeacher();
+
+    const parsed = hideSchema.parse({
+      wordId: formData.get("wordId"),
+      hidden: formData.get("hidden")
+    });
+
+    // Ẩn từ KHÔNG xoá bản ghi VocabDaily cũ — lịch sử ngày nào phát từ nào phải
+    // giữ nguyên, nếu không quiz "từ hôm qua" sẽ hỏi sai.
+    await prisma.vocabWord.update({
+      where: { id: parsed.wordId },
+      data: { hidden: parsed.hidden === "true" }
+    });
+
+    revalidatePath("/teacher/vocab");
+
+    return actionOk(parsed.hidden === "true" ? "Đã ẩn từ." : "Đã bỏ ẩn từ.");
+  } catch (error) {
+    return actionFail(error, "Cập nhật từ");
+  }
+}
+
+const updateSchema = z.object({
+  wordId: z.string().min(1),
+  meaningVi: z.string().trim().min(1, "Nghĩa tiếng Việt không được để trống."),
+  phonetic: z.string().trim(),
+  exampleEn: z.string().trim().min(1, "Câu ví dụ không được để trống.")
+});
+
+export async function updateVocabWord(formData: FormData): Promise<ActionResult> {
+  try {
+    await requireTeacher();
+
+    const parsed = updateSchema.parse({
+      wordId: formData.get("wordId"),
+      meaningVi: formData.get("meaningVi"),
+      phonetic: formData.get("phonetic"),
+      exampleEn: formData.get("exampleEn")
+    });
+
+    await prisma.vocabWord.update({
+      where: { id: parsed.wordId },
+      data: {
+        meaningVi: parsed.meaningVi,
+        phonetic: parsed.phonetic.length > 0 ? parsed.phonetic : null,
+        exampleEn: parsed.exampleEn
+      }
+    });
+
+    revalidatePath("/teacher/vocab");
+    revalidatePath("/student");
+
+    return actionOk("Đã lưu thay đổi.");
+  } catch (error) {
+    return actionFail(error, "Lưu từ");
   }
 }

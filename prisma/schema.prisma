@@ -58,6 +58,9 @@ model StudentProfile {
   answers     Answer[]
   highlights  Highlight[]
   reviews     TeacherReview[]
+
+  vocabProgress VocabProgress[]
+  vocabQuizDays VocabQuizDay[]
 }
 
 // LƯU Ý VỀ INDEX: Postgres (và Prisma) KHÔNG tự tạo index cho cột khoá ngoại —
@@ -131,6 +134,7 @@ model AssignableUnit {
   assignmentUnits         AssignmentUnit[]
   answers                 Answer[]
   highlights              Highlight[]
+  vocabWords              VocabWord[]
 
   @@index([materialId])
 }
@@ -364,4 +368,70 @@ model CommentSnippet {
   teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
 
   @@index([teacherId])
+}
+
+// ---- TỪ VỰNG MỖI NGÀY ----
+// VocabWord.sourceSkill: listening | reading
+// VocabWord.partOfSpeech: noun | verb | adjective | adverb
+
+model VocabWord {
+  id           String   @id @default(cuid())
+  word         String   @unique // dạng chuẩn hoá, chữ thường
+  display      String // dạng hiển thị
+  phonetic     String? // IPA, vd /səˈsteɪnəbl/
+  partOfSpeech String?
+  meaningVi    String // nghĩa tiếng Việt
+  definitionEn String?
+  exampleEn    String // câu ví dụ NGUYÊN VĂN từ đề
+  sourceUnitId String?
+  sourceSkill  String?
+  hidden       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sourceUnit AssignableUnit? @relation(fields: [sourceUnitId], references: [id], onDelete: SetNull)
+  dailies    VocabDaily[]
+  progress   VocabProgress[]
+
+  @@index([hidden])
+  @@index([sourceUnitId])
+}
+
+model VocabDaily {
+  id        String   @id @default(cuid())
+  date      DateTime @unique @db.Date // ngày theo giờ VN
+  wordId    String
+  createdAt DateTime @default(now())
+
+  word VocabWord @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@index([wordId])
+}
+
+model VocabProgress {
+  id           String    @id @default(cuid())
+  studentId    String
+  wordId       String
+  correctCount Int       @default(0)
+  wrongCount   Int       @default(0)
+  lastAnswerAt DateTime?
+
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  word    VocabWord      @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, wordId])
+  @@index([wordId])
+}
+
+model VocabQuizDay {
+  id        String   @id @default(cuid())
+  studentId String
+  date      DateTime @db.Date
+  correct   Int // kết quả TỐT NHẤT trong ngày
+  total     Int
+  updatedAt DateTime @updatedAt
+
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, date])
 }

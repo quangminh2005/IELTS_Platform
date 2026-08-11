@@ -111,6 +111,56 @@ const statements = [
   'CREATE INDEX IF NOT EXISTS "AnswerAnnotation_teacherId_idx" ON "AnswerAnnotation"("teacherId");',
   'CREATE INDEX IF NOT EXISTS "TeacherReview_teacherId_idx" ON "TeacherReview"("teacherId");',
   'CREATE INDEX IF NOT EXISTS "TeacherReview_studentId_idx" ON "TeacherReview"("studentId");',
+  // Từ vựng mỗi ngày: 4 bảng mới, không sửa bảng nào đang có.
+  `CREATE TABLE IF NOT EXISTS "VocabWord" (
+    "id" TEXT NOT NULL,
+    "word" TEXT NOT NULL,
+    "display" TEXT NOT NULL,
+    "phonetic" TEXT,
+    "partOfSpeech" TEXT,
+    "meaningVi" TEXT NOT NULL,
+    "definitionEn" TEXT,
+    "exampleEn" TEXT NOT NULL,
+    "sourceUnitId" TEXT,
+    "sourceSkill" TEXT,
+    "hidden" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "VocabWord_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "VocabWord_word_key" ON "VocabWord"("word");',
+  'CREATE INDEX IF NOT EXISTS "VocabWord_hidden_idx" ON "VocabWord"("hidden");',
+  'CREATE INDEX IF NOT EXISTS "VocabWord_sourceUnitId_idx" ON "VocabWord"("sourceUnitId");',
+  `CREATE TABLE IF NOT EXISTS "VocabDaily" (
+    "id" TEXT NOT NULL,
+    "date" DATE NOT NULL,
+    "wordId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "VocabDaily_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "VocabDaily_date_key" ON "VocabDaily"("date");',
+  'CREATE INDEX IF NOT EXISTS "VocabDaily_wordId_idx" ON "VocabDaily"("wordId");',
+  `CREATE TABLE IF NOT EXISTS "VocabProgress" (
+    "id" TEXT NOT NULL,
+    "studentId" TEXT NOT NULL,
+    "wordId" TEXT NOT NULL,
+    "correctCount" INTEGER NOT NULL DEFAULT 0,
+    "wrongCount" INTEGER NOT NULL DEFAULT 0,
+    "lastAnswerAt" TIMESTAMP(3),
+    CONSTRAINT "VocabProgress_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "VocabProgress_studentId_wordId_key" ON "VocabProgress"("studentId", "wordId");',
+  'CREATE INDEX IF NOT EXISTS "VocabProgress_wordId_idx" ON "VocabProgress"("wordId");',
+  `CREATE TABLE IF NOT EXISTS "VocabQuizDay" (
+    "id" TEXT NOT NULL,
+    "studentId" TEXT NOT NULL,
+    "date" DATE NOT NULL,
+    "correct" INTEGER NOT NULL,
+    "total" INTEGER NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "VocabQuizDay_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "VocabQuizDay_studentId_date_key" ON "VocabQuizDay"("studentId", "date");',
 ];
 
 const prisma = new PrismaClient();

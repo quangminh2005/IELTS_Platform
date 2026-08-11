@@ -9,6 +9,8 @@ import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
 import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
 import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
+import { VocabCard } from "@/components/vocab-card";
+import { getVocabSidebar, getWordOfTheDay } from "@/lib/vocab-daily";
 
 function statusClasses(status: string) {
   if (status === "reviewed") {
@@ -69,7 +71,7 @@ export default async function StudentDashboardPage() {
 
   // Ba truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
   // một lượt đi/về database thay vì ba lượt nối tiếp.
-  const [recipients, attempts, membership] = await Promise.all([
+  const [recipients, attempts, membership, wordOfDay, vocabSidebar] = await Promise.all([
     prisma.assignmentRecipient.findMany({
       // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
       where: { studentId: student.id, assignment: excludePracticeAssignment },
@@ -115,7 +117,9 @@ export default async function StudentDashboardPage() {
       where: { studentId: student.id },
       orderBy: { joinedAt: "desc" },
       include: { class: { select: { weeklyGoal: true } } }
-    })
+    }),
+    getWordOfTheDay(),
+    getVocabSidebar(student.id)
   ]);
 
   const pendingCount = recipients.filter(
@@ -201,6 +205,12 @@ export default async function StudentDashboardPage() {
           </div>
         </div>
       </div>
+
+      <VocabCard
+        word={wordOfDay}
+        streakDays={vocabSidebar.streakDays}
+        canQuiz={vocabSidebar.canQuiz}
+      />
 
       <ProgressRing completed={completedCount} total={recipients.length} />
 

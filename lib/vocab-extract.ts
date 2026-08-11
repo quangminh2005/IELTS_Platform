@@ -1,8 +1,9 @@
-import { isAcademicWord } from "@/lib/vocab-awl";
+import { matchAcademicRoot } from "@/lib/vocab-awl";
 
 export type VocabCandidate = {
   word: string; // dạng chuẩn hoá, chữ thường
   display: string; // dạng như trong đề
+  root: string; // gốc từ học thuật — dùng để gom các từ cùng họ
   sentence: string; // câu đầu tiên chứa từ, nguyên văn
   unitId: string;
   skill: string;
@@ -59,7 +60,9 @@ export function extractCandidates(input: {
     });
   }
 
-  // Lượt 2: gom ứng viên, mỗi từ lấy câu xuất hiện đầu tiên.
+  // Lượt 2: gom ứng viên theo GỐC TỪ, mỗi gốc lấy một mục duy nhất. Gặp
+  // "computer" rồi "computers" thì giữ dạng ngắn hơn — nó gần dạng nguyên thể
+  // nhất, dạy học viên dễ hơn.
   const found = new Map<string, VocabCandidate>();
 
   for (const sentence of sentences) {
@@ -73,11 +76,13 @@ export function extractCandidates(input: {
     for (const token of sentence.match(/[A-Za-z]+/g) ?? []) {
       const lower = token.toLowerCase();
 
-      if (found.has(lower) || lower.length < 4) {
+      if (lower.length < 4) {
         continue;
       }
 
-      if (!isAcademicWord(lower)) {
+      const root = matchAcademicRoot(lower);
+
+      if (!root) {
         continue;
       }
 
@@ -86,9 +91,18 @@ export function extractCandidates(input: {
         continue;
       }
 
-      found.set(lower, {
+      const kept = found.get(root);
+
+      if (kept && kept.word.length <= lower.length) {
+        continue;
+      }
+
+      found.set(root, {
         word: lower,
         display: lower,
+        root,
+        // Luôn lấy câu chứa đúng dạng từ đang giữ — nếu mượn câu của dạng cũ thì
+        // câu ví dụ sẽ không chứa từ được hiển thị.
         sentence,
         unitId: input.unitId,
         skill: input.skill

@@ -1,5 +1,26 @@
 import { describe, expect, it } from "vitest";
-import { AWL_HEADWORDS, academicRoot, isAcademicWord } from "../lib/vocab-awl";
+import {
+  AWL_HEADWORDS,
+  academicRoot,
+  isAcademicWord,
+  matchAcademicRoot
+} from "../lib/vocab-awl";
+
+describe("matchAcademicRoot", () => {
+  it("các từ cùng họ cho cùng một gốc", () => {
+    expect(matchAcademicRoot("computer")).toBe(matchAcademicRoot("computers"));
+    expect(matchAcademicRoot("final")).toBe(matchAcademicRoot("finally"));
+  });
+
+  it("từ ngoài danh sách trả về null", () => {
+    expect(matchAcademicRoot("water")).toBeNull();
+  });
+
+  it("chọn gốc dài nhất khi nhiều gốc cùng khớp", () => {
+    // "constitute" -> "constitut" phải thắng, không được gom nhầm vào "consist".
+    expect(matchAcademicRoot("constitution")).toBe("constitut");
+  });
+});
 
 describe("academicRoot", () => {
   it("bỏ 'e' cuối với từ dài hơn 4 chữ", () => {

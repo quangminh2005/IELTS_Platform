@@ -62,6 +62,26 @@ describe("extractCandidates", () => {
     );
   });
 
+  it("gom các từ cùng họ về một mục, giữ dạng ngắn nhất", () => {
+    const result = run(
+      "Modern computers changed the workplace forever. " +
+        "Every computer in the office was replaced last month."
+    );
+    const words = result.map((item) => item.word);
+    expect(words).toContain("computer");
+    expect(words).not.toContain("computers");
+  });
+
+  it("câu ví dụ luôn chứa đúng dạng từ được giữ lại", () => {
+    const result = run(
+      "Modern computers changed the workplace forever. " +
+        "Every computer in the office was replaced last month."
+    );
+    for (const item of result) {
+      expect(item.sentence.toLowerCase()).toContain(item.word);
+    }
+  });
+
   it("bỏ câu ví dụ quá ngắn hoặc quá dài", () => {
     expect(run("Policy.")).toHaveLength(0);
   });

@@ -49,11 +49,27 @@ const ROOTS = AWL_HEADWORDS.map(academicRoot);
 // Đuôi dài quá 5 chữ gần như chắc chắn là từ khác, không phải biến thể.
 const MAX_SUFFIX_LENGTH = 5;
 
-export function isAcademicWord(word: string): boolean {
+// Trả về gốc từ khớp được, hoặc null nếu từ không thuộc danh sách học thuật.
+// Gốc này còn dùng để gom "computer"/"computers", "final"/"finally"... về cùng
+// một mục — nếu không kho từ sẽ đầy các cặp gần trùng.
+export function matchAcademicRoot(word: string): string | null {
   const lower = word.toLowerCase();
 
-  return ROOTS.some(
-    (root) =>
-      lower.startsWith(root) && lower.length - root.length <= MAX_SUFFIX_LENGTH
-  );
+  // Gốc dài hơn thì cụ thể hơn: "constitut" phải thắng "consist" nếu cả hai cùng
+  // khớp, nếu không các từ khác họ sẽ bị gom nhầm vào nhau.
+  let best: string | null = null;
+
+  for (const root of ROOTS) {
+    if (lower.startsWith(root) && lower.length - root.length <= MAX_SUFFIX_LENGTH) {
+      if (best === null || root.length > best.length) {
+        best = root;
+      }
+    }
+  }
+
+  return best;
+}
+
+export function isAcademicWord(word: string): boolean {
+  return matchAcademicRoot(word) !== null;
 }

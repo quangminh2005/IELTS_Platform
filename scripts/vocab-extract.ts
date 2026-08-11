@@ -1,12 +1,20 @@
 // Quét transcript Listening + passage Reading đang có trong DB, lọc ra từ học
-// thuật, gọi Claude API điền nghĩa/phiên âm rồi ghi vào bảng VocabWord.
+// thuật rồi ghi vào bảng VocabWord kèm nghĩa/phiên âm.
 //
-// Chạy lại được nhiều lần: từ đã có trong DB sẽ bị bỏ qua, nên đứt mạng giữa
-// chừng chỉ cần chạy lại.
+// Chạy lại được nhiều lần: từ đã có trong DB sẽ bị bỏ qua, nên đứt giữa chừng
+// chỉ cần chạy lại.
 //
-//   npx tsx scripts/vocab-extract.ts --dry-run
-//   npx tsx scripts/vocab-extract.ts
-//   DATABASE_URL=$DATABASE_URL_PROD npx tsx scripts/vocab-extract.ts
+// BỐN CHẾ ĐỘ:
+//   --dry-run              chỉ liệt kê từ lọc được, không ghi gì
+//   --emit <file.json>     xuất danh sách từ + câu ví dụ ra file để soạn nghĩa tay
+//   --import <file.json>   nhập file đã soạn nghĩa vào DB (KHÔNG cần API key)
+//   (không cờ nào)         gọi Claude API tự điền nghĩa — cần ANTHROPIC_API_KEY
+//
+// Thêm --prod để chạy trên database production (DATABASE_URL_PROD).
+//
+//   npx tsx scripts/vocab-extract.ts --prod --emit tmp/vocab-candidates.json
+//   npx tsx scripts/vocab-extract.ts --prod --import tmp/vocab-filled.json
+import { readFileSync, writeFileSync } from "node:fs";
 import Anthropic from "@anthropic-ai/sdk";
 import { PrismaClient } from "@prisma/client";
 import { warmUpDatabase } from "../lib/db-warmup";
@@ -15,8 +23,25 @@ import { extractCandidates, type VocabCandidate } from "../lib/vocab-extract";
 const BATCH_SIZE = 50;
 const MODEL = "claude-opus-5";
 
-const prisma = new PrismaClient();
+function flagValue(name: string): string | null {
+  const index = process.argv.indexOf(name);
+
+  return index >= 0 ? (process.argv[index + 1] ?? null) : null;
+}
+
 const dryRun = process.argv.includes("--dry-run");
+const useProd = process.argv.includes("--prod");
+const emitPath = flagValue("--emit");
+const importPath = flagValue("--import");
+
+if (useProd && !process.env.DATABASE_URL_PROD) {
+  throw new Error("Thiếu DATABASE_URL_PROD trong môi trường.");
+}
+
+// datasourceUrl undefined => Prisma tự đọc DATABASE_URL từ .env như bình thường.
+const prisma = new PrismaClient({
+  datasourceUrl: useProd ? process.env.DATABASE_URL_PROD : undefined
+});
 
 type Filled = {
   word: string;
@@ -90,7 +115,65 @@ async function fillMeanings(
   return (JSON.parse(text.text) as { words: Filled[] }).words;
 }
 
+// Ghi một từ đã có đủ nghĩa vào DB. Dùng chung cho cả nhánh gọi API lẫn nhánh
+// nhập file soạn tay.
+async function saveWord(item: Filled, source: VocabCandidate) {
+  await prisma.vocabWord.upsert({
+    where: { word: source.word },
+    update: {},
+    create: {
+      word: source.word,
+      display: item.word,
+      phonetic: item.phonetic,
+      partOfSpeech: item.partOfSpeech,
+      meaningVi: item.meaningVi,
+      definitionEn: item.definitionEn,
+      exampleEn: source.sentence,
+      // Chuỗi rỗng sẽ làm hỏng khoá ngoại — quy về null.
+      sourceUnitId: source.unitId || null,
+      sourceSkill: source.skill || null
+    }
+  });
+}
+
+// Nhập file đã soạn nghĩa tay. Mỗi phần tử là một Filled kèm đủ thông tin nguồn,
+// nên không cần quét lại đề — nhập được cả những từ đã bị người soạn sửa lại mặt
+// chữ (vd "distributed" -> "distribute").
+type FilledWithSource = Filled & {
+  key: string; // khoá chuẩn hoá, dùng làm VocabWord.word
+  sentence: string;
+  unitId: string | null;
+  skill: string | null;
+};
+
+async function importFilled(path: string) {
+  const rows = JSON.parse(readFileSync(path, "utf8")) as FilledWithSource[];
+
+  console.log(`Đọc ${rows.length} từ từ ${path}.`);
+
+  let saved = 0;
+
+  for (const row of rows) {
+    await saveWord(row, {
+      word: row.key,
+      display: row.word,
+      root: row.key,
+      sentence: row.sentence,
+      unitId: row.unitId ?? "",
+      skill: row.skill ?? ""
+    });
+    saved += 1;
+  }
+
+  console.log(`Đã ghi ${saved} từ vào DB.`);
+}
+
 async function main() {
+  if (importPath) {
+    await importFilled(importPath);
+    return;
+  }
+
   // Neon ngủ khi vắng người dùng — đánh thức trước, nếu không truy vấn đầu tiên
   // hay chết vì chưa kết nối kịp (xem lib/db-warmup.ts).
   const attempts = await warmUpDatabase(() => prisma.$queryRaw`SELECT 1`);
@@ -139,7 +222,29 @@ async function main() {
   );
 
   if (dryRun) {
-    console.log(todo.slice(0, 30).map((item) => item.word).join(", "));
+    console.log(todo.map((item) => item.word).sort().join(", "));
+    return;
+  }
+
+  if (emitPath) {
+    // Xuất ra file để soạn nghĩa bằng tay (hoặc nhờ Claude soạn trong phiên chat),
+    // rồi nhập lại bằng --import. Đây là đường đi KHÔNG cần API key.
+    const rows = todo
+      .map((item) => ({
+        key: item.word,
+        word: item.word,
+        phonetic: "",
+        partOfSpeech: "",
+        meaningVi: "",
+        definitionEn: "",
+        sentence: item.sentence,
+        unitId: item.unitId,
+        skill: item.skill
+      }))
+      .sort((left, right) => left.key.localeCompare(right.key));
+
+    writeFileSync(emitPath, JSON.stringify(rows, null, 2), "utf8");
+    console.log(`Đã xuất ${rows.length} từ ra ${emitPath}.`);
     return;
   }
 
@@ -173,22 +278,7 @@ async function main() {
         continue;
       }
 
-      await prisma.vocabWord.upsert({
-        where: { word: source.word },
-        update: {},
-        create: {
-          word: source.word,
-          display: item.word,
-          phonetic: item.phonetic,
-          partOfSpeech: item.partOfSpeech,
-          meaningVi: item.meaningVi,
-          definitionEn: item.definitionEn,
-          exampleEn: source.sentence,
-          sourceUnitId: source.unitId,
-          sourceSkill: source.skill
-        }
-      });
-
+      await saveWord(item, source);
       saved += 1;
     }
 

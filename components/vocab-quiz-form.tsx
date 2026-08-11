@@ -6,13 +6,17 @@ import { submitVocabQuiz } from "@/lib/actions/vocab";
 import type { QuizQuestion } from "@/lib/vocab-quiz";
 
 export function VocabQuizForm({ questions }: { questions: QuizQuestion[] }) {
+  // Khoá cứng bộ câu hỏi ngay lần render đầu. Sau khi nộp, action gọi
+  // revalidatePath nên máy chủ dựng lại trang với bộ từ MỚI; nếu không khoá thì
+  // phần chữa bài sẽ nhảy sang những câu học viên chưa hề làm.
+  const [items] = useState(questions);
   const [chosen, setChosen] = useState<Record<string, string>>({});
   const [graded, setGraded] = useState(false);
 
-  const answered = questions.every((question) => chosen[question.wordId]);
+  const answered = items.every((question) => chosen[question.wordId]);
 
   const answersJson = JSON.stringify({
-    answers: questions.map((question) => ({
+    answers: items.map((question) => ({
       wordId: question.wordId,
       chosen: chosen[question.wordId] ?? ""
     }))
@@ -30,7 +34,7 @@ export function VocabQuizForm({ questions }: { questions: QuizQuestion[] }) {
     >
       <input type="hidden" name="answersJson" value={answersJson} />
 
-      {questions.map((question, index) => {
+      {items.map((question, index) => {
         const picked = chosen[question.wordId];
         const answer = question.options[question.correctIndex];
 

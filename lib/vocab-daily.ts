@@ -11,6 +11,9 @@ export type DailyWord = {
   meaningVi: string;
   exampleEn: string;
   sourceUnitId: string | null;
+  // Tên đề gốc, vd "Cambridge 20 · Reading Test 1 — Passage 1". Null với từ nhập
+  // tay không gắn phần đề nào.
+  sourceLabel: string | null;
 };
 
 // Cột date kiểu DATE — quy ước lưu bằng nửa đêm UTC của đúng ngày VN đó.
@@ -25,8 +28,34 @@ const WORD_FIELDS = {
   partOfSpeech: true,
   meaningVi: true,
   exampleEn: true,
-  sourceUnitId: true
+  sourceUnitId: true,
+  // select tường minh, không include: content/transcript của phần đề rất nặng.
+  sourceUnit: {
+    select: { title: true, material: { select: { title: true } } }
+  }
 } as const;
+
+type WordRow = {
+  id: string;
+  display: string;
+  phonetic: string | null;
+  partOfSpeech: string | null;
+  meaningVi: string;
+  exampleEn: string;
+  sourceUnitId: string | null;
+  sourceUnit: { title: string; material: { title: string } } | null;
+};
+
+function toDailyWord(row: WordRow): DailyWord {
+  const { sourceUnit, ...rest } = row;
+
+  return {
+    ...rest,
+    sourceLabel: sourceUnit
+      ? `${sourceUnit.material.title} — ${sourceUnit.title}`
+      : null
+  };
+}
 
 export async function getWordOfTheDay(now = new Date()): Promise<DailyWord | null> {
   const key = vietnamDateKey(now);
@@ -38,7 +67,7 @@ export async function getWordOfTheDay(now = new Date()): Promise<DailyWord | nul
   });
 
   if (today) {
-    return today.word;
+    return toDailyWord(today.word);
   }
 
   const [pool, used] = await Promise.all([
@@ -73,7 +102,7 @@ export async function getWordOfTheDay(now = new Date()): Promise<DailyWord | nul
     select: { word: { select: WORD_FIELDS } }
   });
 
-  return saved?.word ?? null;
+  return saved ? toDailyWord(saved.word) : null;
 }
 
 export async function getVocabSidebar(studentId: string, now = new Date()) {
@@ -83,7 +112,9 @@ export async function getVocabSidebar(studentId: string, now = new Date()) {
       select: { date: true }
     }),
     prisma.vocabProgress.count({ where: { studentId } }),
-    prisma.vocabWord.count({ where: { hidden: false } })
+    // Đếm đúng rổ mà trang quiz sẽ dùng: chỉ từ ĐÃ TỪNG được phát. Đếm cả kho
+    // thì nút "Ôn 5 từ cũ" hiện ra trong khi trang quiz lại báo chưa đủ từ.
+    prisma.vocabWord.count({ where: { hidden: false, dailies: { some: {} } } })
   ]);
 
   const streak = calculateVocabStreak({

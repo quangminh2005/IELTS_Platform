@@ -1,0 +1,657 @@
+{
+  "title": "IELTS Master - Reading Test 38",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master - Reading Test 38",
+  "description": "Đề đọc IELTS Master Test 38: The Context, meaning and scope of tourism / Autumn Leaves / Beyond the blue horizon",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 - The Context, meaning and scope of tourism",
+      "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.",
+      "content": "A Travel has existed since the beginning of time, when primitive man set out, often traversing great distances in search of game, which provided the food and clothing necessary for his survival. Throughout the course of history, people have travelled for purposes of trade, religious conviction, economic gain, war, migration and other equally compelling motivations. In the Roman era, wealthy aristocrats and high government officials also travelled for pleasure. Seaside resorts located at Pompeii and Herculaneum afforded citizens the opportunity to escape to their vacation villas in order to avoid the summer heat of Rome. Travel, except during the Dark Ages, has continued to grow and, throughout recorded history, has played a vital role in the development of civilisations and their economies.\n\nB Tourism in the mass form as we know it today is a distinctly twentieth-century phenomenon. Historians suggest that the advent of mass tourism began in England during the industrial revolution with the rise of the middle class and the availability of relatively inexpensive transportation. The creation of the commercial airline industry following the Second World War and the subsequent development of the jet aircraft in the 1950s signalled the rapid growth and expansion of international travel. This growth led to the development of a major new industry: tourism. In turn, international tourism became the concern of a number of world governments since it not only provided new employment opportunities but also produced a means of earning foreign exchange.\n\nC Tourism today has grown significantly in both economic and social importance. In most industrialised countries over the past few years the fastest growth has been seen in the area of services. One of the largest segments of the service industry, although largely unrecognised as an entity in some of these countries, is travel and tourism. According to the World Travel and Tourism Council (1992), 'Travel and tourism is the largest industry in the world on virtually any economic measure including value-added capital investment, employment and tax contributions'. In 1992, the industry's gross output was estimated to be $3.5 trillion, over 12 per cent of all consumer spending. The travel and tourism industry is the world's largest employer with almost 130 million jobs, or almost 7 per cent of all employees. This industry is the world's leading industrial contributor, producing over 6 per cent of the world's gross national product and accounting for capital investment in excess of $422 billion in direct, indirect and personal taxes each year. Thus, tourism has a profound impact both on the world economy and, because of the educative effect of travel and the effects on employment, on society itself.\n\nD However, the major problems of the travel and tourism industry that have hidden, or obscured, its economic impact are the diversity and fragmentation of the industry itself. The travel industry includes: hotels, motels and other types of accommodation; restaurants and other food services; transportation services and facilities; amusements, attractions and other leisure facilities; gift shops and a large number of other enterprises. Since many of these businesses also serve local residents, the impact of spending by visitors can easily be overlooked or underestimated. In addition, Meis (1992) points out that the tourism industry involves concepts that have remained amorphous to both analysts and decision makers. Moreover, in all nations this problem has made it difficult for the industry to develop any type of reliable or credible tourism information base in order to estimate the contribution it makes to regional, national and global economies. However, the nature of this very diversity makes travel and tourism ideal vehicles for economic development in a wide variety of countries, regions or communities.\n\nE Once the exclusive province of the wealthy, travel and tourism have become an institutionalised way of life for most of the population. In fact, McIntosh and Goeldner (1990) suggest that tourism has become the largest commodity in international trade for many nations and, for a significant number of other countries, it ranks second or third. For example, tourism is the major source of income in Bermuda, Greece, Italy, Spain, Switzerland and most Caribbean countries. In addition, Hawkins and Ritchie, quoting from data published by the American Express Company, suggest that the travel and tourism industry is the number one ranked employer in the Bahamas, Brazil, Canada, France, (the former) West Germany, Hong Kong, Italy, Jamaica, Japan, Singapore, the United Kingdom and the United States. However, because of problems of definition, which directly affect statistical measurement, it is not possible with any degree of certainty to provide precise, valid or reliable data about the extent of world-wide tourism participation or its economic impact. In many cases, similar difficulties arise when attempts are made to measure domestic tourism.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Reading passage 1 has five paragraphs A-E.\nChoose the correct heading for paragraphs B-E from the list of heading below.\n\nList of headings\n:::box\ni Economic and social significance of tourism\nii The development of mass tourism\niii Travel for the wealthy\niv Earning foreign exchange through tourism\nv Difficulty in recognising the economic effects of tourism\nvi The contribution of air travel to tourism\nvii The world impact of tourism\nviii The history of travel\n:::\n\nExample: Paragraph A - viii",
+          "5": "Do the following statements agree with the information given in Reading Passage 1?\nIn boxes 5-10 on your answer sheet, write\n:::box\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n:::",
+          "11": "Complete the sentences below.\nChoose NO MORE THAN THREE WORDS from the passage."
+        }
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "matching",
+          "prompt": "Paragraph B",
+          "answer": "ii The development of mass tourism",
+          "explanation": "Đoạn B kể lại sự ra đời của DU LỊCH ĐẠI CHÚNG: bắt đầu ở Anh thời cách mạng công nghiệp nhờ tầng lớp trung lưu và phương tiện đi lại rẻ, rồi bùng nổ nhờ hàng không thương mại và máy bay phản lực. → ii.",
+          "points": 1,
+          "options": [
+            "i Economic and social significance of tourism",
+            "ii The development of mass tourism",
+            "iii Travel for the wealthy",
+            "iv Earning foreign exchange through tourism",
+            "v Difficulty in recognising the economic effects of tourism",
+            "vi The contribution of air travel to tourism",
+            "vii The world impact of tourism",
+            "viii The history of travel"
+          ],
+          "evidence": "Historians suggest that the advent of mass tourism began in England during the industrial revolution with the rise of the middle class and the availability of relatively inexpensive transportation."
+        },
+        {
+          "order": 2,
+          "questionType": "matching",
+          "prompt": "Paragraph C",
+          "answer": "i Economic and social significance of tourism",
+          "explanation": "Đoạn C mở đầu bằng đúng câu chủ đề: du lịch lớn mạnh cả về KINH TẾ lẫn XÃ HỘI, rồi dẫn số liệu về GDP, việc làm, thuế và tác động lên xã hội. → i.",
+          "points": 1,
+          "options": [
+            "i Economic and social significance of tourism",
+            "ii The development of mass tourism",
+            "iii Travel for the wealthy",
+            "iv Earning foreign exchange through tourism",
+            "v Difficulty in recognising the economic effects of tourism",
+            "vi The contribution of air travel to tourism",
+            "vii The world impact of tourism",
+            "viii The history of travel"
+          ],
+          "evidence": "Tourism today has grown significantly in both economic and social importance. / Thus, tourism has a profound impact both on the world economy and, because of the educative effect of travel and the effects on employment, on society itself."
+        },
+        {
+          "order": 3,
+          "questionType": "matching",
+          "prompt": "Paragraph D",
+          "answer": "v Difficulty in recognising the economic effects of tourism",
+          "explanation": "Đoạn D nói về việc KHÓ NHẬN DIỆN tác động kinh tế của du lịch: ngành quá đa dạng và phân mảnh, chi tiêu của khách dễ bị bỏ sót, không lập nổi cơ sở dữ liệu đáng tin cậy. → v.",
+          "points": 1,
+          "options": [
+            "i Economic and social significance of tourism",
+            "ii The development of mass tourism",
+            "iii Travel for the wealthy",
+            "iv Earning foreign exchange through tourism",
+            "v Difficulty in recognising the economic effects of tourism",
+            "vi The contribution of air travel to tourism",
+            "vii The world impact of tourism",
+            "viii The history of travel"
+          ],
+          "evidence": "However, the major problems of the travel and tourism industry that have hidden, or obscured, its economic impact are the diversity and fragmentation of the industry itself."
+        },
+        {
+          "order": 4,
+          "questionType": "matching",
+          "prompt": "Paragraph E",
+          "answer": "vii The world impact of tourism",
+          "explanation": "Đoạn E điểm qua TẦM ẢNH HƯỞNG TOÀN CẦU: du lịch là mặt hàng lớn nhất trong thương mại quốc tế với nhiều nước, là nguồn thu chính của Hy Lạp, Ý, Tây Ban Nha… và là nhà tuyển dụng số một ở hàng chục quốc gia. → vii.",
+          "points": 1,
+          "options": [
+            "i Economic and social significance of tourism",
+            "ii The development of mass tourism",
+            "iii Travel for the wealthy",
+            "iv Earning foreign exchange through tourism",
+            "v Difficulty in recognising the economic effects of tourism",
+            "vi The contribution of air travel to tourism",
+            "vii The world impact of tourism",
+            "viii The history of travel"
+          ],
+          "evidence": "In fact, McIntosh and Goeldner (1990) suggest that tourism has become the largest commodity in international trade for many nations and, for a significant number of other countries, it ranks second or third."
+        },
+        {
+          "order": 5,
+          "questionType": "true_false_not_given",
+          "prompt": "The largest employment figures in the world are found in the travel and tourism industry.",
+          "answer": "TRUE",
+          "explanation": "Bài viết khẳng định du lịch – lữ hành là nhà tuyển dụng LỚN NHẤT thế giới với gần 130 triệu việc làm. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "The travel and tourism industry is the world's largest employer with almost 130 million jobs, or almost 7 per cent of all employees."
+        },
+        {
+          "order": 6,
+          "questionType": "true_false_not_given",
+          "prompt": "Tourism contributes over six per cent of the Australian gross national product.",
+          "answer": "NOT GIVEN",
+          "explanation": "Con số “hơn 6 phần trăm” trong bài là của TỔNG SẢN PHẨM QUỐC DÂN THẾ GIỚI, không phải của Úc; bài không nhắc gì tới Úc. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 7,
+          "questionType": "true_false_not_given",
+          "prompt": "Tourism has a social impact because it promotes recreation.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài có nói du lịch tác động lên xã hội, nhưng lý do được nêu là tác dụng GIÁO DỤC của việc đi lại và ảnh hưởng tới việc làm — hoàn toàn không nhắc tới giải trí (recreation). → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 8,
+          "questionType": "true_false_not_given",
+          "prompt": "Two main features of the travel and tourism industry make its economic significance difficult to ascertain.",
+          "answer": "TRUE",
+          "explanation": "Bài nêu đúng HAI đặc điểm làm lu mờ tác động kinh tế: sự đa dạng (diversity) và sự phân mảnh (fragmentation) của chính ngành này. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "the major problems of the travel and tourism industry that have hidden, or obscured, its economic impact are the diversity and fragmentation of the industry itself"
+        },
+        {
+          "order": 9,
+          "questionType": "true_false_not_given",
+          "prompt": "Visitor spending is always greater than the spending of residents in tourist areas.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói vì nhiều cơ sở cũng phục vụ dân địa phương nên chi tiêu của khách dễ bị bỏ sót, chứ KHÔNG so sánh xem bên nào chi nhiều hơn. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 10,
+          "questionType": "true_false_not_given",
+          "prompt": "It is easy to show statistically how tourism affects individual economies.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại, bài nói ở MỌI quốc gia vấn đề này khiến ngành RẤT KHÓ xây dựng cơ sở dữ liệu đáng tin cậy để ước lượng đóng góp cho kinh tế vùng/quốc gia. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "in all nations this problem has made it difficult for the industry to develop any type of reliable or credible tourism information base in order to estimate the contribution it makes to regional, national and global economies"
+        },
+        {
+          "order": 11,
+          "questionType": "short_answer",
+          "prompt": "In Greece, tourism is the most important ...",
+          "answer": [
+            "source of income",
+            "the source of income",
+            "major source of income",
+            "income",
+            "industry"
+          ],
+          "explanation": "Đoạn E liệt kê Hy Lạp trong nhóm nước mà du lịch là “nguồn thu nhập chính” — source of income.",
+          "points": 1,
+          "evidence": "For example, tourism is the major source of income in Bermuda, Greece, Italy, Spain, Switzerland and most Caribbean countries."
+        },
+        {
+          "order": 12,
+          "questionType": "short_answer",
+          "prompt": "The travel and tourism industry in Jamaica is the major ...",
+          "answer": [
+            "employer",
+            "ranked employer",
+            "number one ranked employer"
+          ],
+          "explanation": "Đoạn E nói du lịch – lữ hành là “nhà tuyển dụng số một” (number one ranked employer) ở Jamaica và nhiều nước khác → employer.",
+          "points": 1,
+          "evidence": "suggest that the travel and tourism industry is the number one ranked employer in the Bahamas, Brazil, Canada, France, (the former) West Germany, Hong Kong, Italy, Jamaica, Japan, Singapore, the United Kingdom and the United States"
+        },
+        {
+          "order": 13,
+          "questionType": "short_answer",
+          "prompt": "The problems associated with measuring international tourism are often reflected in the measurement of ...",
+          "answer": [
+            "domestic tourism",
+            "measuring domestic tourism"
+          ],
+          "explanation": "Câu cuối bài: những khó khăn tương tự cũng xuất hiện khi đo lường DU LỊCH NỘI ĐỊA (domestic tourism).",
+          "points": 1,
+          "evidence": "In many cases, similar difficulties arise when attempts are made to measure domestic tourism."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 - Autumn Leaves",
+      "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.",
+      "content": "A One of the most captivating natural events of the year in many areas throughout North America is the turning of the leaves in the fall. The colours are magnificent, but the question of exactly why some trees turn yellow or orange, and others red or purple, is something which has long puzzled scientists.\n\nB Summer leaves are green because they are full of chlorophyll, the molecule that captures sunlight and converts that energy into new building materials for the tree. As fall approaches in the northern hemisphere, the amount of solar energy available declines considerably. For many trees - evergreen conifers being an exception - the best strategy is to abandon photosynthesis until the spring. So rather than maintaining the now redundant leaves throughout the winter, the tree saves its precious resources and discards them. But before letting its leaves go, the tree dismantles their chlorophyll molecules and ships their valuable nitrogen back into the twigs. As chlorophyll is depleted, other colours that have been dominated by it throughout the summer begin to be revealed. This unmasking explains the autumn colours of yellow and orange, but not the brilliant reds and purples of trees such as the maple or sumac.\n\nC The source of the red is widely known: it is created by anthocyanins, water-soluble plant pigments reflecting the red to blue range of the visible spectrum. They belong to a class of sugar-based chemical compounds also known as flavonoids. What's puzzling is that anthocyanins are actually newly minted, made in the leaves at the same time as the tree is preparing to drop them. But it is hard to make sense of the manufacture of anthocyanins - why should a tree bother making new chemicals in its leaves when it's already scrambling to withdraw and preserve the ones already there?\n\nD Some theories about anthocyanins have argued that they might act as a chemical defence against attacks by insects or fungi, or that they might attract fruit-eating birds or increase a leaf's tolerance to freezing. However there are problems with each of these theories, including the fact that leaves are red for such a relatively short period that the expense of energy needed to manufacture the anthocyanins would outweigh any anti-fungal or anti-herbivore activity achieved.\n\nE It has also been proposed that trees may produce vivid red colours to convince herbivorous insects that they are healthy and robust and would be easily able to mount chemical defences against infestation. If insects paid attention to such advertisements, they might be prompted to lay their eggs on a duller, and presumably less resistant host. The flaw in this theory lies in the lack of proof to support it. No one has as yet ascertained whether more robust trees sport the brightest leaves, or whether insects make choices according to colour intensity.\n\nF Perhaps the most plausible suggestion as to why leaves would go to the trouble of making anthocyanins when they're busy packing up for the winter is the theory known as the 'light screen' hypothesis. It sounds paradoxical, because the idea behind this hypothesis is that the red pigment is made in autumn leaves to protect chlorophyll, the light-absorbing chemical, from too much light. Why does chlorophyll need protection when it is the natural world's supreme light absorber? Why protect chlorophyll at a time when the tree is breaking it down to salvage as much of it as possible?\n\nG Chlorophyll, although exquisitely evolved to capture the energy of sunlight, can sometimes be overwhelmed by it, especially in situations of drought, low temperatures, or nutrient deficiency. Moreover, the problem of oversensitivity to light is even more acute in the fall, when the leaf is busy preparing for winter by dismantling its internal machinery. The energy absorbed by the chlorophyll molecules of the unstable autumn leaf is not immediately channelled into useful products and processes, as it would be in an intact summer leaf. The weakened fall leaf then becomes vulnerable to the highly destructive effects of the oxygen created by the excited chlorophyll molecules.\n\nH Even if you had never suspected that this is what was going on when leaves turn red, there are clues out there. One is straightforward: on many trees, the leaves that are the reddest are those on the side of the tree which gets most sun. Not only that, but the red is brighter on the upper side of the leaf. It has also been recognised for decades that the best conditions for intense red colours are dry, sunny days and cool nights, conditions that nicely match those that make leaves susceptible to excess light. And finally, trees such as maples usually get much redder the more north you travel in the northern hemisphere. It's colder there, they're more stressed, their chlorophyll is more sensitive and it needs more sunblock.\n\nI What is still not fully understood, however, is why some trees resort to producing red pigments while others don't bother, and simply reveal their orange or yellow hues. Do these trees have other means at their disposal to prevent overexposure to light in autumn? Their story, though not as spectacular to the eye, will surely turn out to be as subtle and as complex.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Reading Passage 2 has nine paragraphs, A-I.\nWhich paragraph contains the following information?\nWrite the correct letter, A-I, in boxes 14-18 on your answer sheet.\nNB You may use any letter more than once.",
+          "19": "Complete the notes below.\nChoose ONE WORD ONLY from the passage.",
+          "23": "Do the following statements agree with the information given in the passage?\nIn boxes 23-25 write\n:::box\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n:::",
+          "26": "Choose the correct letter A, B, C or D."
+        },
+        "noteBody": "# Why believe the 'light screen' hypothesis?\n• The most vividly coloured red leaves are found on the side of the tree facing the [[19]].\n• The [[20]] surfaces of leaves contain the most red pigment.\n• Red leaves are most abundant when daytime weather conditions are [[21]] and sunny.\n• The intensity of the red colour of leaves increases as you go further [[22]]."
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "matching",
+          "prompt": "a description of the substance responsible for the red colouration of leaves",
+          "answer": "C",
+          "explanation": "Đoạn C mô tả chất tạo màu đỏ: anthocyanin — sắc tố thực vật tan trong nước, phản xạ dải màu từ đỏ tới xanh lam, thuộc nhóm flavonoid. → C.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "The source of the red is widely known: it is created by anthocyanins, water-soluble plant pigments reflecting the red to blue range of the visible spectrum."
+        },
+        {
+          "order": 15,
+          "questionType": "matching",
+          "prompt": "the reason why trees drop their leaves in autumn",
+          "answer": "B",
+          "explanation": "Đoạn B giải thích vì sao cây rụng lá: năng lượng mặt trời giảm, giữ lá không còn lợi, nên cây tiết kiệm tài nguyên và bỏ lá đi. → B.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "So rather than maintaining the now redundant leaves throughout the winter, the tree saves its precious resources and discards them."
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "some evidence to confirm a theory about the purpose of the red leaves",
+          "answer": "H",
+          "explanation": "Đoạn H đưa ra các BẰNG CHỨNG củng cố giả thuyết “màn lọc ánh sáng”: lá đỏ nhất ở phía nhiều nắng, mặt trên đỏ đậm hơn, thời tiết khô nắng thì màu càng rực, càng lên phía bắc cây càng đỏ. → H.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "Even if you had never suspected that this is what was going on when leaves turn red, there are clues out there."
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "an explanation of the function of chlorophyll",
+          "answer": "B",
+          "explanation": "Đoạn B định nghĩa chức năng của diệp lục: phân tử thu ánh sáng mặt trời và chuyển năng lượng đó thành vật liệu xây dựng mới cho cây. → B.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "Summer leaves are green because they are full of chlorophyll, the molecule that captures sunlight and converts that energy into new building materials for the tree."
+        },
+        {
+          "order": 18,
+          "questionType": "matching",
+          "prompt": "a suggestion that the red colouration in leaves could serve as a warning signal",
+          "answer": "E",
+          "explanation": "Đoạn E nêu giả thuyết màu đỏ như một lời “quảng cáo” cảnh báo côn trùng: cây khoẻ mạnh, đủ sức phòng vệ hoá học, nên sâu bọ hãy đi đẻ trứng ở cây khác. → E.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "evidence": "It has also been proposed that trees may produce vivid red colours to convince herbivorous insects that they are healthy and robust and would be easily able to mount chemical defences against infestation."
+        },
+        {
+          "order": 19,
+          "questionType": "note_completion",
+          "prompt": "Question 19",
+          "answer": [
+            "sun",
+            "the sun",
+            "sunlight"
+          ],
+          "explanation": "Đoạn H: lá đỏ nhất nằm ở phía thân cây “gets most sun” — phía đón nhiều nắng nhất → sun.",
+          "points": 1,
+          "evidence": "on many trees, the leaves that are the reddest are those on the side of the tree which gets most sun"
+        },
+        {
+          "order": 20,
+          "questionType": "note_completion",
+          "prompt": "Question 20",
+          "answer": [
+            "upper",
+            "the upper"
+          ],
+          "explanation": "Đoạn H: “the red is brighter on the upper side of the leaf” — mặt TRÊN của lá đỏ đậm hơn → upper.",
+          "points": 1,
+          "evidence": "Not only that, but the red is brighter on the upper side of the leaf."
+        },
+        {
+          "order": 21,
+          "questionType": "note_completion",
+          "prompt": "Question 21",
+          "answer": [
+            "dry"
+          ],
+          "explanation": "Đoạn H: điều kiện cho màu đỏ đậm nhất là những ngày KHÔ ráo, nắng và đêm lạnh → dry.",
+          "points": 1,
+          "evidence": "It has also been recognised for decades that the best conditions for intense red colours are dry, sunny days and cool nights"
+        },
+        {
+          "order": 22,
+          "questionType": "note_completion",
+          "prompt": "Question 22",
+          "answer": [
+            "north",
+            "further north",
+            "the north"
+          ],
+          "explanation": "Đoạn H: cây phong càng đỏ hơn khi ta đi càng xa về phía BẮC của bắc bán cầu → north.",
+          "points": 1,
+          "evidence": "trees such as maples usually get much redder the more north you travel in the northern hemisphere"
+        },
+        {
+          "order": 23,
+          "questionType": "true_false_not_given",
+          "prompt": "It is likely that the red pigments help to protect the leaf from freezing temperatures.",
+          "answer": "FALSE",
+          "explanation": "Đoạn D có nhắc giả thuyết sắc tố đỏ làm tăng khả năng chịu lạnh, nhưng ngay sau đó bài khẳng định MỌI giả thuyết trong nhóm này đều có vấn đề — nên nói “có khả năng đúng” là trái với bài. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Some theories about anthocyanins have argued that they might act as a chemical defence against attacks by insects or fungi, or that they might attract fruit-eating birds or increase a leaf's tolerance to freezing. However there are problems with each of these theories"
+        },
+        {
+          "order": 24,
+          "questionType": "true_false_not_given",
+          "prompt": "The 'light screen' hypothesis would initially seem to contradict what is known about chlorophyll.",
+          "answer": "TRUE",
+          "explanation": "Đoạn F nói thẳng giả thuyết này “nghe có vẻ nghịch lý” vì diệp lục vốn là kẻ hấp thụ ánh sáng giỏi nhất mà lại cần được che nắng. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "It sounds paradoxical, because the idea behind this hypothesis is that the red pigment is made in autumn leaves to protect chlorophyll, the light-absorbing chemical, from too much light."
+        },
+        {
+          "order": 25,
+          "questionType": "true_false_not_given",
+          "prompt": "Leaves which turn colours other than red are more likely to be damaged by sunlight.",
+          "answer": "NOT GIVEN",
+          "explanation": "Đoạn I chỉ đặt câu hỏi bỏ ngỏ: những cây chỉ ngả vàng/cam liệu có cách khác để tránh thừa sáng không? Bài KHÔNG kết luận chúng dễ bị nắng làm hại hơn. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 26,
+          "questionType": "multiple_choice",
+          "prompt": "For which of the following questions does the writer offer an explanation?",
+          "answer": "B how leaves turn orange and yellow in autumn",
+          "explanation": "Đoạn B giải thích rõ cơ chế lá ngả vàng/cam: diệp lục bị rút đi, các sắc tố vốn bị che lấp lộ ra (“unmasking”). Ba phương án còn lại đều chỉ được nêu ra mà không được giải đáp: cây lá kim chỉ được nhắc thoáng qua, cách côn trùng chọn cây đẻ trứng thì bài nói còn thiếu bằng chứng, và vì sao chỉ một số cây tạo anthocyanin thì đoạn I nói thẳng là “vẫn chưa hiểu rõ”. → B.",
+          "points": 1,
+          "options": [
+            "A why conifers remain green in winter",
+            "B how leaves turn orange and yellow in autumn",
+            "C how herbivorous insects choose which trees to lay their eggs in",
+            "D why anthocyanins are restricted to certain trees"
+          ],
+          "evidence": "As chlorophyll is depleted, other colours that have been dominated by it throughout the summer begin to be revealed. This unmasking explains the autumn colours of yellow and orange, but not the brilliant reds and purples of trees such as the maple or sumac."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 - Beyond the blue horizon",
+      "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.",
+      "content": "An important archaeological discovery on the island of Efate in the Pacific archipelago of Vanuatu has revealed traces of an ancient seafaring people, the distant ancestors of today's Polynesians. The site came to light only by chance. An agricultural worker, digging in the grounds of a derelict plantation, scraped open a grave - the first of dozens in a burial ground some 3,000 years old. It is the oldest cemetery ever found in the Pacific islands, and it harbors the remains of an ancient people archaeologists call the Lapita.\n\nThey were daring blue-water adventurers who used basic canoes to rove across the ocean. But they were not just explorers. They were also pioneers who carried with them everything they would need to build new lives - their livestock, taro seedlings and stone tools. Within the span of several centuries, the Lapita stretched the boundaries of their world from the jungle-clad volcanoes of Papua New Guinea to the loneliest coral outliers of Tonga.\n\nThe Lapita left precious few clues about themselves, but Efate expands the volume of data available to researchers dramatically. The remains of 62 individuals have been uncovered so far, and archaeologists were also thrilled to find six complete Lapita pots. Other items included a Lapita burial urn with modeled birds arranged on the rim as though peering down at the human remains sealed inside. 'It's an important discovery,' says Matthew Spriggs, professor of archaeology at the Australian National University and head of the international team digging up the site, for it conclusively identifies the remains at Lapita.\n\nDNA teased from these human remains may help answer one of the most puzzling questions in Pacific anthropology: did all Pacific islanders spring from one source or many? Was there only one outward migration from a single point in Asia, or several from different points? 'This represents the best opportunity we've had yet,' says Spriggs, 'to find out who the Lapita actually were, where they came from, and who their closest descendants are today.'\n\nThere is one stubborn question for which archaeology has yet to provide any answers: how did the Lapita accomplish the ancient equivalent of a moon landing, many times over? No-one has found one of their canoes or any rigging, which could reveal how the canoes were sailed. Nor do the oral histories and traditions of later Polynesians offer any insights, for they turn into myths long before they reach as far back in time as the Lapita.\n\n'All we can say for certain is that the Lapita had canoes that were capable of ocean voyages, and they had the ability to sail them,' says Geoff Irwin a professor of archaeology at the University of Auckland. Those sailing skills, he says, were developed and passed down over thousands of years by earlier mariners who worked their way through the archipelagoes of the western Pacific, making short crossings to nearby islands. The real adventure didn't begin, however, until their Lapita descendants sailed out of sight of land, with empty horizons on every side. This must have been as difficult for them as landing on the moon is for us today. Certainly it distinguished them from their ancestors, but what gave them the courage to launch out on such risky voyages?\n\nThe Lapita's thrust into the Pacific was eastward, against the prevailing trade winds, Irwin notes. Those nagging headwinds, he argues, may have been the key to their success. 'They could sail out for days into the unknown and assess the area, secure in the knowledge that if they didn't find anything, they could turn about and catch a swift ride back on the trade winds. This is what would have made the whole thing work.' Once out there, skilled seafarers would have detected abundant leads to follow to land: seabirds, coconuts and twigs carried out to sea by the tides, and the afternoon pile-up of clouds on the horizon which often indicates an island in the distance.\n\nFor returning explorers, successful or not, the geography of their own archipelagoes would have provided a safety net. Without this to go by, overshooting their home ports, getting lost and sailing off into eternity would have been all too easy. Vanuatu, for example, stretches more than 500 miles in a northwest-southeast trend, its scores of intervisible islands forming a backstop for mariners riding the trade winds home.\n\nAll this presupposes one essential detail, says Atholl Anderson, professor of prehistory at the Australian National University: the Lapita had mastered the advanced art of sailing against the wind. 'And there's no proof they could do any such thing,' Anderson says, 'There has been this assumption they did, and people have built canoes to re-create those early voyages based on that assumption. But nobody has any idea what their canoes looked like or how they were rigged.'\n\nRather than give all the credit to human skill, Anderson invokes the winds of chance. El Nino, the same climate disruption that affects the Pacific today, may have helped scatter the Lapita, Anderson suggests. He points out that climate data obtained from slow-growing corals around the Pacific indicated a series of unusually frequent El Ninos around the time of the Lapita expansion. By reversing the regular east-to-west flow of the trade winds for weeks at a time, these 'super El Ninos' might have taken the Lapita on long unplanned voyages.\n\nHowever they did it, the Lapita spread themselves a third of the way across the Pacific, then called it quits for reasons known only to them. Ahead lay the vast emptiness of the central Pacific and perhaps they were too thinly stretched to venture farther. 'They probably never numbered more than a few thousand in total, and in their rapid migration eastward they encountered hundreds of islands - more than 300 in Fiji alone.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Complete the summary using the list of words and phrases, A-J, below.\n:::box\nA proof | B plantation | C harbor | D bones | E data\nF archaeological discovery | G burial urn | H source | I animals | J maps\n:::",
+          "32": "Choose the correct letter, A, B, C or D.",
+          "36": "Do the following statements agree with the views of the writer in Reading Passage 3?\nIn boxes 36-40 on your answer sheet, write\n:::box\nYES if the statement agrees with the views of the writer\nNO if the statement contradicts the views of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this\n:::"
+        },
+        "noteBody": "# The Efate burial site\nA 3,000-year-old burial ground of a seafaring people called the Lapita has been found on an abandoned [[27]] on the Pacific island of Efate. The cemetery, which is a significant [[28]], was uncovered accidentally by an agricultural worker.\nThe Lapita explored and colonized many Pacific islands over several centuries. They took many things with them on their voyages including [[29]] and tools.\nThe burial ground increases the amount of information about the Lapita available to scientists. A team of researchers, led by Matthew Spriggs from the Australian National University, are helping with the excavation of the site. Spriggs believes the [[30]] which was found at the site is very important since it confirms that the [[31]] found inside are Lapita."
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "note_completion",
+          "prompt": "Question 27",
+          "answer": [
+            "B",
+            "B plantation",
+            "plantation"
+          ],
+          "explanation": "Người làm nông đào đất trong khuôn viên một ĐỒN ĐIỀN bỏ hoang (derelict plantation) thì chạm vào ngôi mộ. → B plantation.",
+          "points": 1,
+          "evidence": "An agricultural worker, digging in the grounds of a derelict plantation, scraped open a grave"
+        },
+        {
+          "order": 28,
+          "questionType": "note_completion",
+          "prompt": "Question 28",
+          "answer": [
+            "F",
+            "F archaeological discovery",
+            "archaeological discovery"
+          ],
+          "explanation": "Ngay câu mở đầu gọi đây là “một phát hiện khảo cổ quan trọng”. → F archaeological discovery.",
+          "points": 1,
+          "evidence": "An important archaeological discovery on the island of Efate in the Pacific archipelago of Vanuatu has revealed traces of an ancient seafaring people"
+        },
+        {
+          "order": 29,
+          "questionType": "note_completion",
+          "prompt": "Question 29",
+          "answer": [
+            "I",
+            "I animals",
+            "animals"
+          ],
+          "explanation": "Họ mang theo “livestock” (gia súc), cây giống khoai sọ và công cụ đá; trong hộp từ chỉ có “animals” ứng với gia súc. → I animals.",
+          "points": 1,
+          "evidence": "They were also pioneers who carried with them everything they would need to build new lives - their livestock, taro seedlings and stone tools."
+        },
+        {
+          "order": 30,
+          "questionType": "note_completion",
+          "prompt": "Question 30",
+          "answer": [
+            "G",
+            "G burial urn",
+            "burial urn"
+          ],
+          "explanation": "Vật được tìm thấy ở hiện trường và được Spriggs coi là quan trọng chính là chiếc BÌNH ĐỰNG HÀI CỐT (burial urn) có hình chim trên miệng. → G burial urn.",
+          "points": 1,
+          "evidence": "Other items included a Lapita burial urn with modeled birds arranged on the rim as though peering down at the human remains sealed inside."
+        },
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Question 31",
+          "answer": [
+            "D",
+            "D bones",
+            "bones"
+          ],
+          "explanation": "Thứ nằm bên trong bình là “human remains” — hài cốt; chính chiếc bình giúp khẳng định chắc chắn đó là người Lapita. → D bones.",
+          "points": 1,
+          "evidence": "for it conclusively identifies the remains at Lapita"
+        },
+        {
+          "order": 32,
+          "questionType": "multiple_choice",
+          "prompt": "According to the writer, there are difficulties explaining how the Lapita accomplished their journeys because",
+          "answer": "C little information relating to this period can be relied upon for accuracy.",
+          "explanation": "Bài nói CHƯA tìm được chiếc thuyền nào (nên A sai — không có thuyền để mà “cho ít manh mối”), còn truyền miệng của người Polynesia đời sau thì đã biến thành huyền thoại trước khi lùi về tới thời Lapita — tức thông tin về giai đoạn này không đáng tin. → C.",
+          "points": 1,
+          "options": [
+            "A the canoes that have been discovered offer relatively few clues.",
+            "B archeologists have shown limited interest in this area of research.",
+            "C little information relating to this period can be relied upon for accuracy.",
+            "D technological advances have altered the way such achievements are viewed."
+          ],
+          "evidence": "No-one has found one of their canoes or any rigging, which could reveal how the canoes were sailed. Nor do the oral histories and traditions of later Polynesians offer any insights, for they turn into myths long before they reach as far back in time as the Lapita."
+        },
+        {
+          "order": 33,
+          "questionType": "multiple_choice",
+          "prompt": "According to the sixth paragraph, what was extraordinary about the Lapita?",
+          "answer": "A They sailed beyond the point where land was visible.",
+          "explanation": "Đoạn 6 phân biệt người Lapita với tổ tiên: cuộc phiêu lưu thật sự chỉ bắt đầu khi họ đi KHUẤT TẦM NHÌN ĐẤT LIỀN, bốn bề chỉ còn đường chân trời trống. Kỹ năng truyền đời (D) và thuyền đi biển (C) đã có từ những người đi trước. → A.",
+          "points": 1,
+          "options": [
+            "A They sailed beyond the point where land was visible.",
+            "B Their cultural heritage discouraged the expression of fear.",
+            "C They were able to build canoes that withstood ocean voyages.",
+            "D Their navigational skills were passed on from one generation to the next."
+          ],
+          "evidence": "The real adventure didn't begin, however, until their Lapita descendants sailed out of sight of land, with empty horizons on every side."
+        },
+        {
+          "order": 34,
+          "questionType": "multiple_choice",
+          "prompt": "What does 'This' refer to in the seventh paragraph?",
+          "answer": "D the Lapita's belief they would be able to return home",
+          "explanation": "“This” khép lại ý ngay trước đó: họ dám đi sâu vào vùng chưa biết vì YÊN TÂM rằng nếu không tìm thấy gì thì quay đầu là có gió mậu dịch đưa về. Chính niềm tin về đường về mới là thứ “làm nên chuyện”. → D.",
+          "points": 1,
+          "options": [
+            "A the Lapita's seafaring talent",
+            "B the Lapita's ability to detect signs of land",
+            "C the Lapita's extensive knowledge of the region",
+            "D the Lapita's belief they would be able to return home"
+          ],
+          "evidence": "They could sail out for days into the unknown and assess the area, secure in the knowledge that if they didn't find anything, they could turn about and catch a swift ride back on the trade winds. This is what would have made the whole thing work."
+        },
+        {
+          "order": 35,
+          "questionType": "multiple_choice",
+          "prompt": "According to the eighth paragraph, how was the geography of the region significant?",
+          "answer": "C It provided a navigational aid for the Lapita",
+          "explanation": "Đoạn 8: địa hình quần đảo là “tấm lưới an toàn” — Vanuatu trải dài hơn 500 dặm với các đảo nhìn thấy nhau, tạo thành tấm chắn giúp thuỷ thủ không đi lạc khi theo gió mậu dịch về nhà. Đó là hỗ trợ ĐỊNH HƯỚNG. → C.",
+          "points": 1,
+          "options": [
+            "A It played an important role in Lapita culture",
+            "B It meant there were relatively few storms at sea",
+            "C It provided a navigational aid for the Lapita",
+            "D It made a large number of islands habitable"
+          ],
+          "evidence": "For returning explorers, successful or not, the geography of their own archipelagoes would have provided a safety net."
+        },
+        {
+          "order": 36,
+          "questionType": "true_false_not_given",
+          "prompt": "It is now clear that the Lapita could sail into a prevailing wind.",
+          "answer": "NO",
+          "explanation": "Anderson nói thẳng: “không có bằng chứng nào cho thấy họ làm được điều đó” — mọi người chỉ GIẢ ĐỊNH như vậy rồi đóng thuyền tái dựng theo giả định ấy. Vậy hoàn toàn chưa “đã rõ ràng”. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "'And there's no proof they could do any such thing,' Anderson says"
+        },
+        {
+          "order": 37,
+          "questionType": "true_false_not_given",
+          "prompt": "Extreme climate conditions may have played a role in Lapita migration.",
+          "answer": "YES",
+          "explanation": "Anderson cho rằng “siêu El Niño” — hiện tượng khí hậu bất thường — có thể đã đảo chiều gió mậu dịch và đưa người Lapita đi những chuyến ngoài ý muốn. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "He points out that climate data obtained from slow-growing corals around the Pacific indicated a series of unusually frequent El Ninos around the time of the Lapita expansion."
+        },
+        {
+          "order": 38,
+          "questionType": "true_false_not_given",
+          "prompt": "The Lapita learnt to predict the duration of El Ninos.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói El Niño có thể đã cuốn họ đi, hoàn toàn không đề cập việc người Lapita biết dự đoán El Niño kéo dài bao lâu. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 39,
+          "questionType": "true_false_not_given",
+          "prompt": "It remains unclear why the Lapita halted their expansion across the Pacific.",
+          "answer": "YES",
+          "explanation": "Bài viết họ dừng lại “vì những lý do chỉ riêng họ biết” — tức đến nay vẫn chưa rõ nguyên nhân (phần sau chỉ là phỏng đoán “perhaps”). → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "However they did it, the Lapita spread themselves a third of the way across the Pacific, then called it quits for reasons known only to them."
+        },
+        {
+          "order": 40,
+          "questionType": "true_false_not_given",
+          "prompt": "It is likely that the majority of Lapita settled on Fiji.",
+          "answer": "NOT GIVEN",
+          "explanation": "Fiji chỉ được nhắc đến như ví dụ về số lượng đảo họ gặp (hơn 300 đảo riêng ở Fiji), không nói gì về việc phần lớn người Lapita định cư tại đó. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        }
+      ]
+    }
+  ]
+}

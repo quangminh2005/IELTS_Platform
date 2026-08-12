@@ -1,0 +1,658 @@
+{
+  "title": "IELTS Master - Reading Test 39",
+  "skill": "reading",
+  "sourceLabel": "IELTS Master - Reading Test 39",
+  "description": "Đề đọc IELTS Master Test 39: The Megafires of California / Second Nature / When Evolution Runs Backwards",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 - The Megafires of California",
+      "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.",
+      "content": "Wildfires are becoming an increasing menace in the western United States, with Southern California being the hardest hit area. There's a reason fire squads battling more frequent blazes in Southern California are having such difficulty containing the flames, despite better preparedness than ever and decades of experience fighting fires fanned by the 'Santa Ana Winds'. The wildfires themselves, experts say, are generally hotter, faster, and spread more erratically than in the past.\n\nMegafires, also called 'siege fires', are the increasingly frequent blazes that burn 500,000 acres or more - 10 times the size of the average forest fire of 20 years ago. Some recent wildfires are among the biggest ever in California in terms of acreage burned, according to state figures and news reports.\n\nOne explanation for the trend to more superhot fires is that the region, which usually has dry summers, has had significantly below normal precipitation in many recent years. Another reason, experts say, is related to the century-long policy of the US Forest Service to stop wildfires as quickly as possible. The unintentional consequence has been to halt the natural eradication of underbrush, now the primary fuel for megafires.\n\nThree other factors contribute to the trend, they add. First is climate change, marked by a 1-degree Fahrenheit rise in average yearly temperature across the western states. Second is fire seasons that on average are 78 days longer than they were 20 years ago. Third is increased construction of homes in wooded areas.\n\n'We are increasingly building our homes in fire-prone ecosystems,' says Dominik Kulakowski, adjunct professor of biology at Clark University Graduate School of Geography in Worcester, Massachusetts. 'Doing that in many of the forests of the western US is like building homes on the side of an active volcano.'\n\nIn California, where population growth has averaged more than 600,000 a year for at least a decade, more residential housing is being built. 'What once was open space is now residential homes providing fuel to make fires burn with greater intensity,' says Terry McHale of the California Department of Forestry firefighters' union. 'With so much dryness, so many communities to catch fire, so many fronts to fight, it becomes an almost incredible job.'\n\nThat said, many experts give California high marks for making progress on preparedness in recent years, after some of the largest fires in state history scorched thousands of acres, burned thousands of homes, and killed numerous people. Stung in the past by criticism of bungling that allowed fires to spread when they might have been contained, personnel are meeting the peculiar challenges of neighborhood - and canyon-hopping fires better than previously, observers say.\n\nState promises to provide more up-to-date engines, planes, and helicopters to fight fires have been fulfilled. Firefighters' unions that in the past complained of dilapidated equipment, old fire engines, and insufficient blueprints for fire safety are now praising the state's commitment, noting that funding for firefighting has increased, despite huge cuts in many other programs. 'We are pleased that the current state administration has been very proactive in its support of us, and [has] come through with budgetary support of the infrastructure needs we have long sought,' says Mr. McHale of the firefighters' union.\n\nBesides providing money to upgrade the fire engines that must traverse the mammoth state and wind along serpentine canyon roads, the state has invested in better command-and-control facilities as well as in the strategies to run them. 'In the fire sieges of earlier years, we found that other jurisdictions and states were willing to offer mutual-aid help, but we were not able to communicate adequately with them,' says Kim Zagaris, chief of the state's Office of Emergency Services Fire and Rescue Branch.\n\nAfter a commission examined and revamped communications procedures, the statewide response 'has become far more professional and responsive,' he says. There is a sense among both government officials and residents that the speed, dedication, and coordination of firefighters from several states and jurisdictions are resulting in greater efficiency than in past 'siege fire' situations.\n\nIn recent years, the Southern California region has improved building codes, evacuation procedures, and procurement of new technology. 'I am extraordinarily impressed by the improvements we have witnessed,' says Randy Jacobs, a Southern California-based lawyer who has had to evacuate both his home and business to escape wildfires. 'Notwithstanding all the damage that will continue to be caused by wildfires, we will no longer suffer the loss of life endured in the past because of the fire prevention and firefighting measures that have been put in place,' he says.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the notes below.\nChoose ONE WORD OR A NUMBER from the passage.",
+          "7": "Do the following statements agree with the information given in Reading Passage 1?\nIn boxes 7-13 on your answer sheet, write\n:::box\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n:::"
+        },
+        "noteBody": "# Wildfires\n## Characteristics of wildfires and wildfire conditions today compared to the past:\nOccurrence: more frequent\nTemperature: hotter\nSpeed: faster\nMovement: [[1]] more unpredictably\nSize of fires: [[2]] greater on average than two decades ago\n## Reasons wildfires cause more damage today compared to the past:\nRainfall: [[3]] average\nMore brush to act as [[4]]\nIncrease in yearly temperature\nExtended fire [[5]]\nMore building of [[6]] in vulnerable places"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Question 1",
+          "answer": [
+            "spread"
+          ],
+          "explanation": "Câu cuối đoạn 1: cháy rừng ngày nay “hotter, faster, and spread more erratically” — LAN đi thất thường hơn → spread.",
+          "points": 1,
+          "evidence": "The wildfires themselves, experts say, are generally hotter, faster, and spread more erratically than in the past."
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Question 2",
+          "answer": [
+            "10 times",
+            "ten times",
+            "10"
+          ],
+          "explanation": "Megafire cháy từ 500.000 mẫu trở lên — GẤP 10 LẦN quy mô đám cháy rừng trung bình của 20 năm trước.",
+          "points": 1,
+          "evidence": "Megafires, also called 'siege fires', are the increasingly frequent blazes that burn 500,000 acres or more - 10 times the size of the average forest fire of 20 years ago."
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Question 3",
+          "answer": [
+            "below"
+          ],
+          "explanation": "Lượng mưa nhiều năm gần đây “significantly below normal precipitation” — DƯỚI mức trung bình → below.",
+          "points": 1,
+          "evidence": "One explanation for the trend to more superhot fires is that the region, which usually has dry summers, has had significantly below normal precipitation in many recent years."
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Question 4",
+          "answer": [
+            "fuel"
+          ],
+          "explanation": "Chính sách dập lửa nhanh khiến lớp cây bụi không được tiêu huỷ tự nhiên, nay trở thành “the primary fuel for megafires” — NHIÊN LIỆU chính → fuel.",
+          "points": 1,
+          "evidence": "The unintentional consequence has been to halt the natural eradication of underbrush, now the primary fuel for megafires."
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Question 5",
+          "answer": [
+            "seasons",
+            "season"
+          ],
+          "explanation": "Yếu tố thứ hai: MÙA CHÁY (fire seasons) trung bình dài hơn 78 ngày so với 20 năm trước → seasons.",
+          "points": 1,
+          "evidence": "Second is fire seasons that on average are 78 days longer than they were 20 years ago."
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Question 6",
+          "answer": [
+            "homes",
+            "housing",
+            "residential homes"
+          ],
+          "explanation": "Yếu tố thứ ba: ngày càng nhiều NHÀ CỬA được xây trong vùng rừng — nơi dễ cháy → homes.",
+          "points": 1,
+          "evidence": "Third is increased construction of homes in wooded areas."
+        },
+        {
+          "order": 7,
+          "questionType": "true_false_not_given",
+          "prompt": "The amount of open space in California has diminished over the last ten years.",
+          "answer": "TRUE",
+          "explanation": "Bài nói suốt ÍT NHẤT MỘT THẬP KỶ dân số California tăng hơn 600.000 người/năm nên nhà ở được xây thêm, và “nơi từng là không gian trống nay đã thành khu dân cư”. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "In California, where population growth has averaged more than 600,000 a year for at least a decade, more residential housing is being built. / 'What once was open space is now residential homes providing fuel to make fires burn with greater intensity,'"
+        },
+        {
+          "order": 8,
+          "questionType": "true_false_not_given",
+          "prompt": "Many experts believe California has made little progress in readying itself to fight fires.",
+          "answer": "FALSE",
+          "explanation": "Ngược lại: nhiều chuyên gia “cho California điểm cao” về tiến bộ trong khâu chuẩn bị những năm gần đây. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "That said, many experts give California high marks for making progress on preparedness in recent years"
+        },
+        {
+          "order": 9,
+          "questionType": "true_false_not_given",
+          "prompt": "Personnel in the past have been criticised for mishandling fire containment.",
+          "answer": "TRUE",
+          "explanation": "Bài nhắc lực lượng chữa cháy từng “bị chỉ trích vì xử lý vụng về khiến lửa lan rộng trong khi lẽ ra có thể khống chế được”. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "Stung in the past by criticism of bungling that allowed fires to spread when they might have been contained"
+        },
+        {
+          "order": 10,
+          "questionType": "true_false_not_given",
+          "prompt": "California has replaced a range of firefighting tools.",
+          "answer": "TRUE",
+          "explanation": "Cam kết của bang về cung cấp xe cứu hoả, máy bay và trực thăng ĐỜI MỚI đã được thực hiện; công đoàn trước đây than phiền thiết bị cũ nát nay khen ngợi. → TRUE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "State promises to provide more up-to-date engines, planes, and helicopters to fight fires have been fulfilled."
+        },
+        {
+          "order": 11,
+          "questionType": "true_false_not_given",
+          "prompt": "More firefighters have been hired to improve fire-fighting capacity.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói về tăng ngân sách, thiết bị mới, trung tâm chỉ huy tốt hơn — hoàn toàn không đề cập việc TUYỂN THÊM lính cứu hoả. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 12,
+          "questionType": "true_false_not_given",
+          "prompt": "Citizens and government groups disapprove of the efforts of different states and agencies working together.",
+          "answer": "FALSE",
+          "explanation": "Trái lại, cả quan chức lẫn người dân đều cảm nhận sự phối hợp giữa các bang và các cơ quan đang mang lại hiệu quả cao hơn trước. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "There is a sense among both government officials and residents that the speed, dedication, and coordination of firefighters from several states and jurisdictions are resulting in greater efficiency than in past 'siege fire' situations."
+        },
+        {
+          "order": 13,
+          "questionType": "true_false_not_given",
+          "prompt": "Randy Jacobs believes that loss of life from fires will continue at the same levels, despite changes made.",
+          "answer": "FALSE",
+          "explanation": "Jacobs nói rõ: dù thiệt hại vật chất vẫn còn, nhưng nhờ các biện pháp phòng và chữa cháy, “chúng ta sẽ KHÔNG CÒN chịu tổn thất nhân mạng như trước”. → FALSE.",
+          "points": 1,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "evidence": "'Notwithstanding all the damage that will continue to be caused by wildfires, we will no longer suffer the loss of life endured in the past because of the fire prevention and firefighting measures that have been put in place,' he says."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 - Second Nature",
+      "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.",
+      "content": "A Psychologists have long held that a person's character cannot undergo a transformation in any meaningful way and that the key traits of personality are determined at a very young age. However, researchers have begun looking more closely at ways we can change. Positive psychologists have identified 24 qualities we admire, such as loyalty and kindness, and are studying them to find out why they come so naturally to some people. What they're discovering is that many of these qualities amount to habitual behaviour that determines the way we respond to the world. The good news is that all this can be learned.\n\nSome qualities are less challenging to develop than others, optimism being one of them. However, developing qualities requires mastering a range of skills which are diverse and sometimes surprising. For example, to bring more joy and passion into your life, you must be open to experiencing negative emotions. Cultivating such qualities will help you realise your full potential.\n\nB 'The evidence is good that most personality traits can be altered,' says Christopher Peterson, professor of psychology at the University of Michigan, who cites himself as an example. Inherently introverted, he realised early on that as an academic, his reticence would prove disastrous in the lecture hall. So he learned to be more outgoing and to entertain his classes. 'Now my extroverted behaviour is spontaneous,' he says.\n\nC David Fajgenbaum had to make a similar transition. He was preparing for university, when he had an accident that put an end to his sports career. On campus, he quickly found that beyond ordinary counselling, the university had no services for students who were undergoing physical rehabilitation and suffering from depression like him. He therefore launched a support group to help others in similar situations. He took action despite his own pain - a typical response of an optimist.\n\nD Suzanne Segerstrom, professor of psychology at the University of Kentucky, believes that the key to increasing optimism is through cultivating optimistic behaviour, rather than positive thinking. She recommends you train yourself to pay attention to good fortune by writing down three positive things that come about each day. This will help you convince yourself that favourable outcomes actually happen all the time, making it easier to begin taking action.\n\nE You can recognise a person who is passionate about a pursuit by the way they are so strongly involved in it. Tanya Streeter's passion is freediving - the sport of plunging deep into the water without tanks or other breathing equipment. Beginning in 1998, she set nine world records and can hold her breath for six minutes. The physical stamina required for this sport is intense but the psychological demands are even more overwhelming. Streeter learned to untangle her fears from her judgment of what her body and mind could do. 'In my career as a competitive freediver, there was a limit to what I could do - but it wasn't anywhere near what I thought it was,' she says.\n\nF Finding a pursuit that excites you can improve anyone's life. The secret about consuming passions, though, according to psychologist Paul Silvia of the University of North Carolina, is that 'they require discipline, hard work and ability, which is why they are so rewarding.' Psychologist Todd Kashdan has this advice for those people taking up a new passion: 'As a newcomer, you also have to tolerate and laugh at your own ignorance. You must be willing to accept the negative feelings that come your way,' he says.\n\nG In 2004, physician-scientist Mauro Zappaterra began his PhD research at Harvard Medical School. Unfortunately, he was miserable as his research wasn't compatible with his curiosity about healing. He finally took a break and during eight months in Santa Fe, Zappaterra learned about alternative healing techniques not taught at Harvard. When he got back, he switched labs to study how cerebrospinal fluid nourishes the developing nervous system. He also vowed to look for the joy in everything, including failure, as this could help him learn about his research and himself.\n\nOne thing that can hold joy back is a person's concentration on avoiding failure rather than their looking forward to doing something well. 'Focusing on being safe might get in the way of your reaching your goals,' explains Kashdan. For example, are you hoping to get through a business lunch without embarrassing yourself, or are you thinking about how fascinating the conversation might be?\n\nH Usually, we think of courage in physical terms but ordinary life demands something else. For marketing executive Kenneth Pedeleose, it meant speaking out against something he thought was ethically wrong. The new manager was intimidating staff so Pedeleose carefully recorded each instance of bullying and eventually took the evidence to a senior director, knowing his own job security would be threatened. Eventually the manager was the one to go. According to Cynthia Pury, a psychologist at Clemson University, Pedeleose's story proves the point that courage is not motivated by fearlessness, but by moral obligation. Pury also believes that people can acquire courage. Many of her students said that faced with a risky situation, they first tried to calm themselves down, then looked for a way to mitigate the danger, just as Pedeleose did by documenting his allegations. Over the long term, picking up a new character trait may help you move toward being the person you want to be. And in the short term, the effort itself could be surprisingly rewarding, a kind of internal adventure.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Complete the summary below.\nChoose NO MORE THAN TWO WORDS from the passage.",
+          "19": "Look at the following statements (Questions 19-22) and the list of people below.\nMatch each statement with the correct person, A-G.\n\nList of People\n:::box\nA Christopher Peterson | B David Fajgenbaum | C Suzanne Segerstrom\nD Tanya Streeter | E Todd Kashdan | F Kenneth Pedeleose\nG Cynthia Pury\n:::",
+          "23": "Reading Passage 2 has eight sections, A-H.\nWhich section contains the following information?"
+        },
+        "noteBody": "Psychologists have traditionally believed that a personality [[14]] was impossible and that by a [[15]], a person's character tends to be fixed. This is not true according to positive psychologists, who say that our personal qualities can be seen as habitual behaviour. One of the easiest qualities to acquire is [[16]]. However, regardless of the quality, it is necessary to learn a wide variety of different [[17]] in order for a new quality to develop; for example, a person must understand and feel some [[18]] in order to increase their happiness."
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "note_completion",
+          "prompt": "Question 14",
+          "answer": [
+            "transformation",
+            "change"
+          ],
+          "explanation": "Câu mở bài: các nhà tâm lý học lâu nay tin rằng tính cách con người không thể trải qua một cuộc BIẾN ĐỔI (transformation) có ý nghĩa nào.",
+          "points": 1,
+          "evidence": "Psychologists have long held that a person's character cannot undergo a transformation in any meaningful way"
+        },
+        {
+          "order": 15,
+          "questionType": "note_completion",
+          "prompt": "Question 15",
+          "answer": [
+            "young age",
+            "very young age",
+            "a young age"
+          ],
+          "explanation": "Cũng câu đó: các nét tính cách chủ chốt được định hình từ khi còn RẤT NHỎ (at a very young age).",
+          "points": 1,
+          "evidence": "and that the key traits of personality are determined at a very young age"
+        },
+        {
+          "order": 16,
+          "questionType": "note_completion",
+          "prompt": "Question 16",
+          "answer": [
+            "optimism"
+          ],
+          "explanation": "Đoạn sau nêu phẩm chất dễ rèn nhất: “Some qualities are less challenging to develop than others, optimism being one of them.” → optimism.",
+          "points": 1,
+          "evidence": "Some qualities are less challenging to develop than others, optimism being one of them."
+        },
+        {
+          "order": 17,
+          "questionType": "note_completion",
+          "prompt": "Question 17",
+          "answer": [
+            "skills",
+            "technique",
+            "techniques"
+          ],
+          "explanation": "Muốn phát triển một phẩm chất thì phải làm chủ “a range of skills which are diverse” — hàng loạt KỸ NĂNG khác nhau → skills.",
+          "points": 1,
+          "evidence": "However, developing qualities requires mastering a range of skills which are diverse and sometimes surprising."
+        },
+        {
+          "order": 18,
+          "questionType": "note_completion",
+          "prompt": "Question 18",
+          "answer": [
+            "negative emotions",
+            "negative feelings",
+            "negative emotion"
+          ],
+          "explanation": "Ví dụ được nêu: muốn có thêm niềm vui và đam mê thì phải sẵn sàng trải nghiệm những CẢM XÚC TIÊU CỰC → negative emotions.",
+          "points": 1,
+          "evidence": "For example, to bring more joy and passion into your life, you must be open to experiencing negative emotions."
+        },
+        {
+          "order": 19,
+          "questionType": "matching",
+          "prompt": "People must accept that they do not know much when first trying something new.",
+          "answer": "E Todd Kashdan",
+          "explanation": "Todd Kashdan khuyên người mới bắt đầu một đam mê: phải chấp nhận và tự cười vào sự thiếu hiểu biết của chính mình. → E.",
+          "points": 1,
+          "options": [
+            "A Christopher Peterson",
+            "B David Fajgenbaum",
+            "C Suzanne Segerstrom",
+            "D Tanya Streeter",
+            "E Todd Kashdan",
+            "F Kenneth Pedeleose",
+            "G Cynthia Pury"
+          ],
+          "evidence": "Psychologist Todd Kashdan has this advice for those people taking up a new passion: 'As a newcomer, you also have to tolerate and laugh at your own ignorance."
+        },
+        {
+          "order": 20,
+          "questionType": "matching",
+          "prompt": "It is important for people to actively notice when good things happen.",
+          "answer": "C Suzanne Segerstrom",
+          "explanation": "Suzanne Segerstrom khuyên tự luyện chú ý tới điều may bằng cách mỗi ngày ghi lại ba chuyện tích cực. → C.",
+          "points": 1,
+          "options": [
+            "A Christopher Peterson",
+            "B David Fajgenbaum",
+            "C Suzanne Segerstrom",
+            "D Tanya Streeter",
+            "E Todd Kashdan",
+            "F Kenneth Pedeleose",
+            "G Cynthia Pury"
+          ],
+          "evidence": "She recommends you train yourself to pay attention to good fortune by writing down three positive things that come about each day."
+        },
+        {
+          "order": 21,
+          "questionType": "matching",
+          "prompt": "Courage can be learned once its origins in a sense of responsibility are understood.",
+          "answer": "G Cynthia Pury",
+          "explanation": "Cynthia Pury cho rằng lòng dũng cảm bắt nguồn từ NGHĨA VỤ ĐẠO ĐỨC chứ không phải từ sự không biết sợ, và bà tin người ta có thể rèn được nó. → G.",
+          "points": 1,
+          "options": [
+            "A Christopher Peterson",
+            "B David Fajgenbaum",
+            "C Suzanne Segerstrom",
+            "D Tanya Streeter",
+            "E Todd Kashdan",
+            "F Kenneth Pedeleose",
+            "G Cynthia Pury"
+          ],
+          "evidence": "According to Cynthia Pury, a psychologist at Clemson University, Pedeleose's story proves the point that courage is not motivated by fearlessness, but by moral obligation. Pury also believes that people can acquire courage."
+        },
+        {
+          "order": 22,
+          "questionType": "matching",
+          "prompt": "It is possible to overcome shyness when faced with the need to speak in public.",
+          "answer": "A Christopher Peterson",
+          "explanation": "Christopher Peterson vốn hướng nội, nhận ra sự rụt rè sẽ là thảm hoạ trên giảng đường nên đã tập trở nên cởi mở, cuốn hút hơn. → A.",
+          "points": 1,
+          "options": [
+            "A Christopher Peterson",
+            "B David Fajgenbaum",
+            "C Suzanne Segerstrom",
+            "D Tanya Streeter",
+            "E Todd Kashdan",
+            "F Kenneth Pedeleose",
+            "G Cynthia Pury"
+          ],
+          "evidence": "Inherently introverted, he realised early on that as an academic, his reticence would prove disastrous in the lecture hall. So he learned to be more outgoing and to entertain his classes."
+        },
+        {
+          "order": 23,
+          "questionType": "matching",
+          "prompt": "a mention of how rational thinking enabled someone to achieve physical goals",
+          "answer": "E",
+          "explanation": "Mục E: Tanya Streeter học cách TÁCH nỗi sợ ra khỏi phán đoán lý trí về giới hạn thật của cơ thể và trí óc, nhờ đó lập chín kỷ lục lặn tự do. → E.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "evidence": "Streeter learned to untangle her fears from her judgment of what her body and mind could do."
+        },
+        {
+          "order": 24,
+          "questionType": "matching",
+          "prompt": "an account of how someone overcame a sad experience",
+          "answer": "C",
+          "explanation": "Mục C: David Fajgenbaum sau tai nạn chấm dứt sự nghiệp thể thao và rơi vào trầm cảm đã tự lập nhóm hỗ trợ để giúp người cùng cảnh ngộ. → C.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "evidence": "He therefore launched a support group to help others in similar situations. He took action despite his own pain - a typical response of an optimist."
+        },
+        {
+          "order": 25,
+          "questionType": "matching",
+          "prompt": "a description of how someone decided to rethink their academic career path",
+          "answer": "G",
+          "explanation": "Mục G: Mauro Zappaterra thấy đề tài tiến sĩ không hợp với mối quan tâm của mình nên nghỉ một thời gian rồi ĐỔI phòng thí nghiệm sang hướng nghiên cứu khác. → G.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "evidence": "When he got back, he switched labs to study how cerebrospinal fluid nourishes the developing nervous system."
+        },
+        {
+          "order": 26,
+          "questionType": "matching",
+          "prompt": "an example of how someone risked his career out of a sense of duty",
+          "answer": "H",
+          "explanation": "Mục H: Kenneth Pedeleose ghi lại từng vụ bắt nạt rồi đưa bằng chứng lên giám đốc cấp cao dù BIẾT RÕ công việc của mình bị đe doạ. → H.",
+          "points": 1,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "evidence": "The new manager was intimidating staff so Pedeleose carefully recorded each instance of bullying and eventually took the evidence to a senior director, knowing his own job security would be threatened."
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 - When Evolution Runs Backwards",
+      "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.",
+      "content": "The description of any animal as an 'evolutionary throwback' is controversial. For the better part of a century, most biologists have been reluctant to use those words, mindful of a principle of evolution that says 'evolution cannot run backwards'. But as more and more examples come to light and modern genetics enters the scene, that principle is having to be rewritten. Not only are evolutionary throwbacks possible, they sometimes play an important role in the forward march of evolution.\n\nThe technical term for an evolutionary throwback is an 'atavism', from the Latin atavus, meaning forefather. The word has ugly connotations thanks largely to Cesare Lombroso, a 19th-century Italian medic who argued that criminals were born not made and could be identified by certain physical features that were throwbacks to a primitive, sub-human state.\n\nWhile Lombroso was measuring criminals, a Belgian palaeontologist called Louis Dollo was studying fossil records and coming to the opposite conclusion. In 1890 he proposed that evolution was irreversible: that 'an organism is unable to return, even partially, to a previous stage already realised in the ranks of its ancestors'. Early 20th-century biologists came to similar conclusion, though they qualified it in terms of probability, stating that there is no reason why evolution cannot run backwards - it is just very unlikely. And so the idea of irreversibility in evolution stuck and came to be known as 'Dollo's law'.\n\nIf Dollo's law is right, atavisms should occur only very rarely, if at all. Yet almost since the idea took root, exceptions have been cropping up. In 1919, for example, a humpback whale with a pair of leg-like appendages over a metre long, complete with a full set of limb bones, was caught off Vancouver Island in Canada. Explorer Roy Chapman Andrews argued at the time that the whale must be a throwback to a land-living ancestor. 'I can see no other explanation,' he wrote in 1921.\n\nSince then, so many other examples have been discovered that it no longer makes sense to say that evolution is as good as irreversible. And this poses a puzzle: how can characteristics that disappeared millions of years ago suddenly reappear? In 1994, Rudolf Raff and colleagues at Indiana University in the USA decided to use genetics to put a number on the probability of evolution going into reverse. They reasoned that while some evolutionary changes involve the loss of genes and are therefore irreversible, others may be the result of genes being switched off. If these silent genes are somehow switched back on, they argued, long-lost traits could reappear.\n\nRaff's team went on to calculate the likelihood of it happening. Silent genes accumulate random mutations, they reasoned, eventually rendering them useless. So how long can a gene survive in a species if it is no longer used? The team calculated that there is a good chance of silent genes surviving for up to 6 million years in at least a few individuals in a population, and that some might survive as long as 10 million years. In other words, throwbacks are possible, but only to the relatively recent evolutionary past.\n\nAs a possible example, the team pointed to the mole salamanders of Mexico and California. Like most amphibians these begin life in a juvenile 'tadpole' state, then metamorphose into the adult form - except for one species, the axolotl, which famously lives its entire life as a juvenile. The simplest explanation for this is that the axolotl lineage alone lost the ability to metamorphose, while others retained it. From a detailed analysis of the salamanders' family tree, however, it is clear that the other lineages evolved from an ancestor that itself had lost the ability to metamorphose. In other words, metamorphosis in mole salamanders is an atavism. The salamander example fits with Raff's 10-million-year time frame.\n\nMore recently, however, examples have been reported that break the time limit, suggesting that silent genes may not be the whole story. In a paper published last year, biologist Gunter Wagner of Yale University reported some work on the evolutionary history of a group of South American lizards called Bachia. Many of these have minuscule limbs; some look more like snakes than lizards and a few have completely lost the toes on their hind limbs. Other species, however, sport up to four toes on their hind legs. The simplest explanation is that the toed lineages never lost their toes, but Wagner begs to differ. According to his analysis of the Bachia family tree, the toed species re-evolved toes from toeless ancestors and, what is more, digit loss and gain has occurred on more than one occasion over tens of millions of years.\n\nSo what's going on? One possibility is that these traits are lost and then simply reappear, in much the same way that similar structures can independently arise in unrelated species, such as the dorsal fins of sharks and killer whales. Another more intriguing possibility is that the genetic information needed to make toes somehow survived for tens or perhaps hundreds of millions of years in the lizards and was reactivated. These atavistic traits provided an advantage and spread through the population, effectively reversing evolution.\n\nBut if silent genes degrade within 6 to 10 million years, how can long-lost traits be reactivated over longer timescales? The answer may lie in the womb. Early embryos of many species develop ancestral features. Snake embryos, for example, sprout hind limb buds. Later in development these features disappear thanks to developmental programs that say 'lose the leg'. If for any reason this does not happen, the ancestral feature may not disappear, leading to an atavism.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Choose the correct letter, A, B, C or D.",
+          "32": "Complete each sentence with the correct ending, A-G, below.\n:::box\nA the question of how certain long-lost traits could reappear.\nB the occurrence of a particular feature in different species.\nC parallels drawn between behaviour and appearance.\nD the continued existence of certain genetic information.\nE the doubts felt about evolutionary throwbacks.\nF the possibility of evolution being reversible.\nG Dollo's findings and the convictions held by Lombroso.\n:::",
+          "37": "Do the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 37-40 on your answer sheet, write\n:::box\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this\n:::"
+        }
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "multiple_choice",
+          "prompt": "When discussing the theory developed by Louis Dollo, the writer says that",
+          "answer": "C it was modified by biologists in the early twentieth century",
+          "explanation": "Bài viết các nhà sinh học đầu thế kỷ 20 tuy đi tới kết luận tương tự nhưng đã ĐIỀU CHỈNH nó theo hướng xác suất: không phải không thể đảo ngược, chỉ là rất khó xảy ra. Cái tên “Dollo's law” cũng chỉ có SAU đó chứ không phải ngay lập tức (loại A). → C.",
+          "points": 1,
+          "options": [
+            "A it was immediately referred to as Dollo's law",
+            "B it supported the possibility of evolutionary throwbacks",
+            "C it was modified by biologists in the early twentieth century",
+            "D it was based on many years of research"
+          ],
+          "evidence": "Early 20th-century biologists came to similar conclusion, though they qualified it in terms of probability, stating that there is no reason why evolution cannot run backwards - it is just very unlikely."
+        },
+        {
+          "order": 28,
+          "questionType": "multiple_choice",
+          "prompt": "The humpback whale caught off Vancouver Island is mentioned because of",
+          "answer": "D the reason given for its unusual features",
+          "explanation": "Con cá voi được nhắc tới vì LỜI GIẢI THÍCH cho đôi chi lạ của nó: Roy Chapman Andrews lập luận đó là dấu vết lại giống của tổ tiên sống trên cạn. Nó là NGOẠI LỆ của định luật Dollo chứ không minh hoạ cho định luật (loại B). → D.",
+          "points": 1,
+          "options": [
+            "A the exceptional size of its body",
+            "B the way it exemplifies Dollo's law",
+            "C the amount of local controversy it caused",
+            "D the reason given for its unusual features"
+          ],
+          "evidence": "Explorer Roy Chapman Andrews argued at the time that the whale must be a throwback to a land-living ancestor."
+        },
+        {
+          "order": 29,
+          "questionType": "multiple_choice",
+          "prompt": "What is said about 'silent genes'?",
+          "answer": "C They could lead to the re-emergence of certain characteristics",
+          "explanation": "Nhóm Raff lập luận rằng nếu các gen “im lặng” này được BẬT LẠI thì những đặc điểm mất từ lâu có thể tái xuất hiện. Chúng không sống mãi — chỉ trụ được 6–10 triệu năm (loại D). → C.",
+          "points": 1,
+          "options": [
+            "A Their numbers vary according to species",
+            "B Raff disagreed with the use of the term",
+            "C They could lead to the re-emergence of certain characteristics",
+            "D They can have an unlimited life span"
+          ],
+          "evidence": "If these silent genes are somehow switched back on, they argued, long-lost traits could reappear."
+        },
+        {
+          "order": 30,
+          "questionType": "multiple_choice",
+          "prompt": "The writer mentions the mole salamander because",
+          "answer": "B it suggests that Raff's theory is correct",
+          "explanation": "Kỳ giông chuột chũi được nêu như VÍ DỤ MINH HOẠ cho tính toán của Raff: hiện tượng lại giống ở loài này nằm gọn trong khung thời gian 10 triệu năm mà nhóm ông đưa ra. → B.",
+          "points": 1,
+          "options": [
+            "A it exemplifies what happens in the development of most amphibians",
+            "B it suggests that Raff's theory is correct",
+            "C it has lost and regained more than one ability",
+            "D its ancestors have become the subject of extensive research"
+          ],
+          "evidence": "The salamander example fits with Raff's 10-million-year time frame."
+        },
+        {
+          "order": 31,
+          "questionType": "multiple_choice",
+          "prompt": "Which of the following does Wagner claim?",
+          "answer": "A Members of the Bachia lizard family have lost and regained certain features several times",
+          "explanation": "Theo phân tích cây phả hệ Bachia của Wagner, các loài có ngón đã TÁI TIẾN HOÁ ngón từ tổ tiên không ngón, và việc mất rồi được lại ngón đã xảy ra NHIỀU LẦN qua hàng chục triệu năm. → A.",
+          "points": 1,
+          "options": [
+            "A Members of the Bachia lizard family have lost and regained certain features several times",
+            "B Evidence shows that the evolution of the Bachia lizard is due to the environment",
+            "C His research into South American lizards supports Raff's assertions",
+            "D His findings will apply to other species of South American lizards"
+          ],
+          "evidence": "According to his analysis of the Bachia family tree, the toed species re-evolved toes from toeless ancestors and, what is more, digit loss and gain has occurred on more than one occasion over tens of millions of years."
+        },
+        {
+          "order": 32,
+          "questionType": "matching",
+          "prompt": "For a long time biologists rejected",
+          "answer": "F the possibility of evolution being reversible.",
+          "explanation": "Suốt gần một thế kỷ, phần lớn nhà sinh học ngại dùng khái niệm “lại giống” vì tin nguyên tắc “tiến hoá không thể chạy ngược” — tức họ BÁC BỎ khả năng tiến hoá có thể đảo ngược. → F.",
+          "points": 1,
+          "options": [
+            "A the question of how certain long-lost traits could reappear.",
+            "B the occurrence of a particular feature in different species.",
+            "C parallels drawn between behaviour and appearance.",
+            "D the continued existence of certain genetic information.",
+            "E the doubts felt about evolutionary throwbacks.",
+            "F the possibility of evolution being reversible.",
+            "G Dollo's findings and the convictions held by Lombroso."
+          ],
+          "evidence": "For the better part of a century, most biologists have been reluctant to use those words, mindful of a principle of evolution that says 'evolution cannot run backwards'."
+        },
+        {
+          "order": 33,
+          "questionType": "matching",
+          "prompt": "Opposing views on evolutionary throwbacks are represented by",
+          "answer": "G Dollo's findings and the convictions held by Lombroso.",
+          "explanation": "Bài đặt hai người đối lập cạnh nhau: trong khi Lombroso đo đạc tù nhân với niềm tin về đặc điểm lại giống, thì Dollo nghiên cứu hoá thạch và đi tới KẾT LUẬN NGƯỢC LẠI. → G.",
+          "points": 1,
+          "options": [
+            "A the question of how certain long-lost traits could reappear.",
+            "B the occurrence of a particular feature in different species.",
+            "C parallels drawn between behaviour and appearance.",
+            "D the continued existence of certain genetic information.",
+            "E the doubts felt about evolutionary throwbacks.",
+            "F the possibility of evolution being reversible.",
+            "G Dollo's findings and the convictions held by Lombroso."
+          ],
+          "evidence": "While Lombroso was measuring criminals, a Belgian palaeontologist called Louis Dollo was studying fossil records and coming to the opposite conclusion."
+        },
+        {
+          "order": 34,
+          "questionType": "matching",
+          "prompt": "Examples of evolutionary throwbacks have led to",
+          "answer": "A the question of how certain long-lost traits could reappear.",
+          "explanation": "Quá nhiều ví dụ được phát hiện khiến nảy sinh một CÂU HỎI HÓC BÚA: làm sao những đặc điểm biến mất hàng triệu năm trước lại đột nhiên xuất hiện trở lại? → A.",
+          "points": 1,
+          "options": [
+            "A the question of how certain long-lost traits could reappear.",
+            "B the occurrence of a particular feature in different species.",
+            "C parallels drawn between behaviour and appearance.",
+            "D the continued existence of certain genetic information.",
+            "E the doubts felt about evolutionary throwbacks.",
+            "F the possibility of evolution being reversible.",
+            "G Dollo's findings and the convictions held by Lombroso."
+          ],
+          "evidence": "And this poses a puzzle: how can characteristics that disappeared millions of years ago suddenly reappear?"
+        },
+        {
+          "order": 35,
+          "questionType": "matching",
+          "prompt": "The shark and killer whale are mentioned to exemplify",
+          "answer": "B the occurrence of a particular feature in different species.",
+          "explanation": "Vây lưng của cá mập và cá voi sát thủ được nêu làm ví dụ cho việc CÙNG MỘT ĐẶC ĐIỂM có thể xuất hiện độc lập ở những loài không họ hàng. → B.",
+          "points": 1,
+          "options": [
+            "A the question of how certain long-lost traits could reappear.",
+            "B the occurrence of a particular feature in different species.",
+            "C parallels drawn between behaviour and appearance.",
+            "D the continued existence of certain genetic information.",
+            "E the doubts felt about evolutionary throwbacks.",
+            "F the possibility of evolution being reversible.",
+            "G Dollo's findings and the convictions held by Lombroso."
+          ],
+          "evidence": "One possibility is that these traits are lost and then simply reappear, in much the same way that similar structures can independently arise in unrelated species, such as the dorsal fins of sharks and killer whales."
+        },
+        {
+          "order": 36,
+          "questionType": "matching",
+          "prompt": "One explanation for the findings of Wagner's research is",
+          "answer": "D the continued existence of certain genetic information.",
+          "explanation": "Cách lý giải hấp dẫn hơn cho kết quả của Wagner: THÔNG TIN DI TRUYỀN để tạo ngón chân đã tồn tại dai dẳng hàng chục, thậm chí hàng trăm triệu năm trong loài thằn lằn rồi được kích hoạt lại. → D.",
+          "points": 1,
+          "options": [
+            "A the question of how certain long-lost traits could reappear.",
+            "B the occurrence of a particular feature in different species.",
+            "C parallels drawn between behaviour and appearance.",
+            "D the continued existence of certain genetic information.",
+            "E the doubts felt about evolutionary throwbacks.",
+            "F the possibility of evolution being reversible.",
+            "G Dollo's findings and the convictions held by Lombroso."
+          ],
+          "evidence": "Another more intriguing possibility is that the genetic information needed to make toes somehow survived for tens or perhaps hundreds of millions of years in the lizards and was reactivated."
+        },
+        {
+          "order": 37,
+          "questionType": "true_false_not_given",
+          "prompt": "Wagner was the first person to do research on South American lizards.",
+          "answer": "NOT GIVEN",
+          "explanation": "Bài chỉ nói Wagner công bố nghiên cứu về lịch sử tiến hoá của chi Bachia, không hề khẳng định ông là người ĐẦU TIÊN nghiên cứu thằn lằn Nam Mỹ. → NOT GIVEN.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ]
+        },
+        {
+          "order": 38,
+          "questionType": "true_false_not_given",
+          "prompt": "Wagner believes that Bachia lizards with toes had toeless ancestors.",
+          "answer": "YES",
+          "explanation": "Đúng như phân tích của Wagner: các loài có ngón đã tái tiến hoá ngón TỪ TỔ TIÊN KHÔNG NGÓN. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "According to his analysis of the Bachia family tree, the toed species re-evolved toes from toeless ancestors"
+        },
+        {
+          "order": 39,
+          "questionType": "true_false_not_given",
+          "prompt": "The temporary occurrence of long-lost traits in embryos is rare.",
+          "answer": "NO",
+          "explanation": "Trái lại, tác giả viết phôi sớm của NHIỀU loài đều phát triển các đặc điểm tổ tiên (phôi rắn còn mọc mầm chi sau) — tức đây là chuyện phổ biến, không hiếm. → NO.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "Early embryos of many species develop ancestral features. Snake embryos, for example, sprout hind limb buds."
+        },
+        {
+          "order": 40,
+          "questionType": "true_false_not_given",
+          "prompt": "Evolutionary throwbacks might be caused by developmental problems in the womb.",
+          "answer": "YES",
+          "explanation": "Đoạn cuối: bình thường chương trình phát triển ra lệnh “bỏ chân đi”; nếu vì lý do nào đó điều này KHÔNG xảy ra thì đặc điểm tổ tiên còn lại, sinh ra hiện tượng lại giống. → YES.",
+          "points": 1,
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "evidence": "If for any reason this does not happen, the ancestral feature may not disappear, leading to an atavism."
+        }
+      ]
+    }
+  ]
+}

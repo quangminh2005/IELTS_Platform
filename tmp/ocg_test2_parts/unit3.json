@@ -1,0 +1,101 @@
+{
+  "unitType": "listening_part",
+  "unitNumber": 3,
+  "title": "Listening Section 3 - Martina and George at university",
+  "instructions": "You will hear two students talking about their first weeks at university. Answer questions 21-30.",
+  "content": "Listen to the recording and answer the questions below.",
+  "defaultTimeLimitMinutes": 10,
+  "audioKey": "Cam45",
+  "metadata": {
+    "groupInstructions": {
+      "21": "Choose TWO letters, A-E.\n\nWhich TWO subjects did Martina like best before going to university?",
+      "23": "Complete the summary below.\n\nWrite NO MORE THAN TWO WORDS for each answer.",
+      "27": "Choose the correct letter, A, B or C."
+    },
+    "noteBody": "# George's experience of university\nGeorge is studying Mechanical Engineering which involves several disciplines. He is finding [[23]] the most difficult. At the moment, his course is mainly [[24]]. He will soon have an assignment which involves a study of [[25]]. He thinks there are too many [[26]] and would like less of them."
+  },
+  "questions": [
+    {
+      "order": 21,
+      "questionType": "multiple_choice",
+      "prompt": "Which TWO subjects did Martina like best before going to university?",
+      "options": ["A. Art", "B. English", "C. French", "D. History", "E. Science"],
+      "answer": ["D. History", "B. English"],
+      "explanation": "Bẫy dày: Art chỉ là môn cô học giỏi vì thích thầy giáo, còn Science thì giỏi nhưng KHÔNG thích. Hai môn cô thích nhất là History (yêu thích nhất) và English (yêu thích thứ hai).",
+      "evidenceHint": "favourite subject"
+    },
+    {
+      "order": 22,
+      "questionType": "multiple_choice",
+      "prompt": "Which TWO subjects did Martina like best before going to university?",
+      "options": ["A. Art", "B. English", "C. French", "D. History", "E. Science"],
+      "answer": ["D. History", "B. English"],
+      "explanation": "Bẫy dày: Art chỉ là môn cô học giỏi vì thích thầy giáo, còn Science thì giỏi nhưng KHÔNG thích. Hai môn cô thích nhất là History (yêu thích nhất) và English (yêu thích thứ hai).",
+      "evidenceHint": "second favourite"
+    },
+    {
+      "order": 23,
+      "questionType": "note_completion",
+      "answer": ["mathematics", "maths", "math"],
+      "explanation": "Các mảng kia (vật liệu, thiết kế máy, vật lý, cơ học) đều ổn; riêng toán mới là thứ George thấy khó hơn hẳn hồi phổ thông.",
+      "evidenceHint": "struggling with"
+    },
+    {
+      "order": 24,
+      "questionType": "note_completion",
+      "answer": ["theory", "theoretical"],
+      "explanation": "Hiện tại khoá học gần như toàn lý thuyết; phần thực hành chỉ bắt đầu sau vài tuần nữa.",
+      "evidenceHint": "at the moment"
+    },
+    {
+      "order": 25,
+      "questionType": "note_completion",
+      "answer": ["jet engines"],
+      "explanation": "Bài tập lớn sắp tới là về động cơ phản lực, kèm vài chuyến đi thực tế tới sân bay gần đó.",
+      "evidenceHint": "assignment this term"
+    },
+    {
+      "order": 26,
+      "questionType": "note_completion",
+      "answer": ["seminars"],
+      "explanation": "Bài giảng thì George thấy ổn và học được nhiều; thứ anh muốn bớt đi là các buổi seminar vì quá đông người phát biểu.",
+      "evidenceHint": "we didn't have so many"
+    },
+    {
+      "order": 27,
+      "questionType": "multiple_choice",
+      "prompt": "Martina thinks the students at her university are",
+      "options": ["A. sociable", "B. intelligent", "C. energetic"],
+      "answer": "A. sociable",
+      "explanation": "Martina nói sinh viên chỗ cô KHÔNG có vẻ chăm học, nhưng rất thân thiện - cô ngồi tán gẫu suốt cả tuần. Đó là 'sociable'. Chỗ George mới là nơi sinh viên trầm.",
+      "evidenceHint": "sitting around and chatting"
+    },
+    {
+      "order": 28,
+      "questionType": "multiple_choice",
+      "prompt": "George hopes that his tutor will help him",
+      "options": ["A. lose his shyness", "B. settle into university", "C. get to know his subject better"],
+      "answer": "B. settle into university",
+      "explanation": "Martina đoán thầy sẽ giúp anh làm quen bạn, nhưng George gạt đi: điều anh cần là biết mình phải làm gì, đi đâu - tức là ổn định cuộc sống đại học.",
+      "evidenceHint": "where to go"
+    },
+    {
+      "order": 29,
+      "questionType": "multiple_choice",
+      "prompt": "What does Martina know about her first assignment?",
+      "options": ["A. the topic", "B. the length", "C. the deadline"],
+      "answer": "C. the deadline",
+      "explanation": "Cô mới chỉ biết hạn nộp là cuối tháng sau. Đề bài thì chưa có, độ dài cũng chưa rõ.",
+      "evidenceHint": "hand our first one in"
+    },
+    {
+      "order": 30,
+      "questionType": "multiple_choice",
+      "prompt": "George would like to live",
+      "options": ["A. in a hall of residence", "B. in a flat on his own", "C. with a host family"],
+      "answer": "C. with a host family",
+      "explanation": "Ký túc xá là chỗ anh đang ở nhưng quá ồn. Anh cũng không muốn ở một mình - anh muốn ở cùng một gia đình trong nhà gần trường.",
+      "evidenceHint": "prefer to live with"
+    }
+  ]
+}

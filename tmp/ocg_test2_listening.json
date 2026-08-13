@@ -1,0 +1,550 @@
+{
+  "title": "The Official Cambridge Guide to IELTS - Listening Test 2",
+  "skill": "listening",
+  "sourceLabel": "The Official Cambridge Guide to IELTS - Practice Test 2",
+  "description": "Đề nghe đầy đủ 4 phần, 40 câu, có transcript và giải thích từng câu.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Section 1 - Short story competition",
+      "instructions": "You will hear a phone call about a short story competition. Answer questions 1-10.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the notes below.\n\nWrite NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+          "7": "Complete the sentences below.\n\nWrite NO MORE THAN TWO WORDS for each answer."
+        },
+        "noteBody": "# Short Story Competition\n## Entry Details\nExample - Cost of entry: 5 pounds\nLength of story: approximately [[1]]\nStory must include: a [[2]]\nMinimum age: [[3]]\nLast entry date: 1st [[4]]\nWeb address: www. [[5]] .com\nDon't: [[6]] the story to the organisers\n:::break\n## Judging and Prize Details\nThe competition is judged by [[7]].\nThe top five stories will be available [[8]].\nThe top story will be chosen by the [[9]].\nThe first prize is a place at a writers' workshop in [[10]]."
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "answer": [
+            "3,000 words",
+            "3000 words",
+            "three thousand words"
+          ],
+          "explanation": "Bẫy số: người nói nhắc mức CŨ là 5,000 từ rồi mới chốt mức HIỆN TẠI là khoảng 3,000 từ. Đáp án phải kèm chữ 'words'.",
+          "prompt": "Question 1",
+          "evidence": "Well, we want to give people a reasonable amount of freedom, But the guidelines are around 3,000 words."
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "answer": [
+            "surprise ending",
+            "surprising ending"
+          ],
+          "explanation": "Đề tài tự do, nhưng điểm bắt buộc của cuộc thi năm nay là truyện phải có kết thúc bất ngờ.",
+          "prompt": "Question 2",
+          "evidence": "But the main point of the competition is that it has to have a surprise ending."
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "answer": [
+            "16",
+            "sixteen"
+          ],
+          "explanation": "Người gọi 18 tuổi, nhưng đó là tuổi CỦA CÔ ẤY - tuổi tối thiểu để dự thi là 16.",
+          "prompt": "Question 3",
+          "evidence": "Yes, you need to be 16 or over."
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "answer": [
+            "August"
+          ],
+          "explanation": "Hạn nộp là ngày 1 tháng 8. Tháng 4 chỉ là thời điểm đang gọi điện, không phải hạn nộp.",
+          "prompt": "Question 4",
+          "evidence": "You need to submit your entry by the 1st of August."
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "answer": [
+            "COMP4SS"
+          ],
+          "explanation": "Đánh vần từng chữ C-O-M-P-4-S-S. Người nói nhấn mạnh là CHỮ SỐ 4, không phải chữ 'four'.",
+          "prompt": "Question 5",
+          "evidence": "It's www.comp4ss.com and that's the number four, not the word four."
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "answer": [
+            "post"
+          ],
+          "explanation": "Được phép in truyện ra để đọc lại, nhưng KHÔNG được gửi bưu điện - phải gửi qua email.",
+          "prompt": "Question 6",
+          "evidence": "But don't post it to us."
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "answer": [
+            "famous authors"
+          ],
+          "explanation": "Ban giám khảo là các nhà văn nổi tiếng. Câu hỏi hỏi AI chấm, không phải chấm như thế nào.",
+          "prompt": "Question 7",
+          "evidence": "Our competition is quite popular, so we are lucky to be able to use famous authors who are very interested in the competition."
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "answer": [
+            "online"
+          ],
+          "explanation": "Năm truyện vào chung kết được đăng trực tuyến cho mọi người đọc, chưa xếp hạng lúc này.",
+          "prompt": "Question 8",
+          "evidence": "Well, they will be published online so everyone can read them."
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "answer": [
+            "public"
+          ],
+          "explanation": "Giám khảo chọn ra top 5, nhưng người chọn truyện QUÁN QUÂN lại là công chúng bỏ phiếu.",
+          "prompt": "Question 9",
+          "evidence": "Well, once the top five stories are available, it will be the public who will vote for their favourite story."
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "answer": [
+            "Spain"
+          ],
+          "explanation": "Giải nhì là 300 bảng tiền mặt; giải nhất mới là chuyến đi dự workshop viết văn ở Tây Ban Nha.",
+          "prompt": "Question 10",
+          "evidence": "Well, the runner-up gets a prize of £300, but the winner gets a trip to Spain to attend a workshop for writers."
+        }
+      ],
+      "transcript": "Recording 43 You will hear a telephone conversation between the organiser of a short story competition and someone who wishes to take part in the competition. First, you have some time to look at questions one to six. Good morning, Dave speaking. Oh hi, I'm phoning about a short story competition.\n\nI saw an advert in a magazine and I was just calling to get some details. Yes, certainly. I'm the competition organiser, so I should be able to help. What kind of details are you looking for?\n\nWell, does it cost anything to enter? Yes, there's an entry fee of £5. OK, that should be fine. It's a short story competition, so how many words is that?\n\nWell, we want to give people a reasonable amount of freedom, But the guidelines are around 3,000 words. Oh, that sounds quite a lot. Well, it's not as much as it used to be. We did have a limit of 5,000 words, but some people thought that was too many.\n\nSo this year we've reduced it. Right. And does the story need to be about anything in particular? No, you can write about any topic you like.\n\nBut the main point of the competition is that it has to have a surprise ending. Oh, I see. That sounds interesting. I don't think I've ever written a story like that before.\n\nYes, it's something we've introduced for this year's competition. Right. Um, I'm 18. Is there any age limit?\n\nYes, you need to be 16 or over. So, if you're 18, that's fine. Great. So you have the competition once a year, is that right?\n\nYes. We start advertising in January and the competition takes up a lot of the year. We give people a few months to write their story and then it takes quite a long time to judge all the entries and to announce the winners. I see.\n\nSo when is the closing date for the competition? It's already April. I hope I'm not too late. No, you've still got plenty of time.\n\nYou need to submit your entry by the 1st of August. After then it will be too late. Although you can always enter next year's competition. OK, good.\n\nSo how do I enter? Well, we have a website, and the best way to enter is to complete the entry form online. We also have more details of the competition on the site. Shall I give you the web address?\n\nYes, please. OK. It's www.comp4ss.com and that's the number four, not the word four. OK, thanks.\n\nI've got that. So, I can complete the entry form online, but how do I send the story? Do I print it out and send it to you? Well, you may want to print the story out so you can review it.\n\nBut don't post it to us. When you've finished your story, you will need to email it to us. The email address is on the website I gave you. OK, that's fine.\n\nBefore you hear the rest of the conversation, you will have some time to look at the questions 7 to 10. Now listen and answer questions 7 to 10. Can you tell me a bit about how the competition is judged and what the prizes are? Yes, of course.\n\nWell, once we have all the entries, I send them to all the judges. Our competition is quite popular, so we are lucky to be able to use famous authors who are very interested in the competition. That's fantastic! It's great to know that someone famous will be reading my story.\n\nYes, that's right. It takes them quite a while to read through the entries, But eventually they decide on the top five stories. I see. And what happens then?\n\nWell, they will be published online so everyone can read them. They will not be in any order at this point. They will just be the five stories that the judges think are the best. And do all the top five stories get prizes?\n\nNo. It's just the top story and the runner-up. So how is the top story decided? Well, once the top five stories are available, it will be the public who will vote for their favourite story.\n\nRight, I see. So I need to get all my friends to vote for me then? Er, yes, that's a good idea. And what is the prize?\n\nWell, the runner-up gets a prize of £300, but the winner gets a trip to Spain to attend a workshop for writers. Wow, that's brilliant! I'd better get writing straight away. Yes.\n\nGood luck. Thanks. That is the end of section 1. You now have half a minute to check your answers.\n\nNow turn to section 2.",
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/Cam43-75JgULr1Jlrp4Gv14jVsNOqWnTSaYg"
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Section 2 - Sea Life Centre",
+      "instructions": "You will hear a guide giving information to visitors at a sea life centre. Answer questions 11-20.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "metadata": {
+        "groupTitles": {
+          "11": "Sea Life Centre - information"
+        },
+        "groupInstructions": {
+          "11": "Answer the questions below.\n\nWrite NO MORE THAN THREE WORDS for each answer.",
+          "18": "What does the guide say about each attraction?\n\nChoose THREE answers from the box and write the correct letter, A-E, next to Questions 18-20."
+        }
+      },
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "short_answer",
+          "prompt": "What was the Sea Life Centre previously called?",
+          "answer": [
+            "World of Water"
+          ],
+          "explanation": "Trung tâm vừa đổi tên từ đầu mùa hè này. Câu hỏi hỏi tên CŨ, nên đáp án là tên trước khi đổi.",
+          "evidence": "We're not called World of Water any more."
+        },
+        {
+          "order": 12,
+          "questionType": "short_answer",
+          "prompt": "What is the newest attraction called?",
+          "answer": [
+            "splash ride",
+            "the splash ride"
+          ],
+          "explanation": "Nhà hàng và khu picnic cũng mới, nhưng thứ mới NHẤT (vừa xong tuần trước) là trò splash ride.",
+          "evidence": "But we have a new restaurant and picnic area and the latest thing that we have, and it was only finished last week, is the Splash Ride."
+        },
+        {
+          "order": 13,
+          "questionType": "short_answer",
+          "prompt": "When is the main feeding time?",
+          "answer": [
+            "noon",
+            "at noon",
+            "midday",
+            "at midday",
+            "12 o'clock",
+            "12 pm",
+            "12pm"
+          ],
+          "explanation": "Bẫy: 3 giờ chiều là giờ cho ăn CŨ. Họ đã đổi sang giữa trưa vì con vật đói khi phải chờ lâu.",
+          "evidence": "We used to have the main feeding time in the afternoon at around 3pm, but we found that some of the animals got a bit hungry waiting until then, and so we now have it at noon."
+        },
+        {
+          "order": 14,
+          "questionType": "short_answer",
+          "prompt": "What can you do with a VIP ticket?",
+          "answer": [
+            "feed the sharks",
+            "feed sharks"
+          ],
+          "explanation": "Vé VIP thêm 2 bảng cho phép bạn tự tay cho cá mập ăn. Video xem cá mập là thứ dành cho người còn e ngại, không phải quyền lợi của vé.",
+          "evidence": "With this you'll be allowed to feed the sharks."
+        },
+        {
+          "order": 15,
+          "questionType": "short_answer",
+          "prompt": "What special event will the Sea Life Centre arrange for you?",
+          "answer": [
+            "birthday party",
+            "a birthday party"
+          ],
+          "explanation": "Trung tâm nhận tổ chức tiệc sinh nhật cho gia đình và bạn bè; mẫu đăng ký để ở lối vào.",
+          "evidence": "Speaking of friends, I'd just like to remind you that the SeaLife Centre will be more than happy to organise a birthday party for you and your family and friends."
+        },
+        {
+          "order": 16,
+          "questionType": "short_answer",
+          "prompt": "Where will the petition for animal conservation be sent to?",
+          "answer": [
+            "government",
+            "the government"
+          ],
+          "explanation": "Con số 5,000 là số chữ ký cần thu, còn NƠI NHẬN đơn kiến nghị là chính phủ.",
+          "evidence": "Once we have over 5,000 signatures, we are planning to send it to the Government, in the hope that more people will begin to take it seriously."
+        },
+        {
+          "order": 17,
+          "questionType": "short_answer",
+          "prompt": "What can you use to test what you have learnt?",
+          "answer": [
+            "quiz",
+            "the quiz",
+            "a quiz"
+          ],
+          "explanation": "Sau khi tham quan có bài trắc nghiệm để tự kiểm tra. Không có giải thưởng, nhưng vẫn là thứ dùng để kiểm tra.",
+          "evidence": "At all the attractions, there is helpful information, so please read as much as you can and, if you want to see what you've remembered, please do the quiz after your visit."
+        },
+        {
+          "order": 18,
+          "questionType": "matching",
+          "prompt": "must not miss",
+          "options": [
+            "A. Aquarium",
+            "B. Crocodile Cave",
+            "C. Penguin Park",
+            "D. Seal Centre",
+            "E. Turtle Town"
+          ],
+          "answer": "E. Turtle Town",
+          "explanation": "Nếu không đủ thời gian xem hết thì nhất định phải ghé Turtle Town - nơi này ở góc xa nên hay bị bỏ sót.",
+          "evidence": "Of course, there are the old favourites like the aquarium and the crocodile cave, but if you don't have time to see everything, make sure you visit Turtle Town, which is beyond the Aquarium and the Seal Centre."
+        },
+        {
+          "order": 19,
+          "questionType": "matching",
+          "prompt": "temporarily closed",
+          "options": [
+            "A. Aquarium",
+            "B. Crocodile Cave",
+            "C. Penguin Park",
+            "D. Seal Centre",
+            "E. Turtle Town"
+          ],
+          "answer": "C. Penguin Park",
+          "explanation": "Khu chim cánh cụt đang sửa gấp nên đóng cửa một tuần; hướng dẫn viên gợi ý sang Seal Centre đối diện.",
+          "evidence": "This has needed some urgent work to be done and so will not be open for the next week."
+        },
+        {
+          "order": 20,
+          "questionType": "matching",
+          "prompt": "large queues",
+          "options": [
+            "A. Aquarium",
+            "B. Crocodile Cave",
+            "C. Penguin Park",
+            "D. Seal Centre",
+            "E. Turtle Town"
+          ],
+          "answer": "B. Crocodile Cave",
+          "explanation": "Cá sấu vừa nở trứng nên đông người xếp hàng. Bể cá tuy ai cũng vào đầu tiên nhưng rộng nên KHÔNG phải chờ.",
+          "evidence": "So expect delays there and, if you like, move on to the seal centre first and then go back when things are quieter towards the end of the day."
+        }
+      ],
+      "transcript": "Recording 44. You will hear a guide talking about a sea life centre. First, you have some time to look at questions 11 to 17. OK, so hi everybody and welcome to the sea life centre.\n\nBefore you start on your tour, I'd just like to give you some information about things to look out for as you go. Well, first of all, I guess some of you may have been here before and may be surprised to see the name has changed. We're not called World of Water any more. Since the beginning of this summer we've been renamed and we've also made a few other changes.\n\nHowever, the main attractions like the aquarium, the crocodiles, the penguins and so on are still here. But we have a new restaurant and picnic area and the latest thing that we have, and it was only finished last week, is the Splash Ride. This is an exciting new area of the centre and is pretty scary and of course you do get a a bit wet so make sure you're not wearing your best clothes. As I said, the main attractions are still here and the most popular thing that everyone wants to see is feeding time, especially for the crocodiles and the seals.\n\nWe used to have the main feeding time in the afternoon at around 3pm, but we found that some of the animals got a bit hungry waiting until then, and so we now have it at noon. They seem much happier with the new time, although it's a bit difficult to know what they're thinking. Now, I'd like to mention something new that we've introduced this year that we're very excited about. It's called a VIP ticket.\n\nThe VIP ticket costs an extra £2 per person and you will be amazed at what it allows you to do. With this you'll be allowed to feed the sharks. Now I know that for some people this might be quite a frightening thing to do but it is perfectly safe. For For those of you who are a bit unsure, we do have a video you can watch to see what happens.\n\nIt's a great experience and your friends will be very impressed. Speaking of friends, I'd just like to remind you that the SeaLife Centre will be more than happy to organise a birthday party for you and your family and friends. If you need more details, you can speak to me afterwards and there are also forms at the entrance that you can fill in. I'd also like to bring your attention to the good work that the Sea Life Centre is doing in support of animal conservation.\n\nI'm sure you're all aware of the worrying situation with a large number of species facing extinction. Here at the Sea Life Centre, we're taking action by asking as many people as possible to sign a petition. Once we have over 5,000 signatures, we are planning to send it to the Government, in the hope that more people will begin to take it seriously. Right, well there's obviously a lot going on at the centre, and a lot of things to discover.\n\nAt all the attractions, there is helpful information, so please read as much as you can and, if you want to see what you've remembered, please do the quiz after your visit. There are no prizes, of course, but I'm sure you'll be surprised by how much you've learnt. Before you hear the rest of the conversation, you will have some time to look at the questions 18 to 20. Now listen and answer questions 18 to 20.\n\nSo before I leave you all to start your tour, I've just got a few tips. There are a large number of attractions and you may not have time to see them all. Of course, there are the old favourites like the aquarium and the crocodile cave, but if you don't have time to see everything, make sure you visit Turtle Town, which is beyond the Aquarium and the Seal Centre. This is very special and has a large number of endangered species, and as it's at the far corner of the Sealife Centre, it often gets overlooked.\n\nI also have to apologise for the Penguin Park. This has needed some urgent work to be done and so will not be open for the next week. We're very sorry about this, but I'm sure you'll find the seal centre, which is directly opposite it, will keep you entertained just as much, if not more. We're also very busy today, as you may have noticed on your way in.\n\nEveryone starts here at the aquarium, but as it's so big, there's no waiting to get in. But today we're expecting a lot of people to want to see the crocodile cave as a couple of eggs have hatched out. So expect delays there and, if you like, move on to the seal centre first and then go back when things are quieter towards the end of the day. So, I'll leave you now but if you have any questions I won't be be far away and have a great time at the Sea Life Centre.\n\nThat is the end of section two. You now have half a minute to check your answers. Now turn to section three.",
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/Cam44-ayRmicIwgHlD2rQmTUvDnikigwcrrn"
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Section 3 - Martina and George at university",
+      "instructions": "You will hear two students talking about their first weeks at university. Answer questions 21-30.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "metadata": {
+        "groupInstructions": {
+          "21": "Choose TWO letters, A-E.\n\nWhich TWO subjects did Martina like best before going to university?",
+          "23": "Complete the summary below.\n\nWrite NO MORE THAN TWO WORDS for each answer.",
+          "27": "Choose the correct letter, A, B or C."
+        },
+        "noteBody": "# George's experience of university\nGeorge is studying Mechanical Engineering which involves several disciplines. He is finding [[23]] the most difficult. At the moment, his course is mainly [[24]]. He will soon have an assignment which involves a study of [[25]]. He thinks there are too many [[26]] and would like less of them."
+      },
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO subjects did Martina like best before going to university?",
+          "options": [
+            "A. Art",
+            "B. English",
+            "C. French",
+            "D. History",
+            "E. Science"
+          ],
+          "answer": [
+            "D. History",
+            "B. English"
+          ],
+          "explanation": "Bẫy dày: Art chỉ là môn cô học giỏi vì thích thầy giáo, còn Science thì giỏi nhưng KHÔNG thích. Hai môn cô thích nhất là History (yêu thích nhất) và English (yêu thích thứ hai).",
+          "evidence": "My favourite subject was history, but I couldn't see what career that would give me."
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO subjects did Martina like best before going to university?",
+          "options": [
+            "A. Art",
+            "B. English",
+            "C. French",
+            "D. History",
+            "E. Science"
+          ],
+          "answer": [
+            "D. History",
+            "B. English"
+          ],
+          "explanation": "Bẫy dày: Art chỉ là môn cô học giỏi vì thích thầy giáo, còn Science thì giỏi nhưng KHÔNG thích. Hai môn cô thích nhất là History (yêu thích nhất) và English (yêu thích thứ hai).",
+          "evidence": "So, in the end, I decided to opt for English, which was my second favourite subject, and I thought it would be more useful to me than studying anything else."
+        },
+        {
+          "order": 23,
+          "questionType": "note_completion",
+          "answer": [
+            "mathematics",
+            "maths",
+            "math"
+          ],
+          "explanation": "Các mảng kia (vật liệu, thiết kế máy, vật lý, cơ học) đều ổn; riêng toán mới là thứ George thấy khó hơn hẳn hồi phổ thông.",
+          "prompt": "Question 23",
+          "evidence": "And they're all fine, but it's maths that I'm struggling with."
+        },
+        {
+          "order": 24,
+          "questionType": "note_completion",
+          "answer": [
+            "theory",
+            "theoretical"
+          ],
+          "explanation": "Hiện tại khoá học gần như toàn lý thuyết; phần thực hành chỉ bắt đầu sau vài tuần nữa.",
+          "prompt": "Question 24",
+          "evidence": "Well, not at the moment."
+        },
+        {
+          "order": 25,
+          "questionType": "note_completion",
+          "answer": [
+            "jet engines"
+          ],
+          "explanation": "Bài tập lớn sắp tới là về động cơ phản lực, kèm vài chuyến đi thực tế tới sân bay gần đó.",
+          "prompt": "Question 25",
+          "evidence": "In fact, I've got a great assignment this term working on jet engines, which means I'll be going on a few field trips to a nearby airport."
+        },
+        {
+          "order": 26,
+          "questionType": "note_completion",
+          "answer": [
+            "seminars"
+          ],
+          "explanation": "Bài giảng thì George thấy ổn và học được nhiều; thứ anh muốn bớt đi là các buổi seminar vì quá đông người phát biểu.",
+          "prompt": "Question 26",
+          "evidence": "It would be better if we didn't have so many of those."
+        },
+        {
+          "order": 27,
+          "questionType": "multiple_choice",
+          "prompt": "Martina thinks the students at her university are",
+          "options": [
+            "A. sociable",
+            "B. intelligent",
+            "C. energetic"
+          ],
+          "answer": "A. sociable",
+          "explanation": "Martina nói sinh viên chỗ cô KHÔNG có vẻ chăm học, nhưng rất thân thiện - cô ngồi tán gẫu suốt cả tuần. Đó là 'sociable'. Chỗ George mới là nơi sinh viên trầm.",
+          "evidence": "I must say, I've been doing a lot of sitting around and chatting over the last week or so."
+        },
+        {
+          "order": 28,
+          "questionType": "multiple_choice",
+          "prompt": "George hopes that his tutor will help him",
+          "options": [
+            "A. lose his shyness",
+            "B. settle into university",
+            "C. get to know his subject better"
+          ],
+          "answer": "B. settle into university",
+          "explanation": "Martina đoán thầy sẽ giúp anh làm quen bạn, nhưng George gạt đi: điều anh cần là biết mình phải làm gì, đi đâu - tức là ổn định cuộc sống đại học.",
+          "evidence": "It's more a question of finding out what I need to do, where to go and so on."
+        },
+        {
+          "order": 29,
+          "questionType": "multiple_choice",
+          "prompt": "What does Martina know about her first assignment?",
+          "options": [
+            "A. the topic",
+            "B. the length",
+            "C. the deadline"
+          ],
+          "answer": "C. the deadline",
+          "explanation": "Cô mới chỉ biết hạn nộp là cuối tháng sau. Đề bài thì chưa có, độ dài cũng chưa rõ.",
+          "evidence": "For the course I'm doing, we have to hand our first one in at the end of next month."
+        },
+        {
+          "order": 30,
+          "questionType": "multiple_choice",
+          "prompt": "George would like to live",
+          "options": [
+            "A. in a hall of residence",
+            "B. in a flat on his own",
+            "C. with a host family"
+          ],
+          "answer": "C. with a host family",
+          "explanation": "Ký túc xá là chỗ anh đang ở nhưng quá ồn. Anh cũng không muốn ở một mình - anh muốn ở cùng một gia đình trong nhà gần trường.",
+          "evidence": "Well, I do like to have some people around me, so I'd prefer to live with a family somewhere, in a house not too far from the university."
+        }
+      ],
+      "transcript": "Recording 45. You will hear two students talking about their university studies. First, you have some time to look at questions 21 to 26. Hi, George.\n\nHow's it going? Hi, Martina. It's going well. How about you?\n\nHow is university life? Well, it's great. Apart from the studying, of course. Yeah, me too.\n\nWhat are you studying? I seem to remember that you were going to do art. That was your best subject, wasn't it? No, not really.\n\nI just liked the teacher. He was French and had an amazing accent. My favourite subject was history, but I couldn't see what career that would give me. Oh, right.\n\nSo, what did you choose? Well, I found it really difficult to decide. I was really good at science, but I must admit, I never really enjoyed studying it. So, in the end, I decided to opt for English, which was my second favourite subject, and I thought it would be more useful to me than studying anything else.\n\nSo, that's what I'm doing. And how are you finding university? Well, it's a bit of a challenge, I suppose. Are you finding it difficult?\n\nWell, some of it. I'm doing mechanical engineering, which is really interesting, but it covers quite a lot of areas, like materials science, machine design, physics, and of course mechanics. And they're all fine, but it's maths that I'm struggling with. It's a lot harder than it was at school.\n\nI can believe it. It all sounds very difficult to me. But then, I never was very good at mechanical things. I suppose it must involve some practical work.\n\nWell, not at the moment. Currently, it's nearly all theory, so it's a bit heavy going. I guess you need to start with that so that you can get a grasp of the concepts and learn a few facts before you start putting it into practice. It must be a lot different to the course that I'm taking.\n\nYes, but in a few weeks we'll be having a lot more practical experience. In fact, I've got a great assignment this term working on jet engines, which means I'll be going on a few field trips to a nearby airport. Oh, that's great. It sounds like you're going to be very busy.\n\nYes, I'm not sure how I'm going to cope with the work. We have a lot of lectures, and that's fine. The lecturers are very knowledgeable and I learn a lot from them, but we also have a lot of seminars, and I find with so many people expressing their views, it can get quite frustrating. It would be better if we didn't have so many of those.\n\nYes, it's the same for me. Now listen and answer questions 27 to 30. How were the students at your place? Well, I haven't really met anyone yet.\n\nThey all seem a bit quiet. Perhaps they're working hard. They don't appear to be very studious here, but they are very friendly. I must say, I've been doing a lot of sitting around and chatting over the last week or so.\n\nWell, that's good. The only person I've spoken to really is my tutor. He's very approachable and seems to understand how difficult it can be starting university. It's good to have someone you can talk to and he may help you meet other students.\n\nActually that doesn't bother me. I'm bound to get to know some people sooner or later. It's more a question of finding out what I need to do, where to go and so on. I hope he can help me with that.\n\nOh, I would have thought so. Well, we certainly have a lot of work ahead of us. It seems like a long time, doesn't it? Studying for three years.\n\nYes it does, but I'm sure it'll go quickly. You know, I'm really dreading the first assessment. Yes. For the course I'm doing, we have to hand our first one in at the end of next month.\n\nReally? So, have you got the topic yet? No, but we'll get it soon. I'm not sure how much we have to write yet.\n\nNot too much, I hope. I know what you mean. And it's hard to study, especially where I am now. Oh, where are you living?\n\nI'm living in a hall of residence. I thought that would be a good idea, as there'd be a lot of people around, but I'm finding it a bit noisy. I can see that I'm going to have problems when I really need to get down to some work. So, I guess you need to be somewhere on your own then?\n\nYes. Well, I do like to have some people around me, so I'd prefer to live with a family somewhere, in a house not too far from the university. Well, good luck with that. Yes, thanks.\n\nAnd good luck to you as well. Oh, I have to dash now. I've another lecture in ten minutes. Bye for now!\n\nBye! That is the end of section three. You now have half a minute to check your answers. Now turn to section 4.",
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/Cam45-Obe5WLO6GwvL7kqYgqiqTm58D9FQm6"
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Section 4 - Preparing and giving a presentation",
+      "instructions": "You will hear a lecturer giving advice on how to prepare and give a presentation. Answer questions 31-40.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "metadata": {
+        "groupInstructions": {
+          "31": "Complete the notes below.\n\nWrite NO MORE THAN TWO WORDS for each answer."
+        },
+        "noteBody": "# Preparing and Giving a Presentation\n## Initial thoughts\nMost important consideration: your audience\nThree points to bear in mind:\n- what they need to know\n- how [[31]] they will be\n- how big the audience will be\n## Structure\nStart with information that makes the audience [[32]]\nEnd with [[33]]\n## Design\nThe presentation needs to be [[34]]\nVary content by using a mix of words and [[35]]\n## Presenting\nLook at the audience, be enthusiastic and energetic\nVoice - vary speed and [[36]]\nOccasionally add [[37]] for greater impact\nDo not use [[38]] (e.g. appears, seems)\n## Questions and Interruptions\nWhen asked a question, first of all you should [[39]]\nMinimise interruptions by [[40]] them"
+      },
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "answer": [
+            "supportive"
+          ],
+          "explanation": "Ba điều cần cân nhắc về khán giả: họ cần biết gì, họ có ủng hộ mình không, và quy mô nhóm. Ý thứ hai là 'supportive'.",
+          "prompt": "Question 31",
+          "evidence": "Secondly, it's useful to consider whether they'll be supportive or not."
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "answer": [
+            "pay attention"
+          ],
+          "explanation": "Mở đầu phải nói điều gì đó buộc khán giả chú ý - có thể gây bất ngờ hoặc gây sốc, nhưng phải liên quan đến nội dung.",
+          "prompt": "Question 32",
+          "evidence": "Right at the beginning, you should tell them something that forces them to pay attention."
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "answer": [
+            "next steps"
+          ],
+          "explanation": "Bẫy thứ tự: tóm tắt lại là bước áp chót, còn thứ KẾT THÚC bài nói là phần 'next steps' - gợi ý hành động tiếp theo.",
+          "prompt": "Question 33",
+          "evidence": "After this, you should summarize what you've presented and close with what I call next steps."
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "answer": [
+            "consistent"
+          ],
+          "explanation": "Về thiết kế slide: phải nhất quán - cùng phông chữ, cùng màu, cùng cỡ cho các thành phần giống nhau.",
+          "prompt": "Question 34",
+          "evidence": "Well, the important thing here is to be consistent."
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "answer": [
+            "graphics"
+          ],
+          "explanation": "Đừng chỉ dùng chữ; thêm hình ảnh, sơ đồ, biểu đồ - tức là graphics - để bài nói sinh động.",
+          "prompt": "Question 35",
+          "evidence": "And don't just stick to words."
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "answer": [
+            "tone"
+          ],
+          "explanation": "Về giọng nói có hai thứ cần thay đổi: tốc độ (nhanh với phần quen, chậm với phần lạ) và ngữ điệu.",
+          "prompt": "Question 36",
+          "evidence": "And change your tone as you speak."
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "answer": [
+            "silence",
+            "a silence",
+            "silences"
+          ],
+          "explanation": "Muốn một ý nổi bật thì chèn khoảng lặng ngay sau ý đó, để người nghe có thời gian ngẫm.",
+          "prompt": "Question 37",
+          "evidence": "There may be points in your presentation that you want your audience to really absorb, and in order to make important points stand out, you may consider adding silence right after these."
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "answer": [
+            "weak verbs"
+          ],
+          "explanation": "Các động từ như 'appears', 'seems', 'could be' tạo cảm giác thiếu chắc chắn - đó là 'weak verbs', cần tránh.",
+          "prompt": "Question 38",
+          "evidence": "So using weak verbs such as appears, seems, could be, etc., needs to be avoided."
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "answer": [
+            "repeat it"
+          ],
+          "explanation": "Việc ĐẦU TIÊN khi được hỏi là nhắc lại câu hỏi - vừa chắc chắn nghe đúng, vừa có vài giây để nghĩ.",
+          "prompt": "Question 39",
+          "evidence": "So initially, my tip is to repeat it."
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "answer": [
+            "predicting"
+          ],
+          "explanation": "Cách giảm bị ngắt lời: đọc lại bài trước và DỰ ĐOÁN những chỗ có thể gây thắc mắc để sửa trước.",
+          "prompt": "Question 40",
+          "evidence": "So my advice is to reduce problems by reading through your presentation beforehand and predicting potential points which could cause interruptions."
+        }
+      ],
+      "transcript": "Recording 46. You will hear someone talking about creating a presentation. First you have some time to look at questions 31 to 40. Now listen carefully and answer questions 31 to 40.\n\nHello everyone. You've all been given an assignment for your sociology course which will involve giving a presentation to the rest of the group. And so today I'm going to be giving you a few tips on how to prepare your presentations. This should help you with your current assignment, but a lot of the principles I'll be putting across will be general principles which will, of course, help you with all your future presentations.\n\nSo first of all, the most important thing to consider is your audience. And in this instance, your audience are the other students in your group. There are three points to bear in mind. Firstly, you need to ask yourself what they need to know.\n\nSecondly, it's useful to consider whether they'll be supportive or not. And thirdly, will it be a small group, say three or four, a moderate gathering of 20 or so people, as for your current assignment, or will there be hundreds of people? Having said all that, what I'm about to tell you will apply equally to any audience. So, how do you structure your presentation?\n\nRight at the beginning, you should tell them something that forces them to pay attention. This could be something surprising or even shocking, but it needs to be relevant. After that, you need a list of items or topics showing them what you'll be covering, rather like an agenda. And then the main part of the presentation will follow.\n\nThis main part will be the detailed information you'll be presenting and could include facts, statistics, personal experiences, etc. After this, you should summarize what you've presented and close with what I call next steps. For this assignment, you could simply point the group to other sociology reference material. In other cases, you may want to suggest some actions that people can take.\n\nNow, what about the design of the slides for your laptop? Well, the important thing here is to be consistent. You need to have the same type of font and use the same color and size for the same elements. For example, all headers need to look the same.\n\nAll bullet points need to be presented in the same way. And don't just stick to words. Bring the presentation to life by adding graphics. These could be in several forms such as pictures, flowcharts, diagrams, histograms and so on.\n\nAnd so let's move on now to presenting. You have your presentation prepared and you're ready to start. Well, it's important to give a good impression from the start. So take three deep breaths, look at the audience, no matter how frightening they may be, and be enthusiastic and energetic.\n\nAs you go through the presentation, remember to provide some variety in the way you speak. So for example, you can talk fairly rapidly for information that may be familiar, but then slow down for more unfamiliar sections. And change your tone as you speak. Don't keep it at the same level all the way through.\n\nAs I mentioned, look at your audience. A good tip is to pick people out and look at them for around five seconds. Not looking at the audience gives the impression that you're either not interested in them or terrified of them. Being too long at one particular person may make them feel rather uncomfortable.\n\nThere may be points in your presentation that you want your audience to really absorb, and in order to make important points stand out, you may consider adding silence right after these. It will give people time to reflect on what you've just said. Also, you may be presenting complicated ideas or technical details, but try to keep everything as simple as possible. Use simple words and as few as possible.\n\nAnd be clear. If you say something like, this appears to be, it implies uncertainty. So using weak verbs such as appears, seems, could be, etc., needs to be avoided. I'll just finish off with a few thoughts on questions and interruptions from the audience.\n\nYou may choose to invite questions from the audience as you go, or ask them to wait until the end. Either way, questions should be encouraged, as it provides you with some feedback on how interested the audience is and how well they're understanding you. When a question is asked, you need to provide an answer that is as accurate as possible. So initially, my tip is to repeat it.\n\nThis will ensure you have heard it correctly and will give you a few seconds to gather your thoughts. Interruptions, on the other hand, can be unwelcome, and you may get them for a a variety of reasons. It's likely, however, that there's something in your presentation that's unclear or confusing. So my advice is to reduce problems by reading through your presentation beforehand and predicting potential points which could cause interruptions.\n\nYou may then want to change that part of your presentation, or at least you'll be prepared if someone does interrupt you. Now, do you have any questions?",
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/Cam46-GK7S1VLcZpXIlqMZcpdZFYUusciPyI"
+    }
+  ]
+}

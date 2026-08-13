@@ -1,0 +1,87 @@
+{
+  "unitType": "listening_part",
+  "unitNumber": 4,
+  "title": "Listening Section 4 - Preparing and giving a presentation",
+  "instructions": "You will hear a lecturer giving advice on how to prepare and give a presentation. Answer questions 31-40.",
+  "content": "Listen to the recording and answer the questions below.",
+  "defaultTimeLimitMinutes": 10,
+  "audioKey": "Cam46",
+  "metadata": {
+    "groupInstructions": {
+      "31": "Complete the notes below.\n\nWrite NO MORE THAN TWO WORDS for each answer."
+    },
+    "noteBody": "# Preparing and Giving a Presentation\n## Initial thoughts\nMost important consideration: your audience\nThree points to bear in mind:\n- what they need to know\n- how [[31]] they will be\n- how big the audience will be\n## Structure\nStart with information that makes the audience [[32]]\nEnd with [[33]]\n## Design\nThe presentation needs to be [[34]]\nVary content by using a mix of words and [[35]]\n## Presenting\nLook at the audience, be enthusiastic and energetic\nVoice - vary speed and [[36]]\nOccasionally add [[37]] for greater impact\nDo not use [[38]] (e.g. appears, seems)\n## Questions and Interruptions\nWhen asked a question, first of all you should [[39]]\nMinimise interruptions by [[40]] them"
+  },
+  "questions": [
+    {
+      "order": 31,
+      "questionType": "note_completion",
+      "answer": ["supportive"],
+      "explanation": "Ba điều cần cân nhắc về khán giả: họ cần biết gì, họ có ủng hộ mình không, và quy mô nhóm. Ý thứ hai là 'supportive'.",
+      "evidenceHint": "whether they'll be"
+    },
+    {
+      "order": 32,
+      "questionType": "note_completion",
+      "answer": ["pay attention"],
+      "explanation": "Mở đầu phải nói điều gì đó buộc khán giả chú ý - có thể gây bất ngờ hoặc gây sốc, nhưng phải liên quan đến nội dung.",
+      "evidenceHint": "forces them to"
+    },
+    {
+      "order": 33,
+      "questionType": "note_completion",
+      "answer": ["next steps"],
+      "explanation": "Bẫy thứ tự: tóm tắt lại là bước áp chót, còn thứ KẾT THÚC bài nói là phần 'next steps' - gợi ý hành động tiếp theo.",
+      "evidenceHint": "close with what I call"
+    },
+    {
+      "order": 34,
+      "questionType": "note_completion",
+      "answer": ["consistent"],
+      "explanation": "Về thiết kế slide: phải nhất quán - cùng phông chữ, cùng màu, cùng cỡ cho các thành phần giống nhau.",
+      "evidenceHint": "important thing here"
+    },
+    {
+      "order": 35,
+      "questionType": "note_completion",
+      "answer": ["graphics"],
+      "explanation": "Đừng chỉ dùng chữ; thêm hình ảnh, sơ đồ, biểu đồ - tức là graphics - để bài nói sinh động.",
+      "evidenceHint": "stick to words"
+    },
+    {
+      "order": 36,
+      "questionType": "note_completion",
+      "answer": ["tone"],
+      "explanation": "Về giọng nói có hai thứ cần thay đổi: tốc độ (nhanh với phần quen, chậm với phần lạ) và ngữ điệu.",
+      "evidenceHint": "change your"
+    },
+    {
+      "order": 37,
+      "questionType": "note_completion",
+      "answer": ["silence", "a silence", "silences"],
+      "explanation": "Muốn một ý nổi bật thì chèn khoảng lặng ngay sau ý đó, để người nghe có thời gian ngẫm.",
+      "evidenceHint": "stand out"
+    },
+    {
+      "order": 38,
+      "questionType": "note_completion",
+      "answer": ["weak verbs"],
+      "explanation": "Các động từ như 'appears', 'seems', 'could be' tạo cảm giác thiếu chắc chắn - đó là 'weak verbs', cần tránh.",
+      "evidenceHint": "needs to be avoided"
+    },
+    {
+      "order": 39,
+      "questionType": "note_completion",
+      "answer": ["repeat it"],
+      "explanation": "Việc ĐẦU TIÊN khi được hỏi là nhắc lại câu hỏi - vừa chắc chắn nghe đúng, vừa có vài giây để nghĩ.",
+      "evidenceHint": "my tip is to"
+    },
+    {
+      "order": 40,
+      "questionType": "note_completion",
+      "answer": ["predicting"],
+      "explanation": "Cách giảm bị ngắt lời: đọc lại bài trước và DỰ ĐOÁN những chỗ có thể gây thắc mắc để sửa trước.",
+      "evidenceHint": "beforehand and"
+    }
+  ]
+}

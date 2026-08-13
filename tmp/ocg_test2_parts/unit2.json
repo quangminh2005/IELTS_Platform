@@ -1,0 +1,103 @@
+{
+  "unitType": "listening_part",
+  "unitNumber": 2,
+  "title": "Listening Section 2 - Sea Life Centre",
+  "instructions": "You will hear a guide giving information to visitors at a sea life centre. Answer questions 11-20.",
+  "content": "Listen to the recording and answer the questions below.",
+  "defaultTimeLimitMinutes": 10,
+  "audioKey": "Cam44",
+  "metadata": {
+    "groupTitles": {
+      "11": "Sea Life Centre - information"
+    },
+    "groupInstructions": {
+      "11": "Answer the questions below.\n\nWrite NO MORE THAN THREE WORDS for each answer.",
+      "18": "What does the guide say about each attraction?\n\nChoose THREE answers from the box and write the correct letter, A-E, next to Questions 18-20."
+    }
+  },
+  "questions": [
+    {
+      "order": 11,
+      "questionType": "short_answer",
+      "prompt": "What was the Sea Life Centre previously called?",
+      "answer": ["World of Water"],
+      "explanation": "Trung tâm vừa đổi tên từ đầu mùa hè này. Câu hỏi hỏi tên CŨ, nên đáp án là tên trước khi đổi.",
+      "evidenceHint": "not called"
+    },
+    {
+      "order": 12,
+      "questionType": "short_answer",
+      "prompt": "What is the newest attraction called?",
+      "answer": ["splash ride", "the splash ride"],
+      "explanation": "Nhà hàng và khu picnic cũng mới, nhưng thứ mới NHẤT (vừa xong tuần trước) là trò splash ride.",
+      "evidenceHint": "finished last week"
+    },
+    {
+      "order": 13,
+      "questionType": "short_answer",
+      "prompt": "When is the main feeding time?",
+      "answer": ["noon", "at noon", "midday", "at midday", "12 o'clock", "12 pm", "12pm"],
+      "explanation": "Bẫy: 3 giờ chiều là giờ cho ăn CŨ. Họ đã đổi sang giữa trưa vì con vật đói khi phải chờ lâu.",
+      "evidenceHint": "have it at"
+    },
+    {
+      "order": 14,
+      "questionType": "short_answer",
+      "prompt": "What can you do with a VIP ticket?",
+      "answer": ["feed the sharks", "feed sharks"],
+      "explanation": "Vé VIP thêm 2 bảng cho phép bạn tự tay cho cá mập ăn. Video xem cá mập là thứ dành cho người còn e ngại, không phải quyền lợi của vé.",
+      "evidenceHint": "be allowed to"
+    },
+    {
+      "order": 15,
+      "questionType": "short_answer",
+      "prompt": "What special event will the Sea Life Centre arrange for you?",
+      "answer": ["birthday party", "a birthday party"],
+      "explanation": "Trung tâm nhận tổ chức tiệc sinh nhật cho gia đình và bạn bè; mẫu đăng ký để ở lối vào.",
+      "evidenceHint": "happy to organise"
+    },
+    {
+      "order": 16,
+      "questionType": "short_answer",
+      "prompt": "Where will the petition for animal conservation be sent to?",
+      "answer": ["government", "the government"],
+      "explanation": "Con số 5,000 là số chữ ký cần thu, còn NƠI NHẬN đơn kiến nghị là chính phủ.",
+      "evidenceHint": "planning to send it"
+    },
+    {
+      "order": 17,
+      "questionType": "short_answer",
+      "prompt": "What can you use to test what you have learnt?",
+      "answer": ["quiz", "the quiz", "a quiz"],
+      "explanation": "Sau khi tham quan có bài trắc nghiệm để tự kiểm tra. Không có giải thưởng, nhưng vẫn là thứ dùng để kiểm tra.",
+      "evidenceHint": "after your visit"
+    },
+    {
+      "order": 18,
+      "questionType": "matching",
+      "prompt": "must not miss",
+      "options": ["A. Aquarium", "B. Crocodile Cave", "C. Penguin Park", "D. Seal Centre", "E. Turtle Town"],
+      "answer": "E. Turtle Town",
+      "explanation": "Nếu không đủ thời gian xem hết thì nhất định phải ghé Turtle Town - nơi này ở góc xa nên hay bị bỏ sót.",
+      "evidenceHint": "make sure you visit"
+    },
+    {
+      "order": 19,
+      "questionType": "matching",
+      "prompt": "temporarily closed",
+      "options": ["A. Aquarium", "B. Crocodile Cave", "C. Penguin Park", "D. Seal Centre", "E. Turtle Town"],
+      "answer": "C. Penguin Park",
+      "explanation": "Khu chim cánh cụt đang sửa gấp nên đóng cửa một tuần; hướng dẫn viên gợi ý sang Seal Centre đối diện.",
+      "evidenceHint": "not be open for the next week"
+    },
+    {
+      "order": 20,
+      "questionType": "matching",
+      "prompt": "large queues",
+      "options": ["A. Aquarium", "B. Crocodile Cave", "C. Penguin Park", "D. Seal Centre", "E. Turtle Town"],
+      "answer": "B. Crocodile Cave",
+      "explanation": "Cá sấu vừa nở trứng nên đông người xếp hàng. Bể cá tuy ai cũng vào đầu tiên nhưng rộng nên KHÔNG phải chờ.",
+      "evidenceHint": "expect delays"
+    }
+  ]
+}

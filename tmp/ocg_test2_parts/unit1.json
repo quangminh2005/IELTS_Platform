@@ -1,0 +1,112 @@
+{
+  "unitType": "listening_part",
+  "unitNumber": 1,
+  "title": "Listening Section 1 - Short story competition",
+  "instructions": "You will hear a phone call about a short story competition. Answer questions 1-10.",
+  "content": "Listen to the recording and answer the questions below.",
+  "defaultTimeLimitMinutes": 10,
+  "audioKey": "Cam43",
+  "metadata": {
+    "groupInstructions": {
+      "1": "Complete the notes below.\n\nWrite NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+      "7": "Complete the sentences below.\n\nWrite NO MORE THAN TWO WORDS for each answer."
+    },
+    "noteBody": "# Short Story Competition\n## Entry Details\nExample - Cost of entry: 5 pounds\nLength of story: approximately [[1]]\nStory must include: a [[2]]\nMinimum age: [[3]]\nLast entry date: 1st [[4]]\nWeb address: www. [[5]] .com\nDon't: [[6]] the story to the organisers\n:::break\n## Judging and Prize Details\nThe competition is judged by [[7]].\nThe top five stories will be available [[8]].\nThe top story will be chosen by the [[9]].\nThe first prize is a place at a writers' workshop in [[10]]."
+  },
+  "questions": [
+    {
+      "order": 1,
+      "questionType": "note_completion",
+      "answer": [
+        "3,000 words",
+        "3000 words",
+        "three thousand words"
+      ],
+      "explanation": "Bẫy số: người nói nhắc mức CŨ là 5,000 từ rồi mới chốt mức HIỆN TẠI là khoảng 3,000 từ. Đáp án phải kèm chữ 'words'.",
+      "evidenceHint": "guidelines are around"
+    },
+    {
+      "order": 2,
+      "questionType": "note_completion",
+      "answer": [
+        "surprise ending",
+        "surprising ending"
+      ],
+      "explanation": "Đề tài tự do, nhưng điểm bắt buộc của cuộc thi năm nay là truyện phải có kết thúc bất ngờ.",
+      "evidenceHint": "surprise ending"
+    },
+    {
+      "order": 3,
+      "questionType": "note_completion",
+      "answer": [
+        "16",
+        "sixteen"
+      ],
+      "explanation": "Người gọi 18 tuổi, nhưng đó là tuổi CỦA CÔ ẤY - tuổi tối thiểu để dự thi là 16.",
+      "evidenceHint": "or over"
+    },
+    {
+      "order": 4,
+      "questionType": "note_completion",
+      "answer": [
+        "August"
+      ],
+      "explanation": "Hạn nộp là ngày 1 tháng 8. Tháng 4 chỉ là thời điểm đang gọi điện, không phải hạn nộp.",
+      "evidenceHint": "submit your entry"
+    },
+    {
+      "order": 5,
+      "questionType": "note_completion",
+      "answer": [
+        "COMP4SS"
+      ],
+      "explanation": "Đánh vần từng chữ C-O-M-P-4-S-S. Người nói nhấn mạnh là CHỮ SỐ 4, không phải chữ 'four'.",
+      "evidenceHint": "not the word four"
+    },
+    {
+      "order": 6,
+      "questionType": "note_completion",
+      "answer": [
+        "post"
+      ],
+      "explanation": "Được phép in truyện ra để đọc lại, nhưng KHÔNG được gửi bưu điện - phải gửi qua email.",
+      "evidenceHint": "it to us"
+    },
+    {
+      "order": 7,
+      "questionType": "note_completion",
+      "answer": [
+        "famous authors"
+      ],
+      "explanation": "Ban giám khảo là các nhà văn nổi tiếng. Câu hỏi hỏi AI chấm, không phải chấm như thế nào.",
+      "evidenceHint": "lucky to be able to use"
+    },
+    {
+      "order": 8,
+      "questionType": "note_completion",
+      "answer": [
+        "online"
+      ],
+      "explanation": "Năm truyện vào chung kết được đăng trực tuyến cho mọi người đọc, chưa xếp hạng lúc này.",
+      "evidenceHint": "so everyone can read"
+    },
+    {
+      "order": 9,
+      "questionType": "note_completion",
+      "answer": [
+        "public"
+      ],
+      "explanation": "Giám khảo chọn ra top 5, nhưng người chọn truyện QUÁN QUÂN lại là công chúng bỏ phiếu.",
+      "evidenceHint": "vote for their favourite"
+    },
+    {
+      "order": 10,
+      "questionType": "note_completion",
+      "answer": [
+        "Spain"
+      ],
+      "explanation": "Giải nhì là 300 bảng tiền mặt; giải nhất mới là chuyến đi dự workshop viết văn ở Tây Ban Nha.",
+      "evidenceHint": "gets a trip to"
+    }
+  ]
+}

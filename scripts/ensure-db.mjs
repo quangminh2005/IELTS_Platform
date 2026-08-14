@@ -55,6 +55,18 @@ const statements = [
   'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "practiceScopeKey" TEXT;',
   'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "attemptRound" INTEGER NOT NULL DEFAULT 1;',
   'CREATE UNIQUE INDEX IF NOT EXISTS "Assignment_practiceScopeKey_key" ON "Assignment"("practiceScopeKey");',
+  // Chặn dò mật khẩu giáo viên: bảng đếm số lần đăng nhập SAI. Bảng mới, không
+  // đụng bảng nào đang có. Đặt trước các câu UPDATE nặng bên dưới để chắc chắn
+  // lên được prod kể cả khi một câu UPDATE bị timeout vì Neon cold-start.
+  `CREATE TABLE IF NOT EXISTS "LoginAttempt" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "ip" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "LoginAttempt_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "LoginAttempt_email_createdAt_idx" ON "LoginAttempt"("email", "createdAt");',
+  'CREATE INDEX IF NOT EXISTS "LoginAttempt_ip_createdAt_idx" ON "LoginAttempt"("ip", "createdAt");',
   // Gắn lớp cho các bài giao cũ (Assignment.classId trước đây không bao giờ được
   // ghi). Chỉ gắn khi mọi học viên nhận bài cùng chung đúng MỘT lớp; bài giao
   // trải nhiều lớp thì để null = "bài chung", lớp nào cũng tính.

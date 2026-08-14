@@ -8,6 +8,20 @@ export const runtime = "nodejs";
 // Blob bằng BLOB_READ_WRITE_TOKEN. Đáng tin cậy hơn client upload (không phụ
 // thuộc trình duyệt kết nối thẳng tới blob.vercel-storage.com). Hạn chế: body
 // của serverless function ~4.5MB, nên hợp với từng part audio đã nén.
+//
+// Danh sách này khớp với allowedContentTypes của /api/audio/upload (đường tải
+// thẳng lên Blob) — hai đường vào cùng một kho thì phải chặn giống nhau.
+const allowedTypes = new Set([
+  "audio/mpeg",
+  "audio/mp3",
+  "audio/wav",
+  "audio/ogg",
+  "audio/mp4",
+  "audio/x-m4a",
+  "audio/aac",
+  "audio/webm"
+]);
+
 export async function POST(request: Request): Promise<NextResponse> {
   const session = await auth();
 
@@ -29,6 +43,13 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   if (!(file instanceof File) || file.size === 0) {
     return NextResponse.json({ error: "Không nhận được file." }, { status: 400 });
+  }
+
+  if (file.type && !allowedTypes.has(file.type)) {
+    return NextResponse.json(
+      { error: "Định dạng audio không hỗ trợ (chỉ MP3, WAV, OGG, M4A, AAC, WEBM)." },
+      { status: 400 }
+    );
   }
 
   try {

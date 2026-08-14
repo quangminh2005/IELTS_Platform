@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { LOGIN_LOCKED_ERROR, MAX_FAILS_PER_EMAIL } from "../lib/login-lock";
 
 const prismaMock = vi.hoisted(() => ({
   user: {
@@ -9,12 +10,22 @@ const prismaMock = vi.hoisted(() => ({
   studentProfile: {
     findUnique: vi.fn(),
     update: vi.fn()
+  },
+  // Mặc định: chưa có lần đăng nhập sai nào -> không khoá.
+  loginAttempt: {
+    findMany: vi.fn(async () => []),
+    create: vi.fn(async () => ({})),
+    deleteMany: vi.fn(async () => ({ count: 0 }))
   }
 }));
 
 vi.mock("../lib/prisma", () => ({
   prisma: prismaMock
 }));
+
+beforeEach(() => {
+  vi.clearAllMocks();
+});
 
 describe("auth options", () => {
   it("authorizes a credentials user with a valid password and role", async () => {
@@ -37,6 +48,95 @@ describe("auth options", () => {
       name: "Ms. Trang",
       role: "teacher"
     });
+  });
+
+  it("từ chối tài khoản học viên dù mật khẩu đúng", async () => {
+    const { authorizeCredentials } = await import("../lib/auth");
+    const passwordHash = await bcrypt.hash("student123", 10);
+
+    // Học viên bắt buộc đăng nhập bằng Google. Một tài khoản role "student" mà
+    // có passwordHash chính là cổng đi vòng qua quy định đó.
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: "student-user-id",
+      email: "student@example.com",
+      name: "Demo Student",
+      passwordHash,
+      role: "student"
+    });
+
+    const user = await authorizeCredentials("student@example.com", "student123");
+
+    expect(user).toBeNull();
+    expect(prismaMock.loginAttempt.create).toHaveBeenCalled();
+  });
+
+  it("ghi nhận lần đăng nhập sai và xoá sạch khi đăng nhập được", async () => {
+    const { authorizeCredentials } = await import("../lib/auth");
+    const passwordHash = await bcrypt.hash("teacher123", 10);
+
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: "teacher-user-id",
+      email: "teacher@example.com",
+      name: "Ms. Trang",
+      passwordHash,
+      role: "teacher"
+    });
+
+    expect(await authorizeCredentials("teacher@example.com", "sai-mat-khau")).toBeNull();
+    expect(prismaMock.loginAttempt.create).toHaveBeenCalledWith({
+      data: { email: "teacher@example.com", ip: "unknown" }
+    });
+
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: "teacher-user-id",
+      email: "teacher@example.com",
+      name: "Ms. Trang",
+      passwordHash,
+      role: "teacher"
+    });
+
+    expect(await authorizeCredentials("teacher@example.com", "teacher123")).not.toBeNull();
+    expect(prismaMock.loginAttempt.deleteMany).toHaveBeenCalledWith({
+      where: { email: "teacher@example.com" }
+    });
+  });
+
+  it("khoá tạm sau khi sai quá nhiều lần, không thèm kiểm mật khẩu nữa", async () => {
+    const { authorizeCredentials } = await import("../lib/auth");
+    const fails = Array.from({ length: MAX_FAILS_PER_EMAIL }, () => ({
+      createdAt: new Date(Date.now() - 60_000)
+    }));
+
+    prismaMock.loginAttempt.findMany.mockResolvedValueOnce(fails as never);
+    prismaMock.loginAttempt.findMany.mockResolvedValueOnce([] as never);
+
+    await expect(
+      authorizeCredentials("teacher@example.com", "teacher123", {
+        "x-forwarded-for": "203.0.113.7"
+      })
+    ).rejects.toThrow(LOGIN_LOCKED_ERROR);
+
+    // Đang khoá thì dừng ngay, không đọc tới bảng User.
+    expect(prismaMock.user.findUnique).not.toHaveBeenCalled();
+  });
+
+  it("DB lỗi khi đếm thì vẫn cho đăng nhập, không khoá cứng giáo viên", async () => {
+    const { authorizeCredentials } = await import("../lib/auth");
+    const passwordHash = await bcrypt.hash("teacher123", 10);
+
+    prismaMock.loginAttempt.findMany.mockRejectedValueOnce(new Error("connection lost"));
+    prismaMock.loginAttempt.findMany.mockRejectedValueOnce(new Error("connection lost"));
+    prismaMock.user.findUnique.mockResolvedValueOnce({
+      id: "teacher-user-id",
+      email: "teacher@example.com",
+      name: "Ms. Trang",
+      passwordHash,
+      role: "teacher"
+    });
+
+    const user = await authorizeCredentials("teacher@example.com", "teacher123");
+
+    expect(user).toMatchObject({ id: "teacher-user-id", role: "teacher" });
   });
 
   it("links Google sign-in to a pre-added student profile", async () => {
@@ -80,8 +180,7 @@ describe("auth options", () => {
       where: { email: "student@example.com" },
       update: {
         googleId: "google-account-id",
-        name: "Demo Student",
-        role: "student"
+        name: "Demo Student"
       },
       create: {
         email: "student@example.com",
@@ -90,6 +189,10 @@ describe("auth options", () => {
         role: "student"
       }
     });
+
+    // Tài khoản ĐÃ tồn tại thì không được đụng tới role — nếu không, một email
+    // giáo viên lỡ có StudentProfile sẽ bị hạ quyền mỗi lần đăng nhập Google.
+    expect(prismaMock.user.upsert.mock.calls[0][0].update).not.toHaveProperty("role");
     expect(prismaMock.studentProfile.update).toHaveBeenCalledWith({
       where: { id: "student-profile-id" },
       data: { userId: "student-user-id" }

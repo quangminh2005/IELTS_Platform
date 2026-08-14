@@ -8,6 +8,7 @@ import {
   readRememberedTeacherEmail,
   saveRememberedTeacherEmail
 } from "@/lib/auth-preferences";
+import { loginErrorMessage } from "@/lib/login-lock";
 import { ChangeRoleLink } from "@/components/auth/change-role-link";
 
 export default function TeacherLoginPage() {
@@ -42,7 +43,9 @@ export default function TeacherLoginPage() {
     setIsSubmitting(false);
 
     if (result?.error) {
-      setError("Email hoặc mật khẩu không đúng.");
+      // Sai mật khẩu quá nhiều lần thì báo đang bị khoá tạm, còn lại giữ nguyên
+      // câu chung chung.
+      setError(loginErrorMessage(result.error));
       return;
     }
 

@@ -30,6 +30,19 @@ model User {
   studentProfile StudentProfile?
 }
 
+// Một lần đăng nhập SAI bằng mật khẩu. Chỉ dùng để khoá tạm khi có người dò mật
+// khẩu — không phải nhật ký đăng nhập. Bản ghi cũ hơn cửa sổ khoá bị xoá tự động
+// mỗi lần có lần sai mới (xem lib/auth.ts + lib/login-lock.ts).
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  email     String
+  ip        String
+  createdAt DateTime @default(now())
+
+  @@index([email, createdAt])
+  @@index([ip, createdAt])
+}
+
 model TeacherProfile {
   id                String             @id @default(cuid())
   userId            String             @unique

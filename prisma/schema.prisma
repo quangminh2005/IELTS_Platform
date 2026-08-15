@@ -385,7 +385,7 @@ model CommentSnippet {
 
 // ---- TỪ VỰNG MỖI NGÀY ----
 // VocabWord.sourceSkill: listening | reading
-// VocabWord.partOfSpeech: noun | verb | adjective | adverb
+// VocabWord.partOfSpeech: noun | verb | adjective | adverb | preposition | conjunction
 
 model VocabWord {
   id           String   @id @default(cuid())

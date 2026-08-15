@@ -23,6 +23,33 @@ export function cleanExamText(raw: string): string {
     .replace(/\[\[\d+\]\]/g, "");
 }
 
+// Transcript Listening đầy lời dẫn của người đọc đề và nhãn người nói. Những câu
+// đó chứa từ nhưng không dạy được gì ("Section 3 Narrator: Now turn to section
+// 3."), nên loại khỏi rổ câu ví dụ.
+const RUBRIC_PATTERNS: readonly RegExp[] = [
+  /\bnarrator\b/i,
+  /\bnow turn to\b/i,
+  /\byou will hear\b/i,
+  /^(section|part)\s+\d/i,
+  /\bquestions?\s+\d+\s*(to|-|–)\s*\d+/i
+];
+
+// Nhãn người nói đầu câu — mẩu hội thoại cụt, thường không thành câu hoàn chỉnh.
+// Phải bắt được cả các dạng có dấu đầu dòng và tên nhiều chữ:
+//   "Dave: What, the ... chapter?"
+//   "• Tutor: The program is designed to ..."
+//   "Miss Harris: Then pursue that."
+//   "• Speaker 2 (Woman): Following is a brief summary ..."
+const SPEAKER_LABEL = /^[•\-–*\s]*[A-Z][\w'()]*(?:\s+[A-Z0-9(][\w'()]*){0,3}:\s/;
+
+function isUsableExample(sentence: string): boolean {
+  if (SPEAKER_LABEL.test(sentence)) {
+    return false;
+  }
+
+  return !RUBRIC_PATTERNS.some((pattern) => pattern.test(sentence));
+}
+
 function splitSentences(text: string): string[] {
   return text
     .split(/(?<=[.!?])\s+/)
@@ -68,7 +95,8 @@ export function extractCandidates(input: {
   for (const sentence of sentences) {
     if (
       sentence.length < MIN_SENTENCE_LENGTH ||
-      sentence.length > MAX_SENTENCE_LENGTH
+      sentence.length > MAX_SENTENCE_LENGTH ||
+      !isUsableExample(sentence)
     ) {
       continue;
     }

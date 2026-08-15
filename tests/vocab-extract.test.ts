@@ -82,6 +82,45 @@ describe("extractCandidates", () => {
     }
   });
 
+  it("bỏ lời dẫn đề trong transcript, không lấy làm câu ví dụ", () => {
+    const result = run(
+      "Section 3 Narrator: Now turn to section 3 of the listening paper. " +
+        "The regional policy was finally approved by the committee."
+    );
+    // "section" chỉ xuất hiện trong lời dẫn nên không được nhận
+    expect(result.map((item) => item.word)).not.toContain("section");
+    // câu nội dung thật thì vẫn nhận bình thường
+    expect(result.map((item) => item.word)).toContain("policy");
+  });
+
+  it("bỏ mẩu hội thoại có nhãn người nói ở đầu câu", () => {
+    expect(
+      run("Dave: What, the constraints on the learning chapter we discussed?")
+    ).toHaveLength(0);
+  });
+
+  it.each([
+    "• Tutor: The program is designed to deliver advanced theory to everyone.",
+    "Miss Harris: Then pursue that idea until it is completely finished.",
+    "• Speaker 2 (Woman): Following is a brief summary of the regional tours."
+  ])("bỏ nhãn người nói có dấu đầu dòng hoặc tên nhiều chữ: %s", (line) => {
+    expect(run(line)).toHaveLength(0);
+  });
+
+  it("không nhầm câu thường thành nhãn người nói", () => {
+    const words = run(
+      "The research team published a detailed summary of the regional policy."
+    ).map((item) => item.word);
+    expect(words).toContain("summary");
+  });
+
+  it("loại hẳn các từ máy bắt nhầm họ", () => {
+    const words = run(
+      "Jacinta said that was just why she rang the office again this morning."
+    ).map((item) => item.word);
+    expect(words).not.toContain("rang");
+  });
+
   it("bỏ câu ví dụ quá ngắn hoặc quá dài", () => {
     expect(run("Policy.")).toHaveLength(0);
   });

@@ -1,7 +1,6 @@
 // Danh sách từ học thuật (Academic Word List) dùng làm tầng lọc chính khi rút từ
-// từ đề Listening/Reading. Đang có Sublist 1-2 (120 headword) — đủ dùng nhiều
-// tháng ở nhịp 1 từ/ngày. Muốn mở rộng chỉ cần thêm chuỗi vào mảng dưới đây,
-// không phải sửa code cũng không phải sửa test.
+// từ đề Listening/Reading. Đang có Sublist 1-5 (300 headword). Muốn mở rộng chỉ
+// cần thêm chuỗi vào mảng dưới đây, không phải sửa code cũng không phải sửa test.
 export const AWL_HEADWORDS: readonly string[] = [
   // Sublist 1
   "analyse", "approach", "area", "assess", "assume", "authority", "available",
@@ -22,8 +21,47 @@ export const AWL_HEADWORDS: readonly string[] = [
   "journal", "maintain", "normal", "obtain", "participate", "perceive",
   "positive", "potential", "previous", "primary", "purchase", "range", "region",
   "regulate", "relevant", "reside", "resource", "restrict", "secure", "seek",
-  "select", "site", "strategy", "survey", "text", "tradition", "transfer"
+  "select", "site", "strategy", "survey", "text", "tradition", "transfer",
+  // Sublist 3
+  "alternative", "circumstance", "comment", "compensate", "component", "consent",
+  "considerable", "constant", "constrain", "contribute", "convene", "coordinate",
+  "core", "corporate", "correspond", "criteria", "deduce", "demonstrate",
+  "document", "dominate", "emphasis", "ensure", "exclude", "framework", "fund",
+  "illustrate", "immigrate", "imply", "initial", "instance", "interact",
+  "justify", "layer", "link", "locate", "maximise", "minor", "negate", "outcome",
+  "partner", "philosophy", "physical", "proportion", "publish", "react",
+  "register", "rely", "remove", "scheme", "sequence", "shift", "specify",
+  "sufficient", "task", "technical", "technique", "technology", "valid",
+  "volume",
+  // Sublist 4
+  "access", "adequate", "annual", "apparent", "approximate", "attitude",
+  "attribute", "civil", "code", "commit", "communicate", "concentrate", "confer",
+  "contrast", "cycle", "debate", "despite", "dimension", "domestic", "emerge",
+  "error", "ethnic", "goal", "grant", "hence", "hypothesis", "implement",
+  "implicate", "impose", "integrate", "internal", "investigate", "label",
+  "mechanism", "obvious", "occupy", "option", "output", "overall", "parallel",
+  "parameter", "phase", "predict", "principal", "prior", "professional",
+  "project", "promote", "regime", "resolve", "retain", "series", "statistic",
+  "status", "stress", "subsequent", "summary", "undertake",
+  // Sublist 5
+  "academy", "adjust", "alter", "amend", "aware", "capacity", "challenge",
+  "clause", "compound", "conflict", "consult", "contact", "decline", "discrete",
+  "draft", "enable", "energy", "enforce", "entity", "equivalent", "evolve",
+  "expand", "expose", "external", "facilitate", "fundamental", "generate",
+  "generation", "image", "liberal", "licence", "logic", "margin", "medical",
+  "mental", "modify", "monitor", "network", "notion", "objective", "orient",
+  "perspective", "precise", "prime", "psychology", "pursue", "ratio", "reject",
+  "revenue", "stable", "style", "substitute", "sustain", "symbol", "target",
+  "transit", "trend", "version", "welfare"
 ];
+
+// Từ mà quy tắc so khớp theo tiền tố gốc bắt nhầm: mặt chữ trùng gốc của một
+// headword nhưng nghĩa hoàn toàn khác họ. Loại hẳn để mỗi lần quét lại không
+// phải nhặt ra bằng tay nữa.
+export const FALSE_MATCHES: ReadonlySet<string> = new Set([
+  "rang", // quá khứ của "ring", không thuộc họ "range"
+  "equator" // từ địa lý, không thuộc họ "equate"
+]);
 
 // Gốc từ dùng để so khớp cả họ từ.
 // - Bỏ "e" cuối để "create" bắt được "creating", "creation"...
@@ -54,6 +92,10 @@ const MAX_SUFFIX_LENGTH = 5;
 // một mục — nếu không kho từ sẽ đầy các cặp gần trùng.
 export function matchAcademicRoot(word: string): string | null {
   const lower = word.toLowerCase();
+
+  if (FALSE_MATCHES.has(lower)) {
+    return null;
+  }
 
   // Gốc dài hơn thì cụ thể hơn: "constitut" phải thắng "consist" nếu cả hai cùng
   // khớp, nếu không các từ khác họ sẽ bị gom nhầm vào nhau.

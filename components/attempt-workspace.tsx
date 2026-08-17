@@ -3295,7 +3295,9 @@ export function AttemptWorkspace({
                   key={`${src}-${index}`}
                   src={src}
                   alt={`Hình ${index + 1}`}
-                  className="w-full rounded-md border border-border bg-white"
+                  // Không phóng ảnh vượt kích thước gốc: ảnh scan độ phân giải thấp
+                  // bị kéo giãn full cột sẽ vỡ nét (ảnh lớn vẫn co lại vừa cột).
+                  className="mx-auto h-auto max-w-full rounded-md border border-border bg-white"
                 />
               ))}
             </div>

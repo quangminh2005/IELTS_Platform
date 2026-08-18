@@ -68,6 +68,16 @@ model StudentProfile {
   // này thì tính là chưa đọc. Null = coi như đã đọc hết (học viên có từ trước khi
   // thêm cột), để người mới không bị dội cả chục thông báo cũ.
   notificationsReadAt DateTime?
+  // Liên hệ phụ huynh. Để trống parentEmail = học viên này không có báo cáo,
+  // cron bỏ qua và link /ph/<token> cũng ngưng hoạt động.
+  parentEmail         String?
+  parentName          String?
+  // Mã bí mật của link xem báo cáo. Giáo viên bấm "Tạo lại link" -> đổi mã,
+  // link cũ chết ngay. Sinh bằng crypto.randomBytes(24).toString("base64url").
+  parentToken         String?   @unique
+  // Lần cron gửi mail tuần gần nhất. Nút gửi tay KHÔNG cập nhật cột này để
+  // không làm lỡ mail Chủ nhật.
+  parentReportSentAt  DateTime?
   user        User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
   classes     ClassStudent[]
   recipients  AssignmentRecipient[]

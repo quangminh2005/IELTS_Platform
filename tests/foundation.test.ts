@@ -149,3 +149,34 @@ describe("import dẫn chứng", () => {
     expect(src).toContain("answerEvidence: optionalText(question.evidence)");
   });
 });
+
+describe("cột liên hệ phụ huynh", () => {
+  const PARENT_COLUMNS = [
+    "parentEmail",
+    "parentName",
+    "parentToken",
+    "parentReportSentAt"
+  ];
+
+  it("schema.prisma khai báo đủ 4 cột trên StudentProfile", () => {
+    const schema = readProjectFile("prisma/schema.prisma");
+    const start = schema.indexOf("model StudentProfile");
+    const model = schema.slice(start, schema.indexOf("\nmodel ", start + 10));
+
+    for (const column of PARENT_COLUMNS) {
+      expect(model).toContain(column);
+    }
+
+    expect(model).toMatch(/parentToken\s+String\?\s+@unique/);
+  });
+
+  it("ensure-db.mjs áp đủ 4 cột và unique index lên production", () => {
+    const script = readProjectFile("scripts/ensure-db.mjs");
+
+    for (const column of PARENT_COLUMNS) {
+      expect(script).toContain(`"${column}"`);
+    }
+
+    expect(script).toContain("StudentProfile_parentToken_key");
+  });
+});

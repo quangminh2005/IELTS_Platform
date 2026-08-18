@@ -6,6 +6,8 @@ import { resetRecipientAttempts } from "@/lib/actions/attempts";
 import { ActionDeleteButton, ActionForm } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { ProctorFlag } from "@/components/proctor-flag";
+import { ParentContactBlock } from "@/components/parent-contact-block";
+import { resolveAppUrl } from "@/lib/app-url";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
@@ -155,6 +157,12 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
     }))
   }));
 
+  // Chưa có email phụ huynh thì không hiện link — bấm vào cũng ra 404.
+  const parentLink =
+    student.parentEmail && student.parentToken
+      ? `${resolveAppUrl()}/ph/${student.parentToken}`
+      : null;
+
   const progressSeries = buildProgressSeries(submittedAttempts);
   const typeStats = questionTypeStatsBySkill(
     submittedAttempts.flatMap((attempt) => attempt.answers)
@@ -205,6 +213,14 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           ))}
         </div>
       </section>
+
+      <ParentContactBlock
+        studentId={student.id}
+        parentName={student.parentName ?? ""}
+        parentEmail={student.parentEmail ?? ""}
+        parentLink={parentLink}
+        lastSentAt={student.parentReportSentAt}
+      />
 
       {submittedAttempts.length > 0 ? (
         <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">

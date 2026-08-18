@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { LogoutButton } from "@/components/logout-button";
+import { NotificationBell } from "@/components/notification-bell";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 
 type AppShellRole = "teacher" | "student";
@@ -241,7 +242,10 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
           <Icon name="menu" />
         </button>
         <Brand role={role} />
-        <AnimatedThemeToggle />
+        <div className="flex items-center gap-2">
+          {role === "student" ? <NotificationBell /> : null}
+          <AnimatedThemeToggle />
+        </div>
       </header>
 
       <div className={`mx-auto flex w-full ${isWidePage ? "max-w-[2200px]" : "max-w-7xl"}`}>
@@ -249,7 +253,10 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
         <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col border-r border-border bg-card/60 px-4 py-5 backdrop-blur lg:flex">
           <div className="flex items-center justify-between gap-2">
             <Brand role={role} />
-            <AnimatedThemeToggle />
+            <div className="flex items-center gap-2">
+              {role === "student" ? <NotificationBell /> : null}
+              <AnimatedThemeToggle />
+            </div>
           </div>
 
           <span className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold capitalize text-primary">

@@ -64,6 +64,10 @@ model StudentProfile {
   displayName String
   targetBand  Float?
   createdAt   DateTime              @default(now())
+  // Mốc thời gian học viên xem chuông thông báo lần gần nhất. Mục nào mới hơn mốc
+  // này thì tính là chưa đọc. Null = coi như đã đọc hết (học viên có từ trước khi
+  // thêm cột), để người mới không bị dội cả chục thông báo cũ.
+  notificationsReadAt DateTime?
   user        User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
   classes     ClassStudent[]
   recipients  AssignmentRecipient[]

@@ -173,6 +173,10 @@ const statements = [
     CONSTRAINT "VocabQuizDay_pkey" PRIMARY KEY ("id")
   );`,
   'CREATE UNIQUE INDEX IF NOT EXISTS "VocabQuizDay_studentId_date_key" ON "VocabQuizDay"("studentId", "date");',
+  // Chuông thông báo cho học viên: mốc "đã xem lần cuối".
+  // DEFAULT NOW() là có chủ ý — học viên đang có bắt đầu ở trạng thái đã đọc hết,
+  // tránh việc vừa deploy là chuông đỏ với hàng chục thông báo cũ.
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "notificationsReadAt" TIMESTAMP(3) DEFAULT NOW();',
 ];
 
 const prisma = new PrismaClient();

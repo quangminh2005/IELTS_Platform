@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
-import { regenerateParentToken, saveParentContact } from "@/lib/actions/parents";
+import {
+  regenerateParentToken,
+  saveParentContact,
+  sendParentReportNow
+} from "@/lib/actions/parents";
 
 type ParentContactBlockProps = {
   studentId: string;
@@ -113,6 +117,27 @@ export function ParentContactBlock({
                 </ConfirmSubmitButton>
               </ActionForm>
             </div>
+            <ActionForm
+              action={sendParentReportNow}
+              className="flex flex-wrap items-center gap-2 border-t border-border pt-3"
+            >
+              <input type="hidden" name="studentId" value={studentId} />
+              <select
+                name="period"
+                defaultValue="week"
+                className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm"
+              >
+                <option value="week">7 ngày qua</option>
+                <option value="month">30 ngày qua</option>
+              </select>
+              <ActionSubmitButton
+                pendingLabel="Đang gửi…"
+                className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+              >
+                Gửi báo cáo ngay
+              </ActionSubmitButton>
+            </ActionForm>
+
             <p className="text-xs text-muted-foreground">
               Mail gần nhất: {formatSentAt(lastSentAt)}
             </p>

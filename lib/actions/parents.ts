@@ -5,6 +5,11 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireTeacher } from "@/lib/actions/classes";
 import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
+import { resolveAppUrl } from "@/lib/app-url";
+import { isEmailConfigured, sendEmail } from "@/lib/email";
+import { buildParentSummary, type ParentPeriod } from "@/lib/parent-report";
+import { buildParentReportEmail } from "@/lib/parent-report-email";
+import { loadParentReportItems } from "@/lib/parent-report-query";
 import { prisma } from "@/lib/prisma";
 
 // Mã bí mật của link báo cáo. 24 byte ngẫu nhiên -> 32 ký tự base64url, đủ dài để
@@ -105,5 +110,56 @@ export async function regenerateParentToken(formData: FormData): Promise<ActionR
     return actionOk("Đã tạo link mới. Link cũ không dùng được nữa.");
   } catch (error) {
     return actionFail(error, "Tạo lại link");
+  }
+}
+
+export async function sendParentReportNow(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher();
+
+  try {
+    if (!isEmailConfigured()) {
+      throw new Error("Chưa cấu hình GMAIL_USER / GMAIL_APP_PASSWORD.");
+    }
+
+    const studentId = String(formData.get("studentId") ?? "").trim();
+    const period: ParentPeriod = formData.get("period") === "month" ? "month" : "week";
+
+    if (!studentId) {
+      throw new Error("Thiếu mã học viên.");
+    }
+
+    // Chặn quyền trước, rồi mới đọc thêm các cột cần cho mail.
+    await findOwnedStudent(teacher.id, studentId);
+
+    const student = await prisma.studentProfile.findUnique({
+      where: { id: studentId },
+      select: {
+        displayName: true,
+        parentEmail: true,
+        parentName: true,
+        parentToken: true
+      }
+    });
+
+    if (!student?.parentEmail?.trim() || !student.parentToken) {
+      throw new Error("Học viên này chưa có email phụ huynh.");
+    }
+
+    const items = await loadParentReportItems(studentId);
+    const summary = buildParentSummary(items, new Date(), period);
+    const mail = buildParentReportEmail({
+      studentName: student.displayName,
+      parentName: student.parentName,
+      summary,
+      link: `${resolveAppUrl()}/ph/${student.parentToken}`
+    });
+
+    await sendEmail(student.parentEmail, mail.subject, mail.html, mail.text);
+
+    // CỐ TÌNH không cập nhật parentReportSentAt: gửi tay không được làm lỡ mail
+    // tự động trưa Chủ nhật.
+    return actionOk(`Đã gửi báo cáo tới ${student.parentEmail}.`);
+  } catch (error) {
+    return actionFail(error, "Gửi báo cáo");
   }
 }

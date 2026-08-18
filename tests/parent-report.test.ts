@@ -6,6 +6,7 @@ import {
   shouldSendReport,
   type ParentReportItem
 } from "@/lib/parent-report";
+import { buildParentReportEmail } from "@/lib/parent-report-email";
 
 const NOW = new Date("2026-08-16T05:00:00.000Z");
 
@@ -206,5 +207,84 @@ describe("pickStrengthsAndWeaknesses", () => {
 
     expect(result.strengths).toHaveLength(0);
     expect(result.weaknesses).toHaveLength(0);
+  });
+});
+
+describe("buildParentReportEmail", () => {
+  const summary = buildParentSummary(
+    [
+      item({ assignmentTitle: "Cam 20 Test 1 — Reading", scorePercent: 75 }),
+      item({
+        assignmentTitle: "Writing Task 2 tuần 3",
+        skills: ["writing"],
+        scorePercent: null,
+        overallBand: 6,
+        status: "reviewed",
+        reviewedAt: daysAgo(1),
+        summaryFeedback: "Ý tốt, cần chú ý ngữ pháp thì."
+      })
+    ],
+    NOW,
+    "week"
+  );
+
+  const mail = buildParentReportEmail({
+    studentName: "Minh Anh",
+    parentName: "chị Lan",
+    summary,
+    link: "https://example.com/ph/abc123"
+  });
+
+  it("tiêu đề nhắc tên học sinh", () => {
+    expect(mail.subject).toContain("Minh Anh");
+  });
+
+  it("bản chữ thuần có link xem chi tiết", () => {
+    expect(mail.text).toContain("https://example.com/ph/abc123");
+  });
+
+  it("bản HTML có nút xem chi tiết", () => {
+    expect(mail.html).toContain("https://example.com/ph/abc123");
+    expect(mail.html).toContain("Xem chi tiết");
+  });
+
+  it("liệt kê bài đã làm kèm điểm", () => {
+    expect(mail.text).toContain("Cam 20 Test 1 — Reading");
+    expect(mail.text).toContain("75%");
+  });
+
+  it("có nhận xét của cô", () => {
+    expect(mail.text).toContain("Ý tốt, cần chú ý ngữ pháp thì.");
+  });
+
+  it("xưng hô theo tên phụ huynh", () => {
+    expect(mail.text).toContain("chị Lan");
+  });
+
+  it("không có tên phụ huynh thì dùng câu chào chung", () => {
+    const anonymous = buildParentReportEmail({
+      studentName: "Minh Anh",
+      parentName: null,
+      summary,
+      link: "https://example.com/ph/abc123"
+    });
+
+    expect(anonymous.text).toContain("Kính gửi phụ huynh");
+  });
+
+  it("escape ký tự HTML trong tên bài", () => {
+    const risky = buildParentReportEmail({
+      studentName: "Minh Anh",
+      parentName: null,
+      summary: buildParentSummary(
+        [item({ assignmentTitle: "Bài <b>1</b> & 2", scorePercent: 50 })],
+        NOW,
+        "week"
+      ),
+      link: "https://example.com/ph/abc123"
+    });
+
+    expect(risky.html).toContain("&lt;b&gt;");
+    expect(risky.html).toContain("&amp;");
   });
 });

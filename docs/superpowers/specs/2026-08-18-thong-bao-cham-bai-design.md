@@ -77,7 +77,11 @@ có default) được xử lý như "đã đọc hết" — không dội thông 
 
 ## Kiến trúc
 
-### `lib/notifications.ts` — nguồn dữ liệu
+### `lib/notifications.ts` + `lib/notifications-feed.ts` — nguồn dữ liệu
+
+Tách làm hai tệp vì chuông là client component: `lib/notifications.ts` giữ kiểu dữ
+liệu và logic thuần, **không import prisma** nên client dùng được; phần truy vấn
+nằm riêng ở `lib/notifications-feed.ts`.
 
 Kiểu chung cho một thông báo:
 
@@ -109,16 +113,17 @@ Tách rõ hai phần để test được:
 - `buildStudentNotifications(reviews, recipients, readAt)` — **hàm thuần**: gộp
   hai nguồn, sắp xếp theo `createdAt` giảm dần, cắt còn 30, đánh dấu `unread`
   cho mục có `createdAt > readAt`. Đây là phần có unit test.
-- `getStudentNotifications(studentId)` — chạy truy vấn Prisma rồi gọi hàm thuần
-  ở trên. Trả về `{ items, unreadCount }`.
+- `getStudentNotifications(studentId)` (ở `notifications-feed.ts`) — chạy truy vấn
+  Prisma rồi gọi hàm thuần ở trên. Trả về `{ items, unreadCount }`.
+- `touchNotificationsRead(studentId)` (ở `notifications-feed.ts`) — đặt mốc đã đọc,
+  dùng chung cho server action và cho trang danh sách.
 
 ### `lib/actions/notifications.ts` — đánh dấu đã đọc
 
 Một server action `markNotificationsRead()`:
 
 - Bắt đầu bằng `requireStudent()` (dùng lại từ `lib/actions/attempts.ts`).
-- `prisma.studentProfile.update({ data: { notificationsReadAt: new Date() } })`
-  cho đúng học viên đang đăng nhập.
+- Gọi `touchNotificationsRead(student.id)` cho đúng học viên đang đăng nhập.
 - Không `revalidatePath` — số đếm do chuông tự lấy qua API, revalidate chỉ làm
   nhấp nháy trang đang xem.
 
@@ -210,6 +215,8 @@ Học viên bấm chuông
 Thêm mới:
 
 - `lib/notifications.ts`
+- `lib/notifications-feed.ts`
+- `components/notification-list.tsx`
 - `lib/actions/notifications.ts`
 - `app/api/student/notifications/route.ts`
 - `app/student/notifications/page.tsx`

@@ -7,6 +7,26 @@ import {
   NOTIFICATION_LIMIT,
 } from "../lib/notifications";
 
+describe("nguồn thông báo lọc đúng bài tự luyện", () => {
+  const feed = readFileSync("lib/notifications-feed.ts", "utf8");
+
+  it("nguồn 'bài mới giao' loại bài tự luyện", () => {
+    expect(feed).toContain('from "@/lib/practice"');
+    expect(feed).toContain("assignment: excludePracticeAssignment");
+  });
+
+  // Hàng đợi chấm bài của giáo viên có tab "Tự luyện" — bài tự luyện VẪN được chấm
+  // tay. Lọc chúng khỏi thông báo "đã chấm xong" là học viên không bao giờ biết mà
+  // vào đọc nhận xét.
+  it("nguồn 'đã chấm xong' KHÔNG loại bài tự luyện", () => {
+    expect(feed).not.toContain("excludePracticeRecipient");
+  });
+
+  it("không tự viết chuỗi practice", () => {
+    expect(feed).not.toMatch(/mode:\s*["']practice["']/);
+  });
+});
+
 describe("lược đồ thông báo", () => {
   it("StudentProfile có cột notificationsReadAt", () => {
     const schema = readFileSync("prisma/schema.prisma", "utf8");

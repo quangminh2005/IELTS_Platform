@@ -104,9 +104,14 @@ Hai truy vấn chạy song song, mỗi truy vấn lấy 30 mục gần nhất:
 | `review_done` | `TeacherReview` của học viên | `reviewedAt` desc | `/student/results/{attemptId}` |
 | `assignment_new` | `AssignmentRecipient` của học viên | `assignedAt` desc | `/student/assignments/{recipientId}` |
 
-Cả hai đều lọc bỏ bài tự luyện bằng `excludePracticeRecipient` /
-`excludePracticeAssignment` trong `lib/practice.ts` — học viên tự bấm luyện thì
-không cần ai báo.
+Chỉ nguồn `assignment_new` lọc bỏ bài tự luyện (bằng `excludePracticeAssignment`
+trong `lib/practice.ts`) — học viên tự bấm luyện thì không cần ai báo là mình vừa
+có bài mới.
+
+Nguồn `review_done` **không** lọc bài tự luyện: hàng đợi chấm bài của giáo viên có
+hẳn tab "Tự luyện" (`app/teacher/review/page.tsx`), nên bài tự luyện vẫn được chấm
+tay như thường. Lọc chúng ra là học viên tự luyện Writing rồi được chấm sẽ không
+bao giờ biết mà vào đọc nhận xét. `tests/notifications.test.ts` khoá lại điều này.
 
 Tách rõ hai phần để test được:
 

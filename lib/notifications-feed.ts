@@ -4,7 +4,7 @@ import {
   NOTIFICATION_LIMIT,
   type StudentNotification
 } from "@/lib/notifications";
-import { excludePracticeAssignment, excludePracticeRecipient } from "@/lib/practice";
+import { excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 
 export type StudentNotificationFeed = {
@@ -12,8 +12,13 @@ export type StudentNotificationFeed = {
   unreadCount: number;
 };
 
-// Bài tự luyện bị loại ở CẢ HAI nguồn: học viên tự bấm luyện thì không cần ai báo
-// "có bài mới", và bản thân bài luyện cũng không ai chấm tay.
+// Bài tự luyện chỉ bị loại ở nguồn "bài mới giao": học viên tự bấm luyện thì không
+// cần ai báo là mình vừa có bài mới.
+//
+// NGƯỢC LẠI, nguồn "đã chấm xong" KHÔNG loại bài tự luyện: hàng đợi chấm bài của
+// giáo viên có hẳn tab "Tự luyện" (app/teacher/review/page.tsx), nên bài tự luyện
+// vẫn được chấm tay như thường. Lọc chúng ra là học viên tự luyện Writing rồi được
+// chấm sẽ không bao giờ biết mà vào đọc nhận xét.
 export async function getStudentNotifications(
   studentId: string
 ): Promise<StudentNotificationFeed> {
@@ -23,7 +28,7 @@ export async function getStudentNotifications(
       select: { notificationsReadAt: true }
     }),
     prisma.teacherReview.findMany({
-      where: { studentId, attempt: { assignmentRecipient: excludePracticeRecipient } },
+      where: { studentId },
       orderBy: { reviewedAt: "desc" },
       take: NOTIFICATION_LIMIT,
       select: {

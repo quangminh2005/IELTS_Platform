@@ -186,6 +186,17 @@ describe("pickStrengthsAndWeaknesses", () => {
     expect(result.weaknesses.map((s) => s.percent)).toEqual([40, 60]);
   });
 
+  it("nhóm làm kém không được gọi là điểm mạnh dù là nhóm duy nhất", () => {
+    const stats = [
+      { key: "gapfill", label: "Điền từ", correct: 0, total: 12, percent: 0 }
+    ] as unknown as Parameters<typeof pickStrengthsAndWeaknesses>[0];
+
+    const result = pickStrengthsAndWeaknesses(stats);
+
+    expect(result.strengths).toHaveLength(0);
+    expect(result.weaknesses.map((s) => s.percent)).toEqual([0]);
+  });
+
   it("bỏ qua nhóm quá ít câu", () => {
     const stats = [
       { key: "mc", label: "Trắc nghiệm", correct: 2, total: 3, percent: 67 }

@@ -21,6 +21,10 @@ const TREND_MARGIN = 3;
 const MAX_COMMENTS = 3;
 const TOP_GROUPS = 2;
 
+// Ngưỡng để được gọi là "làm tốt". Không có ngưỡng thì học viên mới — chỉ có đúng
+// một nhóm đủ dữ liệu — sẽ thấy nhóm 0% nằm chình ình dưới nhãn "Làm tốt".
+const STRENGTH_MIN_PERCENT = 50;
+
 export type ParentReportItem = {
   assignmentTitle: string;
   skills: string[];
@@ -244,7 +248,10 @@ export function pickStrengthsAndWeaknesses(stats: GroupStat[]): {
   weaknesses: GroupStat[];
 } {
   const eligible = stats.filter((stat) => stat.total >= WEAKEST_MIN_ANSWERS);
-  const strengths = [...eligible].sort((a, b) => b.percent - a.percent).slice(0, TOP_GROUPS);
+  const strengths = eligible
+    .filter((stat) => stat.percent >= STRENGTH_MIN_PERCENT)
+    .sort((a, b) => b.percent - a.percent)
+    .slice(0, TOP_GROUPS);
   const strongKeys = new Set(strengths.map((stat) => stat.key));
   const weaknesses = eligible
     .filter((stat) => !strongKeys.has(stat.key))

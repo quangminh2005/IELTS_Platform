@@ -27,7 +27,6 @@ export async function findStudentByParentToken(token: string): Promise<ParentStu
       id: true,
       displayName: true,
       targetBand: true,
-      parentEmail: true,
       classes: {
         select: { class: { select: { name: true } } },
         orderBy: { joinedAt: "desc" },
@@ -36,8 +35,8 @@ export async function findStudentByParentToken(token: string): Promise<ParentStu
     }
   });
 
-  // Xoá email phụ huynh = tắt báo cáo, link cũng ngưng hoạt động luôn.
-  if (!student || !student.parentEmail?.trim()) {
+  // Giáo viên thu hồi link -> parentToken về null -> không tra ra ai nữa.
+  if (!student) {
     return null;
   }
 

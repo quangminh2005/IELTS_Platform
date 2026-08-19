@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const root = process.cwd();
@@ -150,33 +150,29 @@ describe("import dẫn chứng", () => {
   });
 });
 
-describe("cột liên hệ phụ huynh", () => {
-  const PARENT_COLUMNS = [
-    "parentEmail",
-    "parentName",
-    "parentToken",
-    "parentReportSentAt"
-  ];
-
-  it("schema.prisma khai báo đủ 4 cột trên StudentProfile", () => {
+describe("link báo cáo cho phụ huynh", () => {
+  it("schema.prisma khai báo parentToken là cột unique", () => {
     const schema = readProjectFile("prisma/schema.prisma");
     const start = schema.indexOf("model StudentProfile");
     const model = schema.slice(start, schema.indexOf("\nmodel ", start + 10));
 
-    for (const column of PARENT_COLUMNS) {
-      expect(model).toContain(column);
-    }
-
     expect(model).toMatch(/parentToken\s+String\?\s+@unique/);
   });
 
-  it("ensure-db.mjs áp đủ 4 cột và unique index lên production", () => {
+  it("ensure-db.mjs áp cột và unique index lên production", () => {
     const script = readProjectFile("scripts/ensure-db.mjs");
 
-    for (const column of PARENT_COLUMNS) {
-      expect(script).toContain(`"${column}"`);
-    }
-
+    expect(script).toContain('"parentToken"');
     expect(script).toContain("StudentProfile_parentToken_key");
+  });
+
+  // Kênh gửi báo cáo qua mail đã bỏ (phụ huynh ít dùng mail) — chỉ còn link.
+  // Test này giữ cho code không lặng lẽ mọc lại đường gửi mail.
+  it("không còn cron hay module gửi mail báo cáo phụ huynh", () => {
+    const vercelConfig = readProjectFile("vercel.json");
+
+    expect(vercelConfig).not.toContain("parent-reports");
+    expect(existsSync(join(root, "lib/parent-report-email.ts"))).toBe(false);
+    expect(existsSync(join(root, "app/api/cron/parent-reports/route.ts"))).toBe(false);
   });
 });

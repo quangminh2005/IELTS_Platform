@@ -2,6 +2,13 @@
 
 Ngày: 2026-08-18
 
+> **Cập nhật 19/08/2026 — đã bỏ kênh mail.** Thực tế phụ huynh ít dùng email, nên
+> toàn bộ phần gửi mail (cron Chủ nhật, nút "Gửi báo cáo ngay", module soạn mail,
+> hai cột `parentEmail`/`parentName`/`parentReportSentAt`) đã được gỡ. Chỉ còn
+> **link báo cáo**: giáo viên bấm tạo link rồi tự gửi cho phụ huynh qua Zalo/tin nhắn.
+> Các mục 7, 8 và phần mail trong mục 1, 4 dưới đây giữ lại làm hồ sơ thiết kế ban
+> đầu, KHÔNG còn phản ánh code hiện tại.
+
 ## Mục tiêu
 
 Phụ huynh nắm được tình hình học tập và điểm số của con mà **không cần tài khoản,

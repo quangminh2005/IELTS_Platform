@@ -157,11 +157,10 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
     }))
   }));
 
-  // Chưa có email phụ huynh thì không hiện link — bấm vào cũng ra 404.
-  const parentLink =
-    student.parentEmail && student.parentToken
-      ? `${resolveAppUrl()}/ph/${student.parentToken}`
-      : null;
+  // Chưa tạo link thì chưa có gì để đưa phụ huynh.
+  const parentLink = student.parentToken
+    ? `${resolveAppUrl()}/ph/${student.parentToken}`
+    : null;
 
   const progressSeries = buildProgressSeries(submittedAttempts);
   const typeStats = questionTypeStatsBySkill(
@@ -214,13 +213,7 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
         </div>
       </section>
 
-      <ParentContactBlock
-        studentId={student.id}
-        parentName={student.parentName ?? ""}
-        parentEmail={student.parentEmail ?? ""}
-        parentLink={parentLink}
-        lastSentAt={student.parentReportSentAt}
-      />
+      <ParentContactBlock studentId={student.id} parentLink={parentLink} />
 
       {submittedAttempts.length > 0 ? (
         <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">

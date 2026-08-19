@@ -1,9 +1,8 @@
 import { WEAKEST_MIN_ANSWERS, type GroupStat } from "@/lib/question-stats";
 import { rankingScorePercent } from "@/lib/student-score";
 
-// Tóm tắt tình hình học tập gửi cho phụ huynh. Cố tình KHÔNG phụ thuộc kiểu của
-// Prisma để test được mà không cần DB, và để mail với trang web dùng chung đúng
-// một bộ số liệu — không bao giờ lệch nhau.
+// Tóm tắt tình hình học tập hiện trên trang báo cáo cho phụ huynh (/ph/<token>).
+// Cố tình KHÔNG phụ thuộc kiểu của Prisma để test được mà không cần DB.
 
 export type ParentPeriod = "week" | "month";
 
@@ -229,16 +228,6 @@ export function buildParentSummary(
     pending,
     comments
   };
-}
-
-// Kỳ nào con không học gì và cũng không nợ bài thì không gửi mail — phụ huynh
-// nhận mail rỗng vài lần là bắt đầu bỏ qua tất cả mail của lớp.
-export function shouldSendReport(summary: ParentSummary): boolean {
-  return (
-    summary.submittedCount > 0 ||
-    summary.lateOrMissingCount > 0 ||
-    summary.comments.length > 0
-  );
 }
 
 // Nhóm dạng câu tốt nhất / kém nhất. Chỉ xét nhóm đủ dữ liệu, và không để một

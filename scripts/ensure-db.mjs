@@ -177,12 +177,14 @@ const statements = [
   // DEFAULT NOW() là có chủ ý — học viên đang có bắt đầu ở trạng thái đã đọc hết,
   // tránh việc vừa deploy là chuông đỏ với hàng chục thông báo cũ.
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "notificationsReadAt" TIMESTAMP(3) DEFAULT NOW();',
-  // Liên hệ phụ huynh + link báo cáo. ALTER TABLE không tự tạo ràng buộc unique
-  // nên phải có thêm câu CREATE UNIQUE INDEX riêng cho parentToken.
-  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "parentEmail" TEXT;',
-  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "parentName" TEXT;',
+  // Link báo cáo cho phụ huynh. ALTER TABLE không tự tạo ràng buộc unique nên
+  // phải có thêm câu CREATE UNIQUE INDEX riêng cho parentToken.
+  //
+  // GHI CHÚ: production còn sót 3 cột parentEmail/parentName/parentReportSentAt
+  // từ thời báo cáo gửi qua mail. Kênh mail đã bỏ, schema không còn khai báo
+  // chúng nữa; Prisma bỏ qua cột lạ nên để đó vô hại. Script này chỉ THÊM cột,
+  // không bao giờ xoá, nên không tự dọn được — muốn dọn phải chạy tay.
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "parentToken" TEXT;',
-  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "parentReportSentAt" TIMESTAMP(3);',
   'CREATE UNIQUE INDEX IF NOT EXISTS "StudentProfile_parentToken_key" ON "StudentProfile"("parentToken");',
 ];
 

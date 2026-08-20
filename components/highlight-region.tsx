@@ -7,6 +7,7 @@ import {
   highlightColors,
   type HighlightPayload
 } from "@/components/highlight-popup";
+import { useNoTranslateGuard } from "@/components/no-translate-guard";
 import { useSelectionCapture } from "@/components/use-selection-capture";
 
 /*
@@ -224,6 +225,9 @@ export function HighlightRegion({
   const regionId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
+  // Chặn chuột phải + công cụ dịch trên khối câu hỏi. Truyền className của thẻ
+  // cha vào để được GHÉP thêm "notranslate" — ghi đè là mất space-y-4.
+  const { guardProps, notice } = useNoTranslateGuard(className);
   const resolvedRef = useRef<Array<{ id: string; range: Range }>>([]);
   const [items, setItems] = useState<LocalHighlight[]>(() =>
     highlights.map((highlight) => ({
@@ -472,10 +476,10 @@ export function HighlightRegion({
   return (
     <>
       <div
+        {...guardProps}
         ref={containerRef}
         onMouseUp={captureSelection}
         onClick={handleClick}
-        className={className}
       >
         {children}
       </div>
@@ -496,6 +500,8 @@ export function HighlightRegion({
           onRemove={() => popup.kind === "existing" && remove(popup.id)}
         />
       ) : null}
+
+      {notice}
     </>
   );
 }

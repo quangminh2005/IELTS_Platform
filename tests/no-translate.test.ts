@@ -77,3 +77,29 @@ describe("khiên chặn dịch", () => {
     expect(guard).toContain("document.body");
   });
 });
+
+const layer = read("components/highlight-layer.tsx");
+const region = read("components/highlight-region.tsx");
+const workspace = read("components/attempt-workspace.tsx");
+
+describe("gắn khiên đúng chỗ", () => {
+  it("cả đoạn văn lẫn khối câu hỏi đều đeo khiên", () => {
+    for (const source of [layer, region]) {
+      expect(source).toContain("useNoTranslateGuard");
+      expect(source).toContain("{...guardProps}");
+      expect(source).toContain("{notice}");
+    }
+  });
+
+  // Khiên chỉ được sống trong hai thẻ bọc kia. Rải thẳng lên màn làm bài sẽ kéo
+  // theo cả ô soạn bài Writing — chỗ học sinh CẦN chuột phải để dán và sửa chữ.
+  it("không rải khiên thẳng lên màn làm bài", () => {
+    expect(workspace).not.toContain("useNoTranslateGuard");
+  });
+
+  // HighlightRegion nhận className="space-y-4" từ thẻ cha. Ghi đè nó là hỏng
+  // khoảng cách giữa các khối câu hỏi.
+  it("khối câu hỏi truyền className của thẻ cha vào khiên để được ghép thêm", () => {
+    expect(region).toContain("useNoTranslateGuard(className)");
+  });
+});

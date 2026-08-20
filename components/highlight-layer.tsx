@@ -7,6 +7,7 @@ import {
   markClass,
   type HighlightPayload
 } from "@/components/highlight-popup";
+import { useNoTranslateGuard } from "@/components/no-translate-guard";
 import { useSelectionCapture } from "@/components/use-selection-capture";
 
 export type { HighlightPayload };
@@ -120,6 +121,10 @@ export function HighlightLayer({
 }: HighlightLayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
+  // Chặn chuột phải + công cụ dịch trên đoạn văn (xem components/no-translate-guard.tsx).
+  const { guardProps, notice } = useNoTranslateGuard(
+    "whitespace-pre-wrap rounded-md border border-border bg-background/50 p-4 text-sm leading-7 text-foreground"
+  );
   const [items, setItems] = useState<LocalHighlight[]>(() =>
     highlights.map((highlight) => ({
       id: highlight.id,
@@ -316,10 +321,10 @@ export function HighlightLayer({
   return (
     <div className="space-y-2">
       <div
+        {...guardProps}
         ref={containerRef}
         onMouseUp={captureSelection}
         onKeyUp={captureSelection}
-        className="whitespace-pre-wrap rounded-md border border-border bg-background/50 p-4 text-sm leading-7 text-foreground"
       >
         {segments.map((segment) =>
           segment.color ? (
@@ -352,6 +357,8 @@ export function HighlightLayer({
           onRemove={() => popup.kind === "existing" && remove(popup.id)}
         />
       ) : null}
+
+      {notice}
 
       {error ? <p className="text-xs text-red-500">{error}</p> : null}
     </div>

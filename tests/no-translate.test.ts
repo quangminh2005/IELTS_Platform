@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 import {
   NO_TRANSLATE_NOTICE,
@@ -39,5 +41,39 @@ describe("câu nhắc", () => {
 
   it("tự tắt sau 3 giây", () => {
     expect(NO_TRANSLATE_NOTICE_MS).toBe(3000);
+  });
+});
+
+const root = join(__dirname, "..");
+const read = (path: string) => readFileSync(join(root, path), "utf8");
+
+const guard = read("components/no-translate-guard.tsx");
+
+describe("khiên chặn dịch", () => {
+  it("khai báo translate=no để Chrome / tiện ích Google Dịch bỏ qua vùng này", () => {
+    expect(guard).toContain('translate: "no"');
+    expect(guard).toContain("notranslate");
+  });
+
+  it("tắt soát chính tả (gạch chân đỏ cũng là gợi ý sửa từ)", () => {
+    expect(guard).toContain("spellCheck: false");
+  });
+
+  it("hỏi shouldBlockContextMenu trước khi chặn, không chặn bừa", () => {
+    expect(guard).toContain("shouldBlockContextMenu");
+    expect(guard).toContain("preventDefault");
+  });
+
+  it("nhớ loại con trỏ từ pointerdown", () => {
+    expect(guard).toContain("onPointerDown");
+    expect(guard).toContain("pointerType");
+  });
+
+  // AppShell bọc nội dung trong div có transform (animate-fade-in), biến nó
+  // thành containing block cho position: fixed. Toast phải portal ra body thì
+  // mới bám màn hình thay vì bám cột nội dung.
+  it("toast được portal ra body", () => {
+    expect(guard).toContain("createPortal");
+    expect(guard).toContain("document.body");
   });
 });

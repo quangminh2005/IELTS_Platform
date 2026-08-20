@@ -7,6 +7,7 @@ import {
   highlightColors,
   type HighlightPayload
 } from "@/components/highlight-popup";
+import { useSelectionCapture } from "@/components/use-selection-capture";
 
 /*
   Tô màu cho KHỐI CÂU HỎI.
@@ -47,8 +48,8 @@ type PendingSelection = {
 };
 
 type Popup =
-  | { kind: "new"; x: number; y: number }
-  | { kind: "existing"; x: number; y: number; id: string };
+  | { kind: "new"; x: number; top: number; bottom: number }
+  | { kind: "existing"; x: number; top: number; bottom: number; id: string };
 
 type HighlightRegionProps = {
   highlights?: StoredHighlight[];
@@ -334,8 +335,17 @@ export function HighlightRegion({
     const offsets = getSelectionOffsets(container, range);
 
     setPending(offsets);
-    setPopup({ kind: "new", x: rect.left + rect.width / 2, y: rect.top });
+    setPopup({
+      kind: "new",
+      x: rect.left + rect.width / 2,
+      top: rect.top,
+      bottom: rect.bottom
+    });
   }
+
+  // Điện thoại không bắn `mouseup` khi nhấn–giữ bôi đen, phải nghe thêm
+  // `selectionchange` thì học sinh dùng điện thoại mới tô màu được.
+  useSelectionCapture(captureSelection);
 
   // Bấm vào chỗ đã tô: mở popup để đổi màu / xoá. Vì không có phần tử <mark>
   // để gắn onClick, phải dò theo toạ độ chuột trên các Range đang tô.
@@ -355,7 +365,13 @@ export function HighlightRegion({
     }
 
     setPending(null);
-    setPopup({ kind: "existing", x: event.clientX, y: event.clientY - 4, id });
+    setPopup({
+      kind: "existing",
+      x: event.clientX,
+      top: event.clientY - 6,
+      bottom: event.clientY + 6,
+      id
+    });
   }
 
   function persistNew(local: LocalHighlight) {
@@ -469,7 +485,8 @@ export function HighlightRegion({
           popupRef={popupRef}
           kind={popup.kind}
           x={popup.x}
-          y={popup.y}
+          top={popup.top}
+          bottom={popup.bottom}
           note={note}
           onNoteChange={setNote}
           activeNote={activeNote}

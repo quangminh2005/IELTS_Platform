@@ -1,7 +1,12 @@
 "use client";
 
-import type { RefObject } from "react";
+import { useEffect, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
+
+import {
+  placeHighlightPopup,
+  type PopupPlacement
+} from "@/lib/highlight-popup-position";
 
 // Bảng màu + popup chọn màu dùng chung cho hai kiểu tô màu:
 //  - <HighlightLayer>: tô trên đoạn văn thuần (cắt chuỗi thành <mark>).
@@ -29,8 +34,10 @@ export type HighlightPayload = {
 type HighlightPopupProps = {
   popupRef: RefObject<HTMLDivElement>;
   kind: "new" | "existing";
+  // Tâm ngang cùng mép trên/mép dưới của đoạn đang bôi đen.
   x: number;
-  y: number;
+  top: number;
+  bottom: number;
   note: string;
   onNoteChange: (value: string) => void;
   activeNote: string | null;
@@ -42,28 +49,53 @@ export function HighlightPopup({
   popupRef,
   kind,
   x,
-  y,
+  top,
+  bottom,
   note,
   onNoteChange,
   activeNote,
   onPickColor,
   onRemove
 }: HighlightPopupProps) {
+  // Đo kích thước thật rồi mới đặt chỗ: màn hình điện thoại hẹp, popup rộng hơn
+  // 220px nên bôi đen sát mép là popup lòi ra ngoài, bấm không tới màu nào.
+  const [placement, setPlacement] = useState<PopupPlacement | null>(null);
+
+  useEffect(() => {
+    const node = popupRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    const rect = node.getBoundingClientRect();
+
+    setPlacement(
+      placeHighlightPopup({
+        x,
+        top,
+        bottom,
+        width: rect.width,
+        height: rect.height,
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight
+      })
+    );
+  }, [popupRef, x, top, bottom, kind, activeNote]);
+
   if (typeof document === "undefined") {
     return null;
   }
 
-  // Đưa popup ra thẳng <body>: phòng làm bài bọc nội dung trong khối `zoom`
-  // (nút A- / A+), mà `zoom` co giãn cả phần tử position:fixed bên trong nên
-  // toạ độ chuột sẽ lệch. Ra ngoài body thì toạ độ khớp đúng màn hình.
   return createPortal(
     <div
       ref={popupRef}
       style={{
         position: "fixed",
-        left: x,
-        top: Math.max(y, 56),
-        transform: "translate(-50%, calc(-100% - 8px))",
+        left: placement ? placement.left : x,
+        top: placement ? placement.top : top,
+        // Chưa đo xong thì giấu đi, tránh popup nháy ở sai chỗ một khung hình.
+        visibility: placement ? "visible" : "hidden",
         zIndex: 60
       }}
       className="flex flex-col gap-2 rounded-xl border border-border bg-card p-2 shadow-pop"

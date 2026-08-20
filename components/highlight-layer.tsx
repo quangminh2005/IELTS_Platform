@@ -7,6 +7,7 @@ import {
   markClass,
   type HighlightPayload
 } from "@/components/highlight-popup";
+import { useSelectionCapture } from "@/components/use-selection-capture";
 
 export type { HighlightPayload };
 
@@ -44,8 +45,8 @@ type PendingSelection = {
 };
 
 type Popup =
-  | { kind: "new"; x: number; y: number }
-  | { kind: "existing"; x: number; y: number; id: string };
+  | { kind: "new"; x: number; top: number; bottom: number }
+  | { kind: "existing"; x: number; top: number; bottom: number; id: string };
 
 function getSelectionOffsets(container: HTMLElement, range: Range) {
   const preSelectionRange = range.cloneRange();
@@ -195,16 +196,27 @@ export function HighlightLayer({
     setPopup({
       kind: "new",
       x: rect.left + rect.width / 2,
-      y: rect.top
+      top: rect.top,
+      bottom: rect.bottom
     });
   }
+
+  // Điện thoại không bắn `mouseup` khi nhấn–giữ bôi đen, phải nghe thêm
+  // `selectionchange` thì học sinh dùng điện thoại mới tô màu được.
+  useSelectionCapture(captureSelection);
 
   function openExisting(event: React.MouseEvent, id: string) {
     event.stopPropagation();
     const rect = event.currentTarget.getBoundingClientRect();
     setError(null);
     setPending(null);
-    setPopup({ kind: "existing", x: rect.left + rect.width / 2, y: rect.top, id });
+    setPopup({
+      kind: "existing",
+      x: rect.left + rect.width / 2,
+      top: rect.top,
+      bottom: rect.bottom,
+      id
+    });
   }
 
   function persistNew(local: LocalHighlight) {
@@ -329,7 +341,8 @@ export function HighlightLayer({
           popupRef={popupRef}
           kind={popup.kind}
           x={popup.x}
-          y={popup.y}
+          top={popup.top}
+          bottom={popup.bottom}
           note={note}
           onNoteChange={setNote}
           activeNote={activeNote}

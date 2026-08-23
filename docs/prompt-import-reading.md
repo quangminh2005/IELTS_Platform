@@ -113,6 +113,15 @@ HỘP LỰA CHỌN trong groupInstructions (":::box") — BẮT BUỘC:
       "23": "Complete the summary using the list of words, A–K, below.\n:::box\nA tariffs | B components | C container ships | D output\nE employees | F insurance costs | G trade | H freight\nI fares | J software | K international standards\n:::"
     }
 
+BẢNG KẺ Ô trong "content" (hộp từ vựng / bảng không có hàng tiêu đề): bọc giữa dòng
+":::table" và ":::", mỗi dòng một hàng, các ô ngăn bằng "|". Mọi ô kẻ viền, canh giữa,
+cột chia đều — giống bảng in trong đề gốc. Bảng CÓ tiêu đề vẫn dùng bảng markdown thường.
+
+    :::table
+    house | apartment | flat
+    hall | hallway | basement
+    :::
+
 GIẢI THÍCH (explanation) — thêm cho MỖI câu:
 - Trường "explanation" = giải thích NGẮN GỌN bằng TIẾNG VIỆT (1–3 câu) vì sao đáp án đúng:
   chỉ ra chỗ trong bài đọc dẫn tới đáp án, diễn đạt lại ý bằng tiếng Việt cho học viên dễ hiểu.

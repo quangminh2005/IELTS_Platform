@@ -82,6 +82,17 @@ QUY TẮC CHỌN questionType:
     • Câu dẫn ("Which feature is related to…") + "Choose SIX…" đặt vào groupInstructions.
   TUYỆT ĐỐI KHÔNG dùng "multiple_choice" cho dạng có HỘP chung này (sẽ ra radio A–I lặp lại, sai layout).
 
+BẢNG KẺ Ô trong "content" (hộp từ vựng / bảng in trong đề gốc, KHÔNG có hàng tiêu đề):
+bọc giữa dòng ":::table" và ":::". Mỗi dòng = một hàng, các ô ngăn bằng "|"; mọi ô đều kẻ viền,
+canh giữa, các cột chia đều — giống bảng trong file Word/PDF gốc.
+    :::table
+    house | apartment | flat
+    hall | hallway | basement
+    :::
+Bảng CÓ hàng tiêu đề (vd bảng số liệu Writing Task 1) thì vẫn dùng bảng markdown thường
+(hàng tiêu đề + hàng "---"). Hộp lựa chọn của một NHÓM CÂU thì dùng ":::box" trong
+groupInstructions, không dùng ":::table".
+
 SƠ ĐỒ trong note_completion (flow-chart / diagram có khung + mũi tên): dựng bằng chữ trong
 content/noteBody, bọc trong "fence" để hệ thống vẽ khung + mũi tên, ô trống [[n]] nằm inline:
 - Flow-chart dọc (các bước nối bằng mũi tên ↓): bọc giữa dòng ":::flow" và ":::". Mỗi dòng = một khung.

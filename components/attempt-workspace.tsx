@@ -208,9 +208,89 @@ function countWords(value: string) {
   return trimmed ? trimmed.split(/\s+/).length : 0;
 }
 
+// Bảng kẻ ô KHÔNG có hàng tiêu đề (vd hộp từ vựng in thành bảng trong file Word).
+// Trong content viết:
+//
+//   :::table
+//   house | apartment | flat
+//   hall | hallway | basement
+//   :::
+//
+// Mỗi dòng là một hàng, các ô ngăn bằng "|"; mọi ô đều kẻ viền và canh giữa,
+// các cột chia đều nhau — giống bảng gốc trong đề. Khác bảng markdown ở trên:
+// bảng markdown cần hàng tiêu đề + hàng "---".
+function SourceGridTable({ lines }: { lines: string[] }) {
+  const rows = lines
+    .map((line) => line.split("|").map((cell) => cell.trim()))
+    .filter((row) => row.some((cell) => cell !== ""));
+  const columns = Math.max(1, ...rows.map((row) => row.length));
+
+  return (
+    <div className="overflow-x-auto rounded-md border border-border">
+      <table className="w-full border-collapse text-sm">
+        <tbody>
+          {rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {Array.from({ length: columns }, (_, cellIndex) => (
+                <td
+                  key={cellIndex}
+                  className="border border-border px-3 py-2 text-center align-middle"
+                  style={{ width: `${100 / columns}%` }}
+                >
+                  {row[cellIndex] ?? ""}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// Tách content thành các đoạn thường và các bảng kẻ ô ":::table ... :::".
+function splitSourceSegments(content: string) {
+  const segments: { kind: "text" | "grid"; lines: string[] }[] = [];
+  let current: { kind: "text" | "grid"; lines: string[] } = { kind: "text", lines: [] };
+
+  content.split(/\r?\n/).forEach((line) => {
+    const trimmed = line.trim();
+    if (trimmed === ":::table") {
+      segments.push(current);
+      current = { kind: "grid", lines: [] };
+      return;
+    }
+    if (trimmed === ":::" && current.kind === "grid") {
+      segments.push(current);
+      current = { kind: "text", lines: [] };
+      return;
+    }
+    current.lines.push(line);
+  });
+  segments.push(current);
+
+  return segments.filter((segment) => segment.lines.some((line) => line.trim() !== ""));
+}
+
 // Render nội dung đề có thể chứa bảng markdown (Writing Task 1). Mỗi khối bảng
 // liên tiếp (các dòng có "|") được dựng thành <table>; phần còn lại giữ nguyên text.
 function SourceContent({ content }: { content: string }) {
+  const segments = splitSourceSegments(content);
+
+  if (segments.some((segment) => segment.kind === "grid")) {
+    return (
+      <div className="space-y-3 text-sm leading-7 text-foreground">
+        {segments.map((segment, index) =>
+          segment.kind === "grid" ? (
+            <SourceGridTable key={index} lines={segment.lines} />
+          ) : (
+            <SourceContent key={index} content={segment.lines.join("\n").trim()} />
+          )
+        )}
+      </div>
+    );
+  }
+
   const lines = content.split(/\r?\n/);
   const blocks: Array<{ type: "text"; value: string } | { type: "table"; value: string }> = [];
   let buffer: string[] = [];

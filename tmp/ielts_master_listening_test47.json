@@ -1,0 +1,646 @@
+{
+  "title": "IELTS Master - Listening Test 47",
+  "skill": "listening",
+  "sourceLabel": "IELTS Master - Listening Test 47",
+  "description": "Listening Test 47: 4 phần, 40 câu (chuẩn bị đi thăm bạn ở nước ngoài / công viên giải trí Camber's / thuyết trình về làm việc nhóm / nhà kính bền vững ở vùng núi Himalaya).",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 - Notes for holiday",
+      "instructions": "You will hear a woman called Tanya talking to her friend called Simon, who lives abroad. Tanya is planning to visit Simon. Answer questions 1-10.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test47_part1-HiGsAJisIHPakRqtCLnHYUHUfoCON6",
+      "transcript": "Narrator: Section 1. You will hear a woman called Tanya talking to her friend called Simon, who lives abroad. Tanya is planning to visit Simon. First, you have some time to look at questions 1 to 4. [...] Now we shall begin. You should answer the questions as you listen because you will not hear the recording a second time. Listen carefully and answer questions 1 to 4.\nTanya: Hello?\nSimon: Hi, is that Tanya?\nTanya: Yes, Simon! Lovely to hear you. How are you?\nSimon: Very well, and we're so looking forward to seeing you.\nTanya: So am I.\nSimon: Now, I don't have a lot of time, I'm afraid, so I wanted to make sure we've got all your details. Have you confirmed your flights?\nTanya: Yes, I'm definitely coming on the 22nd of June.\nSimon: Excellent. Have you got your flight number?\nTanya: Not with me, I'm afraid, but I promise I'll email it. Let me make a note of all this.\nSimon: Yes, do, because one of us will try to come and collect you from the airport if we can. I presume you'll be coming into Terminal 1?\nTanya: Ah, I don't know. I'll have to find out which one it is.\nSimon: Yes, you must. We don't want to be waiting at the wrong one.\nTanya: But hang on, I'll be arriving at about lunchtime, and that'll mean you have to take time off work to pick me up. You really mustn't do that.\nSimon: Look, we're not all that busy at work, and if there's a problem, I can text you when you arrive, and you can take a taxi.\nTanya: Okay.\nSimon: There's a really good company called Pantera.\nTanya: Can you spell that?\nSimon: It's P-A-N-T-E-R-A. They have a stand at the airport. You can't miss it, and they're really reliable.\nTanya: Great, thanks. How far are you from the airport?\nSimon: About 40 minutes.\nTanya: And you're near the city centre, aren't you?\nSimon: We're east of it, actually. Don't tell the driver \"city centre\" because you'll really get caught up in traffic.\nTanya: Okay, and I'll make sure I carry your address with me. Now, have you got my mobile-uh, cell phone number?\nSimon: Yes, you sent it last month.\nTanya: But I tell you what, I don't think I've got yours. I'd better have it now just in case.\nSimon: Okay, and I changed it recently anyway. Ready? It's 07765 328411.\nNarrator: Before you hear the rest of the conversation, you have some time to look at questions 5 to 10. [...] Now listen and answer questions 5 to 10.\nTanya: Thanks. Now, what should I pack?\nSimon: Well, all the usual, casual clothes mainly. Though you'd better bring an evening dress-we'll be having at least one fancy dinner in a hotel restaurant. Okay, now, when you're coming, unfortunately, the weather is not going to be brilliant.\nTanya: I know, it's the rainy season. I'm bringing an umbrella.\nSimon: Uh, we have tons of those! So don't pack one. But pack a raincoat, a good one, cuz we'll try and get out for plenty of hikes.\nTanya: Okay, sure. Sounds super, just what I love. And I'd better remember to pack my sturdy walking shoes.\nSimon: Excellent idea. It's pretty rugged round here, so they have to be tough.\nTanya: I can imagine. I'm so looking forward to getting out. Oh Simon, before I forget, you recommended I read a book about your area?\nSimon: Yeah.\nTanya: What was the name again? I'd like to read it to get an idea of the history, etc.\nSimon: It's called Mountain Lives, and it's...\nTanya: Hang on, I'm just writing it down. Okay?\nSimon: ...and it's by Rex Campbell.\nTanya: Great, I'll try and get hold of that.\nSimon: Well worth it.\nTanya: Now, the really important thing is the gifts.\nSimon: Oh, don't worry about that, just bring yourself!\nTanya: I know, but I'd like to get something for your parents. What about Janice? I know she loves English tea.\nSimon: Oh, that's very kind, but she's not drinking so much of that these days. But she'd love some chocolate-you know her favourite.\nTanya: Oh yes, that'd be nice. I'll do that. And Alec-is he still into racing?\nSimon: Very much so!\nTanya: I was thinking of bringing a calendar, you know, with horse racing pictures.\nSimon: What a good idea! He'd love that.\nTanya: Great. So, that's about it, I think?\nSimon: Yes, I think so. So you'll send me your number again...\nNarrator: That is the end of Section 1. You now have half a minute to check your answers.",
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the notes below. Write NO MORE THAN TWO WORDS OR A NUMBER."
+        },
+        "noteBody": "# Notes for holiday\n## Travel information\nWill email the flight number\n- Must find out which [[1]] arriving at\n- Best taxi company [[2]]\n- Note: Simon lives in the [[3]] of the city\n- Simon's cell phone number [[4]]\n## What to pack\nTo wear:\n- Casual clothes\n- One smart dress - to wear at a [[5]]\n- A good [[6]]\n- Tough [[7]]\nTo read:\n- Try to find book named [[8]] by Rex Campbell\nFor presents:\n- For Janice [[9]]\n- For Alec [[10]] (with racing pictures)"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": [
+            "terminal",
+            "the terminal"
+          ],
+          "explanation": "Simon đoán Tanya sẽ tới Terminal 1 nhưng Tanya chưa biết, phải tìm hiểu lại mình hạ cánh ở NHÀ GA (terminal) nào.",
+          "evidence": "I presume you'll be coming into Terminal 1?"
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": [
+            "Pantera"
+          ],
+          "explanation": "Hãng taxi tốt Simon giới thiệu tên là Pantera - ông còn đánh vần P-A-N-T-E-R-A.",
+          "evidence": "There's a really good company called Pantera."
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Câu 3",
+          "answer": [
+            "east",
+            "the east"
+          ],
+          "explanation": "Nhà Simon nằm ở PHÍA ĐÔNG thành phố. Bẫy: \"city centre\" là nơi Simon dặn đừng bảo tài xế chở tới, không phải đáp án.",
+          "evidence": "We're east of it, actually."
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": [
+            "07765328411",
+            "07765 328411"
+          ],
+          "explanation": "Simon đọc số di động mới của mình: 07765 328411.",
+          "evidence": "Ready? It's 07765 328411."
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Câu 5",
+          "answer": [
+            "hotel restaurant",
+            "hotel",
+            "a hotel restaurant"
+          ],
+          "explanation": "Cần một chiếc váy lịch sự để mặc trong bữa tối sang trọng ở NHÀ HÀNG KHÁCH SẠN.",
+          "evidence": "we'll be having at least one fancy dinner in a hotel restaurant"
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Câu 6",
+          "answer": [
+            "raincoat",
+            "rain coat"
+          ],
+          "explanation": "Mang ÁO MƯA loại tốt vì đang mùa mưa. Bẫy: ô (umbrella) bị loại vì Simon bảo nhà có sẵn rất nhiều, đừng mang theo.",
+          "evidence": "But pack a raincoat, a good one"
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Câu 7",
+          "answer": [
+            "walking shoes",
+            "shoes"
+          ],
+          "explanation": "Tanya nhắc mang GIÀY ĐI BỘ chắc chắn, Simon xác nhận đường ở đây gồ ghề nên giày phải bền.",
+          "evidence": "And I'd better remember to pack my sturdy walking shoes."
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Câu 8",
+          "answer": [
+            "Mountain Lives"
+          ],
+          "explanation": "Tên cuốn sách là Mountain Lives; Tanya còn dừng lại để chép cho kịp.",
+          "evidence": "It's called Mountain Lives"
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Câu 9",
+          "answer": [
+            "chocolate",
+            "chocolates",
+            "some chocolate"
+          ],
+          "explanation": "Janice giờ ít uống trà nên món quà hợp là SÔ CÔ LA - thứ bà thích nhất. Bẫy: \"English tea\" là ý ban đầu của Tanya nhưng đã bị bác.",
+          "evidence": "But she'd love some chocolate"
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Câu 10",
+          "answer": [
+            "calendar",
+            "a calendar"
+          ],
+          "explanation": "Alec vẫn mê đua ngựa nên Tanya tính tặng cuốn LỊCH có ảnh đua ngựa.",
+          "evidence": "I was thinking of bringing a calendar, you know, with horse racing pictures."
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 - Camber's theme park",
+      "instructions": "You will hear a podcast on Camber's theme park. Answer questions 11-20.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test47_part2-gBHV2m9F1iZvGGB4Fg8UgQdjRCey8q",
+      "transcript": "Narrator: Section 2. You will hear a podcast on Cambers Theme Park. Now you have some time to look at questions 11 to 16. [...] Now listen and answer questions 11 to 16.\nSpeaker: Welcome to Cambers Park podcast. In the next few minutes, I'll tell you a little about the park and the amazing things we have to offer.\nWe like to think that Cambers offers more than other theme parks. Like them, we have a variety of exciting rides for people of all ages, but Cambers also places strong emphasis on the educational experience for its visitors. Not boring facts, but lots of interactive exhibits. Although it's mainly an outdoor experience, we do have some indoor activities if the weather gets too dreadful.\nThe park's got a lovely, well-established feel, set in 80 acres of beautiful countryside, about 3 miles south of the tourist resort of Dullchester. The park was set up in 1997 by the Camber family, but then taken over by new owners in 2004, who have maintained the original vision of the Cambers. It has lots of old trees, hundreds of flower beds, and a gorgeous lake.\nCambers has over 45 different rides, exhibits, and arcades. All but one of these is free once you've paid your entrance fee. We charge a small fee for our newest ride to reduce the length of the queues. You don't pay anything for parking. A family ticket, for a family of four, works out at about £8 per person, which is amazing value. Full details of current prices are shown on our website, along with full details of rides, etc., and directions for getting to us.\nWe also have a number of special offers. For example, if you live locally, why not join our Adventurers Club, which entitles you to 50% off ticket prices all year round, and a special lane for all rides and exhibits, which means you don't have to wait to get into any part of the park. See the Offers tab on the website.\nWe've recently added a number of new exhibits to the park, and we're particularly proud of our Future Farm Zone, which houses over 20 different species of animals, from chipmunks to dairy cows. The emphasis is on getting near to the animals. All of them can be petted, and you can buy food for feeding the animals. Many of our younger visitors say that this is the high point of their visit.\nAnd speaking of food, don't let the animals have all the fun! We have a total of seven different catering outlets on the site. We're open 10:00 to 5:30 all year round, and cold drinks and snacks can be bought at any time during opening hours. And hot food is available most of the day in the Hungry Horse Cafe from 11:00 until 5:00, just half an hour before closing time.\nNarrator: Now you have some time to look at questions 17 to 20. [...] Now listen and answer questions 17 to 20.\nSpeaker: Now, we want all our visitors to have an exciting time when they come to the park, but our first priority must be safety. Parents and guardians know their children's behaviour and capabilities, but here at the park, we have set certain conditions for each of the rides to ensure that all visitors get the maximum enjoyment out of the experience and feel secure at all times.\nThere are four major rides at the park. Our newest ride is the River Adventure, which is designed to reproduce the experience of whitewater rafting. No amount of protective clothing would make any difference, so only go on this ride if you're prepared to get wet. Children under 8 can go on this ride, but all under-16s must have an adult with them.\nNot all of our rides are designed for thrills and spills. Our Jungle Jim Rollercoaster is a gentler version of the classic loop-the-loop, specially created for whole family enjoyment, from the smallest children to elderly grandparents. Suitable for all levels of disability and health conditions. Carriages have comfortable seating for up to eight people, with safety belts for each passenger, which must be worn at all times. Sit back and enjoy the scenery.\nOne of the best-established and most popular of Cambers' rides is the massive Swoop Slide. Whizz down the polished vertical slide, 9 metres in height, and scream to your heart's content. There are no age or height restrictions. Be careful, though-you must have on long trousers so you won't get any speed burns.\nAnd then there's the famous Zip Go-Kart Stadium, with 16 karts: eight for single drivers and eight for kids preferring to ride along with Mum, Dad, or carer. Take part in high-speed races in our specially designed Formula 1-style karts, but no bumping other karts, please! All riders must be above 1.2 metres because they have to be able to reach the pedals, even in the shared karts.\nFull details of all safety features are available on our website at www.camberspark.com. So come and make a day of it at Cambers Theme Park!\nNarrator: That is the end of Section 2. You now have half a minute to check your answers.",
+      "metadata": {
+        "groupTitles": {
+          "11": "Camber's theme park",
+          "17": "Rides"
+        },
+        "groupInstructions": {
+          "11": "Choose the correct letter A, B or C.",
+          "17": "Questions 17-20\nWhat special conditions apply to the following rides?\nChoose FOUR answers from the list below and write the correct letter A-F next to questions 17-20.\nSpecial conditions for visitors\n:::box\nA Must be over a certain age\nB Must use special safety equipment\nC Must avoid it if they have health problems\nD Must wear a particular type of clothing\nE Must be over a certain height\nF Must be accompanied by an adult if under 16\n:::"
+        }
+      },
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "According to the speaker, in what way is Camber's different from other theme parks?",
+          "options": [
+            "A it is suitable for different age groups",
+            "B it offers lots to do in wet weather",
+            "C it has a focus on education"
+          ],
+          "answer": [
+            "C it has a focus on education"
+          ],
+          "explanation": "Camber's cũng có trò chơi cho mọi lứa tuổi GIỐNG các công viên khác (nên A sai), điểm KHÁC biệt là chú trọng trải nghiệm GIÁO DỤC. Hoạt động trong nhà chỉ là phụ nên B sai.",
+          "evidence": "but Cambers also places strong emphasis on the educational experience for its visitors"
+        },
+        {
+          "order": 12,
+          "questionType": "multiple_choice",
+          "prompt": "The park first opened in",
+          "options": [
+            "A 1980",
+            "B 1997",
+            "C 2004"
+          ],
+          "answer": [
+            "B 1997"
+          ],
+          "explanation": "Công viên được lập năm 1997; 2004 chỉ là năm ĐỔI CHỦ, không phải năm mở cửa.",
+          "evidence": "The park was set up in 1997 by the Camber family, but then taken over by new owners in 2004"
+        },
+        {
+          "order": 13,
+          "questionType": "multiple_choice",
+          "prompt": "What is included in the entrance fee?",
+          "options": [
+            "A most rides and parking",
+            "B all rides and some exhibits",
+            "C parking and all rides"
+          ],
+          "answer": [
+            "A most rides and parking"
+          ],
+          "explanation": "HẦU HẾT (chứ không phải tất cả) trò chơi được miễn phí - trò mới nhất vẫn thu thêm tiền - và gửi xe thì miễn phí.",
+          "evidence": "All but one of these is free once you've paid your entrance fee. / You don't pay anything for parking."
+        },
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "Becoming a member of the Adventurers Club means",
+          "options": [
+            "A you can avoid queuing so much",
+            "B you can enter the park free for a year",
+            "C you can visit certain zones closed to other people"
+          ],
+          "answer": [
+            "A you can avoid queuing so much"
+          ],
+          "explanation": "Hội viên có làn đi riêng nên KHÔNG PHẢI XẾP HÀNG. Bẫy: chỉ giảm 50% giá vé chứ không miễn phí (B sai).",
+          "evidence": "and a special lane for all rides and exhibits, which means you don't have to wait to get into any part of the park"
+        },
+        {
+          "order": 15,
+          "questionType": "multiple_choice",
+          "prompt": "The Future Farm zone encourages visitors to",
+          "options": [
+            "A buy animals as pets",
+            "B learn about the care of animals",
+            "C get close to the animals"
+          ],
+          "answer": [
+            "C get close to the animals"
+          ],
+          "explanation": "Điểm nhấn của khu này là ĐƯỢC LẠI GẦN con vật - có thể vuốt ve và mua thức ăn cho chúng. Mua THỨC ĂN chứ không phải mua con vật (A sai).",
+          "evidence": "The emphasis is on getting near to the animals."
+        },
+        {
+          "order": 16,
+          "questionType": "multiple_choice",
+          "prompt": "When is hot food available in the park?",
+          "options": [
+            "A 10 am - 5.30 pm",
+            "B 11 am - 5 pm",
+            "C 10.30 am - 5 pm"
+          ],
+          "answer": [
+            "B 11 am - 5 pm"
+          ],
+          "explanation": "ĐỒ ĂN NÓNG bán từ 11h đến 17h. Bẫy: 10h-17h30 là giờ mở cửa cả công viên, áp dụng cho đồ uống lạnh và đồ ăn vặt.",
+          "evidence": "And hot food is available most of the day in the Hungry Horse Cafe from 11:00 until 5:00"
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "River Adventure",
+          "options": [
+            "A Must be over a certain age",
+            "B Must use special safety equipment",
+            "C Must avoid it if they have health problems",
+            "D Must wear a particular type of clothing",
+            "E Must be over a certain height",
+            "F Must be accompanied by an adult if under 16"
+          ],
+          "answer": [
+            "F Must be accompanied by an adult if under 16"
+          ],
+          "explanation": "Trẻ dưới 8 tuổi vẫn chơi được, nhưng mọi người DƯỚI 16 TUỔI phải có người lớn đi kèm.",
+          "evidence": "Children under 8 can go on this ride, but all under-16s must have an adult with them."
+        },
+        {
+          "order": 18,
+          "questionType": "matching",
+          "prompt": "Jungle Jim Rollercoaster",
+          "options": [
+            "A Must be over a certain age",
+            "B Must use special safety equipment",
+            "C Must avoid it if they have health problems",
+            "D Must wear a particular type of clothing",
+            "E Must be over a certain height",
+            "F Must be accompanied by an adult if under 16"
+          ],
+          "answer": [
+            "B Must use special safety equipment"
+          ],
+          "explanation": "Mỗi ghế có DÂY AN TOÀN và bắt buộc thắt suốt hành trình - đó là thiết bị an toàn đặc biệt.",
+          "evidence": "with safety belts for each passenger, which must be worn at all times"
+        },
+        {
+          "order": 19,
+          "questionType": "matching",
+          "prompt": "Swoop Slide",
+          "options": [
+            "A Must be over a certain age",
+            "B Must use special safety equipment",
+            "C Must avoid it if they have health problems",
+            "D Must wear a particular type of clothing",
+            "E Must be over a certain height",
+            "F Must be accompanied by an adult if under 16"
+          ],
+          "answer": [
+            "D Must wear a particular type of clothing"
+          ],
+          "explanation": "Không giới hạn tuổi hay chiều cao, nhưng bắt buộc mặc QUẦN DÀI để khỏi bị bỏng do ma sát.",
+          "evidence": "you must have on long trousers so you won't get any speed burns"
+        },
+        {
+          "order": 20,
+          "questionType": "matching",
+          "prompt": "Zip Go-carts",
+          "options": [
+            "A Must be over a certain age",
+            "B Must use special safety equipment",
+            "C Must avoid it if they have health problems",
+            "D Must wear a particular type of clothing",
+            "E Must be over a certain height",
+            "F Must be accompanied by an adult if under 16"
+          ],
+          "answer": [
+            "E Must be over a certain height"
+          ],
+          "explanation": "Người chơi phải CAO trên 1,2 m để với tới bàn đạp - đây là điều kiện chiều cao, không phải tuổi.",
+          "evidence": "All riders must be above 1.2 metres because they have to be able to reach the pedals"
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 - Working effectively in groups",
+      "instructions": "You will hear two business studies students discussing a presentation they'll do on an article on working effectively in groups. Answer questions 21-30.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test47_part3-QRZrXwBSm8XKh6CDMj0UprlZ2n4fnF",
+      "transcript": "Narrator: Section 3. You will hear two business studies students discussing a presentation they'll do on an article on working effectively in groups. First, you have some time to look at questions 21 to 26. [...] Now listen and answer questions 21 to 26.\nHelen: So, Brad, what did you think of the article on group work?\nBrad: Oh hi, Helen. Yeah, it was pretty good, with helpful pieces of advice on how to make group work effective.\nHelen: I think we were lucky to be given such a straightforward text to present at the management skills seminar.\nBrad: Yeah. Actually, shall we discuss it now? Have you got time?\nHelen: Sure. It's only a 10-minute presentation, so we just need to explain and then give our views on the main points raised in the article.\nBrad: I'll jot down some notes. Right.\nHelen: So, there are three main sections. I suggest we start with listening.\nBrad: Yeah. Effective listening in groups, because it's not something that's frequently covered on courses in our field.\nHelen: No, and we should say that in the presentation.\nBrad: Yeah. And also, effective listening's pretty simple, you know. I don't think it's hard to learn.\nHelen: Well, people think it's easy, but in my experience, most of us tend to be very lazy listeners.\nBrad: Okay, I wouldn't argue with that!\nHelen: Something I do think we should emphasise is the power of the listener's posture, gestures, etc., in making speakers feel respected.\nBrad: Not that you're just waiting for them to finish before jumping in with your own ideas.\nHelen: Uh-huh.\nBrad: Okay, right. The next section is on goal setting. Let's make sure we're clear what the article says on this.\nHelen: Yeah. Well, firstly, it says that all group members must be given time to explain their own goals.\nBrad: That's it, yeah.\nHelen: And then, did it say that the whole group should agree on common goals?\nBrad: That's a bit too strong. It's more that everyone's agendas should be equally acceptable. But it does say that goals have to be realistic, you know...\nHelen: ...achievable within a particular time?\nBrad: You've got it. That's really what the article is saying. There isn't really any point in having ideals if group members know they won't come to anything within a reasonable period. So, I think a summary covering those points will be enough for that part of the presentation, don't you?\nHelen: Yep. Now, the last section is about conflict resolution.\nBrad: Actually, I thought it was the worst part of the article.\nHelen: Me too.\nBrad: I don't think it went into sufficient detail on the issue.\nHelen: Actually, I thought it devoted too much space to it, but that it was all rather boring, you know?\nBrad: It didn't mention some of the more radical theories.\nHelen: Absolutely! I found that really irritating.\nBrad: Right. And also, I think it could have said more about conflict sometimes being healthy in groups.\nHelen: Absolutely! It just mentioned rather glibly about how we should avoid thinking of winners and losers, and that quick resolution of conflict is always desirable.\nBrad: Without explaining what these terms mean?\nHelen: Well, it gives quite detailed definitions, but doesn't develop a proper argument.\nBrad: Right. So, for the presentation, I think we just give some definitions and...\nHelen: ...and then explain what we felt were the weaknesses in the article's treatment of conflict resolution.\nBrad: Yeah, good.\nNarrator: Now you have some time to look at questions 27 to 30. [...] Now listen and answer questions 27 to 30.\nBrad: So, let's think about what we have to prepare for the actual presentation.\nHelen: Well, I suppose we'll use PowerPoint, but I'm hopeless at using it, especially if it has any visuals. I really have to look into doing a course on it because I know I'll need it in the future.\nBrad: Don't worry. I'm quite happy using PowerPoint, and I'll put it together when everything else is ready.\nHelen: That's a relief! But yes, do that later.\nBrad: Okay. Now, I heard the tutor saying we have to include some well-chosen quotations from the article?\nHelen: I'm not sure if we do. I'll email him to find out.\nBrad: No need. I can just have a look at the specs he gave us when he set the task.\nHelen: That'll be quicker.\nBrad: But the tutor definitely said we have to prepare a handout to go with the talk. I'm not really sure how we do that.\nHelen: Sarah did one last year.\nBrad: Who's she?\nHelen: She's doing the same option as me in marketing. I'll ask her advice on what to include.\nBrad: Great. So that just leaves the bibliography at the end. I suppose it'll mainly be articles?\nHelen: Yeah. So we'll just look on the web, and we can leave that till later.\nBrad: But we've been advised against that?\nHelen: Well, we could have a look through some journals in the library.\nBrad: I think we should start by looking through module handbooks. I think that'll give us some good leads.\nHelen: Yeah, you're probably right. So, that's all the topics...\nNarrator: That is the end of Section 3. You now have half a minute to check your answers.",
+      "metadata": {
+        "groupTitles": {
+          "27": "Preparation tasks"
+        },
+        "groupInstructions": {
+          "21": "Questions 21 and 22\nChoose TWO letters A-E.\nWhat TWO things do Brad and Helen agree to say about listening in groups?",
+          "23": "Questions 23 and 24\nChoose TWO letters A-E.\nWhat TWO things does the article say about goal setting?",
+          "25": "Questions 25 and 26\nChoose TWO letters A-E.\nWhat TWO things do Brad and Helen agree are weak points in the article's section on conflict resolution?",
+          "27": "Questions 27-30\nWhat actions do Brad and Helen agree to do regarding the following preparation tasks?\nChoose FOUR answers from the list below and write the correct letter A-F next to questions 27-30.\nAction\n:::box\nA Contact the tutor for clarification\nB Check the assignment specifications\nC Leave it until the last task\nD Ask a course-mate to help\nE Find information on the internet\nF Look through course handbooks\n:::"
+        }
+      },
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "What TWO things do Brad and Helen agree to say about listening in groups?",
+          "options": [
+            "A Listening skills are often overlooked in business training",
+            "B Learning to listen well is a skill that is easy for most people to learn",
+            "C It is sometimes acceptable to argue against speakers",
+            "D Body language is very important when listening",
+            "E Listeners should avoid interrupting speakers"
+          ],
+          "answer": [
+            "A Listening skills are often overlooked in business training",
+            "D Body language is very important when listening"
+          ],
+          "explanation": "A: cả hai thống nhất kỹ năng lắng nghe ÍT được dạy trong ngành của họ. D: Helen nhấn mạnh sức mạnh của tư thế, cử chỉ (ngôn ngữ cơ thể) và Brad đồng tình. Bẫy B: Brad cho là dễ học nhưng Helen phản đối nên KHÔNG phải điều hai người đồng thuận.",
+          "evidence": "Effective listening in groups, because it's not something that's frequently covered on courses in our field. / Something I do think we should emphasise is the power of the listener's posture, gestures, etc., in making speakers feel respected."
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "What TWO things do Brad and Helen agree to say about listening in groups?",
+          "options": [
+            "A Listening skills are often overlooked in business training",
+            "B Learning to listen well is a skill that is easy for most people to learn",
+            "C It is sometimes acceptable to argue against speakers",
+            "D Body language is very important when listening",
+            "E Listeners should avoid interrupting speakers"
+          ],
+          "answer": [
+            "A Listening skills are often overlooked in business training",
+            "D Body language is very important when listening"
+          ],
+          "explanation": "A: cả hai thống nhất kỹ năng lắng nghe ÍT được dạy trong ngành của họ. D: Helen nhấn mạnh sức mạnh của tư thế, cử chỉ (ngôn ngữ cơ thể) và Brad đồng tình. Bẫy B: Brad cho là dễ học nhưng Helen phản đối nên KHÔNG phải điều hai người đồng thuận.",
+          "evidence": "Effective listening in groups, because it's not something that's frequently covered on courses in our field. / Something I do think we should emphasise is the power of the listener's posture, gestures, etc., in making speakers feel respected."
+        },
+        {
+          "order": 23,
+          "questionType": "multiple_choice",
+          "prompt": "What TWO things does the article say about goal setting?",
+          "options": [
+            "A Meetings should start with a clear statement of goals",
+            "B It is important for each individual's goals to be explained",
+            "C Everybody in the group should have the same goals",
+            "D Goals should be a mix of the realistic and the ideal",
+            "E Goals must always to be achievable within a set time"
+          ],
+          "answer": [
+            "B It is important for each individual's goals to be explained",
+            "E Goals must always to be achievable within a set time"
+          ],
+          "explanation": "B: bài báo nói mọi thành viên phải được cho thời gian trình bày mục tiêu RIÊNG của mình. E: mục tiêu phải khả thi TRONG MỘT KHUNG THỜI GIAN nhất định. Bẫy C: Brad bác bỏ ý \"cả nhóm chung một mục tiêu\" là nói quá.",
+          "evidence": "Well, firstly, it says that all group members must be given time to explain their own goals. / ...achievable within a particular time?"
+        },
+        {
+          "order": 24,
+          "questionType": "multiple_choice",
+          "prompt": "What TWO things does the article say about goal setting?",
+          "options": [
+            "A Meetings should start with a clear statement of goals",
+            "B It is important for each individual's goals to be explained",
+            "C Everybody in the group should have the same goals",
+            "D Goals should be a mix of the realistic and the ideal",
+            "E Goals must always to be achievable within a set time"
+          ],
+          "answer": [
+            "B It is important for each individual's goals to be explained",
+            "E Goals must always to be achievable within a set time"
+          ],
+          "explanation": "B: bài báo nói mọi thành viên phải được cho thời gian trình bày mục tiêu RIÊNG của mình. E: mục tiêu phải khả thi TRONG MỘT KHUNG THỜI GIAN nhất định. Bẫy C: Brad bác bỏ ý \"cả nhóm chung một mục tiêu\" là nói quá.",
+          "evidence": "Well, firstly, it says that all group members must be given time to explain their own goals. / ...achievable within a particular time?"
+        },
+        {
+          "order": 25,
+          "questionType": "multiple_choice",
+          "prompt": "What TWO things do Brad and Helen agree are weak points in the article's section on conflict resolution?",
+          "options": [
+            "A It does not explore the topic in enough detail",
+            "B It only discusses conservative views",
+            "C It says nothing about the potential value of conflict",
+            "D It talks too much about winners and losers",
+            "E It does not provide definitions of key terms"
+          ],
+          "answer": [
+            "B It only discusses conservative views",
+            "C It says nothing about the potential value of conflict"
+          ],
+          "explanation": "B: bài báo bỏ qua các lý thuyết CẤP TIẾN, tức chỉ nêu quan điểm bảo thủ. C: không nói tới việc xung đột đôi khi lại LÀNH MẠNH cho nhóm. Bẫy A: chỉ mình Brad chê thiếu chi tiết, Helen lại thấy viết quá dài; bẫy E: Helen nói bài CÓ định nghĩa khá kỹ.",
+          "evidence": "It didn't mention some of the more radical theories. / And also, I think it could have said more about conflict sometimes being healthy in groups."
+        },
+        {
+          "order": 26,
+          "questionType": "multiple_choice",
+          "prompt": "What TWO things do Brad and Helen agree are weak points in the article's section on conflict resolution?",
+          "options": [
+            "A It does not explore the topic in enough detail",
+            "B It only discusses conservative views",
+            "C It says nothing about the potential value of conflict",
+            "D It talks too much about winners and losers",
+            "E It does not provide definitions of key terms"
+          ],
+          "answer": [
+            "B It only discusses conservative views",
+            "C It says nothing about the potential value of conflict"
+          ],
+          "explanation": "B: bài báo bỏ qua các lý thuyết CẤP TIẾN, tức chỉ nêu quan điểm bảo thủ. C: không nói tới việc xung đột đôi khi lại LÀNH MẠNH cho nhóm. Bẫy A: chỉ mình Brad chê thiếu chi tiết, Helen lại thấy viết quá dài; bẫy E: Helen nói bài CÓ định nghĩa khá kỹ.",
+          "evidence": "It didn't mention some of the more radical theories. / And also, I think it could have said more about conflict sometimes being healthy in groups."
+        },
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "Preparing the powerpoint",
+          "options": [
+            "A Contact the tutor for clarification",
+            "B Check the assignment specifications",
+            "C Leave it until the last task",
+            "D Ask a course-mate to help",
+            "E Find information on the internet",
+            "F Look through course handbooks"
+          ],
+          "answer": [
+            "C Leave it until the last task"
+          ],
+          "explanation": "Brad nhận làm PowerPoint nhưng ĐỂ SAU CÙNG, khi mọi thứ khác đã xong. Bẫy D: Helen kém PowerPoint nhưng không ai nhờ bạn học giúp việc này.",
+          "evidence": "I'm quite happy using PowerPoint, and I'll put it together when everything else is ready. / That's a relief! But yes, do that later."
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "Using direct quotations",
+          "options": [
+            "A Contact the tutor for clarification",
+            "B Check the assignment specifications",
+            "C Leave it until the last task",
+            "D Ask a course-mate to help",
+            "E Find information on the internet",
+            "F Look through course handbooks"
+          ],
+          "answer": [
+            "B Check the assignment specifications"
+          ],
+          "explanation": "Helen định email hỏi giảng viên nhưng Brad bảo KHÔNG CẦN, cứ xem lại BẢN YÊU CẦU đề bài cho nhanh. Bẫy A bị bác ngay.",
+          "evidence": "No need. I can just have a look at the specs he gave us when he set the task."
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "Creating a handout",
+          "options": [
+            "A Contact the tutor for clarification",
+            "B Check the assignment specifications",
+            "C Leave it until the last task",
+            "D Ask a course-mate to help",
+            "E Find information on the internet",
+            "F Look through course handbooks"
+          ],
+          "answer": [
+            "D Ask a course-mate to help"
+          ],
+          "explanation": "Helen sẽ hỏi Sarah - BẠN CÙNG KHOÁ học cùng chuyên ngành marketing - xem cần đưa gì vào tờ phát tay.",
+          "evidence": "She's doing the same option as me in marketing. I'll ask her advice on what to include."
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "Drawing up a bibliography",
+          "options": [
+            "A Contact the tutor for clarification",
+            "B Check the assignment specifications",
+            "C Leave it until the last task",
+            "D Ask a course-mate to help",
+            "E Find information on the internet",
+            "F Look through course handbooks"
+          ],
+          "answer": [
+            "F Look through course handbooks"
+          ],
+          "explanation": "Brad đề nghị bắt đầu bằng việc lật SỔ TAY MÔN HỌC. Bẫy E: tìm trên mạng là ý của Helen nhưng bị nhắc là đã được khuyên không nên.",
+          "evidence": "I think we should start by looking through module handbooks."
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 - Engineering for sustainable development",
+      "instructions": "You will hear a lecturer talking to a group of engineering students about the design of a greenhouse. Answer questions 31-40.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test47_part4-DDEExYzmmqDDH52rQuRNL9AXqoJUcn",
+      "transcript": "Narrator: Section 4. You will hear a lecturer talking to a group of engineering students about the design of a greenhouse. Before you listen, you have some time to look at questions 31 to 40. [...] Now listen and answer questions 31 to 40.\nLecturer: Good afternoon. This is the first of a series of lectures I'll be giving about engineering for sustainable development. I'll be presenting examples of engineering projects from a variety of contexts, and today I'm going to talk about a project to design a new kind of greenhouse for use in the Himalayan mountain regions.\nFirst of all, I'll tell you about the problem which was the context for this project. In the Himalayan mountains, fresh vegetables and other crops can only be grown outside for about 90 days during the summer, because the altitude of the region is around 3,500 metres, and because the rainfall is so low. In winter, temperatures fall below minus 25 degrees Centigrade, so fresh vegetables have to be imported. They arrive by truck in summer, or by air in winter, which makes them expensive. Local people rely on dried, leafy vegetables and stored root crops during the winter, and rarely eat fresh vegetables.\nBut despite the sub-zero temperatures, the skies over the region are cloudless, and there are over 300 sunny days per year. So, an engineering solution was needed to exploit the sun's energy and protect locally produced plants from freezing during winter.\nAnd in fact, there had been programmes in the past to provide greenhouses, but these were unsuccessful. The greenhouses weren't adapted for local conditions, so they tended to fall into disuse. So, a few years ago, a project was initiated to design a better greenhouse, one which would meet the criteria for sustainability.\nSo what are the criteria for sustainability? Well, first of all, the new greenhouse is designed to be relatively simple, so construction is cheap. Locally available materials are used wherever possible. The walls are generally constructed of mud bricks made locally, although in areas of high snowfall, more resilient walls of stone are needed. Rammed earth is also used. The main roof is generally made from locally available poplar wood, with water-resistant local grass for the covering. In addition, the construction and maintenance of the greenhouse is done by local craftsmen. So local stonemasons are employed to build the greenhouse walls, and specialised training is provided for them wherever necessary.\nThen, the greenhouse is designed to run on solar power alone; there's no supplementary heating. And lastly, families are selected to own one of the new greenhouses with great care. They have to have a site which is suitable for constructing it on. They also have to be keen to make a success of using it, and also to share the produce with the wider community through sale or barter. Potential owners are taken to see existing greenhouses before they make a final decision about having one.\nSo, those are the features which make the project sustainable. And now, I'll briefly describe the design of the greenhouse.\nThe greenhouses are orientated very carefully along an east-west axis, so that there's a long south-facing side. The transparent cover on the south-facing side is made from a heavy-duty polythene, which should last for at least five years. On the inside of the greenhouse, the walls are painted. The rear and west-facing walls are black to improve heat absorption, but the east-facing wall is white to reflect the morning sunlight onto the crops inside. Finally, there's a door in the wall at one end, and vents are incorporated into the roof, the door, and the wall at the other end to enable control of humidity and prevent overheating.\nI'll turn now to the benefits which have resulted from the introduction of these new greenhouses. These benefits are of various kinds, but for now, I'll just mention the social benefits.\nFirst of all, people who own a greenhouse gain social standing in their communities because they provide vegetables for the wider community for regular consumption as well as for festivals, and they also earn income. Secondly, because in rural areas it is women who usually grow the food, the greenhouses have increased their opportunities. They bring the benefits of improved nutrition and increased family income from the sale of surplus produce. And thirdly, as a result of their improved financial position, some families can now afford to educate their children for the first time.\nNarrator: That is the end of Section 4. You now have half a minute to check your answers.",
+      "metadata": {
+        "groupInstructions": {
+          "31": "Complete the notes below. Write ONE WORD ONLY for each answer."
+        },
+        "noteBody": "# Engineering for sustainable development\n## Problem\n- Short growing season because of high altitude and low [[31]]\n- Fresh vegetables imported by lorry or by [[32]], so are expensive\n- Need to use sunlight to prevent local plants from [[33]]\n- Previous programmes to provide greenhouses were [[34]]\n## New greenhouse\nMeets criteria for sustainability\n- Simple and [[35]] to build\n- Made mainly from local materials (mud or stone for the walls, wood and [[36]] for the roof)\n- Building and maintenance done by local craftsmen\n- Runs solely on [[37]] energy\n- Only families who have a suitable [[38]] can own one\n## Design\n- Long side faces South\n- Strong polythene cover\n- Inner [[39]] are painted black or white\n## Social benefits\n- Owners' status is improved\n- Rural [[40]] have greater opportunities\n- More children are educated"
+      },
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Câu 31",
+          "answer": [
+            "rainfall"
+          ],
+          "explanation": "Mùa vụ ngắn vì vùng này ở độ cao lớn và LƯỢNG MƯA rất thấp.",
+          "evidence": "because the altitude of the region is around 3,500 metres, and because the rainfall is so low"
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "prompt": "Câu 32",
+          "answer": [
+            "air",
+            "plane",
+            "aeroplane",
+            "airplane"
+          ],
+          "explanation": "Rau tươi chở bằng xe tải vào mùa hè, còn mùa đông phải chở bằng ĐƯỜNG HÀNG KHÔNG nên rất đắt.",
+          "evidence": "They arrive by truck in summer, or by air in winter, which makes them expensive."
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Câu 33",
+          "answer": [
+            "freezing"
+          ],
+          "explanation": "Cần tận dụng nắng để bảo vệ cây trồng địa phương khỏi bị ĐÓNG BĂNG trong mùa đông.",
+          "evidence": "protect locally produced plants from freezing during winter"
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": [
+            "unsuccessful"
+          ],
+          "explanation": "Các chương trình cấp nhà kính trước đây đều THẤT BẠI vì không hợp điều kiện địa phương, bị bỏ không dùng.",
+          "evidence": "there had been programmes in the past to provide greenhouses, but these were unsuccessful"
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": [
+            "cheap",
+            "inexpensive"
+          ],
+          "explanation": "Nhà kính mới thiết kế đơn giản nên chi phí xây dựng RẺ.",
+          "evidence": "the new greenhouse is designed to be relatively simple, so construction is cheap"
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": [
+            "grass"
+          ],
+          "explanation": "Mái làm bằng gỗ dương sẵn có cùng Cỏ chịu nước của địa phương.",
+          "evidence": "The main roof is generally made from locally available poplar wood, with water-resistant local grass for the covering."
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": [
+            "solar"
+          ],
+          "explanation": "Nhà kính chạy hoàn toàn bằng NĂNG LƯỢNG MẶT TRỜI, không có nguồn sưởi bổ sung.",
+          "evidence": "the greenhouse is designed to run on solar power alone; there's no supplementary heating"
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": [
+            "location",
+            "site"
+          ],
+          "explanation": "Chỉ hộ nào có VỊ TRÍ đất phù hợp để dựng nhà kính mới được chọn.",
+          "evidence": "They have to have a site which is suitable for constructing it on."
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": [
+            "walls"
+          ],
+          "explanation": "Các BỨC TƯỜNG bên trong được sơn: tường sau và tường hướng tây sơn đen để hút nhiệt, tường hướng đông sơn trắng để phản chiếu nắng sớm.",
+          "evidence": "On the inside of the greenhouse, the walls are painted."
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": [
+            "women"
+          ],
+          "explanation": "Ở nông thôn chính PHỤ NỮ là người trồng trọt, nên nhà kính mở ra nhiều cơ hội hơn cho họ.",
+          "evidence": "because in rural areas it is women who usually grow the food, the greenhouses have increased their opportunities"
+        }
+      ]
+    }
+  ]
+}

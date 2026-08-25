@@ -1,21 +1,45 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatDuration } from "@/lib/format-duration";
 import { ProctorFlag } from "@/components/proctor-flag";
 import {
+  BookOpenIcon,
+  CalendarDaysIcon,
+  CheckIcon,
+  ChevronRightIcon,
+  ClipboardCheckIcon,
+  ClockIcon,
+  HeadphonesIcon,
+  LayersIcon,
+  MicIcon,
+  NotebookIcon,
+  PenToolIcon,
+  TriangleAlertIcon
+} from "@/components/icons";
+import {
+  assignmentSkillTags,
+  deadlineState,
   formatAttemptResult,
   groupAssignmentsByDayDescending,
+  isMockTestAssignment,
   isSubmissionLate,
   skillChipText,
   studentsGroupedByClass,
+  submissionProgress,
   type CalendarAssignment,
   type CalendarClass,
   type CalendarMode,
   type CalendarRecipient,
-  type CalendarSkillProgress
+  type CalendarSkillProgress,
+  type SubmissionLevel
 } from "@/lib/assignment-calendar";
+import {
+  MOCK_TEST_BADGE_CLASSES,
+  SKILL_BADGE_CLASSES,
+  SKILL_LABELS
+} from "@/lib/skills";
 
 const SUBMITTED = new Set(["submitted", "reviewed"]);
 
@@ -23,6 +47,33 @@ type Props = {
   assignments: CalendarAssignment[];
   classes: CalendarClass[];
 };
+
+type IconComponent = (props: { className?: string }) => JSX.Element;
+
+// Icon đại diện cho từng kỹ năng IELTS.
+const SKILL_ICONS: Record<string, IconComponent> = {
+  listening: HeadphonesIcon,
+  reading: BookOpenIcon,
+  writing: PenToolIcon,
+  speaking: MicIcon
+};
+
+// Badge tiến độ nộp bài: xong hết / đang nộp dở / còn ít người nộp.
+const SUBMISSION_BADGE_CLASSES: Record<SubmissionLevel, string> = {
+  done: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300",
+  progress:
+    "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-300",
+  low: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300"
+};
+
+const SUBMISSION_BAR_CLASSES: Record<SubmissionLevel, string> = {
+  done: "bg-emerald-500",
+  progress: "bg-blue-500",
+  low: "bg-amber-500"
+};
+
+const BADGE_BASE =
+  "inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold";
 
 // dayKey 'YYYY-MM-DD' (giờ VN). Dựng mốc giữa trưa VN để tránh lệch ngày do múi giờ.
 function fmtDayHeading(dayKey: string) {
@@ -80,10 +131,57 @@ function SkillProgressChips({ skills }: { skills: CalendarSkillProgress[] }) {
   );
 }
 
+// Badge kỹ năng đứng trước tiêu đề bài.
+function SkillBadge({ skill }: { skill: string }) {
+  const SkillIcon = SKILL_ICONS[skill] ?? NotebookIcon;
+
+  return (
+    <span
+      className={`${BADGE_BASE} ${
+        SKILL_BADGE_CLASSES[skill] ?? "border-border bg-muted text-muted-foreground"
+      }`}
+    >
+      <SkillIcon className="h-3.5 w-3.5" />
+      {SKILL_LABELS[skill] ?? skill}
+    </span>
+  );
+}
+
+// Cụm bên phải thẻ bài: badge tỷ lệ nộp + thanh tiến độ mảnh cùng màu.
+function SubmissionProgress({ submitted, total }: { submitted: number; total: number }) {
+  const { percent, level } = submissionProgress(submitted, total);
+
+  return (
+    <div className="flex shrink-0 flex-col items-end gap-1.5">
+      <span className={`${BADGE_BASE} ${SUBMISSION_BADGE_CLASSES[level]}`}>
+        {level === "done" ? <CheckIcon className="h-3.5 w-3.5" /> : null}
+        {level === "low" ? <TriangleAlertIcon className="h-3.5 w-3.5" /> : null}
+        {submitted}/{total} đã nộp
+      </span>
+      <span
+        className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-100 dark:bg-muted sm:w-24"
+        role="presentation"
+      >
+        <span
+          className={`block h-full rounded-full transition-all duration-300 ${SUBMISSION_BAR_CLASSES[level]}`}
+          style={{ width: `${percent}%` }}
+        />
+      </span>
+    </div>
+  );
+}
+
 export function AssignmentCalendar({ assignments, classes }: Props) {
   const [mode, setMode] = useState<CalendarMode>("assigned");
   const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  // Mốc "bây giờ" chỉ lấy sau khi gắn ở trình duyệt, để lần render đầu của
+  // server và client giống hệt nhau (tránh lệch hydration).
+  const [nowMs, setNowMs] = useState<number | null>(null);
+
+  useEffect(() => {
+    setNowMs(Date.now());
+  }, []);
 
   const filtered = useMemo(() => {
     if (!selectedClassId) {
@@ -130,7 +228,7 @@ export function AssignmentCalendar({ assignments, classes }: Props) {
             className={
               mode === "assigned"
                 ? "bg-primary px-3 py-1.5 font-semibold text-primary-foreground"
-                : "px-3 py-1.5 text-muted-foreground"
+                : "px-3 py-1.5 text-muted-foreground transition hover:bg-muted/50"
             }
           >
             Theo ngày giao
@@ -141,7 +239,7 @@ export function AssignmentCalendar({ assignments, classes }: Props) {
             className={
               mode === "deadline"
                 ? "bg-primary px-3 py-1.5 font-semibold text-primary-foreground"
-                : "px-3 py-1.5 text-muted-foreground"
+                : "px-3 py-1.5 text-muted-foreground transition hover:bg-muted/50"
             }
           >
             Theo hạn nộp
@@ -175,65 +273,136 @@ export function AssignmentCalendar({ assignments, classes }: Props) {
       ) : (
         <div className="space-y-6">
           {days.map((day) => (
-            <div key={day.dayKey} className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold">{fmtDayHeading(day.dayKey)}</span>
-                <span className="text-xs text-muted-foreground">· {day.assignments.length} bài</span>
+            <div key={day.dayKey} className="space-y-2.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm dark:border-border dark:bg-card dark:text-foreground">
+                  <CalendarDaysIcon className="h-3.5 w-3.5 text-primary" />
+                  {fmtDayHeading(day.dayKey)}
+                </span>
+                <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                  {day.assignments.length} bài
+                </span>
               </div>
-              <div className="space-y-2">
-                {day.assignments.map((assignment) => {
-                  const shown = visibleRecipients(assignment);
-                  const submitted = shown.filter((r) => SUBMITTED.has(r.status)).length;
-                  const open = openIds.has(assignment.id);
-                  return (
-                    <div
-                      key={assignment.id}
-                      className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => toggle(assignment.id)}
-                        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-muted/40"
-                      >
-                        <div className="flex min-w-0 items-center gap-2.5">
-                          <span
-                            className={`text-muted-foreground transition-transform ${open ? "rotate-90" : ""}`}
-                            aria-hidden
-                          >
-                            ›
-                          </span>
-                          <div className="min-w-0">
-                            <p className="truncate font-semibold">{assignment.title}</p>
-                            <p className="mt-0.5 text-xs text-muted-foreground">
-                              {assignment.deadline
-                                ? `Hạn nộp ${fmtDeadline(assignment.deadline)}`
-                                : "Không đặt hạn"}{" "}
-                              · {assignment.unitCount} phần
-                            </p>
-                          </div>
-                        </div>
-                        <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
-                          {submitted}/{shown.length} đã nộp
-                        </span>
-                      </button>
-                      {open ? (
-                        <div className="border-t border-border px-4 py-3">
-                          <AssignmentDetail
-                            assignment={assignment}
-                            classes={classes}
-                            selectedClassId={selectedClassId}
-                          />
-                        </div>
-                      ) : null}
-                    </div>
-                  );
-                })}
+              <div className="space-y-2.5">
+                {day.assignments.map((assignment) => (
+                  <AssignmentCard
+                    key={assignment.id}
+                    assignment={assignment}
+                    classes={classes}
+                    selectedClassId={selectedClassId}
+                    recipients={visibleRecipients(assignment)}
+                    nowMs={nowMs}
+                    open={openIds.has(assignment.id)}
+                    onToggle={() => toggle(assignment.id)}
+                  />
+                ))}
               </div>
             </div>
           ))}
         </div>
       )}
     </section>
+  );
+}
+
+function AssignmentCard({
+  assignment,
+  classes,
+  selectedClassId,
+  recipients,
+  nowMs,
+  open,
+  onToggle
+}: {
+  assignment: CalendarAssignment;
+  classes: CalendarClass[];
+  selectedClassId: string | null;
+  recipients: CalendarRecipient[];
+  nowMs: number | null;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const submitted = recipients.filter((r) => SUBMITTED.has(r.status)).length;
+  const skills = assignmentSkillTags(assignment);
+  const isMockTest = isMockTestAssignment(assignment.title);
+  const leadSkill = skills[0] ?? "";
+  const LeadIcon = isMockTest
+    ? ClipboardCheckIcon
+    : (SKILL_ICONS[leadSkill] ?? NotebookIcon);
+  const leadTone = isMockTest
+    ? MOCK_TEST_BADGE_CLASSES
+    : (SKILL_BADGE_CLASSES[leadSkill] ?? "border-border bg-muted text-muted-foreground");
+  const dueState = deadlineState(assignment.deadline, nowMs);
+
+  return (
+    <div className="group cursor-pointer overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm transition-all duration-200 hover:border-slate-300 hover:shadow-md dark:border-border dark:bg-card dark:hover:border-slate-600">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="flex w-full items-center gap-3 px-3.5 py-3 text-left sm:gap-4 sm:px-4"
+      >
+        <span
+          className={`hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl border sm:flex ${leadTone}`}
+        >
+          <LeadIcon className="h-5 w-5" />
+        </span>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            {isMockTest ? (
+              <span className={`${BADGE_BASE} ${MOCK_TEST_BADGE_CLASSES}`}>
+                <ClipboardCheckIcon className="h-3.5 w-3.5" />
+                Kiểm tra định kỳ
+              </span>
+            ) : null}
+            {skills.map((skill) => (
+              <SkillBadge key={skill} skill={skill} />
+            ))}
+            <span className="min-w-0 truncate font-semibold">{assignment.title}</span>
+          </div>
+
+          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs">
+            <span
+              className={`inline-flex items-center gap-1 ${
+                dueState === "overdue"
+                  ? "font-medium text-rose-600 dark:text-rose-300"
+                  : dueState === "none"
+                    ? "text-muted-foreground/60"
+                    : "text-muted-foreground"
+              }`}
+            >
+              <ClockIcon className="h-3.5 w-3.5" />
+              {assignment.deadline
+                ? `${dueState === "overdue" ? "Quá hạn" : "Hạn nộp"}: ${fmtDeadline(assignment.deadline)}`
+                : "Không đặt hạn"}
+            </span>
+            <span className="inline-flex items-center gap-1 text-muted-foreground">
+              <LayersIcon className="h-3.5 w-3.5" />
+              {assignment.unitCount} phần
+            </span>
+          </div>
+        </div>
+
+        <SubmissionProgress submitted={submitted} total={recipients.length} />
+
+        <ChevronRightIcon
+          className={`h-4 w-4 shrink-0 text-muted-foreground/50 transition-transform duration-200 ${
+            open ? "rotate-90" : "group-hover:translate-x-1"
+          }`}
+        />
+      </button>
+
+      {open ? (
+        <div className="border-t border-slate-200/80 px-4 py-3 dark:border-border">
+          <AssignmentDetail
+            assignment={assignment}
+            classes={classes}
+            selectedClassId={selectedClassId}
+          />
+        </div>
+      ) : null}
+    </div>
   );
 }
 
@@ -280,7 +449,7 @@ function StudentRow({
   const late = done && attempt ? isSubmissionLate(attempt.submittedAt, assignment.deadline) : false;
 
   return (
-    <div className="rounded-lg border border-border p-3">
+    <div className="rounded-lg border border-slate-200/80 p-3 transition-colors hover:border-slate-300 dark:border-border dark:hover:border-slate-600">
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2.5">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
@@ -294,9 +463,10 @@ function StudentRow({
         {done && attempt ? (
           <Link
             href={`/teacher/results/${attempt.id}`}
-            className="shrink-0 text-xs font-semibold text-primary hover:underline"
+            className="inline-flex shrink-0 items-center gap-0.5 text-xs font-semibold text-primary hover:underline"
           >
-            Xem bài →
+            Xem bài
+            <ChevronRightIcon className="h-3.5 w-3.5" />
           </Link>
         ) : null}
       </div>

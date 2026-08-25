@@ -35,3 +35,20 @@ export function distinctSkills(skills: string[]): string[] {
   const present = new Set(skills);
   return SKILL_ORDER.filter((skill) => present.has(skill));
 }
+
+// Badge đầy đủ (viền + nền nhạt + chữ đậm) cho thẻ bài ở Lịch giao bài. Cùng
+// tông màu với SKILL_PILL_CLASSES để một kỹ năng luôn có một màu trong cả app.
+export const SKILL_BADGE_CLASSES: Record<string, string> = {
+  listening:
+    "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300",
+  reading:
+    "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-500/30 dark:bg-sky-500/10 dark:text-sky-300",
+  writing:
+    "border-orange-200 bg-orange-50 text-orange-700 dark:border-orange-500/30 dark:bg-orange-500/10 dark:text-orange-300",
+  speaking:
+    "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-500/30 dark:bg-violet-500/10 dark:text-violet-300",
+};
+
+// Badge cho bài kiểm tra định kỳ / thi thử — màu chàm, tách khỏi 4 màu kỹ năng.
+export const MOCK_TEST_BADGE_CLASSES =
+  "border-indigo-200 bg-indigo-50 text-indigo-700 dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-300";

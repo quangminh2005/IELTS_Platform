@@ -3,6 +3,7 @@
 // cho cả server component lẫn client component.
 
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
+import { distinctSkills } from "@/lib/skills";
 
 export type CalendarClass = { id: string; name: string };
 
@@ -46,6 +47,8 @@ export type CalendarAssignment = {
   createdAt: string; // ISO
   deadline: string | null; // ISO
   unitCount: number;
+  // Kỹ năng có trong bài (lấy từ các phần được giao), đã sắp thứ tự IELTS.
+  skills: string[];
   recipients: CalendarRecipient[];
 };
 
@@ -238,4 +241,87 @@ export function groupAssignmentsByDayDescending(
   return [...map.keys()]
     .sort((a, b) => b.localeCompare(a))
     .map((dayKey) => ({ dayKey, assignments: map.get(dayKey) ?? [] }));
+}
+
+// ---------------------------------------------------------------------------
+// Nhãn & trạng thái hiển thị của một thẻ bài trên Lịch giao bài.
+// Toàn bộ là hàm thuần để test được và để client component chỉ lo dựng giao diện.
+// ---------------------------------------------------------------------------
+
+// Bỏ dấu tiếng Việt + hạ chữ thường, để dò từ khóa trong tiêu đề bài.
+function normalizeTitle(title: string): string {
+  return title
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/đ/g, "d");
+}
+
+const SKILL_TITLE_PATTERNS: Array<{ skill: string; pattern: RegExp }> = [
+  { skill: "listening", pattern: /\b(listening|nghe)\b/ },
+  { skill: "reading", pattern: /\b(reading|doc hieu|doc)\b/ },
+  { skill: "writing", pattern: /\b(writing|viet|essay|task [12])\b/ },
+  { skill: "speaking", pattern: /\b(speaking|noi)\b/ }
+];
+
+const MOCK_TEST_PATTERN = /(kiem tra dinh ky|kiem tra|thi thu|mock test|mock|full test|mini test|de thi)/;
+
+// Đoán kỹ năng từ tiêu đề — chỉ dùng khi bài không kèm dữ liệu kỹ năng thật.
+export function assignmentTitleSkills(title: string): string[] {
+  const text = normalizeTitle(title);
+  return SKILL_TITLE_PATTERNS.filter((item) => item.pattern.test(text)).map(
+    (item) => item.skill
+  );
+}
+
+// Bài kiểm tra định kỳ / thi thử? Chỉ dựa vào tiêu đề vì dữ liệu không có cờ này.
+export function isMockTestAssignment(title: string): boolean {
+  return MOCK_TEST_PATTERN.test(normalizeTitle(title));
+}
+
+// Kỹ năng để gắn badge cho một bài: ưu tiên kỹ năng thật của các phần trong bài,
+// không có thì mới đoán theo tiêu đề.
+export function assignmentSkillTags(assignment: {
+  title: string;
+  skills?: string[];
+}): string[] {
+  const fromUnits = distinctSkills(assignment.skills ?? []);
+  if (fromUnits.length > 0) {
+    return fromUnits;
+  }
+  return distinctSkills(assignmentTitleSkills(assignment.title));
+}
+
+// Mức độ nộp bài của cả lớp: xong hết / đang nộp dở / còn ít người nộp.
+export type SubmissionLevel = "done" | "progress" | "low";
+
+export function submissionProgress(
+  submitted: number,
+  total: number
+): { percent: number; level: SubmissionLevel } {
+  if (total <= 0) {
+    return { percent: 0, level: "low" };
+  }
+  const percent = Math.round((submitted / total) * 100);
+  if (submitted >= total) {
+    return { percent: 100, level: "done" };
+  }
+  return { percent, level: percent >= 50 ? "progress" : "low" };
+}
+
+// Trạng thái hạn nộp để đổi màu nhãn. nowMs = null (chưa gắn xong ở trình duyệt)
+// thì coi như còn hạn, tránh lệch giữa server và client.
+export type DeadlineState = "none" | "due" | "overdue";
+
+export function deadlineState(
+  deadline: string | null,
+  nowMs: number | null
+): DeadlineState {
+  if (!deadline) {
+    return "none";
+  }
+  if (nowMs === null) {
+    return "due";
+  }
+  return new Date(deadline).getTime() < nowMs ? "overdue" : "due";
 }

@@ -78,6 +78,7 @@ export default async function TeacherCalendarPage() {
       createdAt: assignment.createdAt.toISOString(),
       deadline: assignment.deadline ? assignment.deadline.toISOString() : null,
       unitCount: assignment._count.units,
+      skills: assignmentSkills,
       recipients: assignment.recipients.map((recipient) => {
         const attempt = recipient.attempts[0] ?? null;
 

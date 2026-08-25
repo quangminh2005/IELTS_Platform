@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
+  assignmentSkillTags,
+  deadlineState,
+  isMockTestAssignment,
+  submissionProgress,
   vnDayKey,
   bucketAssignmentsByDay,
   groupAssignmentsByDayDescending,
@@ -11,7 +15,7 @@ function fakeAssignment(
   createdAt: string,
   deadline: string | null
 ): CalendarAssignment {
-  return { id, title: id, createdAt, deadline, unitCount: 1, recipients: [] };
+  return { id, title: id, createdAt, deadline, unitCount: 1, skills: [], recipients: [] };
 }
 
 describe("vnDayKey", () => {
@@ -261,6 +265,7 @@ describe("groupAssignmentsByDayDescending", () => {
     createdAt: "2026-07-02T18:00:00.000Z", // 03/07 giờ VN
     deadline: "2026-07-05T16:59:00.000Z",
     unitCount: 1,
+    skills: [],
     recipients: []
   };
   const b = {
@@ -269,6 +274,7 @@ describe("groupAssignmentsByDayDescending", () => {
     createdAt: "2026-07-03T20:00:00.000Z", // 04/07 giờ VN
     deadline: null,
     unitCount: 1,
+    skills: [],
     recipients: []
   };
 
@@ -282,5 +288,60 @@ describe("groupAssignmentsByDayDescending", () => {
     const days = groupAssignmentsByDayDescending([a, b], "deadline");
     expect(days.map((d) => d.dayKey)).toEqual(["2026-07-05"]);
     expect(days[0].assignments.map((x) => x.id)).toEqual(["a"]);
+  });
+});
+
+describe("assignmentSkillTags", () => {
+  it("ưu tiên kỹ năng thật của các phần trong bài", () => {
+    expect(
+      assignmentSkillTags({ title: "Homework 21/8", skills: ["writing", "listening"] })
+    ).toEqual(["listening", "writing"]);
+  });
+
+  it("không có kỹ năng thì đoán theo tiêu đề (kể cả tiếng Việt có dấu)", () => {
+    expect(assignmentSkillTags({ title: "Kiểm tra định kỳ lần 2 Reading" })).toEqual([
+      "reading"
+    ]);
+    expect(assignmentSkillTags({ title: "Bài tập Nghe tuần này", skills: [] })).toEqual([
+      "listening"
+    ]);
+  });
+
+  it("tiêu đề không nhắc kỹ năng nào thì trả về rỗng", () => {
+    expect(assignmentSkillTags({ title: "Homework 21/8", skills: [] })).toEqual([]);
+  });
+});
+
+describe("isMockTestAssignment", () => {
+  it("nhận ra bài kiểm tra định kỳ / thi thử", () => {
+    expect(isMockTestAssignment("Kiểm tra định kỳ Writing lần 3")).toBe(true);
+    expect(isMockTestAssignment("Mock test 01")).toBe(true);
+    expect(isMockTestAssignment("Listening Homework 19/8")).toBe(false);
+  });
+});
+
+describe("submissionProgress", () => {
+  it("phân mức theo tỷ lệ nộp", () => {
+    expect(submissionProgress(7, 7)).toEqual({ percent: 100, level: "done" });
+    expect(submissionProgress(5, 9)).toEqual({ percent: 56, level: "progress" });
+    expect(submissionProgress(2, 7)).toEqual({ percent: 29, level: "low" });
+  });
+
+  it("không có người nhận thì coi như 0%", () => {
+    expect(submissionProgress(0, 0)).toEqual({ percent: 0, level: "low" });
+  });
+});
+
+describe("deadlineState", () => {
+  const now = Date.parse("2026-08-25T03:00:00.000Z");
+
+  it("không có hạn / còn hạn / quá hạn", () => {
+    expect(deadlineState(null, now)).toBe("none");
+    expect(deadlineState("2026-08-26T03:00:00.000Z", now)).toBe("due");
+    expect(deadlineState("2026-08-24T03:00:00.000Z", now)).toBe("overdue");
+  });
+
+  it("chưa có mốc thời gian ở trình duyệt thì coi như còn hạn", () => {
+    expect(deadlineState("2020-01-01T00:00:00.000Z", null)).toBe("due");
   });
 });

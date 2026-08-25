@@ -1,0 +1,665 @@
+{
+ "title": "IELTS Master - Reading Test 49",
+ "skill": "reading",
+ "sourceLabel": "IELTS Master - Reading Test 49",
+ "description": "Đề đọc IELTS Master Test 49: Diabetes / Contaminating the Arctic / The Story of Coffee.",
+ "units": [
+  {
+   "unitType": "reading_passage",
+   "unitNumber": 1,
+   "title": "Passage 1 - Diabetes",
+   "instructions": "You should spend about 20 minutes on Questions 1-14, which are based on Reading Passage 1 below.",
+   "content": "Here are some facts that you probably didn't know about diabetes. It is the world's fastest growing disease. It is Australia's 6th leading cause of death. Over 1 million Australians have it though 50% of those are as yet unaware. Every 10 minutes someone is diagnosed with diabetes. So much for the facts but what exactly is diabetes?\n\nDiabetes is the name given to a group of different conditions in which there is too much glucose in the blood. Here's what happens: the body needs glucose as its main source of fuel or energy. The body makes glucose from foods containing carbohydrate such as vegetables containing carbohydrate (like potatoes or corn) and cereal foods (like bread, pasta and rice) as well as fruit and milk. Glucose is carried around the body in the blood and the glucose level is called glycaemia. Glycaemia (blood sugar levels) in humans and animals must be neither too high nor too low, but just right. The glucose running around in the blood stream now has to get out of the blood and into the body tissues. This is where insulin enters the story. Insulin is a hormone made by the pancreas, a gland sitting just below the stomach. Insulin opens the doors that let glucose go from the blood to the body cells where energy is made. This process is called glucose metabolism. In diabetes, the pancreas either cannot make insulin or the insulin it does make is not enough and cannot work properly. Without insulin doing its job, the glucose channels are shut. Glucose builds up in the blood leading to high blood glucose levels, which causes the health problems linked to diabetes.\n\nPeople refer to the disease as diabetes but there are actually two distinctive types of the disease. Type 1 diabetes is a condition characterized by high blood glucose levels caused by a total lack of insulin. It occurs when the body's immune system attacks the insulin-producing beta cells in the pancreas and destroys them. The pancreas then produces little or no insulin. Type 1 diabetes develops most often in young people but can appear in adults. Type 2 diabetes is the most common form of diabetes. In type 2 diabetes, either the body does not produce enough insulin or the cells ignore the insulin. Insulin is necessary for the body to be able to use sugar. Sugar is the basic fuel for the cells in the body, and insulin takes the sugar from the blood into the cells.\n\nThe diagnosis of diabetes often depends on what type the patient is suffering from. In Type 1 diabetes, symptoms are usually sudden and sometimes even life threatening - hyperglycaemia (high blood sugar levels) can lead to comas - and therefore it is mostly diagnosed quite quickly. In Type 2 diabetes, many people have no symptoms at all, while other signs can go unnoticed, being seen as part of 'getting older'. Therefore, by the time symptoms are noticed, the blood glucose level for many people can be very high. Common symptoms include: being more thirsty than usual, passing more urine, feeling lethargic, always feeling hungry, having cuts that heal slowly, itching, skin infections, bad breath, blurred vision, unexplained weight change, mood swings, headaches, feeling dizzy and leg cramps.\n\nAt present there is no cure for diabetes, but there is a huge amount of research looking for a cure and to provide superior management techniques and products until a cure is found. Whether it's Type 1 or Type 2 diabetes, the aim of any diabetes treatment is to get your blood glucose levels as close to the non-diabetic range as often as possible. For people with Type 1 diabetes, this will mean insulin injections every day plus leading a healthy lifestyle. For people with Type 2 diabetes, healthy eating and regular physical activity may be all that is required at first: sometimes tablets and/or insulin may be needed later on. Ideally blood glucose levels are kept as close to the non-diabetic range as possible so frequent self-testing is a good idea. This will help prevent the short-term effects of very low or very high blood glucose levels as well as the possible long-term problems. If someone is dependent on insulin, it has to be injected into the body. Insulin cannot be taken as a pill. The insulin would be broken down during digestion just like the protein in food. Insulin must be injected into the fat under your skin for it to get into your blood. Diabetes can cause serious complications for patients. When glucose builds up in the blood instead of going into cells, it can cause problems. Short term problems are similar to the symptoms but long term high blood sugar levels can lead to heart attacks, strokes, kidney failure, amputations and blindness. Having your blood pressure and cholesterol outside recommended ranges can also lead to problems like heart attack and stroke and in fact 2 out of 3 people with diabetes eventually die of these complications. Young adults age 18 - 44 who get type 2 diabetes are 14 times more likely to suffer a heart attack, and are up to 30 times more likely to have a stroke than their peers without diabetes. Young women account for almost all the increase in heart attack risk, while young men are twice as likely to suffer a stroke as young women. This means that huge numbers of people are going to get heart disease, heart attacks and strokes years, sometimes even decades, before they should.",
+   "defaultTimeLimitMinutes": 20,
+   "metadata": {
+    "groupInstructions": {
+     "1": "Do the following statements reflect the views of the writer in Reading Passage 1?\nIn boxes 1 - 7 on your answer sheet write:\n:::box\nYES if the statement agrees with the information\nNO if the statement contradicts the statement\nNOT GIVEN if there is no information on this in the passage\n:::",
+     "8": "Complete the following statements with the best ending from the box below.\nWrite the appropriate letters A - H in boxes 8 - 11 on your answer sheet.\n:::box\nA a healthy lifestyle\nB never suffer any ill effects\nC women\nD people also suffering strokes\nE body cells\nF the pancreas\nG do not realise the fact\nH injections\n:::",
+     "12": "According to the text which of the following are symptoms of diabetes?\nChoose THREE letters (A - G) and write them in boxes 12 - 14 on your answer sheet."
+    }
+   },
+   "questions": [
+    {
+     "order": 1,
+     "questionType": "true_false_not_given",
+     "prompt": "Carbohydrate foods are the body's source of glucose.",
+     "answer": [
+      "YES"
+     ],
+     "explanation": "Bài viết nói cơ thể TẠO glucose TỪ các thức ăn chứa carbohydrate: rau củ nhiều tinh bột, ngũ cốc, trái cây và sữa. → YES.",
+     "points": 1,
+     "evidence": "The body makes glucose from foods containing carbohydrate such as vegetables containing carbohydrate (like potatoes or corn) and cereal foods (like bread, pasta and rice) as well as fruit and milk."
+    },
+    {
+     "order": 2,
+     "questionType": "true_false_not_given",
+     "prompt": "Diabetics cannot produce insulin.",
+     "answer": [
+      "NO"
+     ],
+     "explanation": "Câu này nói TẤT CẢ người tiểu đường đều không tạo được insulin - sai. Bài viết dùng chữ \"either... or\": tuyến tuỵ HOẶC không tạo được insulin, HOẶC có tạo nhưng không đủ và không hoạt động tốt. Tiểu đường tuýp 2 vẫn sản xuất insulin. → NO.",
+     "points": 1,
+     "evidence": "In diabetes, the pancreas either cannot make insulin or the insulin it does make is not enough and cannot work properly."
+    },
+    {
+     "order": 3,
+     "questionType": "true_false_not_given",
+     "prompt": "Some patients develop diabetes due to faults in their own immune systems",
+     "answer": [
+      "YES"
+     ],
+     "explanation": "Tiểu đường tuýp 1 xảy ra khi HỆ MIỄN DỊCH của chính cơ thể tấn công và phá huỷ các tế bào beta sản xuất insulin trong tuyến tuỵ. → YES.",
+     "points": 1,
+     "evidence": "It occurs when the body's immune system attacks the insulin-producing beta cells in the pancreas and destroys them."
+    },
+    {
+     "order": 4,
+     "questionType": "true_false_not_given",
+     "prompt": "Hyperglycaemia leads to type 1 diabetes being diagnosed quite quickly.",
+     "answer": [
+      "YES"
+     ],
+     "explanation": "Ở tuýp 1, triệu chứng đến đột ngột và có khi nguy hiểm tính mạng - đường huyết cao (hyperglycaemia) có thể gây hôn mê, CHÍNH VÌ VẬY bệnh thường được chẩn đoán khá nhanh. → YES.",
+     "points": 1,
+     "evidence": "In Type 1 diabetes, symptoms are usually sudden and sometimes even life threatening - hyperglycaemia (high blood sugar levels) can lead to comas - and therefore it is mostly diagnosed quite quickly."
+    },
+    {
+     "order": 5,
+     "questionType": "true_false_not_given",
+     "prompt": "Artificial insulin is the most effective treatment for those patients requiring insulin.",
+     "answer": [
+      "NOT GIVEN"
+     ],
+     "explanation": "Bài có nói người phụ thuộc insulin phải TIÊM chứ không uống được, nhưng KHÔNG hề nhắc tới \"insulin nhân tạo\" cũng như không xếp hạng cách điều trị nào hiệu quả nhất. → NOT GIVEN.",
+     "points": 1
+    },
+    {
+     "order": 6,
+     "questionType": "true_false_not_given",
+     "prompt": "Frequent check ups at the doctor can drastically reduce the chances of suffering from problems related to diabetes.",
+     "answer": [
+      "NOT GIVEN"
+     ],
+     "explanation": "Bẫy đánh tráo chủ thể: bài khuyên TỰ KIỂM TRA đường huyết thường xuyên (frequent self-testing), chứ không nói gì về việc đi khám bác sĩ định kỳ. → NOT GIVEN.",
+     "points": 1
+    },
+    {
+     "order": 7,
+     "questionType": "true_false_not_given",
+     "prompt": "The majority of diabetics develop heart problems or suffer strokes.",
+     "answer": [
+      "YES"
+     ],
+     "explanation": "Bài nói 2 trong 3 người tiểu đường cuối cùng CHẾT vì các biến chứng tim mạch và đột quỵ - tức đa số mắc các vấn đề này. → YES.",
+     "points": 1,
+     "evidence": "in fact 2 out of 3 people with diabetes eventually die of these complications"
+    },
+    {
+     "order": 8,
+     "questionType": "matching",
+     "prompt": "Bizarre as it may seem, many people with diabetes...",
+     "answer": [
+      "G do not realise the fact"
+     ],
+     "explanation": "Ngay đầu bài: hơn 1 triệu người Úc mắc bệnh nhưng 50% trong số đó CHƯA HỀ BIẾT mình mắc. → G do not realise the fact.",
+     "points": 1,
+     "evidence": "Over 1 million Australians have it though 50% of those are as yet unaware.",
+     "options": [
+      "A a healthy lifestyle",
+      "B never suffer any ill effects",
+      "C women",
+      "D people also suffering strokes",
+      "E body cells",
+      "F the pancreas",
+      "G do not realise the fact",
+      "H injections"
+     ]
+    },
+    {
+     "order": 9,
+     "questionType": "matching",
+     "prompt": "Insulin is a hormone that allows glucose to be absorbed by...",
+     "answer": [
+      "E body cells"
+     ],
+     "explanation": "Insulin mở \"cánh cửa\" cho glucose đi từ máu vào CÁC TẾ BÀO CƠ THỂ, nơi năng lượng được tạo ra. Bẫy: F the pancreas là nơi SẢN XUẤT insulin, không phải nơi hấp thụ glucose. → E body cells.",
+     "points": 1,
+     "evidence": "Insulin opens the doors that let glucose go from the blood to the body cells where energy is made.",
+     "options": [
+      "A a healthy lifestyle",
+      "B never suffer any ill effects",
+      "C women",
+      "D people also suffering strokes",
+      "E body cells",
+      "F the pancreas",
+      "G do not realise the fact",
+      "H injections"
+     ]
+    },
+    {
+     "order": 10,
+     "questionType": "matching",
+     "prompt": "Non severe type 2 diabetes can be solely treated by...",
+     "answer": [
+      "A a healthy lifestyle"
+     ],
+     "explanation": "Với tiểu đường tuýp 2, ăn uống lành mạnh và vận động đều đặn CÓ THỂ LÀ TẤT CẢ những gì cần ở giai đoạn đầu - thuốc viên hay insulin chỉ tính tới sau. → A a healthy lifestyle.",
+     "points": 1,
+     "evidence": "For people with Type 2 diabetes, healthy eating and regular physical activity may be all that is required at first: sometimes tablets and/or insulin may be needed later on.",
+     "options": [
+      "A a healthy lifestyle",
+      "B never suffer any ill effects",
+      "C women",
+      "D people also suffering strokes",
+      "E body cells",
+      "F the pancreas",
+      "G do not realise the fact",
+      "H injections"
+     ]
+    },
+    {
+     "order": 11,
+     "questionType": "matching",
+     "prompt": "Increases in diabetes related heart problems are mainly seen in...",
+     "answer": [
+      "C women"
+     ],
+     "explanation": "Phụ nữ trẻ chiếm gần như TOÀN BỘ phần tăng thêm của nguy cơ nhồi máu cơ tim. Bẫy: nam giới trẻ có nguy cơ ĐỘT QUỴ gấp đôi phụ nữ - nhưng câu hỏi hỏi về bệnh TIM. → C women.",
+     "points": 1,
+     "evidence": "Young women account for almost all the increase in heart attack risk, while young men are twice as likely to suffer a stroke as young women.",
+     "options": [
+      "A a healthy lifestyle",
+      "B never suffer any ill effects",
+      "C women",
+      "D people also suffering strokes",
+      "E body cells",
+      "F the pancreas",
+      "G do not realise the fact",
+      "H injections"
+     ]
+    },
+    {
+     "order": 12,
+     "questionType": "multiple_choice",
+     "prompt": "",
+     "answer": [
+      "B muscle pains",
+      "D losing consciousness",
+      "E tiredness"
+     ],
+     "explanation": "Ba triệu chứng có trong bài là B muscle pains (bài ghi \"leg cramps\" - chuột rút ở chân), D losing consciousness (đường huyết cao có thể dẫn tới hôn mê) và E tiredness (bài ghi \"feeling lethargic\" - uể oải). Bẫy: hot flushes, nausea, bleeding gums và dilation of the eyes đều KHÔNG có trong danh sách; bài chỉ nói \"blurred vision\" (nhìn mờ) chứ không phải giãn đồng tử.",
+     "points": 1,
+     "evidence": "Common symptoms include: being more thirsty than usual, passing more urine, feeling lethargic, always feeling hungry, having cuts that heal slowly, itching, skin infections, bad breath, blurred vision, unexplained weight change, mood swings, headaches, feeling dizzy and leg cramps. / In Type 1 diabetes, symptoms are usually sudden and sometimes even life threatening - hyperglycaemia (high blood sugar levels) can lead to comas",
+     "options": [
+      "A hot flushes",
+      "B muscle pains",
+      "C nausea",
+      "D losing consciousness",
+      "E tiredness",
+      "F bleeding gums",
+      "G dilation of the eyes"
+     ]
+    },
+    {
+     "order": 13,
+     "questionType": "multiple_choice",
+     "prompt": "",
+     "answer": [
+      "B muscle pains",
+      "D losing consciousness",
+      "E tiredness"
+     ],
+     "explanation": "Ba triệu chứng có trong bài là B muscle pains (bài ghi \"leg cramps\" - chuột rút ở chân), D losing consciousness (đường huyết cao có thể dẫn tới hôn mê) và E tiredness (bài ghi \"feeling lethargic\" - uể oải). Bẫy: hot flushes, nausea, bleeding gums và dilation of the eyes đều KHÔNG có trong danh sách; bài chỉ nói \"blurred vision\" (nhìn mờ) chứ không phải giãn đồng tử.",
+     "points": 1,
+     "evidence": "Common symptoms include: being more thirsty than usual, passing more urine, feeling lethargic, always feeling hungry, having cuts that heal slowly, itching, skin infections, bad breath, blurred vision, unexplained weight change, mood swings, headaches, feeling dizzy and leg cramps. / In Type 1 diabetes, symptoms are usually sudden and sometimes even life threatening - hyperglycaemia (high blood sugar levels) can lead to comas",
+     "options": [
+      "A hot flushes",
+      "B muscle pains",
+      "C nausea",
+      "D losing consciousness",
+      "E tiredness",
+      "F bleeding gums",
+      "G dilation of the eyes"
+     ]
+    },
+    {
+     "order": 14,
+     "questionType": "multiple_choice",
+     "prompt": "",
+     "answer": [
+      "B muscle pains",
+      "D losing consciousness",
+      "E tiredness"
+     ],
+     "explanation": "Ba triệu chứng có trong bài là B muscle pains (bài ghi \"leg cramps\" - chuột rút ở chân), D losing consciousness (đường huyết cao có thể dẫn tới hôn mê) và E tiredness (bài ghi \"feeling lethargic\" - uể oải). Bẫy: hot flushes, nausea, bleeding gums và dilation of the eyes đều KHÔNG có trong danh sách; bài chỉ nói \"blurred vision\" (nhìn mờ) chứ không phải giãn đồng tử.",
+     "points": 1,
+     "evidence": "Common symptoms include: being more thirsty than usual, passing more urine, feeling lethargic, always feeling hungry, having cuts that heal slowly, itching, skin infections, bad breath, blurred vision, unexplained weight change, mood swings, headaches, feeling dizzy and leg cramps. / In Type 1 diabetes, symptoms are usually sudden and sometimes even life threatening - hyperglycaemia (high blood sugar levels) can lead to comas",
+     "options": [
+      "A hot flushes",
+      "B muscle pains",
+      "C nausea",
+      "D losing consciousness",
+      "E tiredness",
+      "F bleeding gums",
+      "G dilation of the eyes"
+     ]
+    }
+   ]
+  },
+  {
+   "unitType": "reading_passage",
+   "unitNumber": 2,
+   "title": "Passage 2 - Contaminating the Arctic",
+   "instructions": "You should spend about 20 minutes on Questions 15-27, which are based on Reading Passage 2 below.",
+   "content": "Our perception of the Arctic region is that its distance from industrial centers keeps it pristine and clear from the impact of pollution. However, through a process known as transboundary pollution, the Arctic is the recipient of contaminants whose sources are thousands of miles away. Large quantities of pollutants pour into our atmosphere, as well as our lakes, rivers, and oceans on a daily basis. In the last 20 years, scientists have detected an increasing variety of toxic contaminants in the North, including pesticides from agriculture, chemicals and heavy metals from industry, and even radioactive fall-out from Chernobyl. These are substances that have invaded ecosystems virtually worldwide, but they are especially worrisome in the Arctic.\n\nOriginally, Arctic contamination was largely blamed on chemical leaks, and these leaks were thought to be \"small and localized.\" The consensus now is that pollutants from around the world are being carried north by rivers, ocean currents, and atmospheric circulation. Due to extreme conditions in the Arctic, including reduced sunlight, extensive ice cover and cold temperatures, contaminants break down much more slowly than in warmer climates. Contaminants can also become highly concentrated due to their significantly lengthened life span in the Arctic.\n\nProblems of spring run-off into coastal waters during the growth period of marine life are of critical concern. Spring algae blooms easily, absorbing the concentrated contaminants released by spring melting. These algae are in turn eaten by zooplankton and a wide variety of marine life. The accumulation of these contaminants increases with each step of the food chain or web and can potentially affect northerners who eat marine mammals near the top of the food chain. Pollutants respect no borders; transboundary pollution is the movement of contaminants across political borders, whether by air, rivers, or ocean currents. The eight circumpolar nations, led by the Finnish Initiative of 1989, established the Arctic Environmental Protection Strategy (AEPS) in which participants have agreed to develop an Arctic Monitoring and Assessment Program (AMAP). AMAP establishes an international scientific network to monitor the current condition of the Arctic with respect to specific contaminants. This monitoring program is extremely important because it will give a scientific basis for understanding the scope of the problem.\n\nIn the 1950's, pilots traveling on weather reconnaissance flights in the Canadian high Arctic reported seeing bands of haze in the springtime in the Arctic region. It was during this time that the term \"Arctic haze\" was first used, referring to this smog of unknown origin. But it was not until 1972, that Dr. Glenn Shaw of the Geophysical Institute at the University of Alaska first put forth ideas of the nature and long-range origin of Arctic haze. The idea that the source was long range was very difficult for many to support. Each winter, cold, dense air settles over the Arctic. In the darkness, the Arctic seems to become more and more polluted by a buildup of mid-latitude emissions from fossil fuel combustion, smelting and other industrial processes. By late winter, the Arctic is covered by a layer of this haze the size of the continent of Africa. When the spring light arrives in the Arctic, there is a smog-like haze, which makes the region, at times, looks like pollution over such cities as Los Angeles.\n\nThis polluted air is a well-known and well-characterized feature of the late winter Arctic environment. In the North American Arctic, episodes of brown or black snow have been traced to continental storm tracks that deliver gaseous and particulate-associated contaminants from Asian deserts and agricultural areas. It is now known that the contaminants originate largely from Europe and Asia.\n\nArctic haze has been studied most extensively in Point Barrow, Alaska, across the Canadian Arctic and in Svalbard (Norway). Evidence from ice cores drilled from the ice sheet of Greenland indicates that these haze particles were not always present in the Arctic, but began to appear only in the last century. The Arctic haze particles appear to be similar to smog particles observed in industrial areas farther south, consisting mostly of sulfates mixed with particles of carbon. It is believed the particles are formed when gaseous sulfur dioxide produced by burning sulfur-bearing coal is irradiated by sunlight and oxidized to sulfate, a process catalyzed by trace elements in the air. These sulfate particles or droplets of sulfuric acid quickly capture the carbon particles, which are also floating in the air. Pure sulfate particles or droplets are colourless, so it is believed the darkness of the haze is caused by the mixed-in carbon particles.\n\nThe impact of the haze on Arctic ecosystems, as well as the global environment, has not been adequately researched. The pollutants have only been studied in their aerosol form over the Arctic. However, little is known about what eventually happens to them. It is known that they are removed somehow. There is a good degree of likelihood that the contaminants end up in the ocean, likely into the North Atlantic, the Norwegian Sea and possibly the Bering Sea - all three very important fisheries.\n\nCurrently, the major issue among researchers is to understand the impact of Arctic haze on global climate change. The contaminants absorb sunlight and, in turn, heat up the atmosphere. The global impact of this is currently unknown but the implications are quite powerful.",
+   "defaultTimeLimitMinutes": 20,
+   "metadata": {
+    "groupInstructions": {
+     "15": "Read passage 2 and look at the statements below.\nIn boxes 15 - 21 on your answer sheet write:\n:::box\nTRUE if the statement is true\nFALSE if the statement is false\nNOT GIVEN if the information is not given in the passage\n:::",
+     "22": "Complete the summary relating to Arctic Haze below.\nChoose your answers from the box below the summary and write them in boxes 22 - 27 on your answer sheet.\nNB There are more words than spaces, so you will not use them at all.\n:::box\nBurning | Terrible | Ice cores | Valid | Certain\nOriginating | Sea | Destroying | Theories | Unknown\nAgriculture | Decided | Bird life | Dissipating | Accepted\nGases | Darkness | Air | Density\n:::"
+    },
+    "groupTitles": {
+     "22": "Arctic Haze"
+    },
+    "noteBody": "The origins of spring, arctic haze, first seen over the ice cap in the 1950s, were at first not [[22]]. This haze is a smog formed in the dark, arctic winter by pollution delivered to the Arctic by storms [[23]] in Europe and Asia. It is known to be a recent phenomenon as proof from [[24]] shows it only starting to occur in the 20th Century. The smog consists of sulphates and carbon, the latter creating the [[25]] of the haze. Due to lack of research, the final destination of the pollution is unknown but it probably ends up in the [[26]] and therefore into the food chain. Scientists are presently more worried about the [[27]] effect it has on climate change."
+   },
+   "questions": [
+    {
+     "order": 15,
+     "questionType": "true_false_not_given",
+     "prompt": "Industry in the Arctic has increased over the last 20 years.",
+     "answer": [
+      "NOT GIVEN"
+     ],
+     "explanation": "Bẫy đọc lướt: bài nói trong 20 năm qua các nhà khoa học PHÁT HIỆN ngày càng nhiều loại chất độc ở phương Bắc, và nguồn gốc của chúng ở cách xa hàng nghìn dặm. Bài không nói gì về việc công nghiệp TẠI Bắc Cực tăng lên. → NOT GIVEN.",
+     "points": 1
+    },
+    {
+     "order": 16,
+     "questionType": "true_false_not_given",
+     "prompt": "Arctic conditions mean that the break down of pollutants is much accelerated",
+     "answer": [
+      "FALSE"
+     ],
+     "explanation": "Ngược hẳn: do ít nắng, băng phủ dày và nhiệt độ lạnh, chất ô nhiễm phân huỷ CHẬM HƠN NHIỀU so với vùng khí hậu ấm - vì thế chúng còn tích tụ đậm đặc hơn. → FALSE.",
+     "points": 1,
+     "evidence": "Due to extreme conditions in the Arctic, including reduced sunlight, extensive ice cover and cold temperatures, contaminants break down much more slowly than in warmer climates."
+    },
+    {
+     "order": 17,
+     "questionType": "true_false_not_given",
+     "prompt": "Pollution absorbed by arctic algae can eventually affect humans.",
+     "answer": [
+      "TRUE"
+     ],
+     "explanation": "Tảo hút chất độc, động vật phù du ăn tảo, chất độc tích tụ dần theo từng bậc chuỗi thức ăn và cuối cùng ảnh hưởng tới người dân phương Bắc ăn thú biển ở gần đỉnh chuỗi. → TRUE.",
+     "points": 1,
+     "evidence": "The accumulation of these contaminants increases with each step of the food chain or web and can potentially affect northerners who eat marine mammals near the top of the food chain."
+    },
+    {
+     "order": 18,
+     "questionType": "true_false_not_given",
+     "prompt": "The AEPS has set up scientific stations in the Arctic to monitor pollution.",
+     "answer": [
+      "NOT GIVEN"
+     ],
+     "explanation": "Bài nói AEPS lập chương trình AMAP, và AMAP thiết lập một MẠNG LƯỚI KHOA HỌC QUỐC TẾ để theo dõi. \"Mạng lưới\" không đồng nghĩa với việc dựng các TRẠM nghiên cứu tại Bắc Cực - bài không nói tới trạm nào. → NOT GIVEN.",
+     "points": 1
+    },
+    {
+     "order": 19,
+     "questionType": "true_false_not_given",
+     "prompt": "Arctic pollution can sometimes resemble US urban pollution.",
+     "answer": [
+      "TRUE"
+     ],
+     "explanation": "Khi ánh sáng mùa xuân tới, lớp mù ở Bắc Cực có lúc trông giống hệt màn ô nhiễm trên các thành phố như LOS ANGELES - một đô thị Mỹ. → TRUE.",
+     "points": 1,
+     "evidence": "When the spring light arrives in the Arctic, there is a smog-like haze, which makes the region, at times, looks like pollution over such cities as Los Angeles."
+    },
+    {
+     "order": 20,
+     "questionType": "true_false_not_given",
+     "prompt": "Evidence that this smog has only occurred in the 20th Century has been found in the ice on the polar ice cap.",
+     "answer": [
+      "TRUE"
+     ],
+     "explanation": "Các lõi băng khoan từ dải băng Greenland cho thấy hạt mù này không phải lúc nào cũng có ở Bắc Cực mà chỉ bắt đầu xuất hiện trong thế kỷ vừa qua. → TRUE.",
+     "points": 1,
+     "evidence": "Evidence from ice cores drilled from the ice sheet of Greenland indicates that these haze particles were not always present in the Arctic, but began to appear only in the last century."
+    },
+    {
+     "order": 21,
+     "questionType": "true_false_not_given",
+     "prompt": "Research has shown that aerosol arctic pollutants remain the air indefinitely.",
+     "answer": [
+      "FALSE"
+     ],
+     "explanation": "Bài viết nói rõ: người ta BIẾT các chất này bị loại khỏi không khí bằng cách nào đó, chỉ chưa rõ chúng đi đâu. Vậy chúng không ở lại trong không khí mãi mãi. → FALSE.",
+     "points": 1,
+     "evidence": "It is known that they are removed somehow."
+    },
+    {
+     "order": 22,
+     "questionType": "note_completion",
+     "prompt": "Câu 22",
+     "answer": [
+      "accepted"
+     ],
+     "explanation": "Giả thuyết cho rằng nguồn gốc lớp mù ở rất xa lúc đầu KHÔNG ĐƯỢC CHẤP NHẬN - bài viết nói ý tưởng đó \"rất khó để nhiều người ủng hộ\". Bẫy: \"Valid\" (có giá trị) nghe hợp nhưng \"not accepted\" mới khớp với \"difficult for many to support\".",
+     "points": 1,
+     "evidence": "The idea that the source was long range was very difficult for many to support."
+    },
+    {
+     "order": 23,
+     "questionType": "note_completion",
+     "prompt": "Câu 23",
+     "answer": [
+      "originating",
+      "originate"
+     ],
+     "explanation": "Các cơn bão mang chất ô nhiễm tới Bắc Cực BẮT NGUỒN từ châu Âu và châu Á - bài dùng đúng động từ \"originate\", dạng V-ing sau danh từ \"storms\".",
+     "points": 1,
+     "evidence": "It is now known that the contaminants originate largely from Europe and Asia."
+    },
+    {
+     "order": 24,
+     "questionType": "note_completion",
+     "prompt": "Câu 24",
+     "answer": [
+      "ice cores",
+      "ice core"
+     ],
+     "explanation": "Bằng chứng đến từ CÁC LÕI BĂNG khoan ở dải băng Greenland - cho thấy hiện tượng chỉ mới có từ thế kỷ 20.",
+     "points": 1,
+     "evidence": "Evidence from ice cores drilled from the ice sheet of Greenland indicates that these haze particles were not always present in the Arctic, but began to appear only in the last century."
+    },
+    {
+     "order": 25,
+     "questionType": "note_completion",
+     "prompt": "Câu 25",
+     "answer": [
+      "darkness"
+     ],
+     "explanation": "Hạt sulfate nguyên chất vốn KHÔNG MÀU, nên MÀU SẪM của lớp mù là do các hạt carbon trộn lẫn vào tạo ra.",
+     "points": 1,
+     "evidence": "Pure sulfate particles or droplets are colourless, so it is believed the darkness of the haze is caused by the mixed-in carbon particles."
+    },
+    {
+     "order": 26,
+     "questionType": "note_completion",
+     "prompt": "Câu 26",
+     "answer": [
+      "sea",
+      "the sea"
+     ],
+     "explanation": "Nhiều khả năng chất ô nhiễm cuối cùng rơi xuống BIỂN - Bắc Đại Tây Dương, biển Na Uy và có thể cả biển Bering, đều là ngư trường quan trọng, nên chúng đi vào chuỗi thức ăn.",
+     "points": 1,
+     "evidence": "There is a good degree of likelihood that the contaminants end up in the ocean, likely into the North Atlantic, the Norwegian Sea and possibly the Bering Sea"
+    },
+    {
+     "order": 27,
+     "questionType": "note_completion",
+     "prompt": "Câu 27",
+     "answer": [
+      "unknown"
+     ],
+     "explanation": "Điều các nhà khoa học lo nhất hiện nay là tác động CHƯA RÕ của lớp mù lên biến đổi khí hậu - bài viết dùng đúng chữ \"unknown\".",
+     "points": 1,
+     "evidence": "The global impact of this is currently unknown but the implications are quite powerful."
+    }
+   ]
+  },
+  {
+   "unitType": "reading_passage",
+   "unitNumber": 3,
+   "title": "Passage 3 - The Story of Coffee",
+   "instructions": "You should spend about 20 minutes on Questions 28-40, which are based on Reading Passage 3 below.",
+   "content": "A Coffee was first discovered in Eastern Africa in an area we know today as Ethiopia. A popular legend refers to a goat herder by the name of Kaldi, who observed his goats acting unusually friskily after eating berries from a bush. Curious about this phenomenon, Kaldi tried eating the berries himself. He found that these berries gave him renewed energy.\n\nB The news of this energy laden fruit quickly moved throughout the region. Coffee berries were transported from Ethiopia to the Arabian Peninsula, and were first cultivated in what today is the country of Yemen. Coffee remained a secret in Arabia before spreading to Turkey and then to the European continent by means of Venetian trade merchants.\n\nC Coffee was first eaten as a food though later people in Arabia would make a drink out of boiling the beans for its narcotic effects and medicinal value. Coffee for a time was known as Arabian wine to Muslims who were banned from alcohol by Islam. It was not until after coffee had been eaten as a food product, a wine and a medicine that it was discovered, probably by complete accident in Turkey, that by roasting the beans a delicious drink could be made. The roasted beans were first crushed, and then boiled in water, creating a crude version of the beverage we enjoy today. The first coffee houses were opened in Europe in the 17th Century and in 1675, the Viennese established the habit of refining the brew by filtering out the grounds, sweetening it, and adding a dash of milk.\n\nD If you were to explore the planet for coffee, you would find about 60 species of coffee plants growing wild in Africa, Malaysia, and other regions. But only about ten of them are actually cultivated. Of these ten, two species are responsible for almost all the coffee produced in the world: Coffea Arabica and Coffea Canephora (usually known as Robusta). Because of ecological differences existing among the various coffee producing countries, both types have undergone many mutations and now exist in many sub species.\n\nE Although wild plants can reach 10 - 12 metres in height, the plantation one reaches a height of around four metres. This makes the harvest and flowering easier, and cultivation more economical. The flowers are white and sweet-scented like the Spanish jasmine. Flowers give way to a red, darkish berry. At first sight, the fruit is like a big cherry both in size and in colour. The berry is coated with a thin, red film (epicarp) containing a white, sugary mucilaginous flesh (mesocarp). Inside the pulp there are the seeds in the form of two beans coupled at their flat surface. Beans are in turn coated with a kind of resistant, golden yellow parchment, (called endocarp). When peeled, the real bean appears with another very thin silvery film. The bean is bluish green verging on bronze, and is at the most 11 millimetres long and 8 millimetres wide.\n\nF Coffee plants need special conditions to give a satisfactory crop. The climate needs to be hot-wet or hot temperate, between the Tropic of Cancer and the Tropic of Capricorn, with frequent rains and temperatures varying from 15 to 25 Degrees C. The soil should be deep, hard, permeable, well irrigated, with well-drained subsoil. The best lands are the hilly ones or from just-tilled woods. The perfect altitude is between 600 and 1200 metres, though some varieties thrive at 2000-2200 metres. Cultivation aimed at protecting the plants at every stage of growth is needed. Sowing should be in sheltered nurseries from which, after about six months, the seedlings should be moved to plantations in the rainy season where they are usually alternated with other plants to shield them from wind and excessive sunlight. Only when the plant is five years old can it be counted upon to give a regular yield. This is between 400 grams and two kilos of arabica beans for each plant, and 600 grams and two kilos for robusta beans.\n\nG Harvesting time depends on the geographic situation and it can vary greatly therefore according to the various producing countries. First the ripe beans are picked from the branches. Pickers can selectively pick approximately 250 to 300 pounds of coffee cherry a day. At the end of the day, the pickers bring their heavy burlap bags to pulping mills where the cherry coffee can be pulped (or wet milled). The pulped beans then rest, covered in pure rainwater to ferment overnight. The next day the wet beans are hand-distributed upon the drying floor to be sun dried. This drying process takes from one to two weeks depending on the amount of sunny days available. To make sure they dry evenly, the beans need to be raked many times during this drying time. Two weeks later the sun dried beans, now called parchment, are scooped up, bagged and taken to be milled. Huge milling machines then remove the parchment and silver skin, which renders a green bean suitable for roasting. The green beans are roasted according to the customers' specifications and, after cooling, the beans are then packaged and mailed to customers.",
+   "defaultTimeLimitMinutes": 20,
+   "metadata": {
+    "groupInstructions": {
+     "28": "The reading passage on The Story of Coffee has 7 paragraphs A - G.\nFrom the list of headings below choose the most suitable headings for paragraphs B - G.\nWrite the appropriate number (i - xi) in boxes 28 - 33 on your answer sheet.\nNB There are more headings than paragraphs, so you will not use them all.\nExample: Paragraph A - Answer: iv\n\nList of headings\n:::box\ni Growing Coffee\nii Problems with Manufacture\niii Processing the Bean\niv First Contact\nv Arabian Coffee\nvi Coffee Varieties\nvii Modern Coffee\nviii The Spread of Coffee\nix Consuming Coffee\nx Climates for Coffee\nxi The Coffee Plant\n:::",
+     "34": "Complete the labels on the diagram of a coffee bean below.\nChoose your answers from the text and write them in boxes 34 - 36 on your answer sheet.",
+     "37": "Using the information in the passage, complete the flow chart below.\nWrite your answers in boxes 37 - 40 on your answer sheet.\nUse NO MORE THAN THREE WORDS from the passage for each answer."
+    },
+    "groupImages": {
+     "34": "data:image/jpeg;base64,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"
+    },
+    "noteBody": "[[34]]\n[[35]]\n[[36]]\n:::break\n# The Coffee Production Process\n:::flow\nThe coffee (eg) ...cherry... is picked by hand and delivered to mills.\nThe coffee cherry is pulped or [[37]]\nThe pulped beans are left [[38]] to ferment in pure water.\nThe wet beans are sun dried for 1 or 2 weeks to make parchment - they are [[39]] often to ensure an even drying procedure.\nThe parchment is then bagged and taken to be milled to make the green beans.\nThe green beans are then roasted to [[40]]\nThe roasted beans are cooled.\nThe finished product is packaged and mailed to the customer.\n:::"
+   },
+   "questions": [
+    {
+     "order": 28,
+     "questionType": "matching",
+     "prompt": "Paragraph B",
+     "answer": [
+      "viii The Spread of Coffee"
+     ],
+     "explanation": "Đoạn B kể việc cà phê LAN RỘNG: từ Ethiopia sang bán đảo Ả Rập, trồng đầu tiên ở Yemen, rồi tới Thổ Nhĩ Kỳ và châu Âu nhờ thương nhân Venice. Bẫy: \"v Arabian Coffee\" chỉ đúng một chặng trong cả hành trình. → viii.",
+     "points": 1,
+     "evidence": "Coffee berries were transported from Ethiopia to the Arabian Peninsula, and were first cultivated in what today is the country of Yemen. Coffee remained a secret in Arabia before spreading to Turkey and then to the European continent by means of Venetian trade merchants.",
+     "options": [
+      "i Growing Coffee",
+      "ii Problems with Manufacture",
+      "iii Processing the Bean",
+      "iv First Contact",
+      "v Arabian Coffee",
+      "vi Coffee Varieties",
+      "vii Modern Coffee",
+      "viii The Spread of Coffee",
+      "ix Consuming Coffee",
+      "x Climates for Coffee",
+      "xi The Coffee Plant"
+     ]
+    },
+    {
+     "order": 29,
+     "questionType": "matching",
+     "prompt": "Paragraph C",
+     "answer": [
+      "ix Consuming Coffee"
+     ],
+     "explanation": "Đoạn C nói người ta DÙNG cà phê thế nào qua các thời kỳ: ăn như thức ăn, nấu thành thức uống gây hưng phấn, dùng làm thuốc, làm \"rượu vang Ả Rập\", rồi rang lên pha uống và mở quán cà phê. → ix Consuming Coffee.",
+     "points": 1,
+     "evidence": "Coffee was first eaten as a food though later people in Arabia would make a drink out of boiling the beans for its narcotic effects and medicinal value.",
+     "options": [
+      "i Growing Coffee",
+      "ii Problems with Manufacture",
+      "iii Processing the Bean",
+      "iv First Contact",
+      "v Arabian Coffee",
+      "vi Coffee Varieties",
+      "vii Modern Coffee",
+      "viii The Spread of Coffee",
+      "ix Consuming Coffee",
+      "x Climates for Coffee",
+      "xi The Coffee Plant"
+     ]
+    },
+    {
+     "order": 30,
+     "questionType": "matching",
+     "prompt": "Paragraph D",
+     "answer": [
+      "vi Coffee Varieties"
+     ],
+     "explanation": "Đoạn D liệt kê các GIỐNG cà phê: khoảng 60 loài mọc hoang, chỉ 10 loài được trồng, và hai loài Coffea Arabica với Coffea Canephora (Robusta) chiếm gần hết sản lượng thế giới, lại còn nhiều phân loài. → vi Coffee Varieties.",
+     "points": 1,
+     "evidence": "Of these ten, two species are responsible for almost all the coffee produced in the world: Coffea Arabica and Coffea Canephora (usually known as Robusta).",
+     "options": [
+      "i Growing Coffee",
+      "ii Problems with Manufacture",
+      "iii Processing the Bean",
+      "iv First Contact",
+      "v Arabian Coffee",
+      "vi Coffee Varieties",
+      "vii Modern Coffee",
+      "viii The Spread of Coffee",
+      "ix Consuming Coffee",
+      "x Climates for Coffee",
+      "xi The Coffee Plant"
+     ]
+    },
+    {
+     "order": 31,
+     "questionType": "matching",
+     "prompt": "Paragraph E",
+     "answer": [
+      "xi The Coffee Plant"
+     ],
+     "explanation": "Đoạn E mô tả BẢN THÂN CÂY và quả: chiều cao, hoa trắng thơm như nhài, quả đỏ như quả anh đào, các lớp epicarp - mesocarp - endocarp và kích thước hạt. → xi The Coffee Plant.",
+     "points": 1,
+     "evidence": "Although wild plants can reach 10 - 12 metres in height, the plantation one reaches a height of around four metres.",
+     "options": [
+      "i Growing Coffee",
+      "ii Problems with Manufacture",
+      "iii Processing the Bean",
+      "iv First Contact",
+      "v Arabian Coffee",
+      "vi Coffee Varieties",
+      "vii Modern Coffee",
+      "viii The Spread of Coffee",
+      "ix Consuming Coffee",
+      "x Climates for Coffee",
+      "xi The Coffee Plant"
+     ]
+    },
+    {
+     "order": 32,
+     "questionType": "matching",
+     "prompt": "Paragraph F",
+     "answer": [
+      "i Growing Coffee"
+     ],
+     "explanation": "Đoạn F nói cách TRỒNG cà phê: khí hậu, đất, độ cao, gieo trong vườn ươm, chuyển ra đồn điền vào mùa mưa, che nắng che gió, và sản lượng khi cây được năm tuổi. Bẫy: \"x Climates for Coffee\" chỉ bao được phần đầu đoạn, trong khi đoạn còn nói cả khâu gieo trồng và thu hoạch. → i Growing Coffee.",
+     "points": 1,
+     "evidence": "Coffee plants need special conditions to give a satisfactory crop.",
+     "options": [
+      "i Growing Coffee",
+      "ii Problems with Manufacture",
+      "iii Processing the Bean",
+      "iv First Contact",
+      "v Arabian Coffee",
+      "vi Coffee Varieties",
+      "vii Modern Coffee",
+      "viii The Spread of Coffee",
+      "ix Consuming Coffee",
+      "x Climates for Coffee",
+      "xi The Coffee Plant"
+     ]
+    },
+    {
+     "order": 33,
+     "questionType": "matching",
+     "prompt": "Paragraph G",
+     "answer": [
+      "iii Processing the Bean"
+     ],
+     "explanation": "Đoạn G mô tả CHẾ BIẾN hạt sau thu hoạch: hái quả, xay ướt, ủ lên men, phơi nắng, cào đảo, xay bỏ vỏ trấu để ra hạt xanh rồi rang. → iii Processing the Bean.",
+     "points": 1,
+     "evidence": "At the end of the day, the pickers bring their heavy burlap bags to pulping mills where the cherry coffee can be pulped (or wet milled).",
+     "options": [
+      "i Growing Coffee",
+      "ii Problems with Manufacture",
+      "iii Processing the Bean",
+      "iv First Contact",
+      "v Arabian Coffee",
+      "vi Coffee Varieties",
+      "vii Modern Coffee",
+      "viii The Spread of Coffee",
+      "ix Consuming Coffee",
+      "x Climates for Coffee",
+      "xi The Coffee Plant"
+     ]
+    },
+    {
+     "order": 34,
+     "questionType": "note_completion",
+     "prompt": "Câu 34",
+     "answer": [
+      "epicarp",
+      "the epicarp"
+     ],
+     "explanation": "Mũi tên (34) chỉ LỚP VỎ NGOÀI cùng của quả - bài viết gọi là lớp màng mỏng màu đỏ, tức epicarp.",
+     "points": 1,
+     "evidence": "The berry is coated with a thin, red film (epicarp) containing a white, sugary mucilaginous flesh (mesocarp)."
+    },
+    {
+     "order": 35,
+     "questionType": "note_completion",
+     "prompt": "Câu 35",
+     "answer": [
+      "mesocarp",
+      "the mesocarp"
+     ],
+     "explanation": "Mũi tên (35) chỉ lớp THỊT QUẢ trắng, nhiều đường và nhớt nằm ngay dưới vỏ - tức mesocarp.",
+     "points": 1,
+     "evidence": "The berry is coated with a thin, red film (epicarp) containing a white, sugary mucilaginous flesh (mesocarp)."
+    },
+    {
+     "order": 36,
+     "questionType": "note_completion",
+     "prompt": "Câu 36",
+     "answer": [
+      "endocarp",
+      "the endocarp"
+     ],
+     "explanation": "Mũi tên (36) chỉ lớp vỏ trấu dai màu vàng óng bọc quanh hạt - bài gọi là endocarp.",
+     "points": 1,
+     "evidence": "Beans are in turn coated with a kind of resistant, golden yellow parchment, (called endocarp)."
+    },
+    {
+     "order": 37,
+     "questionType": "note_completion",
+     "prompt": "Câu 37",
+     "answer": [
+      "wet milled",
+      "wet-milled"
+     ],
+     "explanation": "Ở nhà máy, quả cà phê được xay bỏ vỏ - bài viết ghi \"pulped (or wet milled)\", tức XAY ƯỚT.",
+     "points": 1,
+     "evidence": "At the end of the day, the pickers bring their heavy burlap bags to pulping mills where the cherry coffee can be pulped (or wet milled)."
+    },
+    {
+     "order": 38,
+     "questionType": "note_completion",
+     "prompt": "Câu 38",
+     "answer": [
+      "overnight"
+     ],
+     "explanation": "Hạt sau khi xay được ngâm trong nước mưa sạch để lên men QUA ĐÊM.",
+     "points": 1,
+     "evidence": "The pulped beans then rest, covered in pure rainwater to ferment overnight."
+    },
+    {
+     "order": 39,
+     "questionType": "note_completion",
+     "prompt": "Câu 39",
+     "answer": [
+      "raked"
+     ],
+     "explanation": "Để hạt khô đều, người ta phải CÀO ĐẢO nhiều lần trong suốt thời gian phơi.",
+     "points": 1,
+     "evidence": "To make sure they dry evenly, the beans need to be raked many times during this drying time."
+    },
+    {
+     "order": 40,
+     "questionType": "note_completion",
+     "prompt": "Câu 40",
+     "answer": [
+      "the customers' specifications",
+      "customers' specifications",
+      "the customers’ specifications",
+      "customers’ specifications",
+      "customer's specifications",
+      "the customers specifications"
+     ],
+     "explanation": "Hạt xanh được rang THEO YÊU CẦU CỦA KHÁCH HÀNG, sau đó để nguội, đóng gói và gửi đi.",
+     "points": 1,
+     "evidence": "The green beans are roasted according to the customers' specifications and, after cooling, the beans are then packaged and mailed to customers."
+    }
+   ]
+  }
+ ]
+}

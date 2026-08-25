@@ -40,3 +40,36 @@ export function getLoginBackgroundPalette(
     ? LOGIN_BACKGROUND_PALETTES.dark
     : LOGIN_BACKGROUND_PALETTES.light;
 }
+
+/**
+ * Bề rộng màn hình tối thiểu để nạp nền động.
+ *
+ * Dưới ngưỡng này (điện thoại, tablet dựng đứng) dùng nền tĩnh. Hai lý do:
+ * three.js nặng ~731KB, tải qua 4G thì chậm và tốn dung lượng của học viên;
+ * và chính nó là thủ phạm làm trắng trang đăng nhập trên máy đời cũ — bản
+ * 0.185 dùng cú pháp `static { ... }`, chỉ chạy từ iOS Safari 16.4 / Chrome 94
+ * trở lên, máy cũ hơn báo lỗi cú pháp ngay lúc đọc file.
+ */
+export const LOGIN_SHADER_MIN_WIDTH = 1024;
+
+export type LoginShaderConditions = {
+  /** Người dùng bật "giảm chuyển động" trong cài đặt hệ thống. */
+  reducedMotion: boolean;
+  /** Máy tạo được ngữ cảnh WebGL. */
+  hasWebgl: boolean;
+  /** Bề rộng khung nhìn, tính bằng px. */
+  viewportWidth: number;
+};
+
+/** Có nạp nền động hay không. Phải qua CẢ BA điều kiện. */
+export function shouldLoadLoginShader({
+  reducedMotion,
+  hasWebgl,
+  viewportWidth
+}: LoginShaderConditions): boolean {
+  if (reducedMotion || !hasWebgl) {
+    return false;
+  }
+
+  return viewportWidth >= LOGIN_SHADER_MIN_WIDTH;
+}

@@ -30,6 +30,16 @@ Seeded demo accounts: `teacher@example.com` / `teacher123`, `student@example.com
 - **NextAuth v4** (JWT sessions). Tailwind CSS. **Vercel Blob** for audio/image storage.
 - Deploys to **Vercel**, region `sin1` (see `vercel.json`). Pushes to `feature/ielts-platform-mvp` auto-deploy.
 
+## Supported browsers
+
+`package.json` declares a `browserslist`: **iOS/Safari >= 15.6, Chrome/Edge/Firefox >= 90, Samsung >= 15**. Students take tests on phones, many of them old iPhones — check this list before using a modern-only API. Next's SWC compiler reads it and down-compiles **our own code** in `app/`, `components/`, `lib/` to match.
+
+**What browserslist does NOT do:** it never touches code shipped inside `node_modules` — those packages are bundled as published. That's exactly how the 25/8/2026 outage happened: `three@0.185` uses `static { }` class blocks (iOS Safari 16.4+ / Chrome 94+), old iPhones threw a SyntaxError while parsing the chunk, and `/login` went blank. Widening browserslist would not have prevented it. The only way to re-compile a dependency is `transpilePackages: ["..."]` in `next.config.js` — deliberately **not** enabled for `three` (it only loads at >=1024px wide and sits behind an error boundary, so paying the build cost buys nothing). If a dependency has to run on old phones, add it to `transpilePackages`; don't assume browserslist covers it.
+
+## Error screens
+
+`app/error.tsx` (per-page) and `app/global-error.tsx` (root layout crash) replace Next's English "Application error: a client-side exception has occurred" with a Vietnamese screen carrying a "Thử lại" (`reset()`) button and a home link. `global-error.tsx` renders its own `<html>`/`<body>` and must stay self-contained — its colors are hand-copied from the tokens in `app/globals.css` into an inline `<style>`, because the stylesheet may not be loaded when the root layout is what died. Change the palette there too if the tokens move.
+
 ## Architecture
 
 ### Roles & auth (`lib/auth.ts`)

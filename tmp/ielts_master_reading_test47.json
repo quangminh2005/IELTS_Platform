@@ -1,0 +1,618 @@
+{
+ "title": "IELTS Master - Reading Test 47",
+ "skill": "reading",
+ "sourceLabel": "IELTS Master - Reading Test 47",
+ "description": "Đề đọc IELTS Master Test 47: Ocean Acidification / A New Fair Trade Organisation / The First Antigravity Machine.",
+ "units": [
+  {
+   "unitType": "reading_passage",
+   "unitNumber": 1,
+   "title": "Passage 1 - Ocean Acidification",
+   "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.",
+   "content": "A few years ago, biologist, Victoria Fabry, saw the future of the world's oceans in ajar. She was aboard a research ship in the North Pacific, carrying out experiments on a species of pteropod - small molluscs with shells up to a centimetre long, which swim in a way that resembles butterfly flight, propelled by small flaps. Something strange was happening in Fabry's jars. 'The pteropods were still swimming, but their shells were visibly dissolving,' says Fabry. She realised that the animals' respiration had increased the carbon dioxide (CO2) in the jars, which had been sealed for 48 hours, changing the water's chemistry to a point where the calcium carbonate in the pteropods' shells had started to dissolve. What Fabry had stumbled on was a hint of 'the other CO2 problem'.\n\nIt has taken several decades for climate change to be recognised as a serious threat. But another result of our fossil-fuel habit - ocean acidification - has only begun to be researched in the last few years. Its impact could be momentous, says Joanie Kleypas of the National Centre for Atmospheric Research in Boulder, Colorado.\n\nCO2 forms carbonic acid when it dissolves in water, and the oceans are soaking up more and more of it. Recent studies show that the seas have absorbed about a third of all the fossil-fuel carbon released into the atmosphere since the beginning of the industrial revolution in the mid-eighteenth century, and they will soak up much more over the next century. Yet until quite recently many people dismissed the idea that humanity could alter the acidity of the oceans, which cover 71% of the planet's surface to an average depth of about four kilometres. The ocean's natural buffering capacity was assumed to be capable of preventing any changes in acidity even with a massive increase in CO2 levels.\n\nAnd it is - but only if the increase happens slowly, over hundreds of thousands of years. Over this timescale, the release of carbonates from rocks on land and from ocean sediments can neutralise the dissolved CO2, just like dropping chalk in an acid. Levels of CO2 are now rising so fast that they are overwhelming the oceans' buffering capacity.\n\nIn 2003 Ken Caldeira of the Carnegie Institution in Stanford, and Michael Wickett at the Lawrence Livermore National Laboratory, calculated that the absorption of fossil CO2 could make the oceans more acidic over the next few centuries than they have been for 300 million years, with the possible exception of rare catastrophic events. The potential seriousness of the effect was underlined in 2005 by the work of James Zachos of the University of California and his colleagues, who studied one of those rare catastrophic events. They showed that the mass extinction of huge numbers of deep-sea creatures around 55 million years ago was caused by ocean acidification after the release of around 4500 gigatonnes of carbon. It took over 100,000 years for the oceans to return to their normal state.\n\nAround the same time as the Zachos paper, the UK's Royal Society published the first comprehensive report on ocean acidification. It makes grim reading, concluding that ocean acidification is inevitable without drastic cuts in emissions. Marine ecosystems, especially coral reefs, are likely to be affected, with fishing and tourism based around reefs losing billions of dollars each year. Yet the report also stressed that there is huge uncertainty about the effects on marine life.\n\nThe sea creatures most likely to be affected are those that make their shells or skeletons from calcium carbonate, including tiny plankton and huge corals. Their shells and skeletons do not dissolve only because the upper layers of the oceans are supersaturated with calcium carbonate. Acidification reduces carbonate ion concentrations, making it harder for organisms to build their shells or skeletons. When the water drops below the saturation point, these structures will start to dissolve. Calcium carbonate comes in two different forms, aragonite and calcite, aragonite being more soluble. So organisms with aragonite structures, such as corals, will be hardest hit.\n\nSo far the picture looks relentlessly gloomy, but could there actually be some positive results from adding so much CO2 to the seas? One intriguing finding, says Ulf Riebesell of the Leibniz Institute of Marine Sciences in Kiel, Germany, concerns gases that influence climate. A few experiments suggest that in more acidic conditions, microbes will produce more volatile organic compounds such as dimethyl sulphide, some of which escapes to the atmosphere and causes clouds to develop. More clouds would mean cooler conditions, which could potentially slow global warming.\n\nCalculating the effect of ocean acidification on people and economies is virtually impossible, but it could be enormous. Take the impact on tropical corals, assuming that warming and other pressures such as pollution do not decimate them first. Reefs protect the shorelines of many countries. Acidification could start eating away at reefs just when they are needed more than ever because of rising sea levels.\n\n'No serious scientist believes the oceans will be devoid of life,' says Caldeira. 'Wherever there is light and nutrients something will live. A likely outcome will be a radical simplification of the ecosystem.' Taking this and other scientists' views into account, it seems clear that acidification will mean the loss of many species, so our children will not see the amazingly beautiful things that we can. It is important to tell them to go and see the corals now before it is too late.",
+   "defaultTimeLimitMinutes": 20,
+   "metadata": {
+    "groupInstructions": {
+     "1": "Answer the questions below.\nChoose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.",
+     "8": "Complete the flow chart below.\nWrite NO MORE THAN TWO WORDS from the passage.",
+     "13": "Choose the correct letter, A, B, C or D.\nWrite the correct letter in box 13 on your answer sheet."
+    },
+    "noteBody": "# A possible benefit from increased CO2 levels in the sea\n:::flow\nIncreased ocean acidification\nLarge quantities of organic compounds made by [[8]]\nTransfer to [[9]]\n[[10]] are formed\n[[11]] temperatures\nReduction in rate of [[12]]\n:::"
+   },
+   "questions": [
+    {
+     "order": 1,
+     "questionType": "short_answer",
+     "prompt": "What does the pteropod use to move itself through the water?",
+     "answer": [
+      "small flaps",
+      "flaps",
+      "(small) flaps",
+      "its small flaps"
+     ],
+     "explanation": "Loài pteropod bơi theo kiểu giống bướm vỗ cánh, được đẩy đi nhờ NHỮNG VẠT NHỎ (small flaps) ở thân.",
+     "points": 1,
+     "evidence": "which swim in a way that resembles butterfly flight, propelled by small flaps"
+    },
+    {
+     "order": 2,
+     "questionType": "short_answer",
+     "prompt": "Which part of the pteropods was being damaged by increased acidification?",
+     "answer": [
+      "shells",
+      "their shells",
+      "the shells",
+      "(their) shells"
+     ],
+     "explanation": "Fabry thấy pteropod vẫn bơi được nhưng VỎ của chúng đang tan dần thấy rõ - đó là bộ phận bị axit ăn mòn.",
+     "points": 1,
+     "evidence": "The pteropods were still swimming, but their shells were visibly dissolving"
+    },
+    {
+     "order": 3,
+     "questionType": "short_answer",
+     "prompt": "What proportion of the carbon released over the last 200 years has been taken in by the oceans?",
+     "answer": [
+      "a third",
+      "about a third",
+      "1/3",
+      "about 1/3",
+      "one third",
+      "one-third"
+     ],
+     "explanation": "Biển đã hấp thụ KHOẢNG MỘT PHẦN BA lượng carbon từ nhiên liệu hoá thạch thải ra kể từ đầu cách mạng công nghiệp giữa thế kỷ 18 (tức khoảng 200 năm nay).",
+     "points": 1,
+     "evidence": "the seas have absorbed about a third of all the fossil-fuel carbon released into the atmosphere since the beginning of the industrial revolution in the mid-eighteenth century"
+    },
+    {
+     "order": 4,
+     "questionType": "short_answer",
+     "prompt": "Where do carbonates enter the oceans from?",
+     "answer": [
+      "rocks on land",
+      "rocks",
+      "(rocks) on land",
+      "from rocks on land",
+      "ocean sediments"
+     ],
+     "explanation": "Carbonate được giải phóng từ ĐÁ TRÊN ĐẤT LIỀN (và từ trầm tích đáy biển) rồi trung hoà bớt CO2 đã hoà tan - giống thả phấn vào axit. Đáp án sách ghi \"rocks (on land)\".",
+     "points": 1,
+     "evidence": "the release of carbonates from rocks on land and from ocean sediments can neutralise the dissolved CO2"
+    },
+    {
+     "order": 5,
+     "questionType": "short_answer",
+     "prompt": "How long did the oceans need to recover after the destruction of marine life by acidification 55 million years ago?",
+     "answer": [
+      "over 100,000 years",
+      "100,000 years",
+      "over 100000 years",
+      "100000 years"
+     ],
+     "explanation": "Sau đợt tuyệt chủng hàng loạt cách đây 55 triệu năm, biển phải mất HƠN 100.000 NĂM mới trở lại trạng thái bình thường.",
+     "points": 1,
+     "evidence": "It took over 100,000 years for the oceans to return to their normal state."
+    },
+    {
+     "order": 6,
+     "questionType": "short_answer",
+     "prompt": "Which businesses will suffer if reefs are damaged?",
+     "answer": [
+      "fishing and tourism",
+      "tourism and fishing",
+      "fishing and tourism industries"
+     ],
+     "explanation": "Báo cáo của Royal Society cảnh báo NGHỀ CÁ VÀ DU LỊCH dựa vào các rạn san hô sẽ mất hàng tỷ đô la mỗi năm.",
+     "points": 1,
+     "evidence": "with fishing and tourism based around reefs losing billions of dollars each year"
+    },
+    {
+     "order": 7,
+     "questionType": "short_answer",
+     "prompt": "What type of creatures make their skeletons out of aragonite?",
+     "answer": [
+      "corals",
+      "coral",
+      "(corals)"
+     ],
+     "explanation": "Aragonite dễ tan hơn calcite, nên những sinh vật có bộ khung bằng aragonite - tiêu biểu là SAN HÔ - sẽ chịu thiệt nặng nhất.",
+     "points": 1,
+     "evidence": "So organisms with aragonite structures, such as corals, will be hardest hit."
+    },
+    {
+     "order": 8,
+     "questionType": "note_completion",
+     "prompt": "Câu 8",
+     "answer": [
+      "microbes",
+      "microbe"
+     ],
+     "explanation": "Trong môi trường axit hơn, VI SINH VẬT (microbes) sinh ra nhiều hợp chất hữu cơ dễ bay hơi hơn, chẳng hạn dimethyl sulphide.",
+     "points": 1,
+     "evidence": "in more acidic conditions, microbes will produce more volatile organic compounds such as dimethyl sulphide"
+    },
+    {
+     "order": 9,
+     "questionType": "note_completion",
+     "prompt": "Câu 9",
+     "answer": [
+      "the atmosphere",
+      "atmosphere"
+     ],
+     "explanation": "Một phần các hợp chất đó thoát lên KHÍ QUYỂN - đây là bước chuyển tiếp trong sơ đồ.",
+     "points": 1,
+     "evidence": "some of which escapes to the atmosphere and causes clouds to develop"
+    },
+    {
+     "order": 10,
+     "questionType": "note_completion",
+     "prompt": "Câu 10",
+     "answer": [
+      "clouds",
+      "cloud",
+      "more clouds"
+     ],
+     "explanation": "Lên tới khí quyển, các hợp chất này khiến MÂY hình thành.",
+     "points": 1,
+     "evidence": "some of which escapes to the atmosphere and causes clouds to develop"
+    },
+    {
+     "order": 11,
+     "questionType": "note_completion",
+     "prompt": "Câu 11",
+     "answer": [
+      "cooler",
+      "cooler conditions"
+     ],
+     "explanation": "Nhiều mây hơn đồng nghĩa với nhiệt độ MÁT HƠN (cooler). Ô trống đứng ngay trước chữ \"temperatures\" nên phải điền tính từ so sánh \"cooler\".",
+     "points": 1,
+     "evidence": "More clouds would mean cooler conditions"
+    },
+    {
+     "order": 12,
+     "questionType": "note_completion",
+     "prompt": "Câu 12",
+     "answer": [
+      "global warming"
+     ],
+     "explanation": "Nhiệt độ mát hơn có thể làm CHẬM quá trình NÓNG LÊN TOÀN CẦU - đây chính là \"lợi ích có thể có\" mà sơ đồ nói tới.",
+     "points": 1,
+     "evidence": "which could potentially slow global warming"
+    },
+    {
+     "order": 13,
+     "questionType": "multiple_choice",
+     "prompt": "Which of the following best summarises the writer's view in the passage?",
+     "answer": [
+      "C It is likely that increased CO2 will change marine ecosystems considerably."
+     ],
+     "explanation": "Ở đoạn kết, tác giả dẫn lời Caldeira: biển sẽ không chết hẳn, nhưng \"kết cục có khả năng xảy ra là hệ sinh thái bị đơn giản hoá triệt để\", và tác giả kết luận axit hoá sẽ khiến mất nhiều loài. Tức là CO2 tăng RẤT CÓ THỂ làm hệ sinh thái biển thay đổi đáng kể → C. Bẫy: A sai vì tác giả không hề chờ xem; B sai vì tác giả dùng \"likely\" chứ không khẳng định chắc chắn; D sai vì phần lợi ích chỉ được nêu như một phát hiện gây tò mò.",
+     "points": 1,
+     "evidence": "A likely outcome will be a radical simplification of the ecosystem. / it seems clear that acidification will mean the loss of many species",
+     "options": [
+      "A We will have to wait and see if acidification has serious effects.",
+      "B It is clear that acidification will cause huge damage to marine life.",
+      "C It is likely that increased CO2 will change marine ecosystems considerably.",
+      "D The theory that increased CO2 could have positive results is believable."
+     ]
+    }
+   ]
+  },
+  {
+   "unitType": "reading_passage",
+   "unitNumber": 2,
+   "title": "Passage 2 - A New Fair Trade Organisation",
+   "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.",
+   "content": "Trade has, so far, proved ineffective in solving the major problems faced by most nations. However, the answer to the injustices of the existing trade regime is not no trade, but fair trade.\n\nThe existing regime forbids poor nations from following the path taken by the rich. With the exceptions of Switzerland, Belgium and the Netherlands, all the nations that have become independently wealthy did so with the help of a mechanism economists call 'infant industry protection': defending new sectors from foreign competition until they are big enough to compete on equal terms. The textile industry in Britain, for example, on which the Industrial Revolution was built in the nineteenth century, was nurtured and promoted by means of tariffs (or trade taxes) and the outright prohibition of competing goods. Between 1864 and 1913, the US was the most heavily protected nation on earth. Only when these countries had established technological and commercial superiority did they suddenly discover the virtues of unimpeded competition.\n\nFor nations to develop in direct competition with countries with established industries is like learning to swim in a fast-flowing river: you are likely to be swept away and drowned long before you acquire the necessary expertise. Your competitors have experience, legal rights and established marketing networks on their side; your infant industries have none of these. It is all but impossible, in other words, for poor nations to extract money from the rich unless they can safeguard some key parts of their economies.\n\nClearly, nations that are currently poor should be permitted to defend certain industries from foreign competition with the help of tariff barriers and subsidies. Rich nations, on the other hand, should be permitted neither to subsidise their industries nor to impose tariffs on imports. Nations should be forced gradually to lift their protections as they develop. So, the first function of what we might call the Fair Trade Organisation (FTO) would be to lay down the rules governing the protections and privileges permitted at different stages of development.\n\nA fair-trade system should, or so we should hope, slowly push the world towards genuine free trade, which is likely to be the most equitable means of governing nations' relationships with each other. This system could provide a potent means by which the world could begin to move towards the economic equality that is an essential precondition for political equality. It would not, however, directly address some of the other critical problems that the people of poor nations confront - such as inadequate working conditions, environmental devastation and the inordinate power of the multinational corporations.\n\nMany campaigners in the rich world have suggested that the best way to raise standards is to discriminate, through tariffs or other measures, against imports from countries where workers or the environment are mistreated. This approach has also been advocated by trades unions seeking to protect members' jobs from foreigners. Unsurprisingly, it is deeply resented by the very people it is supposed to help: the workers of the poor world.\n\nIf our purpose is to regulate international trade, then it surely makes sense to address the behaviour, not of nation states, but of the multinational corporations operating between them. So a second function of the FTO could be to set the standards to which those corporations must conform. A corporation would not be permitted to trade between nations unless it could demonstrate that, at every stage of manufacture and distribution, its own operations and those of its suppliers met the necessary standards.\n\nIf, for example, a food-processing corporation based in Europe wished to import cocoa from an African country, it would need to demonstrate that the plantation owners it bought from were not using banned pesticides, expanding into protected forests or failing to conform to whatever other standards the FTO set. The company's performance would be assessed, at its own expense, by monitors accredited to the organisation.\n\nOne other precondition of justice is that producers and consumers should carry their own costs, rather than dumping them on other people. The monitors deployed by the FTO could determine whether or not companies are paying a fair price for the resources they use. Companies would, among other costs, have to buy enough of a nation's carbon quota to cover the fossil fuel they consume.\n\nOne of the many beneficial impacts of such full-cost accounting would be that everything that could be processed in the country of origin would be. No multinational company would export logs, coffee beans or cotton, as it requires far more (costly) energy to transport these bulky resources from one place to another than would be involved in exporting the finished products - furniture, instant coffee and T-shirts (all currently manufactured on the other side of the world). Those nations which are currently locked into the export of raw materials would become the most favoured locations for manufacturing.\n\nUnder this scheme, export growth comes to measure something quite different. At present it represents a mixture of gains and losses, which are misleadingly compounded into a single figure. The loss of natural resources is 'added' to the genuine addition of value provided by the application of labour. The FTO system would effectively separate these measures. The extraction and export of natural resources would in most cases be accounted as a loss. The application of human labour would be measured as a gain. Nations would be able to see immediately whether they were being enriched or impoverished through trade. To introduce these measures in the face of the resistance of the world's most powerful governments and companies would require severe and unusual methods. But the goal of universal fair trade would permit the global economic levelling without which there can be no justice.",
+   "defaultTimeLimitMinutes": 20,
+   "metadata": {
+    "groupInstructions": {
+     "14": "Choose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 14 - 19 on your answer sheet.",
+     "20": "Complete the summary below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer."
+    },
+    "noteBody": "# A Proposal for Regulating Multinational Corporations\nThe FTO would determine the [[20]] for the multinational corporations to follow. In this way, a multinational corporation would have to prove that all aspects of the way it produced its goods and the systems for their [[21]] to customers was in line with FTO requirements. Similarly it would need to satisfy the FTO that the processes employed by any [[22]] that it used were also acceptable.\n\nAs an illustration, in order to source cocoa from Africa, a corporation would have to ensure that no illegal [[23]] were being used by the [[24]] during cultivation and that they had not taken over land from [[25]].\n\nIt would not be sufficient for multinational corporations to say that these points had been checked. Their conduct would have to be inspected by [[26]] appointed by the FTO."
+   },
+   "questions": [
+    {
+     "order": 14,
+     "questionType": "multiple_choice",
+     "prompt": "The writer refers to textile production in Britain in order to",
+     "answer": [
+      "C help the reader understand how infant industry protection works."
+     ],
+     "explanation": "Ngành dệt Anh được nêu NGAY SAU định nghĩa \"infant industry protection\" (bảo hộ ngành non trẻ), như một ví dụ minh hoạ: nó được nuôi dưỡng bằng thuế quan và lệnh cấm hàng cạnh tranh → C. Bẫy: D sai vì Mỹ được nêu như một ví dụ riêng chứ không phải để so sánh với châu Âu; B sai ngược hoàn toàn với ý tác giả.",
+     "points": 1,
+     "evidence": "The textile industry in Britain, for example, on which the Industrial Revolution was built in the nineteenth century, was nurtured and promoted by means of tariffs (or trade taxes) and the outright prohibition of competing goods.",
+     "options": [
+      "A point out how differently industries were financed in the past.",
+      "B show how unnecessary tariff barriers are for countries today.",
+      "C help the reader understand how infant industry protection works.",
+      "D compare European trade development with that of the United States."
+     ]
+    },
+    {
+     "order": 15,
+     "questionType": "multiple_choice",
+     "prompt": "What is the writer's main point in the third paragraph?",
+     "answer": [
+      "D New industries in poor countries will probably fail without protection."
+     ],
+     "explanation": "Đoạn 3 ví nước nghèo cạnh tranh trực diện với nước có ngành công nghiệp lâu đời như tập bơi ở dòng sông chảy xiết: bị cuốn trôi và chết đuối trước khi kịp có kỹ năng. Ý là ngành non trẻ ở nước nghèo SẼ THẤT BẠI NẾU KHÔNG ĐƯỢC BẢO HỘ → D.",
+     "points": 1,
+     "evidence": "For nations to develop in direct competition with countries with established industries is like learning to swim in a fast-flowing river: you are likely to be swept away and drowned long before you acquire the necessary expertise.",
+     "options": [
+      "A Businesses will succeed if they learn from established companies.",
+      "B Detailed market research is often neglected in developing countries.",
+      "C You have to be prepared to adapt your products quickly to follow fashion.",
+      "D New industries in poor countries will probably fail without protection."
+     ]
+    },
+    {
+     "order": 16,
+     "questionType": "multiple_choice",
+     "prompt": "According to the writer, a fair trade system could have the effect of",
+     "answer": [
+      "C encouraging states to work together in a more even-handed way."
+     ],
+     "explanation": "Hệ thống thương mại công bằng sẽ đẩy thế giới tới thương mại tự do thật sự - cách CÔNG BẰNG NHẤT để điều hành quan hệ GIỮA CÁC QUỐC GIA, hướng tới bình đẳng kinh tế rồi bình đẳng chính trị → C. Bẫy: A và B chính là những vấn đề mà tác giả nói ngay sau đó rằng hệ thống này KHÔNG giải quyết trực tiếp được.",
+     "points": 1,
+     "evidence": "A fair-trade system should, or so we should hope, slowly push the world towards genuine free trade, which is likely to be the most equitable means of governing nations' relationships with each other.",
+     "options": [
+      "A improving safety in the majority of workplaces around the world.",
+      "B preventing the continued destruction of endangered wildlife habitats.",
+      "C encouraging states to work together in a more even-handed way.",
+      "D making politicians agree to more representative systems of government."
+     ]
+    },
+    {
+     "order": 17,
+     "questionType": "multiple_choice",
+     "prompt": "What point is the writer making in the sixth paragraph?",
+     "answer": [
+      "B The trades unions are concerned about the effects of imports on local jobs."
+     ],
+     "explanation": "Đoạn 6 nói cách đánh thuế hàng nhập từ nước ngược đãi lao động cũng được CÔNG ĐOÀN ủng hộ, nhưng là để BẢO VỆ VIỆC LÀM của đoàn viên trước người nước ngoài → B. Bẫy: A sai vì mục tiêu của công đoàn không phải giúp lao động nước ngoài; C sai ngược - chính người lao động nước nghèo \"deeply resented\" cách làm này.",
+     "points": 1,
+     "evidence": "This approach has also been advocated by trades unions seeking to protect members' jobs from foreigners.",
+     "options": [
+      "A The trades unions' aim is to help foreign workers gain better conditions.",
+      "B The trades unions are concerned about the effects of imports on local jobs.",
+      "C Workers in poor countries are grateful for the trades unions' support.",
+      "D Campaigners are right to suggest imposing tariffs against bad treatment."
+     ]
+    },
+    {
+     "order": 18,
+     "questionType": "multiple_choice",
+     "prompt": "According to the writer, what is one of the benefits of full-cost accounting?",
+     "answer": [
+      "A Factories would be set up and jobs created in the country of origin."
+     ],
+     "explanation": "Khi phải chịu đủ chi phí, không công ty nào còn xuất gỗ, hạt cà phê hay bông thô nữa vì vận chuyển nguyên liệu cồng kềnh tốn năng lượng hơn hẳn; mọi thứ sẽ được CHẾ BIẾN NGAY TẠI NƯỚC XUẤT XỨ, biến các nước này thành nơi sản xuất được ưa chuộng nhất - tức có nhà máy và việc làm → A. Bẫy: C sai vì hàng thành phẩm vẫn được xuất, chỉ đổi nơi sản xuất.",
+     "points": 1,
+     "evidence": "One of the many beneficial impacts of such full-cost accounting would be that everything that could be processed in the country of origin would be. / Those nations which are currently locked into the export of raw materials would become the most favoured locations for manufacturing.",
+     "options": [
+      "A Factories would be set up and jobs created in the country of origin.",
+      "B Multinational companies would consume fewer natural resources.",
+      "C The export of finished products around the world would decrease.",
+      "D Countries would be able to keep their resources for the domestic market."
+     ]
+    },
+    {
+     "order": 19,
+     "questionType": "multiple_choice",
+     "prompt": "What conclusion does the writer come to about the FTO system?",
+     "answer": [
+      "B It would be difficult to introduce but would be worth the effort."
+     ],
+     "explanation": "Câu kết: áp dụng các biện pháp này trước sự phản kháng của các chính phủ và tập đoàn mạnh nhất thế giới sẽ đòi hỏi những cách làm khắc nghiệt và bất thường (KHÓ), NHƯNG mục tiêu thương mại công bằng toàn cầu sẽ mang lại sự san bằng kinh tế mà thiếu nó thì không có công lý (ĐÁNG LÀM) → B. Bẫy: A sai vì tác giả đã thừa nhận hệ thống này không xử lý trực tiếp mọi bất công.",
+     "points": 1,
+     "evidence": "To introduce these measures in the face of the resistance of the world's most powerful governments and companies would require severe and unusual methods. But the goal of universal fair trade would permit the global economic levelling without which there can be no justice.",
+     "options": [
+      "A It would help to combat injustice in its many different forms.",
+      "B It would be difficult to introduce but would be worth the effort.",
+      "C States all over the world would earn more through trade as a result of it.",
+      "D Multinationals would accept it because it measures exports more precisely."
+     ]
+    },
+    {
+     "order": 20,
+     "questionType": "note_completion",
+     "prompt": "Câu 20",
+     "answer": [
+      "standards",
+      "the standards",
+      "rules",
+      "rule"
+     ],
+     "explanation": "Chức năng thứ hai của FTO là ĐẶT RA CÁC TIÊU CHUẨN (standards) mà các tập đoàn đa quốc gia phải tuân theo.",
+     "points": 1,
+     "evidence": "So a second function of the FTO could be to set the standards to which those corporations must conform."
+    },
+    {
+     "order": 21,
+     "questionType": "note_completion",
+     "prompt": "Câu 21",
+     "answer": [
+      "distribution",
+      "the distribution"
+     ],
+     "explanation": "Tập đoàn phải chứng minh được rằng ở MỌI KHÂU sản xuất VÀ PHÂN PHỐI (distribution) đều đạt chuẩn - \"systems for their ... to customers\" chính là khâu phân phối.",
+     "points": 1,
+     "evidence": "A corporation would not be permitted to trade between nations unless it could demonstrate that, at every stage of manufacture and distribution, its own operations and those of its suppliers met the necessary standards."
+    },
+    {
+     "order": 22,
+     "questionType": "note_completion",
+     "prompt": "Câu 22",
+     "answer": [
+      "suppliers",
+      "supplier",
+      "its suppliers"
+     ],
+     "explanation": "Không chỉ hoạt động của chính mình, tập đoàn còn phải bảo đảm các NHÀ CUNG CẤP (suppliers) của nó cũng đạt chuẩn.",
+     "points": 1,
+     "evidence": "A corporation would not be permitted to trade between nations unless it could demonstrate that, at every stage of manufacture and distribution, its own operations and those of its suppliers met the necessary standards."
+    },
+    {
+     "order": 23,
+     "questionType": "note_completion",
+     "prompt": "Câu 23",
+     "answer": [
+      "pesticides",
+      "pesticide",
+      "banned pesticides"
+     ],
+     "explanation": "Ví dụ nhập ca cao từ châu Phi: phải chứng minh bên bán KHÔNG dùng THUỐC TRỪ SÂU bị cấm (banned pesticides = illegal pesticides trong bài tóm tắt).",
+     "points": 1,
+     "evidence": "it would need to demonstrate that the plantation owners it bought from were not using banned pesticides"
+    },
+    {
+     "order": 24,
+     "questionType": "note_completion",
+     "prompt": "Câu 24",
+     "answer": [
+      "plantation owners",
+      "the plantation owners",
+      "plantation owner"
+     ],
+     "explanation": "Người dùng thuốc trừ sâu trong quá trình canh tác chính là các CHỦ ĐỒN ĐIỀN (plantation owners) mà tập đoàn mua hàng của họ.",
+     "points": 1,
+     "evidence": "it would need to demonstrate that the plantation owners it bought from were not using banned pesticides"
+    },
+    {
+     "order": 25,
+     "questionType": "note_completion",
+     "prompt": "Câu 25",
+     "answer": [
+      "protected forests",
+      "protected forest"
+     ],
+     "explanation": "Điều kiện thứ hai: các chủ đồn điền không được lấn sang RỪNG ĐƯỢC BẢO VỆ (protected forests).",
+     "points": 1,
+     "evidence": "expanding into protected forests or failing to conform to whatever other standards the FTO set"
+    },
+    {
+     "order": 26,
+     "questionType": "note_completion",
+     "prompt": "Câu 26",
+     "answer": [
+      "monitors",
+      "monitor",
+      "accredited monitors"
+     ],
+     "explanation": "Tập đoàn tự nói suông là chưa đủ: hoạt động của họ phải do các GIÁM SÁT VIÊN (monitors) được FTO công nhận đánh giá, và chính tập đoàn phải trả chi phí đó.",
+     "points": 1,
+     "evidence": "The company's performance would be assessed, at its own expense, by monitors accredited to the organisation."
+    }
+   ]
+  },
+  {
+   "unitType": "reading_passage",
+   "unitNumber": 3,
+   "title": "Passage 3 - The First Antigravity Machine",
+   "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.",
+   "content": "It was one of the biggest science stories of the 1990s. Even now, the facts behind it remain hotly disputed. And small wonder, for if the claims made for the small disc, the focus of the controversy, are true, it may be possible to break through one of the great barriers in the scientific world and control the most potent of cosmic forces: gravity. Huge innovations in flight and space travel could arise from that.\n\nThe first gravity-blocking system to be taken seriously by scientists appeared in a laboratory in Tampere University of Technology, Finland. A Russian scientist named Dr Evgeny Podkletnov created a disc 275mm across, made from a substance which combined copper, barium and the 'rare Earth metal' called yttrium, which is known to be a high-temperature superconductor (a substance that conducts electricity without resistance). When chilled with liquid nitrogen at -196° C (a high temperature compared with other superconductors), this material loses all its electrical resistance, and can levitate (lift) in a magnetic field. That may seem amazing for a ceramic-like material - and it won a Nobel Prize for the scientists, Karl Muller and Johannes Bednorz, who first demonstrated it in the 1980s. But according to Podkletnov, the disc had another far more astounding property.\n\nIn 1992, while experimenting with rotating superconductors, Podkletnov noticed that pipe-smoke from a nearby researcher was drifting into a vertical column above the spinning disc. Intrigued by this phenomenon, he decided to devise an experiment to investigate further. A superconductive disc, surrounded by liquid nitrogen was magnetically levitated and rotated at high speed - up to 5,000 revolutions per minute (rpm) in a magnetic field. An object was suspended from a sensitive balance above the disc. It was enclosed in a glass tube to shield it from any effects of air currents. During the course of a series of tests, Podkletnov was able to observe that the object lost a variable amount of weight from less than 0.5 percent to 2 percent of its total weight. This effect was noted with a range of materials from ceramics to wood. The effect was slight, yet the implications were revolutionary: the disc appeared to be partly shielding the object from the gravitational pull of the Earth.\n\nThis was just the start, claimed Podkletnov. While far short of the 100 percent reduction in weight needed to send astronauts into space, for example, it was infinitely greater than the amount predicted by the best theory of gravity currently in existence: Einstein's theory of general relativity (GR), published in 1905. According to Einstein, gravity is not some kind of 'force field', like magnetism, which can - in principle at least - be screened out. Instead, GR views gravity as a distortion in the very fabric of space and time, that permeates the whole cosmos. As such, any claim to have shielded objects from gravity is to defy Einstein himself.\n\nPodkletnov's claims were subjected to intense scrutiny when he submitted them for publication. The UK Institute of Physics had Podkletnov's paper checked by three independent referees, but none could find a fatal flaw. His research was set to appear in the respected Journal of Physics when events took an unexpected turn. The claims were leaked to the media, sparking world-wide coverage of his apparent breakthrough. Then Podkletnov suddenly withdrew the paper from publication and refused to talk to the press.\n\nRumours began to circulate of unknown backers demanding silence until the device had been fully patented. But for many scientists the strange events were all too familiar. Podkletnov was just the latest in a long line of people to have made claims about defying gravity. Most of these have come from madcap inventors, with bizarre devices - often with some kind of spinning disc. But occasionally, respectable academics have made such claims as well.\n\nOne instance of this occurred in the late 1980s when scientists at Tohoku University, Japan, made headlines with research suggesting that apparatus, known as a gyroscope, lost 0.01 percent of its weight when spinning at up to 13,000 rpm. Oddly the effect only appeared if the gyroscope was spinning anticlockwise - raising suspicions that some mechanical peculiarity was to blame. Attempts by scientists at the University of Colorado to replicate the effect failed.\n\nThen Professor Giovanni Modanese, an Italian theoretical physicist, became interested. He had read an earlier paper by Podkletnov, hinting at a connection between superconductivity and gravity shielding. Modanese wondered if the magnetic fields surrounding the superconductive disc might somehow assimilate part of the gravitational field under it. He published some calculations based on his idea in 1995 - and soon discovered that taking 'antigravity' seriously was a career-limiting move. The revelations about Podkletnov's antigravity research led to reports of major corporations setting up their own studies. In 2000, the UK defence contractor BAE Systems was said to have launched 'Project Greenglow' to investigate Podkletnov's gravity shield effect. Then it emerged that the US aircraft builder Boeing was also investigating, suggesting it too had an interest in the effect. Groups in other countries were also rumoured to be carrying out studies. Yet not one of the teams has reported confirmation of the original findings. Some projects have been wound up without producing results either way. So for the time being, it seems that the dream of controlling gravity will remain precisely that.",
+   "defaultTimeLimitMinutes": 20,
+   "metadata": {
+    "groupInstructions": {
+     "27": "Label the diagram below.\nChoose NO MORE THAN THREE WORDS OR A NUMBER from the passage.",
+     "31": "Classify the following findings as belonging to\n:::box\nA Podkletnov\nB Tohoku University\nC Modanese\n:::\nWrite the correct letter, A, B or C in boxes 31-35 on your answer sheet.",
+     "36": "Do the following statements agree with information given in Reading Passage 3?\nIn boxes 36 - 40 on your answer sheet, write\n:::box\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n:::"
+    },
+    "groupImages": {
+     "27": "data:image/jpeg;base64,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"
+    },
+    "noteBody": "[[27]] - to measure weight loss\nsuperconductive disc rotating at max [[28]]\ncooling [[29]]\n[[30]] - to protect object from disturbance"
+   },
+   "questions": [
+    {
+     "order": 27,
+     "questionType": "note_completion",
+     "prompt": "Câu 27",
+     "answer": [
+      "balance",
+      "sensitive balance",
+      "a sensitive balance",
+      "(sensitive) balance"
+     ],
+     "explanation": "Vật thử được treo vào một CHIẾC CÂN nhạy đặt phía trên đĩa - đó là thứ dùng để đo phần trọng lượng bị mất.",
+     "points": 1,
+     "evidence": "An object was suspended from a sensitive balance above the disc."
+    },
+    {
+     "order": 28,
+     "questionType": "note_completion",
+     "prompt": "Câu 28",
+     "answer": [
+      "5,000 revolutions per minute",
+      "5000 revolutions per minute",
+      "5,000 rpm",
+      "5000 rpm"
+     ],
+     "explanation": "Đĩa siêu dẫn được nâng bằng từ trường và quay với tốc độ tối đa 5.000 VÒNG MỖI PHÚT.",
+     "points": 1,
+     "evidence": "magnetically levitated and rotated at high speed - up to 5,000 revolutions per minute (rpm) in a magnetic field"
+    },
+    {
+     "order": 29,
+     "questionType": "note_completion",
+     "prompt": "Câu 29",
+     "answer": [
+      "liquid nitrogen"
+     ],
+     "explanation": "Đĩa siêu dẫn được bao quanh bằng NITƠ LỎNG để làm lạnh (tới -196°C) thì mới mất hết điện trở.",
+     "points": 1,
+     "evidence": "A superconductive disc, surrounded by liquid nitrogen was magnetically levitated"
+    },
+    {
+     "order": 30,
+     "questionType": "note_completion",
+     "prompt": "Câu 30",
+     "answer": [
+      "glass tube",
+      "a glass tube",
+      "in a glass tube"
+     ],
+     "explanation": "Vật thử được bọc trong một ỐNG THUỶ TINH để chắn mọi ảnh hưởng của luồng khí - tức bảo vệ khỏi nhiễu động.",
+     "points": 1,
+     "evidence": "It was enclosed in a glass tube to shield it from any effects of air currents."
+    },
+    {
+     "order": 31,
+     "questionType": "matching",
+     "prompt": "The experiment only works if the equipment moves in a particular direction.",
+     "answer": [
+      "B Tohoku University"
+     ],
+     "explanation": "Thí nghiệm ở Đại học Tohoku: hiệu ứng CHỈ xuất hiện khi con quay hồi chuyển quay NGƯỢC CHIỀU KIM ĐỒNG HỒ - tức phụ thuộc vào chiều chuyển động. → B.",
+     "points": 1,
+     "evidence": "Oddly the effect only appeared if the gyroscope was spinning anticlockwise",
+     "options": [
+      "A Podkletnov",
+      "B Tohoku University",
+      "C Modanese"
+     ]
+    },
+    {
+     "order": 32,
+     "questionType": "matching",
+     "prompt": "Varying amounts of weight are lost as a result of the test.",
+     "answer": [
+      "A Podkletnov"
+     ],
+     "explanation": "Podkletnov quan sát thấy vật thử mất một lượng trọng lượng THAY ĐỔI, từ dưới 0,5% đến 2% tổng trọng lượng. → A.",
+     "points": 1,
+     "evidence": "Podkletnov was able to observe that the object lost a variable amount of weight from less than 0.5 percent to 2 percent of its total weight",
+     "options": [
+      "A Podkletnov",
+      "B Tohoku University",
+      "C Modanese"
+     ]
+    },
+    {
+     "order": 33,
+     "questionType": "matching",
+     "prompt": "Gravity could be absorbed by a magnetic field.",
+     "answer": [
+      "C Modanese"
+     ],
+     "explanation": "Modanese đặt giả thuyết rằng từ trường bao quanh đĩa siêu dẫn có thể HẤP THU (assimilate) một phần trường hấp dẫn bên dưới nó. → C.",
+     "points": 1,
+     "evidence": "Modanese wondered if the magnetic fields surrounding the superconductive disc might somehow assimilate part of the gravitational field under it.",
+     "options": [
+      "A Podkletnov",
+      "B Tohoku University",
+      "C Modanese"
+     ]
+    },
+    {
+     "order": 34,
+     "questionType": "matching",
+     "prompt": "Superconductive material seems to screen an object from gravity.",
+     "answer": [
+      "A Podkletnov"
+     ],
+     "explanation": "Kết luận từ loạt thí nghiệm của Podkletnov: chiếc đĩa siêu dẫn dường như CHE CHẮN một phần lực hút của Trái Đất tác động lên vật thử. → A.",
+     "points": 1,
+     "evidence": "the disc appeared to be partly shielding the object from the gravitational pull of the Earth",
+     "options": [
+      "A Podkletnov",
+      "B Tohoku University",
+      "C Modanese"
+     ]
+    },
+    {
+     "order": 35,
+     "questionType": "matching",
+     "prompt": "Weight loss occurs when the equipment rotates at speeds reaching 13,000 rpm.",
+     "answer": [
+      "B Tohoku University"
+     ],
+     "explanation": "Con số 13.000 vòng/phút là của nhóm Đại học Tohoku (Nhật Bản), nơi con quay mất 0,01% trọng lượng. Bẫy: đĩa của Podkletnov chỉ quay tới 5.000 vòng/phút. → B.",
+     "points": 1,
+     "evidence": "research suggesting that apparatus, known as a gyroscope, lost 0.01 percent of its weight when spinning at up to 13,000 rpm",
+     "options": [
+      "A Podkletnov",
+      "B Tohoku University",
+      "C Modanese"
+     ]
+    },
+    {
+     "order": 36,
+     "questionType": "true_false_not_given",
+     "prompt": "Podkletnov won a prize for his initial work on superconductive substances.",
+     "answer": [
+      "FALSE"
+     ],
+     "explanation": "Giải Nobel về vật liệu siêu dẫn nhiệt độ cao thuộc về Karl Muller và Johannes Bednorz - hai người đầu tiên chứng minh hiện tượng này hồi thập niên 1980, KHÔNG phải Podkletnov. → FALSE.",
+     "points": 1,
+     "evidence": "it won a Nobel Prize for the scientists, Karl Muller and Johannes Bednorz, who first demonstrated it in the 1980s"
+    },
+    {
+     "order": 37,
+     "questionType": "true_false_not_given",
+     "prompt": "A chance observation led Podkletnov to experiment with gravity blocking.",
+     "answer": [
+      "TRUE"
+     ],
+     "explanation": "Năm 1992 Podkletnov TÌNH CỜ thấy khói tẩu thuốc của một đồng nghiệp bay thành cột thẳng đứng phía trên đĩa đang quay; chính quan sát ngẫu nhiên đó khiến ông thiết kế thí nghiệm. → TRUE.",
+     "points": 1,
+     "evidence": "In 1992, while experimenting with rotating superconductors, Podkletnov noticed that pipe-smoke from a nearby researcher was drifting into a vertical column above the spinning disc."
+    },
+    {
+     "order": 38,
+     "questionType": "true_false_not_given",
+     "prompt": "Einstein challenged earlier experiments on antigravity.",
+     "answer": [
+      "NOT GIVEN"
+     ],
+     "explanation": "Bài chỉ nói thuyết tương đối rộng của Einstein (1905) coi hấp dẫn là sự uốn cong của không-thời gian nên không thể chắn được, và mọi tuyên bố chắn hấp dẫn đều là thách thức chính Einstein. Bài KHÔNG hề nói Einstein đã phản bác các thí nghiệm phản trọng lực trước đó. → NOT GIVEN.",
+     "points": 1
+    },
+    {
+     "order": 39,
+     "questionType": "true_false_not_given",
+     "prompt": "Modanese suffered professionally after following up Podkletnov's findings.",
+     "answer": [
+      "TRUE"
+     ],
+     "explanation": "Sau khi công bố các tính toán năm 1995, Modanese sớm nhận ra rằng nghiêm túc với \"phản trọng lực\" là một nước đi HẠN CHẾ SỰ NGHIỆP (career-limiting move). → TRUE.",
+     "points": 1,
+     "evidence": "He published some calculations based on his idea in 1995 - and soon discovered that taking 'antigravity' seriously was a career-limiting move."
+    },
+    {
+     "order": 40,
+     "questionType": "true_false_not_given",
+     "prompt": "An aircraft company announced that it had replicated Podkletnov's results.",
+     "answer": [
+      "FALSE"
+     ],
+     "explanation": "Boeing (Mỹ) và BAE Systems (Anh) đều được cho là có nghiên cứu, nhưng bài khẳng định KHÔNG một nhóm nào báo cáo xác nhận được kết quả gốc. → FALSE.",
+     "points": 1,
+     "evidence": "Yet not one of the teams has reported confirmation of the original findings."
+    }
+   ]
+  }
+ ]
+}

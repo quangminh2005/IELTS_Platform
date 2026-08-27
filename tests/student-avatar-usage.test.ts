@@ -88,3 +88,23 @@ describe("StudentAvatar giữ đúng quy ước hiển thị ảnh Google", () =
     expect(lg).toContain('text: "text-lg"');
   });
 });
+
+describe("avatar trên thanh điều hướng học viên", () => {
+  const shell = read("components/app-shell.tsx");
+
+  it("có mặt ở CẢ hai bộ khung: thanh trên (điện thoại) và thanh bên (máy tính)", () => {
+    // AppShell dựng khung hai lần cho hai cỡ màn hình. Sửa sót một chỗ thì avatar
+    // biến mất ở đúng cỡ màn hình đó mà không ai thấy — học viên chủ yếu dùng điện
+    // thoại nên chỗ dễ sót lại là chỗ quan trọng nhất.
+    const links = shell.match(/href="\/student\/profile"/g) ?? [];
+    expect(links).toHaveLength(2);
+
+    const avatars = shell.match(/<StudentAvatar/g) ?? [];
+    expect(avatars).toHaveLength(2);
+  });
+
+  it("link vào hồ sơ có tên gọi cho trình đọc màn hình", () => {
+    // Chỉ một tấm ảnh thì trình đọc màn hình không biết đọc gì.
+    expect(shell).toMatch(/href="\/student\/profile"\s+aria-label=/);
+  });
+});

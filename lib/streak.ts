@@ -1,4 +1,4 @@
-const VN_OFFSET_MS = 7 * 60 * 60 * 1000; // VN = UTC+7 (không DST)
+export const VN_OFFSET_MS = 7 * 60 * 60 * 1000; // VN = UTC+7 (không DST)
 const DAY_MS = 24 * 60 * 60 * 1000;
 const WEEK_MS = 7 * DAY_MS;
 

@@ -7,12 +7,18 @@ import type { RankedClassStudent } from "@/lib/class-ranking";
 
 const medals = ["🥇", "🥈", "🥉"];
 
-// Avatar bục giờ đều dùng size="lg" của StudentAvatar (xem bên dưới) — không còn
-// cột "size" riêng cho từng hạng như trước khi gộp về component dùng chung.
+// Hạng nhất avatar to hơn hẳn (80px) so với hạng nhì/ba (64px) — sự chênh lệch
+// kích thước này là một phần cách bục "đọc" được, nên giữ field size riêng cho
+// từng hạng và truyền vào StudentAvatar thay vì dùng chung một size.
 const podiumStyle = [
-  { ring: "ring-yellow-400", pedestal: "h-24 bg-yellow-400/20", shine: "animate-podium-shine" },
-  { ring: "ring-slate-300", pedestal: "h-16 bg-slate-300/20", shine: "" },
-  { ring: "ring-amber-600", pedestal: "h-12 bg-amber-600/20", shine: "" }
+  {
+    ring: "ring-yellow-400",
+    pedestal: "h-24 bg-yellow-400/20",
+    size: "podium" as const,
+    shine: "animate-podium-shine"
+  },
+  { ring: "ring-slate-300", pedestal: "h-16 bg-slate-300/20", size: "lg" as const, shine: "" },
+  { ring: "ring-amber-600", pedestal: "h-12 bg-amber-600/20", size: "lg" as const, shine: "" }
 ];
 
 // Điểm trung bình hiển thị: ưu tiên band, không quy đổi được thì giữ %.
@@ -142,7 +148,7 @@ export function ClassRankingBoard({
                   avatarPreset={rankedStudent.avatarPreset}
                   userImage={rankedStudent.userImage}
                   displayName={rankedStudent.displayName}
-                  size="lg"
+                  size={style.size}
                   className={`ring-4 ${style.ring} ${style.shine}`}
                 />
                 <p className="mt-2 max-w-full truncate text-center text-sm font-semibold">
@@ -212,7 +218,7 @@ export function ClassRankingBoard({
                       avatarPreset={rankedStudent.avatarPreset}
                       userImage={rankedStudent.userImage}
                       displayName={rankedStudent.displayName}
-                      size="md"
+                      size="list"
                     />
                     <div className="min-w-0">
                       <p className="truncate font-semibold">
@@ -279,7 +285,7 @@ export function ClassRankingBoard({
                   avatarPreset={rankedStudent.avatarPreset}
                   userImage={rankedStudent.userImage}
                   displayName={rankedStudent.displayName}
-                  size="md"
+                  size="list"
                   className="opacity-70"
                 />
                 <p className="truncate text-sm font-medium text-muted-foreground">

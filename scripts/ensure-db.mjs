@@ -186,6 +186,11 @@ const statements = [
   // không bao giờ xoá, nên không tự dọn được — muốn dọn phải chạy tay.
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "parentToken" TEXT;',
   'CREATE UNIQUE INDEX IF NOT EXISTS "StudentProfile_parentToken_key" ON "StudentProfile"("parentToken");',
+  // Hồ sơ học viên: bio, avatar, màu bìa.
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "bio" TEXT;',
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "avatarUrl" TEXT;',
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "avatarPreset" TEXT;',
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "coverColor" TEXT;',
 ];
 
 const prisma = new PrismaClient();

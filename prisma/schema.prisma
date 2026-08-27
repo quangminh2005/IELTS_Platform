@@ -63,6 +63,18 @@ model StudentProfile {
   email       String                @unique
   displayName String
   targetBand  Float?
+  // Giới thiệu ngắn học viên tự viết, tối đa 280 ký tự. Văn bản thuần — chỗ hiển
+  // thị KHÔNG được dùng dangerouslySetInnerHTML.
+  bio          String?
+  // Ảnh đại diện học viên tự tải lên (Vercel Blob). Thứ tự ưu tiên khi hiện avatar
+  // nằm trong lib/student-avatar.ts: ảnh này -> avatarPreset -> User.image -> chữ cái.
+  avatarUrl    String?
+  // Mã avatar có sẵn (emoji + màu), giá trị hợp lệ liệt kê trong AVATAR_PRESETS
+  // của lib/student-avatar.ts.
+  avatarPreset String?
+  // Mã màu dải bìa trang hồ sơ, giá trị hợp lệ trong COVER_COLORS của
+  // lib/student-avatar.ts. Không nhận mã hex tự do — tránh chữ chìm vào nền.
+  coverColor   String?
   createdAt   DateTime              @default(now())
   // Mốc thời gian học viên xem chuông thông báo lần gần nhất. Mục nào mới hơn mốc
   // này thì tính là chưa đọc. Null = coi như đã đọc hết (học viên có từ trước khi

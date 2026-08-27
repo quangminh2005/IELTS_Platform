@@ -118,7 +118,22 @@ export function isAllowedAvatarUrl(url: string): boolean {
     return false;
   }
 
-  return parsed.pathname.startsWith("/avatars/");
+  if (!parsed.pathname.startsWith("/avatars/")) {
+    return false;
+  }
+
+  // Chặn phần trăm-mã-hoá (vd. "%2F" thay cho "/") trong phần đuôi sau tiền tố —
+  // pathname giữ nguyên dạng mã hoá nên "avatars/..%2Flistening/x.mp3" vẫn qua
+  // được startsWith ở trên dù thực chất trỏ ra ngoài thư mục avatars/. Nhiều khả
+  // năng vô hại (Blob store khớp theo chuỗi thô, del() cũng gửi thẳng chuỗi thô),
+  // nhưng cái giá để chặn chỉ là một dòng, còn cái giá đoán sai là mất file audio
+  // vĩnh viễn — nên chặn hẳn.
+  const rest = parsed.pathname.slice("/avatars/".length);
+  if (/%[0-9a-fA-F]{2}/.test(rest)) {
+    return false;
+  }
+
+  return true;
 }
 
 // Thứ tự ưu tiên: ảnh tự tải -> avatar có sẵn -> ảnh Google -> chữ cái viết tắt.

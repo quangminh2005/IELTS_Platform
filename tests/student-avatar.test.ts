@@ -128,6 +128,19 @@ describe("isAllowedAvatarUrl", () => {
       )
     ).toBe(true);
   });
+
+  it("từ chối dấu / được mã hoá phần trăm để lách ra khỏi thư mục avatars/", () => {
+    // Vá thêm sau review: "avatars/" khớp startsWith trên pathname vì pathname
+    // vẫn giữ nguyên "%2F" chưa giải mã — nhưng nếu Blob store hiểu %2F như dấu
+    // "/", URL này thực chất trỏ ra ngoài avatars/, vào thẳng thư mục audio
+    // Listening. Nhiều khả năng vô hại nhưng cái giá đoán sai là xoá nhầm file
+    // không khôi phục được, nên chặn hẳn mọi phần trăm-mã-hoá sau tiền tố.
+    expect(
+      isAllowedAvatarUrl(
+        "https://abc123xyz.public.blob.vercel-storage.com/avatars/..%2Flistening/a.mp3"
+      )
+    ).toBe(false);
+  });
 });
 
 describe("bảng hằng số", () => {

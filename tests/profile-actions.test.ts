@@ -15,6 +15,17 @@ function bodyOf(name: string): string {
   return next === -1 ? rest : rest.slice(0, next);
 }
 
+// Cắt thân một hàm/hằng module-level theo tên, không phụ thuộc thứ tự khai báo
+// trong file (khác bodyOf ở trên, vốn CỐ Ý dùng vị trí để phân định ranh giới giữa
+// hai action). Dùng cho các hàm/schema dùng chung mà updateMyProfile/updateStudentProfile
+// gọi tới — kiểm tra invariant thật nằm bên trong thân đó, không phải suy luận từ vị
+// trí khai báo.
+function blockOf(startPattern: RegExp): string {
+  const match = source.match(startPattern);
+  expect(match, `Không tìm thấy khối khớp ${startPattern}`).not.toBeNull();
+  return match![0];
+}
+
 describe("chốt chặn quyền của action sửa hồ sơ", () => {
   const mine = bodyOf("updateMyProfile");
   const byTeacher = bodyOf("updateStudentProfile");
@@ -29,10 +40,25 @@ describe("chốt chặn quyền của action sửa hồ sơ", () => {
     expect(mine).not.toMatch(/formData\.get\(\s*["']studentId["']\s*\)/);
   });
 
-  it("updateMyProfile KHÔNG chạm displayName hay email", () => {
-    // Tên hiện ở bảng xếp hạng và hàng chờ chấm bài — chỉ giáo viên đổi được.
+  it("updateMyProfile ghi thẳng object trả về từ readDecoration, không tự thêm displayName/email", () => {
+    // Bản thân object "data" ghi vào Prisma phải đến từ readDecoration(formData),
+    // và thân hàm không được có thêm khoá displayName:/email: nào khác chèn vào.
+    expect(mine).toMatch(/readDecoration\(formData\)/);
     expect(mine).not.toMatch(/displayName:/);
     expect(mine).not.toMatch(/email:/);
+  });
+
+  it("decorationSchema (dùng chung) chỉ có đúng 5 trường trang trí — không có displayName/email", () => {
+    // Đây là chốt THẬT đứng sau bài kiểm tra ở trên: decorationSchema định nghĩa
+    // toàn bộ những gì updateMyProfile được phép ghi. Ai đó thêm displayName/email
+    // vào decorationSchema (một khai báo NẰM NGOÀI phần thân bị cắt của
+    // updateMyProfile, nên bài kiểm tra ở trên không thấy được) vẫn phải bị bắt ở
+    // đây — bất kể decorationSchema được khai báo ở vị trí nào trong file.
+    const block = blockOf(/const decorationSchema = z\.object\(\{([\s\S]*?)\}\);/);
+    const keys = [...block.matchAll(/^\s*(\w+):/gm)].map((m) => m[1]).sort();
+    expect(keys).toEqual(
+      ["avatarPreset", "avatarUrl", "bio", "coverColor", "targetBand"].sort()
+    );
   });
 
   it("updateStudentProfile gọi requireTeacher", () => {
@@ -45,18 +71,63 @@ describe("chốt chặn quyền của action sửa hồ sơ", () => {
   });
 
   it("updateStudentProfile chặn đổi email khi học viên đã liên kết Google", () => {
-    // Email là khoá nối tài khoản Google trong lib/auth.ts. Đổi email của học viên
-    // đã đăng nhập = họ mất quyền vào toàn bộ bài cũ.
-    expect(byTeacher).toContain("userId");
+    // Khớp đúng điều kiện chặn thật sự (student.userId !== null), không phải chỉ
+    // chuỗi "userId" xuất hiện đâu đó (vd. trong select: { userId: true } thì luôn
+    // đúng dù không hề có chốt chặn) — và câu báo lỗi phải nhắc tới Google.
+    expect(byTeacher).toMatch(/student\.userId\s*!==\s*null/);
     expect(byTeacher).toMatch(/Google/);
   });
 
-  it("cả hai action kiểm link ảnh bằng isAllowedAvatarUrl", () => {
-    expect(source).toContain("isAllowedAvatarUrl");
+  it("updateStudentProfile CHỈ ghi trường giáo viên thực sự gửi lên, không hiểu vắng mặt là xoá trắng", () => {
+    // Finding 1: form giáo viên có thể chỉ gửi studentId/displayName/email, không
+    // gửi đủ 5 trường trang trí như form học viên. Phải dùng readDecorationPatch
+    // (dựa trên formData.has) chứ không phải readDecoration (coi vắng mặt = null).
+    expect(byTeacher).toMatch(/readDecorationPatch\(formData\)/);
+    expect(byTeacher).not.toMatch(/readDecoration\(formData\)/);
+
+    const fn = blockOf(/function readDecorationPatch\([\s\S]*?\n\}/);
+    for (const field of ["bio", "avatarUrl", "avatarPreset", "coverColor", "targetBand"]) {
+      // Mỗi trường phải được gate bằng formData.has(...) — thiếu gate này thì
+      // trường đó lại quay về hành vi "vắng mặt = xoá trắng".
+      expect(fn).toMatch(new RegExp(`formData\\.has\\(\\s*["']${field}["']\\s*\\)`));
+    }
   });
 
-  it("đổi avatar thì xoá ảnh cũ trên Blob", () => {
-    // Blob store từng bị khoá vì vượt băng thông — không để ảnh mồ côi tích lại.
+  it("cả hai action chặn nhận avatarUrl đang thuộc StudentProfile khác (chống cướp ảnh của bạn học)", () => {
+    // Finding 2: chỉ kiểm hostname (isAllowedAvatarUrl) là không đủ — một học viên
+    // có thể dán đúng URL Blob của bạn học. Phải có một truy vấn loại trừ chính
+    // mình (id: { not: ownerId }) để phát hiện URL đó đã thuộc hồ sơ khác.
+    const fn = blockOf(/async function assertAvatarUrlNotTaken\([\s\S]*?\n\}/);
+    expect(fn).toMatch(/id:\s*\{\s*not:\s*ownerId\s*\}/);
+    expect(mine).toMatch(/assertAvatarUrlNotTaken\(/);
+    expect(byTeacher).toMatch(/assertAvatarUrlNotTaken\(/);
+  });
+
+  it("avatarUrlSchema thật sự dùng isAllowedAvatarUrl để validate (không chỉ import cho có)", () => {
+    // Trước đây bài kiểm tra chỉ khớp toContain("isAllowedAvatarUrl"), thứ mà
+    // riêng dòng import cũng thoả — xoá hẳn .refine(...) khỏi schema vẫn xanh.
+    const block = blockOf(/const avatarUrlSchema = z[\s\S]*?;\n/);
+    expect(block).toMatch(/\.refine\(\s*isAllowedAvatarUrl/);
+  });
+
+  it("import del từ @vercel/blob và deleteOldAvatar() thật sự gọi del() trên ảnh cũ", () => {
+    // Trước đây bài kiểm tra chỉ khớp dòng import — xoá lệnh gọi del(oldUrl) bên
+    // trong deleteOldAvatar() (mà vẫn giữ dòng import) trước đây vẫn xanh.
     expect(source).toMatch(/import \{[^}]*\bdel\b[^}]*\} from "@vercel\/blob"/);
+    const fn = blockOf(/async function deleteOldAvatar\([\s\S]*?\n\}/);
+    expect(fn).toMatch(/\bdel\(\s*oldUrl\s*\)/);
+  });
+
+  it("cả hai action xoá ảnh cũ trên Blob SAU KHI ghi DB thành công, không xoá trước", () => {
+    // Finding 3: xoá trước mà ghi DB thất bại thì ảnh mất trong khi hồ sơ vẫn trỏ
+    // tới nó. Vị trí lệnh gọi TRONG THÂN HÀM ở đây phản ánh đúng thứ tự thực thi —
+    // không phải một chi tiết bố cục tình cờ như các trường hợp khác trong file.
+    for (const body of [mine, byTeacher]) {
+      const updateIndex = body.indexOf("prisma.studentProfile.update(");
+      const deleteIndex = body.indexOf("deleteOldAvatar(");
+      expect(updateIndex).toBeGreaterThanOrEqual(0);
+      expect(deleteIndex).toBeGreaterThanOrEqual(0);
+      expect(deleteIndex).toBeGreaterThan(updateIndex);
+    }
   });
 });

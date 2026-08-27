@@ -67,7 +67,12 @@ const decorationSchema = z.object({
   targetBand: targetBandSchema
 });
 
-function readDecoration(formData: FormData) {
+type Decoration = z.infer<typeof decorationSchema>;
+
+// Học viên gửi đủ cả 5 trường mỗi lần lưu (form trang hồ sơ luôn có sẵn cả 5 ô) —
+// nên ở đây "vắng mặt trên FormData" == "" == "muốn xoá trắng" là đúng ý đồ (đây là
+// cách nút "Xoá ảnh" và xoá bio hoạt động).
+function readDecoration(formData: FormData): Decoration {
   const parsed = decorationSchema.safeParse({
     bio: optional(formData.get("bio")),
     avatarUrl: optional(formData.get("avatarUrl")),
@@ -83,9 +88,75 @@ function readDecoration(formData: FormData) {
   return parsed.data;
 }
 
+function parseFieldOrThrow<T>(schema: z.ZodType<T>, raw: unknown): T {
+  const parsed = schema.safeParse(raw);
+  if (!parsed.success) {
+    throw new Error(parsed.error.issues[0]?.message ?? "Thông tin hồ sơ chưa hợp lệ.");
+  }
+  return parsed.data;
+}
+
+// Biến thể của readDecoration dành riêng cho giáo viên. Form giáo viên thường CHỈ
+// gửi vài trường (vd. chỉ studentId/displayName/email), không gửi đủ cả 5 trường
+// trang trí như form học viên. Nếu hiểu "vắng mặt" là "xoá trắng" như readDecoration
+// thì một lần lưu tên/email vô tình xoá sạch bio/avatar/coverColor/targetBand của
+// học viên — và deleteOldAvatar() sẽ xoá luôn ảnh đã tải lên trên Blob, không cứu
+// được. Nên ở đây dùng formData.has(...): trường nào KHÔNG có mặt trên form thì bỏ
+// qua hẳn, không đưa khoá đó vào object trả về (không phải gán undefined — Prisma
+// vẫn có thể hiểu undefined-nhưng-có-khoá theo cách khác nhau tuỳ phiên bản).
+function readDecorationPatch(formData: FormData): Partial<Decoration> {
+  const patch: Partial<Decoration> = {};
+
+  if (formData.has("bio")) {
+    patch.bio = parseFieldOrThrow(bioSchema, optional(formData.get("bio")));
+  }
+  if (formData.has("avatarUrl")) {
+    patch.avatarUrl = parseFieldOrThrow(avatarUrlSchema, optional(formData.get("avatarUrl")));
+  }
+  if (formData.has("avatarPreset")) {
+    patch.avatarPreset = parseFieldOrThrow(
+      avatarPresetSchema,
+      optional(formData.get("avatarPreset"))
+    );
+  }
+  if (formData.has("coverColor")) {
+    patch.coverColor = parseFieldOrThrow(
+      coverColorSchema,
+      optional(formData.get("coverColor"))
+    );
+  }
+  if (formData.has("targetBand")) {
+    patch.targetBand = parseFieldOrThrow(targetBandSchema, parseTargetBand(formData.get("targetBand")));
+  }
+
+  return patch;
+}
+
+// Avatar hiện công khai trên bảng xếp hạng của lớp. Không có chốt này, một học viên
+// đọc được URL Blob ảnh của bạn học (vốn công khai) có thể dán URL đó vào ô avatarUrl
+// của chính mình — isAllowedAvatarUrl vẫn cho qua vì chỉ kiểm hostname. Lần đổi
+// avatar SAU ĐÓ sẽ khiến deleteOldAvatar() xoá thẳng ảnh của người kia trên Blob,
+// không khôi phục được. Chặn bằng một truy vấn: URL mới không được trùng avatarUrl
+// của bất kỳ StudentProfile nào khác — không phụ thuộc cách đặt tên file trên Blob.
+async function assertAvatarUrlNotTaken(newUrl: string | null, ownerId: string) {
+  if (!newUrl) {
+    return;
+  }
+
+  const taken = await prisma.studentProfile.findFirst({
+    where: { avatarUrl: newUrl, id: { not: ownerId } },
+    select: { id: true }
+  });
+
+  if (taken) {
+    throw new Error("Ảnh đại diện này đang thuộc về một học viên khác.");
+  }
+}
+
 // Xoá ảnh cũ trên Blob khi học viên đổi sang ảnh khác. Bọc try/catch: xoá hỏng thì
 // chỉ còn một file rác (scripts/blob-orphans.mjs dọn được), không đáng để chặn việc
-// lưu hồ sơ.
+// lưu hồ sơ. LUÔN gọi hàm này SAU KHI ghi DB thành công (không phải trước) — nếu gọi
+// trước và việc ghi DB sau đó thất bại, ảnh cũ đã mất trong khi hồ sơ vẫn trỏ tới nó.
 async function deleteOldAvatar(oldUrl: string | null, newUrl: string | null) {
   if (!oldUrl || oldUrl === newUrl || !isAllowedAvatarUrl(oldUrl)) {
     return;
@@ -112,12 +183,15 @@ export async function updateMyProfile(formData: FormData): Promise<ActionResult>
   try {
     const data = readDecoration(formData);
 
-    await deleteOldAvatar(student.avatarUrl, data.avatarUrl);
+    await assertAvatarUrlNotTaken(data.avatarUrl, student.id);
 
     await prisma.studentProfile.update({
       where: { id: student.id },
       data
     });
+
+    // Xoá ảnh cũ SAU KHI ghi DB thành công — xem chú thích trên deleteOldAvatar().
+    await deleteOldAvatar(student.avatarUrl, data.avatarUrl);
 
     revalidatePath("/student/profile");
     revalidatePath("/student");
@@ -143,7 +217,10 @@ export async function updateStudentProfile(formData: FormData): Promise<ActionRe
       throw new Error(fields.error.issues[0]?.message ?? "Thông tin chưa hợp lệ.");
     }
 
-    const decoration = readDecoration(formData);
+    // Chỉ trường nào giáo viên THỰC SỰ gửi lên mới bị ghi đè — xem chú thích trên
+    // readDecorationPatch(). Form giáo viên có thể chỉ gửi tên/email, không gửi đủ
+    // 5 trường trang trí như form học viên.
+    const decoration = readDecorationPatch(formData);
 
     // Chốt chặn quyền: lọc NGAY TRONG where, không lấy ra rồi mới đối chiếu.
     const student = await prisma.studentProfile.findFirst({
@@ -175,7 +252,9 @@ export async function updateStudentProfile(formData: FormData): Promise<ActionRe
       throw new Error("Email này đã thuộc về một học viên khác.");
     }
 
-    await deleteOldAvatar(student.avatarUrl, decoration.avatarUrl);
+    if ("avatarUrl" in decoration) {
+      await assertAvatarUrlNotTaken(decoration.avatarUrl ?? null, student.id);
+    }
 
     await prisma.studentProfile.update({
       where: { id: student.id },
@@ -185,6 +264,13 @@ export async function updateStudentProfile(formData: FormData): Promise<ActionRe
         ...decoration
       }
     });
+
+    // Xoá ảnh cũ SAU KHI ghi DB thành công (xem chú thích trên deleteOldAvatar()).
+    // Chỉ có "ảnh mới" khi giáo viên thực sự gửi trường avatarUrl — nếu form không
+    // gửi trường này thì avatar không đổi, không có gì để xoá.
+    if ("avatarUrl" in decoration) {
+      await deleteOldAvatar(student.avatarUrl, decoration.avatarUrl ?? null);
+    }
 
     revalidatePath(`/teacher/students/${student.id}`);
     revalidatePath("/teacher/classes");

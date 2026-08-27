@@ -31,4 +31,13 @@ describe("hồ sơ rút gọn của bạn cùng lớp", () => {
   it("gọi notFound khi không tìm thấy, không lộ sự tồn tại của học viên", () => {
     expect(source).toContain("notFound()");
   });
+
+  it("không chạm tới bảng nào chứa kết quả làm bài", () => {
+    // Bốn khẳng định ở trên chỉ cấm đúng bốn cái TÊN. Ai đó kéo thẳng
+    // Attempt.score hay Answer vào select là lọt hết. Chốt theo QUAN HỆ dữ liệu
+    // mới bịt được: trang này không được đụng tới bài làm dưới bất kỳ hình thức nào.
+    for (const relation of ["attempts", "answers", "recipients", "attemptSkill"]) {
+      expect(source).not.toContain(`${relation}:`);
+    }
+  });
 });

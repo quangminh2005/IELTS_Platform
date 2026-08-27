@@ -40,12 +40,15 @@ describe("chốt chặn quyền của action sửa hồ sơ", () => {
     expect(mine).not.toMatch(/formData\.get\(\s*["']studentId["']\s*\)/);
   });
 
-  it("updateMyProfile ghi thẳng object trả về từ readDecoration, không tự thêm displayName/email", () => {
-    // Bản thân object "data" ghi vào Prisma phải đến từ readDecoration(formData),
-    // và thân hàm không được có thêm khoá displayName:/email: nào khác chèn vào.
+  it("updateMyProfile ghi thẳng object trả về từ readDecoration(formData)", () => {
+    // Bản thân object "data" ghi vào Prisma phải đến từ readDecoration(formData).
+    // (Trước đây bài kiểm còn thêm expect(mine).not.toMatch(/displayName:/) và
+    // /email:/ — hai assertion đó chỉ xanh NHỜ vị trí khai báo teacherFieldsSchema
+    // nằm ngoài phần thân bị cắt của updateMyProfile; dời khai báo đó vào giữa
+    // hai action (một thay đổi hoàn toàn vô hại) sẽ làm chúng đỏ oan. Chốt thật
+    // cho "updateMyProfile không đụng displayName/email" nay nằm ở bài kiểm
+    // decorationSchema bên dưới — kiểm đúng invariant, không phụ thuộc bố cục.)
     expect(mine).toMatch(/readDecoration\(formData\)/);
-    expect(mine).not.toMatch(/displayName:/);
-    expect(mine).not.toMatch(/email:/);
   });
 
   it("decorationSchema (dùng chung) chỉ có đúng 5 trường trang trí — không có displayName/email", () => {
@@ -128,6 +131,54 @@ describe("chốt chặn quyền của action sửa hồ sơ", () => {
       expect(updateIndex).toBeGreaterThanOrEqual(0);
       expect(deleteIndex).toBeGreaterThanOrEqual(0);
       expect(deleteIndex).toBeGreaterThan(updateIndex);
+    }
+  });
+
+  it("deleteOldAvatar CHỈ xoá file khớp isAllowedAvatarUrl(oldUrl) — không tự nới lỏng gate riêng (Finding A)", () => {
+    // Finding A (security): chốt khiến del() an toàn là isAllowedAvatarUrl (nay đã
+    // ràng buộc tiền tố avatars/ ở lib/student-avatar.ts). Nếu ai đó thay điều kiện
+    // gate này bằng thứ gì yếu hơn (vd. chỉ kiểm oldUrl !== newUrl) thì audio
+    // Listening hay ảnh tài liệu — cùng host Blob — lại có thể bị del() nhầm. Bài
+    // kiểm này khoá đúng lệnh gọi isAllowedAvatarUrl(oldUrl) có mặt trong gate.
+    const fn = blockOf(/async function deleteOldAvatar\([\s\S]*?\n\}/);
+    expect(fn).toMatch(/isAllowedAvatarUrl\(\s*oldUrl\s*\)/);
+  });
+
+  it("updateMyProfile ghi update nhắm đúng student.id lấy từ requireStudent(), không phải id nào khác trên FormData", () => {
+    // Finding C: chỉ kiểm KHÔNG có formData.get("studentId") là chưa đủ — một
+    // dòng where: { id: String(formData.get("sid")) } (đọc id qua khoá khác) vẫn
+    // qua được bài kiểm đó trong khi phá vỡ đúng bất biến mà task yêu cầu. Phải
+    // khẳng định DƯƠNG rằng where trỏ thẳng tới student.id (biến trả về từ
+    // requireStudent()).
+    expect(mine).toMatch(
+      /prisma\.studentProfile\.update\(\{\s*where:\s*\{\s*id:\s*student\.id\s*\}/
+    );
+  });
+
+  it("updateStudentProfile ghi update nhắm đúng student.id lấy từ bản ghi đã lọc theo lớp giáo viên", () => {
+    // Đối chứng phía giáo viên: id ghi vào where phải là student.id (kết quả
+    // findFirst đã lọc theo teacherId trong where ở bài kiểm phía trên), không
+    // phải fields.data.studentId đọc thẳng từ FormData chưa qua lọc quyền sở hữu.
+    expect(byTeacher).toMatch(
+      /prisma\.studentProfile\.update\(\{\s*where:\s*\{\s*id:\s*student\.id\s*\}/
+    );
+  });
+
+  it("requireStudent()/requireTeacher() nằm NGOÀI khối try — lỗi phân quyền phải ném ra như các action khác trong repo", () => {
+    // Finding C: đây là house pattern bắt buộc (xem CLAUDE.md + các action khác
+    // trong lib/actions). Đặt lệnh gọi vào TRONG try sẽ khiến lỗi phân quyền bị
+    // actionFail() nuốt thành ActionResult thay vì ném ra — hành vi khác hẳn phần
+    // còn lại của codebase. Kiểm bằng vị trí là hợp lệ ở đây vì đây chính là điều
+    // đang được khẳng định (thứ tự câu lệnh so với ranh giới try).
+    for (const [body, callText] of [
+      [mine, "requireStudent()"],
+      [byTeacher, "requireTeacher()"]
+    ] as const) {
+      const callIndex = body.indexOf(callText);
+      const tryIndex = body.indexOf("try {");
+      expect(callIndex).toBeGreaterThanOrEqual(0);
+      expect(tryIndex).toBeGreaterThan(0);
+      expect(callIndex).toBeLessThan(tryIndex);
     }
   });
 });

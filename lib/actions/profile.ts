@@ -132,12 +132,20 @@ function readDecorationPatch(formData: FormData): Partial<Decoration> {
   return patch;
 }
 
+// LƯU Ý: đây là chốt PHỤ (advisory) — kiểm-rồi-ghi (check-then-write), không có
+// ràng buộc UNIQUE nào đứng sau trong schema nên vẫn có khe hẹp (race) giữa lúc
+// kiểm và lúc ghi. Chốt THẬT khiến deleteOldAvatar() an toàn là tiền tố avatars/
+// bắt buộc trong isAllowedAvatarUrl (lib/student-avatar.ts) — chốt đó đảm bảo dù
+// avatarUrl trỏ tới file của ai, nó chỉ có thể là một file avatar, không bao giờ
+// là audio Listening hay ảnh tài liệu. Hàm dưới đây chỉ để tránh học viên A vô
+// tình/cố ý "mượn" đúng avatar học viên B đang dùng, không phải để chống xoá
+// nhầm file quan trọng.
+//
 // Avatar hiện công khai trên bảng xếp hạng của lớp. Không có chốt này, một học viên
 // đọc được URL Blob ảnh của bạn học (vốn công khai) có thể dán URL đó vào ô avatarUrl
-// của chính mình — isAllowedAvatarUrl vẫn cho qua vì chỉ kiểm hostname. Lần đổi
-// avatar SAU ĐÓ sẽ khiến deleteOldAvatar() xoá thẳng ảnh của người kia trên Blob,
-// không khôi phục được. Chặn bằng một truy vấn: URL mới không được trùng avatarUrl
-// của bất kỳ StudentProfile nào khác — không phụ thuộc cách đặt tên file trên Blob.
+// của chính mình. Lần đổi avatar SAU ĐÓ sẽ khiến deleteOldAvatar() xoá thẳng ảnh của
+// người kia trên Blob, không khôi phục được. Chặn bằng một truy vấn: URL mới không
+// được trùng avatarUrl của bất kỳ StudentProfile nào khác.
 async function assertAvatarUrlNotTaken(newUrl: string | null, ownerId: string) {
   if (!newUrl) {
     return;
@@ -157,6 +165,12 @@ async function assertAvatarUrlNotTaken(newUrl: string | null, ownerId: string) {
 // chỉ còn một file rác (scripts/blob-orphans.mjs dọn được), không đáng để chặn việc
 // lưu hồ sơ. LUÔN gọi hàm này SAU KHI ghi DB thành công (không phải trước) — nếu gọi
 // trước và việc ghi DB sau đó thất bại, ảnh cũ đã mất trong khi hồ sơ vẫn trỏ tới nó.
+//
+// isAllowedAvatarUrl(oldUrl) là chốt AN TOÀN bắt buộc, không phải chốt hợp lệ dữ
+// liệu thông thường: nó khoá oldUrl phải nằm dưới avatars/ trước khi cho phép
+// del(). Tuyệt đối KHÔNG được nới lỏng hay bỏ điều kiện này — thà bỏ qua, để lại
+// một file rác (dọn được bằng scripts/blob-orphans.mjs), còn hơn xoá nhầm file
+// không phải avatar (vd. audio Listening) mà không có cách khôi phục.
 async function deleteOldAvatar(oldUrl: string | null, newUrl: string | null) {
   if (!oldUrl || oldUrl === newUrl || !isAllowedAvatarUrl(oldUrl)) {
     return;

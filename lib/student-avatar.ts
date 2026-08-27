@@ -91,9 +91,14 @@ function initialsColor(name: string): string {
   return INITIALS_COLORS[hash % INITIALS_COLORS.length];
 }
 
-// Chỉ chấp nhận ảnh nằm trên Blob store của chính mình. Không có chốt này thì học
-// viên sửa gói tin gửi lên là dán được ảnh bất kỳ ngoài internet vào hồ sơ, và nó
-// sẽ hiện trên bảng xếp hạng của cả lớp.
+// Chỉ chấp nhận ảnh nằm trên Blob store của chính mình, VÀ nằm trong thư mục
+// avatars/ — không phải bất kỳ file nào trên cùng store. Cùng một Blob store còn
+// chứa audio Listening và ảnh tài liệu (xem lib/audio-source.ts); nếu chỉ kiểm
+// hostname thì học viên dán được URL audio Listening vào ô avatarUrl của mình,
+// rồi đổi avatar lần nữa khiến deleteOldAvatar() (lib/actions/profile.ts) xoá
+// vĩnh viễn file audio của cả lớp. Route tải avatar (app/api/student/avatar,
+// task sau) luôn ghi vào "avatars/<id>.webp" nên mọi avatar hợp lệ đều khớp
+// tiền tố này.
 export function isAllowedAvatarUrl(url: string): boolean {
   let parsed: URL;
 
@@ -109,7 +114,11 @@ export function isAllowedAvatarUrl(url: string): boolean {
 
   // So khớp bằng ĐUÔI có dấu chấm dẫn đầu, không phải endsWith trần — nếu không
   // thì "public.blob.vercel-storage.com.doc-hai.com" cũng lọt.
-  return parsed.hostname.endsWith(".public.blob.vercel-storage.com");
+  if (!parsed.hostname.endsWith(".public.blob.vercel-storage.com")) {
+    return false;
+  }
+
+  return parsed.pathname.startsWith("/avatars/");
 }
 
 // Thứ tự ưu tiên: ảnh tự tải -> avatar có sẵn -> ảnh Google -> chữ cái viết tắt.

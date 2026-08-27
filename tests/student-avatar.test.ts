@@ -104,6 +104,30 @@ describe("isAllowedAvatarUrl", () => {
     expect(isAllowedAvatarUrl("javascript:alert(1)")).toBe(false);
     expect(isAllowedAvatarUrl("")).toBe(false);
   });
+
+  it("từ chối file đúng host Blob nhưng KHÔNG nằm trong thư mục avatars/ (vd. audio Listening)", () => {
+    // Finding A (security): cùng một Blob store còn chứa audio Listening và ảnh
+    // tài liệu (xem lib/audio-source.ts), tất cả chung hostname với avatar. Nếu
+    // isAllowedAvatarUrl chỉ kiểm hostname, học viên dán được URL audio Listening
+    // vào ô avatarUrl của mình, rồi đổi avatar lần nữa khiến deleteOldAvatar()
+    // (lib/actions/profile.ts) xoá vĩnh viễn file audio của cả lớp — không khôi
+    // phục được. Một URL Blob hợp lệ nhưng ngoài avatars/ phải bị từ chối.
+    expect(
+      isAllowedAvatarUrl(
+        "https://abc123xyz.public.blob.vercel-storage.com/listening/cam20-test1-part1-aBcD12.mp3"
+      )
+    ).toBe(false);
+  });
+
+  it("nhận file đúng host Blob VÀ nằm trong thư mục avatars/", () => {
+    // Đối chứng với test trên: một URL avatar hợp lệ thật sự (đúng tiền tố mà
+    // route tải avatar app/api/student/avatar sẽ dùng) vẫn phải được chấp nhận.
+    expect(
+      isAllowedAvatarUrl(
+        "https://abc123xyz.public.blob.vercel-storage.com/avatars/hoc-vien-1-aBcD12.webp"
+      )
+    ).toBe(true);
+  });
 });
 
 describe("bảng hằng số", () => {

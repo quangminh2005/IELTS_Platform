@@ -77,4 +77,14 @@ describe("StudentAvatar giữ đúng quy ước hiển thị ảnh Google", () =
     expect(component).toMatch(/h-20 w-20/);
     expect(component).toMatch(/h-9 w-9/);
   });
+
+  it("bục hạng nhất dùng chung cỡ chữ viết tắt với hạng nhì/ba", () => {
+    // Giao diện gốc để cả ba bục cùng "text-lg" dù khung hạng nhất to hơn. Đổi cỡ
+    // chữ của riêng hạng nhất là làm khác bản cũ — chỉ lộ ra khi học viên đứng đầu
+    // chưa đặt avatar và cũng không có ảnh Google (rơi về chữ viết tắt).
+    const podium = component.match(/podium:\s*\{[^}]*\}/)?.[0] ?? "";
+    const lg = component.match(/\n\s*lg:\s*\{[^}]*\}/)?.[0] ?? "";
+    expect(podium).toContain('text: "text-lg"');
+    expect(lg).toContain('text: "text-lg"');
+  });
 });

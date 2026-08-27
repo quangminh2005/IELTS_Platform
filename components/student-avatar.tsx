@@ -13,7 +13,9 @@ const SIZES = {
   lg: { box: "h-16 w-16", text: "text-lg", emoji: "text-2xl" },
   // "podium": riêng cho avatar hạng nhất trên bục — 80px, lớn hơn hạng nhì/ba
   // (dùng "lg" = 64px) một bậc để nổi bật, đúng như giao diện gốc.
-  podium: { box: "h-20 w-20", text: "text-xl", emoji: "text-3xl" },
+  // Chữ viết tắt giữ "text-lg" y hệt hạng nhì/ba: giao diện gốc dùng chung một cỡ
+  // chữ cho cả ba bục dù khung hạng nhất to hơn. Đổi sang text-xl là làm khác bản cũ.
+  podium: { box: "h-20 w-20", text: "text-lg", emoji: "text-2xl" },
   xl: { box: "h-24 w-24", text: "text-2xl", emoji: "text-4xl" }
 } as const;
 

@@ -3,10 +3,13 @@ import { notFound } from "next/navigation";
 import { deleteStudent } from "@/lib/actions/classes";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { resetRecipientAttempts } from "@/lib/actions/attempts";
+import { updateStudentProfile } from "@/lib/actions/profile";
 import { ActionDeleteButton, ActionForm } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { ProctorFlag } from "@/components/proctor-flag";
 import { ParentContactBlock } from "@/components/parent-contact-block";
+import { ProfileEditor } from "@/components/profile-editor";
+import { StudentAvatar } from "@/components/student-avatar";
 import { resolveAppUrl } from "@/lib/app-url";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
@@ -63,6 +66,12 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
       }
     },
     include: {
+      // Dùng include (không phải select) ở tầng này nên các cột vô hướng của
+      // StudentProfile (bio, avatarUrl, avatarPreset, coverColor, targetBand,
+      // userId, email...) đã tự động có sẵn — chỉ cần khai báo thêm quan hệ
+      // `user` (ảnh Google) cho khối "Hồ sơ học viên"; select: { image: true }
+      // để không kéo theo các cột nặng khác của User.
+      user: { select: { image: true } },
       classes: {
         where: {
           class: {
@@ -196,6 +205,71 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           </form>
         </div>
       </header>
+
+      <section className="rounded-xl border border-border bg-card p-5 shadow-card">
+        <div className="flex items-center gap-4">
+          <StudentAvatar
+            avatarUrl={student.avatarUrl}
+            avatarPreset={student.avatarPreset}
+            userImage={student.user?.image ?? null}
+            displayName={student.displayName}
+            size="lg"
+          />
+          <div>
+            <h3 className="text-sm font-semibold">Hồ sơ học viên</h3>
+            <p className="text-sm text-muted-foreground">
+              {student.userId
+                ? "Học viên đã đăng nhập bằng Google — không đổi được email."
+                : "Học viên chưa đăng nhập lần nào — còn đổi được email."}
+            </p>
+          </div>
+        </div>
+
+        <details className="mt-4">
+          <summary className="cursor-pointer text-sm font-medium text-primary">
+            Chỉnh sửa
+          </summary>
+          <div className="mt-4 space-y-4">
+            <ProfileEditor
+              action={updateStudentProfile}
+              initial={{
+                displayName: student.displayName,
+                bio: student.bio,
+                avatarUrl: student.avatarUrl,
+                avatarPreset: student.avatarPreset,
+                userImage: student.user?.image ?? null,
+                coverColor: student.coverColor,
+                targetBand: student.targetBand
+              }}
+              extraFields={
+                <>
+                  <input type="hidden" name="studentId" value={student.id} />
+                  <label className="block space-y-1">
+                    <span className="text-sm font-semibold">Tên hiển thị</span>
+                    <input
+                      name="displayName"
+                      defaultValue={student.displayName}
+                      required
+                      className="w-full rounded-lg border border-border bg-card px-3 py-2 text-sm"
+                    />
+                  </label>
+                  <label className="block space-y-1">
+                    <span className="text-sm font-semibold">Email</span>
+                    <input
+                      name="email"
+                      type="email"
+                      defaultValue={student.email}
+                      required
+                      readOnly={student.userId !== null}
+                      className="w-full rounded-lg border border-border bg-card px-3 py-2 text-sm read-only:opacity-60"
+                    />
+                  </label>
+                </>
+              }
+            />
+          </div>
+        </details>
+      </section>
 
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="border-b border-border px-5 py-4">

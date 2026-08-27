@@ -14,6 +14,9 @@ export type ParentStudent = {
   displayName: string;
   targetBand: number | null;
   className: string | null;
+  avatarUrl: string | null;
+  avatarPreset: string | null;
+  userImage: string | null;
 };
 
 export async function findStudentByParentToken(token: string): Promise<ParentStudent | null> {
@@ -27,6 +30,9 @@ export async function findStudentByParentToken(token: string): Promise<ParentStu
       id: true,
       displayName: true,
       targetBand: true,
+      avatarUrl: true,
+      avatarPreset: true,
+      user: { select: { image: true } },
       classes: {
         select: { class: { select: { name: true } } },
         orderBy: { joinedAt: "desc" },
@@ -44,7 +50,10 @@ export async function findStudentByParentToken(token: string): Promise<ParentStu
     id: student.id,
     displayName: student.displayName,
     targetBand: student.targetBand,
-    className: student.classes[0]?.class.name ?? null
+    className: student.classes[0]?.class.name ?? null,
+    avatarUrl: student.avatarUrl,
+    avatarPreset: student.avatarPreset,
+    userImage: student.user?.image ?? null
   };
 }
 

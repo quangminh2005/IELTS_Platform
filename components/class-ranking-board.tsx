@@ -68,31 +68,47 @@ function RankChange({ change, showNew }: { change: number | null; showNew: boole
 }
 
 // Bục top 3 + bảng từ hạng 4. Dùng chung cho trang Xếp hạng của học viên và
-// của giáo viên; chỉ khác ở nhãn "Bạn" và ở chỗ giáo viên bấm được vào tên để
-// mở hồ sơ học viên.
+// của giáo viên; chỉ khác ở nhãn "Bạn" và ở chỗ tên học viên bấm được vào đâu.
 export function ClassRankingBoard({
   students,
   highlightStudentId = null,
-  linkToProfile = false
+  linkToProfile = false,
+  linkToProfiles = false
 }: {
   students: RankedClassStudent[];
   highlightStudentId?: string | null;
+  // Giáo viên bấm tên -> mở hồ sơ quản lý học viên (/teacher/students/[id]).
   linkToProfile?: boolean;
+  // Học viên bấm tên bạn cùng lớp -> mở hồ sơ rút gọn (/student/profile/[id]).
+  // Hai route khác nhau hẳn và chỉ một bên đăng nhập được vào mỗi route, nên
+  // đây là hai prop tách biệt, KHÔNG dùng chung một cờ — bảng này hiện cho cả
+  // hai vai trò, nhầm cờ là giáo viên bấm vào sẽ bị đẩy về /login.
+  linkToProfiles?: boolean;
 }) {
-  // Chỉ khu vực giáo viên mới có trang hồ sơ học viên.
   function StudentName({ student, className = "" }: { student: RankedClassStudent; className?: string }) {
-    if (!linkToProfile) {
-      return <span className={className}>{student.displayName}</span>;
+    if (linkToProfile) {
+      return (
+        <Link
+          href={`/teacher/students/${student.id}`}
+          className={`${className} rounded transition hover:text-primary hover:underline`}
+        >
+          {student.displayName}
+        </Link>
+      );
     }
 
-    return (
-      <Link
-        href={`/teacher/students/${student.id}`}
-        className={`${className} rounded transition hover:text-primary hover:underline`}
-      >
-        {student.displayName}
-      </Link>
-    );
+    if (linkToProfiles) {
+      return (
+        <Link
+          href={`/student/profile/${student.id}`}
+          className={`${className} rounded transition hover:text-primary hover:underline`}
+        >
+          {student.displayName}
+        </Link>
+      );
+    }
+
+    return <span className={className}>{student.displayName}</span>;
   }
 
   if (students.length === 0) {

@@ -8,6 +8,7 @@ import {
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { ActionDeleteButton, ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
+import { StudentAvatar } from "@/components/student-avatar";
 import { prisma } from "@/lib/prisma";
 
 type ClassDetailPageProps = {
@@ -23,7 +24,21 @@ export default async function TeacherClassDetailPage({ params }: ClassDetailPage
     include: {
       students: {
         orderBy: { joinedAt: "desc" },
-        include: { student: true }
+        // students là quan hệ lồng trong include, nhưng bản thân student vẫn
+        // dùng select có chủ đích — tránh kéo theo content/transcript nặng nếu
+        // sau này StudentProfile có thêm cột lớn.
+        include: {
+          student: {
+            select: {
+              id: true,
+              displayName: true,
+              email: true,
+              avatarUrl: true,
+              avatarPreset: true,
+              user: { select: { image: true } }
+            }
+          }
+        }
       }
     }
   });
@@ -78,9 +93,13 @@ export default async function TeacherClassDetailPage({ params }: ClassDetailPage
                   className="flex flex-col gap-2 px-5 py-4 transition hover:bg-muted/60 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
-                      {membership.student.displayName.trim().charAt(0).toUpperCase()}
-                    </span>
+                    <StudentAvatar
+                      avatarUrl={membership.student.avatarUrl}
+                      avatarPreset={membership.student.avatarPreset}
+                      userImage={membership.student.user?.image ?? null}
+                      displayName={membership.student.displayName}
+                      size="sm"
+                    />
                     <div className="min-w-0">
                       <p className="truncate font-semibold">{membership.student.displayName}</p>
                       <p className="truncate text-sm text-muted-foreground">

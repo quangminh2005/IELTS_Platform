@@ -3,11 +3,15 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ProctorFlag } from "@/components/proctor-flag";
+import { StudentAvatar } from "@/components/student-avatar";
 
 export type QueueRow = {
   id: string;
   studentName: string;
   studentEmail: string;
+  studentAvatarUrl: string | null;
+  studentAvatarPreset: string | null;
+  studentUserImage: string | null;
   assignmentId: string;
   assignmentTitle: string;
   className: string | null;
@@ -180,11 +184,22 @@ export function ReviewQueue({ rows }: ReviewQueueProps) {
                 filtered.map((row) => (
                   <tr key={row.id} className="transition hover:bg-muted/30">
                     <td className="px-4 py-3">
-                      <p className="flex items-center gap-1 font-medium">
-                        {row.studentName}
-                        <ProctorFlag counts={row} />
-                      </p>
-                      <p className="text-xs text-muted-foreground">{row.studentEmail}</p>
+                      <div className="flex items-center gap-2.5">
+                        <StudentAvatar
+                          avatarUrl={row.studentAvatarUrl}
+                          avatarPreset={row.studentAvatarPreset}
+                          userImage={row.studentUserImage}
+                          displayName={row.studentName}
+                          size="sm"
+                        />
+                        <div className="min-w-0">
+                          <p className="flex items-center gap-1 font-medium">
+                            {row.studentName}
+                            <ProctorFlag counts={row} />
+                          </p>
+                          <p className="text-xs text-muted-foreground">{row.studentEmail}</p>
+                        </div>
+                      </div>
                     </td>
                     <td className="px-4 py-3">
                       <p>{row.assignmentTitle}</p>

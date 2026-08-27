@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProgressLineChart } from "@/components/progress-line-chart";
+import { StudentAvatar } from "@/components/student-avatar";
 import { formatBand } from "@/lib/band-score";
 import {
   buildParentSummary,
@@ -87,15 +88,26 @@ export default async function ParentReportPage({ params }: ParentPageProps) {
     <main className="mx-auto w-full max-w-3xl space-y-6 px-4 py-8 text-[15px]">
       <header>
         <p className="text-sm font-semibold text-primary">Báo cáo học tập</p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-          {student.displayName}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {student.className ? `Lớp ${student.className}` : "Chưa xếp lớp"}
-          {student.targetBand !== null
-            ? ` · Mục tiêu band ${formatBand(student.targetBand)}`
-            : ""}
-        </p>
+        <div className="mt-2 flex items-center gap-3">
+          <StudentAvatar
+            avatarUrl={student.avatarUrl}
+            avatarPreset={student.avatarPreset}
+            userImage={student.userImage}
+            displayName={student.displayName}
+            size="lg"
+          />
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              {student.displayName}
+            </h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {student.className ? `Lớp ${student.className}` : "Chưa xếp lớp"}
+              {student.targetBand !== null
+                ? ` · Mục tiêu band ${formatBand(student.targetBand)}`
+                : ""}
+            </p>
+          </div>
+        </div>
         <p className="mt-3 rounded-lg bg-muted px-4 py-3 text-sm leading-6">{summary.headline}</p>
       </header>
 

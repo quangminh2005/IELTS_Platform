@@ -58,7 +58,13 @@ export default async function TeacherReviewPage({
       orderBy: [{ submittedAt: "asc" }, { startedAt: "asc" }],
       include: {
         student: {
-          select: { displayName: true, email: true }
+          select: {
+            displayName: true,
+            email: true,
+            avatarUrl: true,
+            avatarPreset: true,
+            user: { select: { image: true } }
+          }
         },
         review: {
           select: { reviewedAt: true }
@@ -103,6 +109,9 @@ export default async function TeacherReviewPage({
       id: attempt.id,
       studentName: attempt.student.displayName,
       studentEmail: attempt.student.email,
+      studentAvatarUrl: attempt.student.avatarUrl,
+      studentAvatarPreset: attempt.student.avatarPreset,
+      studentUserImage: attempt.student.user?.image ?? null,
       assignmentId: assignment.id,
       assignmentTitle: assignment.title,
       className: assignment.class?.name ?? null,

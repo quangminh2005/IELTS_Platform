@@ -232,6 +232,7 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           <div className="mt-4 space-y-4">
             <ProfileEditor
               action={updateStudentProfile}
+              mode="teacherPatch"
               initial={{
                 displayName: student.displayName,
                 bio: student.bio,

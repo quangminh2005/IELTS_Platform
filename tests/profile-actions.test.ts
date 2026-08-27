@@ -4,6 +4,14 @@ import { join } from "node:path";
 
 const root = process.cwd();
 const source = readFileSync(join(root, "lib", "actions", "profile.ts"), "utf8");
+const editorSource = readFileSync(
+  join(root, "components", "profile-editor.tsx"),
+  "utf8"
+);
+const teacherPageSource = readFileSync(
+  join(root, "app", "teacher", "students", "[studentId]", "page.tsx"),
+  "utf8"
+);
 
 // Cắt riêng thân từng action để khẳng định về đúng action đó, không ăn nhầm sang
 // action bên cạnh trong cùng file.
@@ -180,5 +188,73 @@ describe("chốt chặn quyền của action sửa hồ sơ", () => {
       expect(tryIndex).toBeGreaterThan(0);
       expect(callIndex).toBeLessThan(tryIndex);
     }
+  });
+});
+
+describe("ProfileEditor không để hai chế độ (self / teacherPatch) sụp thành một", () => {
+  // Bối cảnh: readDecorationPatch() ở trên chỉ có tác dụng khi form giáo viên
+  // THỰC SỰ bỏ trống những ô chưa chạm tới. Nếu ProfileEditor lại render đủ cả
+  // 5 hidden input bất kể mode (như trước khi vá), formData.has(...) phía server
+  // luôn đúng và nhánh "để nguyên" không bao giờ được kích hoạt — chốt bảo vệ có
+  // tồn tại nhưng không có tác dụng thật. Các bài kiểm dưới đây khoá đúng phần
+  // component chịu trách nhiệm không để việc đó xảy ra lại.
+  it("cả 5 hidden input trang trí đều render CÓ ĐIỀU KIỆN qua shouldPost(...), không unconditional", () => {
+    for (const field of ["bio", "avatarUrl", "avatarPreset", "coverColor", "targetBand"]) {
+      const gated = new RegExp(
+        `shouldPost\\(\\s*["']${field}["']\\s*\\)[\\s\\S]{0,80}<input type="hidden" name="${field}"`
+      );
+      expect(editorSource).toMatch(gated);
+    }
+  });
+
+  it("shouldPost() thật sự phân biệt hai mode, không phải hằng true nguỵ trang", () => {
+    const fn = editorSource.match(/function shouldPost\([\s\S]*?\n  \}/);
+    expect(fn, "Không tìm thấy thân hàm shouldPost").not.toBeNull();
+    // mode="self" luôn gửi (giữ hành vi "vắng mặt = xoá trắng" cho học viên)...
+    expect(fn![0]).toMatch(/mode\s*===\s*["']self["']/);
+    // ...còn mode khác thì phải tra theo tập các trường đã thực sự bị chạm tới,
+    // không phải một điều kiện luôn đúng nào khác.
+    expect(fn![0]).toMatch(/touchedFields\.has\(/);
+  });
+
+  it("chọn preset / xoá ảnh / tải ảnh thành công đều đánh dấu CẢ avatarUrl lẫn avatarPreset đã chạm", () => {
+    // avatarUrl và avatarPreset loại trừ lẫn nhau — chạm một ô mà không đánh dấu
+    // ô kia thì giá trị "" cần thiết để xoá ô còn lại sẽ không được gửi lên.
+    const touchAvatarFn = editorSource.match(/function touchAvatar\(\)[\s\S]*?\n  \}/);
+    expect(touchAvatarFn, "Không tìm thấy thân hàm touchAvatar").not.toBeNull();
+    expect(touchAvatarFn![0]).toMatch(/touch\(\s*["']avatarUrl["']\s*,\s*["']avatarPreset["']\s*\)/);
+
+    // Cả 3 hành động (tải ảnh thành công, bấm "Xoá ảnh", chọn preset) đều phải
+    // gọi touchAvatar() — thiếu ở bất kỳ đâu thì hành động đó lại "câm" trong
+    // mode="teacherPatch" dù người dùng đã thực sự đổi ảnh. Kiểm riêng từng
+    // handler (không đếm gộp toàn file) — đếm gộp sẽ vẫn "xanh giả" khi mất
+    // đúng 1 lời gọi, vì chuỗi con "touchAvatar()" còn xuất hiện trong chính
+    // định nghĩa hàm touchAvatar ở trên.
+    expect(editorSource).toMatch(
+      /setAvatarPreset\(null\); \/\/ ảnh tự tải thắng avatar có sẵn\s*\n\s*touchAvatar\(\);/
+    );
+    expect(editorSource).toMatch(
+      /setAvatarUrl\(null\);\s*\n\s*setUploadError\(null\);\s*\n\s*setUploading\(false\);\s*\n\s*touchAvatar\(\);\s*\n\s*\}\}\s*\n\s*className="ml-2/
+    );
+    expect(editorSource).toMatch(
+      /setAvatarPreset\(preset\.key\);[\s\S]{0,220}touchAvatar\(\);/
+    );
+  });
+
+  it("trang giáo viên (teacherPatch) chỉ đọc trường thực sự gửi lên — không tự nới lỏng thành đọc thẳng FormData", () => {
+    // Chốt đối chứng phía "gửi": nếu ai đó âm thầm bỏ chế độ teacherPatch khỏi
+    // trang giáo viên (quay về mặc định mode="self" của ProfileEditor), form
+    // giáo viên lại gửi đủ cả 5 trường mỗi lần lưu — đúng lỗi ban đầu của finding.
+    expect(teacherPageSource).toMatch(
+      /<ProfileEditor[\s\S]{0,200}mode="teacherPatch"/
+    );
+  });
+
+  it("trang hồ sơ học viên (self) KHÔNG truyền mode=\"teacherPatch\" — vẫn dùng mặc định mode=\"self\"", () => {
+    const studentPageSource = readFileSync(
+      join(root, "app", "student", "profile", "page.tsx"),
+      "utf8"
+    );
+    expect(studentPageSource).not.toMatch(/mode="teacherPatch"/);
   });
 });

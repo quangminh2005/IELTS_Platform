@@ -1,52 +1,18 @@
 import Link from "next/link";
 import { formatBand } from "@/lib/band-score";
 import { RankTierBadge } from "@/components/rank-tier-badge";
+import { StudentAvatar } from "@/components/student-avatar";
 import { daysAgoLabel } from "@/lib/student-score";
 import type { RankedClassStudent } from "@/lib/class-ranking";
 
-// Chữ cái viết tắt cho avatar (tối đa 2 ký tự, lấy từ đầu các từ trong tên).
-function initials(name: string) {
-  const words = name.trim().split(/\s+/).filter(Boolean);
-
-  if (words.length === 0) {
-    return "?";
-  }
-
-  if (words.length === 1) {
-    return words[0].slice(0, 2).toUpperCase();
-  }
-
-  return (words[0][0] + words[words.length - 1][0]).toUpperCase();
-}
-
-// Màu nền avatar suy ra từ tên để mỗi học viên có một màu ổn định, dễ phân biệt.
-const AVATAR_COLORS = [
-  "bg-rose-500",
-  "bg-orange-500",
-  "bg-amber-500",
-  "bg-emerald-500",
-  "bg-teal-500",
-  "bg-sky-500",
-  "bg-indigo-500",
-  "bg-violet-500",
-  "bg-fuchsia-500"
-];
-
-function avatarColor(name: string) {
-  let hash = 0;
-  for (let i = 0; i < name.length; i += 1) {
-    hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
-  }
-
-  return AVATAR_COLORS[hash % AVATAR_COLORS.length];
-}
-
 const medals = ["🥇", "🥈", "🥉"];
 
+// Avatar bục giờ đều dùng size="lg" của StudentAvatar (xem bên dưới) — không còn
+// cột "size" riêng cho từng hạng như trước khi gộp về component dùng chung.
 const podiumStyle = [
-  { ring: "ring-yellow-400", pedestal: "h-24 bg-yellow-400/20", size: "h-20 w-20", shine: "animate-podium-shine" },
-  { ring: "ring-slate-300", pedestal: "h-16 bg-slate-300/20", size: "h-16 w-16", shine: "" },
-  { ring: "ring-amber-600", pedestal: "h-12 bg-amber-600/20", size: "h-16 w-16", shine: "" }
+  { ring: "ring-yellow-400", pedestal: "h-24 bg-yellow-400/20", shine: "animate-podium-shine" },
+  { ring: "ring-slate-300", pedestal: "h-16 bg-slate-300/20", shine: "" },
+  { ring: "ring-amber-600", pedestal: "h-12 bg-amber-600/20", shine: "" }
 ];
 
 // Điểm trung bình hiển thị: ưu tiên band, không quy đổi được thì giữ %.
@@ -171,24 +137,14 @@ export function ClassRankingBoard({
             return (
               <div key={rankedStudent.id} className="flex w-28 flex-col items-center sm:w-36">
                 <span className="mb-1 text-2xl">{medals[rankIndex]}</span>
-                {rankedStudent.avatarUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={rankedStudent.avatarUrl}
-                    alt=""
-                    referrerPolicy="no-referrer"
-                    className={`${style.size} rounded-full object-cover ring-4 ${style.ring} ${style.shine}`}
-                  />
-                ) : (
-                  <span
-                    className={`flex ${style.size} items-center justify-center rounded-full text-lg font-bold text-white ring-4 ${style.ring} ${style.shine} ${avatarColor(
-                      rankedStudent.displayName
-                    )}`}
-                    aria-hidden="true"
-                  >
-                    {initials(rankedStudent.displayName)}
-                  </span>
-                )}
+                <StudentAvatar
+                  avatarUrl={rankedStudent.avatarUrl}
+                  avatarPreset={rankedStudent.avatarPreset}
+                  userImage={rankedStudent.userImage}
+                  displayName={rankedStudent.displayName}
+                  size="lg"
+                  className={`ring-4 ${style.ring} ${style.shine}`}
+                />
                 <p className="mt-2 max-w-full truncate text-center text-sm font-semibold">
                   <StudentName student={rankedStudent} />
                   {isHighlighted ? (
@@ -251,24 +207,13 @@ export function ClassRankingBoard({
                     <RankChange change={rankedStudent.rankChange} showNew={hasTrendData} />
                   </p>
                   <div className="flex min-w-0 items-center gap-3">
-                    {rankedStudent.avatarUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={rankedStudent.avatarUrl}
-                        alt=""
-                        referrerPolicy="no-referrer"
-                        className="h-9 w-9 shrink-0 rounded-full object-cover"
-                      />
-                    ) : (
-                      <span
-                        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white ${avatarColor(
-                          rankedStudent.displayName
-                        )}`}
-                        aria-hidden="true"
-                      >
-                        {initials(rankedStudent.displayName)}
-                      </span>
-                    )}
+                    <StudentAvatar
+                      avatarUrl={rankedStudent.avatarUrl}
+                      avatarPreset={rankedStudent.avatarPreset}
+                      userImage={rankedStudent.userImage}
+                      displayName={rankedStudent.displayName}
+                      size="md"
+                    />
                     <div className="min-w-0">
                       <p className="truncate font-semibold">
                         <StudentName student={rankedStudent} />
@@ -329,24 +274,14 @@ export function ClassRankingBoard({
           <div className="flex flex-wrap gap-x-6 gap-y-3 px-5 py-4">
             {notStarted.map((rankedStudent) => (
               <div key={rankedStudent.id} className="flex min-w-0 items-center gap-3">
-                {rankedStudent.avatarUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={rankedStudent.avatarUrl}
-                    alt=""
-                    referrerPolicy="no-referrer"
-                    className="h-9 w-9 shrink-0 rounded-full object-cover opacity-70"
-                  />
-                ) : (
-                  <span
-                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white opacity-70 ${avatarColor(
-                      rankedStudent.displayName
-                    )}`}
-                    aria-hidden="true"
-                  >
-                    {initials(rankedStudent.displayName)}
-                  </span>
-                )}
+                <StudentAvatar
+                  avatarUrl={rankedStudent.avatarUrl}
+                  avatarPreset={rankedStudent.avatarPreset}
+                  userImage={rankedStudent.userImage}
+                  displayName={rankedStudent.displayName}
+                  size="md"
+                  className="opacity-70"
+                />
                 <p className="truncate text-sm font-medium text-muted-foreground">
                   <StudentName student={rankedStudent} />
                   {rankedStudent.id === highlightStudentId ? (

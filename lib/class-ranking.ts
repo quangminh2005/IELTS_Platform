@@ -12,6 +12,8 @@ export type RankedClassStudent = {
   id: string;
   displayName: string;
   avatarUrl: string | null;
+  avatarPreset: string | null;
+  userImage: string | null;
   averageScorePercent: number;
   averageBandValue: number | null;
   completionRate: number;
@@ -35,6 +37,8 @@ export type ClassmateRow = {
   id: string;
   displayName: string;
   avatarUrl: string | null;
+  avatarPreset: string | null;
+  userImage: string | null;
   attempts: Array<{
     scorePercent: number | null;
     startedAt: Date;
@@ -152,6 +156,8 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
         id: row.id,
         displayName: row.displayName,
         avatarUrl: row.avatarUrl,
+        avatarPreset: row.avatarPreset,
+        userImage: row.userImage,
         averageScorePercent: score.averageScorePercent,
         averageBandValue: averageBand(attemptBands),
         completionRate: score.completionRate,
@@ -242,6 +248,8 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
           user: {
             select: { image: true }
           },
+          // Không cần liệt kê avatarUrl/avatarPreset ở đây — include (khác select)
+          // đã tự mang theo MỌI cột vô hướng của student, kể cả hai cột này.
           attempts: {
             where: {
               OR: [
@@ -281,7 +289,9 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
     classmates.map((classmate) => ({
       id: classmate.student.id,
       displayName: classmate.student.displayName,
-      avatarUrl: classmate.student.user?.image ?? null,
+      avatarUrl: classmate.student.avatarUrl,
+      avatarPreset: classmate.student.avatarPreset,
+      userImage: classmate.student.user?.image ?? null,
       attempts: classmate.student.attempts.map((attempt) => ({
         scorePercent: attempt.scorePercent,
         startedAt: attempt.startedAt,

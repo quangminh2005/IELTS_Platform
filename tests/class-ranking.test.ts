@@ -39,6 +39,8 @@ function classmate(id: string, displayName: string, scorePercent: number): Class
     id,
     displayName,
     avatarUrl: null,
+    avatarPreset: null,
+    userImage: null,
     attempts: [
       {
         scorePercent,
@@ -92,6 +94,8 @@ describe("rankClassmates", () => {
         id: "a",
         displayName: "An",
         avatarUrl: null,
+        avatarPreset: null,
+        userImage: null,
         attempts: [
           {
             scorePercent: null,
@@ -125,6 +129,8 @@ describe("rankClassmates", () => {
         id: "a",
         displayName: "An",
         avatarUrl: null,
+        avatarPreset: null,
+        userImage: null,
         attempts: [
           {
             scorePercent: 80,
@@ -157,6 +163,8 @@ describe("rankClassmates", () => {
         id: "a",
         displayName: "An",
         avatarUrl: null,
+        avatarPreset: null,
+        userImage: null,
         attempts: [
           {
             scorePercent: 60,
@@ -189,6 +197,8 @@ describe("rankClassmates", () => {
         id: "a",
         displayName: "An",
         avatarUrl: null,
+        avatarPreset: null,
+        userImage: null,
         attempts: [
           {
             scorePercent: 70,
@@ -238,6 +248,8 @@ describe("rankClassmates", () => {
         id: "moi",
         displayName: "Mới",
         avatarUrl: null,
+        avatarPreset: null,
+        userImage: null,
         attempts: [
           {
             scorePercent: null,
@@ -255,6 +267,8 @@ describe("rankClassmates", () => {
         id: "cham",
         displayName: "Chăm",
         avatarUrl: null,
+        avatarPreset: null,
+        userImage: null,
         attempts: [
           {
             scorePercent: 0,
@@ -292,6 +306,8 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
     id: "an",
     displayName: "An",
     avatarUrl: null,
+    avatarPreset: null,
+    userImage: null,
     attempts: [
       {
         scorePercent: 60,
@@ -317,6 +333,8 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
     id: "binh",
     displayName: "Bình",
     avatarUrl: null,
+    avatarPreset: null,
+    userImage: null,
     attempts: [
       {
         scorePercent: 70,
@@ -343,6 +361,8 @@ describe("rankClassmates - xu hướng so với tuần trước", () => {
       id: "moi",
       displayName: "Mới",
       avatarUrl: null,
+      avatarPreset: null,
+      userImage: null,
       attempts: [
         {
           scorePercent: 90,

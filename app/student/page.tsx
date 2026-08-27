@@ -5,10 +5,10 @@ import { prisma } from "@/lib/prisma";
 import { SkillTags } from "@/components/skill-tags";
 import { ProgressRing } from "@/components/progress-ring";
 import { calculateWeekStreak } from "@/lib/streak";
-import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
+import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
-import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
+import { excludePracticeAssignment } from "@/lib/practice";
 import { VocabCard } from "@/components/vocab-card";
 import { getVocabSidebar, getWordOfTheDay } from "@/lib/vocab-daily";
 
@@ -144,24 +144,17 @@ export default async function StudentDashboardPage() {
 
   const streak = calculateWeekStreak({ submittedAt: submittedDates, weeklyGoal, now });
 
-  // Chuỗi hoạt động tính MỌI lượt (kể cả luyện lại); điểm xếp hạng chỉ lượt đầu.
-  const scoringAttempts = attempts.filter(
-    (attempt) => attempt.attemptRound === countsForStats.attemptRound
-  );
-
-  const score = studentRankingScore({
-    scorePercents: scoringAttempts
-      .map((attempt) =>
-        rankingScorePercent({
-          scorePercent: attempt.scorePercent,
-          overallBand: attempt.review?.overallBand ?? null
-        })
-      )
-      .filter((value): value is number => value !== null),
-    statuses: recipients.map((recipient) => recipient.status),
-    attemptTimes: scoringAttempts.map((attempt) => ({
+  // Chuỗi hoạt động tính MỌI lượt (kể cả luyện lại); điểm xếp hạng chỉ lượt đầu —
+  // việc lọc lượt nằm trong rankingScoreFromRecipientsAndAttempts (lib/student-score.ts),
+  // dùng chung với trang Hồ sơ để không lặp logic lọc/tính % ở hai nơi.
+  const score = rankingScoreFromRecipientsAndAttempts({
+    recipientStatuses: recipients.map((recipient) => recipient.status),
+    attempts: attempts.map((attempt) => ({
+      scorePercent: attempt.scorePercent,
       startedAt: attempt.startedAt,
-      submittedAt: attempt.submittedAt
+      submittedAt: attempt.submittedAt,
+      attemptRound: attempt.attemptRound,
+      overallBand: attempt.review?.overallBand ?? null
     })),
     now
   });

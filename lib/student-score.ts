@@ -1,4 +1,5 @@
 import { calculateRankingScore } from "@/lib/ranking";
+import { countsForStats } from "@/lib/practice";
 
 export type StudentScore = {
   averageScorePercent: number;
@@ -131,4 +132,42 @@ export function studentRankingScore(input: {
     rankingScore,
     daysSinceLastActivity
   };
+}
+
+// Bọc `studentRankingScore` với đúng cách lọc/ánh xạ mà trang Tổng quan (Task 8:
+// app/student/page.tsx) đang dùng, để trang Hồ sơ (và mọi nơi khác cần điểm xếp
+// hạng để suy ra bậc) gọi lại thay vì tự chép lại logic lọc lượt/ tính % lần nữa.
+// Chỉ lượt 1 (countsForStats) mới tính vào xếp hạng — lượt tự luyện lại không đẩy
+// hạng lên.
+export function rankingScoreFromRecipientsAndAttempts(input: {
+  recipientStatuses: string[];
+  attempts: Array<{
+    scorePercent: number | null;
+    startedAt: Date;
+    submittedAt: Date | null;
+    attemptRound: number;
+    overallBand: number | null;
+  }>;
+  now?: Date;
+}): StudentScore {
+  const scoringAttempts = input.attempts.filter(
+    (attempt) => attempt.attemptRound === countsForStats.attemptRound
+  );
+
+  return studentRankingScore({
+    scorePercents: scoringAttempts
+      .map((attempt) =>
+        rankingScorePercent({
+          scorePercent: attempt.scorePercent,
+          overallBand: attempt.overallBand
+        })
+      )
+      .filter((value): value is number => value !== null),
+    statuses: input.recipientStatuses,
+    attemptTimes: scoringAttempts.map((attempt) => ({
+      startedAt: attempt.startedAt,
+      submittedAt: attempt.submittedAt
+    })),
+    now: input.now
+  });
 }

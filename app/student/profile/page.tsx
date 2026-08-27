@@ -1,15 +1,18 @@
 import { redirect } from "next/navigation";
 import { AttendanceCalendar } from "@/components/attendance-calendar";
 import { ProfileEditor } from "@/components/profile-editor";
+import { RankTierBadge } from "@/components/rank-tier-badge";
 import { StudentAvatar } from "@/components/student-avatar";
 import { updateMyProfile } from "@/lib/actions/profile";
 import { auth } from "@/lib/auth";
 import { buildAttendanceMonth } from "@/lib/attendance";
-import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
-import { countsForStats } from "@/lib/practice";
+import { averageBandsBySkillAcrossAttempts, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
+import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
+import { getTierProgress } from "@/lib/rank-tier";
 import { calculateWeekStreak } from "@/lib/streak";
 import { coverClassName } from "@/lib/student-avatar";
+import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 
 export const dynamic = "force-dynamic";
 
@@ -65,18 +68,51 @@ export default async function StudentProfilePage() {
     where: { studentId: student.id }
   });
 
+  // Dữ liệu cho chip hạng ở header — cùng cách trang Tổng quan (app/student/page.tsx)
+  // tính điểm xếp hạng, qua helper dùng chung rankingScoreFromRecipientsAndAttempts.
+  const recipients = await prisma.assignmentRecipient.findMany({
+    where: { studentId: student.id, assignment: excludePracticeAssignment },
+    select: { status: true }
+  });
+
+  const rankingAttempts = await prisma.attempt.findMany({
+    where: { studentId: student.id, ...countsForStats },
+    select: {
+      scorePercent: true,
+      startedAt: true,
+      submittedAt: true,
+      attemptRound: true,
+      review: { select: { overallBand: true } }
+    }
+  });
+
   const submittedAt = attempts
     .map((attempt) => attempt.submittedAt)
     .filter((date): date is Date => date !== null);
 
-  const bands = bandsBySkill(
-    attempts.flatMap((attempt) =>
+  // Band trung bình theo từng kỹ năng — quy đổi RIÊNG cho mỗi lần làm rồi mới lấy
+  // trung bình, không gộp câu trả lời của nhiều lần làm lại (xem lib/band-score.ts).
+  const bands = averageBandsBySkillAcrossAttempts(
+    attempts.map((attempt) =>
       attempt.answers.map((answer) => ({
         isCorrect: answer.isCorrect,
         skill: answer.assignableUnit.skill
       }))
     )
-  ).filter((row) => row.band !== null);
+  );
+
+  const rankingScore = rankingScoreFromRecipientsAndAttempts({
+    recipientStatuses: recipients.map((recipient) => recipient.status),
+    attempts: rankingAttempts.map((attempt) => ({
+      scorePercent: attempt.scorePercent,
+      startedAt: attempt.startedAt,
+      submittedAt: attempt.submittedAt,
+      attemptRound: attempt.attemptRound,
+      overallBand: attempt.review?.overallBand ?? null
+    }))
+  });
+
+  const tierProgress = getTierProgress(rankingScore.rankingScore);
 
   const streak = calculateWeekStreak({
     submittedAt,
@@ -118,12 +154,17 @@ export default async function StudentProfilePage() {
               {student.bio}
             </p>
           ) : null}
-          <p className="mt-3 text-sm text-muted-foreground">
-            Tham gia từ {joined}
-            {student.targetBand !== null
-              ? ` · Mục tiêu ${formatBand(student.targetBand)}`
-              : ""}
-          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
+            <span>Tham gia từ {joined}</span>
+            <span aria-hidden="true">·</span>
+            <RankTierBadge tier={tierProgress.tier} />
+            {student.targetBand !== null ? (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>Mục tiêu {formatBand(student.targetBand)}</span>
+              </>
+            ) : null}
+          </div>
         </div>
       </section>
 

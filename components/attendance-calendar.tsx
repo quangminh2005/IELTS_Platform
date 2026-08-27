@@ -30,6 +30,7 @@ export function AttendanceCalendar({ data }: { data: AttendanceMonth }) {
           <span
             key={day.day}
             title={`Ngày ${day.day}: ${day.active ? "có học" : "nghỉ"}`}
+            aria-label={`Ngày ${day.day} tháng ${data.month}: ${day.active ? "có học" : "nghỉ"}`}
             className={`flex aspect-square items-center justify-center rounded-md text-xs ${
               day.active
                 ? "bg-primary font-semibold text-primary-foreground"
@@ -39,6 +40,19 @@ export function AttendanceCalendar({ data }: { data: AttendanceMonth }) {
             {day.day}
           </span>
         ))}
+      </div>
+
+      {/* Chú giải màu — trên điện thoại không có hover nên tooltip title không đủ,
+          màu phải kèm chữ giải thích ngay trên trang. */}
+      <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1.5">
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-sm bg-primary" />
+          Có học
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-sm bg-muted" />
+          Nghỉ
+        </span>
       </div>
     </div>
   );

@@ -145,6 +145,37 @@ export function averageBand(bands: number[]): number | null {
   return roundHalfBand(bands.reduce((total, band) => total + band, 0) / bands.length);
 }
 
+export type AveragedSkillBand = { skill: string; band: number };
+
+// Band trung bình theo TỪNG kỹ năng, gộp NHIỀU lần làm bài — dùng cho trang Hồ sơ.
+// Mỗi lần làm phải tự quy đổi band riêng (bandsBySkill) rồi mới lấy trung bình các
+// band; KHÔNG được gộp câu trả lời của nhiều lần làm lại với nhau trước khi quy
+// đổi, vì band chỉ có ý nghĩa với bài đủ 40 câu (bandScore) — gộp nhiều lần làm sẽ
+// luôn ra tổng > 40 và không bao giờ ra band. Lần làm có band null (bài lẻ, không
+// đủ 40 câu) bị loại khỏi trung bình, không tính là 0.
+export function averageBandsBySkillAcrossAttempts(
+  attempts: Array<Array<{ isCorrect: boolean | null; skill: string }>>
+): AveragedSkillBand[] {
+  const bandsBySkillName = new Map<string, number[]>();
+
+  for (const answers of attempts) {
+    for (const row of bandsBySkill(answers)) {
+      if (row.band === null) {
+        continue;
+      }
+
+      const existing = bandsBySkillName.get(row.skill) ?? [];
+      existing.push(row.band);
+      bandsBySkillName.set(row.skill, existing);
+    }
+  }
+
+  return [...bandsBySkillName.entries()].map(([skill, bands]) => ({
+    skill,
+    band: averageBand(bands) as number
+  }));
+}
+
 // Band đại diện cho MỘT lần làm bài, dùng cho trang Lịch sử & Xếp hạng.
 // Ưu tiên band do giáo viên chấm (Nói/Viết), sau đó tới band tự động của bài
 // Nghe/Đọc đủ 40 câu. Không đủ điều kiện quy đổi -> null (phía hiển thị giữ %).

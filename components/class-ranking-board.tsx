@@ -72,21 +72,21 @@ function RankChange({ change, showNew }: { change: number | null; showNew: boole
 export function ClassRankingBoard({
   students,
   highlightStudentId = null,
-  linkToProfile = false,
-  linkToProfiles = false
+  profileLinkTarget
 }: {
   students: RankedClassStudent[];
   highlightStudentId?: string | null;
-  // Giáo viên bấm tên -> mở hồ sơ quản lý học viên (/teacher/students/[id]).
-  linkToProfile?: boolean;
-  // Học viên bấm tên bạn cùng lớp -> mở hồ sơ rút gọn (/student/profile/[id]).
-  // Hai route khác nhau hẳn và chỉ một bên đăng nhập được vào mỗi route, nên
-  // đây là hai prop tách biệt, KHÔNG dùng chung một cờ — bảng này hiện cho cả
-  // hai vai trò, nhầm cờ là giáo viên bấm vào sẽ bị đẩy về /login.
-  linkToProfiles?: boolean;
+  // Đích của link khi bấm vào tên học viên — đặt tên theo ĐÍCH ĐẾN thay vì
+  // một cờ boolean riêng cho từng vai trò, để không thể gõ nhầm/copy nhầm ra
+  // một tổ hợp vô nghĩa (bảng này hiện cho cả hai vai trò, nhầm route là giáo
+  // viên bấm vào sẽ bị đẩy về /login):
+  //   - "teacher"   -> giáo viên bấm tên học viên, mở /teacher/students/[id]
+  //   - "classmate" -> học viên bấm tên bạn cùng lớp, mở /student/profile/[id]
+  // Không truyền (mặc định) -> không link, chỉ hiện tên dạng chữ thường.
+  profileLinkTarget?: "teacher" | "classmate";
 }) {
   function StudentName({ student, className = "" }: { student: RankedClassStudent; className?: string }) {
-    if (linkToProfile) {
+    if (profileLinkTarget === "teacher") {
       return (
         <Link
           href={`/teacher/students/${student.id}`}
@@ -97,7 +97,7 @@ export function ClassRankingBoard({
       );
     }
 
-    if (linkToProfiles) {
+    if (profileLinkTarget === "classmate") {
       return (
         <Link
           href={`/student/profile/${student.id}`}

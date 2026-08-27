@@ -86,7 +86,7 @@ export default async function TeacherRankingPage({ searchParams }: TeacherRankin
         </form>
       </header>
 
-      <ClassRankingBoard students={rankedStudents} linkToProfile />
+      <ClassRankingBoard students={rankedStudents} profileLinkTarget="teacher" />
     </div>
   );
 }

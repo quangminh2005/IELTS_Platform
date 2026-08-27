@@ -66,7 +66,7 @@ export default async function StudentRankingPage() {
       <ClassRankingBoard
         students={rankedStudents}
         highlightStudentId={student.id}
-        linkToProfiles
+        profileLinkTarget="classmate"
       />
     </div>
   );

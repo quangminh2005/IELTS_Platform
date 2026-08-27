@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { ActionForm, type ServerAction } from "@/components/action-form";
 import { StudentAvatar } from "@/components/student-avatar";
 import {
@@ -75,8 +75,17 @@ export function ProfileEditor({
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
+  const fileInputId = useId();
+
+  // Đếm số "lượt quyết định avatar" (bắt đầu tải ảnh mới / chọn preset / xoá ảnh).
+  // Mỗi lượt tải ảnh ghi lại số thứ tự của chính nó lúc bắt đầu; khi kết quả về,
+  // chỉ áp dụng nếu số này vẫn còn là lượt mới nhất — nhờ vậy một lượt tải chậm
+  // (mạng điện thoại) không bao giờ đè lên lựa chọn học viên đã chọn sau đó,
+  // kể cả khi có 2 lượt tải ảnh chồng lên nhau.
+  const avatarActionRef = useRef(0);
 
   async function handleFile(file: File) {
+    const token = ++avatarActionRef.current;
     setUploadError(null);
     setUploading(true);
 
@@ -92,12 +101,22 @@ export function ProfileEditor({
         throw new Error(payload.error ?? "Tải ảnh không thành công.");
       }
 
+      // Học viên đã đổi ý (chọn ảnh khác / preset / xoá ảnh) trong lúc chờ —
+      // kết quả tải chậm này đã lỗi thời, bỏ qua để không đè lên lựa chọn mới hơn.
+      if (avatarActionRef.current !== token) {
+        return;
+      }
+
       setAvatarUrl(payload.url);
       setAvatarPreset(null); // ảnh tự tải thắng avatar có sẵn
     } catch (error) {
-      setUploadError((error as Error).message);
+      if (avatarActionRef.current === token) {
+        setUploadError((error as Error).message);
+      }
     } finally {
-      setUploading(false);
+      if (avatarActionRef.current === token) {
+        setUploading(false);
+      }
       if (fileInput.current) {
         fileInput.current.value = "";
       }
@@ -128,7 +147,7 @@ export function ProfileEditor({
             type="file"
             accept="image/png,image/jpeg,image/webp"
             className="sr-only"
-            id="avatar-file"
+            id={fileInputId}
             onChange={(event) => {
               const file = event.target.files?.[0];
               if (file) {
@@ -137,7 +156,7 @@ export function ProfileEditor({
             }}
           />
           <label
-            htmlFor="avatar-file"
+            htmlFor={fileInputId}
             className="inline-flex cursor-pointer items-center rounded-lg border border-border px-3 py-2 text-sm font-medium transition hover:border-primary hover:text-primary"
           >
             {uploading ? "Đang tải ảnh…" : "Tải ảnh lên"}
@@ -145,7 +164,12 @@ export function ProfileEditor({
           {avatarUrl ? (
             <button
               type="button"
-              onClick={() => setAvatarUrl(null)}
+              onClick={() => {
+                avatarActionRef.current += 1; // huỷ lượt tải ảnh đang chờ (nếu có)
+                setAvatarUrl(null);
+                setUploadError(null);
+                setUploading(false);
+              }}
               className="ml-2 text-sm text-muted-foreground underline"
             >
               Xoá ảnh
@@ -164,12 +188,16 @@ export function ProfileEditor({
             <button
               key={preset.key}
               type="button"
+              disabled={uploading}
               aria-pressed={avatarPreset === preset.key}
               onClick={() => {
+                avatarActionRef.current += 1; // huỷ lượt tải ảnh đang chờ (nếu có)
                 setAvatarPreset(preset.key);
                 setAvatarUrl(null);
+                setUploadError(null);
+                setUploading(false);
               }}
-              className={`flex h-11 w-11 items-center justify-center rounded-full text-xl ${preset.colorClass} ${
+              className={`flex h-11 w-11 items-center justify-center rounded-full text-xl disabled:cursor-not-allowed disabled:opacity-50 ${preset.colorClass} ${
                 avatarPreset === preset.key ? "ring-2 ring-primary ring-offset-2" : ""
               }`}
             >
@@ -186,10 +214,11 @@ export function ProfileEditor({
             <button
               key={cover.key}
               type="button"
+              disabled={uploading}
               aria-pressed={coverColor === cover.key}
               aria-label={`Màu bìa ${cover.key}`}
               onClick={() => setCoverColor(cover.key)}
-              className={`h-11 w-16 rounded-lg ${cover.className} ${
+              className={`h-11 w-16 rounded-lg disabled:cursor-not-allowed disabled:opacity-50 ${cover.className} ${
                 coverColor === cover.key ? "ring-2 ring-primary ring-offset-2" : ""
               }`}
             />

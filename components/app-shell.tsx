@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { LogoutButton } from "@/components/logout-button";
 import { NotificationBell } from "@/components/notification-bell";
+import { StudentAvatar } from "@/components/student-avatar";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
 
 type AppShellRole = "teacher" | "student";
@@ -197,7 +198,22 @@ function NavLinks({
   );
 }
 
-export function AppShell({ children, role }: { children: ReactNode; role: AppShellRole }) {
+export function AppShell({
+  children,
+  role,
+  studentAvatar
+}: {
+  children: ReactNode;
+  role: AppShellRole;
+  // Chỉ có khi vai trò là học viên và đã tồn tại StudentProfile (không rơi vào
+  // trường hợp /waiting) — layout truyền undefined nếu chưa có hồ sơ.
+  studentAvatar?: {
+    displayName: string;
+    avatarUrl: string | null;
+    avatarPreset: string | null;
+    userImage: string | null;
+  };
+}) {
   const navItems = navByRole[role];
   const rootHref = role === "teacher" ? "/teacher" : "/student";
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -243,6 +259,17 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
         </button>
         <Brand role={role} />
         <div className="flex items-center gap-2">
+          {role === "student" && studentAvatar ? (
+            <Link href="/student/profile" aria-label="Hồ sơ của tôi">
+              <StudentAvatar
+                avatarUrl={studentAvatar.avatarUrl}
+                avatarPreset={studentAvatar.avatarPreset}
+                userImage={studentAvatar.userImage}
+                displayName={studentAvatar.displayName}
+                size="sm"
+              />
+            </Link>
+          ) : null}
           {role === "student" ? <NotificationBell /> : null}
           <AnimatedThemeToggle />
         </div>
@@ -254,6 +281,17 @@ export function AppShell({ children, role }: { children: ReactNode; role: AppShe
           <div className="flex items-center justify-between gap-2">
             <Brand role={role} />
             <div className="flex items-center gap-2">
+              {role === "student" && studentAvatar ? (
+                <Link href="/student/profile" aria-label="Hồ sơ của tôi">
+                  <StudentAvatar
+                    avatarUrl={studentAvatar.avatarUrl}
+                    avatarPreset={studentAvatar.avatarPreset}
+                    userImage={studentAvatar.userImage}
+                    displayName={studentAvatar.displayName}
+                    size="sm"
+                  />
+                </Link>
+              ) : null}
               {role === "student" ? <NotificationBell /> : null}
               <AnimatedThemeToggle />
             </div>

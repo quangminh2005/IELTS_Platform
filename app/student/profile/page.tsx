@@ -10,13 +10,53 @@ import { averageBandsBySkillAcrossAttempts, formatBand, SKILL_SHORT_LABELS } fro
 import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 import { getTierProgress } from "@/lib/rank-tier";
-import { calculateWeekStreak } from "@/lib/streak";
+import { calculateWeekStreak, VN_OFFSET_MS } from "@/lib/streak";
 import { coverClassName } from "@/lib/student-avatar";
 import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 
 export const dynamic = "force-dynamic";
 
-export default async function StudentProfilePage() {
+// Đọc/kẹp tham số điều hướng lịch chuyên cần trên URL, dạng "?month=YYYY-MM".
+// Tên tham số để tiếng Anh (month) cho khớp quy ước ĐANG CÓ của app/student/*
+// (tab, skill, classId, page, q — toàn bộ đều là tên tiếng Anh dù chữ hiển thị
+// tiếng Việt; không có route nào trong app/ dùng tên tham số tiếng Việt).
+//
+// Chặn tham số gõ tay bừa bãi: năm phải nằm trong khoảng hợp lý và tháng không
+// được vượt quá tháng hiện tại (giờ Việt Nam) — sai định dạng hoặc ngoài
+// khoảng thì coi như không truyền, quay về tháng hiện tại thay vì lỗi trang.
+function resolveRequestedMonth(
+  raw: string | undefined,
+  currentYear: number,
+  currentMonth: number
+): { year: number; month: number } {
+  const match = raw?.match(/^(\d{4})-(\d{2})$/);
+  if (match) {
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const inRange = year >= 2000 && year <= currentYear && month >= 1 && month <= 12;
+    const notFuture = year < currentYear || month <= currentMonth;
+    if (inRange && notFuture) {
+      return { year, month };
+    }
+  }
+  return { year: currentYear, month: currentMonth };
+}
+
+function formatMonthParam(year: number, month: number): string {
+  return `${year}-${String(month).padStart(2, "0")}`;
+}
+
+// Cộng/trừ n tháng, tự cuốn qua năm.
+function shiftMonth(year: number, month: number, delta: number) {
+  const total = year * 12 + (month - 1) + delta;
+  return { year: Math.floor(total / 12), month: (total % 12) + 1 };
+}
+
+export default async function StudentProfilePage({
+  searchParams
+}: {
+  searchParams?: { month?: string };
+}) {
   const session = await auth();
 
   if (!session?.user?.id || session.user.role !== "student") {
@@ -47,44 +87,44 @@ export default async function StudentProfilePage() {
     redirect("/waiting");
   }
 
-  const attempts = await prisma.attempt.findMany({
-    where: { studentId: student.id, submittedAt: { not: null }, ...countsForStats },
-    select: {
-      submittedAt: true,
-      // Answer KHÔNG có cột skill — kỹ năng nằm ở phần bài (assignableUnit).
-      // Mọi nơi gọi bandsBySkill đều phải tự ánh xạ như dưới đây.
-      answers: {
-        select: { isCorrect: true, assignableUnit: { select: { skill: true } } }
+  // Sáu truy vấn dưới đây độc lập với nhau, chỉ phụ thuộc student.id đã có ở
+  // trên — gộp Promise.all để chạy song song thay vì nối đuôi tuần tự.
+  const [attempts, vocabDays, vocabWordCount, recipients, rankingAttempts] = await Promise.all([
+    prisma.attempt.findMany({
+      where: { studentId: student.id, submittedAt: { not: null }, ...countsForStats },
+      select: {
+        submittedAt: true,
+        // Answer KHÔNG có cột skill — kỹ năng nằm ở phần bài (assignableUnit).
+        // Mọi nơi gọi bandsBySkill đều phải tự ánh xạ như dưới đây.
+        answers: {
+          select: { isCorrect: true, assignableUnit: { select: { skill: true } } }
+        }
       }
-    }
-  });
-
-  const vocabDays = await prisma.vocabQuizDay.findMany({
-    where: { studentId: student.id },
-    select: { date: true }
-  });
-
-  const vocabWordCount = await prisma.vocabProgress.count({
-    where: { studentId: student.id }
-  });
-
-  // Dữ liệu cho chip hạng ở header — cùng cách trang Tổng quan (app/student/page.tsx)
-  // tính điểm xếp hạng, qua helper dùng chung rankingScoreFromRecipientsAndAttempts.
-  const recipients = await prisma.assignmentRecipient.findMany({
-    where: { studentId: student.id, assignment: excludePracticeAssignment },
-    select: { status: true }
-  });
-
-  const rankingAttempts = await prisma.attempt.findMany({
-    where: { studentId: student.id, ...countsForStats },
-    select: {
-      scorePercent: true,
-      startedAt: true,
-      submittedAt: true,
-      attemptRound: true,
-      review: { select: { overallBand: true } }
-    }
-  });
+    }),
+    prisma.vocabQuizDay.findMany({
+      where: { studentId: student.id },
+      select: { date: true }
+    }),
+    prisma.vocabProgress.count({
+      where: { studentId: student.id }
+    }),
+    // Dữ liệu cho chip hạng ở header — cùng cách trang Tổng quan (app/student/page.tsx)
+    // tính điểm xếp hạng, qua helper dùng chung rankingScoreFromRecipientsAndAttempts.
+    prisma.assignmentRecipient.findMany({
+      where: { studentId: student.id, assignment: excludePracticeAssignment },
+      select: { status: true }
+    }),
+    prisma.attempt.findMany({
+      where: { studentId: student.id, ...countsForStats },
+      select: {
+        scorePercent: true,
+        startedAt: true,
+        submittedAt: true,
+        attemptRound: true,
+        review: { select: { overallBand: true } }
+      }
+    })
+  ]);
 
   const submittedAt = attempts
     .map((attempt) => attempt.submittedAt)
@@ -120,11 +160,32 @@ export default async function StudentProfilePage() {
     now: new Date()
   });
 
+  const now = new Date();
+  const nowVN = new Date(now.getTime() + VN_OFFSET_MS);
+  const currentYear = nowVN.getUTCFullYear();
+  const currentMonth = nowVN.getUTCMonth() + 1;
+
+  const requestedMonth = resolveRequestedMonth(searchParams?.month, currentYear, currentMonth);
+  const isCurrentMonth =
+    requestedMonth.year === currentYear && requestedMonth.month === currentMonth;
+
   const attendance = buildAttendanceMonth({
     submittedAt,
     vocabDays: vocabDays.map((row) => row.date),
-    month: new Date()
+    // Neo giữa tháng, giữa trưa: đủ xa hai đầu tháng để cộng VN_OFFSET_MS bên
+    // trong buildAttendanceMonth không lỡ tay đẩy sang tháng kế cận.
+    month: new Date(
+      Date.UTC(requestedMonth.year, requestedMonth.month - 1, 15, 12, 0, 0)
+    )
   });
+
+  const prevMonth = shiftMonth(requestedMonth.year, requestedMonth.month, -1);
+  const prevMonthHref = `/student/profile?month=${formatMonthParam(prevMonth.year, prevMonth.month)}`;
+  const nextMonth = shiftMonth(requestedMonth.year, requestedMonth.month, 1);
+  // Không cho xem tháng "tương lai" — nút tới tháng biến mất khi đang ở tháng hiện tại.
+  const nextMonthHref = isCurrentMonth
+    ? null
+    : `/student/profile?month=${formatMonthParam(nextMonth.year, nextMonth.month)}`;
 
   const joined = new Intl.DateTimeFormat("vi-VN", {
     day: "numeric",
@@ -187,7 +248,7 @@ export default async function StudentProfilePage() {
         />
       </section>
 
-      <AttendanceCalendar data={attendance} />
+      <AttendanceCalendar data={attendance} prevHref={prevMonthHref} nextHref={nextMonthHref} />
 
       <section className="rounded-xl border border-border bg-card p-5 shadow-card">
         <h3 className="text-sm font-semibold">Chỉnh sửa hồ sơ</h3>

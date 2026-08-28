@@ -103,4 +103,17 @@ describe("buildAttendanceMonth", () => {
     });
     expect(result.leadingBlanks).toBe(0);
   });
+
+  it("tháng bắt đầu Chủ Nhật phải cuốn về cột thứ 7, không phải 0 ô trống", () => {
+    // 01/03/2026 là Chủ Nhật. getUTCDay() trả về 0 cho Chủ Nhật — công thức
+    // (firstWeekday + 6) % 7 phải cuốn giá trị này về 6 (đứng cuối tuần, cột
+    // Chủ Nhật) chứ không phải 0 (tưởng nhầm là đầu tuần, cột Thứ 2). Trước đây
+    // một reviewer đã dò tay trường hợp này; chốt lại thành test cho khỏi dò lại.
+    const result = buildAttendanceMonth({
+      submittedAt: [],
+      vocabDays: [],
+      month: new Date("2026-03-10T10:00:00+07:00")
+    });
+    expect(result.leadingBlanks).toBe(6);
+  });
 });

@@ -1,13 +1,18 @@
 import { notFound, redirect } from "next/navigation";
+import { RankTierBadge } from "@/components/rank-tier-badge";
 import { StudentAvatar } from "@/components/student-avatar";
 import { auth } from "@/lib/auth";
+import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
+import { getTierProgress } from "@/lib/rank-tier";
 import { coverClassName } from "@/lib/student-avatar";
+import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 
 export const dynamic = "force-dynamic";
 
-// Hồ sơ RÚT GỌN của bạn cùng lớp: chỉ phần trang trí. Điểm số, mục tiêu band và
-// lịch chuyên cần là chuyện riêng, không hiện ở đây.
+// Hồ sơ RÚT GỌN của bạn cùng lớp: trang trí + chip hạng (đã công khai trên bảng
+// xếp hạng lớp — spec §6). Band từng kỹ năng, mục tiêu band và lịch chuyên cần
+// vẫn là chuyện riêng, KHÔNG bao giờ hiện ở đây — xem tests/profile-visibility.test.ts.
 export default async function ClassmateProfilePage({
   params
 }: {
@@ -41,6 +46,7 @@ export default async function ClassmateProfilePage({
       classes: { some: { classId: { in: classIds } } }
     },
     select: {
+      id: true,
       displayName: true,
       bio: true,
       avatarUrl: true,
@@ -54,6 +60,41 @@ export default async function ClassmateProfilePage({
   if (!classmate) {
     notFound();
   }
+
+  // Chip hạng: tính ĐÚNG MỘT CÁCH DUY NHẤT trong cả app, qua helper dùng chung
+  // rankingScoreFromRecipientsAndAttempts — cùng cách app/student/profile/page.tsx
+  // (hồ sơ của chính mình) đang tính. Không tự chấm điểm riêng ở đây, để tránh
+  // hai bậc khác nhau cho cùng một học viên ở hai trang.
+  const recipients = await prisma.assignmentRecipient.findMany({
+    where: { studentId: classmate.id, assignment: excludePracticeAssignment },
+    select: { status: true }
+  });
+
+  const rankingAttempts = await prisma.attempt.findMany({
+    where: { studentId: classmate.id, ...countsForStats },
+    select: {
+      scorePercent: true,
+      startedAt: true,
+      submittedAt: true,
+      attemptRound: true,
+      review: { select: { overallBand: true } }
+    }
+  });
+
+  const rankingScore = rankingScoreFromRecipientsAndAttempts({
+    recipientStatuses: recipients.map((recipient) => recipient.status),
+    attempts: rankingAttempts.map((attempt) => ({
+      scorePercent: attempt.scorePercent,
+      startedAt: attempt.startedAt,
+      submittedAt: attempt.submittedAt,
+      attemptRound: attempt.attemptRound,
+      overallBand: attempt.review?.overallBand ?? null
+    }))
+  });
+
+  // Chỉ lấy TÊN BẬC (tier) để render chip — không có con số điểm xếp hạng thô
+  // nào chảy tới JSX bên dưới.
+  const tierProgress = getTierProgress(rankingScore.rankingScore);
 
   const joined = new Intl.DateTimeFormat("vi-VN", {
     day: "numeric",
@@ -83,7 +124,11 @@ export default async function ClassmateProfilePage({
               {classmate.bio}
             </p>
           ) : null}
-          <p className="mt-3 text-sm text-muted-foreground">Tham gia từ {joined}</p>
+          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
+            <span>Tham gia từ {joined}</span>
+            <span aria-hidden="true">·</span>
+            <RankTierBadge tier={tierProgress.tier} />
+          </div>
         </div>
       </section>
     </div>

@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   AVATAR_PRESETS,
   COVER_COLORS,
+  DEFAULT_COVER_KEY,
+  coverClassName,
   isAllowedAvatarUrl,
   resolveStudentAvatar
 } from "../lib/student-avatar";
@@ -74,6 +76,29 @@ describe("resolveStudentAvatar", () => {
     const a = resolveStudentAvatar({ ...base, displayName: "Trần Bình" });
     const b = resolveStudentAvatar({ ...base, displayName: "Trần Bình" });
     expect(a).toEqual(b);
+  });
+
+  it("bốn cột trang trí đều NULL (dữ liệu cũ ngay lúc mới deploy) vẫn ra chữ cái viết tắt, không nổ", () => {
+    // avatarUrl, avatarPreset, coverColor, targetBand là 4 cột MỚI thêm cho tính
+    // năng hồ sơ. Ngay khoảnh khắc deploy, MỌI StudentProfile có sẵn trong prod
+    // đều NULL ở cả 4 cột này (học viên chưa ai sửa hồ sơ). Chưa có test nào lắp
+    // đúng hình dạng đó — test dưới đây khoá lại để chắc trang hồ sơ không trắng
+    // trang/nổ lỗi cho lứa học viên cũ ngay khi tính năng lên prod.
+    const result = resolveStudentAvatar({
+      avatarUrl: null,
+      avatarPreset: null,
+      userImage: null,
+      displayName: "Lê Thu Hà"
+    });
+    expect(result).toMatchObject({ kind: "initials", text: "LH" });
+  });
+});
+
+describe("coverClassName — dữ liệu cũ trước khi có cột coverColor", () => {
+  it("coverColor NULL ra đúng class của màu bìa mặc định", () => {
+    expect(coverClassName(null)).toBe(
+      COVER_COLORS.find((c) => c.key === DEFAULT_COVER_KEY)!.className
+    );
   });
 });
 

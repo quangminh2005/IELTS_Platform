@@ -96,7 +96,10 @@ export function PracticeLibrary({
           Chưa có đề nào trong thư viện tự luyện. Hãy nhắc giáo viên mở thêm đề nhé.
         </p>
       ) : (
-        <ul className="grid gap-3 md:grid-cols-2">
+        // items-start: hai thẻ cùng hàng grid mặc định bị kéo giãn cao bằng nhau —
+        // bấm "Luyện từng phần" ở thẻ bên trái làm khung thẻ bên phải giãn theo,
+        // trông như nó cũng bật ra. Để mỗi thẻ tự cao theo nội dung của chính nó.
+        <ul className="grid items-start gap-3 md:grid-cols-2">
           {visible.map((item) => (
             <li key={item.id} className="rounded-lg border border-border bg-card p-4">
               <p className="text-sm font-semibold">{item.title}</p>

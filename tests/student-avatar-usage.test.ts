@@ -95,12 +95,16 @@ describe("avatar trên thanh điều hướng học viên", () => {
   it("có mặt ở CẢ hai bộ khung: thanh trên (điện thoại) và thanh bên (máy tính)", () => {
     // AppShell dựng khung hai lần cho hai cỡ màn hình. Sửa sót một chỗ thì avatar
     // biến mất ở đúng cỡ màn hình đó mà không ai thấy — học viên chủ yếu dùng điện
-    // thoại nên chỗ dễ sót lại là chỗ quan trọng nhất.
+    // thoại nên chỗ dễ sót lại là chỗ quan trọng nhất. Cụm avatar/chuông/sáng-tối
+    // nay nằm chung trong <HeaderActions> nên đếm số lần gọi component đó.
+    const clusters = shell.match(/<HeaderActions /g) ?? [];
+    expect(clusters).toHaveLength(2);
+
     const links = shell.match(/href="\/student\/profile"/g) ?? [];
-    expect(links).toHaveLength(2);
+    expect(links).toHaveLength(1);
 
     const avatars = shell.match(/<StudentAvatar/g) ?? [];
-    expect(avatars).toHaveLength(2);
+    expect(avatars).toHaveLength(1);
   });
 
   it("link vào hồ sơ có tên gọi cho trình đọc màn hình", () => {

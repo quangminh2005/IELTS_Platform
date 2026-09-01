@@ -12,6 +12,15 @@ type AppShellRole = "teacher" | "student";
 
 type NavItem = { href: string; label: string; hint: string; icon: IconName };
 
+// Chỉ có khi vai trò là học viên và đã tồn tại StudentProfile (không rơi vào
+// trường hợp /waiting) — layout truyền undefined nếu chưa có hồ sơ.
+type StudentAvatarInfo = {
+  displayName: string;
+  avatarUrl: string | null;
+  avatarPreset: string | null;
+  userImage: string | null;
+};
+
 const navByRole: Record<AppShellRole, NavItem[]> = {
   teacher: [
     { href: "/teacher", label: "Tổng quan", hint: "Bảng điều khiển", icon: "home" },
@@ -128,6 +137,40 @@ function Icon({ name }: { name: IconName }) {
   }
 }
 
+// Cụm nút ở đầu thanh điều hướng (avatar / chuông thông báo / sáng-tối).
+// Cả ba phải cùng một khuôn 36px và cùng khoảng cách, nếu không chúng sẽ so le
+// và trông như dính sát vào nhau.
+function HeaderActions({
+  role,
+  studentAvatar
+}: {
+  role: AppShellRole;
+  studentAvatar?: StudentAvatarInfo | null;
+}) {
+  return (
+    <div className="flex shrink-0 items-center gap-2.5">
+      {role === "student" && studentAvatar ? (
+        <Link
+          href="/student/profile"
+          aria-label="Hồ sơ của tôi"
+          className="inline-flex shrink-0 rounded-full ring-1 ring-border transition hover:ring-primary"
+        >
+          {/* "list" = 36px, bằng đúng nút chuông và nút sáng-tối bên cạnh. */}
+          <StudentAvatar
+            avatarUrl={studentAvatar.avatarUrl}
+            avatarPreset={studentAvatar.avatarPreset}
+            userImage={studentAvatar.userImage}
+            displayName={studentAvatar.displayName}
+            size="list"
+          />
+        </Link>
+      ) : null}
+      {role === "student" ? <NotificationBell /> : null}
+      <AnimatedThemeToggle className="h-9 w-9 p-0" />
+    </div>
+  );
+}
+
 function Brand({ role }: { role: AppShellRole }) {
   return (
     <Link href={role === "teacher" ? "/teacher" : "/student"} className="flex items-center gap-2.5">
@@ -205,14 +248,7 @@ export function AppShell({
 }: {
   children: ReactNode;
   role: AppShellRole;
-  // Chỉ có khi vai trò là học viên và đã tồn tại StudentProfile (không rơi vào
-  // trường hợp /waiting) — layout truyền undefined nếu chưa có hồ sơ.
-  studentAvatar?: {
-    displayName: string;
-    avatarUrl: string | null;
-    avatarPreset: string | null;
-    userImage: string | null;
-  };
+  studentAvatar?: StudentAvatarInfo;
 }) {
   const navItems = navByRole[role];
   const rootHref = role === "teacher" ? "/teacher" : "/student";
@@ -258,48 +294,23 @@ export function AppShell({
           <Icon name="menu" />
         </button>
         <Brand role={role} />
-        <div className="flex items-center gap-2">
-          {role === "student" && studentAvatar ? (
-            <Link href="/student/profile" aria-label="Hồ sơ của tôi">
-              <StudentAvatar
-                avatarUrl={studentAvatar.avatarUrl}
-                avatarPreset={studentAvatar.avatarPreset}
-                userImage={studentAvatar.userImage}
-                displayName={studentAvatar.displayName}
-                size="sm"
-              />
-            </Link>
-          ) : null}
-          {role === "student" ? <NotificationBell /> : null}
-          <AnimatedThemeToggle />
-        </div>
+        <HeaderActions role={role} studentAvatar={studentAvatar} />
       </header>
 
       <div className={`mx-auto flex w-full ${isWidePage ? "max-w-[2200px]" : "max-w-7xl"}`}>
         {/* Sidebar cố định cho màn hình lớn */}
         <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col border-r border-border bg-card/60 px-4 py-5 backdrop-blur lg:flex">
-          <div className="flex items-center justify-between gap-2">
-            <Brand role={role} />
-            <div className="flex items-center gap-2">
-              {role === "student" && studentAvatar ? (
-                <Link href="/student/profile" aria-label="Hồ sơ của tôi">
-                  <StudentAvatar
-                    avatarUrl={studentAvatar.avatarUrl}
-                    avatarPreset={studentAvatar.avatarPreset}
-                    userImage={studentAvatar.userImage}
-                    displayName={studentAvatar.displayName}
-                    size="sm"
-                  />
-                </Link>
-              ) : null}
-              {role === "student" ? <NotificationBell /> : null}
-              <AnimatedThemeToggle />
-            </div>
-          </div>
+          {/* Thương hiệu chiếm trọn một dòng: nhét thêm cụm nút (avatar / chuông /
+              sáng-tối) vào đây thì cột 288px không đủ chỗ, chữ "IELTS Platform" bị
+              xuống dòng và các biểu tượng dính sát nhau. */}
+          <Brand role={role} />
 
-          <span className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold capitalize text-primary">
-            {role === "teacher" ? "Giáo viên" : "Học viên"}
-          </span>
+          <div className="mt-5 flex items-center justify-between gap-3">
+            <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold capitalize text-primary">
+              {role === "teacher" ? "Giáo viên" : "Học viên"}
+            </span>
+            <HeaderActions role={role} studentAvatar={studentAvatar} />
+          </div>
 
           <div className="mt-6 flex-1 overflow-y-auto">
             <NavLinks items={navItems} rootHref={rootHref} />

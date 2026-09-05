@@ -24,7 +24,7 @@
           "1": "Read the definitions of places in and around the home and write the correct words.\nViết MỘT từ (hoặc cụm từ) tiếng Anh cho mỗi định nghĩa, không cần a/an/the.",
           "7": "Look at the pictures and choose the correct answer.\nTám bức ảnh đánh số 1-8 đúng như trong sách (tr.31). Chọn phương án đúng cho từng ảnh. (Đề gốc yêu cầu gạch chân - ở đây bấm chọn.)",
           "15": "Match the questions and answers.\nBấm một câu trả lời trong hộp bên phải rồi bấm vào ô trống của câu hỏi tương ứng. Mỗi câu trả lời chỉ dùng MỘT lần.",
-          "23": "Find the 11 words about places and things in and around a home.\n:::box\nE | Y | D | B | S | H | O | W | E | R\nK | P | G | A | R | D | E | N | M | S\nO | B | B | S | T | U | D | Y | W | I\nK | V | W | E | R | K | G | T | E | N\nI | V | S | M | S | B | M | N | E | K\nT | E | L | E | V | I | S | I | O | N\nC | N | D | N | X | Z | R | V | S | N\nH | I | L | T | A | T | T | I | C | F\nE | S | Q | W | I | N | D | O | W | K\nN | X | J | P | M | B | L | I | N | D\n:::\nTừ nằm theo hàng ngang, cột dọc hoặc đường chéo. Mỗi câu cho sẵn chữ cái đầu và số chữ cái của từ cần tìm - gõ đầy đủ từ đó.",
+          "23": "Find the 11 words about places and things in and around a home.\n:::box\nE | Y | D | B | S | H | O | W | E | R\nK | P | G | A | R | D | E | N | M | S\nO | B | B | S | T | U | D | Y | W | I\nK | V | W | E | R | K | G | T | E | N\nI | V | S | M | S | B | M | N | E | K\nT | E | L | E | V | I | S | I | O | N\nC | N | D | N | X | Z | R | V | S | N\nH | I | L | T | A | T | T | I | C | F\nE | S | Q | W | I | N | D | O | W | K\nN | X | J | P | M | B | L | I | N | D\n:::\nTừ nằm theo hàng ngang, cột dọc hoặc đường chéo. Điền mỗi ô một từ, mỗi từ chỉ dùng MỘT lần - thứ tự tuỳ ý.",
           "34": "Correct the spelling mistake in each sentence.\nTừ viết sai được đặt trong ngoặc kép. Chỉ gõ lại TỪ đã sửa đúng chính tả, không cần chép cả câu."
         },
         "groupImages": {
@@ -364,111 +364,221 @@
         {
           "order": 23,
           "questionType": "short_answer",
-          "prompt": "a _ _ _ _ (5 chữ cái)",
+          "prompt": "Từ 1",
           "answer": [
-            "attic"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "ATTIC nằm ở hàng 8, đọc từ trái sang phải (H I L T A T T I C F).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 24,
           "questionType": "short_answer",
-          "prompt": "b _ _ _ _ _ _ _ (8 chữ cái)",
+          "prompt": "Từ 2",
           "answer": [
-            "basement"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "BASEMENT nằm ở cột 4, đọc từ trên xuống (B A S E M E N T).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 25,
           "questionType": "short_answer",
-          "prompt": "b _ _ _ _ (5 chữ cái)",
+          "prompt": "Từ 3",
           "answer": [
-            "blind"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "BLIND nằm ở hàng 10, đọc từ trái sang phải (N X J P M B L I N D).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 26,
           "questionType": "short_answer",
-          "prompt": "d _ _ _ (4 chữ cái)",
+          "prompt": "Từ 4",
           "answer": [
-            "desk"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "DESK nằm ở đường chéo đi LÊN sang phải: D (hàng 7, cột 3) - E - S - K (hàng 4, cột 6).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 27,
           "questionType": "short_answer",
-          "prompt": "g _ _ _ _ _ (6 chữ cái)",
+          "prompt": "Từ 5",
           "answer": [
-            "garden"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "GARDEN nằm ở hàng 2, đọc từ trái sang phải (K P G A R D E N M S).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 28,
           "questionType": "short_answer",
-          "prompt": "k _ _ _ _ _ _ (7 chữ cái)",
+          "prompt": "Từ 6",
           "answer": [
-            "kitchen"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "KITCHEN nằm ở cột 1, đọc từ trên xuống (hàng 4 đến hàng 10).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 29,
           "questionType": "short_answer",
-          "prompt": "s _ _ _ _ _ (6 chữ cái)",
+          "prompt": "Từ 7",
           "answer": [
-            "shower"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "SHOWER nằm ở hàng 1, đọc từ trái sang phải (E Y D B S H O W E R).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 30,
           "questionType": "short_answer",
-          "prompt": "s _ _ _ (4 chữ cái)",
+          "prompt": "Từ 8",
           "answer": [
-            "sink"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "SINK nằm ở cột 10, đọc từ trên xuống (hàng 2 đến hàng 5).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 31,
           "questionType": "short_answer",
-          "prompt": "s _ _ _ _ (5 chữ cái)",
+          "prompt": "Từ 9",
           "answer": [
-            "study"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "STUDY nằm ở hàng 3, đọc từ trái sang phải (O B B S T U D Y W I).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 32,
           "questionType": "short_answer",
-          "prompt": "t _ _ _ _ _ _ _ _ _ (10 chữ cái)",
+          "prompt": "Từ 10",
           "answer": [
-            "television"
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
+            "window"
           ],
-          "explanation": "TELEVISION chiếm trọn hàng 6.",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {
           "order": 33,
           "questionType": "short_answer",
-          "prompt": "w _ _ _ _ _ (6 chữ cái)",
+          "prompt": "Từ 11",
           "answer": [
+            "attic",
+            "basement",
+            "blind",
+            "desk",
+            "garden",
+            "kitchen",
+            "shower",
+            "sink",
+            "study",
+            "television",
             "window"
           ],
-          "explanation": "WINDOW nằm ở hàng 9, đọc từ trái sang phải (E S Q W I N D O W K).",
+          "explanation": "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý.",
           "points": 1
         },
         {

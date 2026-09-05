@@ -167,23 +167,25 @@ for order, prompt, index, explanation in matches:
     )
 
 # Bài 04 - Word search (câu 23-33)
+WORD_SEARCH_WORDS = [
+    "attic", "basement", "blind", "desk", "garden", "kitchen",
+    "shower", "sink", "study", "television", "window",
+]
+# Đề gốc KHÔNG gợi ý gì: học viên tự tìm 11 từ. Mỗi ô nhận bất kỳ từ nào trong
+# 11 từ (thứ tự tuỳ ý) nên tìm được bao nhiêu từ thì ăn điểm bấy nhiêu.
+WORD_SEARCH_EXPLANATION = (
+    "11 từ trong bảng: shower (hàng 1), garden (hàng 2), study (hàng 3), "
+    "television (hàng 6), attic (hàng 8), window (hàng 9), blind (hàng 10) - đọc theo "
+    "hàng ngang; kitchen (cột 1), basement (cột 4), sink (cột 10) - đọc theo cột dọc; "
+    "desk - đường chéo đi lên từ D (hàng 7, cột 3) tới K (hàng 4, cột 6). "
+    "Mỗi ô điền một từ khác nhau, thứ tự tuỳ ý."
+)
 word_search = [
-    (23, "a _ _ _ _ (5 chữ cái)", "attic", "ATTIC nằm ở hàng 8, đọc từ trái sang phải (H I L T A T T I C F)."),
-    (24, "b _ _ _ _ _ _ _ (8 chữ cái)", "basement",
-     "BASEMENT nằm ở cột 4, đọc từ trên xuống (B A S E M E N T)."),
-    (25, "b _ _ _ _ (5 chữ cái)", "blind", "BLIND nằm ở hàng 10, đọc từ trái sang phải (N X J P M B L I N D)."),
-    (26, "d _ _ _ (4 chữ cái)", "desk",
-     "DESK nằm ở đường chéo đi LÊN sang phải: D (hàng 7, cột 3) - E - S - K (hàng 4, cột 6)."),
-    (27, "g _ _ _ _ _ (6 chữ cái)", "garden", "GARDEN nằm ở hàng 2, đọc từ trái sang phải (K P G A R D E N M S)."),
-    (28, "k _ _ _ _ _ _ (7 chữ cái)", "kitchen", "KITCHEN nằm ở cột 1, đọc từ trên xuống (hàng 4 đến hàng 10)."),
-    (29, "s _ _ _ _ _ (6 chữ cái)", "shower", "SHOWER nằm ở hàng 1, đọc từ trái sang phải (E Y D B S H O W E R)."),
-    (30, "s _ _ _ (4 chữ cái)", "sink", "SINK nằm ở cột 10, đọc từ trên xuống (hàng 2 đến hàng 5)."),
-    (31, "s _ _ _ _ (5 chữ cái)", "study", "STUDY nằm ở hàng 3, đọc từ trái sang phải (O B B S T U D Y W I)."),
-    (32, "t _ _ _ _ _ _ _ _ _ (10 chữ cái)", "television", "TELEVISION chiếm trọn hàng 6."),
-    (33, "w _ _ _ _ _ (6 chữ cái)", "window", "WINDOW nằm ở hàng 9, đọc từ trái sang phải (E S Q W I N D O W K)."),
+    (22 + i, f"Từ {i}", WORD_SEARCH_WORDS, WORD_SEARCH_EXPLANATION)
+    for i in range(1, 12)
 ]
 for order, prompt, answer, explanation in word_search:
-    unit1.append(question(order, "short_answer", prompt, [answer], explanation))
+    unit1.append(question(order, "short_answer", prompt, answer, explanation))
 
 # Bài 05 - Correct the spelling mistake (câu 34-39)
 spelling = [
@@ -369,8 +371,8 @@ payload = {
                     "23": (
                         "Find the 11 words about places and things in and around a home.\n"
                         + GRID_BOX
-                        + "\nTừ nằm theo hàng ngang, cột dọc hoặc đường chéo. Mỗi câu cho sẵn chữ cái đầu "
-                        "và số chữ cái của từ cần tìm - gõ đầy đủ từ đó."
+                        + "\nTừ nằm theo hàng ngang, cột dọc hoặc đường chéo. Điền mỗi ô một từ, "
+                        "mỗi từ chỉ dùng MỘT lần - thứ tự tuỳ ý."
                     ),
                     "34": (
                         "Correct the spelling mistake in each sentence.\n"

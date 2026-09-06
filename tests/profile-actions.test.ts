@@ -3,15 +3,18 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const root = process.cwd();
-const source = readFileSync(join(root, "lib", "actions", "profile.ts"), "utf8");
-const editorSource = readFileSync(
-  join(root, "components", "profile-editor.tsx"),
-  "utf8"
-);
-const teacherPageSource = readFileSync(
-  join(root, "app", "teacher", "students", "[studentId]", "page.tsx"),
-  "utf8"
-);
+
+// Các khẳng định dưới đây khớp mẫu có chứa "\n" (ví dụ ";\n" để chốt cuối một khối).
+// Git lưu file bằng LF nhưng trên Windows (core.autocrlf=true) bản làm việc lại là
+// CRLF, nên đọc thô sẽ khiến ";\n" không bao giờ khớp — test đỏ trên máy Windows dù
+// mã nguồn không sai. Chuẩn hoá về LF ngay khi đọc để test chỉ nói về NỘI DUNG.
+function readSource(...segments: string[]): string {
+  return readFileSync(join(root, ...segments), "utf8").replace(/\r\n/g, "\n");
+}
+
+const source = readSource("lib", "actions", "profile.ts");
+const editorSource = readSource("components", "profile-editor.tsx");
+const teacherPageSource = readSource("app", "teacher", "students", "[studentId]", "page.tsx");
 
 // Cắt riêng thân từng action để khẳng định về đúng action đó, không ăn nhầm sang
 // action bên cạnh trong cùng file.

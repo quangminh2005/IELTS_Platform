@@ -1,0 +1,36 @@
+UNIT 14
+BOX rude | faux pas | misunderstandings | embarrassing | polite | refused
+
+A
+ [rude]   # ?? cho trong doan o cuoi cau
+ [faux pas]   # ?? cho trong doan o cuoi cau
+ [misunderstandings]   # ?? cho trong doan o cuoi cau
+ [embarrassing]   # ?? cho trong doan o cuoi cau
+ [polite]   # ?? cho trong doan o cuoi cau
+ [refused]   # ?? cho trong doan o cuoi cau
+
+B
+Q 
+Q 
+
+C
+This is called a [faux pas]   # !! kiem lai
+In another culture, it is [rude].
+A faux pas is [embarrassing].
+However, when two cultures meet, there can be [misunderstandings].
+
+D summary
+5 Try to be patient and understanding with other people.
+2 Every culture is different and has different manners.
+3 The friend who went to Israel made a faux pas by using the wrong sponge.
+1 Faux pas are sure to happen because so many people move to other countries.
+4 The speaker accidentally entered a temple in India with his shoes on.
+
+E
+# For example, @ Israel. @
+# Something @ temple @
+# India. @ officials @
+# It @ realized @
+# @ a temple __.________ I @ embarrassed.
+# Of __,__ @ I apologized @
+# and @ politely.

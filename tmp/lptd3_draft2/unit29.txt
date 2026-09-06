@@ -1,0 +1,45 @@
+UNIT 29
+BOX committing | arrested | criminal | fail | regret | luxury
+
+A
+Do not copy the software. If you do, you will be [committing] a cnme.
+The police [arrested] two people and took them to jail.
+A person who is found guilty of a crime is called a [criminal]   # ?? cho trong doan o cuoi cau
+If you don't study hard, you might [fail] your mid-term examination.
+I [regret] not studying harder when I was younger. I wish I had put more effort into it.
+Everyone likes some kind of __.__ [luxury] Some people like expensive clothes while others prefer gourmet foods.
+
+B
+Q What kinds of stories are on TV shows and in movies about criminals?
+- Stories of the poor
++ Stories of successful criminals
+- Stories of prisoners
+- Stories of robbing a bank
+Q What did the criminal do?
+- He broke into a police station.
+- He robbed a luxury home.
+- He acted like a policeman.
++ He tried to break into cars.
+
+C
+They go on to live a life of [luxury].
+However, for every successful criminal, there are many, many more who [fail].
+These crooks soon [regret] their crimes.
+He was soon [arrested] by the police.
+
+D truefalse
+T Movies show criminals living in luxury.
+T Many people try to commit crimes and fail.
+F A man in Winnipeg tried to steal cars at the police academy.
+F The police helped the criminal steal cars at the police academy.
+F The police did not arrest the criminal.
+
+E
+# Take @ Winnipeg @
+# @ police @
+# . They
+# hoping
+# know
+# @ was
+# foolish
+# like @

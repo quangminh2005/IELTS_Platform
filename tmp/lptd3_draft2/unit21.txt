@@ -1,0 +1,46 @@
+UNIT 21
+BOX defense | balance | attack | attempt | athlete | stance
+
+A
+Timmy, Paul, and David play [defense] very well. They never let the ball get past them.
+The ballerina had perfect [balance] as she danced gracefully across the stage.
+A mother bear will [attack] another animal that is trying to hurt her cubs.
+This time, I will [attempt] to get a perfect score on my math test.
+An [athlete] is a sportsperson.
+The clown was pretending to be an archer. His [stance] was perfect, as if he had his bow drawn back and his eye on the target.
+
+B
+Q What does Jackson need to do?
++ Keep his body low and his knees bent
+- Keep the coach busy
+- Play basketball and football
+- Play offense
+Q Which of these is NOT something the coach advised Jackson to do?
+- Bend his knees
+- Keep his balance
++ Lean forward and attack people
+- Stay on the balls of his feet
+
+C
+It helps you keep your [balance].
+You should [attempt] to stay on the balls of your feet.
+[Athletes] never rest on their heels.
+This seems almost like I'm getting ready to [attack] the ball.
+
+D truefalse
+F Jackson should keep his knees straight and his back bent.
+F Athletes frequently rest on their heels.
+F Jackson already knows how to play defense well.
+F The coach's back aches.
+T The coach thinks playing defense is difficult.
+
+E
+# B: @ , Coach?
+# @ quickly @
+# M: That's right. @ balls of
+# your feet. @ pounce.
+# B: @ together @ ?
+# M: @ shoulder-width
+# B: Coach, @ and @ ?
+# dart
+# @ pointing @

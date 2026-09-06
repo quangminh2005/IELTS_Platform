@@ -1,0 +1,54 @@
+UNIT 20
+BOX homeless | retire | creative | tutor | collector | hobby
+
+A
+Do you give clothes and blankets to the [homeless] every year?
+My grandfather does not want to [retire]. He likes his job.
+The committee said that our project was very [creative] because we used a video camera and actors.
+His sister will [tutor] me in math and science so I can pass those tests.
+You may want to sell your model cars to a serious [collector].
+Do you have a [hobby], like making pottery or jewelry?
+
+B
+Q What does the speaker say about hobbies?
+- Collecting valuable things is the best hobby.
+- A good hobby should help others in some way.
++ There are a lot of different hobbies.
+- Some people spend too much time on their hobbies.
+Q All of the following hobbies are mentioned by the speaker EXCEPT
+- Helping the elderly
+- Listening to music
+- Collecting stamps
++ Taking photographs
+
+C
+A [hobby] can be about making or collecting things, or enjoying an experience.
+Some [creative] hobbies are writing, drawing, and making pottery.
+You can help feed the [homeless] at soup kitchens.
+You can also [tutor] children or help the elderly.
+
+D summary
+1 There are many kinds of hobbies.
+2 Enjoying an experience is a kind of hobby.
+3 Creative hobbies include writing, drawing, and making things.
+5 Volunteering to help people is a hobby, too.
+4 Collecting is also a popular hobby.
+
+E
+# @ activity @
+# and
+# hobby. @ hobbies @
+# @ hobbies.
+# hobbies,
+# @ or collecting things, @ experience.
+# hobbies @ . People
+# @ hobbies @
+# retire.
+# trendy. Collectors
+# Internet.
+# Enjoying
+# listen
+# build houses
+# soup kitchens.
+# elderly.
+# so many

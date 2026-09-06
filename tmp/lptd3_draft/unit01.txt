@@ -1,0 +1,48 @@
+UNIT 1
+BOX route | companionship | expensive | expenses | decision | responsibility
+
+A
+The airplane's [route] takes it over Siberia and into Canada.
+He got married for love, warmth, and [companionship]   # ?? cho trong doan o cuoi cau
+A diamond ring is more [expensive] than a gold ring.
+There are many [expenses] that go along with attending university.
+My father and mother made the [decision] to move our family to New York.
+Every person needs to accept [responsibility] for his or her actions.
+
+B
+Q What does the mother think about getting a puppy?
+- It's a good idea.
+- It's Billy's decision.
+- It's impossible for them.
++ The whole family should talk about it.
+Q Which expense is NOT mentioned in the dialog?
++ Training fees
+- Shots
+- Dog food
+- A license
+
+C
+Taking care of a pet is a big [responsibility].
+A dog also needs [companionship].
+There are other [expenses], too.
+This is a family [decision].
+
+D truefalse
+F Puppies are cheap and easy to care for.
+F Billy's mother wants to get a puppy right now.
+T Billy's mother explains what the puppy will need.
+T Billy wants to get a paper route to help pay for expenses.
+T Mom and Billy will talk to Billy's father about getting a puppy.
+
+E
+# B: I promise @ of
+# W: @ awhile. @
+# life @ . He is
+# B: @ ,Mom. @ feed
+# and @ vet
+# also @ . You can't
+# and
+# and
+# B: Well, @ lawns,
+# family
+# B: OK, Mom.

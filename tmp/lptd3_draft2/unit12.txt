@@ -1,0 +1,31 @@
+UNIT 12
+BOX tightens | pitch | imitate | squeezes | hollow | skillful
+
+A
+ [tightens]   # ?? cho trong doan o cuoi cau
+ [pitch]   # ?? cho trong doan o cuoi cau
+ [imitate]   # ?? cho trong doan o cuoi cau
+ [squeezes]   # ?? cho trong doan o cuoi cau
+ [hollow]   # ?? cho trong doan o cuoi cau
+ [skillful]   # ?? cho trong doan o cuoi cau
+
+B
+Q 
+Q 
+
+C
+They are made with [hollow] logs and animal skins.
+These pegs can be tightened to change the [pitch].
+When a player holds the drum under an armpit and squeezes, it [tightens] the string and raises the pitch.
+The drummers are so skillful they can make the drums [imitate] human voices.
+
+D summary
+3 Henry asks what "talking" drums are.
+1 James tells Henry he prefers traditional drums to heavy metal drums.
+2 James explains about barrel drums to Henry.
+4 James tells Henry that "talking" drums are played by skillful players.
+5 They decide to see an African drum concert together.
+
+E
+# M: @ , Henry!
+# M: They @ and

@@ -1,0 +1,50 @@
+UNIT 6
+BOX According | lies | relatives | developed | inaccurate | reliable
+
+A
+ [According]   # ?? cho trong doan o cuoi cau
+ [lies]   # ?? cho trong doan o cuoi cau
+ [relatives]   # ?? cho trong doan o cuoi cau
+ [developed]   # ?? cho trong doan o cuoi cau
+ [inaccurate]   # ?? cho trong doan o cuoi cau
+ [reliable]   # ?? cho trong doan o cuoi cau
+
+B
+Q Why is Billy's grandmother worried about using the Internet for research?
+- There are famous people online.
++ There is a lot of wrong information online.
+- There are a lot of kids online.
+- There are a lot of jokes online.
+Q What does Billy's grandmother recommend?
++ Going to the library
+- Going to visit Einstein
+- Using the Internet
+- Getting a Nobel Prize
+
+C
+But it is also full of misinformation and [lies].
+You don't really know what you are looking at unless you are at a [reliable] site.
+Now, [according] to this site, he was born in 1979, came up with the theory of relatives, and was awarded the Nobel Prize for Physics in 1922.
+That means all this stuff is [inaccurate].
+
+D summary
+3 Grandma thinks Billy should be careful because not everything online is true.
+5 Billy thanks his grandmother for helping him.
+4 Grandma tells Billy that the information from the site is wrong and suggests that they go to the library.
+2 Billy explains to his grandmother that he has found a lot of information about Einstein.
+1 Billy is doing his research online.
+
+E
+# W: @ , Billy?
+# B: @ websites.
+# B: @ time,
+# site. @ and @
+# @ old-fashioned. @
+# @ Albert Einstein. @
+# @ relatives, @ Nobel Prize @
+# Physics @
+# Einstein @ 1879 @
+# general relativity. @ Nobel Prize @
+# W: @ and
+# facts.
+# B: __,____ @ Grandma. @ life-saver!

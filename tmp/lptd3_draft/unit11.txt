@@ -1,0 +1,37 @@
+UNIT 11
+BOX mysterious | reminded | memory | suffering | emotions | element
+
+A
+That man with the black hat looked [mysterious] . We couldn't see his eyes.
+That book [reminded] me of a time when I was much younger.
+My grandfather's favorite [memory] was when he worked in a bakery as a child.
+Many people are [suffering] in some parts of the world. Some are victims of war. Some have no food or clean water.
+People have different [emotions] ; they can be happy, angry, worried, excited or sad.
+The most important [element] of any party is fun.
+
+B
+Q What does a great painting have?
+- A special book
+- A new painter
+- A special paint
++ A special element
+Q Why is Guernica considered great art?
++ The painter's feelings are shown.
+- The painting tells a story.
+- The painting was difficult to make.
+- The painter used a new technique.
+
+C
+It shows [suffering] people, too.
+Other times, the element is a [memory] or feeling.
+Some people say it is a [mysterious] smile.
+Whatever the case, a painting that grabs people's [emotions] is popular.
+
+D truefalse
+F The only thing that is important in a painting is if it is pretty.
+T Picasso painted a picture called Guernica.
+F Everyone agrees on what makes a great painting.
+T Sometimes, what other people feel about the painting is what makes it great.
+T Paintings that capture people's emotions are popular.
+
+E

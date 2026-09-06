@@ -1,0 +1,58 @@
+UNIT 38
+BOX insert | clockwise | pry | spare | panic | loosen
+
+A
+The door is stuck. I need a crowbar to [pry] it open.
+Please do not [panic] when you see smoke. Go to the exit calmly and quickly.
+Is the lid stuck? You can [loosen] it by putting it in hot water.
+I always lose my glasses. I keep a [spare] pair in my desk.
+During dinner at our house, the food gets passed [clockwise] around the table.
+Fold the letter and [insert] it into the envelope.
+
+B
+Q What do you need to change a flat tire?
++ A spare tire and tools
+- A spare tire
+- A tool you can spin freely
+- A bolt for the hubcap
+Q According to the speaker, which step might be difficult?
+- Putting the jack under the car
+- Raising the car
++ Taking the bolts off
+- Putting the hubcap on the tire
+
+C
+When your car gets a flat tire, do not [panic].
+Inside the trunk, you will find a [spare] tire and a toolbox.
+Insert the jack handle and turn it [clockwise].
+[Loosen] these, using the long L-shaped tool.
+
+D truefalse
+F You should panic as soon as you get a flat tire.
+T Pull over to the side of the road first.
+F Use the jack to pry off the hubcap.
+F Do not loosen the bolts on the tire.
+T Put the toolbox in the trunk when you have finished changing the flat tire.
+
+E passage
+_ , _ panic.
+_ , _ . _ ,
+_ find _ .
+_ these _ jack, _ tool _
+_ . This _ . Position _
+_ , behind _ . _
+handle _ . _
+car _ well _
+_ spins _ . Make sure _
+_ . If _ ,
+_ . _ .
+Next, _ pry _ hubcap ( _
+side _ ) . _ bolts _
+_ . _ , using _ L-shaped _ . _
+_ get _ . It _ .
+_ loose, _ .
+Now _ . _ it _ ,
+_ tighten _ . _
+_ toolbox _ .
+_ , _ nearest _
+_ fixed!

@@ -1,0 +1,51 @@
+UNIT 10
+BOX committees | achievements | construction | invented | decides | chemistry
+
+A
+Two [committees] will work together on the dance, one for the dinner and another for the party.
+Many people know about the [achievements] of Marie Curie. She discovered amazing things.
+Many companies today use both wood and bricks in the [construction] of houses.
+Do you know who [invented] the telephone?
+The teacher [decides] who gets to start the game.
+Children can be taught the basics of [chemistry] in the kitchen at home.
+
+B
+Q Which is true about Alfred Nobel?
+- He won the Nobel Prize before he died.
++ He invented dynamite.
+- He was a doctor.
+- He worked at a famous university.
+Q Which of these prizes is NOT chosen by the Nobel committees?
+- The Nobel Prize for Physics
+- The Nobel Prize for Peace
+- The Nobel Prize for Medicine
++ The Nobel Prize for Economics
+
+C
+One of the greatest [achievements] in the world is to win the Nobel Prize.
+Alfred Nobel [invented] dynamite in 1866.
+Dynamite is used in mining, [construction], and war.
+Five [committees] secretly meet to pick the winners.
+
+D truefalse
+F Alfred Nobel invented the Swedish Banking system.
+T Alfred Nobel died in 1896.
+T There are Nobel Prizes for peace, literature, and medicine.
+F The first prize awarded to anyone was the Nobel Prize for Economics.
+T Over 750 people have been awarded Nobel Prizes.
+
+E
+# @ world @
+# Nobel Prize. @ 1901. @
+# @ ____, and @ Nobel Prize @ Alfred
+# Nobel. @ Stockholm, Sweden, __.__ Alfred Nobel
+# @ dynamite __.__ @ Dynamite @
+# @ Nobel Prize. @
+# Swedish crowns. @ euros. @ ?
+# Nobel Prize
+# Economics
+# 1956 @ Bank of Sweden
+# Alfred Nobel's
+# Bank of Sweden @ Nobel Prize
+# Economics. @ 1901, @ 750
+# Nobel Prize.

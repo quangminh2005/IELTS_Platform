@@ -1,0 +1,46 @@
+UNIT 31
+BOX hygienic | physical | diet | shortage | diseases | prevention
+
+A
+The new dentist has very [hygienic] habits. He always wears gloves and washes everything.
+People should see their doctors regularly for routine [physical] examinations to make sure they are in good health.
+My [diet] contains a lot of fruits and vegetables.
+There is a terrible famine in that country. There is a [shortage] of food, and many people are going hungry.
+Some [diseases] are caused by the way people live. Not eating right and not getting enough exercise lead to serious illnesses.
+The fire [prevention] lecture at the fire station was very educational.
+
+B
+Q Why does Joe need a physical exam?
+- He joined a clinic.
+- He's going to school.
++ He joined a gym.
+- He got a new job.
+Q Which one is NOT mentioned as important?
+- A healthy diet
+- Getting enough exercise
++ Exercising with a trainer
+- Preventing diseases
+
+C
+I need to have a [physical] examination, and there is a new clinic on Elm Street.
+She said it was very [hygienic] and well-run.
+The change in [diet] has really made me feel better.
+[Prevention] is very important.
+
+D truefalse
+T Joe needs a physical examination for the gym.
+T There are not enough doctors in the area.
+T Sandy has high blood pressure.
+F Joe wants to learn kick-boxing.
+F Prevention is never a good idea.
+
+E dialog
+M: Hi, Sandy. _ .
+W: Sure, Joe.
+M: _ examination, and _ Elm Street. _ ?
+W: _ . _ well-run. _ , _ there _ . Why _ ?
+M: _ . _ get more exercise, _ start.
+W: _ ?
+M: _ pressure, _ , and _ possible _ . _ terrific, _ .
+W: _ check-up _ , _ pressure _ . _ , but _ . I am _ , and I _ intake. _ rather _ medication _ . The _ . _ , " _ ounce _ pound _ ."
+M: _ . Prevention _ . _ and _ appointment.

@@ -1,0 +1,52 @@
+UNIT 15
+BOX noticed | recognize | locate | commonly | supplies | prestigious
+
+A
+I [noticed] the sign that said, "No Pets Allowed.".
+I wonder if my friend will [recognize] me. I have not seen her in twenty years.
+Please help me [locate] that city on the map.
+"Please" and "Thank you" are [commonly] used in everyday conversation.
+The children needed crayons, scissors, and other [supplies] for school.
+Oxford University is a [prestigious] school. It has a great reputation.
+
+B
+Q What does Megan need?
+- A way to locate things
+- A prestigious school
+- A place in line
++ A lot of art supplies
+Q What is vine charcoal?
++ A specially-burned wood
+- A specially-designed brush
+- A specially-burned lead
+- A specially-made ink
+
+C
+Greer is a very [prestigious] art school.
+There is an enormous list of art [supplies].
+Now we need to [locate] the vine charcoal.
+It is [commonly] used for drawing.
+
+D truefalse
+F Megan is going to a prestigious business school.
+T Her dad is helping her find art supplies.
+T Megan and her dad do not know what vine charcoal is.
+T Megan needs India ink and a fountain pen.
+F No one helps them find the vine charcoal.
+
+E dialog
+G: _ , Dad. _ !
+M: _ mother _ . Greer _ .
+G: _ supplies. _ I _ .
+M: _ the _ , Megan, _ .
+G: _ . _ meter _ , _ , and _ .
+M: Here _ , and _ . _ ?
+G: _ , _ , India _ , and _ .
+M: _ .
+G: _ vine charcoal.
+M: _ , miss.
+W: Yes, sir? _ ?
+M: _ vine charcoal. _ , and _ ?
+W: Vine charcoal _ . _ . It _ . Vine charcoal _ , so _ .
+G: _ , Dad!
+M: Great! _ supplies.

@@ -1,0 +1,47 @@
+UNIT 17
+BOX erupts | fantastic | satisfied | suggesting | Shake | force
+
+A
+When a volcano [erupts] , it spills hot lava and ash.
+Tammy thinks Picasso's work is [fantastic] . She loves all of his paintings.
+Are you [satisfied] with a B grade for that assignment?
+Thank you for [suggesting] that I read this book. I am really enjoying it.
+[Shake] that traditional musical instrument to hear the beans inside make n01se.
+Please do not [force] me to tell a lie. I always want to be honest with my parents.
+
+B
+Q What ride does Michael want to try?
+- The Ferris Wheel
+- The bumper boats
+- The Rocket
++ The Volcano
+Q What does Fran want to do instead?
+- Eat candy
++ Have lunch
+- Go to the park
+- Ride the Ferris Wheel
+
+C
+I am having a [fantastic] time.
+Did you know that when the volcano [erupts], our seats shake?
+They look very [satisfied].
+I don't want to [force] you to do something you really don't want to do.
+
+D truefalse
+F 
+T 
+T 
+F 
+T 
+
+E
+# @ "The Rocket," @ Ferris Wheel,
+# @ bumper @
+# W: @ you @ mushrooms,
+# M: @ mushrooms!
+# W: 0K, Michael.
+# W: @ sure
+# very
+# W: @ Skylight. @
+# eat!
+# M: Oh wow! @

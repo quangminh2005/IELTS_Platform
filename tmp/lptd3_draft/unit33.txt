@@ -1,0 +1,43 @@
+UNIT 33
+BOX Popular | cure | crushed | soaked | remedy | cold
+
+A
+[Popular] movie stars usually make a lot of money.
+The doctor told me to use this medicine as a [cure] for my illness.
+Gustavo [crushed] the empty cans with his feet.
+My shirt was dirty. My mom [soaked] it overnight in soapy water.
+One common home [remedy] for a cold is chicken soup.
+My throat hurts and I am a little tired. I think I have a [cold]   # ?? cho trong doan o cuoi cau
+
+B
+Q What does the speaker say about home remedies ?
+- They rarely work.
++ Not all of them work.
+- They are better than medicine.
+- They can help families save money.
+Q What is NOT one of the remedies mentioned in the passage?
++ Coffee
+- Honey
+- Chicken soup
+- Ginger tea
+
+C
+Sleep and rest are good for taking care of a [cold].
+However, in almost every culture, most families have a home [remedy] for colds.
+It is then [soaked] in water.
+A ginger root is peeled. It is then [crushed]   # ?? cho trong doan o cuoi cau   # !! kiem lai
+
+D truefalse
+F Doctors can always cure colds.
+T Every culture has different cold remedies.
+F In China, people drink hot milk as a remedy for a cold.
+T Home remedies are passed on from parents to children.
+F Fried chicken is a common cold remedy.
+
+E
+# @ ingredients. @
+# , oregano,
+# @ gempap @ Puerto
+# America. @
+# @ China. @ then @
+# @ family @

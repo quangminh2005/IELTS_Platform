@@ -1,0 +1,50 @@
+UNIT 23
+BOX borrow | tempting | courses | complain | Psychology | attend
+
+A
+Can I [borrow] your car? I need to get to work, and mine has a flat tire.
+Chocolates are more [tempting] when I am on a strict diet.
+The university offers many different [courses].
+Do not [complain] about how bad your life is; someone always has it worse.
+[Psychology] is a big field. There are many ways to examine the human mind.
+Lee and Trish [attend] all the monthly Chess Club meetings.
+
+B
+Q Which is true about the students?
+- They both did poorly in their last psychology course.
+- They never took a class together before.
+- They will share a room together.
++ They studied in the same class before.
+Q Why does Henry NOT want to take the film studies course?
++ He wants to learn something useful.
+- He wants to borrow the notes.
+- He wants Sue to teach him.
+- He wants an easy grade.
+
+C
+Henry, have you chosen all of your [courses] yet?
+[Psychology] sounds interesting.
+I promise I'll [attend] the classes and not just borrow your notes this time.
+That is [tempting], but I want to learn something useful.
+
+D truefalse
+F Sue and Henry have chosen all of their classes already.
+F The psychology professor is not tough.
+F Henry borrowed notes and did not go to class before.
+T The film studies class is easy.
+T Henry wants to take a class where he can learn something.
+
+E dialog
+W: _ semester. Henry, _ of _ ?
+M: No, Sue. _ , _ need _ . _ ? _ ?
+W: _ tough _ . _ , _ .
+M: _ sounds _ .
+W: How _ ? _ , and we _ .
+M: _ . _ so _ .
+W: Oh, come on. _ . _ the _ .
+M: _ !
+W: _ about _ . _ ?
+M: _ , _ I _ .
+W: I _ , _ . _ everyone _ "A" _ "B." _ .
+M: _ tempting, _ .
+W: Fine, _ you _ "C."

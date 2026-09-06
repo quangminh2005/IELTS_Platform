@@ -1,0 +1,46 @@
+UNIT 20
+BOX homeless | retire | creative | tutor | collector | hobby
+
+A
+ [homeless]   # ?? cho trong doan o cuoi cau
+ [retire]   # ?? cho trong doan o cuoi cau
+ [creative]   # ?? cho trong doan o cuoi cau
+ [tutor]   # ?? cho trong doan o cuoi cau
+ [collector]   # ?? cho trong doan o cuoi cau
+ [hobby]   # ?? cho trong doan o cuoi cau
+
+B
+Q 
+Q 
+
+C
+A [hobby] can be about making or collecting things, or enjoying an experience.
+Some [creative] hobbies are writing, drawing, and making pottery.
+You can help feed the [homeless] at soup kitchens.
+You can also [tutor] children or help the elderly.
+
+D summary
+1 There are many kinds of hobbies.
+2 Enjoying an experience is a kind of hobby. Creative hobbies include writing, drawing, and making things. 4. Volunteering to help people is a hobby, too. Collecting is also a popular hobby.
+3 
+5 
+4 
+
+E
+# @ activity @
+# and
+# hobby. @ hobbies @
+# @ hobbies.
+# hobbies,
+# @ or collecting things, @ experience.
+# hobbies @ . People
+# @ hobbies @
+# retire.
+# trendy. Collectors
+# Internet.
+# Enjoying
+# listen
+# build houses
+# soup kitchens.
+# elderly.
+# so many

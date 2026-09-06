@@ -1,0 +1,51 @@
+UNIT 27
+BOX entered | stunning | intelligent | competition | contract | introduced
+
+A
+Jeff [entered] his poem in the poetry contest.
+The Hope diamond is [stunning] . It's so big and beautiful!
+General Lee was [intelligent] . He outwitted the enemy army.
+Coney Island's hot-dog-eating [competition] is popular. People come from all over to compete.
+A [contract] is a legal agreement.
+It is thought that the chilli pepper was first [introduced] to Korea by the Portuguese.
+
+B
+Q Who is Ferren Lee?
+- A doctor with a daughter
++ A talented and intelligent singer
+- CoCo Lee's father
+- A scientist who cured cancer
+Q Which of these is NOT true about Ferren Lee?
+- Her stage name is CoCo.
+- Her grade-point average was 3.8.
++ She is a scientist in Hong Kong.
+- Her mother wanted her to be a doctor.
+
+C
+She won many [competitions].
+She got a recording [contract] with Fancy Pie Records, and, a few years later, Sony.
+It [introduced] her to American audiences.
+ [intelligent]   # ?? cho trong doan o cuoi cau   # !! kiem lai
+
+D truefalse
+F Ferren Lee hated singing when she was a little girl.
+F Perren's mother wanted her to become a singer.
+T Ferren Lee won many singing contests.
+T Ferren Lee is CoCo Lee.
+T Ferren Lee earned a degree in bio-chemistry and bio-science.
+
+E
+# Ferren Lee's
+# footsteps @ ____, Ferren @
+# @ Hong Kong @
+# @ Fancy Pie Records, @ __,______ @ Sony.
+# Hong Kong @ January ,
+# @ San Francisco. @
+# @ Chinese. __,____ @ DiDaDi, @ MTV Asia @
+# @ Just No Other Way. @
+# @ American @
+# stunning
+# CoCo Lee @ 3.8 grade-point average
+# @ major @ bio-chemistry
+# dreams,
+# cancer.

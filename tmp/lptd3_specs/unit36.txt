@@ -1,0 +1,51 @@
+UNIT 36
+BOX attractions | casual | guide | unique | upscale | roller coaster
+
+A
+The [attractions] at the mall include a movie theater, an ice rink, and a bowling alley.
+Her paintings are very [unique]. No other artist paints like her.
+His grandparents are rich, so they live in an [upscale] part of town.
+The last time I rode on a [roller coaster], I got sick.
+It is better to go through the museum with a professional [guide].
+The party will be [casual]. You do not need to wear a suit and tie.
+
+B
+Q What is the River Walk?
+- A park with lots of animals
+- A place for swimming and fishing
+- An amusement park
++ A place for shopping and eating
+Q What can be found just outside Frisco City?
++ Amusement parks
+- A special market
+- A national park
+- A large lake
+
+C
+You will see many [unique] shops, casual cafes, and upscale restaurants.
+You can ride one of the riverboats and hear a [guide] talk about the history of the River Walk.
+However, the River Walk is only one of the [attractions] of Frisco City.
+You can also spend the day enjoying the [roller coasters] and other rides at Sun Land.
+
+D truefalse
+F You should avoid visiting Frisco City as there is little to do there.
+T Get to the River Walk by taking a city bus and getting off downtown.
+T There is a sidewalk on each side of the river.
+T There are many shops and restaurants along the River Walk.
+F Water World Park and Sun Land are in the middle of Frisco City.
+
+E passage
+Frisco City _ . _
+_ , _ , and _ . _ !
+_ River Walk _ must-see. _
+_ . _ , _ . _
+_ riverside. _ .
+Palm _ cypress _ . _
+_ tropical _ . _ , _ ,
+and _ . _ . _
+_ riverboats _ River Walk.
+_ , _ River Walk _
+Frisco City. _ Frisco City.
+_ Water World Park.
+_ Sun Land.
+_ Frisco City! _ .

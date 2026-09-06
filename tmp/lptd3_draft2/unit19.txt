@@ -1,0 +1,49 @@
+UNIT 19
+BOX standard | restricted | avoid | extremely | budget | craving
+
+A
+ [standard]   # ?? cho trong doan o cuoi cau
+ [restricted]   # ?? cho trong doan o cuoi cau
+ [avoid]   # ?? cho trong doan o cuoi cau
+ [extremely]   # ?? cho trong doan o cuoi cau
+ [budget]   # ?? cho trong doan o cuoi cau
+ [craving]   # ?? cho trong doan o cuoi cau
+
+B
+Q When are the friends having this conversation?
+- While standing in line for movie tickets
++ Just before the movie starts
+- During the movie
+- After the movie has finished
+Q Who will pay for the food?
+- Both the man and the woman
+- The woman
++ The man
+- They are not buying any food.
+
+C
+It looks like the [standard] popcorn and soda.
+I have a [craving] for chocolate, but I should attempt to eat something healthy.
+I want to [avoid] getting sick this year.
+I know you are on a [restricted] budget.
+
+D truefalse
+F The movie tickets were extremely cheap.
+T The woman is glad to have a break. The menu is full of healthy food items. 4. The woman wants to drink coffee. 5. The man wants to drink soda and eat popcorn.
+F 
+T 
+T 
+
+E
+# W: Yes, @ break, @
+# M: @ something @ ?
+# M: @ and
+# , and
+# M: No, but @ brownies.
+# W @ some @
+# M: It's on me.
+# W: No, @ know @
+# M: @ insist. @ and @ ?
+# W: Well, @ coffee,
+# W: No, @ brownies.
+# aisle.

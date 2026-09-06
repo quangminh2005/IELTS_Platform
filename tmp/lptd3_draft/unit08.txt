@@ -1,0 +1,45 @@
+UNIT 8
+BOX highlight | annual | design | secret | create | robot
+
+A
+ [highlight]   # ?? cho trong doan o cuoi cau
+ [annual]   # ?? cho trong doan o cuoi cau
+ [design]   # ?? cho trong doan o cuoi cau
+ [secret]   # ?? cho trong doan o cuoi cau
+ [create]   # ?? cho trong doan o cuoi cau
+ [robot]   # ?? cho trong doan o cuoi cau
+
+B
+Q What club did the speaker join?
+- A racing club
+- A robot-controlled club
+- A secret club
++ A robot-making club
+Q What must the robots do to win?
++ Race through a maze
+- Fight other robots
+- Climb 30 centimeters
+- Build a tower
+
+C
+I have been interested in [robots] for as long as I can remember.
+We get together after school every day and [create] our own robots.
+The [highlight] of the year for us is the annual Robot Maze race.
+We are keeping the [design] of our robot secret.
+
+D summary
+3 We build robots from kits.
+2 I joined the robot-making club in high school.
+4 The best time of the year is the maze race.
+5 I hope my team will win this year.
+1 I have liked robots ever since I was a child.
+
+E
+# Robotech
+# and
+# Nowadays @
+# Robot Maze
+# -controlled
+# @ competition,so @
+# Our @ centimeters @ two
+# kilograms. @

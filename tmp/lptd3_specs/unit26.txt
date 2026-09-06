@@ -1,0 +1,49 @@
+UNIT 26
+BOX firefighter | reside | gear | brave | rescue | ignited
+
+A
+The [firefighter] ran into the burning building to save the children.
+Does she [reside] in Hampton or in Newtown?
+Mountain climbers need a lot of [gear] to help them. They take backpacks, ropes, and other items.
+Hong was very [brave] to face the bully alone.
+Please [rescue] my cat! She is up in that tree.
+Kim [ignited] the fire with a few matches.
+
+B
+Q Who did Wendy write about for her assignment?
+- Ian
+- Her brother
+- Her mother
++ Her father
+Q Which of these is something the firefighter did?
+- Ran into a burning store
+- Rescued a cat
++ Rescued a girl
+- Drove a pickup truck
+
+C
+I wrote about my dad because he is a [firefighter].
+Yes, and he sometimes has to crawl into tight places to [rescue] people.
+Someone left the stove on, and it [ignited] a fire in the kitchen.
+They quickly put on their [gear] and then jump onto the fire trucks.
+
+D summary
+1 Wendy tells Ian that she wrote about her father.
+3 Wendy tells Ian that her father rescued a little girl.
+2 Ian asks if her father goes into burning buildings.
+4 Wendy explains how firefighters live at the station.
+5 Ian and Wendy decide they both want to be firefighters.
+
+E dialog
+B: _ Wendy! _ ?
+G: _ .
+B: Really? _ ?
+G: _ , _ .
+B: _ ?
+G: _ , _ . _ . _ stove on, _ .
+B: _ ?
+G: _ , _ .
+B: _ incredibly _ , _ . _ fire station?
+G: _ . _ , _ , _ . _ , _ fire station's _ fire-fighting _ . _ . _ .
+B: Wow! _ .
+G: _ , Ian. _ .

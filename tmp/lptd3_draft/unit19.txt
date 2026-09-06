@@ -1,0 +1,49 @@
+UNIT 19
+BOX standard | restricted | avoid | extremely | budget | craving
+
+A
+Is this the [standard] score on the test, or do students usually score higher?
+My grandma is on a [restricted] diet. She has to be careful about what she eats.
+Please [avoid] trouble by listening to your father. He went through this when he was young.
+The weather in Siberia is [extremely] cold.
+If I am careful with my [budget], I will be able to save enough money for her birthday present.
+Sometimes, I get a strong [craving] for cheesecake. I just have to eat it, or I will think about it all day.
+
+B
+Q When are the friends having this conversation?
+- While standing in line for movie tickets
++ Just before the movie starts
+- During the movie
+- After the movie has finished
+Q Who will pay for the food?
+- Both the man and the woman
+- The woman
++ The man
+- They are not buying any food.
+
+C
+It looks like the [standard] popcorn and soda.
+I have a [craving] for chocolate, but I should attempt to eat something healthy.
+I want to [avoid] getting sick this year.
+I know you are on a [restricted] budget.
+
+D truefalse
+F The movie tickets were extremely cheap.
+T The woman is glad to have a break.
+F The menu is full of healthy food items.
+T The woman wants to drink coffee.
+T The man wants to drink soda and eat popcorn.
+
+E
+# W: Yes, @ break, @
+# M: @ something @ ?
+# M: @ and
+# , and
+# M: No, but @ brownies.
+# W @ some @
+# M: It's on me.
+# W: No, @ know @
+# M: @ insist. @ and @ ?
+# W: Well, @ coffee,
+# W: No, @ brownies.
+# aisle.

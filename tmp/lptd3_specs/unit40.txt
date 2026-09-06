@@ -1,0 +1,57 @@
+UNIT 40
+BOX display | archeology | culture | ancient | traditional | experience
+
+A
+Volunteering is a great [experience]. You help people and feel good.
+This book is about Brazil. You can learn about the [culture] there.
+[Archeology] is the scientific study of ancient people and cultures.
+The [ancient] pyramids in Giza are listed as one of the wonders of the world.
+It is [traditional] to set firecrackers off on New Year's Day.
+Matthew set up an excellent [display] to show the results of his science project.
+
+B
+Q What does the speaker talk about?
+- A place with interesting historical buildings
++ A place to learn about an old culture
+- A place with inexpensive shopping
+- A place where people never lived
+Q Which of the following is NOT mentioned by the speaker?
+- A visitors' center
+- An archaeology lab
+- Walking trails
++ A hotel for tourists
+
+C
+There is a place in Canada where you can learn about the [culture] of the First Nations.
+There is also an [archeology] lab and walking trails.
+There are also wild rice dishes, fruit pies, and [traditional] bread.
+It is an [experience] to remember.
+
+D truefalse
+F The First Nations people did not live in Canada.
+F There is a restaurant and a theater on the site.
+T You can eat bison in the restaurant.
+T You can see archaeologists at the archaeology lab.
+F There are no walking trails at the site.
+
+E passage
+The First Nations _ North America
+_ Europeans migrated _ .
+_ Canada _
+First Nations. _ First Nations _ .
+_ , _ Visitors' Center _ . _
+_ . _
+_ Center. _ .
+_ .
+_ Visitors' Center _ First Nations
+_ . _ , _ , and _ . _
+_ . Bison _
+_ . _ , _ , and _
+_ . _ .
+_ . _
+_ . _ spearhead. _ ancient _
+_ .
+_ First Nations Visitors' Center _ . _
+_ First Nations' _ . _
+_ . _ .
+_ .

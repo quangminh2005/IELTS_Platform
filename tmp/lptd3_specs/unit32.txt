@@ -1,0 +1,56 @@
+UNIT 32
+BOX herbs | ginger | gentler | pills | harmful | medicine
+
+A
+The [herbs] were dried and then put in the pot to make tea.
+Do you put real [ginger] in your Ginger Snaps?
+Traditional medicine can sometimes be [gentler] on the body than modern medicine.
+Did the doctor tell you to take those [pills]? They are in the medicine cabinet.
+Eating too much candy is [harmful] to your health.
+Some [medicine] is harmful if the wrong dose is taken.
+
+B
+Q Why are more people trying herbal medicine?
++ They are interested in using plants as medicine.
+- They used to be doctors.
+- They all like parsley and ginger.
+- They think pills are better than plants.
+Q Why should you be careful when taking herbs?
+- Some herbs have not been tested by doctors.
+- Some herbs do not work.
+- Some herbs smell.
++ Some herbs can be harmful.
+
+C
+They take [pills] to stay healthy.
+More and more people are trying [herbs] to stay healthy.
+Herbs may be [gentler] than some pills.
+Some herbs can be [harmful], too.
+
+D summary
+1 Plants have been used in healing for thousands of years.
+5 People are more interested in their health now.
+2 There are many helpful plants.
+3 However, plants can sometimes also be dangerous.
+4 Coffee and peppermint are types of herbal medicines.
+
+E passage
+_ . _ see _ . _
+stay _ . However, _
+_ . _ and _ .
+_ "herbal medicine."
+_ herbal _ . _
+_ . Herbal _
+_ . _ .
+_ . Ginger _ .
+Eating _ . _
+parsley. _ .
+_ . However, _
+_ . _ should _
+_ . _ , too. _ rosemary _
+_ stomach. _ .
+Foxglove _ . _ poison _ .
+Nevertheless, _ , _ .
+_ herbal _ . _ , _ ,
+ginseng, _ peppermint _ herbal _ . Herbal
+medicine _ .

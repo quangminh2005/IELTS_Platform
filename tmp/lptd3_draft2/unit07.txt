@@ -1,0 +1,42 @@
+UNIT 7
+BOX warranty | basic | specific | solar | digit | personal
+
+A
+My computer came with a one-year [warranty] . The store will replace it if it breaks.
+The [basic] model-car kit comes with a body and wheels. You can get fancy paint, special wheels, and different parts in the deluxe kit.
+Tim knew the [specific] location of the lost sneaker. It was strange how he knew exactly where it was.
+[solar] batteries store energy from the sun.
+Please enter a single [digit] into the space. Do not write more than one number in the space.
+Chase's music collection is for [personal] use only. No one is allowed to copy it.
+
+B
+Q What does the customer want to buy?
+- A specific calculator
+- An expensive calculator
++ A simple calculator
+- A battery for a calculator
+Q Which of these does NOT describe the calculator the customer buys?
+- Solar-powered
++ Has no function keys
+- Has batteries
+- Simple
+
+C
+I want something simple for [basic] math.
+Here is a [solar] model that never needs batteries.
+It has an eight- [digit] display. :: I  4.It comes with a one-year   # !! kiem lai
+ [warranty]   # ?? cho trong doan o cuoi cau   # !! kiem lai
+
+D summary
+2 The salesperson asks if she wants a specific type of calculator.
+1 The customer asks to see the calculators.
+4 The salesperson shows her a calculator, but it is too small.
+5 The customer finally finds a calculator she likes, and buys it.
+3 The customer wants a calculator to use for shopping and paying bills.
+
+E
+# W: Hi.
+# W: I'm @ want
+# @ math.
+# W: Yes.
+# M: Well,

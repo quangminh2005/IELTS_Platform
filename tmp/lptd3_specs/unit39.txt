@@ -1,0 +1,50 @@
+UNIT 39
+BOX per | rather | local | exchange rate | currency | receipt
+
+A
+Please keep the [receipt] for your sweater. You may need it to return it to the store if it does not fit.
+You do not have to go to another city. There is a [local] post office by your house.
+Did you know that you are only allowed one free cup [per] customer? You need to pay for the other ones.
+The yen is the official [currency] for Japan.
+What is the [exchange rate] for the Canadian dollar?
+The cashier at the bank was [rather] rude.
+
+B
+Q Where is the traveler going?
+- She is going to Colombia.
+- She is going to California.
++ She is going to Caracas.
+- She is not going anywhere.
+Q What does the traveler do?
++ She exchanges some money at the airport.
+- She goes to a cash machine.
+- She sends some money to a relative.
+- She goes to a bank.
+
+C
+Can you tell me what the [exchange rate] is for the dollar?
+The [currency] in Venezuela is the bolivar.
+The exchange rate is two hundred bolivars [per] dollar.
+Would you like a [receipt]?
+
+D summary
+4 The traveler asks where she can exchange money after she arrives in Caracas.
+3 The clerk looks up the exchange rate.
+1 The clerk welcomes the traveler to the airport.
+2 The traveler asks about the exchange rate in Venezuela.
+5 The traveler thanks the clerk for his advice.
+
+E dialog
+M: _ Atlanta International Airport, ma'am. _ ?
+W: _ Venezuela. _ rate _ ?
+M: _ , _ , and _ . The _ in Venezuela _ bolivar. _ bolivars _ .
+W: _ . _ ?
+M: _ , but _ .
+W: _ ? _ for a _ and a _ Caracas.
+M: _ . _ . _ ?
+W: _ , _ . _ .
+M: _ anything _ ?
+W: _ . _ Venezuela _ ? _ , _ .
+M: _ bank. _ . _ cities.
+W: _ . _ . _ .
+M: _ pleasure. _ Venezuela.

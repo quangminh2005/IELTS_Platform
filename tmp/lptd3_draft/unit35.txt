@@ -1,0 +1,45 @@
+UNIT 35
+BOX blocking | warning | penalty | ejected | impede | opponents
+
+A
+The moon is [blocking] the sun. This is called an eclipse.
+Listen to your teacher's [warning]. If you don't work hard, you won't do well on the exam.
+If you don't pay your parking ticket on time, there will be a 10 dollar [penalty].
+The coach shouted so much that he was [ejected] from the game.
+Please do not [impede] the rescue workers as they go by. They need to save lives.
+In baseball, your [opponents] are the opposite team.
+
+B
+Q What does the speaker talk about?
+- The different positions for players
+- How popular the sport is in different countries
+- A famous player from the past
++ How players should play the game
+Q The speaker talks about all of the following situations EXCEPT
+- Touching the ball with one's hands
++ Shouting at other players
+- Impeding other players
+- Blocking the goalkeeper
+
+C
+A yellow card is a [warning].
+He is [ejected] from the game.
+A player is not allowed to [impede] an opponent.
+A [penalty] can be called if this occurs.
+
+D truefalse
+F Soccer is very unpopular all over the world.
+F There are only a few rules in soccer.
+T A yellow card is a warning for the player.
+T A player can be ejected for breaking many rules.
+T There are rules about blocking the goalkeeper.
+
+E
+# .Although
+# followed.
+# @ "handling ." "Handling" @
+# @ opponent's @
+# lesser-known @ . A
+# . This
+# @ goalkeeper, @
+# indirect kick @ . Yes,

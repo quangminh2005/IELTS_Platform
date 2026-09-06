@@ -1,0 +1,46 @@
+UNIT 25
+BOX profession | noble | enormous | admire | Accounting | inspiration
+
+A
+Maria chose journalism as her [profession] because she wanted to help people hear news from all over the world.
+Many famous kings were [noble] and wise.
+The pyramids are [enormous] buildings in Giza.
+I [admire] my mother because she takes good care of her family while working at the same time.
+[Accounting] is a job that involves lots of numbers.
+Eda's [inspiration] for her new book came from her sister,who recovered from cancer in 1997.
+
+B
+Q What is the project?
++ It is about a profession.
+- It is about a sky diver.
+- It is about his dad.
+- It is about accounting.
+Q Who does the son want to interview?
+- His brother, who is a sky diver
+- His best friend, who is an accountant
++ His father's friend, who is a diver
+- His father, who is an accountant
+
+C
+I've just been assigned this [enormous] project at school, and I really don't know where to begin.
+Well, I am an expert when it comes to my [profession].
+Accounting is a [noble] profession and one that I am always happy to talk about.
+It isn't that I don't [admire] you.
+
+D truefalse
+T The father says that he will help his son with the project.
+F The son wants to interview his father for the project.
+F The project is about reading a special book.
+F The father thinks his job is silly and boring.
+T The father agrees to call his friend.
+
+E
+B: _ Dad! _ ? _ school, _ .
+M: _ Jason, _ .
+B: _ , Dad, _ me.
+M: OK, OK. _ . _ ?
+B: _ , _ . _ , _ . _ , _ add _ .
+M: _ , _ . _ happy _ .
+B: Dad, _ . _ . But _ , _ Mr. Chang, _ , _ . _ cool!
+M: _ . _ ! _ talking _ . _ David Chang _ .
+B: _ , Dad! You're _ ! _

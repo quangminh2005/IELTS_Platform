@@ -1,0 +1,53 @@
+UNIT 3
+BOX chemicals | garden | seep | cinnamon | deck | hazardous
+
+A
+Please use your goggles in the lab because we are using toxic [chemicals] today.
+Tanaka's [garden] is full of beautiful plants and flowers.
+Don't spill the milk! It will [seep] into the carpet and cause a smell.
+Espresso tastes better with [cinnamon] in it.
+Fritz's house has a [deck] in the back. There are several chairs and a grill on it.
+Nuclear waste is [hazardous] to your health and to the environment.
+
+B
+Q What does Mrs. Wilson want to do?
+- Kill the ants in her yard.
+- Keep the ants out of her garden.
++ Keep the ants off her patio.
+- Stop the ants from killing her mint plants.
+Q Why doesn't Mrs. Wilson want to use chemicals to get rid of the ants?
+- They are expensive.
+- They are difficult to find.
+- They are hard to use.
++ They are harmful and unhealthy.
+
+C
+I would, but I don't want all those hazardous [chemicals] around my children.
+I also don't want dangerous substances to [seep] into the garden.
+I also use [cinnamon] and cayenne pepper.
+I would rather use cinnamon and mint around my patio than some [hazardous] chemicals.
+
+D truefalse
+T Mrs. Wilson does not want ants on the patio because there is a birthday party soon.
+F Mrs. Wilson has already called an exterminator.
+F Mrs. Wilson doesn't want to use cinnamon in the garden.
+T Brianna plants mint around her deck.
+T Brianna is going to help Mrs. Wilson.
+
+E
+# W: I'm @ , Brianna. @ patio!
+# W: What's worse
+# patio.
+# G: @ exterminator?
+# around @ harmful @
+# substances
+# G: @ problems @ , and
+# G: Well, @ 'so @ mint
+# use
+# cayenne pepper. @ sprinkle
+# Others @ else.
+# W: @ worth @ rather
+# and
+# Besides, @ simply
+# G: @ pleasure.
+# home @ run

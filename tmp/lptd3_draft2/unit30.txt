@@ -1,0 +1,51 @@
+UNIT 30
+BOX graduated | maintenance | deadline | interviewing | position | résumé
+
+A
+She [graduated] in 1994 from Columbia University with an art degree.
+How much does the company spend on office equipment and [maintenance] each year?
+The [deadline] for this assignment is next Monday; make sure you hand in your work on time!
+The president of the company is [interviewing] me tomorrow.
+The company president is considering Jaime for the [position] of manager.
+Chang Yi has prepared an up-to-date [résumé] which clearly lists all his qualifications, skills and experience.
+
+B
+Q What work experience does Ms. Jones have?
+- Selling things at a computer store
++ Working in a university computer lab
+- Writing computer programs
+- Working in a software company
+Q Which of these is NOT included in Ms. Jones' description of herself?
+- Organized
+- Enjoys problem solving
++ Ambitious
+- Hardworking
+
+C
+So, you're applying for the [position] of computer technician.
+Smith, and I will be [interviewing] you today.
+As my [resume] shows, I graduated from Leeds University with a computer science degree.   # !! kiem lai
+That way, I can get everything done within the set [deadlines].
+
+D summary
+2 Ms. Jones tells Mr. Smith about her qualifications and experience.
+3 The interviewer asks Ms. Jones to describe herself.
+5 Then she explains why she wants to work for Mr. Smith's company.
+1 Ms. Jones is being interviewed for the position of computer technician.
+4 Ms. Jones says that she is hardworking and organized.
+
+E
+# M: @ , Ms. Jones?
+# M: @ Mr. Smith,
+# M: @ little @ ?
+# W: @ ' I @ Leeds University
+# and
+# part-time
+# in @ university. @ that __,
+# application
+# taught @ Microsoft Office
+# W: @ really @ very
+# @ problems @
+# @ work @ urgent. @
+# W: @ known @
+# would @ your @

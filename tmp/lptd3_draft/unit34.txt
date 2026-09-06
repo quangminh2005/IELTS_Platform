@@ -1,0 +1,53 @@
+UNIT 34
+BOX calcium | beneficial | addictive | study | concern | caffeine
+
+A
+You should have plenty of milk, cheese, and green leafy vegetables to get enough [calcium] in your diet.
+Exercise is [beneficial] to your body and your mind.
+Is drinking a lot of cola as [addictive] as drinking a lot of coffee?
+The [study] showed that women with many children are able to deal with stressful situations. More research will be done on this.
+My father showed his [concern] for me by talking with me about my schoolwork and my health. He wanted to know if he could help me in any way.
+Foods like coffee, cola, some kinds of tea, and chocolate contain [caffeine]
+
+B
+Q What is Jenny's opinion about drinking coffee?
++ Three cups a day is OK.
+- Coffee is bad for teenagers.
+- Italian coffee is the best kind of coffee.
+- People should not drink coffee at all.
+Q Which of these is NOT an effect of caffeine?
+- It removes calcium from bones.
++ It helps you grow taller.
+- It can relieve headaches.
+- It affects blood and circulation.
+
+C
+According to an article I read, coffee can be [beneficial] to your health.
+But you should remember that one [study] does not prove much.
+Coffee has a lot of caffeine, which is [addictive].
+I appreciate your [concern].
+
+D summary
+2 Sam asks Jenny if she is concerned about the amount of coffee she drinks.
+1 Jenny is drinking her third cup of coffee.
+3 Jenny explains that a doctor in Italy did a study that showed coffee was beneficial.
+5 Jenny thinks that she will cut back on her coffee drinking.
+4 Sam explains that caffeine has some health problems associated with it.
+
+E
+# M: Hi, Jenny. @ ?
+# W: Hi, Sam. @
+# that @ ?
+# W: No, @ misconception.
+# W: According @ read,
+# M: @ . But @ does
+# , too.
+# W: @ doctor @ Italy @ benefits.
+# W: @ chemicals
+# and relieve @ ,
+# a lot
+# affects @ blood
+# calcium
+# W: @ admit @ , and
+# ?Do
+# W: @ appreciate @ cutting back.

@@ -15,6 +15,29 @@ export function practiceScopeKey(
   return `${studentId}:${materialId}:${unitId ?? "all"}`;
 }
 
+// Đọc ngược khoá phạm vi. Trả về null khi khoá trống hoặc sai định dạng — bài giao
+// thật không có khoá này, và dữ liệu cũ có thể thiếu, nên nơi gọi chỉ việc bỏ qua.
+export type PracticeScope = {
+  studentId: string;
+  materialId: string;
+  // null = luyện CẢ đề (phân đoạn thứ ba là "all").
+  unitId: string | null;
+};
+
+export function parsePracticeScopeKey(key: string | null | undefined): PracticeScope | null {
+  if (!key) {
+    return null;
+  }
+
+  const [studentId, materialId, scope] = key.split(":");
+
+  if (!studentId || !materialId || !scope) {
+    return null;
+  }
+
+  return { studentId, materialId, unitId: scope === "all" ? null : scope };
+}
+
 // Dùng ở where của Assignment.
 export const excludePracticeAssignment = {
   mode: { not: PRACTICE_MODE }

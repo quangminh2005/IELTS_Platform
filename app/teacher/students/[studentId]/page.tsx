@@ -20,7 +20,9 @@ import {
   buildProgressSeries,
   questionTypeStatsBySkill
 } from "@/lib/question-stats";
-import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
+import { countsForStats, excludePracticeAssignment, onlyPracticeAssignment } from "@/lib/practice";
+import { groupPracticeAttempts } from "@/lib/practice-progress";
+import { StudentPracticeHistory } from "@/components/student-practice-history";
 
 type StudentPageProps = {
   params: {
@@ -166,6 +168,70 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
     }))
   }));
 
+  // Khối "Tự luyện": các đề học viên tự chọn luyện thêm. Đây là truy vấn riêng vì
+  // student.recipients ở trên đã loại hẳn bài tự luyện. Đếm MỌI lượt (kể cả lượt
+  // luyện lại) — khối này đo mức độ chăm chỉ, khác thống kê năng lực chỉ tính lượt 1.
+  // take giới hạn để một học viên luyện rất nhiều không làm trang phình ra.
+  const practiceAttempts = await prisma.attempt.findMany({
+    where: {
+      studentId: student.id,
+      assignmentRecipient: {
+        assignment: { teacherId: teacher.id, ...onlyPracticeAssignment }
+      }
+    },
+    orderBy: [{ startedAt: "desc" }],
+    take: 60,
+    select: {
+      id: true,
+      attemptRound: true,
+      status: true,
+      startedAt: true,
+      submittedAt: true,
+      elapsedSeconds: true,
+      score: true,
+      scorePercent: true,
+      assignmentRecipient: {
+        select: {
+          assignmentId: true,
+          assignment: { select: { title: true } }
+        }
+      },
+      answers: {
+        select: {
+          isCorrect: true,
+          assignableUnit: { select: { skill: true } }
+        }
+      }
+    }
+  });
+
+  const practiceGroups = groupPracticeAttempts(
+    practiceAttempts.map((attempt) => ({
+      id: attempt.id,
+      assignmentId: attempt.assignmentRecipient.assignmentId,
+      assignmentTitle: attempt.assignmentRecipient.assignment.title,
+      attemptRound: attempt.attemptRound,
+      status: attempt.status,
+      startedAt: attempt.startedAt,
+      submittedAt: attempt.submittedAt,
+      elapsedSeconds: attempt.elapsedSeconds,
+      score: attempt.score,
+      scorePercent: attempt.scorePercent
+    }))
+  );
+
+  const practiceBands = new Map(
+    practiceAttempts.map((attempt) => [
+      attempt.id,
+      bandsBySkill(
+        attempt.answers.map((answer) => ({
+          isCorrect: answer.isCorrect,
+          skill: answer.assignableUnit.skill
+        }))
+      )
+    ])
+  );
+
   // Chưa tạo link thì chưa có gì để đưa phụ huynh.
   const parentLink = student.parentToken
     ? `${resolveAppUrl()}/ph/${student.parentToken}`
@@ -304,6 +370,8 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           </div>
         </section>
       ) : null}
+
+      <StudentPracticeHistory groups={practiceGroups} bandsByAttempt={practiceBands} />
 
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="border-b border-border px-5 py-4">

@@ -1,3 +1,5 @@
+import { parsePracticeScopeKey } from "@/lib/practice";
+
 // Nhãn tiến độ tự luyện hiện trên mỗi thẻ đề. Tách khỏi UI để test được.
 export function practiceProgressLabel(
   rounds: number,
@@ -48,18 +50,15 @@ export function summarizePracticeAttempts(
   const summary = new Map<string, PracticeMaterialProgress>();
 
   for (const attempt of attempts) {
-    const key = attempt.practiceScopeKey;
-    if (!key) continue;
+    const scope = parsePracticeScopeKey(attempt.practiceScopeKey);
+    if (scope === null) continue;
 
-    const parts = key.split(":");
-    const materialId = parts[1];
-    const scope = parts[2];
-    if (!materialId) continue;
+    const materialId = scope.materialId;
 
     const progress = summary.get(materialId) ?? { rounds: 0, bestCorrect: null };
     progress.rounds += 1;
 
-    if (scope === "all" && attempt.score !== null) {
+    if (scope.unitId === null && attempt.score !== null) {
       // score là Float (điểm có thể lẻ ở bài chấm tay) — làm tròn để nhãn đọc gọn.
       const roundedScore = Math.round(attempt.score);
       progress.bestCorrect =

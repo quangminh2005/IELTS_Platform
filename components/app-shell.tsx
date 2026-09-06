@@ -30,6 +30,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
     { href: "/teacher/vocab", label: "Từ vựng", hint: "Kho từ mỗi ngày", icon: "book" },
     { href: "/teacher/assignments", label: "Giao bài", hint: "Bài tập về nhà", icon: "clipboard" },
     { href: "/teacher/calendar", label: "Lịch giao bài", hint: "Theo dõi nộp bài", icon: "calendar" },
+    { href: "/teacher/practice", label: "Tự luyện", hint: "Học viên luyện thêm", icon: "chart" },
     { href: "/teacher/review", label: "Chấm bài", hint: "Writing & Speaking", icon: "check" }
   ],
   student: [

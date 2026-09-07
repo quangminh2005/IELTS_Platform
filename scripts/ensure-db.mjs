@@ -52,6 +52,8 @@ const statements = [
   // lại (xem catch trong vòng lặp: một câu lỗi không còn chặn các câu sau, nhưng
   // đặt cột nền tảng lên trước vẫn an toàn hơn là để cuối mảng).
   'ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "practiceOpen" BOOLEAN NOT NULL DEFAULT false;',
+  // Ẩn thanh audio khi học viên TỰ LUYỆN đề này (chế độ thi thật, đặt theo từng đề).
+  'ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "practiceLockAudio" BOOLEAN NOT NULL DEFAULT false;',
   'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "practiceScopeKey" TEXT;',
   'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "attemptRound" INTEGER NOT NULL DEFAULT 1;',
   'CREATE UNIQUE INDEX IF NOT EXISTS "Assignment_practiceScopeKey_key" ON "Assignment"("practiceScopeKey");',

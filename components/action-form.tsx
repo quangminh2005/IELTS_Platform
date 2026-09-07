@@ -81,10 +81,12 @@ export function ActionForm({
 export function ActionSubmitButton({
   className,
   pendingLabel = "Đang lưu…",
+  title,
   children
 }: {
   className?: string;
   pendingLabel?: string;
+  title?: string;
   children: ReactNode;
 }) {
   const { pending } = useFormStatus();
@@ -93,6 +95,7 @@ export function ActionSubmitButton({
     <button
       type="submit"
       disabled={pending}
+      title={title}
       className={`${className ?? ""} disabled:cursor-not-allowed disabled:opacity-60`}
     >
       {pending ? pendingLabel : children}

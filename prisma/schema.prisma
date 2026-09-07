@@ -138,6 +138,9 @@ model Material {
   sourceLabel String?
   // Đề có nằm trong thư viện tự luyện của học viên không (mở là mở cho MỌI học viên).
   practiceOpen Boolean @default(false)
+  // Khi học viên tự luyện đề này: có ẩn thanh audio (chế độ thi thật) hay không.
+  // Chỉ có ý nghĩa với đề Listening; bài giao thường vẫn dùng Assignment.lockAudio riêng.
+  practiceLockAudio Boolean @default(false)
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   teacher     TeacherProfile   @relation(fields: [teacherId], references: [id], onDelete: Cascade)

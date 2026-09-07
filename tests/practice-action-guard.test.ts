@@ -23,6 +23,17 @@ describe("chốt chặn quyền + ranh giới mở lượt mới của thư vi�
     expect(practiceSource).toMatch(/where:\s*\{[^}]*practiceOpen:\s*true/);
   });
 
+  it("bộ luyện lấy cờ ẩn thanh audio từ cài đặt của đề", () => {
+    // Giáo viên bật/tắt "ẩn thanh audio" cho từng đề ở /teacher/materials
+    // (Material.practiceLockAudio) — startPractice phải chép cờ đó sang bài giao ảo,
+    // cả lúc tạo mới lẫn ở mỗi lượt mới, nếu không đổi cài đặt sẽ không có tác dụng.
+    expect(practiceSource).toContain("practiceLockAudio: true");
+    expect(practiceSource).toContain("lockAudio: material.practiceLockAudio");
+    expect(practiceSource).toMatch(
+      /data:\s*\{\s*skillTimeLimitsJson,\s*lockAudio: material\.practiceLockAudio\s*\}/
+    );
+  });
+
   it("startPractice gọi requireStudent", () => {
     expect(practiceSource).toContain("requireStudent()");
   });

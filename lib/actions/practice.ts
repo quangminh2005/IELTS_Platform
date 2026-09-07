@@ -53,6 +53,7 @@ export async function startPractice(formData: FormData): Promise<never> {
       id: true,
       title: true,
       teacherId: true,
+      practiceLockAudio: true,
       units: {
         orderBy: [{ unitNumber: "asc" }, { createdAt: "asc" }],
         select: {
@@ -123,6 +124,10 @@ export async function startPractice(formData: FormData): Promise<never> {
           deadline: null,
           mode: PRACTICE_MODE,
           practiceScopeKey: scopeKey,
+          // Ẩn/hiện thanh audio theo cài đặt hiện tại của đề (giáo viên bật ở
+          // /teacher/materials). Bộ luyện đóng băng nội dung, nhưng cờ này được
+          // đồng bộ lại ở mỗi lượt MỚI phía dưới.
+          lockAudio: material.practiceLockAudio,
           units: {
             create: units.map((unit, index) => ({
               assignableUnitId: unit.id,
@@ -209,8 +214,10 @@ export async function startPractice(formData: FormData): Promise<never> {
     redirect(`/student/assignments/${recipient.id}`);
   }
 
-  // Lượt mới: áp lựa chọn tính giờ CỦA LẦN BẤM NÀY rồi mới tạo Attempt, gộp trong một
-  // transaction để không bao giờ có Attempt mới với skillTimeLimitsJson của lượt cũ.
+  // Lượt mới: áp lựa chọn tính giờ CỦA LẦN BẤM NÀY (và cài đặt ẩn thanh audio hiện tại
+  // của đề) rồi mới tạo Attempt, gộp trong một transaction để không bao giờ có Attempt
+  // mới với skillTimeLimitsJson của lượt cũ. Lượt đang làm dở KHÔNG bị đổi cờ audio —
+  // đổi luật giữa chừng sẽ khiến học viên mất quyền tua ngay giữa bài.
   const recipientId = recipient.id;
   const droppedAttemptId = decision.kind === "restart" ? decision.attemptId : null;
   await prisma.$transaction(async (tx) => {
@@ -223,7 +230,7 @@ export async function startPractice(formData: FormData): Promise<never> {
 
     await tx.assignment.update({
       where: { id: assignmentId },
-      data: { skillTimeLimitsJson }
+      data: { skillTimeLimitsJson, lockAudio: material.practiceLockAudio }
     });
 
     await tx.attempt.create({

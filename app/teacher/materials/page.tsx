@@ -8,6 +8,7 @@ import {
   deleteMaterial,
   deleteQuestion,
   deleteUnit,
+  setPracticeLockAudio,
   setPracticeOpen,
   updateMaterial,
   updateQuestion,
@@ -29,6 +30,7 @@ const materialSelect = {
   skill: true,
   sourceLabel: true,
   practiceOpen: true,
+  practiceLockAudio: true,
   description: true,
   createdAt: true,
   units: {
@@ -233,6 +235,8 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                 (sum, unit) => sum + unit._count.questions,
                 0
               );
+              // Chỉ đề có audio mới bàn tới chuyện ẩn/hiện thanh audio.
+              const hasAudio = material.units.some((unit) => Boolean(unit.audioUrl));
               const status = computeStatus(
                 material.skill,
                 material.units.map((unit) => ({
@@ -312,6 +316,28 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                           {material.practiceOpen ? "Đang cho tự luyện" : "Cho tự luyện"}
                         </ActionSubmitButton>
                       </ActionForm>
+                      {hasAudio ? (
+                        <ActionForm action={setPracticeLockAudio}>
+                          <input type="hidden" name="materialId" value={material.id} />
+                          <input
+                            type="hidden"
+                            name="practiceLockAudio"
+                            value={material.practiceLockAudio ? "0" : "1"}
+                          />
+                          <ActionSubmitButton
+                            className={
+                              material.practiceLockAudio
+                                ? "rounded-md border border-primary/50 bg-primary/10 px-3 py-2 text-sm font-semibold text-primary"
+                                : secondaryButtonClass
+                            }
+                            title="Chỉ áp dụng cho lượt tự luyện của học viên, không ảnh hưởng bài giao."
+                          >
+                            {material.practiceLockAudio
+                              ? "Tự luyện: ẩn thanh audio"
+                              : "Tự luyện: hiện thanh audio"}
+                          </ActionSubmitButton>
+                        </ActionForm>
+                      ) : null}
                     </div>
                     <details className="mt-4 rounded-lg border border-border bg-muted/60 p-4 transition-colors hover:border-primary/40 hover:bg-muted">
                       <summary className="cursor-pointer text-sm font-semibold">

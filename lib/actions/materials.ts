@@ -990,3 +990,54 @@ export async function setPracticeOpen(formData: FormData): Promise<ActionResult>
       : `Đã gỡ "${material.title}" khỏi thư viện tự luyện.`
   );
 }
+
+const practiceLockAudioSchema = z.object({
+  materialId: z.string().trim().min(1, "Thiếu tài liệu."),
+  practiceLockAudio: z.enum(["0", "1"], "Giá trị không hợp lệ.")
+});
+
+// Bật/tắt "ẩn thanh audio" cho riêng luồng TỰ LUYỆN của một đề Listening. Bài giao
+// thường không đọc cờ này — bài giao có ô "Ẩn thanh audio" riêng (Assignment.lockAudio).
+// Đổi cờ chỉ ảnh hưởng các lượt tự luyện MỞ SAU đó; lượt đang làm dở giữ nguyên chế
+// độ của lúc bắt đầu để không đổi luật giữa chừng (xem lib/actions/practice.ts).
+export async function setPracticeLockAudio(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher();
+  const parsed = practiceLockAudioSchema.safeParse({
+    materialId: formData.get("materialId"),
+    practiceLockAudio: formData.get("practiceLockAudio")
+  });
+
+  if (!parsed.success) {
+    return actionFail(
+      new Error(parsed.error.issues[0]?.message ?? "Dữ liệu không hợp lệ."),
+      "Cập nhật thanh audio tự luyện"
+    );
+  }
+
+  const material = await prisma.material.findFirst({
+    where: { id: parsed.data.materialId, teacherId: teacher.id },
+    select: { id: true, title: true }
+  });
+
+  if (!material) {
+    return actionFail(
+      new Error("Không tìm thấy tài liệu."),
+      "Cập nhật thanh audio tự luyện"
+    );
+  }
+
+  const practiceLockAudio = parsed.data.practiceLockAudio === "1";
+
+  await prisma.material.update({
+    where: { id: material.id },
+    data: { practiceLockAudio }
+  });
+
+  revalidatePath("/teacher/materials");
+
+  return actionOk(
+    practiceLockAudio
+      ? `Tự luyện "${material.title}" sẽ ẩn thanh audio như thi thật.`
+      : `Tự luyện "${material.title}" sẽ hiện thanh audio (nghe/tua tự do).`
+  );
+}

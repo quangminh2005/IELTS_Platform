@@ -10,6 +10,8 @@ import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { VocabCard } from "@/components/vocab-card";
+import { LateBadge, OverdueBadge } from "@/components/late-badge";
+import { isSubmissionLate } from "@/lib/late-submission";
 import { getVocabSidebar, getWordOfTheDay } from "@/lib/vocab-daily";
 
 function statusClasses(status: string) {
@@ -148,7 +150,11 @@ export default async function StudentDashboardPage() {
   // việc lọc lượt nằm trong rankingScoreFromRecipientsAndAttempts (lib/student-score.ts),
   // dùng chung với trang Hồ sơ để không lặp logic lọc/tính % ở hai nơi.
   const score = rankingScoreFromRecipientsAndAttempts({
-    recipientStatuses: recipients.map((recipient) => recipient.status),
+    recipients: recipients.map((recipient) => ({
+      status: recipient.status,
+      submittedAt: recipient.submittedAt,
+      deadline: recipient.assignment.deadline
+    })),
     attempts: attempts.map((attempt) => ({
       scorePercent: attempt.scorePercent,
       startedAt: attempt.startedAt,
@@ -218,6 +224,10 @@ export default async function StudentDashboardPage() {
               const latestAttempt = recipient.attempts[0];
               const done =
                 recipient.status === "submitted" || recipient.status === "reviewed";
+              const deadline = recipient.assignment.deadline;
+              // Chưa nộp mà đã qua hạn -> cảnh báo; đã nộp sau hạn -> nhãn nộp trễ.
+              const overdue = !done && deadline !== null && deadline.getTime() < now.getTime();
+              const submittedLate = done && isSubmissionLate(recipient.submittedAt, deadline);
 
               return (
                 <article
@@ -232,9 +242,18 @@ export default async function StudentDashboardPage() {
                         ? ` · ${recipient.assignment.timeLimitMinutes} phút`
                         : ""}
                     </p>
-                    {recipient.assignment.deadline ? (
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        Hạn nộp: {formatDeadline(recipient.assignment.deadline)}
+                    {deadline ? (
+                      <p
+                        className={`mt-1 text-sm ${
+                          overdue ? "font-medium text-red-600 dark:text-red-400" : "text-muted-foreground"
+                        }`}
+                      >
+                        Hạn nộp: {formatDeadline(deadline)}
+                      </p>
+                    ) : null}
+                    {overdue ? (
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                        Đã quá hạn — nộp bây giờ sẽ tính là nộp trễ và chỉ được nửa điểm hoàn thành.
                       </p>
                     ) : null}
                     {latestAttempt ? (
@@ -254,13 +273,18 @@ export default async function StudentDashboardPage() {
                     </div>
                   </div>
                   <div className="flex shrink-0 flex-wrap items-center gap-3">
-                    <span
-                      className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses(
-                        recipient.status
-                      )}`}
-                    >
-                      {formatStatus(recipient.status)}
-                    </span>
+                    {overdue ? (
+                      <OverdueBadge className="px-3 py-1" />
+                    ) : (
+                      <span
+                        className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses(
+                          recipient.status
+                        )}`}
+                      >
+                        {formatStatus(recipient.status)}
+                      </span>
+                    )}
+                    {submittedLate ? <LateBadge className="px-3 py-1" /> : null}
                     <Link
                       href={
                         done && latestAttempt

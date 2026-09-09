@@ -188,6 +188,14 @@ export function ClassRankingBoard({
                   {rankedStudent.submittedCount} bài · {daysAgoLabel(rankedStudent.daysSinceLastActivity)}
                   <br />
                   Hoàn thành {Math.round(rankedStudent.completionRate)}%
+                  {rankedStudent.lateCount > 0 ? (
+                    <>
+                      <br />
+                      <span className="text-amber-600 dark:text-amber-400">
+                        {rankedStudent.lateCount} bài nộp trễ
+                      </span>
+                    </>
+                  ) : null}
                 </p>
                 <div
                   className={`mt-2 flex w-full items-start justify-center rounded-t-lg ${style.pedestal}`}
@@ -251,7 +259,15 @@ export function ClassRankingBoard({
                       <p className="mt-2 grid gap-1 text-sm text-muted-foreground md:hidden">
                         <span>Điểm TB: {averageLabel(rankedStudent)}</span>
                         <span>Số bài: {rankedStudent.submittedCount}</span>
-                        <span>Hoàn thành: {Math.round(rankedStudent.completionRate)}%</span>
+                        <span>
+                          Hoàn thành: {Math.round(rankedStudent.completionRate)}%
+                          {rankedStudent.lateCount > 0 ? (
+                            <span className="text-amber-600 dark:text-amber-400">
+                              {" "}
+                              (trong đó {rankedStudent.lateCount} bài nộp trễ)
+                            </span>
+                          ) : null}
+                        </span>
                         <span>
                           Làm gần nhất: {daysAgoLabel(rankedStudent.daysSinceLastActivity)}
                         </span>
@@ -269,6 +285,14 @@ export function ClassRankingBoard({
                   </p>
                   <p className="hidden text-sm tabular-nums md:block">
                     {Math.round(rankedStudent.completionRate)}%
+                    {rankedStudent.lateCount > 0 ? (
+                      <span
+                        className="block text-[11px] font-medium text-amber-600 dark:text-amber-400"
+                        title="Bài nộp trễ chỉ được nửa suất trong Tỉ lệ hoàn thành."
+                      >
+                        {rankedStudent.lateCount} bài trễ
+                      </span>
+                    ) : null}
                   </p>
                   <p className="hidden text-sm tabular-nums md:block">
                     {daysAgoLabel(rankedStudent.daysSinceLastActivity)}

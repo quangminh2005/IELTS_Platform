@@ -3,6 +3,8 @@ import { notFound, redirect } from "next/navigation";
 import { ResultReview } from "@/components/result-review";
 import { SkillTimeSummary } from "@/components/skill-time-summary";
 import { SubmitCelebration } from "@/components/submit-celebration";
+import { LateBadge } from "@/components/late-badge";
+import { isSubmissionLate } from "@/lib/late-submission";
 import { auth } from "@/lib/auth";
 import { pickDominantSkill } from "@/lib/celebration";
 import { prisma } from "@/lib/prisma";
@@ -43,7 +45,9 @@ export default async function StudentResultPage({ params, searchParams }: Result
         include: {
           assignment: {
             select: {
-              title: true
+              title: true,
+              // Hạn nộp để gắn nhãn "Nộp trễ" cho lượt làm này.
+              deadline: true
             }
           }
         }
@@ -172,9 +176,17 @@ export default async function StudentResultPage({ params, searchParams }: Result
             <p className="text-xs font-semibold uppercase tracking-wide text-primary">
               {skillFilter ? `Kết quả kỹ năng ${skillLabel}` : "Kết quả"}
             </p>
-            <h2 className="mt-0.5 truncate text-lg font-bold tracking-tight sm:text-xl">
-              {attempt.assignmentRecipient.assignment.title}
-            </h2>
+            <div className="mt-0.5 flex flex-wrap items-center gap-2">
+              <h2 className="truncate text-lg font-bold tracking-tight sm:text-xl">
+                {attempt.assignmentRecipient.assignment.title}
+              </h2>
+              {isSubmissionLate(
+                attempt.submittedAt,
+                attempt.assignmentRecipient.assignment.deadline
+              ) ? (
+                <LateBadge />
+              ) : null}
+            </div>
             <SkillTimeSummary
               skillTimes={skillTimes}
               className="mt-1 text-xs text-muted-foreground"

@@ -1,5 +1,13 @@
 import { calculateRankingScore } from "@/lib/ranking";
 import { countsForStats } from "@/lib/practice";
+import { completionWeight } from "@/lib/late-submission";
+
+// Một bài được giao, đủ dữ kiện để biết đã nộp chưa và nộp có kịp hạn không.
+export type CompletionInput = {
+  status: string;
+  submittedAt: Date | null;
+  deadline: Date | null;
+};
 
 export type StudentScore = {
   averageScorePercent: number;
@@ -60,12 +68,14 @@ function average(values: number[]) {
   return values.reduce((total, value) => total + value, 0) / values.length;
 }
 
-function completionRateOf(statuses: string[]) {
-  if (statuses.length === 0) {
+// Tỉ lệ hoàn thành cộng theo TRỌNG SỐ chứ không đếm đầu người: nộp đúng hạn
+// được trọn suất, nộp trễ chỉ nửa suất (lib/late-submission.ts).
+function completionRateOf(completions: CompletionInput[]) {
+  if (completions.length === 0) {
     return 0;
   }
-  const completed = statuses.filter((status) => status === "submitted" || status === "reviewed");
-  return (completed.length / statuses.length) * 100;
+  const completed = completions.reduce((total, item) => total + completionWeight(item), 0);
+  return (completed / completions.length) * 100;
 }
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
@@ -110,13 +120,13 @@ function recentActivityPercentOf(daysSinceLastActivity: number | null) {
 // chung, tránh lặp logic). Giữ nguyên công thức lib/ranking.ts.
 export function studentRankingScore(input: {
   scorePercents: number[];
-  statuses: string[];
+  completions: CompletionInput[];
   attemptTimes: Array<{ startedAt: Date; submittedAt: Date | null }>;
   now?: Date;
 }): StudentScore {
   const now = input.now ?? new Date();
   const averageScorePercent = average(input.scorePercents);
-  const completionRate = completionRateOf(input.statuses);
+  const completionRate = completionRateOf(input.completions);
   const daysSinceLastActivity = daysSinceLastActivityOf(input.attemptTimes, now);
   const recentActivityPercent = recentActivityPercentOf(daysSinceLastActivity);
   const rankingScore = calculateRankingScore({
@@ -140,7 +150,7 @@ export function studentRankingScore(input: {
 // Chỉ lượt 1 (countsForStats) mới tính vào xếp hạng — lượt tự luyện lại không đẩy
 // hạng lên.
 export function rankingScoreFromRecipientsAndAttempts(input: {
-  recipientStatuses: string[];
+  recipients: CompletionInput[];
   attempts: Array<{
     scorePercent: number | null;
     startedAt: Date;
@@ -163,7 +173,7 @@ export function rankingScoreFromRecipientsAndAttempts(input: {
         })
       )
       .filter((value): value is number => value !== null),
-    statuses: input.recipientStatuses,
+    completions: input.recipients,
     attemptTimes: scoringAttempts.map((attempt) => ({
       startedAt: attempt.startedAt,
       submittedAt: attempt.submittedAt

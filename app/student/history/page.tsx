@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { attemptBand, formatBand } from "@/lib/band-score";
 import { SkillTags } from "@/components/skill-tags";
 import { excludePracticeRecipient, onlyPracticeRecipient } from "@/lib/practice";
+import { LateBadge } from "@/components/late-badge";
+import { isSubmissionLate } from "@/lib/late-submission";
 
 const tabClass =
   "rounded-full border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground hover:border-primary";
@@ -86,6 +88,8 @@ export default async function StudentHistoryPage({
           assignment: {
             select: {
               title: true,
+              // Hạn nộp để gắn nhãn "Nộp trễ" cho từng lượt.
+              deadline: true,
               units: {
                 select: {
                   assignableUnit: { select: { skill: true } }
@@ -150,6 +154,12 @@ export default async function StudentHistoryPage({
                       <span className="inline-flex rounded-full border border-border bg-muted px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
                         Lượt {attempt.attemptRound}
                       </span>
+                    ) : null}
+                    {isSubmissionLate(
+                      attempt.submittedAt,
+                      attempt.assignmentRecipient.assignment.deadline
+                    ) ? (
+                      <LateBadge />
                     ) : null}
                   </div>
                   <div className="mt-2">

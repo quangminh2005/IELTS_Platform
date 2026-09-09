@@ -67,7 +67,12 @@ export default async function ClassmateProfilePage({
   // hai bậc khác nhau cho cùng một học viên ở hai trang.
   const recipients = await prisma.assignmentRecipient.findMany({
     where: { studentId: classmate.id, assignment: excludePracticeAssignment },
-    select: { status: true }
+    // Mốc nộp + hạn nộp để biết bài nào nộp trễ (chỉ được nửa suất hoàn thành).
+    select: {
+      status: true,
+      submittedAt: true,
+      assignment: { select: { deadline: true } }
+    }
   });
 
   const rankingAttempts = await prisma.attempt.findMany({
@@ -82,7 +87,11 @@ export default async function ClassmateProfilePage({
   });
 
   const rankingScore = rankingScoreFromRecipientsAndAttempts({
-    recipientStatuses: recipients.map((recipient) => recipient.status),
+    recipients: recipients.map((recipient) => ({
+      status: recipient.status,
+      submittedAt: recipient.submittedAt,
+      deadline: recipient.assignment.deadline
+    })),
     attempts: rankingAttempts.map((attempt) => ({
       scorePercent: attempt.scorePercent,
       startedAt: attempt.startedAt,

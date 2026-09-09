@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { attemptBandFromCounts, averageBand, type SkillCount } from "@/lib/band-score";
 import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
+import { isSubmissionLate } from "@/lib/late-submission";
 import {
   countsForStats,
   excludePracticeAssignment,
@@ -24,6 +25,9 @@ export type RankedClassStudent = {
   hasSubmitted: boolean;
   // Số bài đã nộp — để nhìn ra "cao điểm nhờ làm 1 bài" và "làm đều 10 bài".
   submittedCount: number;
+  // Số bài giao đã nộp NHƯNG quá hạn — mỗi bài như vậy chỉ được nửa suất trong
+  // Tỉ lệ hoàn thành, nên bảng cần nói ra để con số không có vẻ vô lý.
+  lateCount: number;
   daysSinceLastActivity: number | null;
   // Số hạng tăng/giảm so với ảnh chụp 7 ngày trước. Dương = đi lên.
   // null = tuần trước chưa có bài nào nên chưa có mặt trong bảng.
@@ -50,7 +54,13 @@ export type ClassmateRow = {
     // Số câu đúng/tổng theo kỹ năng (đã gộp sẵn) để quy band.
     skillCounts: SkillCount[];
   }>;
-  recipients: Array<{ assignedAt: Date; submittedAt: Date | null; status: string }>;
+  recipients: Array<{
+    assignedAt: Date;
+    submittedAt: Date | null;
+    status: string;
+    // Hạn nộp của bài giao. null = bài không đặt hạn -> không bao giờ tính là trễ.
+    deadline: Date | null;
+  }>;
 };
 
 const TREND_WINDOW_DAYS = 7;
@@ -84,15 +94,22 @@ function scoreAt(row: ClassmateRow, now: Date, asOf: Date | null) {
 
   const score = studentRankingScore({
     scorePercents,
-    statuses: recipients.map((recipient) =>
+    completions: recipients.map((recipient) => ({
       // Hiện tại thì dùng đúng trạng thái đang lưu; còn ảnh chụp tuần trước phải
       // dựng lại từ mốc nộp, vì trạng thái không lưu lịch sử.
-      asOf === null
-        ? recipient.status
-        : recipient.submittedAt !== null && recipient.submittedAt <= cutoff
-          ? "submitted"
-          : "assigned"
-    ),
+      status:
+        asOf === null
+          ? recipient.status
+          : recipient.submittedAt !== null && recipient.submittedAt <= cutoff
+            ? "submitted"
+            : "assigned",
+      // Nộp sau mốc chụp thì lúc đó coi như chưa nộp, nên cũng không xét trễ.
+      submittedAt:
+        recipient.submittedAt !== null && recipient.submittedAt <= cutoff
+          ? recipient.submittedAt
+          : null,
+      deadline: recipient.deadline
+    })),
     attemptTimes: attempts.map((attempt) => ({
       startedAt: attempt.startedAt,
       submittedAt:
@@ -101,7 +118,14 @@ function scoreAt(row: ClassmateRow, now: Date, asOf: Date | null) {
     now: cutoff
   });
 
-  return { score, submittedCount: submitted.length };
+  const lateCount = recipients.filter(
+    (recipient) =>
+      recipient.submittedAt !== null &&
+      recipient.submittedAt <= cutoff &&
+      isSubmissionLate(recipient.submittedAt, recipient.deadline)
+  ).length;
+
+  return { score, submittedCount: submitted.length, lateCount };
 }
 
 // Thứ hạng (1-based) của từng học viên tại một mốc. Học viên chưa nộp bài nào
@@ -144,7 +168,7 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
 
   return rows
     .map((row) => {
-      const { score, submittedCount } = scoreAt(row, today, null);
+      const { score, submittedCount, lateCount } = scoreAt(row, today, null);
       // Band trung bình: gộp band của từng lần làm (band giáo viên chấm hoặc
       // band tự động bài đủ 40 câu). Không có band nào -> null (hiển thị % thay thế).
       const attemptBands = row.attempts
@@ -165,6 +189,7 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
         rankingScore: score.rankingScore,
         hasSubmitted: submittedCount > 0,
         submittedCount,
+        lateCount,
         daysSinceLastActivity: score.daysSinceLastActivity,
         previousPosition: previous?.position ?? null,
         previousRankingScore: previous?.rankingScore ?? null,
@@ -273,7 +298,9 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
             select: {
               status: true,
               assignedAt: true,
-              submittedAt: true
+              submittedAt: true,
+              // Hạn nộp nằm ở bài giao, cần để biết lượt nộp có trễ không.
+              assignment: { select: { deadline: true } }
             }
           }
         }
@@ -303,7 +330,8 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
       recipients: classmate.student.recipients.map((recipient) => ({
         assignedAt: recipient.assignedAt,
         submittedAt: recipient.submittedAt,
-        status: recipient.status
+        status: recipient.status,
+        deadline: recipient.assignment.deadline
       }))
     }))
   );

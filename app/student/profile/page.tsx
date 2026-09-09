@@ -112,7 +112,12 @@ export default async function StudentProfilePage({
     // tính điểm xếp hạng, qua helper dùng chung rankingScoreFromRecipientsAndAttempts.
     prisma.assignmentRecipient.findMany({
       where: { studentId: student.id, assignment: excludePracticeAssignment },
-      select: { status: true }
+      // Mốc nộp + hạn nộp để biết bài nào nộp trễ (chỉ được nửa suất hoàn thành).
+      select: {
+        status: true,
+        submittedAt: true,
+        assignment: { select: { deadline: true } }
+      }
     }),
     prisma.attempt.findMany({
       where: { studentId: student.id, ...countsForStats },
@@ -142,7 +147,11 @@ export default async function StudentProfilePage({
   );
 
   const rankingScore = rankingScoreFromRecipientsAndAttempts({
-    recipientStatuses: recipients.map((recipient) => recipient.status),
+    recipients: recipients.map((recipient) => ({
+      status: recipient.status,
+      submittedAt: recipient.submittedAt,
+      deadline: recipient.assignment.deadline
+    })),
     attempts: rankingAttempts.map((attempt) => ({
       scorePercent: attempt.scorePercent,
       startedAt: attempt.startedAt,

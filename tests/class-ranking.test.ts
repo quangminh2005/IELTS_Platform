@@ -29,7 +29,13 @@ function daysBefore(days: number, hour = 8) {
 
 // Một bài đã giao và đã nộp cùng ngày.
 function doneRecipient(daysAgo: number) {
-  return { assignedAt: daysBefore(daysAgo), submittedAt: daysBefore(daysAgo, 9), status: "submitted" };
+  return {
+    assignedAt: daysBefore(daysAgo),
+    submittedAt: daysBefore(daysAgo, 9),
+    status: "submitted",
+    // Không đặt hạn -> không bao giờ tính là nộp trễ.
+    deadline: null
+  };
 }
 
 // Học viên chỉ có 1 lần làm bài cũ (ngoài 14 ngày) -> recentActivityPercent = 0,
@@ -55,13 +61,30 @@ function classmate(id: string, displayName: string, scorePercent: number): Class
       {
         assignedAt: new Date("2026-06-01T07:00:00+07:00"),
         submittedAt: new Date("2026-06-01T09:00:00+07:00"),
-        status: "submitted"
+        status: "submitted",
+        deadline: null
       }
     ]
   };
 }
 
 describe("rankClassmates", () => {
+  it("cùng điểm bài làm nhưng nộp trễ thì xếp dưới và bị đếm lateCount", () => {
+    const deadline = daysBefore(54, 8); // hạn trước lúc nộp 1 tiếng
+    const late = classmate("b", "Bảo", 80);
+    late.recipients = [{ ...late.recipients[0], deadline }];
+
+    const ranked = rankClassmates([classmate("a", "An", 80), late], now);
+
+    expect(ranked.map((student) => student.id)).toEqual(["a", "b"]);
+    // Đúng hạn: 100% hoàn thành. Trễ: nửa suất -> 50%, mất 10 điểm xếp hạng.
+    expect(ranked[0].completionRate).toBe(100);
+    expect(ranked[0].lateCount).toBe(0);
+    expect(ranked[1].completionRate).toBe(50);
+    expect(ranked[1].lateCount).toBe(1);
+    expect(ranked[0].rankingScore - ranked[1].rankingScore).toBe(10);
+  });
+
   it("sắp xếp giảm dần theo điểm xếp hạng", () => {
     const ranked = rankClassmates(
       [classmate("a", "An", 50), classmate("b", "Bảo", 90), classmate("c", "Cường", 70)],
@@ -110,7 +133,8 @@ describe("rankClassmates", () => {
           {
             assignedAt: new Date("2026-06-01T07:00:00+07:00"),
             submittedAt: new Date("2026-06-01T09:00:00+07:00"),
-            status: "reviewed"
+            status: "reviewed",
+            deadline: null
           }
         ]
       }
@@ -229,7 +253,7 @@ describe("rankClassmates", () => {
         recipients: [
           doneRecipient(5),
           doneRecipient(3),
-          { assignedAt: daysBefore(0), submittedAt: null, status: "in_progress" }
+          { assignedAt: daysBefore(0), submittedAt: null, status: "in_progress", deadline: null }
         ]
       }
     ];
@@ -260,7 +284,9 @@ describe("rankClassmates", () => {
             skillCounts: []
           }
         ],
-        recipients: [{ assignedAt: daysBefore(2), submittedAt: null, status: "in_progress" }]
+        recipients: [
+          { assignedAt: daysBefore(2), submittedAt: null, status: "in_progress", deadline: null }
+        ]
       },
       {
         // Đã nộp 1/20 bài, điểm 0 -> chỉ 1 điểm xếp hạng, vẫn phải đứng trên "Mới".
@@ -284,7 +310,8 @@ describe("rankClassmates", () => {
           ...Array.from({ length: 19 }, () => ({
             assignedAt: daysBefore(54),
             submittedAt: null,
-            status: "assigned"
+            status: "assigned",
+            deadline: null
           }))
         ]
       }

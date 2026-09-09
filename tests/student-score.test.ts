@@ -40,7 +40,7 @@ describe("studentRankingScore - độ mới của hoạt động", () => {
     startedAt.setDate(startedAt.getDate() - days);
     return studentRankingScore({
       scorePercents: [50],
-      statuses: ["submitted"],
+      completions: [{ status: "submitted", submittedAt: null, deadline: null }],
       attemptTimes: [{ startedAt, submittedAt: startedAt }],
       now
     });
@@ -67,7 +67,7 @@ describe("studentRankingScore - độ mới của hoạt động", () => {
   it("trả về số ngày kể từ lần làm bài gần nhất", () => {
     expect(scoreAfterDays(5).daysSinceLastActivity).toBe(5);
     expect(
-      studentRankingScore({ scorePercents: [], statuses: [], attemptTimes: [], now })
+      studentRankingScore({ scorePercents: [], completions: [], attemptTimes: [], now })
         .daysSinceLastActivity
     ).toBeNull();
   });
@@ -75,7 +75,7 @@ describe("studentRankingScore - độ mới của hoạt động", () => {
   it("lấy mốc nộp bài khi bài mở từ lâu nhưng mới nộp", () => {
     const s = studentRankingScore({
       scorePercents: [50],
-      statuses: ["submitted"],
+      completions: [{ status: "submitted", submittedAt: null, deadline: null }],
       attemptTimes: [
         {
           startedAt: new Date("2026-06-01T08:00:00+07:00"),
@@ -96,7 +96,12 @@ describe("studentRankingScore", () => {
   it("gộp điểm TB + hoàn thành + hoạt động gần đây (0.7/0.2/0.1)", () => {
     const s = studentRankingScore({
       scorePercents: [80, 100], // TB = 90
-      statuses: ["submitted", "reviewed", "assigned", "assigned"], // 2/4 = 50%
+      completions: [
+        { status: "submitted", submittedAt: null, deadline: null },
+        { status: "reviewed", submittedAt: null, deadline: null },
+        { status: "assigned", submittedAt: null, deadline: null },
+        { status: "assigned", submittedAt: null, deadline: null }
+      ], // 2/4 = 50%
       attemptTimes: [{ startedAt: new Date("2026-07-07T08:00:00+07:00"), submittedAt: null }], // gần đây -> 100
       now,
     });
@@ -108,17 +113,60 @@ describe("studentRankingScore", () => {
   });
 
   it("không có dữ liệu → tất cả 0", () => {
-    const s = studentRankingScore({ scorePercents: [], statuses: [], attemptTimes: [], now });
+    const s = studentRankingScore({ scorePercents: [], completions: [], attemptTimes: [], now });
     expect(s.averageScorePercent).toBe(0);
     expect(s.completionRate).toBe(0);
     expect(s.recentActivityPercent).toBe(0);
     expect(s.rankingScore).toBe(0);
   });
 
+  it("bài nộp trễ chỉ được nửa suất trong tỉ lệ hoàn thành", () => {
+    const deadline = new Date("2026-07-05T23:59:00+07:00");
+    const s = studentRankingScore({
+      scorePercents: [80],
+      completions: [
+        // Nộp trước hạn -> 1 suất.
+        {
+          status: "submitted",
+          submittedAt: new Date("2026-07-05T20:00:00+07:00"),
+          deadline
+        },
+        // Nộp sau hạn -> 0,5 suất.
+        {
+          status: "submitted",
+          submittedAt: new Date("2026-07-06T08:00:00+07:00"),
+          deadline
+        }
+      ],
+      attemptTimes: [{ startedAt: new Date("2026-07-07T08:00:00+07:00"), submittedAt: null }],
+      now
+    });
+
+    // (1 + 0,5) / 2 = 75%
+    expect(s.completionRate).toBe(75);
+  });
+
+  it("bài không đặt hạn nộp thì nộp lúc nào cũng trọn suất", () => {
+    const s = studentRankingScore({
+      scorePercents: [80],
+      completions: [
+        {
+          status: "submitted",
+          submittedAt: new Date("2026-07-06T08:00:00+07:00"),
+          deadline: null
+        }
+      ],
+      attemptTimes: [{ startedAt: new Date("2026-07-07T08:00:00+07:00"), submittedAt: null }],
+      now
+    });
+
+    expect(s.completionRate).toBe(100);
+  });
+
   it("hoạt động quá 14 ngày → recentActivityPercent 0", () => {
     const s = studentRankingScore({
       scorePercents: [100],
-      statuses: ["submitted"],
+      completions: [{ status: "submitted", submittedAt: null, deadline: null }],
       attemptTimes: [{ startedAt: new Date("2026-06-01T08:00:00+07:00"), submittedAt: new Date("2026-06-01T09:00:00+07:00") }],
       now,
     });

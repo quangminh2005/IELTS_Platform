@@ -88,16 +88,10 @@ export function bucketAssignmentsByDay(
   return map;
 }
 
-// Nộp trễ hạn? Chỉ đúng khi có cả mốc nộp lẫn hạn và nộp sau hạn.
-export function isSubmissionLate(
-  submittedAt: string | Date | null,
-  deadline: string | Date | null
-): boolean {
-  if (!submittedAt || !deadline) {
-    return false;
-  }
-  return new Date(submittedAt).getTime() > new Date(deadline).getTime();
-}
+// Nộp trễ hạn: logic nằm ở lib/late-submission.ts (dùng chung với đường tính
+// điểm xếp hạng). Re-export ở đây để các trang giáo viên đang import từ module
+// lịch không phải sửa.
+export { isSubmissionLate } from "@/lib/late-submission";
 
 // Đếm câu đã chấm tự động (Nghe/Đọc). Bỏ câu Writing/Speaking (isCorrect null).
 export function countGradedAnswers(

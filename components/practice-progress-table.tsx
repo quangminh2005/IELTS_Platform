@@ -142,7 +142,16 @@ export function PracticeProgressTable({ rows, sort, range, classId }: PracticePr
                     Chưa luyện
                   </span>
                 ) : (
-                  <span className="font-semibold text-primary">{row.practice.rounds}</span>
+                  // Bấm số lượt là nhảy thẳng xuống khối "Tự luyện" của trang học viên
+                  // (nơi có từng lượt + nút "Xem bài làm"), khỏi lướt qua phần bài giao.
+                  <Link
+                    href={`/teacher/students/${row.id}#tu-luyen`}
+                    className="inline-flex items-center gap-1 rounded-md px-2 py-1 font-semibold text-primary transition hover:bg-primary/10 hover:underline"
+                    title="Xem các lượt tự luyện"
+                  >
+                    {row.practice.rounds}
+                    <span aria-hidden="true" className="text-xs">→</span>
+                  </Link>
                 )}
               </p>
 

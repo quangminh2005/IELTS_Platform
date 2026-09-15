@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ScrollToHash } from "@/components/scroll-to-hash";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { formatDuration } from "@/lib/format-duration";
 import { isSubmittedAttempt, type PracticeSetGroup } from "@/lib/practice-progress";
@@ -32,7 +33,13 @@ function scoreLabel(score: number | null, scorePercent: number | null): string |
 
 export function StudentPracticeHistory({ groups, bandsByAttempt }: StudentPracticeHistoryProps) {
   return (
-    <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+    // id để trang Tự luyện của giáo viên nhảy thẳng xuống khối này (#tu-luyen);
+    // scroll-mt chừa chỗ cho thanh đầu trang khỏi che mất tiêu đề.
+    <section
+      id="tu-luyen"
+      className="scroll-mt-24 overflow-hidden rounded-xl border border-border bg-card shadow-card"
+    >
+      <ScrollToHash id="tu-luyen" />
       <div className="border-b border-border px-5 py-4">
         <h3 className="text-base font-semibold">Tự luyện</h3>
         <p className="mt-1 text-sm text-muted-foreground">

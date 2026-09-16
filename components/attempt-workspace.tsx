@@ -2172,6 +2172,9 @@ export function AttemptWorkspace({
   // Điều khiển thanh audio của từng phần (nút "Nghe lại đoạn này" theo bước).
   // Không dùng hook trong vòng lặp nên giữ một ref object cho mỗi phần trong map.
   const audioControlRefs = useRef<Record<string, React.MutableRefObject<AudioPlayerControls | null>>>({});
+  // Phần đã tự phát audio một lần: chỉ dựng DOM phần đang mở nên quay lại phần 1
+  // sẽ mount lại thanh audio — không được tự phát lại lần nữa.
+  const autoPlayedRef = useRef<Set<string>>(new Set());
   const audioControlRef = (unitId: string) => {
     if (!audioControlRefs.current[unitId]) {
       audioControlRefs.current[unitId] = { current: null };
@@ -3037,7 +3040,13 @@ export function AttemptWorkspace({
               {/* Tự phát audio phần đầu ngay khi học viên vào bài Listening */}
               <AudioPlayer
                 src={unit.audioUrl}
-                autoPlay={isListening && partIndex === 0 && !previewMode}
+                autoPlay={
+                  isListening &&
+                  partIndex === 0 &&
+                  !previewMode &&
+                  !autoPlayedRef.current.has(unit.id)
+                }
+                onAutoPlayStarted={() => autoPlayedRef.current.add(unit.id)}
                 controlRef={stepMode ? audioControlRef(assignmentUnit.id) : undefined}
               />
             </div>
@@ -3584,11 +3593,10 @@ export function AttemptWorkspace({
               </button>
             ) : null}
 
-            {steps.map((step, index) => (
-              <div key={`step-body-${index}`} className={index === activeStep ? "" : "hidden"}>
-                {step.node}
-              </div>
-            ))}
+            {/* Chỉ dựng DOM của bước đang mở: đáp án đã nằm ở state `answers` nên
+                đổi bước (unmount/mount) không mất gì, còn gõ phím thì nhẹ hơn hẳn
+                so với giữ ~150 ô của mọi bước cùng lúc. */}
+            {current ? <div key={`step-body-${activeStep}`}>{current.node}</div> : null}
 
             <div className="flex items-center justify-between gap-3 border-t border-border pt-4">
               <button
@@ -3687,14 +3695,16 @@ export function AttemptWorkspace({
           )
         ) : null;
 
+        // Phần không mở: KHÔNG dựng DOM (trước đây chỉ `hidden`, nên phòng xem
+        // trước 40 unit / ~6.000 ô bị khựng mỗi phím gõ). Mọi state đều ở cấp
+        // trên (answers/flagged/highlights) nên mở lại phần là dựng lại y nguyên.
+        if (partIndex !== activePart) {
+          return null;
+        }
         return (
           <section
             key={assignmentUnit.id}
-            className={
-              partIndex === activePart
-                ? "flex h-full flex-col bg-card"
-                : "hidden"
-            }
+            className="flex h-full flex-col bg-card"
           >
             <div className="shrink-0 border-b border-border bg-muted/50 px-5 py-3">
               <div className="flex flex-wrap items-center gap-2">

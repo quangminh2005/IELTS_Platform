@@ -86,6 +86,9 @@ type AudioPlayerProps = {
   // Tự phát khi vào bài. Nếu trình duyệt chặn autoplay (chưa có thao tác người
   // dùng trên trang), sẽ phát ngay ở lần bấm chuột/chạm đầu tiên bất kỳ.
   autoPlay?: boolean;
+  // Gọi khi đã tự phát (hoặc đã xếp lịch phát ở thao tác đầu) — để bên ngoài
+  // không bật autoPlay lại khi component mount lần nữa.
+  onAutoPlayStarted?: () => void;
   // Nút đổi tốc độ phát. Chỉ dùng ở trang kết quả (nghe lại) — lúc thi thật KHÔNG
   // được cho đổi tốc độ nên mặc định tắt.
   showSpeed?: boolean;
@@ -97,6 +100,7 @@ type AudioPlayerProps = {
 export function AudioPlayer({
   src,
   autoPlay = false,
+  onAutoPlayStarted,
   showSpeed = false,
   label,
   controlRef
@@ -147,6 +151,7 @@ export function AudioPlayer({
     if (!autoPlay) return;
     const audio = audioRef.current;
     if (!audio) return;
+    onAutoPlayStarted?.();
 
     let cancelled = false;
     const playOnFirstGesture = () => {
@@ -164,6 +169,7 @@ export function AudioPlayer({
       cancelled = true;
       window.removeEventListener("pointerdown", playOnFirstGesture);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPlay]);
 
   // Cho bên ngoài tua tới một mốc (bấm câu trong transcript ở trang kết quả).

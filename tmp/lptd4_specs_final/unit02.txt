@@ -1,0 +1,43 @@
+UNIT 2
+# Falling Leaves
+BOX sense | chlorophyll | survive | fade | reveal | migrate
+
+A
+Dogs can usually [sense] an earthquake before it happens.
+[Chlorophyll] gives leaves a green color.
+Some animals [survive] the winter by hibernating.
+The bright green dress began to [fade] after it was washed several times.
+The policemen opened the door to [reveal] the thief's hiding place.
+Birds and butterflies usually [migrate] to warmer climates when winter is near.
+
+B
+Q According to the passage, why do the leaves on a tree die in autumn?
+- Because they change colors
+- Because they make chlorophyll
++ Because the tree blocks their food and water
+- Because animals eat them
+Q What do many birds do in autumn?
+- Eat lots of food
++ Migrate
+- Hibernate
+- Build nests
+
+C
+Trees [sense] these changes, so they start preparing for colder weather.
+[Chlorophyll] works with the sun to help the trees make food.
+This [reveals] other colors, like red and yellow, that were always in the leaves.
+Each year, many birds [migrate] south to warmer climates during autumn.
+
+D truefalse
+F Leaves become red, yellow, orange, and brown only in spring.
+T Another name for autumn is fall.
+T Hibernating animals eat a lot of food during autumn.
+F During autumn, birds migrate north.
+T Animals use their senses to know that the weather is changing.
+
+E passage
+# khoet 148/240 tu; OCR khong khop:
+Autumn, [or] [fall], is the [season] between [summer] [and] [winter]. The days [become] [shorter], and [the] [air] [gets] cooler. Trees [sense] [these] changes, so [they] [start] [preparing] [for] colder [weather].
+Trees [that] [have] [leaves] block [water] [and] [food] from coming [through] the [branches] [to] [the] leaves. When this [happens], [the] [leaves] die. They [fall] [off] [the] [tree] or the [wind] [blows] [them] away. This is why [autumn] [is] [usually] [called] [fall] in America. As the [leaves] [start] [to] [die], they [appear] to [change] [from] [green] [to] red, yellow, [orange], [or] [brown].
+Actually, [the] [leaves] [are] [really] [these] [colors] all year long. They [look] [green] [because] [of] [a] chemical [called] chlorophyll. [Chlorophyll] [works] [with] [the] [sun] to help [the] [trees] [make] [food]. In autumn, [when] [there] [is] [less] [sun], the tree [cannot] [make] [chlorophyll], so the [green] [color] [fades]. This [reveals] [other] [colors], like [red] [and] [yellow], that were [always] [in] [the] leaves.
+Like trees, [animals] [also] [sense] [changes] in the cooler [autumn] [climate]. Animals that [hibernate] [eat] [a] [lot] [during] autumn. They [gain] [weight] to [store] [energy] [in] [the] [form] [of] fat. They [use] [this] [energy] to [survive] [the] [winter] while [hibernating]. Many birds [survive] [the] [cold] in a [different] [way]: they leave. Each year, [many] [birds] [migrate] [south] to warmer [climates] [during] [autumn]. They [migrate] [north] [again] in the spring. Not a [bad] [idea] [if] [you] [ask] me! After all, [who] [would] [refuse] a mid-winter [trip] [to] [sunny] Thailand?

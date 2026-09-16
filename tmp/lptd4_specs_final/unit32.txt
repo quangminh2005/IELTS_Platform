@@ -1,0 +1,41 @@
+UNIT 32
+# Why Do We Sneeze?
+BOX sneeze | bless | dust | protect | particle | tiny
+
+A
+We usually [sneeze] whenever we have a cold.
+We often sneeze when there is a lot of [dust] in the air.
+Sometimes you can see each [particle] of carbon in smoke when there is bright light behind it.
+That necklace is made of [tiny] glass beads.
+In some cultures, people [bless] a young couple on their wedding day by throwing rice on them.
+Sunglasses [protect] our eyes from the bright sun on hot days.
+
+B
+Q What is NOT true about sneezing?
+- We use many different muscles to sneeze.
+- A sneeze begins when something gets inside your nose.
+- Cold air or dust can make us sneeze.
++ Our hearts stop for two seconds each time we sneeze.
+Q How do messages travel through our body when we sneeze?
++ From nose to brain to muscles
+- From muscles to nose to brain
+- From nose to muscles to brain
+- From brain to nose to muscles
+
+C
+A [sneeze] is a very interesting thing.
+We use many different [muscles] when we sneeze.
+When you sneeze, the [dust] that was in your nose flies out as fast as 100 miles an hour!
+It was thought that saying "God bless you" would [protect] people from getting this awful disease.
+
+D truefalse
+F Our eyes always stay open when we sneeze.
+T When we sneeze, any dust in our nose flies out very fast.
+T Some people sneeze when they look at the sun.
+T To "bless" means to wish someone good and special things.
+T The plague was a terrible disease that killed thousands of people.
+
+E passage
+# khoet 138/237 tu; OCR khong khop: po03
+A sneeze is [a] [very] [interesting] thing. We [use] [many] [different] muscles [when] [we] [sneeze]. These [include] [stomach] muscles, [throat] [muscles], and eye [muscles]. Remember, [our] [eyes] [always] [close] during a [sneeze]. [A] [sneeze] [begins] when [something] gets [inside] [your] [nose], like a [tiny] [particle] [of] [dust]. Your nose [sends] [a] [message] to your brain. Your [brain] [sends] [messages] to the [muscles], getting them [to] [work] [together] [in] [the] [correct] order. When [you] [sneeze], the [dust] that was [in] [your] [nose] flies out [as] [fast] [as] 100 miles [an] [hour]! Usually [something] [like] [dust] or cold air [makes] [us] [sneeze], but [some] [people] [sneeze] whenever they [look] [at] [the] [sun]. Some [people] [think] that your [heart] [stops] when you [sneeze]. Actually, [it] [really] doesn't, but [sometimes] it [might] [feel] [like] it does.
+After [someone] [sneezes], people often [say] "[Bless] you," or "God [bless] you." To [bless] [someone] means to [wish] [them] [good] [and] [special] things. Why [do] [people] [say] this? Long ago, [people] [believed] that this saying [kept] [bad] [things] from [flying] [down] your [throat]. Another [story] is that [people] [thought] this saying [would] [help] [keep] the [person] [who] sneezed [from] getting [a] [very] [serious] [disease] called the plague. At [that] [time], [the] [plague] was killing [thousands] [of] [people]. It was [thought] [that] saying "God [bless] you" would [protect] [people] from [getting] [this] [awful] [disease]. Today, [the] [saying] is [simply] [a] [nice] [way] [to] [wish] someone well.

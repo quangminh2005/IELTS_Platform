@@ -1,0 +1,42 @@
+UNIT 26
+# Meet Debra
+BOX adventure | remind | interests | childhood | goodbye | shy
+
+A
+We said [?] to our parents before going on our camping trip.
+Riding a boat down the Amazon River was a fantastic [?] ！ [?].
+Tanya used to be very [?] when she was a child.
+We are calling to [?] you about your piano lesson at one o'clock tomorrow.
+I spent my [?] in a small village near the sea.
+Jeremy's [?] include golf and guitar playing.
+
+B
+Q What is NOT true about Debra?
+- She is at university.
+- She is 20 years old.
+- She does not meet many people. (d) She likes keeping in touch with friends.
+Q What seems to be Debra's main interest?
+- Riding horses
+- Going to the theater
+- Traveling
+- Dancing
+
+C
+It seems like a new [adventure], and I love adventures!
+I spent my [childhood] traveling all over the world and learning about different cultures.
+But I would always [remind] myself that I would make new friends soon, and I always did.
+If you share any of these [interests] and would like to learn more about me, please let me know.
+
+D truefalse
+? Debra's major is history.
+? Debra's father works as a doctor.
+? Debra spent her childhood in Italy.
+? Debra says she is very shy.
+? Debra likes new adventures.
+
+E passage
+# khoet 121/234 tu; OCR khong khop: 
+Hi! [My] [name] [is] Debra Garrel. I'm [a] [20]- [year-old] [communications] [major] [at] New York University. I [love] being [at] [university]. I'm [enjoying] [my] [courses] and I meet [many] [new] [people] every day. It seems like [a] [new] [adventure], and I love [adventures]!
+I spent [my] [childhood] traveling [all] [over] [the] [world] and learning [about] [different] [cultures]. You see, [my] [father] [works] [for] the World Bank, so [our] [family] has always [moved] [around] a lot. I've [lived] [in] Mongolia, East Timor, Brazil, Nigeria, the Netherlands, and the United States. The [hardest] [part] of growing up [was] [saying] [goodbye] each time [we] [had] [to] [move]. But I [would] [always] [remind] myself that I would [make] [new] [friends] soon, and I [always] [did]. I've [learned] not [to] [be] [shy]!
+After [leaving] [one] [place], I would [always] email [or] [call] my [old] [friends]. I would [tell] [them] about [the] [new] [adventures] I was having, [and] [ask] [them] about [new] [things] [in] their lives. That is [probably] [the] [reason] I chose to major [in] [communications]. I like [to] [keep] [in] [touch].
+It's obvious [that] [I] [love] [to] [travel], isn't it? But [I] [also] [enjoy] [dancing], reading, going [to] [the] [theater], and riding horses. If [you] [share] any of [these] [interests] and would like [to] [learn] [more] about me, [please] [let] [me] know. And if [you] [have] [different] [interests], I'll [remind] you: I'm [always] [looking] for a [new] [adventure]!

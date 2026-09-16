@@ -29,7 +29,13 @@ import { orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
 import { accumulateActiveSeconds, AUTO_SUBMIT_SKILLS } from "@/lib/active-time";
 import { parsePartTimes, SKILL_TIME_LABELS } from "@/lib/skill-times";
-import { AudioPlayer } from "@/components/audio-player";
+import { AudioPlayer, type AudioPlayerControls } from "@/components/audio-player";
+import {
+  chunkNoteLines,
+  chunkTimeRange,
+  stepLabel,
+  type LineTime
+} from "@/lib/dictation-steps";
 import { AudioRecorderAnswer, type RecorderBusy } from "@/components/audio-recorder-answer";
 import { LockedListeningAudio, type LockedTrack } from "@/components/locked-audio-player";
 import { SoundCheck } from "@/components/sound-check";
@@ -44,6 +50,7 @@ import {
   parseMarkdownTable,
   parseQuestionOptions,
   parseUnitImages,
+  parseUnitMetaFlag,
   parseUnitMetaString,
   parseWritingBrief,
   promptHasGap,
@@ -105,6 +112,10 @@ type AssignmentUnit = {
     transcriptTimingJson?: string | null;
     defaultTimeLimitMinutes: number | null;
     metadataJson: string | null;
+    // Mốc giờ [bắt đầu, kết thúc] từng dòng noteBody — chỉ unit bật
+    // metadata.stepMode (server tính, xem lib/exam-payload.ts). Dùng cho nút
+    // "Nghe lại đoạn này" của mỗi bước.
+    noteLineTimes?: Array<LineTime | null> | null;
     questions: Question[];
   };
 };
@@ -905,15 +916,17 @@ function TableCompletionQuestionSet({
 //  - ":::map ... :::"  = đoạn bản đồ (hiện ẢNH + các dòng địa điểm có ô điền chữ cái).
 //  - ":::break"        = ngắt sang đoạn note mới (vd fact-sheet nằm sau một bảng).
 //  - :::flow / :::branch vẫn nằm TRONG đoạn plain và do NoteCompletionQuestionSet tự vẽ.
-type NoteSegment = { kind: "plain" | "map"; text: string };
+// `lineStart` = chỉ số (trong noteBody gốc) của dòng đầu đoạn — chế độ làm từng
+// bước tra mốc giờ audio theo dòng (noteLineTimes đánh chỉ số theo noteBody).
+type NoteSegment = { kind: "plain" | "map"; text: string; lineStart: number };
 function splitNoteSegments(content: string): NoteSegment[] {
   const segments: NoteSegment[] = [];
   let inMap = false;
-  content.split(/\r?\n/).forEach((line) => {
+  content.split(/\r?\n/).forEach((line, lineIndex) => {
     const trimmed = line.trim();
     if (trimmed === ":::map") {
       inMap = true;
-      segments.push({ kind: "map", text: "" });
+      segments.push({ kind: "map", text: "", lineStart: lineIndex + 1 });
       return;
     }
     if (trimmed === ":::" && inMap) {
@@ -921,7 +934,9 @@ function splitNoteSegments(content: string): NoteSegment[] {
       return;
     }
     if (trimmed === ":::break" && !inMap) {
-      segments.push({ kind: "plain", text: "" });
+      // Dòng đầu của đoạn này là chuỗi rỗng (đứng chỗ dòng ":::break"), nên
+      // chỉ số dòng gốc = lineStart + chỉ số trong đoạn.
+      segments.push({ kind: "plain", text: "", lineStart: lineIndex });
       return;
     }
     if (inMap) {
@@ -933,7 +948,7 @@ function splitNoteSegments(content: string): NoteSegment[] {
     if (last && last.kind === "plain") {
       last.text += `\n${line}`;
     } else {
-      segments.push({ kind: "plain", text: line });
+      segments.push({ kind: "plain", text: line, lineStart: lineIndex });
     }
   });
   return segments.filter((seg) => seg.text.trim() !== "");
@@ -2134,6 +2149,35 @@ export function AttemptWorkspace({
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [activePart, setActivePart] = useState(0);
+  // Chế độ làm từng bước (metadata.stepMode): bước đang mở của từng phần, khoá
+  // theo id AssignmentUnit. Lưu localStorage để tải lại trang vẫn ở đúng bước.
+  const [unitSteps, setUnitSteps] = useState<Record<string, number>>({});
+  const stepStorageKey = useCallback(
+    (unitId: string) => `attemptStep:${attempt.id}:${unitId}`,
+    [attempt.id]
+  );
+  const setUnitStep = useCallback(
+    (unitId: string, step: number) => {
+      setUnitSteps((previous) =>
+        previous[unitId] === step ? previous : { ...previous, [unitId]: step }
+      );
+      try {
+        window.localStorage.setItem(stepStorageKey(unitId), String(step));
+      } catch {
+        // localStorage bị chặn (riêng tư/iOS) -> chỉ giữ trong state.
+      }
+    },
+    [stepStorageKey]
+  );
+  // Điều khiển thanh audio của từng phần (nút "Nghe lại đoạn này" theo bước).
+  // Không dùng hook trong vòng lặp nên giữ một ref object cho mỗi phần trong map.
+  const audioControlRefs = useRef<Record<string, React.MutableRefObject<AudioPlayerControls | null>>>({});
+  const audioControlRef = (unitId: string) => {
+    if (!audioControlRefs.current[unitId]) {
+      audioControlRefs.current[unitId] = { current: null };
+    }
+    return audioControlRefs.current[unitId];
+  };
   // Hộp xác nhận trước khi nộp: học sinh hay bấm nhầm nút "Nộp", nên chặn bằng
   // một hộp thoại trong ứng dụng (thay window.confirm — dễ bấm OK theo phản xạ).
   const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false);
@@ -2154,7 +2198,22 @@ export function AttemptWorkspace({
     if (saved >= 0.9 && saved <= 1.6) {
       setFontScale(saved);
     }
-  }, []);
+    // Khôi phục bước đang làm dở của từng phần (chế độ làm từng bước).
+    const restored: Record<string, number> = {};
+    assignment.units.forEach((assignmentUnit) => {
+      try {
+        const value = Number(window.localStorage.getItem(stepStorageKey(assignmentUnit.id)));
+        if (Number.isInteger(value) && value > 0) {
+          restored[assignmentUnit.id] = value;
+        }
+      } catch {
+        // bỏ qua
+      }
+    });
+    if (Object.keys(restored).length > 0) {
+      setUnitSteps((previous) => ({ ...restored, ...previous }));
+    }
+  }, [assignment.units, stepStorageKey]);
 
   const adjustFontScale = useCallback((delta: number) => {
     setFontScale((previous) => {
@@ -2654,6 +2713,7 @@ export function AttemptWorkspace({
         .sort((a, b) => a.order - b.order)
         .map((question) => ({
           id: question.id,
+          unitId: assignmentUnit.id,
           order: question.order,
           // Câu Nói bỏ trống nghĩa là CHƯA CÓ BẢN GHI, phải nhắc bằng lời khác.
           isSpeaking: question.questionType.includes("speaking"),
@@ -2680,15 +2740,31 @@ export function AttemptWorkspace({
 
   // Từ hộp xác nhận nhảy về một câu chưa làm: mở đúng phần rồi mới cuộn tới câu
   // (các phần không mở đang bị `hidden` nên chưa cuộn được ngay).
-  function jumpToUnanswered(entry: { partIndex: number; anchorId: string }) {
+  function jumpToUnanswered(entry: {
+    id: string;
+    unitId: string;
+    partIndex: number;
+    anchorId: string;
+  }) {
     setConfirmSubmitOpen(false);
     goToPart(entry.partIndex);
+    openQuestionStep(entry.unitId, entry.id);
     window.setTimeout(() => scrollToQuestion(entry.anchorId), 80);
   }
 
   const activeSkillLabel = activeSkill
     ? SKILL_TIME_LABELS[activeSkill] ?? activeSkill
     : "bài";
+
+  // Chế độ từng bước: bước chứa từng câu của mỗi phần — điền trong lúc render các
+  // phần (phía trên) rồi dải số câu ở đáy (phía dưới, cùng một lượt render) đọc.
+  const stepInfoByUnit: Record<string, { count: number; stepOfQuestion: Map<string, number> }> = {};
+  const openQuestionStep = (unitId: string, questionId: string) => {
+    const step = stepInfoByUnit[unitId]?.stepOfQuestion.get(questionId);
+    if (step !== undefined) {
+      setUnitStep(unitId, step);
+    }
+  };
 
   const content = (
     <form
@@ -2876,6 +2952,11 @@ export function AttemptWorkspace({
         const groupInstructions = parseGroupInstructions(unit.metadataJson);
         const groupTitles = parseGroupTitles(unit.metadataJson);
         const groupImages = parseGroupImages(unit.metadataJson);
+        // Chế độ làm từng bước: mỗi nhóm câu là một bước, đoạn dictation dài được
+        // cắt thành nhiều bước ngắn; màn hình chỉ hiện một bước mỗi lúc.
+        const stepMode =
+          parseUnitMetaFlag(unit.metadataJson, "stepMode") && !usesLongAnswer(unit.questions[0]?.questionType ?? "");
+        const lineTimes = stepMode ? unit.noteLineTimes ?? null : null;
         // Dải câu của mỗi nhóm = từ key (câu đầu nhóm) tới ngay trước key kế tiếp,
         // hoặc tới câu cuối của phần. Nhờ vậy nhãn hiện đúng "Câu 7–13" dù nhóm gồm
         // nhiều thẻ câu riêng lẻ.
@@ -2894,7 +2975,9 @@ export function AttemptWorkspace({
         });
 
         // Khung hướng dẫn: hiện một lần phía trên nhóm có câu đầu khớp một key.
-        const groupBox = (groupQuestions: Question[]) => {
+        // `rangeOverride`: chế độ từng bước cắt nhóm thành nhiều đoạn -> nhãn "Câu a–b"
+        // của đoạn thay vì của cả nhóm.
+        const groupBox = (groupQuestions: Question[], rangeOverride?: string) => {
           if (groupQuestions.length === 0) {
             return null;
           }
@@ -2911,7 +2994,7 @@ export function AttemptWorkspace({
             <div className="space-y-3">
               {text || title ? (
                 <GroupInstructionBox
-                  rangeLabel={groupRangeLabel[startOrder] ?? `Câu ${startOrder}`}
+                  rangeLabel={rangeOverride ?? groupRangeLabel[startOrder] ?? `Câu ${startOrder}`}
                   text={text ?? ""}
                   title={title}
                 />
@@ -2955,6 +3038,7 @@ export function AttemptWorkspace({
               <AudioPlayer
                 src={unit.audioUrl}
                 autoPlay={isListening && partIndex === 0 && !previewMode}
+                controlRef={stepMode ? audioControlRef(assignmentUnit.id) : undefined}
               />
             </div>
           )
@@ -3173,11 +3257,20 @@ export function AttemptWorkspace({
         // đề gốc (vd ghi chú 23–26 nằm SAU trắc nghiệm 14–22, không nhảy lên trên).
         const minOrder = (qs: Question[]) =>
           qs.reduce((min, q) => Math.min(min, q.order), Number.POSITIVE_INFINITY);
-        const orderedSections: { order: number; node: React.ReactNode }[] = [];
+        const orderedSections: {
+          order: number;
+          node: React.ReactNode;
+          // Câu thuộc khối (để chế độ từng bước biết bước nào chứa câu nào).
+          questions: Question[];
+          // Chỉ ở chế độ từng bước: đoạn dictation thứ mấy trong nhóm + khoảng audio.
+          chunk?: { part: number; total: number };
+          range?: LineTime | null;
+        }[] = [];
 
         if (tableCompletionQuestions.length > 0) {
           orderedSections.push({
             order: minOrder(tableCompletionQuestions),
+            questions: tableCompletionQuestions,
             node: (
               <div
                 key="table-section"
@@ -3214,24 +3307,64 @@ export function AttemptWorkspace({
               segImages = images;
               plainImagesAssigned = true;
             }
-            orderedSections.push({
-              order: minOrder(segQuestions),
-              node: (
-                <div
-                  key={`note-section-${segIndex}`}
-                  id={segIndex === 0 ? `notesection-${assignmentUnit.id}` : undefined}
-                  className="scroll-mt-24 space-y-3"
-                >
-                  {groupBox(segQuestions)}
-                  <NoteCompletionQuestionSet
-                    content={seg.text}
-                    questions={segQuestions}
-                    savedAnswers={answers}
-                    onAnswerChange={handleAnswerChange}
-                    images={segImages}
-                  />
-                </div>
-              )
+            // Chế độ từng bước: cắt đoạn ghi chú dài thành nhiều bước (mỗi bước
+            // tối đa STEP_MAX_BLANKS ô, không cắt giữa dòng). Đoạn bản đồ giữ nguyên.
+            const chunks =
+              stepMode && seg.kind === "plain"
+                ? chunkNoteLines(seg.text.split("\n"))
+                : [{ lineStart: 0, lineEnd: 0, text: seg.text, blanks: 0 }];
+            chunks.forEach((chunk, chunkIndex) => {
+              const chunkOrders = placeholderOrdersIn(chunk.text);
+              const chunkQuestions =
+                chunks.length > 1
+                  ? segQuestions.filter((q) => chunkOrders.has(q.order))
+                  : segQuestions;
+              if (chunkQuestions.length === 0) {
+                return;
+              }
+              const range =
+                lineTimes && stepMode && seg.kind === "plain"
+                  ? chunkTimeRange(
+                      lineTimes,
+                      seg.lineStart + chunk.lineStart,
+                      seg.lineStart + chunk.lineEnd
+                    )
+                  : null;
+              orderedSections.push({
+                order: minOrder(chunkQuestions),
+                questions: chunkQuestions,
+                chunk: chunks.length > 1 ? { part: chunkIndex + 1, total: chunks.length } : undefined,
+                range,
+                node: (
+                  <div
+                    key={`note-section-${segIndex}-${chunkIndex}`}
+                    id={
+                      segIndex === 0 && chunkIndex === 0
+                        ? `notesection-${assignmentUnit.id}`
+                        : undefined
+                    }
+                    className="scroll-mt-24 space-y-3"
+                  >
+                    {groupBox(
+                      chunkQuestions,
+                      chunks.length > 1
+                        ? (() => {
+                            const lo = minOrder(chunkQuestions);
+                            const hi = Math.max(...chunkQuestions.map((q) => q.order));
+                            return hi > lo ? `Câu ${lo}–${hi}` : `Câu ${lo}`;
+                          })()
+                        : undefined
+                    )}
+                    <NoteCompletionQuestionSet
+                      content={chunk.text}
+                      questions={chunkQuestions}
+                      savedAnswers={answers}
+                      onAnswerChange={handleAnswerChange}
+                      images={chunkIndex === 0 ? segImages : []}
+                    />
+                  </div>
+                )
+              });
             });
           });
         }
@@ -3262,6 +3395,7 @@ export function AttemptWorkspace({
           matchingRuns.forEach((run, runIndex) => {
             orderedSections.push({
               order: minOrder(run),
+              questions: run,
               node: (
                 <div key={`matching-section-${runIndex}`} className="space-y-3">
                   {groupBox(run)}
@@ -3281,6 +3415,7 @@ export function AttemptWorkspace({
           const box = groupBox(groupQuestions);
           orderedSections.push({
             order: minOrder(groupQuestions),
+            questions: groupQuestions,
             node: (
               <div key={item.key} className="space-y-3">
                 {box}
@@ -3330,6 +3465,157 @@ export function AttemptWorkspace({
         });
         orderedSections.sort((a, b) => a.order - b.order);
 
+        // ---- Chế độ làm từng bước -------------------------------------------
+        // Nhãn bước lấy từ tiêu đề nhóm (groupTitles) của khối: "A · New Words",
+        // "E · Dictation (đoạn 2/5)". Không có tiêu đề -> "Câu a–b".
+        const groupTitleFor = (order: number) => {
+          let key: number | undefined;
+          groupKeys.forEach((k) => {
+            if (k <= order) key = k;
+          });
+          return key !== undefined ? groupTitles[key] : undefined;
+        };
+        const steps = stepMode
+          ? orderedSections.map((section) => {
+              const orders = section.questions.map((q) => q.order);
+              const lo = Math.min(...orders);
+              const hi = Math.max(...orders);
+              const title = groupTitleFor(section.order);
+              const label =
+                stepLabel(title, section.chunk?.part ?? 1, section.chunk?.total ?? 1) ||
+                (hi > lo ? `Câu ${lo}–${hi}` : `Câu ${lo}`);
+              // Nhãn ngắn cho dải bước: chữ cái đầu nhóm + số đoạn ("E2").
+              const letter = title?.trim().charAt(0) ?? "";
+              const short = letter
+                ? `${letter}${section.chunk ? section.chunk.part : ""}`
+                : `${lo}`;
+              return { ...section, label, short };
+            })
+          : [];
+        const stepCount = steps.length;
+        const activeStep = Math.min(
+          Math.max(0, unitSteps[assignmentUnit.id] ?? 0),
+          Math.max(0, stepCount - 1)
+        );
+        if (stepMode) {
+          const stepOfQuestion = new Map<string, number>();
+          steps.forEach((step, index) =>
+            step.questions.forEach((q) => stepOfQuestion.set(q.id, index))
+          );
+          stepInfoByUnit[assignmentUnit.id] = { count: stepCount, stepOfQuestion };
+        }
+        const stepAnswered = (step: { questions: Question[] }) =>
+          step.questions.filter((q) => (answers[q.id] ?? "").trim() !== "").length;
+        const goToStep = (index: number) => {
+          const next = Math.min(Math.max(0, index), Math.max(0, stepCount - 1));
+          setUnitStep(assignmentUnit.id, next);
+          window.setTimeout(() => {
+            document
+              .getElementById(`stepbar-${assignmentUnit.id}`)
+              ?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 30);
+        };
+        const current = steps[activeStep];
+        const canReplay =
+          Boolean(unit.audioUrl) && !audioLocked && Boolean(current?.range);
+        const replayCurrent = () => {
+          const range = current?.range;
+          if (!range) return;
+          // Lùi 0,4s để không cắt mất âm đầu của từ đầu tiên.
+          audioControlRef(assignmentUnit.id).current?.playRange(
+            Math.max(0, range[0] - 0.4),
+            range[1]
+          );
+        };
+
+        const stepContent = stepMode ? (
+          <div className="space-y-4">
+            <div
+              id={`stepbar-${assignmentUnit.id}`}
+              className="scroll-mt-4 rounded-lg border border-border bg-card p-3 shadow-sm"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <p className="text-sm font-semibold">
+                  <span className="mr-2 rounded-md bg-primary/10 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-primary">
+                    Bước {activeStep + 1}/{stepCount}
+                  </span>
+                  {current?.label}
+                </p>
+                {current ? (
+                  <span className="text-xs font-medium tabular-nums text-muted-foreground">
+                    {stepAnswered(current)}/{current.questions.length} ô
+                  </span>
+                ) : null}
+              </div>
+              {/* Dải bước: bấm để nhảy; xanh = đã điền đủ, viền = đang mở. */}
+              <div className="mt-2 flex flex-wrap gap-1">
+                {steps.map((step, index) => {
+                  const done = stepAnswered(step) === step.questions.length;
+                  const isCurrent = index === activeStep;
+                  return (
+                    <button
+                      key={`step-${index}`}
+                      type="button"
+                      onClick={() => goToStep(index)}
+                      aria-current={isCurrent ? "step" : undefined}
+                      title={step.label}
+                      className={[
+                        "h-7 min-w-8 rounded-md border px-1.5 text-[11px] font-bold transition",
+                        done
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border bg-background text-foreground hover:border-primary",
+                        isCurrent ? "ring-2 ring-primary/50 ring-offset-1 ring-offset-card" : ""
+                      ].join(" ")}
+                    >
+                      {step.short}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {canReplay ? (
+              <button
+                type="button"
+                onClick={replayCurrent}
+                className="inline-flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 text-sm font-semibold text-primary transition hover:bg-primary/20"
+              >
+                <span aria-hidden="true">🔁</span> Nghe lại đoạn này
+              </button>
+            ) : null}
+
+            {steps.map((step, index) => (
+              <div key={`step-body-${index}`} className={index === activeStep ? "" : "hidden"}>
+                {step.node}
+              </div>
+            ))}
+
+            <div className="flex items-center justify-between gap-3 border-t border-border pt-4">
+              <button
+                type="button"
+                onClick={() => goToStep(activeStep - 1)}
+                disabled={activeStep === 0}
+                className="rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                ‹ Bước trước
+              </button>
+              {activeStep >= stepCount - 1 ? (
+                <p className="text-right text-xs font-medium text-muted-foreground">
+                  Đã tới bước cuối · kiểm tra lại rồi bấm Nộp bài
+                </p>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => goToStep(activeStep + 1)}
+                  className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
+                >
+                  Bước tiếp ›
+                </button>
+              )}
+            </div>
+          </div>
+        ) : null;
+
         const questionsContent = isEssayWriting ? (
           <div className="flex min-h-0 flex-1 flex-col gap-4">
             {unit.questions.map((question) => (
@@ -3353,7 +3639,9 @@ export function AttemptWorkspace({
             }
             onRemoveHighlight={removeHighlight}
           >
-            {orderedSections.length > 0 ? (
+            {stepMode && stepCount > 0 ? (
+              stepContent
+            ) : orderedSections.length > 0 ? (
               orderedSections.map((section) => section.node)
             ) : (
               <p className="rounded-md border border-border bg-muted/60 p-4 text-sm text-muted-foreground">
@@ -3502,7 +3790,16 @@ export function AttemptWorkspace({
               <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Phần {parts[activePart]?.order ?? 1}
               </span>
-              {(parts[activePart]?.entries ?? []).map((entry) => {
+              {(parts[activePart]?.entries ?? [])
+                .filter((entry) => {
+                  // Chế độ từng bước: dải số chỉ hiện câu của bước đang mở (bớt rối).
+                  const info = stepInfoByUnit[parts[activePart]?.unitId ?? ""];
+                  if (!info) return true;
+                  const unitId = parts[activePart]?.unitId ?? "";
+                  const step = Math.min(unitSteps[unitId] ?? 0, Math.max(0, info.count - 1));
+                  return info.stepOfQuestion.get(entry.id) === step;
+                })
+                .map((entry) => {
                 const isAnswered = (answers[entry.id] ?? "").trim() !== "";
                 const isFlagged = flagged.has(entry.id);
 
@@ -3510,7 +3807,10 @@ export function AttemptWorkspace({
                   <button
                     key={entry.id}
                     type="button"
-                    onClick={() => scrollToQuestion(entry.anchorId)}
+                    onClick={() => {
+                      openQuestionStep(parts[activePart]?.unitId ?? "", entry.id);
+                      scrollToQuestion(entry.anchorId);
+                    }}
                     title={isFlagged ? "Flagged" : undefined}
                     className={[
                       "relative h-8 min-w-8 rounded-md border px-2 text-xs font-semibold transition",

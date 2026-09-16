@@ -1,0 +1,42 @@
+UNIT 35
+# The Injury
+BOX injury | disappointed | ankle | accidentally | coach | suddenly
+
+A
+At one time, Yao Ming, the famous basketball player, missed 15 games because of a knee [?]
+Tom's mother was [?] with his poor examination results.
+Your [?] is a group of bones shaped like a ball on the side of your foot.
+She [?] spilled some milk on the table.
+My football [?] taught me a new way to kick the ball.
+1 [?] remembered that I left my bag at home!
+
+B
+Q What is NOT a reason that the speaker is disappointed?
+- His team lost the game.
+- He had to see the doctor.
+- He has an injury.
+- He can't play basketball for two weeks.
+Q What part of his body did the speaker injure?
+- His arm
+- His leg
+- His ankle
+- His head
+
+C
+I'm really [disappointed]!
+A West High player had [accidentally] knocked me down.
+I tried to stand up, but my [ankle] hurt so much that I was unable to walk.
+Not only did I receive an [injury], but we also lost the game by a score of 68-66.
+
+D truefalse
+? The boy doesn't have an injury.
+? The doctor told the boy he could never play basketball again.
+? The boy got hurt playing basketball.
+? The score was 60-60 when the boy got hurt.
+? After his ankle felt better, the boy went back into the game.
+
+E passage
+# khoet 126/230 tu; OCR khong khop: 
+I've [just] [returned] from the [doctor's] [office], and he [told] [me] that [because] of [my] [injury] I will [have] [to] [miss] the [next] [two] [weeks] of basketball. I'm [really] [disappointed]! Last night, I [hurt] [my] [ankle] during a [very] [exciting] [game] against West High School. It [was] [five] [minutes] before the [end] [of] [the] [game], [the] [score] was 60-60, [I] [had] [the] [ball], and I heard [my] [coach] [shouting] [at] me to [shoot].
+So I [started] [to] [jump], but [suddenly] I found [myself] lying [flat] [on] [my] [back] [on] the court! A West High [player] had [accidentally] [knocked] me down. [I] [tried] [to] [stand] [up], but my [ankle] hurt [so] [much] that I [was] [unable] [to] walk. Two [of] [my] teammates [had] [to] [help] [me] leave the [court]. My [ankle] [started] [to] swell up, so the [team] [doctor] brought me [a] [bag] [of] [ice] to [put] [on] it. The [ice] [was] [cold], but it [felt] [good] on my [ankle].
+When [the] [swelling] on my [ankle] reduced [a] [little], my [coach] asked [the] [doctor] if he [thought] [I] [would] be able [to] [play] any more. But [the] [doctor] [replied] that I would [have] [to] [sit] [out] the rest [of] [the] [game] and come [to] [see] [him] the next day. Not only [did] [I] [receive] an [injury], but we [also] [lost] [the] [game] by a [score] of 68-66. What [a] [disappointing] night!

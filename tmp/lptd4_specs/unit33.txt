@@ -1,0 +1,42 @@
+UNIT 33
+# Skiing and Snowboarding
+BOX ski | stuck | amount | snowboard | challenge | direction
+
+A
+Some people [?] on snow, but others do it on water.
+A [?] is a flat board which you use to slide down a snow-covered hill.
+Which [?] is the wind blowing from today?
+1 enjoy the [?] of solving crossword puzzles.
+The spoon is [?] in the frozen ice-cream.
+Is this [?] of rice enough for three people?
+
+B
+Q Which sport does the speaker like best?
+- Sking
+- Snowboarding
+- Soccer
+- Basketball
+Q According to the speaker, what is NOT true about skiing?
+- You use poles to ski.
+- It is easy to change direction.
+- You have very little control.
+- You stand on two skis.
+
+C
+The ski poles make it very simple to change my [direction].
+I enjoy the [challenge].
+Some people think that the reduced [amount] of control in snowboarding makes the sport more dangerous.
+On a [snowboard], your legs stay together even when you fall.
+
+D summary
+? When I ski, it feels really easy to control where I go and how I move.
+? If you fall while on skis, it is very easy to break your bones by getting your skis get stuck in the snow.
+? The feeling I get while I'm snowboarding is more exciting than when I'm skiing, because I like having less control.
+? I am 16 years old, and I have been sking since I was five, and snowboarding since I was eight.
+? Snowboarding is more fun and exciting, and maybe even safer, than skiing.
+
+E passage
+# khoet 114/234 tu; OCR khong khop: sking
+My [name] [is] Michael Bryce, and [I] [love] [to] [ski] and [snowboard]. I am 16 [years] [old], and I [have] [been] [skiing] since I [was] [five], and [snowboarding] since I was eight. Both [my] [parents] like skiing, and my [older] [brother] likes [snowboarding].
+In my [opinion], snowboarding is [more] [fun] [and] [exciting] than skiing. When I [ski], it feels [really] [easy] to [control] [where] [I] [go] and how I [move]. The ski poles [make] [it] [very] [simple] to change [my] [direction]. There [are] [no] [poles] in [snowboarding], however, so [when] you [snowboard], [you] have to [understand] [the] [snow] very well to [make] [sure] you don't fall. The [feeling] I get while [I'm] [snowboarding] is more [exciting] than when I'm [skiing], because I [like] [having] [less] [control]. [I] [enjoy] the [challenge]. I never [know] what's [going] [to] [happen]. This makes it [more] [exciting]!
+Some [people] [think] that the [reduced] [amount] of [control] in [snowboarding] makes the [sport] more [dangerous]. But [in] [my] [opinion], snowboarding [is] [actually] [safer] than [skiing], because [when] you [ski], [you] [are] [standing] on two skis. If you [fall] [while] [on] [skis], it is very [easy] to [break] [your] [bones] by getting your [skis] [stuck] in the snow. On a [snowboard], your legs [stay] [together] even when [you] [fall]. While I still [love] [to] [ski], I like [snowboarding] much better. It is [more] [fun] and exciting, and [maybe] [even] [safer], than [skiing].

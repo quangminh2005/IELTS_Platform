@@ -1,0 +1,51 @@
+UNIT 6
+# Who Invented That?
+BOX invention | incredible | portable | unusual | waist | concentrate
+
+A
+Where did you buy that painting? It's very [?].
+The light bulb was Thomas Edison's most famous [?].
+The computer is an [?] machine. It can do so many things.
+I can listen to music wherever I go with my [?] DVD player.
+Some people cannot [?] on their work if there is too much noise.
+Belts are usually worn around the [?]
+
+B
+Q Why is the man laughing?
+- He just heard a funny joke.
+- He is watching a funny TV show.
+- He saw something funny outside.
+- He is reading a funny article.
+Q What is the main topic that the two friends talk about?
+- Unusual inventions
+- A spider ladder
+- Science Today
+- A portable seat
+
+C
+OK, tell me about some of these [inventions], and let's see if I think they're as funny as you do.
+Another inventor has designed a [portable] seat that you wear on a belt around your waist.
+But who would want to walk around with a portable plastic seat hanging from their [waist] all the time?
+Another [unusual] invention is this one.
+
+D truefalse
+? The friends are looking at a magazine article.
+? One unusual invention is a ladder for spiders.
+? Another invention is a seat that can be attached to your waist.
+? Someone invented a car plate that indicates the driver's age.
+? The woman thinks that the car plate invention will make drivers more polite. 001 0.1 AIG
+
+E dialog
+# khoet 153/236 tu; OCR khong khop: 2
+W: What's [so] [funny]? [I] can't [concentrate] [on] [my] [work] if you [keep] [laughing] [loudly] like that.
+M: I'm [sorry]. It's just [that] [I'm] [reading] this [article] in Science Today [magazine] [about] [some] [of] the [unusual] [things] [that] people [have] [invented]. These [inventions] [are] [incredible]!
+W: OK, [tell] [me] about [some] [of] [these] [inventions], and let's [see] [if] [I] [think] they're as [funny] [as] [you] [do].
+M: All right. The [first] [one] [is] [a] [ladder] for spiders, "[a] [thin], flexible, rubber strip [which] attaches [to] [the] [top] edge [of] [the] [bath]."
+W: Ha ha! I [wonder] [how] [long] it took [someone] [to] [invent] that.
+M: [Another] inventor [has] designed [a] [portable] [seat] that [you] [wear] [on] [a] [belt] around [your] [waist]. In [this] [picture] it [looks] [like] a [big] [plastic] cushion.
+W: Well, [that] [is] [very] [unusual]. But who [would] [want] [to] [walk] [around] with a [portable] [plastic] seat [hanging] [from] [their] [waist] all [the] [time]?
+M: Another [unusual] [invention] is this one. Look, [it's] [a] [car] plate [that] indicates [whether] [the] [driver] is a [man] [or] [a] [woman] by using [different] [colors] on either [side]. There's [one] [color] [for] [males] and [one] [for] [females].
+W: What's [the] [point] of [that] [invention]?
+M: The [inventor] [says] [that] [other] road users [will] [change] [the] [way] [they] behave. They [will] [become] [more] polite [if] [they] [know] [a] [woman] [is] driving, [so] [there] [will] [be] [fewer] [car] accidents.
+W: Ha! Do [you] [really] [think] that [will] [happen]?
+That's completely [unbelievable]!

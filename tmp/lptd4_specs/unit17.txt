@@ -1,0 +1,48 @@
+UNIT 17
+# Rock, Paper, Scissors
+BOX scissors | championship | defeat | tfist | palm | finger
+
+A
+The barber used a pair of [?] to cut the man's hair.
+Jake hit Tom with his [?]
+Some people say they can see your future by looking at the of your hand.
+She wears a ring on the third [?] of her left hand.
+Who do you think will win the Wimbledon tennis [?] this year?
+The new tennis player cannot [?] the world champion yet.
+
+B
+Q What are Tony and Mary trying to decide?
+- How to play a game
+- What to have for dinner
+- What to do in the evening
+- Which subject to study
+Q Which part of the body is used to play rock, paper, scissors?
+- Arm
+- Foot
+- Leg
+- Hand
+
+C
+I know, let's play rock, paper, [scissors] to decide!
+First, we each make a [fist] with our right hand, and then we shake our fists at the same time: one, two, three.
+It's interesting that each item in the game can [defeat] one other thing and lose to one other thing.
+There's even a rock, paper, scissors world [championship] that has been held every year in Europe since 1934.
+
+D truefalse
+? "Paper" is an open hand with a flat palm.
+? "Scissors" is a fist with no fingers sticking out.
+? Rock defeats scissors.
+? Scissors defeats paper.
+? Rock, paper, scissors is played only in Europe.
+
+E dialog
+# khoet 127/234 tu; OCR khong khop: or that's
+G: Come on, Tony, let's [go] [to] [a] [movie] tonight.
+B: We [went] [to] [a] [movie] on Saturday, Mary, [but] [we] [haven't] [gone] bowling for [a] [long] [time].
+G: I know, [let's] [play] rock, paper, scissors to [decide]!
+B: [Rock], [paper], [scissors]? It sounds [like] [an] [interesting] sort of game! How [do] [you] [play] it?
+G: First, [we] [each] [make] [a] [fist] with our [right] [hand], and then [we] [shake] [our] [fists] at the [same] [time]: one, two, three. On the [count] [of] three, you can [keep] [your] [hand] in a fist---that's rock--- [or] [open] [your] [hand] with the [palm] flat---that's [paper---or] [keep] [your] [fist], but put out [your] [first] and middle [fingers---that's] [scissors]. The [winner] [is] the [person] [who] [has] the stronger item.
+B: That [sounds] [stupid], because rocks [are] [stronger] than [paper] [and] [scissors], so the rock [will] [win] [every] [time].
+G: That's true [in] [real] [life], Tony, but that's [not] [how] [it] [works] in this [game]. Rock can [break] [scissors], but [rock] [can] [be] covered by [paper], and paper [can] [be] [cut] by [scissors]. So rock [defeats] [scissors], paper [beats] [rock], and [scissors] [beats] [paper].
+B: It's interesting [that] [each] [item] in the game [can] [defeat] [one] [other] [thing] and [lose] [to] one other thing. I [wonder] [who] [invented] this game.
+G: I [don't] [know], but it's played [all] [over] [the] [world]. There's [even] a rock, paper, [scissors] world [championship] [that] [has] been held [every] [year] [in] Europe [since] 1934.

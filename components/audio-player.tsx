@@ -76,6 +76,9 @@ const VolumeIcon = ({ muted }: { muted: boolean }) => (
 // controlRef ở trang kết quả; trang làm bài KHÔNG truyền để giữ hành vi thi thật.
 export type AudioPlayerControls = {
   seekTo: (seconds: number, options?: { play?: boolean }) => void;
+  // Phát một khoảng [start, end] rồi tự dừng (chế độ làm từng bước: nghe lại đúng
+  // đoạn đang điền). Học viên bấm play/tua tay thì bỏ mốc dừng.
+  playRange: (start: number, end: number) => void;
 };
 
 type AudioPlayerProps = {
@@ -105,13 +108,22 @@ export function AudioPlayer({
   const [volume, setVolume] = useState(1);
   const [muted, setMuted] = useState(false);
   const [rate, setRate] = useState(1);
+  // Giây phải dừng khi đang phát một khoảng (playRange); null = phát bình thường.
+  const stopAtRef = useRef<number | null>(null);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     const onLoaded = () => setDuration(audio.duration);
-    const onTime = () => setCurrentTime(audio.currentTime);
+    const onTime = () => {
+      setCurrentTime(audio.currentTime);
+      const stopAt = stopAtRef.current;
+      if (stopAt !== null && audio.currentTime >= stopAt) {
+        stopAtRef.current = null;
+        audio.pause();
+      }
+    };
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
     const onEnded = () => setIsPlaying(false);
@@ -160,6 +172,7 @@ export function AudioPlayer({
     if (!audio) return;
     const limit = Number.isFinite(audio.duration) ? audio.duration : seconds;
     const target = Math.max(0, Math.min(seconds, limit));
+    stopAtRef.current = null;
     audio.currentTime = target;
     setCurrentTime(target);
     if (options?.play && audio.paused) {
@@ -167,17 +180,26 @@ export function AudioPlayer({
     }
   }, []);
 
+  const playRange = useCallback(
+    (start: number, end: number) => {
+      seekTo(start, { play: true });
+      stopAtRef.current = end > start ? end : null;
+    },
+    [seekTo]
+  );
+
   useEffect(() => {
     if (!controlRef) return;
-    controlRef.current = { seekTo };
+    controlRef.current = { seekTo, playRange };
     return () => {
       controlRef.current = null;
     };
-  }, [controlRef, seekTo]);
+  }, [controlRef, seekTo, playRange]);
 
   const togglePlay = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
+    stopAtRef.current = null;
     if (audio.paused) {
       void audio.play();
     } else {
@@ -188,6 +210,7 @@ export function AudioPlayer({
   const skip = useCallback((delta: number) => {
     const audio = audioRef.current;
     if (!audio) return;
+    stopAtRef.current = null;
     audio.currentTime = Math.min(
       Math.max(0, audio.currentTime + delta),
       audio.duration || 0
@@ -198,6 +221,7 @@ export function AudioPlayer({
     const audio = audioRef.current;
     if (!audio) return;
     const value = Number(event.target.value);
+    stopAtRef.current = null;
     audio.currentTime = value;
     setCurrentTime(value);
   }, []);

@@ -1,0 +1,274 @@
+U1
+A shelter weather climate include underground hibernate
+B c a
+D T T F T T
+A5=Some spiders live in small holes [underground].
+
+U2
+A sense Chlorophyll survive fade reveal migrate
+B c b
+D F T T F T
+
+U3
+A dinosaur mystery exist atmosphere meteor earthquake
+B b a
+D 3 1 5 2 4
+A3=Do you think that ghosts really [exist]?
+D3=A big part of the mystery is why some types of animals survived.
+
+U4
+A acid exhaust sulfur Cancer nitrogen carpool
+B d d
+D F F T F T
+
+U5
+A forecast cancel resident continue unbelievable groceries
+B b c
+D 2 4 3 1 5
+A4=I must stop reading my book now; I'll [continue] reading it tomorrow morning.
+
+U6
+A unusual invention incredible portable concentrate waist
+B d a
+D T T T F F
+A6=Belts are usually worn around the [waist].
+D5=The woman thinks that the car plate invention will make drivers more polite.
+
+U7
+A contest reduce microphone invisible frequency powerful
+B d a
+D F F T F T
+A2=I'd like to [reduce] my weight through diet and exercise.
+A5=We measure a sound by its [frequency].
+B2OPTS=It does not need a microphone.|It reduces the effects of dark noise.|It was invented by Charles Moore.|It determines the frequency of sounds.
+
+U8
+BOX=measurement | convert | calculator | height | width | dimensions
+A dimensions measurement convert height width calculator
+B a c
+D 5 1 4 3 2
+
+U9
+A transform lonely statistics convenient opinion response
+B d c
+D 4 2 1 5 3
+
+U10
+A convince encourage division experiment impress confidence
+B b c
+D T T T T F
+
+U11
+A death scene audience theater tragedy enthusiasm
+B b d
+D 1 5 2 3 4
+
+U12
+A model appeal landscape Apparently portrait arrogant
+B a d
+D F T F T F
+B1OPTS=It was made with oil paint.|It was the painter's first painting.|It was painted in the 1700s.|The model was the painter's wife.
+
+U13
+A human examine lifelike combine parachute inventor
+B b c
+D 4 1 2 3 5
+A1=If you want to become a doctor, you must study how the [human] body works.
+
+U14
+A genius compose orchestra symphony deaf complex
+B a d
+D F T F F T
+
+U15
+BOX=wedding | married | present | register | department store | couple
+A wedding register department_store present married couple
+B b a
+D T F T F F
+A1=I am going to attend a [wedding] this Saturday.
+
+U16
+A stamp exchange envelope inexpensive endangered various
+B a d
+D 2 5 4 3 1
+
+U17
+BOX=scissors | championship | defeat | fist | palm | finger
+A scissors fist palm finger championship defeat
+B c d
+D T F T T F
+A2=Jake hit Tom with his [fist].
+A3=Some people say they can see your future by looking at the [palm] of your hand.
+
+U18
+A ailment loyal companion burglar blind compassion
+B c c
+D 3 4 5 2 1
+A4=A [burglar] broke into our home and stole our TV and computer.
+
+U19
+A center serious kindergarten expert Aerobics discount
+B c b
+D T T T T F
+
+U20
+A audition script princess pirate sword positive
+B c a
+D F F T T F
+
+U21
+A subtract multiply require huge apply imagine
+B c a
+D 2 3 1 5 4
+B2OPTS=He imagines pictures in his mind.|He uses a calculator.|He copies his friend's answers.|His father works in a bank.
+D5=If the equation is 200 times 30, I imagine 10 groups of people standing in a field with a sign next to each group.
+
+U22
+A location mistake object manners apologize respect
+B a d
+D T T F T T
+
+U23
+A expect population difference marriage single divorce
+B c d
+D 1 5 3 4 2
+A6=Some marriages end in [divorce].
+B1OPTS=More American women are working.|American families are changing.|US families are getting bigger.|It is more expensive to raise children.
+
+U24
+A household method vote privilege choice equal
+B c d
+D F T F F T
+B2OPTS=Having a vote|Letting the head of the household decide|Taking turns to make decisions|Giving younger children privileges
+
+U25
+A beard demonstrate gestures wastebasket guilty active
+B b c
+D 1 5 3 2 4
+A1=My grandfather has a long, white [beard].
+A4=Trash should be thrown into the [wastebasket].
+
+U26
+A goodbye adventure shy remind childhood interests
+B c c
+D F F F F T
+A2=Riding a boat down the Amazon River was a fantastic [adventure]!
+B1OPTS=She is at university.|She is 20 years old.|She does not meet many people.|She likes keeping in touch with friends.
+
+U27
+BOX=nickname | confusing | born | driver's license | ridiculous | boxer
+A nickname driver's_license boxer confusing born ridiculous
+B a b
+D T T T F T
+A2=It is illegal to drive a car without a [driver's license].
+A3=Mike Tyson is a famous [boxer].
+A4=I don't like this story because it is [confusing]; I don't understand it.
+D5=George Foreman has five boys named George.
+
+U28
+A consider career mood unfriendly impatient salary
+B c a
+D 5 3 2 1 4
+
+U29
+A conversation accurate negative dislike shrink interpret
+B b d
+D 5 3 1 4 2
+A3=It is better to have a positive outlook on life rather than a [negative] one.
+
+U30
+A aquarium injured vaccination observe veterinarian surgery
+B a a
+D T F T T F
+A1=Fish are usually kept in an [aquarium].
+
+U31
+A tongue stomachache certainly fever plenty thermometer
+B b a
+D 4 1 2 5 3
+A1=You taste food with your [tongue].
+
+U32
+A sneeze dust particle tiny bless protect
+B d a
+D F T T T T
+A4=That necklace is made of [tiny] glass beads.
+B2OPTS=From nose to brain to muscles|From muscles to nose to brain|From nose to muscles to brain|From brain to nose to muscles
+D4=To "bless" means to wish someone good and special things.
+
+U33
+A ski snowboard direction challenge stuck amount
+B b c
+D 2 4 3 1 5
+A4=I enjoy the [challenge] of solving crossword puzzles.
+B1OPTS=Skiing|Snowboarding|Soccer|Basketball
+D4=I am 16 years old, and I have been skiing since I was five, and snowboarding since I was eight.
+
+U34
+A flavor taste incident bitter appreciate valuable
+B d b
+D 5 1 3 2 4
+A4=Black coffee usually tastes [bitter].
+A5=I truly [appreciate] all the kind things you have done for me.
+A6=My mother's diamond ring is very [valuable].
+D5=Well, history tells us that in the past, good black tea has been considered more valuable than gold.
+
+U35
+A injury disappointed ankle accidentally coach suddenly
+B b c
+D F F T T F
+A1=At one time, Yao Ming, the famous basketball player, missed 15 games because of a knee [injury].
+A6=I [suddenly] remembered that I left my bag at home!
+
+U36
+BOX=suitcase | container | truck | moving van | cargo | haul
+A suitcase truck haul moving_van container cargo
+B d d
+D T F T F T
+A4=A [moving van] is a large truck that is used to transport furniture and other things when people move.
+D3=Mark's sister used a cargo plane to help move her things to Dallas.
+
+U37
+BOX=seat belt | cigarettes | leader | average | safety | smoke
+A seat_belt cigarettes smoke average safety leader
+B a c
+D F T T F F
+B2OPTS=Seat belts may not save lives.|Most people do not like them.|People should have the right to choose.|Seat belts are too expensive.
+
+U38
+A deliver kangaroo unpleasant deal airline luggage
+B a c
+D T F T F F
+A5=I need an [airline] ticket from New York to Beijing.
+A6=Do you need any help carrying your [luggage]?
+D5=The airline never found the lost luggage at all.
+
+U39
+BOX=first class | business | curtain | service | economy | flight
+A first_class economy business flight service curtain
+B c a
+D F T T F T
+
+U40
+BOX=on board | island | shore | breakfast | volleyball | explore
+A explore on_board island volleyball Breakfast shore
+B c c
+D T T T F F
+A6=You can usually find seashells on the [shore].
+
+U2
+C3=This [reveals] other colors, like red and yellow, that were always in the leaves.
+U11
+C1=Love. Hate. [Death].
+U18
+C1=Probably because dogs have many of the qualities we want in our human [companions].
+U22
+C1=One person decides on an [object] that he or she can see, and tells us its color, then the rest of us have to ask yes-or-no questions to try and find out what it is.
+U29
+C4=But keep in mind that there is no [accurate] way to interpret body language all the time.
+U32
+C3=When you sneeze, the [dust] that was in your nose flies out as fast as 100 miles an hour!
+U37
+C1=In the past 30 years, [seat belts] have saved almost $600 billion in medical costs.
+U38
+C2=My dad knows someone who works for Qantas Airlines, so we were able to get a good [deal].

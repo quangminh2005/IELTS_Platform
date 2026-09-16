@@ -1,0 +1,41 @@
+UNIT 23
+# American Families Today
+BOX difference | expect | population | marriage | divorce | single
+
+A
+You can play with your friends, but we [?] you to be home by lunch time.
+The [?] of the world is expected to increase every year.
+What is the [?] between this computer and that one?
+My parents have been married for thirty years. They have a good [?] because they love and respect each other.
+Frank is married, but his sister Fran is still [?].
+Some marriages end in [?]
+
+B
+Q What is NOT true according to the speaker?
+- More American women are working. (b) American families are changing.
+- US families are getting bigger.
+- It is more expensive to raise children.
+Q What is different about the types of American families today?
+- There are more traditional families.
+- People are having more children.
+- Unmarried couples usually have no children.
+- There are more single parents than ever before.
+
+C
+Parents do not [expect] their children to work for them.
+If they have more than two children, it will increase the [population].
+Another reason is [divorce].
+Almost half of all US [marriages] end in divorce.
+
+D summary
+? American families are changing from the way they used to be.
+? Many US marriages end in divorce, and many people stay single.
+? The types of families are also changing.
+? One reason is the greater number of working women.
+? The main difference is that families are smaller.
+
+E passage
+# khoet 137/239 tu; OCR khong khop: kepol a live
+American [families] [today] are [very] [different] from what [they] [were] about [a] [hundred] [years] ago. The [main] [difference] is that [families] [are] [now] much smaller. In [the] [past], most [families] [lived] [on] farms. They [needed] [children] to [help] [them] work. [Today], [most] [families] live in [cities]. Parents [do] [not] [expect] their children [to] [work] [for] them. It [is] [also] becoming [very] [expensive] to raise [and] [educate] children. Many [parents] cannot afford [to] [have] [a] [large] family. Others [think] [that] [there] are already [too] [many] [people] in the [world]. If they have [more] [than] [two] [children], it will increase [the] [population].
+Also, [the] [types] [of] families are [changing]. Statistics [show] [that] [there] are more [single] [parents] than [ever] [before]. More [and] [more] unmarried [couples] are [having] [children], and a growing [number] [of] [couples] are choosing [to] [have] [no] [children] at all. Traditional [families---a] married [couple] [with] [children---live] in [less] [than] 25 percent [of] [all] US homes.
+One [reason] [for] [this] trend is [the] [greater] [number] of working women. In [the] [past], women [depended] [on] their husbands [for] [money]. Now, [many] [women] [have] jobs. They don't [have] to [be] [married] [to] have [money]. Another [reason] [is] [divorce]. This is when [a] [husband] [and] [wife] decide [not] [to] [be] [married] anymore. Almost [half] [of] [all] US [marriages] end [in] [divorce]. Many [people] [decide] not to [get] [married] at all. They prefer [to] [be] [single] and live [without] [a] husband [or] [a] [wife].

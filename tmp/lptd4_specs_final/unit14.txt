@@ -1,0 +1,43 @@
+UNIT 14
+# Ludwig van Beethoven
+BOX genius | complex | deaf | compose | symphony | orchestra
+
+A
+Albert Einstein was considered a [genius] at physics.
+When we [compose] music, we imagine it, and then write it down.
+An [orchestra] is made up of many different people playing different musical instruments.
+A [symphony] is a complex piece of music written for different instruments.
+A [deaf] person cannot hear.
+That symphony gets very [complex] at the end. It must be difficult to play!
+
+B
+Q According to the speaker, how did Beethoven first compose his symphonies?
++ He imagined them in his head.
+- He wrote them on paper.
+- He hummed them to his wife.
+- He recorded them on tape.
+Q What happened to Beethoven when he was 28?
+- His wife died.
+- He gave his first public performance.
+- He composed his Fifth Symphony.
++ He started to go deaf.
+
+C
+Ludwig van Beethoven was a musical [genius].
+Beethoven was the first composer to use trombones in a [symphony].
+A symphony is a very [complex] and beautiful song.
+But he continued to compose music and to lead the [orchestra].
+
+D truefalse
+F Beethoven composed ten different symphonies in all.
+T Beethoven was born in Germany.
+F Beethoven gave his first public performance at age 12.
+F Beethoven started to go blind at age 28.
+T Beethoven died in 1827.
+
+E passage
+# khoet 131/232 tu; OCR khong khop:
+Ludwig van Beethoven [was] [a] musical [genius]. He [composed] [hundreds] [of] songs [in] [his] lifetime. The [first] [four] [notes] of his Fifth Symphony---bom bom bom bommmmm---are [the] [most] [famous] in [the] [world]. These [notes] [are] [played] [on] a trombone. Beethoven [was] [the] [first] [composer] [to] use trombones [in] a [symphony]. [A] [symphony] is a [very] [complex] [and] [beautiful] song. Beethoven [wrote] [nine] [symphonies] in all. He [said] [that] he first [composed] [symphonies] in his [head]. He heard [the] [part] for [every] [instrument] in his mind [before] [he] [wrote] [the] first note [on] [paper].
+Beethoven [was] [born] [in] 1770 in Bonn, Germany. His [birthday] [was] probably [in] December. Nobody [is] [sure]. He [gave] [his] [first] [public] performance at [age] [seven]. He [wrote] [his] [first] composition [before] [he] [was] 12. Sadly, [at] [the] [age] [of] [28], he started [to] [go] [deaf]. But he continued [to] [compose] [music] and to [lead] [the] [orchestra]. He [never] [got] [married].
+After [his] [death] in 1827, [friends] [found] [love] [letters] that he [had] [written] to [someone] [he] called "Immortal Beloved." To [be] [immortal] means [to] [live] forever. "Beloved" is [a] [way] [of] [saying] you [love] [someone]. His lover's [name] [still] [remains] a mystery.
+For [these] [reasons], and [because] [of] his [wonderful] [music], he [is] [remembered] as a remarkable [man] [in] [history]. Perhaps [no] [other] [composer] has had [such] [a] large effect [on] [the] [history] of western [music] as Beethoven.

@@ -115,3 +115,36 @@ describe("trang làm bài của học viên", () => {
     expect(page).not.toMatch(/assignment=\{recipient\.assignment\}/);
   });
 });
+
+describe("chế độ làm từng bước (metadata.stepMode)", () => {
+  it("unit thường: không có mốc giờ dòng", () => {
+    const [unit] = examUnitsForStudent([rawUnit()]);
+    expect(unit.assignableUnit.noteLineTimes).toBeNull();
+  });
+
+  it("unit stepMode: chỉ gửi mốc giờ (số) của từng dòng, không lộ transcript", () => {
+    const raw = rawUnit();
+    raw.assignableUnit.transcript = "W: The library opens at 9am. M: Great.";
+    raw.assignableUnit.transcriptTimingJson = JSON.stringify({
+      v: 1,
+      matchRatio: 1,
+      words: ["w", "the", "library", "opens", "at", "9am", "m", "great"].map((w, i) => ({
+        w,
+        t: i
+      }))
+    });
+    raw.assignableUnit.metadataJson = JSON.stringify({
+      stepMode: true,
+      noteBody: "W: The [[1]] opens at 9am.\nM: Great."
+    });
+    raw.assignableUnit.questions[0].correctAnswerJson = JSON.stringify(["library"]);
+    const [unit] = examUnitsForStudent([raw]);
+    expect(unit.assignableUnit.noteLineTimes).toEqual([
+      [0, 6],
+      [6, 7 + 3]
+    ]);
+    const serialized = JSON.stringify([unit]);
+    expect(unit.assignableUnit.transcript).toBeNull();
+    expect(serialized).not.toContain("transcriptTimingJson");
+  });
+});

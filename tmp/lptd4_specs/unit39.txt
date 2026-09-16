@@ -1,0 +1,42 @@
+UNIT 39
+# Traveling by Airplane
+BOX first | class | business | curtain | service | economy | flight
+
+# CHU Y: hop tu co 7 tu (mong 6): ['first', 'class', 'business', 'curtain', 'service', 'economy', 'flight']
+A
+Can you afford to buy a [?] ticket to Rome? It is very expensive.
+An [?] class ticket is much cheaper than a first class ticket.
+Mr. Jones will be going to Tokyo for a [?] meeting next week.
+The [?] from Rome to Seoul has been delayed because of bad weather.
+The [?] in this restaurant is good, but the food is not.
+This window needs a new [?]; the old one is torn.
+
+B
+Q What is NOT a kind of airline ticket mentioned by the speaker?
+- First class
+- Business class
+- Third class
+- Economy class
+Q According to the speaker, which is true about economy class?
+- The seats are small and close together.
+- The service is excellent.
+- Food is not served.
+- The passengers have their own TVs.
+
+C
+Most people buy [economy] class tickets.
+[First class] is very expensive, but offers very comfortable seats and excellent service.
+There is a [curtain] between sections, so it is nice and quiet.
+Economy class is a good choice for short [flights] within the same country.
+
+D truefalse
+? Economy class is more expensive than first class.
+? First class passengers eat delicious, fresh food.
+? First class is more comfortable than economy class.
+? Economy class seats can be pushed back to make a comfortable bed.
+? Business class or first class is a good choice for business travelers taking international flights.
+
+E passage
+# khoet 126/239 tu; OCR khong khop: 
+Airplane [travelers] can [choose] [between] three [kinds] [of] tickets: [first] class, [business] [class], and [economy] class. Most people [buy] [economy] [class] tickets. They [are] [cheaper], so [travelers] [can] go to more [places] [more] often. [Business] class is [more] [expensive], with [good] [seats] and good service. [First] [class] is very [expensive], but offers [very] [comfortable] seats and excellent [service].
+In [economy] [class], the seats [are] [small] [and] [close] together. There [is] [not] [much] leg room. In [first] [class], the seats [are] [huge] and wider [apart]. There is [lots] [of] [room] for [passengers] to stretch [their] legs. Economy [class] [passengers] usually [must] [all] [watch] the same movie. First class [passengers] [have] [their] [own] TVs, and [each] [person] can watch [different] [movies]. [Economy] [class] passengers [eat] [cheaper] food. [First] [class] [passengers] are served [delicious], fresh food. It [is] [difficult] to sleep [in] [economy] [class] because of [the] [small] [seats] and [all] [the] noise. In [first] [class], the large seats [can] [be] [pushed] [back] to make [a] [comfortable] bed. There is [a] [curtain] between [sections], so it [is] [nice] [and] quiet. [Economy] [class] is a good [choice] for [short] [flights] within [the] [same] country. [Business] [class] or [first] class is [a] [good] [choice] for [business] travelers taking [an] [international] flight across [an] [ocean]. These people [often] [have] [to] [get] off the [plane] and go right [to] [work]. For them, [it] [is] [important] to arrive [fresh], rested, and [ready] [for] [a] full, [exciting] day.

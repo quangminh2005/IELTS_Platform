@@ -1,0 +1,954 @@
+[
+ {
+  "number": 1,
+  "title": "Hibernation",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "Some animals in cold climates hibernate. This means that they spend the winter months in a very long and deep sleep. Many animals find shelter underground. They dig out shelters to sleep in. Animals that cannot dig find cracks or holes at the base of trees and bushes. If they like the place they find, they might use it for years and years. Animals that hibernate include cold-blooded animals, such as lizards, frogs, and snakes. Many warm-blooded animals also hibernate, such as mice, bats, and squirrels. When these animals are hibernating, they seem like they are not alive at all. Warm-blooded animals seem colder to the touch. However, their blood is still very warm. Hibernating animals have a very slow heartbeat. They almost stop breathing. Extra blood sugar and fat in their bodies keep them alive. They eat lots of food just before they hibernate. Winters that do not stay cold are dangerous for hibernating animals. They can sometimes wake up in their shelters when it gets a little warm. Then they use energy by moving around. During winter, there is very little food. These animals can get very thin and weak. If they move around too much and do not eat, they can die. Animals hibernate to escape the cold. There are also animals in hot climates that escape the heat. During very hot or dry weather, they sleep underground. This is called aestivation."
+   }
+  ]
+ },
+ {
+  "number": 2,
+  "title": "Falling Leaves",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "Autumn, or fall, is the season between summer and winter. The days become shorter, and the air gets cooler. Trees sense these changes, so they start preparing for colder weather. Trees that have leaves block water and food from coming through the branches to the leaves. When this happens, the leaves die. They fall off the tree or the wind blows them away. This is why autumn is usually called fall in America. As the leaves start to die, they appear to change from green to red, yellow, orange, or brown. Actually, the leaves are really these colors all year long. They look green because of a chemical called chlorophyll. Chlorophyll works with the sun to help the trees make food. In autumn, when there is less sun, the tree cannot make chlorophyll, so the green color fades. This reveals other colors, like red and yellow, that were always in the leaves. Like trees, animals also sense changes in the cooler autumn climate. Animals that hibernate eat a lot during autumn. They gain weight to store energy in the form of fat. They use this energy to survive the winter while hibernating. Many birds survive the cold in a different way: they leave. Each year, many birds migrate south to warmer climates during autumn. They migrate north again in the spring. Not a bad idea if you ask me! After all, who would refuse a mid-winter trip to sunny Thailand?"
+   }
+  ]
+ },
+ {
+  "number": 3,
+  "title": "How the Dinosaurs Disappeared",
+  "turns": [
+   {
+    "speaker": "G",
+    "text": "The death of the dinosaurs is a great mystery. About 65 million years ago, dinosaurs lived all over the Earth. They had existed for nearly 200 million years. Suddenly, they all became extinct. Many scientists believe that the dinosaurs were killed by a large meteor. They think that this meteor was about six to twelve miles wide. It crashed into southern Mexico and made a hole about 130 miles wide. The crash threw dust and dirt into the sky. Dust clouds darkened the Earth's atmosphere. The crash caused fires, earthquakes, and tidal waves. The plants were killed. The oceans were poisoned. Very soon, there was no food left for the plant- eating dinosaurs. When they died, there was no food for the meat-eating dinosaurs. The meteor killed almost 70 percent of all plants and animals on Earth. The only animals that could survive were small ones that could eat many different kinds of food. Some scientists say the meteor alone did not cause dinosaurs to become extinct. They think that dinosaurs were already getting weaker. They are not sure why. One reason might be disease. Another might be climate change. A big part of the mystery is why some types of animals survived. If climate change killed dinosaurs, it should also have killed frogs. If the meteor killed most sea reptiles, it should have killed crocodiles. Yet frogs and crocodiles still exist in the world today."
+   }
+  ]
+ },
+ {
+  "number": 4,
+  "title": "Acid Rain!",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "I hate this rain. It's causing the traffic to back up for miles!"
+   },
+   {
+    "speaker": "W",
+    "text": "Well, I hate this traffic, because it's helping turn this rain into acid rain."
+   },
+   {
+    "speaker": "M",
+    "text": "I heard that acid rain has really bad effects. Doesn't it cause cancer and brain damage, and even Alzheimer's disease?"
+   },
+   {
+    "speaker": "W",
+    "text": "It definitely can, but the major thing it does is cause breathing problems. The acid in the rain comes from smoke and gases that are given off by cars and factories. It's like riding your bike behind a bus that's showering you with its exhaust fumes."
+   },
+   {
+    "speaker": "M",
+    "text": "Oh, I was reading something about that the other day. It said there's too much sulfur in the air and that it's killing thousands of people every year."
+   },
+   {
+    "speaker": "W",
+    "text": "Yes. Sulfur is the major element in factory and car exhaust. It combines with oxygen and nitrogen in the air to become the acid in acid rain. This stuff doesn't just kill us, you know. It also kills trees and lakes and animals. The acid soaks into the plants and animals, so that anyone who eats the plants and animals is also eating the acid."
+   },
+   {
+    "speaker": "M",
+    "text": "This sounds terrible! What can people do to stop acid rain?"
+   },
+   {
+    "speaker": "W",
+    "text": "One simple thing they could do is to use less energy. Another way to stop acid rain is to drive less, or at least carpool. Imagine if every car on this road had four people in it right now. There would be fewer cars and a lot less acid rain."
+   }
+  ]
+ },
+ {
+  "number": 5,
+  "title": "The Weather Forecast",
+  "turns": [
+   {
+    "speaker": "",
+    "text": "Part I"
+   },
+   {
+    "speaker": "W1",
+    "text": "And now, over to Barry with our weather forecast for this weekend. How's it looking for this weekend, Barry? Speaking for myself, I know I'm looking forward to clear skies. The past two weeks have been even rainier than usual for Seattle."
+   },
+   {
+    "speaker": "M1",
+    "text": "Well, Sue, residents of Seattle will be happy to hear that this rainy spell we've been having is finally coming to an end. Although we've seen occasional showers today, by tonight things should dry out, and Friday morning should be clear and sunny. This fine weather should continue until the end of the weekend, with temperatures ranging from 55 to 75 degrees, so everyone can put away those umbrellas. Back to you, Sue."
+   },
+   {
+    "speaker": "W1",
+    "text": "Thank you, Barry. On behalf of the Thursday Six o'clock News team, we wish you a pleasant evening."
+   },
+   {
+    "speaker": "",
+    "text": "Part II"
+   },
+   {
+    "speaker": "M2",
+    "text": "Did you hear the weather report, Jenny? It looks like it'll be a clear weekend after all, so we won't have to cancel our trip to the lake."
+   },
+   {
+    "speaker": "W2",
+    "text": "That's almost unbelievable! I'm really looking forward to getting out of the city and camping under the stars. But we'd better get our stuff ready tonight, Paul, if we're planning to leave tomorrow right after work."
+   },
+   {
+    "speaker": "M2",
+    "text": "Yes, we'll need our tent, sleeping bags, camping stove, and a cooler for the drinks. What about food?"
+   },
+   {
+    "speaker": "W2",
+    "text": "Let's stop at a store and pick up some groceries on the way out."
+   },
+   {
+    "speaker": "M2",
+    "text": "Sounds good. Well, we'd better get packing if we want to be ready to go by 5:00 p.m. tomorrow."
+   }
+  ]
+ },
+ {
+  "number": 6,
+  "title": "Who Invented That?",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "What's so funny? I can't concentrate on my work if you keep laughing loudly like that."
+   },
+   {
+    "speaker": "M",
+    "text": "I'm sorry. It's just that I'm reading this article in Science Today magazine about some of the unusual things that people have invented. These inventions are incredible!"
+   },
+   {
+    "speaker": "W",
+    "text": "OK, tell me about some of these inventions, and let's see if I think they're as funny as you do."
+   },
+   {
+    "speaker": "M",
+    "text": "All right. The first one is a ladder for spiders, \"a thin, flexible, rubber strip which attaches to the top edge of the bath.\""
+   },
+   {
+    "speaker": "W",
+    "text": "Ha ha! I wonder how long it took someone to invent that."
+   },
+   {
+    "speaker": "M",
+    "text": "Another inventor has designed a portable seat that you wear on a belt around your waist. In this picture it looks like a big plastic cushion."
+   },
+   {
+    "speaker": "W",
+    "text": "Well, that is very unusual. But who would want to walk around with a portable plastic seat hanging from their waist all the time?"
+   },
+   {
+    "speaker": "M",
+    "text": "Another unusual invention is this one. Look, it's a car plate that indicates whether the driver is a man or a woman by using different colors on either side. There's one color for males and one for females."
+   },
+   {
+    "speaker": "W",
+    "text": "What's the point of that invention?"
+   },
+   {
+    "speaker": "M",
+    "text": "The inventor says that other road users will change the way they behave. They will become more polite if they know a woman is driving, so there will be fewer car accidents."
+   },
+   {
+    "speaker": "W",
+    "text": "Ha! Do you really think that will happen? That's completely unbelievable!"
+   }
+  ]
+ },
+ {
+  "number": 7,
+  "title": "The White Noise Machine",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "And now ladies and gentlemen, the moment you have all been waiting for. Here's the winner of this year's science contest: Charles Moore! Charles, tell everyone about your invention."
+   },
+   {
+    "speaker": "M",
+    "text": "Thank you! For the science contest this year, I've invented a white noise machine. Let me explain what that is. Have you ever been kept awake at night because of the sound of traffic, or people talking, or loud music? These types of noise are sometimes called dark noise. Dark noise is made up of sounds that bother you so much that you can't concentrate on what you are doing. White noise is not exactly noise; in fact, white noise can't be heard at all. White noise is made up of invisible waves of sound that reduce the effects of dark noise by making sounds of the opposite frequency. It's like being in the ocean and seeing a large wave coming toward you. It might knock you down. But if you could send a wave, or many small waves, toward the big wave, it wouldn't be as powerful, because the small waves would hit it and reduce its size. My machine does this with sound. As a sound enters the microphone, the machine determines the sound's frequency. Then it makes a sound in the opposite frequency that cancels out the first sound. I hope my machine will give some peace and quiet to people living in noisy places. Thank you."
+   }
+  ]
+ },
+ {
+  "number": 8,
+  "title": "Inches and Centimeters",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "Hi, Julie. I'm trying to figure out the dimensions of this mp4 player I want to buy, but I'm having trouble converting these English measurements. You're really good at mathematics, aren't you? It says that the mp4 player is 3.6 inches tall and two inches wide, but what does that mean in centimeters?"
+   },
+   {
+    "speaker": "G",
+    "text": "Well, according to my math book, one inch equals 2.54 centimeters, so to convert that, we need to multiply each English measurement by that number. Wait, I have a calculator in my pocket."
+   },
+   {
+    "speaker": "B",
+    "text": "Great!"
+   },
+   {
+    "speaker": "G",
+    "text": "According to the calculator, that would make it 9.1 centimeters tall and, let's see, about five centimeters wide."
+   },
+   {
+    "speaker": "B",
+    "text": "So, its height is about nine centimeters and its width is about five centimeters, but what about its weight? The website says that it weighs 3.6 ounces."
+   },
+   {
+    "speaker": "G",
+    "text": "We multiply 3.6 by 28.3, which is the equivalent in grams, and that converts to about 102 grams."
+   },
+   {
+    "speaker": "B",
+    "text": "All right then, the mp4 player is about nine centimeters tall and five centimeters wide, and weighs about 102 grams. I thought it would have to have larger dimensions to be able to hold 5,000 songs, but it's small and light! Do you think I should buy it, Julie?"
+   },
+   {
+    "speaker": "G",
+    "text": "It sounds like a good product, but it depends on the price."
+   },
+   {
+    "speaker": "B",
+    "text": "Well, now I have the same sort of problem again. Could you help me figure out how to convert Chinese currency to our currency?"
+   }
+  ]
+ },
+ {
+  "number": 9,
+  "title": "Communicating Online",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "Computers have transformed the way people communicate. In some ways this transformation is good, but in other ways it could be harmful. Statistics show that millions of people use the Internet every day. People shop online, play games, and search for information. Studies also show that people use the Internet mainly for communication. The Internet has made communication fast and convenient. Email can travel anywhere within seconds. Chat rooms include people from all over the world. People can even make Internet telephone calls. However, this type of communication is very different from what people did in the past. People spend less time talking face to face. They might \"chat\" for days without being in the same room with a real person. They also might communicate with many people at the same time. Some researchers think this is unhealthy. One study on Internet use found that people who used the Internet a lot were lonely. Also, they did not communicate as much with members of their family. Many people have criticized this study. They say it did not include enough people and that loneliness is hard to measure. In my opinion, all types of communication are good. It is great to email someone and get a fast response. It is also nice to talk face to face. We can do both. The Internet is a fantastic tool. We should use it wisely to benefit from it."
+   }
+  ]
+ },
+ {
+  "number": 10,
+  "title": "Science for Girls",
+  "turns": [
+   {
+    "speaker": "G",
+    "text": "Hi. My name is Sandy. Welcome to physics, my favorite class. Although there are 30 students in our class, only six of us are girls. Most of my friends don't like science as much as I do. They are convinced that science and mathematics are \"boys' subjects.\" They say that boys learn about science and mathematics by playing with toys like building blocks, racing cars, and simple machines, while girls play with toys like dolls and tea sets. They say their parents didn't do science experiments with them or encourage them to learn math. Well, that wasn't the case with me! I played with dolls, too, but my parents also built up my confidence in science and math. They used long plastic rods, which are like sticks, to help me learn addition, subtraction, multiplication, and division. For my eighth birthday, they gave me a kids' chemistry set, which helped me do all sorts of cool experiments! Whenever we went to the park, my parents asked me different questions about the plants and animals that we saw. When we got home, we looked up the answers together. In school, my teachers were surprised. They were used to boys giving all the answers in science class. They were impressed with my science exam scores. I have lots of confidence in myself. I know that boys are not smarter than girls in science and math classes. I just wish I could convince my friends!"
+   }
+  ]
+ },
+ {
+  "number": 11,
+  "title": "On Stage!",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "Love. Hate. Death. These things are at the heart of Shakespeare's famous tragedy, Romeo and Juliet. The St. Stephens High School drama club performed this play last weekend. Romeo and Juliet is the story of two families, the Capulets and the Montagues, who are bitter enemies. Tragedy follows when the son of one falls in love with the daughter of the other. The play is set in Verona, Italy, in the late 16th century. Allison Bourne played Juliet, Capulet's beautiful young daughter. She showed the mixed emotions Juliet felt after secretly marrying the son of her family's most hated enemy. At times, she was happy, and at times, she was afraid. David Taylor played Romeo, Montague's son. He put on a good performance despite having a head cold. His lines were said with great feeling in a clear voice. Eric Parker was the perfect Tybalt: dark and angry. Maggie Jones played the nurse. She acted the part of a gossipy old woman very well. She made everyone in the audience laugh at her jokes and her comic character. The whole cast showed enthusiasm in every scene. The actors knew the meaning of their lines. They used body language to show this meaning well. The stage lights were sometimes too bright or too dim. But the sword fights looked very real, and the costumes were wonderful. Overall, St. Stephens' production of Romeo and Juliet was a great night of high school theater."
+   }
+  ]
+ },
+ {
+  "number": 12,
+  "title": "A Famous Portrait",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "The Mona Lisa is one of the most famous paintings in the world. It was painted by the great Italian artist, Leonardo da Vinci, between the years 1503 and 1505. The portrait was done with oil paint on a simple piece of wood. The portrait shows a woman in front of a landscape with mountains. Many people believe that the model for the painting was the wife of an important man in the area. However, some people now think that da Vinci actually drew a picture of himself. They say the face looks similar to his. Apparently, da Vinci loved the painting so much that he carried it with him at all times until he sold it to the king of France. The portrait is famous for several reasons. The best-known reason is for Mona Lisa's unusual smile. It is difficult to say if she is being pleasant or looking arrogant. Another reason the painting is famous is that it was stolen from an art museum in 1911. Both France and Italy sent people to look for the lost painting. It was then found two years later in a hotel in France. It is currently on display at the Louvre Museum in Paris. People from all over the world go to the museum each year to see the Mona Lisa. In fact, the painting has so much appeal today that it has been copied many times."
+   }
+  ]
+ },
+ {
+  "number": 13,
+  "title": "Leonardo da Vinci",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "When most people hear the name Leonardo da Vinci, they think of art. But in fact, he was a man of many talents. He was a scientist, an inventor, and an artist. Leonardo da Vinci was born in 1452 in Vinci, Italy. When he was 14, his father sent him to Florence to train under Andrea del Verrocchio, one of the best artists in the area. Leonardo became better than Verrocchio. By his early twenties, Leonardo was famous for his painting. He was especially good at painting colors and details. This made his paintings very lifelike. His most famous paintings are the Mona Lisa and The Last Supper. Leonardo was also a great scientist. He was a good observer of life and nature. He would ask himself simple questions like, \"How do birds fly?\" Then he would try to find the answers. He was interested in everything. For example, he studied the inner workings of the human body. He would cut up dead bodies to examine their insides. Leonardo was also a talented inventor. He believed that by understanding how each part of a machine worked, the parts could be changed and combined in different ways to make new machines. Using his artistic talent, Leonardo drew pictures of many inventions. However, few of them were built and tested during his lifetime. For example, his parachute wasn't built until 1783. Also, his war tank wasn't used until World War I in 1917."
+   }
+  ]
+ },
+ {
+  "number": 14,
+  "title": "Ludwig van Beethoven",
+  "turns": [
+   {
+    "speaker": "G",
+    "text": "Ludwig van Beethoven was a musical genius. He composed hundreds of songs in his lifetime. The first four notes of his Fifth Symphony---bom bom bom bommmmm---are the most famous in the world. These notes are played on a trombone. Beethoven was the first composer to use trombones in a symphony. A symphony is a very complex and beautiful song. Beethoven wrote nine symphonies in all. He said that he first composed symphonies in his head. He heard the part for every instrument in his mind before he wrote the first note on paper. Beethoven was born in 1770 in Bonn, Germany. His birthday was probably in December. Nobody is sure. He gave his first public performance at age seven. He wrote his first composition before he was 12. Sadly, at the age of 28, he started to go deaf. But he continued to compose music and to lead the orchestra. He never got married. After his death in 1827, friends found love letters that he had written to someone he called \"Immortal Beloved.\" To be immortal means to live forever. \"Beloved\" is a way of saying you love someone. His lover's name still remains a mystery. For these reasons, and because of his wonderful music, he is remembered as a remarkable man in history. Perhaps no other composer has had such a large effect on the history of western music as Beethoven."
+   }
+  ]
+ },
+ {
+  "number": 15,
+  "title": "A Nice Gift",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "We've been invited to Lisa and Tom's wedding in August, so we need to get them a present. Do you have any ideas about what to buy them?"
+   },
+   {
+    "speaker": "M",
+    "text": "I don't know. I'm not very good at buying gifts for people. What do you usually buy people for wedding gifts?"
+   },
+   {
+    "speaker": "W",
+    "text": "I'd like to buy something that they have especially asked for. Most couples who are getting married go to several department stores and make a list of what they would like, and the stores put the list into a computer system. Then you can go and print out the list and choose something that they would like."
+   },
+   {
+    "speaker": "M",
+    "text": "Are Lisa and Tom registered somewhere?"
+   },
+   {
+    "speaker": "W",
+    "text": "Yes, they are registered at two department stores. I've already printed out their list from one store."
+   },
+   {
+    "speaker": "M",
+    "text": "What have they asked for?"
+   },
+   {
+    "speaker": "W",
+    "text": "Well, they have asked for different things for their new house. They would like towels, linens, decorations for the house, small appliances for the kitchen, china, silverware, crystal glasses, garden tools, and a patio set."
+   },
+   {
+    "speaker": "M",
+    "text": "Wow! That's a lot of stuff, how should we decide what to get them?"
+   },
+   {
+    "speaker": "W",
+    "text": "They have listed a coffee maker as one of the things they want, so why don't we buy them a nice coffee maker?"
+   },
+   {
+    "speaker": "M",
+    "text": "OK, how much is it?"
+   },
+   {
+    "speaker": "W",
+    "text": "It's forty dollars."
+   },
+   {
+    "speaker": "M",
+    "text": "Maybe we could get them some nice coffee cups and some coffee to go with it."
+   },
+   {
+    "speaker": "W",
+    "text": "That's a great idea. I think that will make a lovely wedding present."
+   }
+  ]
+ },
+ {
+  "number": 16,
+  "title": "Collecting Stamps",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "Hello, everyone. My name is Franklin. I'm the president of the Greenville Stamp Collecting Club. Many people ask me why stamp collecting is such a popular hobby. There are several reasons. First, stamp collecting is inexpensive. Most letters come with stamps on them. All you need to do is remove the stamp from the envelope. It's true that nowadays we may not get as many letters as we used to. In that case, you might want to buy your first set of stamps. Stamp dealers often sell a lot of stamps for only three dollars! Second, stamp collecting is educational. Stamps have pictures of everything from world leaders to endangered animals to various sports. It is interesting to learn about the people and things that are pictured on the stamps. It's much more exciting than reading a boring history book. Also, stamp collecting can help build friendships between people from around the world. Stamp collectors in India, for example, can build stamp-trading friendships with people from Mexico. They can learn about each other's culture while they exchange stamps. Finally, collecting stamps is something that families can do together. Parents and children can spend time enjoying the same hobby and build a closer relationship, instead of sitting in front of the television each night. So there you have four good reasons why stamp collecting is the world's number one hobby. I hope you have enjoyed my talk. There are refreshments in the lobby. Thank you."
+   }
+  ]
+ },
+ {
+  "number": 17,
+  "title": "Rock, Paper, Scissors",
+  "turns": [
+   {
+    "speaker": "G",
+    "text": "Come on, Tony, let's go to a movie tonight."
+   },
+   {
+    "speaker": "B",
+    "text": "We went to a movie on Saturday, Mary, but we haven't gone bowling for a long time."
+   },
+   {
+    "speaker": "G",
+    "text": "I know, let's play rock, paper, scissors to decide!"
+   },
+   {
+    "speaker": "B",
+    "text": "Rock, paper, scissors? It sounds like an interesting sort of game! How do you play it?"
+   },
+   {
+    "speaker": "G",
+    "text": "First, we each make a fist with our right hand, and then we shake our fists at the same time: one, two, three. On the count of three, you can keep your hand in a fist---that's rock--- or open your hand with the palm flat---that's paper---or keep your fist, but put out your first and middle fingers---that's scissors. The winner is the person who has the stronger item."
+   },
+   {
+    "speaker": "B",
+    "text": "That sounds stupid, because rocks are stronger than paper and scissors, so the rock will win every time."
+   },
+   {
+    "speaker": "G",
+    "text": "That's true in real life, Tony, but that's not how it works in this game. Rock can break scissors, but rock can be covered by paper, and paper can be cut by scissors. So rock defeats scissors, paper beats rock, and scissors beats paper."
+   },
+   {
+    "speaker": "B",
+    "text": "It's interesting that each item in the game can defeat one other thing and lose to one other thing. I wonder who invented this game."
+   },
+   {
+    "speaker": "G",
+    "text": "I don't know, but it's played all over the world. There's even a rock, paper, scissors world championship that has been held every year in Europe since 1934."
+   }
+  ]
+ },
+ {
+  "number": 18,
+  "title": "Man's Best Friend",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "Why are dogs often called \"man's best friend?\" Probably because dogs have many of the qualities we want in our human companions. They are loyal, friendly, never argue, and are always glad to see us. This is one reason why we have dogs and other pets. Sometimes we might even prefer the company of animals to that of fellow human beings. Pets provide us with many other benefits as well. Studies have shown that having a pet nearby lowers the blood pressure of elderly people and raises their spirits. One study in Britain showed that people with pets recovered more quickly from heart attacks than those who didn't have a pet. The study also found that pet owners suffered from fewer common ailments, such as colds, headaches, and fevers, than people who don't own pets. Pets help children to learn responsibility. By learning to take care of their pets, children learn how to take care of themselves and other people. Walking dogs each day gives children regular exercise. Pets can also help keep us safe. Dogs, for example, guard our homes and scare away burglars. Guide dogs help blind people \"see\" when they need to go outside. Cats catch mice and rats in our houses. Finally, pets teach us compassion. They give us a chance to show our love to other living creatures. If we can love our pets, it becomes easier to love each other. And that might be the most important benefit of all!"
+   }
+  ]
+ },
+ {
+  "number": 19,
+  "title": "The Active Leisure Center",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "Bored with nothing to do? Come and check out the Active Leisure Center. We offer something for everyone. The center has a heated outdoor swimming pool with five different water slides for those who want some fun. There's also an indoor pool with lanes for more serious swimmers. Swimming lessons are available for all levels. The Active Leisure Center also has a fitness center for those who want to exercise. We have running machines, exercise bikes, weight machines and free weights, and daily aerobics and jazz dance classes. Our fitness experts will be happy to provide you with a fitness program to suit your needs. The center has a sports hall where you can play indoor soccer, badminton, basketball, and various other sports. You can join community sports groups, sign up for tournaments, or just book the hall for you and your friends to use. With the school holidays coming soon, why not come and find out about our special holiday programs? We have programs for all ages, from kindergarten to high school students, and if you join now, you can even get a family discount. So come and take advantage of all that the Active Leisure Center has to offer. We're open from six a.m. to ten p.m. on weekdays, and eight a.m. to eight p.m. on weekends. For more information, call 325-6188 or visit our website at www.activeleisure.com."
+   }
+  ]
+ },
+ {
+  "number": 20,
+  "title": "The Audition",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "Hi, Cindy. Are you ready for the big audition this afternoon?"
+   },
+   {
+    "speaker": "G",
+    "text": "I don't know, Greg. I've been practicing the script all week, but the princess has so many lines that I don't know if I can remember them all!"
+   },
+   {
+    "speaker": "B",
+    "text": "You don't have to remember all of them for the audition, just the lines for the main scene, where the pirate meets the princess and tries to kidnap her."
+   },
+   {
+    "speaker": "G",
+    "text": "I know, but even in that scene, the princess has quite a few lines!"
+   },
+   {
+    "speaker": "B",
+    "text": "You've got to think positive and have some confidence in yourself. I think that you're going to get the part, and that you'll be a fantastic princess!"
+   },
+   {
+    "speaker": "G",
+    "text": "Well, I'm glad that somebody has confidence in me. I think I'm just worried that I'll forget my lines. By the way, which part are you going to try out for?"
+   },
+   {
+    "speaker": "B",
+    "text": "I'm trying out for the part of the pirate, the one who tries to steal the princess away from the prince."
+   },
+   {
+    "speaker": "G",
+    "text": "Oh yeah, the pirate and the prince get to have that cool sword fight in the final scene, and then the prince kills the pirate with his own sword!"
+   },
+   {
+    "speaker": "B",
+    "text": "Yeah, I remember reading that in the script. But at the audition today, we'll be practicing the scene where the pirate first sees the princess, and falls in love with her."
+   },
+   {
+    "speaker": "G",
+    "text": "Hey, I'll help you practice your scene if you'll help me practice mine."
+   },
+   {
+    "speaker": "B",
+    "text": "You've got a deal! Let's start now."
+   }
+  ]
+ },
+ {
+  "number": 21,
+  "title": "Add, Subtract, Multiply, and Divide",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "Hello there, Terry. How are you doing?"
+   },
+   {
+    "speaker": "G",
+    "text": "Not too well. I'm really having trouble figuring out this arithmetic assignment. I can add and subtract pretty well, but without a calculator it's difficult for me to multiply and divide. Hey, Olaf, I heard that you're excellent in math."
+   },
+   {
+    "speaker": "B",
+    "text": "My technique is that I try to imagine pictures in my mind, so the numbers aren't just figures on a page, but something I can apply to real life. One way I do this is to imagine the numbers as if they were money. For example, if the equation is 753 minus 236, I think about seven dollars and 53 cents minus two dollars and 36 cents. It's five dollars and 17 cents, or 517. Easy!"
+   },
+   {
+    "speaker": "G",
+    "text": "Wow, that does seem easier, for adding and subtracting. But how do you apply this technique to multiplying and dividing?"
+   },
+   {
+    "speaker": "B",
+    "text": "OK, suppose the equation is 200 times 30. 30 is three groups of 10. So, first I imagine 10 groups of people standing in a large field. Next to each group is a sign with the number 200 on it. At the front of the field is a huge sign with the number 2,000 on it, because 200 times 10 equals 2,000, right? But the problem requires 200 times 10 three times, so, I just add two more fields of people to my picture, with two more signs that say 2,000. Now I have 2,000 times three. The answer is 6,000!"
+   }
+  ]
+ },
+ {
+  "number": 22,
+  "title": "I Spy",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "Dad, this is so boring, just sitting back here with nothing to do!"
+   },
+   {
+    "speaker": "M",
+    "text": "Playing a game is a fun way to pass time on a long car trip."
+   },
+   {
+    "speaker": "B",
+    "text": "OK, but what kind of game can we play when we're going 70 miles an hour in a car?"
+   },
+   {
+    "speaker": "M",
+    "text": "Well, when I was young, we used to play a game in the car called \"I Spy.\" One person decides on an object that he or she can see, and tells us its color, then the rest of us have to ask yes-or-no questions to try and find out what it is."
+   },
+   {
+    "speaker": "G",
+    "text": "I'll go first, and I spy something that's. . ."
+   },
+   {
+    "speaker": "B",
+    "text": "Hey, I wanted to go first!"
+   },
+   {
+    "speaker": "M",
+    "text": "Billy, let your sister begin. Remember, it's considered good manners to let girls and younger children have their turn ahead of us."
+   },
+   {
+    "speaker": "G",
+    "text": "Yeah, remember your manners, stupid!"
+   },
+   {
+    "speaker": "M",
+    "text": "Betsy, it's also good manners to treat each other with respect, and not to call people names. I think you need to apologize to your brother."
+   },
+   {
+    "speaker": "G",
+    "text": "I'm sorry, Billy. Let's start, OK? I spy something small and green, it's on the steering wheel, and. . ."
+   },
+   {
+    "speaker": "B",
+    "text": "Stop, Betsy! Dad said that you're only supposed to tell us its color, not its size or location or anything else."
+   },
+   {
+    "speaker": "G",
+    "text": "Oh no, I forgot!"
+   },
+   {
+    "speaker": "M",
+    "text": "That's OK, honey, everybody makes mistakes. Remember the saying: \"If at first you don't succeed, try, try again.\""
+   },
+   {
+    "speaker": "G",
+    "text": "OK, let me try again. I spy something. . ."
+   }
+  ]
+ },
+ {
+  "number": 23,
+  "title": "American Families Today",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "American families today are very different from what they were about a hundred years ago. The main difference is that families are now much smaller. In the past, most families lived on farms. They needed children to help them work. Today, most families live in cities. Parents do not expect their children to work for them. It is also becoming very expensive to raise and educate children. Many parents cannot afford to have a large family. Others think that there are already too many people in the world. If they have more than two children, it will increase the population. Also, the types of families are changing. Statistics show that there are more single parents than ever before. More and more unmarried couples are having children, and a growing number of couples are choosing to have no children at all. Traditional families---a married couple with children---live in less than 25 percent of all US homes. One reason for this trend is the greater number of working women. In the past, women depended on their husbands for money. Now, many women have jobs. They don't have to be married to have money. Another reason is divorce. This is when a husband and wife decide not to be married anymore. Almost half of all US marriages end in divorce. Many people decide not to get married at all. They prefer to be single and live without a husband or a wife."
+   }
+  ]
+ },
+ {
+  "number": 24,
+  "title": "Making Decisions",
+  "turns": [
+   {
+    "speaker": "G",
+    "text": "How does your family make important decisions? Do children have any say in making these decisions, or do parents simply tell them what to do? There are several different methods for making family decisions. One method is to have a vote. Each family member writes his or her own choice on a piece of paper. With this method, each person gets equal say in the issue being decided. What if the vote is a tie? You should think of an idea to break a tie before you vote. A second method is to give older children special privileges. If you're moving into a new home, for instance, the oldest child might get first choice of bedrooms. A third method is to take turns making the decisions. Suppose a family goes on vacation together each year. One year they might let their daughter decide where they should go. The next year, the choice goes to the son. A fourth method is to let the head of the household decide what is best. That is the way we do it in my family. The head of our household, my father, listens to all our opinions. Then he makes a decision. We agree to follow his decision, even if we don't like it. Making family decisions is not always easy. The important thing is to choose a method that everyone agrees on. That could cause a problem, however. Which method should you use to decide which method to choose for making decisions?"
+   }
+  ]
+ },
+ {
+  "number": 25,
+  "title": "My Favorite Teacher",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "The best teacher I've ever had was Mr. Lambert, my high school French teacher. He was short, with dark hair, a thick beard, and a big smile. His legs were short, too, so his arms always looked too long. He was a very good teacher because he always brought so much energy to the classroom. His classes were never boring because he was always active, trying to find new methods to communicate ideas. Because he taught French, English wasn't allowed in class, so he often had to demonstrate the meaning of new words through gestures and acting. Once, he had to communicate the word \"above\" without saying it in English. First, he pulled a desk near the blackboard, and then put a wastebasket between the desk and the blackboard. Next, he put his feet on the edge of the blackboard and his hands on the desk so that he was above the wastebasket. I've never forgotten that demonstration. It was difficult not to enjoy the subject when he was so excited about teaching it. The most important reason that Mr. Lambert is the best teacher I've ever had is that he loved all his students, even when we made him angry by speaking English in class. Whenever that happened, the students always felt guilty because they had so much respect for him. Now that I'm a teacher, I try my best to be like Mr. Lambert. He is my role model."
+   }
+  ]
+ },
+ {
+  "number": 26,
+  "title": "Meet Debra",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "Hi! My name is Debra Garrel. I'm a 20- year-old communications major at New York University. I love being at university. I'm enjoying my courses and I meet many new people every day. It seems like a new adventure, and I love adventures! I spent my childhood traveling all over the world and learning about different cultures. You see, my father works for the World Bank, so our family has always moved around a lot. I've lived in Mongolia, East Timor, Brazil, Nigeria, the Netherlands, and the United States. The hardest part of growing up was saying goodbye each time we had to move. But I would always remind myself that I would make new friends soon, and I always did. I've learned not to be shy! After leaving one place, I would always email or call my old friends. I would tell them about the new adventures I was having, and ask them about new things in their lives. That is probably the reason I chose to major in communications. I like to keep in touch. It's obvious that I love to travel, isn't it? But I also enjoy dancing, reading, going to the theater, and riding horses. If you share any of these interests and would like to learn more about me, please let me know. And if you have different interests, I'll remind you: I'm always looking for a new adventure!"
+   }
+  ]
+ },
+ {
+  "number": 27,
+  "title": "What's in a Name?",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "Sy, do you have a local driver's license that we can rent the car with for our trip this weekend?"
+   },
+   {
+    "speaker": "M",
+    "text": "Sure, Jen, here you are."
+   },
+   {
+    "speaker": "W",
+    "text": "It says here that your name is Sarang Patel, but I thought your first name was Sy!"
+   },
+   {
+    "speaker": "M",
+    "text": "Sy is my nickname, and Sarang is my given name. It means \"navigator\" in Hindi. At the time I was born, things were confusing and difficult for my family in India. My parents wanted a son who could lead and guide our family to success."
+   },
+   {
+    "speaker": "W",
+    "text": "Well, I just hope you can lead and guide all of us to the beach this weekend."
+   },
+   {
+    "speaker": "M",
+    "text": "Ha ha, very funny! So, your nickname is Jen, and your given name's Jennifer. Do you know how you got that name?"
+   },
+   {
+    "speaker": "W",
+    "text": "Actually, I was named after my father's grandmother, Guinevere."
+   },
+   {
+    "speaker": "M",
+    "text": "Wasn't Guinevere the wife of King Arthur in that old story from England?"
+   },
+   {
+    "speaker": "W",
+    "text": "Yes she was, and her name means \"pure.\""
+   },
+   {
+    "speaker": "M",
+    "text": "It's interesting how people get their names. In India, we don't name children after their relatives like they do in America. To me, it's strange to see names like Jack Johnson Junior and George Bush Senior."
+   },
+   {
+    "speaker": "W",
+    "text": "Usually it's a way to show respect for a person, but some people make it ridiculous. You've heard about George Foreman, the famous boxer, haven't you?"
+   },
+   {
+    "speaker": "M",
+    "text": "No."
+   },
+   {
+    "speaker": "W",
+    "text": "Well, he had five boys, and he named each one of them George, after himself."
+   },
+   {
+    "speaker": "M",
+    "text": "It must be confusing when the phone rings at his house!"
+   }
+  ]
+ },
+ {
+  "number": 28,
+  "title": "The Right Career",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "People need to consider important factors when choosing a career. In my opinion, the most important factor is to choose a job that goes well with your personality. Are you an outgoing person who loves meeting new people and talking to them? Perhaps you should become a tour guide or a teacher. Are you shy? Maybe you should be an accountant or a scientist. Remember, you will do your job almost every day. If you have to change your personality when you work, you probably won't be very happy. And neither will the people you work with. Nobody wants an unfriendly tour guide or an impatient teacher. Are you a moody person? In most jobs, you will be expected to control your emotions. That's hard to do if your mood changes often. In that case, you might want to work alone. Perhaps you could be a writer or an artist. There are other factors to consider, such as salary and status. However, what good is a large salary or high status if you don't like your job? You should consider your personality, find out what you are very good at doing, and then find the right career to go with all this. Too many people choose a career because it pays well. Too often, they find they don't like their jobs. But by then they feel like they're in a trap, and they can't escape. Finding a good career is important. Think about it and choose carefully."
+   }
+  ]
+ },
+ {
+  "number": 29,
+  "title": "Body Language",
+  "turns": [
+   {
+    "speaker": "G",
+    "text": "Did you know that words are not the only thing we use to communicate? Most of our messages are sent through body language. Only about 10 percent of communication is done through the actual words of a conversation. Isn't that strange? If we understand body language well, we can learn a lot more about what other people really think. We can also use body language to send the right message to others. Have you ever felt dislike for someone without knowing why? Well, he or she might have been sending out a negative message through body language. What kind of things should you look for if you want to understand body language? First, look at people's eyes. If people are lying, they may not look directly at the person they are talking to, and the pupils of their eyes may shrink. Next, look at people's arms. Arms crossed in front of the body might mean a person is unfriendly or afraid. He or she might be trying to say, \"Stay away.\" If the arms are by the side or at the back of the body, the person might be saying, \"Come closer. I won't hurt you.\" But keep in mind that there is no accurate way to interpret body language all the time. Sometimes, talking is still the best way to communicate. However, knowing about body language will improve the way you communicate and help you understand other people better."
+   }
+  ]
+ },
+ {
+  "number": 30,
+  "title": "Veterinarians",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "If you like animals and science, you might want to be a veterinarian. Veterinarians are animal doctors. They take care of sick and injured animals. Like doctors, vets perform surgery and give medicine. When an animal is sick, vets examine it to find out why. They look for clues in the way an animal looks and acts. For example, if a dog is walking in a strange way, it might have injured its leg. Vets need to observe animals carefully, since animals cannot speak to tell anyone what is wrong. Vets prevent health problems in animals by giving vaccinations and check-ups and fixing teeth. They also teach owners how to feed and train their animals. Vets use special tools to perform surgery. They fix broken bones, take out tumors, take X-rays, and treat wounds. Most vets treat small pets, including dogs and cats. A few vets focus on large animals, such as sheep, cows, and horses. Large-animal vets usually drive to ranches and stables where their patients live. Often, they help when the animals give birth. Vets who work with large animals often work outside in all kinds of weather. A few vets work in zoos and aquariums. They care for zebras, sharks, and other wild creatures. Because animals can get sick at any time, vets often work long hours. Many vets like their work because they can be with animals every day, even though sick animals can sometimes bite or kick their vets."
+   }
+  ]
+ },
+ {
+  "number": 31,
+  "title": "I Feel Awful!",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "Mom, I feel awful, I think I'd better stay home from school today."
+   },
+   {
+    "speaker": "W",
+    "text": "I'm sorry you're not feeling well. What's the problem?"
+   },
+   {
+    "speaker": "B",
+    "text": "I have a stomachache, my head hurts, and I have a sore throat."
+   },
+   {
+    "speaker": "W",
+    "text": "Well, we'd better take your temperature and make sure you don't have a fever. Keep this thermometer under your tongue for a minute or two. Remind me to call your teacher and tell her you're sick later on today. All right, let's check. Oh dear, you've got a fever. Your temperature is 103, so I think we need to give Dr. Thompson a call."
+   },
+   {
+    "speaker": "B",
+    "text": "I don't understand how my head can be so hot when my body feels so cold."
+   },
+   {
+    "speaker": "W",
+    "text": "That's called the chills, and they often come along with fever. You've certainly got a fever."
+   },
+   {
+    "speaker": "B",
+    "text": "But what about my stomachache, and my sore throat?"
+   },
+   {
+    "speaker": "W",
+    "text": "Well, that's another reason we need to go see Dr. Thompson, because when you have a stomachache, fever, chills, and a sore throat, it usually means that you have something more serious than a common cold. I think you've probably got the flu."
+   },
+   {
+    "speaker": "B",
+    "text": "I hope it's not too serious, because we've got a basketball game Thursday, and the coach told me that I'll probably start."
+   },
+   {
+    "speaker": "W",
+    "text": "If you want to recover from the flu in time for your game, you'd better get plenty of rest, take the medicine the doctor gives you, and drink plenty of water."
+   },
+   {
+    "speaker": "B",
+    "text": "I promise I will, Mom. Let's go and see Dr. Thompson now."
+   }
+  ]
+ },
+ {
+  "number": 32,
+  "title": "Why Do We Sneeze?",
+  "turns": [
+   {
+    "speaker": "G",
+    "text": "A sneeze is a very interesting thing. We use many different muscles when we sneeze. These include stomach muscles, throat muscles, and eye muscles. Remember, our eyes always close during a sneeze. A sneeze begins when something gets inside your nose, like a tiny particle of dust. Your nose sends a message to your brain. Your brain sends messages to the muscles, getting them to work together in the correct order. When you sneeze, the dust that was in your nose flies out as fast as 100 miles an hour! Usually something like dust or cold air makes us sneeze, but some people sneeze whenever they look at the sun. Some people think that your heart stops when you sneeze. Actually, it really doesn't, but sometimes it might feel like it does. After someone sneezes, people often say \"Bless you,\" or \"God bless you.\" To bless someone means to wish them good and special things. Why do people say this? Long ago, people believed that this saying kept bad things from flying down your throat. Another story is that people thought this saying would help keep the person who sneezed from getting a very serious disease called the plague. At that time, the plague was killing thousands of people. It was thought that saying \"God bless you\" would protect people from getting this awful disease. Today, the saying is simply a nice way to wish someone well."
+   }
+  ]
+ },
+ {
+  "number": 33,
+  "title": "Skiing and Snowboarding",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "My name is Michael Bryce, and I love to ski and snowboard. I am 16 years old, and I have been skiing since I was five, and snowboarding since I was eight. Both my parents like skiing, and my older brother likes snowboarding. In my opinion, snowboarding is more fun and exciting than skiing. When I ski, it feels really easy to control where I go and how I move. The ski poles make it very simple to change my direction. There are no poles in snowboarding, however, so when you snowboard, you have to understand the snow very well to make sure you don't fall. The feeling I get while I'm snowboarding is more exciting than when I'm skiing, because I like having less control. I enjoy the challenge. I never know what's going to happen. This makes it more exciting! Some people think that the reduced amount of control in snowboarding makes the sport more dangerous. But in my opinion, snowboarding is actually safer than skiing, because when you ski, you are standing on two skis. If you fall while on skis, it is very easy to break your bones by getting your skis stuck in the snow. On a snowboard, your legs stay together even when you fall. While I still love to ski, I like snowboarding much better. It is more fun and exciting, and maybe even safer, than skiing."
+   }
+  ]
+ },
+ {
+  "number": 34,
+  "title": "A Nice Cup of Tea",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "Could I offer you a cup of tea?"
+   },
+   {
+    "speaker": "W",
+    "text": "Yes, thank you very much. What kind do you have?"
+   },
+   {
+    "speaker": "M",
+    "text": "I have Earl Grey, English Breakfast, Irish Breakfast, and Darjeeling."
+   },
+   {
+    "speaker": "W",
+    "text": "Those are all black teas. Do you have any green tea?"
+   },
+   {
+    "speaker": "M",
+    "text": "I'm sorry, I don't really like green tea."
+   },
+   {
+    "speaker": "W",
+    "text": "How could you not like green tea? It's so much easier to drink than black tea."
+   },
+   {
+    "speaker": "M",
+    "text": "I just don't think green tea tastes as good as black tea. Green tea has a simple flavor, but black tea has many kinds of flavors."
+   },
+   {
+    "speaker": "W",
+    "text": "Well I don't taste many flavors when I drink black tea. It just tastes bitter to me."
+   },
+   {
+    "speaker": "M",
+    "text": "Then you should drink more black tea, because after drinking it for a while, you begin to appreciate its flavor."
+   },
+   {
+    "speaker": "W",
+    "text": "Whatever its flavor, black tea can't be nearly as healthy as green tea. I read about a study last week that showed people who drink green tea are less likely to get serious diseases, like cancer or heart disease."
+   },
+   {
+    "speaker": "M",
+    "text": "Well, history tells us that in the past, good black tea has been considered more valuable than gold. Wars have been started over it."
+   },
+   {
+    "speaker": "W",
+    "text": "Really? Which wars?"
+   },
+   {
+    "speaker": "M",
+    "text": "The American Revolution."
+   },
+   {
+    "speaker": "W",
+    "text": "The American Revolution had nothing to do with tea!"
+   },
+   {
+    "speaker": "M",
+    "text": "One of the things that started the Revolutionary War was an incident where a group of Americans dumped a British shipment of tea into the ocean in Boston. This was called the Boston Tea Party, and it had nothing to do with green tea!"
+   }
+  ]
+ },
+ {
+  "number": 35,
+  "title": "The Injury",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "I've just returned from the doctor's office, and he told me that because of my injury I will have to miss the next two weeks of basketball. I'm really disappointed! Last night, I hurt my ankle during a very exciting game against West High School. It was five minutes before the end of the game, the score was 60-60, I had the ball, and I heard my coach shouting at me to shoot. So I started to jump, but suddenly I found myself lying flat on my back on the court! A West High player had accidentally knocked me down. I tried to stand up, but my ankle hurt so much that I was unable to walk. Two of my teammates had to help me leave the court. My ankle started to swell up, so the team doctor brought me a bag of ice to put on it. The ice was cold, but it felt good on my ankle. When the swelling on my ankle reduced a little, my coach asked the doctor if he thought I would be able to play any more. But the doctor replied that I would have to sit out the rest of the game and come to see him the next day. Not only did I receive an injury, but we also lost the game by a score of 68-66. What a disappointing night!"
+   }
+  ]
+ },
+ {
+  "number": 36,
+  "title": "Moving",
+  "turns": [
+   {
+    "speaker": "M",
+    "text": "Hey, Sheena! I haven't seen you for ages. What's new? Where are you going with all those suitcases?"
+   },
+   {
+    "speaker": "W",
+    "text": "Hi Mark, it's been a while since the last time we ran into each other! I'm bringing these suitcases home to pack because my family is preparing to move across the bay to Port Anderson."
+   },
+   {
+    "speaker": "M",
+    "text": "Really? How are you going to transport all your furniture?"
+   },
+   {
+    "speaker": "W",
+    "text": "I'm not sure. I considered hiring a moving van, but someone told me it might be more convenient to rent a huge container and ship everything across. The details are a bit complicated because we've got so many boxes!"
+   },
+   {
+    "speaker": "M",
+    "text": "Well, when my sister and brother-in-law moved to Dallas last year, they sent all their furniture and heavy items by cargo flight. They hauled it there on a massive cargo plane, then rented a truck and picked it up at the airport after they arrived."
+   },
+   {
+    "speaker": "W",
+    "text": "That's interesting, but the problem is that we have so much junk, we might need two cargo planes!"
+   },
+   {
+    "speaker": "M",
+    "text": "Well, however you get it there, it sounds like you'll need help once you get it to the other side. I've got a friend there who owns a self-serve truck company. He can rent you a truck at a discount rate. Which day are you moving?"
+   },
+   {
+    "speaker": "W",
+    "text": "Next Saturday."
+   },
+   {
+    "speaker": "M",
+    "text": "I'm free that day, so I'll help you out! I've still got my small truck, so I can haul some stuff for you, too."
+   },
+   {
+    "speaker": "W",
+    "text": "Thanks, Mark. That would be great!"
+   }
+  ]
+ },
+ {
+  "number": 37,
+  "title": "Wear Your Seat Belt!",
+  "turns": [
+   {
+    "speaker": "G",
+    "text": "Some people think the government should require passengers by law to wear seat belts in cars and taxis. They say that seat belts save lives and money. Statistics show that 60 percent of people killed in car accidents were not wearing seat belts. Statistics also show that most people who wear seat belts survive. In the past 30 years, seat belts have saved almost $600 billion in medical costs. The average car accident costs $820 for each person in the United States. Some states require people to wear seat belts. In those states, about 80 percent of the passengers follow the law. However, other people think it's wrong to require seat belt use by law. They say that passengers should decide for themselves. Many of these people agree that seat belts save lives, but they don't think the government has the right to force people to wear them. They point out that smoking cigarettes is also unhealthy. But the government lets adults smoke if they want to. Leaders cannot force people to do what's good, they argue. It's better to educate people so they will want to wear seat belts. Those who want seat belt laws say that the right to public safety is more important than the individual's right to free choice. But their opponents say people must be careful to protect their individual rights. They should decide how to live their lives, not the government. What is your opinion on this?"
+   }
+  ]
+ },
+ {
+  "number": 38,
+  "title": "Going on Vacation",
+  "turns": [
+   {
+    "speaker": "W",
+    "text": "Hey, Carl, I'm surprised to see you here! Jeremy told me that you were on vacation."
+   },
+   {
+    "speaker": "M",
+    "text": "Hi, Shelly. We were visiting some relatives in Sydney, but we returned last night."
+   },
+   {
+    "speaker": "W",
+    "text": "Oh, I've wanted to go to Australia ever since I was little! Tell me what it was like."
+   },
+   {
+    "speaker": "M",
+    "text": "It was fantastic! We fed kangaroos, walked through rainforests, and swam in the ocean. What was really great was when we took a train to Brisbane to see the Great Barrier Reef."
+   },
+   {
+    "speaker": "W",
+    "text": "I've heard that flights to Australia are pretty expensive."
+   },
+   {
+    "speaker": "M",
+    "text": "My dad knows someone who works for Qantas Airlines, so we were able to get a good deal. The tickets were only $800 per person for a round trip."
+   },
+   {
+    "speaker": "W",
+    "text": "Wow, that is a good deal! When we went on vacation to Bangkok last year, it cost $1,000 for a round trip ticket, and Thailand's closer than Australia."
+   },
+   {
+    "speaker": "M",
+    "text": "What did you like best about Thailand?"
+   },
+   {
+    "speaker": "W",
+    "text": "Well, the food was delicious, and riding elephants was exciting, but I'd have to say that the beach was the best part. The only unpleasant part of the trip was after we got home, when we found out that the airline had lost some of our luggage. My father's suitcase and my sister's backpack were missing."
+   },
+   {
+    "speaker": "M",
+    "text": "So, the airline lost two pieces of luggage? How long did it take you to get them back?"
+   },
+   {
+    "speaker": "W",
+    "text": "Three days, but the good news is that when they finally found them, they delivered them right to our front door."
+   }
+  ]
+ },
+ {
+  "number": 39,
+  "title": "Traveling by Airplane",
+  "turns": [
+   {
+    "speaker": "B",
+    "text": "Airplane travelers can choose between three kinds of tickets: first class, business class, and economy class. Most people buy economy class tickets. They are cheaper, so travelers can go to more places more often. Business class is more expensive, with good seats and good service. First class is very expensive, but offers very comfortable seats and excellent service. In economy class, the seats are small and close together. There is not much leg room. In first class, the seats are huge and wider apart. There is lots of room for passengers to stretch their legs. Economy class passengers usually must all watch the same movie. First class passengers have their own TVs, and each person can watch different movies. Economy class passengers eat cheaper food. First class passengers are served delicious, fresh food. It is difficult to sleep in economy class because of the small seats and all the noise. In first class, the large seats can be pushed back to make a comfortable bed. There is a curtain between sections, so it is nice and quiet. Economy class is a good choice for short flights within the same country. Business class or first class is a good choice for business travelers taking an international flight across an ocean. These people often have to get off the plane and go right to work. For them, it is important to arrive fresh, rested, and ready for a full, exciting day."
+   }
+  ]
+ },
+ {
+  "number": 40,
+  "title": "A Family Cruise",
+  "turns": [
+   {
+    "speaker": "G",
+    "text": "Family Cruise Line is offering a new, exciting cruise that the whole family can enjoy! We have a special deal for families all year round on our Family Caribbean Cruise. This special one-week cruise leaves from Miami, Florida and stops at six fantastic Caribbean islands. There is so much for the entire family to see and do! On board, we have a variety of great food for breakfast, lunch, and dinner. We also have lots of interesting and fun activities. There are music and dance shows every evening. We have a movie theater and a KTV bar. For kids, we have shows each day with their favorite TV friends like Mickey Mouse, Goofy, and Elmo. Playing with television characters isn't the only activity children will enjoy. They can play volleyball, swim in one of our three huge pools, or take dancing and art classes. There's so much variety, the kids can try a new activity each day. Mom and Dad can join them, or rest in lounge chairs on our wide ship deck. On shore, you can shop, swim, and enjoy fresh food while you learn all about island life. With four to seven hours on shore each day, you'll have plenty of time to explore each island. Does this sound exciting? It is! So, when it's time to plan your next vacation, remember Family Cruise Line. It will be a trip your family will never forget!"
+   }
+  ]
+ }
+]

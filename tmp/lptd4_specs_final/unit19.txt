@@ -1,0 +1,45 @@
+UNIT 19
+# The Active Leisure Center
+BOX center | aerobics | expert | serious | kindergarten | discount
+
+A
+Where is the new fitness [center] located?
+Are you really [serious] about taking swimming lessons?
+Mila's little daughter will go to [kindergarten] next year.
+Mr. Jones is an [expert] on environmental science.
+[Aerobics] classes use music to help people do active exercise.
+Last week, there was a 50% [discount] on every item in that music store.
+
+B
+Q What is NOT something that the Active Leisure Center has?
+- An indoor swimming pool
+- A sports hall
++ A cafeteria
+- A fitness center
+Q What can you do in the sports hall?
+- Go swimming
++ Play sports
+- Take aerobics classes
+- Talk to a fitness expert
+
+C
+The [center] has a heated outdoor swimming pool with five different water slides for those who want some fun.
+We have running machines, exercise bikes, weight machines and free weights, and daily [aerobics] and jazz dance classes.
+Our fitness [experts] will be happy to provide you with a fitness program to suit your needs.
+We have programs for all ages, from [kindergarten] to high school students, and if you join now, you can even get a family discount.
+
+D truefalse
+T The outdoor pool has five water slides.
+T There are dance classes and exercise bikes in the fitness center.
+T You can sign up for tournaments in the sports hall.
+T There are holiday programs for all ages.
+F The center is open from eight a.m. to eight p.m. during the week.
+
+E passage
+# khoet 120/230 tu; OCR khong khop:
+Bored [with] [nothing] [to] do? Come [and] [check] [out] the Active Leisure Center. We [offer] [something] [for] everyone.
+The [center] [has] [a] heated outdoor [swimming] [pool] with [five] [different] water slides [for] [those] who [want] [some] [fun]. There's [also] [an] [indoor] pool [with] [lanes] for more [serious] [swimmers]. Swimming [lessons] are [available] for all levels.
+The Active Leisure Center [also] [has] [a] [fitness] [center] for those who [want] [to] [exercise]. We have [running] [machines], exercise bikes, [weight] [machines] and free weights, and [daily] [aerobics] and jazz [dance] [classes]. Our [fitness] [experts] will be [happy] [to] [provide] you with [a] [fitness] [program] [to] suit your needs.
+The [center] has a [sports] [hall] where [you] [can] [play] indoor soccer, [badminton], basketball, and [various] [other] [sports]. You [can] [join] community [sports] [groups], [sign] [up] for tournaments, or just [book] [the] [hall] for you [and] [your] [friends] to use.
+With [the] [school] [holidays] coming [soon], why not [come] [and] [find] [out] about [our] [special] [holiday] programs? We [have] [programs] for [all] [ages], from [kindergarten] to high school [students], and [if] you [join] [now], [you] can [even] [get] a family [discount].
+So [come] [and] take advantage [of] [all] [that] the Active Leisure Center [has] [to] [offer]. We're [open] [from] six a.m. to ten p.m. [on] [weekdays], and eight a.m. to eight p.m. [on] [weekends]. For [more] [information], call 325-6188 or [visit] [our] [website] at www.activeleisure.com.

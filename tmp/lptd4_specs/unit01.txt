@@ -1,0 +1,43 @@
+UNIT 1
+# Hibernation
+BOX hibernate | weather | shelter | underground | climate | include
+
+A
+A cave can be good [?] during bad weather.
+We had some very dry [?] from March to May; it didn't rain for three months!
+Polar bears and penguins live in a very cold [?].
+Reptiles [?] snakes, lizards, and turtles.
+Some spiders live in small holes [?]
+When animals [?], they look like they are sleeping.
+
+B
+Q What can happen to hibernating animals when the winters are not cold enough?
+- They sleep until spring.
+- They dig deeper into their hiding place.
+- They wake up and use too much energy.
+- They get sick easily.
+Q According to the passage, why do animals hibernate?
+- To escape the winter cold
+- To search for enough food
+- To find a mate
+- To give birth to their young
+
+C
+Many animals find [shelter] underground.
+Animals that hibernate [include] cold-blooded animals, such as lizards, frogs, and snakes.
+They eat lots of food just before they [hibernate].
+There are also animals in hot [climates] that escape the heat.
+
+D truefalse
+? Only cold-blooded animals hibernate.
+? Fat and blood sugar in their bodies keep hibernating animals alive.
+? Cold winters are very dangerous for hibernating animals.
+? Hibernating animals sleep during the winter months.
+? "Hibernation" during very hot or dry weather is called aestivation.
+
+E passage
+# khoet 146/235 tu; OCR khong khop: 
+Some [animals] [in] [cold] [climates] hibernate. This [means] [that] [they] [spend] the [winter] months in [a] [very] [long] [and] [deep] [sleep]. Many animals [find] [shelter] [underground]. They dig out [shelters] [to] [sleep] in. Animals [that] [cannot] dig find [cracks] [or] [holes] at the base [of] [trees] [and] [bushes]. If they [like] [the] [place] they [find], [they] might [use] [it] [for] years [and] [years].
+Animals [that] [hibernate] [include] cold-blooded [animals], [such] [as] [lizards], frogs, [and] [snakes]. Many warm-blooded [animals] [also] [hibernate], such as mice, [bats], [and] squirrels. When [these] [animals] [are] [hibernating], they seem like [they] [are] [not] [alive] at all. Warm-blooded [animals] [seem] [colder] [to] [the] touch. However, their [blood] [is] [still] [very] warm. Hibernating [animals] [have] [a] [very] [slow] heartbeat. They [almost] [stop] breathing. Extra [blood] [sugar] [and] [fat] in their [bodies] [keep] [them] alive. They [eat] [lots] [of] [food] just before [they] [hibernate].
+Winters [that] [do] [not] [stay] cold are [dangerous] [for] [hibernating] animals. They can [sometimes] [wake] [up] in [their] [shelters] when [it] [gets] [a] [little] warm. Then [they] [use] [energy] [by] [moving] around. During [winter], there [is] [very] [little] food. These [animals] [can] [get] very [thin] [and] weak. If they [move] [around] [too] [much] and [do] [not] [eat], they can die.
+Animals [hibernate] [to] [escape] [the] cold. There are [also] [animals] in [hot] [climates] that [escape] [the] heat. During [very] [hot] [or] [dry] [weather], they sleep [underground]. This [is] [called] aestivation.

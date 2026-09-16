@@ -1,0 +1,42 @@
+UNIT 3
+# How the Dinosaurs Disappeared
+BOX dinosaur | mystery | exist | earthquake | meteor | atmosphere
+
+A
+We can see [?] bones in a museum.
+The crime was a real [?] until the police finally solved it.
+Do you think that ghosts really [?] ？ [?].
+There is oxygen and carbon dioxide in the Earth's [?].
+A [?] just moves through space, but it can sometimes hit a planet.
+There was a small [?] in Japan last week.
+
+B
+Q How do many scientists believe the dinosaurs were killed?
+- By disease
+- By a meteor
+- By climate change
+- By people
+Q What is a big part of the mystery?
+- Why some animals survived
+- Why the meteor didn't kill people
+- How the meteor got to Earth
+- How dinosaurs first appeared
+
+C
+The death of the dinosaurs is a great [mystery].
+They had [existed] for nearly 200 million years.
+The crash caused fires, [earthquakes], and tidal waves.
+Some scientists say the [meteor] alone did not cause dinosaurs to become extinct.
+
+D summary
+? The meteor killed almost 70 percent of all plants and animals on Earth.
+? About 65 million years ago, dinosaurs lived on the Earth.
+? . A big part of the mystery is why some types of animals survived.
+? Many scientists believe that the dinosaurs were killed by a meteor about six to twelve miles wide.
+? Some scientists say the meteor alone did not cause dinosaur extinction.
+
+E passage
+# khoet 143/236 tu; OCR khong khop: planteating 1ou pp
+The [death] [of] [the] [dinosaurs] is a great [mystery]. About 65 [million] [years] [ago], dinosaurs [lived] [all] [over] [the] Earth. They [had] [existed] [for] [nearly] 200 million years. Suddenly, [they] [all] [became] extinct.
+Many [scientists] [believe] [that] [the] [dinosaurs] were killed [by] [a] [large] [meteor]. They think [that] [this] [meteor] was [about] [six] to twelve [miles] wide. It [crashed] [into] southern Mexico [and] [made] [a] [hole] [about] 130 miles wide. The [crash] [threw] [dust] [and] [dirt] into the sky. Dust [clouds] darkened the Earth's [atmosphere]. The [crash] [caused] fires, [earthquakes], [and] tidal waves. The [plants] [were] killed. The [oceans] [were] poisoned. Very soon, [there] [was] [no] [food] left [for] [the] [plant]- [eating] [dinosaurs]. When [they] [died], there was [no] [food] [for] [the] meat-eating [dinosaurs]. The [meteor] [killed] [almost] 70 percent [of] [all] [plants] [and] [animals] [on] Earth. The only [animals] [that] [could] [survive] were [small] [ones] [that] [could] [eat] many [different] [kinds] [of] food.
+Some [scientists] [say] [the] [meteor] [alone] [did] [not] [cause] [dinosaurs] to [become] [extinct]. They think [that] [dinosaurs] were [already] [getting] weaker. They [are] [not] [sure] why. One [reason] [might] be [disease]. Another might be [climate] [change]. A big [part] [of] [the] [mystery] is why [some] [types] [of] [animals] [survived]. If [climate] [change] killed [dinosaurs], it should [also] [have] [killed] frogs. If the [meteor] [killed] most sea reptiles, it [should] [have] [killed] crocodiles. Yet [frogs] [and] [crocodiles] still [exist] [in] [the] [world] today.

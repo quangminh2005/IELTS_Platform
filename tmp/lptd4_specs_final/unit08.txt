@@ -1,0 +1,49 @@
+UNIT 8
+# Inches and Centimeters
+BOX measurement | convert | calculator | height | width | dimensions
+
+A
+The [dimensions] of an object tell us its size.
+Inches and centimeters are two types of [measurement].
+Do you know how to [convert] US dollars into Japanese yen?
+The [height] of the building is 500 meters.
+The [width] of an object tells us how wide it is.
+You may need to use a [calculator] to help you do mathematics.
+
+B
+Q What is the main thing the boy is trying to figure out about the MP4 player?
++ The size of it
+- The number of songs it can store
+- How much it costs
+- How to buy it online
+Q Which of these measurements does the girl NOT help the boy with?
+- Weight
+- Height
++ Price
+- Depth
+
+C
+I'm trying to figure out the [dimensions] of this mp4 player I want to buy, but I'm having trouble converting these English measurements.
+Well, according to my math book, one inch equals 2.54 centimeters, so to [convert] that, we need to multiply each English measurement by that number.
+Wait, I have a [calculator] in my pocket.
+So, its [height] is about nine centimeters and its width is about five centimeters, but what about its weight?
+
+D summary
+5 The price of the MP4 player is in Chinese currency.
+1 The boy wants to know the dimensions of an MP4 player.
+4 The MP4 player seems small and light, even though it can hold 5,000 songs.
+3 The girl helps the boy convert ounces into grams.
+2 The girl helps the boy convert inches into centimeters.
+
+E dialog
+# khoet 121/235 tu; OCR khong khop:
+B: Hi, Julie. I'm [trying] [to] figure out [the] [dimensions] [of] [this] mp4 player [I] [want] [to] [buy], but I'm [having] [trouble] [converting] these English [measurements]. You're really [good] [at] [mathematics], aren't you? It [says] [that] [the] [mp4] [player] is 3.6 [inches] tall [and] [two] [inches] [wide], but [what] [does] [that] [mean] in centimeters?
+G: Well, [according] [to] my math book, [one] [inch] equals 2.54 centimeters, so [to] [convert] [that], we [need] [to] multiply [each] English [measurement] [by] [that] number.
+Wait, I have [a] [calculator] [in] [my] pocket.
+B: Great!
+G: According to [the] [calculator], that [would] [make] [it] 9.1 centimeters [tall] and, let's see, [about] [five] [centimeters] wide.
+B: So, [its] [height] is about nine [centimeters] [and] [its] [width] is about five centimeters, but [what] [about] [its] [weight]? The [website] [says] [that] it [weighs] 3.6 ounces.
+G: We [multiply] 3.6 by 28.3, [which] [is] [the] equivalent in grams, and that [converts] [to] [about] 102 grams.
+B: All right [then], the mp4 player [is] [about] [nine] [centimeters] tall and five [centimeters] [wide], and [weighs] [about] 102 grams. I thought it [would] [have] to have [larger] [dimensions] to be [able] [to] [hold] 5,000 [songs], but it's [small] [and] light! Do you [think] [I] [should] [buy] it, Julie?
+G: It [sounds] [like] [a] [good] product, but it [depends] [on] the price.
+B: Well, now [I] [have] [the] [same] [sort] [of] [problem] again. Could you [help] [me] [figure] [out] how to [convert] Chinese [currency] [to] our currency?

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { AttemptWorkspace } from "@/components/attempt-workspace";
+import { noteLineTimesForUnit } from "@/lib/exam-payload";
 import { detectMultiSelectGroups } from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
@@ -62,6 +63,8 @@ export default async function MaterialPreviewPage({ params }: MaterialPreviewPag
         transcriptTimingJson: unit.transcriptTimingJson,
         defaultTimeLimitMinutes: unit.defaultTimeLimitMinutes,
         metadataJson: unit.metadataJson,
+        // Mốc giờ từng dòng cho chế độ làm từng bước (giống trang làm bài).
+        noteLineTimes: noteLineTimesForUnit(unit),
         questions: unit.questions.map((question) => ({
           id: question.id,
           order: question.order,

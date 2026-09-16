@@ -1,0 +1,52 @@
+UNIT 38
+# Going on Vacation
+BOX kangaroo | deliver | airline | luggage | unpleasant | deal
+
+A
+Can you [?] the parcel to her before Tuesday?
+A [?] is a type of animal that lives in Australia.
+It is very [?] to be caught in a thunderstorm without an umbrella.
+She managed to get a really good [?] on her new car.
+1 need an [?] ticket from New York to Beijing.
+Do you need any help carrying your [?]
+
+B
+Q Which place did the man NOT visit in Australia?
+- Ayers Rock
+- Brisbane
+- Sydney
+- The Great Barrier Reef
+Q What is NOT something the woman did in Bangkok?
+- She rode elephants.
+- She ate delicious food.
+- She walked through rainforests.
+- She went to the beach.
+
+C
+We fed [kangaroos], walked through rainforests, and swam in the ocean.
+My dad knows someone who works for Qantas Airlines, so we were able to get a [good deal].
+The only [unpleasant] part of the trip was after we got home, when we found out that the airline had lost some of our luggage.
+So, the airline lost two pieces of [luggage]?
+
+D truefalse
+? The man was visiting relatives in Sydney.
+? The man fed sharks in Australia.
+? The woman traveled to Bangkok with her father and sister.
+? The woman's airplane ticket was cheaper than the man's.
+? The airline never found the lost luggage at all. A
+
+E dialog
+# khoet 130/248 tu; OCR khong khop: 
+W: Hey, Carl, [I'm] [surprised] to see [you] [here]! Jeremy [told] [me] that you [were] [on] [vacation].
+M: Hi, Shelly. We [were] [visiting] some [relatives] in Sydney, but [we] [returned] last [night].
+W: Oh, I've [wanted] to [go] [to] Australia [ever] [since] I was [little]! Tell me [what] [it] [was] like.
+M: It was [fantastic]! We [fed] [kangaroos], walked [through] [rainforests], and [swam] [in] [the] ocean. What was [really] [great] [was] when [we] [took] [a] [train] to Brisbane [to] [see] [the] Great Barrier Reef.
+W: I've [heard] [that] [flights] to Australia [are] pretty [expensive].
+M: My dad [knows] [someone] who [works] for Qantas Airlines, so [we] [were] [able] to get [a] [good] [deal].
+The tickets were only $800 [per] [person] for a round trip.
+W: Wow, [that] [is] [a] [good] deal! When we [went] [on] [vacation] to Bangkok [last] [year], [it] [cost] $1,000 for a [round] [trip] ticket, and Thailand's [closer] [than] Australia.
+M: What [did] [you] [like] [best] about Thailand?
+W: Well, [the] [food] was [delicious], and [riding] [elephants] was exciting, but I'd [have] [to] [say] that the [beach] was [the] [best] part. The only [unpleasant] [part] [of] [the] [trip] was after [we] [got] [home], when we [found] [out] that the [airline] had lost [some] [of] [our] [luggage]. My father's [suitcase] and my [sister's] [backpack] were [missing].
+M: So, [the] [airline] lost [two] [pieces] of [luggage]?
+How [long] [did] [it] [take] you to [get] [them] back?
+W: Three [days], but [the] [good] [news] is that [when] [they] [finally] found them, they [delivered] [them] right to [our] [front] [door].

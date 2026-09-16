@@ -1,0 +1,44 @@
+UNIT 18
+# Man's Best Friend
+BOX loyal | ailment | burglar | blind | compassion | companion
+
+# CHU Y: muc C co cau 2 cho khoet -> [Why are dogs often called man's best friend]?" Probably bec
+A
+What [?] does your grandfather have that causes him to go to the hospital every month?
+The sick man has a [?] friend who visits him every day in the hospital.
+The old lady has a dog who is her constant [?].
+A. [?] broke into our home and stole our TV and computer.
+A [?] person cannot see with his or her eyes.
+Jimmy felt [?] for the beggar, so he gave him five dollars.
+
+B
+Q According to the speaker, what is NOT true about dogs?
+- Dogs are called “man's best friend."
+- Dogs are loyal and friendly.
+- Dogs are always worse than human companions.
+- Dogs have many good qualities.
+Q According to the speaker, what might be the most important benefit of having a pet?
+- Having better health
+- Learning responsibility
+- Learning compassion
+- Getting exercise
+
+C
+[Why are dogs often called man's best friend]?" Probably because dogs have many of the qualities we want in our human [companions].
+They are [loyal], friendly, never argue, and are always glad to see us.
+Dogs, for example, guard our homes and scare away [burglars].
+Finally, pets teach us [compassion].
+
+D summary
+? By learning to take care of their pets, children learn how to take care of themselves and other people.
+? Pets can also help keep us safe.
+? If we can love our pets, it becomes easier to love each other.
+? Studies have shown that having a pet nearby lowers the blood pressure of elderly people and raises their spirits.
+? Sometimes we prefer the company of animals to that of fellow human beings.
+
+E passage
+# khoet 142/246 tu; OCR khong khop: j0
+Why [are] [dogs] [often] called "man's [best] [friend]?" Probably [because] [dogs] [have] many [of] [the] [qualities] [we] [want] in our [human] [companions]. They are [loyal], [friendly], never argue, and [are] [always] [glad] to see us. This [is] [one] [reason] why we [have] [dogs] and [other] [pets]. Sometimes [we] [might] [even] prefer [the] [company] [of] [animals] to that of [fellow] [human] beings.
+Pets [provide] [us] with [many] [other] [benefits] as well. Studies [have] [shown] that [having] [a] [pet] nearby [lowers] [the] blood pressure of [elderly] [people] and [raises] [their] spirits. One [study] in Britain showed [that] [people] [with] [pets] recovered [more] [quickly] from heart [attacks] than those who didn't [have] [a] [pet]. The [study] [also] [found] that [pet] [owners] suffered from [fewer] [common] [ailments], such as colds, [headaches], [and] [fevers], than [people] who don't [own] pets. [Pets] [help] [children] to learn [responsibility]. By [learning] [to] [take] [care] of their pets, [children] [learn] how to [take] [care] [of] [themselves] and other [people]. Walking dogs [each] [day] gives [children] [regular] exercise.
+Pets [can] [also] help [keep] [us] [safe]. Dogs, [for] [example], guard [our] [homes] and [scare] [away] [burglars]. Guide dogs [help] [blind] [people] "see" when [they] [need] [to] [go] outside. Cats [catch] [mice] and rats [in] [our] [houses].
+Finally, [pets] teach us [compassion]. They [give] [us] [a] [chance] to show [our] [love] to other [living] creatures. If we [can] [love] [our] [pets], it becomes [easier] [to] [love] [each] other. And [that] [might] [be] the [most] [important] [benefit] of all!

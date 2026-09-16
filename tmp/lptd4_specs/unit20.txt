@@ -1,0 +1,51 @@
+UNIT 20
+# The Audition
+BOX audition | script | princess | positive | pirate | sword
+
+A
+An [?] is a way to choose the best actors and actresses for a play or a movie.
+A written [?] tells actors and actresses what they need to say.
+A [?] is the daughter of a king; a prince is the son of a king.
+Last week, I read a story about a [?] who buried his treasure on a small island.
+A [?] is a long, thin weapon made out of steel.
+It is better to have a [?] attitude instead of a negative one.
+
+B
+Q What are the friends mainly talking about?
+- A fairy tale
+- Their English class
+- An audition
+- A sword fight
+Q Which part is the girl trying out for?
+- The princess
+- The queen
+- The witch
+- The pirate
+
+C
+Are you ready for the big [audition] this afternoon?
+I've been practicing the [script] all week, but the princess has so many lines that I don't know if I can remember them all!
+You've got to think [positive] and have some confidence in yourself.
+I'm trying out for the part of the [pirate], the one who tries to steal the princess away from the prince.
+
+D truefalse
+? Cindy has a lot of confidence in herself.
+? Greg is trying out for the part of the prince.
+? Cindy has to remember many lines for the audition.
+? The audition is in the afternoon.
+? Greg has to practice the sword-fighting scene for the audition.
+
+E dialog
+# khoet 124/241 tu; OCR khong khop: 
+B: Hi, Cindy. Are [you] [ready] for [the] [big] [audition] this [afternoon]?
+G: I [don't] [know], Greg. I've been [practicing] [the] [script] all week, but [the] [princess] has [so] [many] lines that I [don't] [know] if I can [remember] [them] all!
+B: You don't [have] [to] [remember] all of them [for] [the] [audition], just the [lines] [for] [the] [main] scene, where [the] [pirate] meets [the] [princess] and [tries] [to] [kidnap] her.
+G: I know, but [even] [in] [that] [scene], the [princess] has quite [a] [few] lines!
+B: You've got [to] [think] [positive] and [have] [some] [confidence] in yourself. I [think] [that] you're going [to] [get] [the] [part], and that [you'll] [be] a fantastic [princess]!
+G: Well, I'm [glad] [that] [somebody] has [confidence] in me. I think I'm [just] [worried] that I'll [forget] [my] lines. By [the] [way], which [part] [are] [you] going to [try] [out] for?
+B: I'm [trying] [out] for [the] [part] of the [pirate], the one [who] [tries] [to] [steal] the [princess] away [from] [the] prince.
+G: Oh yeah, [the] [pirate] and [the] [prince] get to have that cool [sword] [fight] in the [final] [scene], and then [the] [prince] kills the [pirate] with his [own] [sword]!
+B: Yeah, I [remember] reading that [in] [the] [script].
+But at [the] [audition] today, we'll [be] [practicing] the scene [where] [the] [pirate] first sees [the] [princess], and [falls] [in] [love] with her.
+G: Hey, I'll [help] [you] [practice] your scene if you'll [help] [me] [practice] mine.
+B: You've [got] [a] deal! Let's [start] [now].

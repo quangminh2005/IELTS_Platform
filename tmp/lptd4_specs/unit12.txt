@@ -1,0 +1,40 @@
+UNIT 12
+# A Famous Portrait
+BOX apparently | portrait | landscape | model | arrogant | appeal
+
+A
+That dress looks nice on that [?]; I don't think it would look so nice on me!
+Bright colors [?] to young children.
+This country has a beautiful [?] with lots of mountains, trees, and rivers.
+[?], the painting was sold last week to a very rich man.
+A [?] is a painting or photo of someone's face or head.
+An [?] person thinks he or she is better than everybody else.
+
+B
+Q According to the speaker, what is true about the painting?
+- It was made with oil paint.
+- It was the painter's first painting.
+- It was painted in the 1700s.
+Q What is the best-known reason that the painting is famous?
+- It was once stolen in 1911.
+- It was sold to the king of France.
+- It has an unusual landscape.
+- The model has an unusual smile.
+
+C
+The [portrait] was done with oil paint on a simple piece of wood.
+The portrait shows a woman in front of a [landscape] with mountains.
+It is difficult to say if she is being pleasant or looking [arrogant].
+In fact, the painting has so much [appeal] today that it has been copied many times.
+
+D truefalse
+? The Mona Lisa was painted in 1511.
+? Some people think that the artist was also the model.
+? The artist sold the portrait to the king of Italy.
+? The Mona Lisa was once stolen from an art museum.
+? Today, the painting is in a museum in the United States.
+
+E passage
+# khoet 118/236 tu; OCR khong khop: 
+The Mona Lisa [is] [one] of the [most] [famous] [paintings] in the [world]. It was [painted] by [the] [great] Italian [artist], Leonardo da Vinci, [between] [the] [years] 1503 and 1505. The [portrait] [was] [done] with oil [paint] on a [simple] [piece] [of] [wood]. The [portrait] shows [a] [woman] in front of [a] [landscape] with mountains. Many [people] [believe] that [the] [model] for the [painting] was [the] [wife] of an [important] [man] in the [area]. However, [some] [people] now [think] that da Vinci actually [drew] [a] [picture] of himself. They say [the] [face] looks [similar] to his. [Apparently], da Vinci [loved] [the] [painting] so much [that] [he] [carried] it with him [at] [all] [times] until he [sold] [it] to [the] [king] of France.
+The [portrait] [is] [famous] for [several] reasons. The best-known [reason] [is] [for] Mona Lisa's [unusual] [smile]. It is [difficult] [to] [say] if she is [being] [pleasant] or [looking] [arrogant]. Another [reason] the [painting] is [famous] [is] that it [was] [stolen] from [an] [art] [museum] in 1911. Both France and Italy [sent] [people] [to] look for [the] [lost] [painting]. It was [then] [found] two [years] [later] in [a] [hotel] in France. It [is] [currently] on [display] at the Louvre Museum [in] Paris. People from [all] [over] [the] [world] go to [the] [museum] each [year] to [see] [the] Mona Lisa. In fact, [the] [painting] has [so] [much] [appeal] today that [it] [has] [been] [copied] many times.

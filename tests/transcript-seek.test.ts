@@ -38,10 +38,14 @@ describe("bấm transcript để tua audio ở trang kết quả", () => {
     );
   });
 
-  it("AudioPlayer nhận controlRef tùy chọn nhưng trang làm bài KHÔNG truyền", () => {
+  it("AudioPlayer nhận controlRef tùy chọn; trang làm bài CHỈ truyền ở chế độ từng bước", () => {
     expect(readProjectFile("components/audio-player.tsx")).toContain("controlRef?:");
-    // Trang làm bài giữ hành vi thi thật: không có điều khiển tua từ ngoài.
-    expect(readProjectFile("components/attempt-workspace.tsx")).not.toContain("controlRef=");
+    // Trang làm bài giữ hành vi thi thật: điều khiển tua từ ngoài chỉ có ở unit bật
+    // metadata.stepMode (luyện nghe chép chính tả, nút "Nghe lại đoạn này").
+    const workspace = readProjectFile("components/attempt-workspace.tsx");
+    const uses = workspace.match(/controlRef=\{[^}]*\}/g) ?? [];
+    expect(uses.length).toBe(1);
+    expect(uses[0]).toContain("stepMode ?");
   });
 
   it("lưu/import phần nghe có gọi đồng bộ mốc thời gian", () => {

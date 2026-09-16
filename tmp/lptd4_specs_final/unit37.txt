@@ -1,0 +1,42 @@
+UNIT 37
+# Wear Your Seat Belt!
+BOX seat belt | cigarettes | leader | average | safety | smoke
+
+A
+Wearing a [seat belt] in a car can save your life.
+Smoking [cigarettes] can damage your lungs and cause lung cancer.
+When something burns, it usually gives off [smoke].
+What is the [average] height for a ten year old child?
+Children should be taught about road [safety], both at home and in school.
+Who is the [leader] of your team?
+
+B
+Q According to the speaker, why should people be required to wear seat belts?
++ Seat belts save lives and money.
+- Seat belts are very comfortable.
+- Seat belts never fail to work.
+- Seat belts are cheap to install.
+Q Why do some people feel that the law should not require seat belt use?
+- Seat belts may not save lives.
+- Most people do not like them.
++ People should have the right to choose.
+- Seat belts are too expensive.
+
+C
+In the past 30 years, [seat belts] have saved almost $600 billion in medical costs.
+The [average] car accident costs $820 for each person in the United States.
+They point out that smoking [cigarettes] is also unhealthy.
+Those who want seat belt laws say that the right to public [safety] is more important than the individual's right to free choice.
+
+D truefalse
+F Statistics show that 40 percent of people killed in car accidents were not wearing seat belts.
+T Seat belts have saved a lot of money in medical costs in the past thirty years.
+T Some states require the use of seat belts.
+F The government does not let adults smoke, even though they want to.
+F Those who are against seat belt laws say public safety is more important than free choice.
+
+E passage
+# khoet 133/243 tu; OCR khong khop:
+Some [people] [think] the government [should] [require] [passengers] by law [to] [wear] [seat] [belts] in [cars] and taxis. They [say] [that] [seat] [belts] save [lives] [and] [money]. Statistics [show] [that] 60 percent of [people] [killed] in car [accidents] were not [wearing] [seat] [belts]. Statistics also [show] [that] most people [who] [wear] [seat] [belts] survive. In [the] [past] 30 [years], [seat] [belts] have [saved] almost $600 billion [in] [medical] [costs]. The [average] [car] [accident] costs $820 [for] [each] [person] in the United States. Some [states] [require] [people] to wear [seat] [belts]. In [those] [states], about 80 percent [of] [the] [passengers] follow [the] [law].
+However, [other] [people] [think] it's wrong to [require] [seat] [belt] use by [law]. They say [that] [passengers] should [decide] [for] themselves. Many [of] [these] [people] agree that [seat] [belts] [save] [lives], but they [don't] [think] the [government] has the right to [force] [people] [to] wear them. They [point] [out] that [smoking] [cigarettes] is also [unhealthy]. But the [government] lets adults [smoke] [if] [they] [want] to. Leaders [cannot] [force] people [to] [do] what's [good], they [argue]. It's [better] [to] [educate] people so [they] [will] [want] to wear [seat] [belts].
+Those who [want] [seat] [belt] [laws] say that [the] [right] to public [safety] is more [important] than the individual's [right] [to] [free] choice. But [their] opponents [say] [people] must [be] [careful] to [protect] their [individual] rights. They [should] [decide] how to [live] [their] [lives], not the [government]. What [is] [your] [opinion] on this?

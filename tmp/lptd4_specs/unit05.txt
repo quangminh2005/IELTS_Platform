@@ -1,0 +1,51 @@
+UNIT 5
+# The Weather Forecast
+BOX forecast | cancel | resident | continue | unbelievable | groceries
+
+A
+According to the weather [?] it will rain all day tomorrow.
+Mrs. Jones wants to [?] her appointment with the doctor on Tuesday.
+Are you a [?] of this city, or just a visitor?
+I must stop reading my book now; Ill [?] reading it tomorrow morning.
+Did you see how much that TV costs? That's an [?] price!
+My mother goes to the supermarket every week to buy [?].
+
+B
+Q What is the weather forecast for the weekend?
+- A cold spell
+- Clear and sunny
+- Rainier than usual
+- Snow and wind
+Q What are Jenny and Paul planning to do?
+- Swim in the lake
+- Prepare for work
+- Go camping
+- Get married
+
+C
+And now, over to Barry with our weather [forecast] for this weekend.
+Well, Sue, [residents] of Seattle will be happy to hear that this rainy spell we've been having is finally coming to an end.
+It looks like it'll be a clear weekend after all, so we won't have to [cancel] our trip to the lake.
+Let's stop at a store and pick up some [groceries] on the way out.
+
+D summary
+? According to the weather forecast, there will be no rain this weekend.
+? They want to get groceries from a store on the way to the lake.
+? Jenny and Paul are glad that they don't have to cancel their trip.
+? It has been raining for the past two weeks in Seattle.
+? They want to leave at 5:00 pm tomorrow.
+
+E dialog
+# khoet 146/252 tu; OCR khong khop: 
+Part I
+W1: And [now], [over] [to] Barry with [our] [weather] [forecast] for [this] [weekend]. How's it [looking] [for] [this] [weekend], Barry? Speaking for [myself], I know [I'm] [looking] [forward] [to] [clear] skies. The [past] [two] [weeks] have been [even] [rainier] [than] [usual] for Seattle.
+M1: Well, Sue, [residents] [of] Seattle [will] [be] [happy] to hear [that] [this] [rainy] spell we've [been] [having] is [finally] [coming] [to] [an] end.
+Although we've [seen] [occasional] showers [today], by [tonight] [things] [should] [dry] out, and Friday [morning] [should] [be] [clear] [and] [sunny].
+This [fine] [weather] should [continue] [until] the end [of] [the] [weekend], with [temperatures] [ranging] [from] 55 to 75 degrees, so [everyone] [can] [put] [away] [those] umbrellas. Back to you, Sue.
+W1: [Thank] [you], Barry. On [behalf] [of] [the] Thursday Six o'clock News [team], we [wish] [you] [a] [pleasant] [evening].
+Part II
+M2: Did you [hear] [the] [weather] [report], Jenny? It [looks] [like] it'll be [a] [clear] [weekend] [after] [all], so we won't [have] [to] [cancel] [our] [trip] [to] [the] lake.
+W2: That's [almost] [unbelievable]! I'm [really] [looking] [forward] to getting [out] [of] [the] [city] and [camping] [under] [the] stars. But we'd [better] [get] [our] [stuff] [ready] tonight, Paul, if we're [planning] [to] [leave] [tomorrow] right after work.
+M2: Yes, we'll [need] [our] [tent], sleeping bags, [camping] stove, and a cooler [for] [the] [drinks]. What [about] [food]?
+W2: Let's [stop] [at] [a] [store] and [pick] [up] [some] [groceries] on the way out.
+M2: [Sounds] [good]. Well, [we'd] [better] [get] [packing] if we want [to] [be] [ready] [to] [go] by 5:00 p.m. [tomorrow].

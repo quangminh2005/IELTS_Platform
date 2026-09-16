@@ -1,0 +1,50 @@
+UNIT 31
+# I Feel Awful!
+BOX stomachache | fever | thermometer | certainly | plenty | tongue
+
+A
+You taste food with your [?]
+Billy had a [?] after eating too much candy.
+You will [?] pass your exam if you study hard.
+If your body temperature is too high, it means you have a [?].
+There is [?] of coffee still in the pot.
+Doctors use a [?] to take a person's temperature.
+
+B
+Q Why is the boy staying home from school?
+- He has a test.
+- He has the flu.
+- He has a basketball game.
+- He forgot to do his homework.
+Q Why does the boy want to recover soon?
+- He wants to play basketball.
+- He wants to go on a camping trip.
+- He does not like to stay home.
+- He has a test on Thursday.
+
+C
+I have a [stomachache], my head hurts, and I have a sore throat.
+Keep this [thermometer] under your tongue for a minute or two.
+Oh dear, you've got a [fever].
+You've [certainly] got a fever.
+
+D summary
+? I hope it's not too serious.
+? I have a stomachache, my head hurts, and I have a sore throat.
+? You've got a fever; your temperature is 103.
+? If you want to recover soon, get plenty of rest, take your medicine, and drink plenty of water.
+? When you have a stomachache, fever, chills, and a sore throat, you have something more serious than a common cold.
+
+E dialog
+# khoet 128/248 tu; OCR khong khop: 
+B: Mom, I [feel] [awful], I think I'd [better] [stay] [home] from [school] today.
+W: I'm [sorry] you're [not] [feeling] [well]. What's [the] [problem]?
+B: [I] have [a] [stomachache], my [head] hurts, and I [have] [a] [sore] throat.
+W: Well, we'd better [take] [your] [temperature] and [make] [sure] you don't have [a] [fever]. Keep [this] [thermometer] under [your] [tongue] for a [minute] [or] two. Remind me [to] [call] [your] [teacher] and tell her [you're] [sick] [later] [on] today. All right, let's [check]. Oh dear, you've [got] [a] [fever]. Your [temperature] [is] 103, so I think [we] [need] [to] [give] Dr. Thompson a call.
+B: I [don't] [understand] how [my] [head] can be [so] [hot] when my [body] [feels] [so] cold.
+W: That's [called] the chills, and [they] [often] [come] [along] with [fever]. You've [certainly] got a [fever].
+B: But what about [my] [stomachache], and [my] [sore] throat?
+W: Well, that's [another] [reason] we need [to] [go] [see] Dr. Thompson, [because] [when] you have [a] [stomachache], [fever], chills, and [a] [sore] throat, it usually [means] [that] you have [something] [more] [serious] than a common [cold]. [I] [think] you've [probably] [got] the flu.
+B: [I] [hope] it's not [too] [serious], because we've [got] [a] basketball [game] Thursday, and [the] [coach] [told] [me] that I'll [probably] start.
+W: If you [want] [to] [recover] from [the] [flu] in time [for] [your] game, you'd better [get] [plenty] [of] [rest], take the [medicine] [the] [doctor] gives you, and [drink] [plenty] [of] water.
+B: I [promise] [I] [will], Mom. Let's [go] [and] [see] Dr. Thompson now.

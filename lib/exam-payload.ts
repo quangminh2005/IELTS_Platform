@@ -10,6 +10,9 @@
 // làm bài không cần những trường này. Trang xem trước của giáo viên thì vẫn
 // truyền đủ — ở đó lộ đáp án là đúng ý đồ.
 
+import { computeNoteLineTimes, type LineTime } from "@/lib/dictation-steps";
+import { parseQuestionOptions, parseUnitMetaFlag, parseUnitMetaString } from "@/lib/question-interactions";
+
 // Chỉ khai báo những trường hàm này ĐỌC, không phải toàn bộ cột của Prisma —
 // nhờ vậy nhận thẳng kết quả query mà không cần ép kiểu.
 type RawAssignmentUnit = {
@@ -24,6 +27,10 @@ type RawAssignmentUnit = {
     instructions: string | null;
     content: string;
     audioUrl: string | null;
+    // Chỉ đọc ở server để tính mốc giờ từng dòng cho chế độ làm từng bước
+    // (metadata.stepMode) — KHÔNG đi xuống client.
+    transcript?: string | null;
+    transcriptTimingJson?: string | null;
     defaultTimeLimitMinutes: number | null;
     metadataJson: string | null;
     questions: Array<{
@@ -32,10 +39,38 @@ type RawAssignmentUnit = {
       questionType: string;
       prompt: string;
       optionsJson: string | null;
+      correctAnswerJson?: string | null;
       points: number;
     }>;
   };
 };
+
+// Mốc [giây bắt đầu, giây kết thúc] của từng dòng noteBody — chỉ có ở unit bật
+// stepMode và có transcript đã đồng bộ mốc giờ. Toàn số nên gửi xuống client an toàn.
+export function noteLineTimesForUnit(
+  unit: RawAssignmentUnit["assignableUnit"]
+): Array<LineTime | null> | null {
+  if (!parseUnitMetaFlag(unit.metadataJson, "stepMode")) {
+    return null;
+  }
+  const noteBody = parseUnitMetaString(unit.metadataJson, "noteBody");
+  if (!noteBody || !unit.transcriptTimingJson) {
+    return null;
+  }
+  const answersByOrder: Record<number, string> = {};
+  unit.questions.forEach((question) => {
+    const [first] = parseQuestionOptions(question.correctAnswerJson);
+    if (first) {
+      answersByOrder[question.order] = first;
+    }
+  });
+  return computeNoteLineTimes({
+    noteBody,
+    answersByOrder,
+    transcript: unit.transcript,
+    transcriptTimingJson: unit.transcriptTimingJson
+  });
+}
 
 export type ExamUnitForStudent = {
   id: string;
@@ -54,6 +89,7 @@ export type ExamUnitForStudent = {
     transcript: null;
     defaultTimeLimitMinutes: number | null;
     metadataJson: string | null;
+    noteLineTimes: Array<LineTime | null> | null;
     questions: Array<{
       id: string;
       order: number;
@@ -84,6 +120,7 @@ export function examUnitsForStudent(units: RawAssignmentUnit[]): ExamUnitForStud
         transcript: null,
         defaultTimeLimitMinutes: unit.defaultTimeLimitMinutes,
         metadataJson: unit.metadataJson,
+        noteLineTimes: noteLineTimesForUnit(unit),
         questions: unit.questions.map((question) => ({
           id: question.id,
           order: question.order,

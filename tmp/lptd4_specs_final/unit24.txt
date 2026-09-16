@@ -1,0 +1,45 @@
+UNIT 24
+# Making Decisions
+BOX method | equal | vote | privilege | choice | household
+
+A
+The average [household] is made up of two parents and one or more children.
+Which [method] do you think is best for learning French?
+People [vote] during an election to choose the leaders of their country.
+You have done so well on the exam! You have earned the [privilege] of going to the concert.
+If you had to make a [choice] between cheesecake and chocolate cake, which would you choose?
+You and your sister have an [equal] amount of rice on your plates.
+
+B
+Q According to the speaker, what is NOT true about voting?
+- Each family member has one vote.
+- Each family member has an equal say in what is being decided.
++ Only parents and older children can vote.
+- You should think of a way to break a tie before you vote.
+Q Which method of making family decisions is NOT mentioned by the speaker?
+- Having a vote
+- Letting the head of the household decide
+- Taking turns to make decisions
++ Giving younger children privileges
+
+C
+One [method] is to have a vote.
+You should think of an idea to break a tie before you [vote].
+A second method is to give older children special [privileges].
+A fourth method is to let the head of the [household] decide what is best.
+
+D truefalse
+F In a vote, some people have more say than others.
+T Some families give older children special privileges.
+F Family members should never take turns to make decisions.
+F The head of a household must not listen to others before making a decision.
+T It is important to choose a method that everybody agrees on.
+
+E passage
+# khoet 134/249 tu; OCR khong khop:
+How [does] [your] [family] make [important] [decisions]? Do [children] have any say in [making] [these] [decisions], or do [parents] simply [tell] [them] [what] to do? There are [several] [different] [methods] for making [family] decisions.
+One [method] is to [have] [a] [vote]. Each [family] [member] writes [his] [or] [her] [own] [choice] on a [piece] [of] paper. With [this] [method], each person [gets] [equal] [say] in the [issue] being decided. What [if] [the] [vote] [is] a tie? You should [think] [of] [an] [idea] to break [a] [tie] before [you] [vote].
+A second [method] is to [give] [older] [children] special [privileges]. If you're [moving] [into] [a] [new] home, for [instance], the [oldest] [child] might get [first] [choice] of bedrooms.
+A [third] [method] is to [take] [turns] making [the] [decisions]. Suppose [a] [family] goes on [vacation] [together] each year. [One] [year] they might [let] [their] [daughter] decide [where] [they] [should] go. The [next] [year], the [choice] [goes] [to] the son.
+A fourth [method] is to let [the] [head] [of] [the] [household] decide [what] [is] best. That is [the] [way] [we] [do] [it] in my [family]. The head of [our] [household], my [father], listens to [all] [our] [opinions]. Then he [makes] [a] [decision]. We [agree] [to] [follow] his decision, [even] [if] [we] don't like it.
+Making [family] [decisions] is not [always] [easy]. The [important] [thing] is to [choose] [a] [method] that everyone [agrees] on. That [could] [cause] a [problem], however. Which [method] should you [use] [to] [decide] which [method] to choose [for] [making] decisions?

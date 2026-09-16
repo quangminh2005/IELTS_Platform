@@ -1,0 +1,41 @@
+UNIT 7
+# The White Noise Machine
+BOX reduce | microphone | contest | powerful | frequency | invisible
+
+A
+The winner of the [?] will get a prize.
+1'd like to [?] my weight through diet and exercise.
+Please speak into the [?] so that everyone can hear you clearly.
+Something that is [?] cannot be seen.
+We measure a sound by its [?]
+A tidal wave can be [?] enough to destroy villages by the sea.
+
+B
+Q What is dark noise made up of?
+- Sounds you hear at night
+- Sounds that are very quiet
+- Sounds that help you sleep
+- Sounds that disturb your concentration
+Q What is NOT true about the white noise machine?
+- It does not need a microphone.  (b) It reduces the effects of dark noise.
+- It was invented by Charles Moore.(d) It determines the frequency of sounds.
+
+C
+Here's the winner of this year's science [contest]: Charles Moore!
+White noise is made up of [invisible] waves of sound that reduce the effects of dark noise by making sounds of the opposite frequency.
+As a sound enters the [microphone], the machine determines the sound's frequency.
+Then it makes a sound in the opposite [frequency] that cancels out the first sound.
+
+D truefalse
+? Charles Moore invented a dark noise machine.
+? White noise can be heard if you listen carefully.
+? White noise is made up of invisible sound waves.
+? Examples of white noise include sounds from traffic and loud music.
+? The machine makes white noise in an opposite frequency to dark noise.
+
+E dialog
+# khoet 136/239 tu; OCR khong khop: pnol 10 j0
+W: And now [ladies] [and] [gentlemen], the moment [you] [have] [all] been [waiting] [for]. Here's [the] [winner] [of] this year's [science] [contest]: Charles Moore! Charles, tell [everyone] [about] your [invention].
+M: [Thank] [you]! For the [science] [contest] [this] [year], I've [invented] [a] white noise [machine]. Let me [explain] [what] [that] is. Have [you] [ever] [been] kept awake [at] [night] [because] of the [sound] [of] [traffic], [or] [people] [talking], [or] [loud] [music]? These [types] [of] [noise] are [sometimes] [called] dark noise. Dark [noise] [is] [made] [up] [of] [sounds] that bother [you] [so] [much] that you [can't] [concentrate] on [what] [you] [are] doing.
+White noise [is] [not] [exactly] [noise]; in fact, [white] [noise] can't be [heard] [at] all. White [noise] [is] made up of [invisible] [waves] of sound that [reduce] [the] [effects] of [dark] [noise] by [making] [sounds] of the [opposite] [frequency]. It's like being [in] [the] [ocean] and seeing [a] [large] [wave] coming toward [you]. It might [knock] [you] down. But [if] [you] [could] send [a] [wave], or many [small] [waves], toward the [big] [wave], it wouldn't be [as] [powerful], because [the] [small] [waves] would hit it [and] [reduce] [its] size.
+My [machine] does this [with] [sound]. As a [sound] [enters] the [microphone], the [machine] determines the [sound's] [frequency]. Then it [makes] [a] [sound] in the opposite [frequency] [that] [cancels] out the [first] sound. I hope [my] [machine] will give [some] [peace] [and] [quiet] to people [living] [in] [noisy] places. [Thank] [you].

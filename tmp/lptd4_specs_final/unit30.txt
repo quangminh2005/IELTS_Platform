@@ -1,0 +1,44 @@
+UNIT 30
+# Veterinarians
+BOX veterinarian | injured | observe | vaccination | surgery | aquarium
+
+A
+Fish are usually kept in an [aquarium].
+Sharon accidentally [injured] her hand.
+The doctor is giving the child a [vaccination] so that she does not catch measles.
+Please [observe] the experiment carefully so that you notice what happens.
+We took our cat to the [veterinarian] when it was sick.
+Mrs. Jones is scheduled to go to the hospital for [surgery] on Tuesday.
+
+B
+Q What is NOT something that a vet can do?
++ Give people medicine
+- Give vaccinations
+- Perform surgery
+- Take X-rays
+Q Which two places where vets work does the speaker mention?
++ Farms and zoos
+- Homes and schools
+- In hospitals and on boats
+- Mountains and jungles
+
+C
+They take care of sick and [injured] animals.
+Vets need to [observe] animals carefully, since animals cannot speak to tell anyone what is wrong.
+Vets use special tools to perform [surgery].
+A few vets work in zoos and [aquariums].
+
+D truefalse
+T Vets examine sick animals to find out what is wrong.
+F Vets feed and train animals.
+T Vets can fix broken bones and take out tumors.
+T Large-animal vets usually drive to the places where their patients live.
+F Sick animals never bite or kick vets.
+
+E passage
+# khoet 120/244 tu; OCR khong khop:
+If you [like] [animals] and [science], you [might] [want] to be [a] [veterinarian]. Veterinarians [are] [animal] [doctors]. They take care [of] [sick] [and] [injured] animals. Like [doctors], vets perform [surgery] and [give] [medicine].
+When [an] [animal] is sick, [vets] [examine] [it] to find out [why]. They [look] [for] clues in the [way] an [animal] [looks] and acts. For [example], if a dog [is] [walking] in a [strange] [way], it might [have] [injured] its leg. Vets [need] [to] [observe] animals [carefully], since animals [cannot] [speak] to tell [anyone] what [is] [wrong].
+Vets prevent [health] [problems] in animals by [giving] [vaccinations] and check-ups and [fixing] [teeth]. They also [teach] [owners] how to [feed] [and] [train] their animals. Vets use [special] [tools] to perform [surgery]. They fix [broken] [bones], take out tumors, [take] X-rays, and [treat] wounds.
+Most vets [treat] [small] [pets], including [dogs] [and] [cats]. A few vets [focus] [on] large [animals], such as [sheep], cows, [and] [horses]. Large-animal [vets] [usually] [drive] to ranches and stables [where] [their] patients live. Often, [they] [help] when [the] [animals] give birth. Vets who [work] [with] [large] [animals] often work [outside] [in] [all] [kinds] of weather.
+A few vets [work] [in] [zoos] and [aquariums]. They [care] [for] zebras, sharks, [and] [other] [wild] creatures. Because [animals] [can] [get] [sick] at any time, [vets] [often] [work] long hours. Many vets [like] [their] [work] because they [can] [be] [with] [animals] every day, even though [sick] [animals] can [sometimes] [bite] or kick [their] vets.

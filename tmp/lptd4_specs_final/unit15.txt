@@ -1,0 +1,53 @@
+UNIT 15
+# A Nice Gift
+BOX wedding | married | present | register | department store | couple
+
+A
+I am going to attend a [wedding] this Saturday.
+You need to [register] for school before you begin taking classes.
+You can buy all kinds of things at a [department store], such as clothes, CDs, toys, and furniture.
+I want to buy a [present] for my friend. It is her birthday tomorrow.
+Jim and Sharon got [married] three years ago.
+The young [couple] will have a baby in June.
+
+B
+Q Where have the man and woman been invited?
+- To a housewarming party
++ To a wedding
+- To a graduation
+- To a birthday party
+Q What gift do they decide to buy?
++ A coffee maker
+- Towels and linens
+- Crystal glasses
+- Garden tools
+
+C
+We've been invited to Lisa and Tom's [wedding] in August, so we need to get them a present.
+Most couples who are getting [married] go to several department stores and make a list of what they would like, and the stores put the list into a computer system.
+Yes, they are registered at two [department stores].
+I think that will make a lovely wedding [present].
+
+D truefalse
+T Tom and Lisa are going to get married.
+F Lisa and Tom have not registered at any department stores.
+T Among the gifts they have listed are kitchen appliances and silverware.
+F The coffee maker costs fifty dollars.
+F The man and woman decide to buy Lisa and Tom some crystal glasses.
+
+E dialog
+# khoet 143/243 tu; OCR khong khop:
+W: We've [been] [invited] to Lisa and Tom's [wedding] [in] August, so we [need] [to] [get] them [a] [present].
+Do you [have] [any] [ideas] about [what] [to] [buy] them?
+M: I [don't] [know]. I'm [not] [very] [good] at [buying] [gifts] for people. What [do] [you] [usually] [buy] people [for] [wedding] gifts?
+W: I'd like [to] [buy] [something] that they [have] [especially] [asked] for. Most [couples] [who] [are] [getting] [married] go to [several] [department] [stores] and [make] [a] [list] of what [they] [would] [like], and the [stores] [put] [the] [list] into a [computer] system. Then you [can] [go] and [print] [out] [the] [list] [and] choose [something] [that] [they] [would] like.
+M: Are Lisa and Tom [registered] [somewhere]?
+W: Yes, [they] [are] [registered] at two [department] [stores]. I've already [printed] [out] [their] [list] from [one] [store].
+M: What [have] [they] [asked] for?
+W: Well, [they] [have] [asked] for [different] [things] for their [new] [house]. They [would] [like] towels, linens, [decorations] [for] [the] [house], small appliances [for] [the] [kitchen], china, silverware, crystal [glasses], [garden] tools, [and] [a] patio set.
+M: Wow! That's [a] [lot] [of] [stuff], how should [we] [decide] [what] to get them?
+W: They [have] [listed] [a] coffee maker as [one] [of] [the] [things] they want, so [why] [don't] [we] [buy] [them] a nice [coffee] [maker]?
+M: OK, [how] [much] [is] [it]?
+W: It's [forty] dollars.
+M: Maybe [we] [could] [get] [them] some [nice] [coffee] [cups] and [some] [coffee] to go with it.
+W: That's [a] [great] [idea]. I think [that] [will] [make] a lovely [wedding] [present].

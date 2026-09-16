@@ -1,0 +1,56 @@
+UNIT 27
+# What's in a Name?
+BOX nickname | confusing | born | driver's | license | ridiculous | boxer
+
+# CHU Y: hop tu co 7 tu (mong 6): ['nickname', 'confusing', 'born', "driver's", 'license', 'ridiculous', 'boxer']
+A
+Bill is a common [?] for William.
+It is illegal to drive a car without a [?]
+Mike Tyson is a famous [?]
+1 don't like this story because it is [?]; I don't understand it.
+Marta was [?] on the 23rd of September fifteen years ago.
+Sam looked really [?] wearing a thick coat, hat and gloves on the hot, sunny beach.
+
+B
+Q What are the friends discussing?
+- How people get their names
+- A trip to the beach
+- Indian customs
+- Renting a car
+Q What is the meaning of the man's name?
+- Pure
+- Navigator
+- Boxer
+- Sarang
+
+C
+Sy, do you have a local [driver's license] that we can rent the car with for our trip this weekend?
+At the time I was born, things were [confusing] and difficult for my family in India.
+So, your [nickname] is Jen, and your given name's Jennifer.
+Usually it's a way to show respect for a person, but some people make it [ridiculous].
+
+D truefalse
+? Sy's given name is Sarang.
+? Jennifer's nickname is Jen.
+? Jennifer was named after her father's grandmother.
+? In India, it is very common to name children after relatives.
+? George Foreman has five boys named George. KADISOI 2 51
+
+E dialog
+# khoet 121/245 tu; OCR khong khop: 
+W: Sy, do [you] [have] a local [driver's] [license] that we can [rent] [the] [car] [with] for our trip [this] [weekend]?
+M: Sure, Jen, [here] [you] [are].
+W: It [says] [here] that [your] [name] is Sarang Patel, but [I] [thought] your [first] [name] was Sy!
+M: Sy is [my] [nickname], and Sarang is [my] [given] [name].
+It [means] "navigator" [in] Hindi. At [the] [time] I was [born], things were [confusing] [and] [difficult] for [my] [family] in India. My [parents] [wanted] a son [who] [could] lead and guide [our] [family] [to] success.
+W: Well, [I] [just] [hope] you can [lead] [and] [guide] all of us [to] [the] [beach] this [weekend].
+M: Ha ha, very [funny]! So, [your] [nickname] is Jen, and your [given] name's Jennifer. Do [you] [know] how you [got] [that] [name]?
+W: Actually, [I] [was] [named] after my [father's] [grandmother], Guinevere.
+M: Wasn't Guinevere [the] [wife] [of] King Arthur [in] [that] [old] [story] from England?
+W: Yes [she] [was], and [her] [name] [means] "pure."
+M: It's [interesting] how people [get] [their] [names].
+In India, we don't [name] [children] [after] [their] relatives [like] [they] [do] in America. To me, it's [strange] to [see] [names] [like] Jack Johnson Junior and George Bush Senior.
+W: Usually it's [a] [way] [to] [show] [respect] for a person, but [some] [people] make it [ridiculous]. You've [heard] [about] George Foreman, [the] [famous] [boxer], haven't you?
+M: No.
+W: Well, he [had] [five] [boys], and he [named] [each] [one] of them George, [after] [himself].
+M: It [must] [be] [confusing] when [the] [phone] [rings] at his house!

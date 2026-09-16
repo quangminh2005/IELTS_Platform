@@ -1,0 +1,46 @@
+UNIT 21
+# Add, Subtract, Multiply, and Divide
+BOX imagine | subtract | multiply | apply | require | huge
+
+A
+If we [subtract] six from ten, we get four.
+If we [multiply] five and two, we get ten.
+What equipment do you [require] for your camping trip?
+There is a [huge] fire engine parked outside the school.
+We should [apply] what we learn in science class to everyday life.
+Can you [imagine] what it would be like if robots took over the world?
+
+B
+Q What does the boy tell the girl about?
+- His math class
+- Money
++ A math technique
+- Soldiers
+Q Why is the boy good at math?
++ He imagines pictures in his mind.
+- He uses a calculator.
+- He copies his friend's answers.
+- His father works in a bank.
+
+C
+I can add and [subtract] pretty well, but without a calculator it's difficult for me to multiply and divide.
+But how do you [apply] this technique to multiplying and dividing?
+So, first I [imagine] 10 groups of people standing in a large field.
+At the front of the field is a [huge] sign with the number 2,000 on it, because 200 times 10 equals 2,000, right?
+
+D summary
+2 I try to imagine pictures in my mind, so the numbers aren't just figures on a page, but something I can apply to real life.
+3 But how do you apply this technique to multiplying and dividing?
+1 I'm really having trouble figuring out this arithmetic assignment.
+5 Then I add two more fields to my picture, and I have the answer!
+4 If the equation is 200 times 30, I imagine 10 groups of people standing in a field with a sign next to each group.
+
+E dialog
+# khoet 123/244 tu; OCR khong khop: 3030 the
+B: Hello [there], Terry. How [are] [you] doing?
+G: Not [too] [well]. I'm really [having] [trouble] figuring [out] [this] arithmetic [assignment]. I can [add] [and] [subtract] pretty well, but [without] [a] [calculator] it's [difficult] [for] [me] to [multiply] [and] [divide]. Hey, Olaf, [I] [heard] that you're [excellent] [in] math.
+B: My technique [is] [that] [I] [try] to imagine [pictures] [in] [my] [mind], so [the] [numbers] aren't just [figures] on [a] [page], but [something] [I] [can] [apply] to real [life]. One [way] [I] [do] [this] is to [imagine] [the] [numbers] as if [they] [were] [money].
+For [example], if the equation [is] 753 minus 236, I [think] [about] seven [dollars] [and] 53 cents minus [two] [dollars] and 36 cents. It's [five] [dollars] and 17 cents, or 517. Easy!
+G: Wow, that [does] [seem] [easier], for adding [and] [subtracting]. But [how] [do] [you] [apply] this technique [to] [multiplying] [and] dividing?
+B: OK, [suppose] [the] equation is 200 [times] [30]. [30] is [three] [groups] [of] 10. So, [first] [I] [imagine] 10 [groups] [of] [people] standing [in] [a] [large] field. Next to [each] [group] is a sign [with] the number 200 [on] [it]. At the front [of] [the] [field] is a [huge] [sign] with the [number] 2,000 on it, [because] 200 times 10 equals 2,000, [right]?
+But [the] [problem] requires 200 times 10 [three] [times], so, I [just] [add] two more [fields] [of] [people] to [my] [picture], with two [more] [signs] that say 2,000. Now [I] [have] 2,000 times three. The [answer] [is] 6,000!

@@ -1,0 +1,42 @@
+UNIT 40
+# A Family Cruise
+BOX on | board | island | shore | breakfast | volleyball | explore
+
+# CHU Y: hop tu co 7 tu (mong 6): ['on', 'board', 'island', 'shore', 'breakfast', 'volleyball', 'explore']
+A
+Would you like to [?] the cave we found this afternoon?
+The boat will leave as soon as all the passengers are [?].
+An [?] is a piece of land that is completely surrounded by the sea.
+The girls like to play [?] on the beach.
+[?] is the first meal of the day.
+You can usually find seashells on the [?]
+
+B
+Q What is NOT included in Family Cruise Line's special deal?
+- Great food
+- A variety of activities
+- Free Internet access
+- A one-week cruise
+Q Where does the cruise go?
+- To Australia
+- To Miami
+- To six Caribbean islands
+- To Hawaii
+
+C
+On board, we have a variety of great food for [breakfast], lunch, and dinner.
+They can play [volleyball], swim in one of our three huge pools, or take dancing and art classes.
+On shore, you can shop, swim, and enjoy fresh food while you learn all about [island] life.
+With four to seven hours on shore each day, you'll have plenty of time to [explore] each island.
+
+D truefalse
+? The cruise begins in Miami.
+? There are music and dance shows each evening.
+? There are interesting and fun activities for children.
+? The ship has five huge swimming pools.
+? Passengers are not allowed to go on shore.
+
+E passage
+# khoet 119/237 tu; OCR khong khop: 2
+Family Cruise Line [is] [offering] a new, [exciting] [cruise] that the [whole] [family] can enjoy! We have [a] [special] [deal] for families [all] [year] [round] on our Family Caribbean Cruise. This [special] one-week [cruise] [leaves] [from] Miami, Florida and [stops] [at] [six] [fantastic] Caribbean [islands]. There is [so] [much] for the [entire] [family] [to] [see] and do! [On] [board], we have [a] [variety] of [great] [food] for [breakfast], lunch, [and] [dinner]. We also [have] [lots] of [interesting] [and] [fun] activities. There are [music] [and] [dance] shows [every] [evening]. We have [a] [movie] [theater] and a KTV bar. For [kids], we [have] [shows] each day [with] [their] [favorite] TV [friends] [like] Mickey Mouse, Goofy, and Elmo. Playing [with] [television] characters isn't [the] [only] [activity] children [will] [enjoy]. They [can] [play] [volleyball], swim in [one] [of] our three [huge] [pools], or take [dancing] [and] [art] classes. There's [so] [much] [variety], the kids can [try] [a] [new] [activity] each day. Mom and Dad [can] [join] [them], or rest in lounge [chairs] on [our] [wide] ship deck.
+On [shore], you [can] [shop], swim, and [enjoy] [fresh] [food] while you [learn] all about [island] [life]. With [four] [to] [seven] [hours] on [shore] each day, you'll [have] [plenty] of time [to] [explore] each [island]. Does this [sound] [exciting]? It is! So, [when] it's [time] [to] [plan] your next [vacation], [remember] Family Cruise Line. It will [be] [a] [trip] your [family] will [never] forget!

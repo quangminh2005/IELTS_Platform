@@ -1,0 +1,42 @@
+UNIT 28
+# The Right Career
+BOX career | mood | salary | unfriendly | impatient | consider
+
+A
+Price is one point to [?] when buying a new car.
+Michael Jackson began his singing [?] when he was five years old.
+Why is Dad in such a bad [?] today?
+No one wants to ask that sales assistant for help because she is very [?] to customers.
+I am so [?]! I can't wait to see what happens at the end of the movie.
+A factory manager usually has a higher [?] than a factory worker.
+
+B
+Q According to the speaker, which is the most important factor to consider when choosing a career?
+- Salary
+- Status
+- Personality
+- Tradition
+Q What are people expected to do in most jobs?
+- Control their emotions
+- Earn a lot of money
+- Be friendly
+- Think about status
+
+C
+People need to [consider] important factors when choosing a career.
+Nobody wants an unfriendly tour guide or an [impatient] teacher.
+However, what good is a large [salary] or high status if you don't like your job?
+Too many people choose a [career] because it pays well.
+
+D summary
+? Finding a good career is important, so think about it carefully.
+? If you have to change your personality when you work, you probably won't be very happy.
+? In my opinion, the most important thing to consider is choosing a job that suits your personality.
+? People need to consider important factors when choosing a career.
+? There are other factors to consider, such as salary and status.
+
+E passage
+# khoet 129/247 tu; OCR khong khop: 
+People [need] [to] [consider] important [factors] [when] choosing [a] [career]. In [my] [opinion], the most [important] [factor] is to [choose] [a] [job] that goes well [with] [your] [personality]. Are [you] [an] outgoing [person] who [loves] [meeting] [new] [people] and [talking] to them? Perhaps [you] [should] become a [tour] [guide] or a [teacher]. Are [you] [shy]? Maybe you [should] [be] an accountant or [a] [scientist].
+Remember, [you] [will] [do] your job [almost] [every] day. If you [have] [to] change [your] [personality] when you [work], you [probably] won't be [very] [happy]. And neither will [the] [people] you [work] with. Nobody [wants] [an] [unfriendly] tour guide or [an] [impatient] [teacher]. Are [you] a moody [person]? In [most] [jobs], you will [be] [expected] to [control] your emotions. That's [hard] [to] [do] if your [mood] [changes] often. In that [case], you might [want] [to] [work] alone. Perhaps [you] [could] [be] a writer or [an] [artist].
+There [are] [other] [factors] to [consider], such as [salary] [and] [status]. However, [what] [good] is a [large] [salary] or [high] [status] if you don't [like] [your] [job]? You should [consider] [your] [personality], find out [what] [you] [are] very good at [doing], and then find [the] [right] [career] to go with all this. Too [many] [people] choose [a] [career] because [it] [pays] well. Too often, [they] [find] [they] don't like [their] [jobs]. But by then [they] [feel] [like] they're in [a] [trap], and they can't [escape]. Finding [a] [good] [career] is [important]. Think [about] [it] and [choose] carefully.

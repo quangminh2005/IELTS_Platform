@@ -1,0 +1,54 @@
+UNIT 34
+# A Nice Cup of Tea
+BOX taste | flavor | bitter | appreciate | incident | valuable
+
+A
+Which [flavor] of ice-cream is your favorite?
+Please [taste] the soup and tell me if it needs more salt.
+My sister is telling her friend about an [incident] that happened yesterday.
+Black coffee usually tastes [bitter].
+I truly [appreciate] all the kind things you have done for me.
+My mother's diamond ring is very [valuable].
+
+B
+Q What does the woman like to drink?
+- Coffee
+- Milk
+- Black tea
++ Green tea
+Q What does the man say about black tea?
+- It is cheaper than green tea.
++ It was involved in the American Revolution.
+- Its flavor is less bitter than green tea.
+- It is healthier than green tea.
+
+C
+Green tea has a simple [flavor], but black tea has many kinds of flavors.
+It just tastes [bitter] to me.
+Then you should drink more black tea, because after drinking it for a while, you begin to [appreciate] its flavor.
+Well, history tells us that in the past, good black tea has been considered more [valuable] than gold.
+
+D summary
+5 One of the things that started the Revolutionary War was an incident where a group of Americans dumped a British shipment of tea into the ocean in Boston.
+1 Could I offer you a cup of tea?
+3 I read about a study last week that showed people who drink green tea are less likely to get serious diseases, like cancer or heart disease.
+2 I just don't think green tea tastes as good as black tea.
+4 Well, history tells us that in the past, good black tea has been considered more valuable than gold.
+
+E dialog
+# khoet 134/248 tu; OCR khong khop: op 1uop '
+M: Could I [offer] [you] a [cup] [of] [tea]?
+W: Yes, [thank] [you] [very] much. What [kind] [do] [you] [have]?
+M: [I] [have] Earl Grey, English Breakfast, Irish Breakfast, [and] Darjeeling.
+W: Those [are] [all] [black] teas. Do [you] [have] any [green] [tea]?
+M: I'm [sorry], I [don't] [really] like [green] [tea].
+W: How [could] [you] not like [green] [tea]? It's so [much] [easier] to [drink] than [black] [tea].
+M: I just [don't] [think] green tea [tastes] as [good] [as] [black] tea. [Green] [tea] has [a] [simple] [flavor], but [black] tea has [many] [kinds] [of] flavors.
+W: Well I don't [taste] [many] [flavors] when I [drink] [black] tea. It [just] [tastes] [bitter] [to] me.
+M: Then [you] [should] [drink] more [black] [tea], because [after] [drinking] [it] for a while, [you] [begin] to [appreciate] its [flavor].
+W: Whatever [its] [flavor], [black] tea can't be [nearly] as [healthy] [as] green tea. I [read] [about] a study [last] [week] that showed [people] [who] [drink] [green] [tea] are less [likely] [to] [get] [serious] diseases, like [cancer] or heart [disease].
+M: Well, [history] tells us [that] [in] [the] [past], good [black] [tea] has been considered [more] [valuable] than gold. Wars [have] [been] [started] over it.
+W: [Really]? Which [wars]?
+M: The American Revolution.
+W: The American Revolution [had] [nothing] to do [with] [tea]!
+M: One [of] [the] [things] that [started] the Revolutionary War [was] [an] [incident] where [a] [group] of Americans dumped a British [shipment] [of] [tea] into [the] [ocean] in Boston. This [was] [called] [the] Boston Tea Party, and [it] [had] [nothing] to do [with] [green] [tea]!

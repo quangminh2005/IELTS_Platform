@@ -1,0 +1,47 @@
+UNIT 4
+# Acid Rain!
+BOX acid | exhaust | sulfur | cancer | nitrogen | carpool
+
+A
+There is a bottle of [acid] in the school science lab.
+The [exhaust] pipe lets the smoke out of the back of your car.
+That black smoke from the factory contains [sulfur]; it smells awful.
+[Cancer] is a disease that kills many people in the world.
+Air contains oxygen, carbon dioxide, and [nitrogen].
+Tom and his friends usually [carpool] to work to save gas.
+
+B
+Q What are the two friends mainly discussing?
+- The causes of traffic jams
+- The main cause of pollution
+- The benefits of carpooling
++ The effects of acid rain
+Q Which one is NOT a condition that acid rain can cause?
+- Cancer
+- Breathing problems
+- Brain damage
++ Muscle pain
+
+C
+It's like riding your bike behind a bus that's showering you with its [exhaust] fumes.
+It said there's too much [sulfur] in the air and that it's killing thousands of people every year.
+It combines with oxygen and [nitrogen] in the air to become the acid in acid rain.
+Another way to stop acid rain is to drive less, or at least [carpool].
+
+D truefalse
+F Acid rain cannot cause cancer.
+F Acid rain only hurts people.
+T Saving energy would reduce acid rain.
+F Car exhaust helps stop acid rain.
+T Sulfur is part of the acid in acid rain.
+
+E dialog
+# khoet 153/247 tu; OCR khong khop:
+M: I [hate] [this] [rain]. It's [causing] [the] [traffic] to back up [for] [miles]!
+W: Well, [I] [hate] [this] [traffic], because it's [helping] [turn] [this] [rain] into [acid] rain.
+M: I heard [that] [acid] [rain] [has] [really] bad effects. Doesn't it [cause] [cancer] and [brain] [damage], [and] even Alzheimer's [disease]?
+W: It [definitely] [can], but the [major] [thing] it does is [cause] [breathing] problems. The [acid] [in] [the] [rain] comes [from] [smoke] [and] [gases] that are [given] [off] [by] [cars] [and] factories. It's like [riding] [your] [bike] behind [a] [bus] that's showering [you] [with] [its] [exhaust] fumes.
+M: Oh, I [was] [reading] [something] about that [the] [other] [day]. It said [there's] [too] [much] [sulfur] [in] the air and [that] [it's] killing [thousands] [of] [people] every year.
+W: Yes. [Sulfur] [is] [the] [major] [element] [in] [factory] and car [exhaust]. It [combines] [with] [oxygen] [and] [nitrogen] in the air [to] [become] [the] acid [in] [acid] rain. This [stuff] doesn't [just] [kill] [us], you know. It [also] [kills] [trees] and lakes [and] [animals]. The [acid] soaks into [the] [plants] [and] [animals], so that [anyone] [who] [eats] [the] [plants] [and] [animals] is also [eating] [the] [acid].
+M: This [sounds] terrible! What can [people] [do] [to] [stop] [acid] rain?
+W: One [simple] [thing] they could [do] [is] [to] [use] [less] energy. Another [way] [to] [stop] [acid] [rain] [is] [to] [drive] less, or [at] [least] [carpool]. Imagine if [every] [car] [on] [this] road had [four] [people] [in] [it] right now. There [would] [be] [fewer] cars and [a] [lot] [less] [acid] rain.

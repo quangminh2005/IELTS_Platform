@@ -170,6 +170,20 @@ export function parseUnitMetaString(
   return null;
 }
 
+// Cờ bật/tắt trong metadata JSON của phần (vd metadata.stepMode = true: màn làm
+// bài hiện từng bước). Thiếu / sai kiểu -> false.
+export function parseUnitMetaFlag(metadataJson: string | null | undefined, key: string): boolean {
+  if (!metadataJson) {
+    return false;
+  }
+  try {
+    const parsed = JSON.parse(metadataJson);
+    return (parsed as Record<string, unknown>)?.[key] === true;
+  } catch {
+    return false;
+  }
+}
+
 // Lấy danh sách ảnh đề bài từ metadata JSON của phần (metadata.images = [url, ...]).
 export function parseUnitImages(metadataJson: string | null | undefined): string[] {
   if (!metadataJson) {

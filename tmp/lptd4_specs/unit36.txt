@@ -1,0 +1,52 @@
+UNIT 36
+# Moving
+BOX suitcase | container | truck | moving | van | cargo | haul
+
+# CHU Y: hop tu co 7 tu (mong 6): ['suitcase', 'container', 'truck', 'moving', 'van', 'cargo', 'haul']
+A
+We use a [?] to carry our clothes when we travel.
+A very large [?] can have as many as eighteen wheels.
+Can you help me [?] some furniture from my old office to my new one?
+A [?] ro p hos on psn s e sts when people move.
+For lots of heavy items, rent a [?] and send it by ship.
+Items being transported on a ship, truck, or plane are called [?].
+
+B
+Q What is Sheena trying to decide?
+- Which city to move to
+- How many suitcases to buy
+- Which cargo plane to take
+- How to transport her belongings
+Q How will Mark help Sheena?
+- He will transport her furniture in his cargo plane.
+- He will lend her his truck on Saturday.
+- He will rent his truck to her at a discount rate.
+- He will use his truck to transport some of her things.
+
+C
+Where are you going with all those [suitcases]?
+I considered hiring a [moving van], but someone told me it might be more convenient to rent a huge container and ship everything across.
+Well, when my sister and brother-in-law moved to Dallas last year, they sent all their furniture and heavy items by [cargo] flight.
+He can rent you a [truck] at a discount rate.
+
+D truefalse
+? Sheena's family is planning to move across the bay to Port Anderson.
+? Sheena has already hired a moving van.
+? S n s o d o e
+? Mark will be moving next Saturday.
+? Mark offers to help Sheena transport some of her things.
+
+E dialog
+# khoet 134/243 tu; OCR khong khop: 
+M: Hey, Sheena! I [haven't] [seen] you [for] ages. What's [new]? Where [are] [you] [going] with all [those] [suitcases]?
+W: Hi Mark, [it's] [been] a while [since] [the] [last] [time] we ran into [each] [other]! I'm bringing [these] [suitcases] home [to] [pack] because [my] [family] is preparing [to] [move] [across] the bay [to] Port Anderson.
+M: [Really]? How [are] [you] [going] to [transport] all your [furniture]?
+W: I'm [not] [sure]. I [considered] hiring [a] [moving] [van], but someone [told] [me] it might [be] [more] [convenient] to rent [a] [huge] [container] and ship [everything] across. The details [are] [a] [bit] [complicated] because we've [got] [so] [many] boxes!
+M: Well, [when] [my] [sister] and brother-in-law [moved] [to] Dallas [last] [year], they sent [all] [their] [furniture] and [heavy] [items] by [cargo] flight.
+They [hauled] [it] [there] on a [massive] [cargo] plane, then [rented] [a] [truck] and [picked] [it] [up] at the [airport] after they [arrived].
+W: That's [interesting], but [the] [problem] is that [we] [have] [so] [much] junk, we [might] [need] two [cargo] [planes]!
+M: Well, however [you] [get] it [there], [it] [sounds] [like] you'll need [help] [once] [you] get it to [the] [other] [side]. I've got [a] [friend] [there] who [owns] [a] self-serve [truck] [company]. He can [rent] [you] [a] [truck] at a [discount] rate. Which day [are] [you] moving?
+W: [Next] Saturday.
+M: I'm [free] [that] [day], so I'll [help] [you] out!
+I've [still] [got] my small [truck], so I can haul some [stuff] [for] [you], too.
+W: [Thanks], Mark. [That] [would] [be] great!

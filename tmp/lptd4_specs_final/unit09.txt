@@ -1,0 +1,43 @@
+UNIT 9
+# Communicating Online
+BOX transform | convenient | lonely | response | statistics | opinion
+
+A
+This amazing toy car can [transform] into a robot when you press this button.
+Statistics show that people who have pets feel less [lonely].
+The [statistics] show that 50 percent of drivers in this country are women.
+What time would be [convenient] for you to take me to the post office?
+What is your [opinion] about smoking?
+He wrote a [response] to most of the emails he received.
+
+B
+Q What is the main topic being discussed?
+- The harmful effects of computers
+- Emails and the Internet
+- A study about loneliness
++ Communication through the Internet
+Q Which of these best sums up the speaker's opinion?
+- The Internet makes people lonely.
+- Email is fantastic.
++ All types of communication are good if used wisely.
+- We don't use the Internet enough.
+
+C
+Computers have [transformed] the way people communicate.
+The Internet has made communication fast and [convenient].
+One study on Internet use found that people who used the Internet a lot were [lonely].
+It is great to email someone and get a fast [response].
+
+D summary
+4 One study claimed that people who used the Internet a lot were lonely, but this study has been criticized.
+2 The Internet makes communication faster and more convenient.
+1 Computers have really changed the way people communicate.
+5 All types of communication are good, if used wisely.
+3 This type of communication is very different from the past because people spend less time talking face to face.
+
+E passage
+# khoet 136/235 tu; OCR khong khop: 1nq 'poo
+Computers [have] [transformed] the way [people] [communicate]. In some [ways] [this] [transformation] [is] [good], [but] [in] [other] [ways] [it] could be harmful. [Statistics] [show] [that] millions of [people] [use] [the] [Internet] [every] day. People shop [online], play [games], and [search] [for] [information]. Studies also [show] that [people] [use] the Internet [mainly] [for] [communication].
+The [Internet] [has] [made] [communication] fast and [convenient]. Email can [travel] [anywhere] within seconds. Chat rooms [include] [people] [from] all over [the] [world]. People can [even] [make] [Internet] [telephone] calls.
+However, [this] [type] [of] [communication] is very [different] [from] what [people] [did] [in] [the] past. People [spend] [less] [time] [talking] face [to] [face]. They [might] "chat" for days [without] [being] [in] [the] [same] [room] with a [real] [person]. They also [might] [communicate] with [many] [people] at [the] [same] time. Some researchers [think] [this] [is] unhealthy. One [study] [on] [Internet] [use] found that [people] [who] [used] [the] [Internet] a lot [were] [lonely]. Also, they [did] [not] [communicate] as much [with] [members] of [their] [family].
+Many [people] have [criticized] [this] study. They say it [did] [not] [include] enough people [and] [that] [loneliness] is hard [to] [measure]. In my [opinion], all [types] [of] [communication] are good. It is [great] [to] [email] [someone] and get a [fast] [response]. It is [also] [nice] to talk [face] [to] [face]. We [can] [do] both. The [Internet] [is] a fantastic tool. We [should] [use] [it] wisely to [benefit] [from] it.

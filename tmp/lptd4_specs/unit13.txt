@@ -1,0 +1,43 @@
+UNIT 13
+# Leonardo da Vinci
+BOX inventor | human | examine | lifelike | parachute | combine
+
+A
+If you want to become a doctor, you must study how the body works.
+Please [?] this painting and tell me if there is something wrong with it.
+She has made a very [?] sculpture of her mother.
+If you [?] red and blue paint, you will get a new color: purple.
+Don't jump out of an airplane without a [?]!
+Who was the [?] of the radio?
+
+B
+Q The talk is mainly about da Vinci's
+- Paintings
+- Talents
+- Inventions
+- Experiments
+Q In addition to being an artist, da Vinci was also
+- A singer and inventor
+- A scientist and soldier
+- An inventor and scientist
+- A doctor and inventor
+
+C
+He was a scientist, an [inventor], and an artist.
+This made his paintings very [lifelike].
+For example, he studied the inner workings of the [human] body.
+He believed that by understanding how each part of a machine worked, the parts could be changed and [combined] in different ways to make new machines.
+
+D summary
+? Leonardo da Vinci was also a talented inventor.
+? Leonardo da Vinci was a man of many talents.
+? By the time he was in his early twenties, da Vinci was famous for his painting.
+? Leonardo da Vinci was a great scientist who observed life and nature.
+? However, few of his inventions were built and tested during his lifetime.
+
+E passage
+# khoet 125/241 tu; OCR khong khop: 
+When [most] [people] hear [the] [name] Leonardo da Vinci, [they] [think] [of] art. But [in] [fact], he was [a] [man] [of] [many] talents. He [was] [a] [scientist], [an] [inventor], and an artist.
+Leonardo da Vinci [was] [born] [in] 1452 in Vinci, Italy. When [he] [was] 14, [his] [father] [sent] [him] to Florence [to] [train] [under] Andrea del Verrocchio, one of [the] [best] [artists] in the [area]. Leonardo [became] [better] than Verrocchio. By his [early] [twenties], Leonardo [was] [famous] [for] his painting. He was [especially] [good] at [painting] [colors] and details. This [made] [his] [paintings] very [lifelike]. His [most] [famous] [paintings] are the Mona Lisa [and] The Last Supper.
+Leonardo was [also] [a] [great] [scientist]. He was [a] [good] observer of [life] [and] [nature]. He would [ask] [himself] [simple] [questions] like, "How [do] [birds] fly?" Then [he] [would] [try] to find [the] [answers]. He was [interested] [in] [everything]. For [example], he [studied] the inner workings of [the] [human] [body]. He [would] [cut] [up] dead bodies [to] [examine] [their] insides.
+Leonardo [was] [also] a talented [inventor]. He [believed] [that] by [understanding] how [each] [part] of [a] [machine] [worked], the parts [could] [be] changed [and] [combined] in [different] [ways] [to] make [new] [machines]. Using his [artistic] [talent], Leonardo [drew] [pictures] of [many] inventions. However, [few] [of] [them] were built [and] [tested] [during] his lifetime. For [example], his [parachute] wasn't built [until] 1783. Also, his [war] [tank] [wasn't] used [until] World War I in 1917.

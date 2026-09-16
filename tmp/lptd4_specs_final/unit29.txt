@@ -1,0 +1,42 @@
+UNIT 29
+# Body Language
+BOX negative | shrink | interpret | accurate | dislike | conversation
+
+A
+Sarah and Tom are having a long [conversation] over the phone.
+Are you sure that your measurement is [accurate]? It looks wrong.
+It is better to have a positive outlook on life rather than a [negative] one.
+I really [dislike] it when people are rude to each other.
+The sweater will [shrink] if you wash it with hot water; it won't fit you any more.
+It is sometimes difficult to [interpret] people's true intentions through their actions.
+
+B
+Q According to the speaker, how do people mostly communicate?
+- With words
++ Through body language
+- In conversations
+- By email
+Q What parts of the body are mentioned as examples?
+- Eyes and ears
+- Arms and legs
+- Legs and head
++ Eyes and arms
+
+C
+Only about 10 percent of communication is done through the actual words of a [conversation].
+Have you ever felt [dislike] for someone without knowing why?
+Well, he or she might have been sending out a [negative] message through body language.
+But keep in mind that there is no [accurate] way to interpret body language all the time.
+
+D summary
+5 Talking is still sometimes the best way to communicate.
+3 If people are telling a lie, they may not look directly at the person they are talking to.
+1 Only a small amount of communication is through the words of a conversation.
+4 If the arms are crossed in front of the body, the person might be feeling unfriendly or afraid.
+2 If we can understand body language, we can learn a lot more about what other people really think.
+
+E passage
+# khoet 120/240 tu; OCR khong khop: jo
+Did [you] [know] that [words] [are] [not] the only [thing] we use to [communicate]? Most of [our] [messages] are sent through [body] [language]. Only [about] 10 percent [of] [communication] is done [through] [the] actual words [of] [a] [conversation]. Isn't that [strange]? If we [understand] body [language] well, we [can] [learn] [a] [lot] more about [what] [other] [people] really think. We [can] [also] use body [language] to send [the] [right] [message] to others. Have you [ever] [felt] [dislike] for [someone] without [knowing] why? Well, he [or] [she] [might] [have] [been] sending out [a] [negative] [message] through body [language].
+What [kind] [of] [things] should [you] [look] [for] if you want [to] [understand] body language? First, [look] [at] people's [eyes]. If [people] [are] lying, they [may] [not] [look] directly at [the] [person] they are [talking] to, and the pupils [of] [their] [eyes] may [shrink]. Next, look at [people's] arms. Arms [crossed] in front of [the] [body] might mean [a] [person] is [unfriendly] or afraid. He [or] [she] [might] [be] [trying] to say, "Stay away." If [the] [arms] are by the side or [at] [the] [back] [of] [the] [body], the person [might] [be] [saying], "Come [closer]. I won't [hurt] [you]."
+But keep [in] [mind] that [there] [is] no [accurate] way to [interpret] [body] [language] all the time. Sometimes, [talking] is still [the] [best] [way] to communicate. However, [knowing] about [body] [language] will [improve] [the] [way] you [communicate] and help you [understand] [other] [people] better.

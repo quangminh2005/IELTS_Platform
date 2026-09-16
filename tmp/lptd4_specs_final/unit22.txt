@@ -1,0 +1,54 @@
+UNIT 22
+# I Spy
+BOX object | manners | apologize | respect | mistake | location
+
+A
+Do you know the [location] of the county police station?
+It is important to learn something from every [mistake] that you make.
+A knife is an [object] used for cutting things.
+It is important to have good [manners] at the dinner table.
+If you are sorry for your mistake, you should [apologize] to your father.
+Children should treat their parents and teachers with [respect].
+
+B
+Q What is the family doing?
++ Going on a car trip
+- Watching a movie
+- Visiting the zoo
+- Eating dinner
+Q How are they going to pass the time?
+- By sleeping
+- By reading
+- By listening to music
++ By playing a game
+
+C
+One person decides on an [object] that he or she can see, and tells us its color, then the rest of us have to ask yes-or-no questions to try and find out what it is.
+Remember, it's considered good [manners] to let girls and younger children have their turn ahead of us.
+I think you need to [apologize] to your brother.
+That's OK, honey, everybody makes [mistakes].
+
+D truefalse
+T Betsy is Billy's sister.
+T The father suggests playing “I Spy."
+F The mother reminds Billy to use good manners.
+T The father tells Betsy to apologize to her brother.
+T Betsy makes a mistake when she tries to play the game.
+
+E dialog
+# khoet 134/241 tu; OCR khong khop: iop 1'11 1uop no
+B: Dad, [this] [is] [so] [boring], just sitting [back] [here] with [nothing] [to] [do]!
+M: Playing [a] [game] is a [fun] [way] to [pass] [time] on a [long] [car] [trip].
+B: OK, but [what] [kind] [of] [game] can we [play] [when] we're going 70 [miles] [an] [hour] in a car?
+M: Well, [when] [I] [was] [young], we used [to] [play] [a] [game] in [the] [car] called "I Spy." One [person] decides [on] [an] [object] that he [or] [she] [can] [see], and [tells] [us] its [color], then [the] [rest] [of] [us] have [to] [ask] yes-or-no [questions] to try [and] [find] [out] what it is.
+G: [I'll] [go] [first], and I spy [something] that's. .[] .[]
+B: Hey, I [wanted] [to] [go] first!
+M: Billy, [let] [your] [sister] begin. Remember, it's [considered] [good] [manners] to let [girls] and [younger] [children] have [their] [turn] ahead of us.
+G: Yeah, [remember] [your] [manners], stupid!
+M: Betsy, it's [also] [good] [manners] to treat [each] [other] with [respect], and not [to] [call] [people] names. I think [you] [need] to [apologize] to your [brother].
+G: I'm [sorry], Billy. Let's [start], OK? I spy [something] [small] [and] [green], it's [on] [the] steering wheel, and. .[] .[]
+B: [Stop], Betsy! Dad [said] [that] you're [only] [supposed] [to] [tell] us its color, not [its] [size] or [location] or anything [else].
+G: Oh no, I [forgot]!
+M: That's OK, honey, [everybody] [makes] [mistakes].
+Remember [the] [saying]: "If [at] [first] [you] [don't] [succeed], [try], try [again]."
+G: OK, let [me] [try] [again]. I spy [something]. .[] .[]

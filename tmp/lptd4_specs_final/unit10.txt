@@ -1,0 +1,43 @@
+UNIT 10
+# Science for Girls
+BOX division | encourage | impress | experiment | convince | confidence
+
+A
+He tried hard to [convince] her that he was right.
+I want to [encourage] children to learn Spanish in primary school.
+The boy's math teacher taught him how to do simple [division] in class last week.
+The scientist did an [experiment] to find out what the strange chemicals were.
+I was trying to [impress] my father with my singing, but I ended up shocking him instead!
+To achieve success, you must have [confidence] in yourself and your abilities.
+
+B
+Q According to the speaker, what do most girls think of science and math?
+- They are fantastic subjects.
++ They are boys' subjects.
+- They are not very interesting.
+- They are too easy.
+Q Why does the speaker like science and math?
+- Because all her friends do
+- Because her teachers impressed her
++ Because her parents encouraged her
+- Because she is unusual
+
+C
+They say their parents didn't do science experiments with them or [encourage] them to learn math.
+For my eighth birthday, they gave me a kids' chemistry set, which helped me do all sorts of cool [experiments]!
+They were [impressed] with my science exam scores.
+I have lots of [confidence] in myself.
+
+D truefalse
+T Physics is Sandy's favorite class.
+T There are only six boys in Sandy's physics class.
+T Sandy's parents encouraged her to learn math and science.
+T Most girls in Sandy's school don't like math and science.
+F Sandy's science scores aren't as good as the boys'.
+
+E passage
+# khoet 129/241 tu; OCR khong khop: 1uop op
+Hi. My [name] [is] Sandy. [Welcome] [to] physics, my [favorite] [class]. Although [there] [are] 30 [students] in our [class], only [six] [of] [us] are girls.
+Most of [my] [friends] [don't] [like] [science] as [much] as I do. They are [convinced] [that] [science] and [mathematics] [are] "boys' subjects." They [say] [that] boys [learn] [about] [science] and mathematics [by] [playing] [with] [toys] like building [blocks], racing [cars], and simple [machines], while girls [play] [with] [toys] like [dolls] and tea sets. They say [their] [parents] didn't do [science] [experiments] with them or [encourage] [them] [to] learn math.
+Well, that wasn't [the] [case] [with] me! I [played] [with] [dolls], too, but [my] [parents] also built [up] [my] [confidence] in science [and] [math]. They used [long] [plastic] rods, which are [like] [sticks], to help me [learn] [addition], subtraction, multiplication, [and] [division]. [For] [my] eighth [birthday], they [gave] [me] a kids' [chemistry] [set], which [helped] [me] [do] [all] [sorts] of cool [experiments]! Whenever [we] [went] [to] [the] [park], my [parents] asked me [different] [questions] about the [plants] [and] [animals] that we saw. When we [got] [home], we looked up [the] [answers] [together].
+In [school], my [teachers] [were] [surprised]. They were [used] [to] boys [giving] [all] [the] [answers] in [science] class. They [were] [impressed] with my [science] [exam] scores. I have [lots] [of] [confidence] in myself. [I] [know] [that] [boys] are not [smarter] [than] [girls] in [science] [and] [math] classes. I [just] [wish] I could [convince] [my] friends!

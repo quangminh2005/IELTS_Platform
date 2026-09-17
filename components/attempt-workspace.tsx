@@ -18,6 +18,8 @@ import {
   startSkillSession,
   submitSkill
 } from "@/lib/actions/attempts";
+import { useBugReport } from "@/components/bug-report-context";
+import { BugReportInlineTrigger } from "@/components/bug-report-button";
 import { HighlightLayer, type HighlightPayload } from "@/components/highlight-layer";
 import { HighlightRegion } from "@/components/highlight-region";
 import { SkillPicker } from "@/components/skill-picker";
@@ -2755,6 +2757,20 @@ export function AttemptWorkspace({
     window.setTimeout(() => scrollToQuestion(entry.anchorId), 80);
   }
 
+  // Đăng ký ngữ cảnh cho nút báo lỗi: bài nào, part nào, bước nào đang mở. Xem
+  // trước (giáo viên) thì không có provider -> setAttemptContext là no-op.
+  const { setAttemptContext } = useBugReport();
+  const activePartTitle = parts[activePart]?.title ?? "";
+  const activePartUnitId = parts[activePart]?.unitId ?? "";
+  // unitSteps chỉ có khoá cho phần chạy chế độ từng bước -> phần thường ra undefined.
+  const activePartStep = unitSteps[activePartUnitId];
+  useEffect(() => {
+    if (previewMode) return;
+    setAttemptContext({ attemptId: attempt.id, unitTitle: activePartTitle, step: activePartStep });
+  }, [previewMode, setAttemptContext, attempt.id, activePartTitle, activePartStep]);
+  // Rời màn làm bài thì trả lại nút nổi cho các trang khác.
+  useEffect(() => () => setAttemptContext(null), [setAttemptContext]);
+
   const activeSkillLabel = activeSkill
     ? SKILL_TIME_LABELS[activeSkill] ?? activeSkill
     : "bài";
@@ -2853,6 +2869,7 @@ export function AttemptWorkspace({
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
+          {!previewMode ? <BugReportInlineTrigger /> : null}
           <div className="flex items-center overflow-hidden rounded-lg border border-border" title="Cỡ chữ">
             <button
               type="button"

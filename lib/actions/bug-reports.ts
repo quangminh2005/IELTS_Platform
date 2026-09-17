@@ -57,34 +57,37 @@ function teacherScope(teacherId: string) {
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-// Gửi mail cho (các) giáo viên phụ trách lớp của học viên. Không có lớp -> gửi về
-// chính hộp thư GMAIL_USER để báo lỗi không bị rơi. Lỗi mail chỉ ghi log: học viên
-// đã lưu xong thì phải thấy "Đã gửi".
-async function notifyTeachers(
-  studentId: string,
-  report: {
-    studentName: string;
-    category: string;
-    description: string;
-    createdAt: Date;
-    pageUrl: string;
-    userAgent: string | null;
-    viewport: string | null;
-    contextJson: string | null;
-    imageUrl: string | null;
+// Gửi mail báo lỗi cho giáo viên. KHÔNG dùng email đăng nhập của TeacherProfile:
+// trên prod đó là địa chỉ demo (teacher@example.com) — Gmail trả thư về ngay
+// (đã xảy ra 17/9/2026). Người nhận là BUG_REPORT_TO (nếu đặt, cách nhau bằng
+// dấu phẩy), không thì chính hộp thư GMAIL_USER đang dùng để gửi — với lớp một
+// giáo viên thì đó chính là Gmail của cô/thầy. Lỗi mail chỉ ghi log: học viên đã
+// lưu xong thì phải thấy "Đã gửi".
+function bugReportRecipients(): string | null {
+  const configured = process.env.BUG_REPORT_TO?.trim();
+  if (configured) {
+    return configured;
   }
-): Promise<void> {
+  const sender = process.env.GMAIL_USER?.trim();
+  return sender ? sender : null;
+}
+
+async function notifyTeachers(report: {
+  studentName: string;
+  category: string;
+  description: string;
+  createdAt: Date;
+  pageUrl: string;
+  userAgent: string | null;
+  viewport: string | null;
+  contextJson: string | null;
+  imageUrl: string | null;
+}): Promise<void> {
   if (!isEmailConfigured()) {
     return;
   }
 
-  const teachers = await prisma.teacherProfile.findMany({
-    where: { classes: { some: { students: { some: { studentId } } } } },
-    select: { user: { select: { email: true } } }
-  });
-  const recipients = [...new Set(teachers.map((t) => t.user.email))];
-  const fallback = process.env.GMAIL_USER?.trim() ?? "";
-  const to = recipients.length ? recipients.join(", ") : fallback;
+  const to = bugReportRecipients();
   if (!to) {
     return;
   }
@@ -136,7 +139,7 @@ export async function createBugReport(formData: FormData): Promise<ActionResult>
     });
 
     try {
-      await notifyTeachers(student.id, { studentName: student.displayName, ...created });
+      await notifyTeachers({ studentName: student.displayName, ...created });
     } catch (error) {
       console.error("[bao-loi] Không gửi được mail cho giáo viên:", error);
     }

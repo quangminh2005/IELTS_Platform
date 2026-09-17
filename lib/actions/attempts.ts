@@ -280,6 +280,18 @@ export async function submitSkill(formData: FormData) {
   const skillUnits = unitsForSkill(allUnits, parsed.data.skill);
   const skillUnitIds = skillUnits.map((u) => u.assignableUnitId);
 
+  // Lớp phòng thủ thứ hai (sau fillMissingAnswers ở client): câu nào form KHÔNG
+  // gửi key `q_<id>` thì lấy lại từ Answer nháp đã tự lưu, thay vì coi là bỏ
+  // trống. Form chỉ gom được input đang có trong DOM, mà phòng làm bài chỉ dựng
+  // DOM cho part/bước đang mở — ngày 17/09/2026 hai học viên nộp bài Listening
+  // 6 part chỉ còn part đang mở vì thiếu chính lớp này. Ô để trống có chủ ý vẫn
+  // gửi key với giá trị "" nên không bị nháp ghi đè.
+  const draftRows = await prisma.answer.findMany({
+    where: { attemptId: attempt.id, assignableUnitId: { in: skillUnitIds } },
+    select: { questionId: true, value: true }
+  });
+  const draftByQuestion = new Map(draftRows.map((row) => [row.questionId, row.value]));
+
   const graded = gradeUnits(
     skillUnits.map((au) => ({
       assignableUnitId: au.assignableUnitId,
@@ -288,7 +300,10 @@ export async function submitSkill(formData: FormData) {
       transcript: au.assignableUnit.transcript,
       questions: au.assignableUnit.questions
     })),
-    (questionId) => String(formData.get(`q_${questionId}`) ?? "")
+    (questionId) =>
+      formData.has(`q_${questionId}`)
+        ? String(formData.get(`q_${questionId}`) ?? "")
+        : draftByQuestion.get(questionId) ?? ""
   );
   const answerRows = graded.answerRows.map((row) => ({
     ...row,

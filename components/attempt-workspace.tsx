@@ -27,6 +27,7 @@ import { ResultReview } from "@/components/result-review";
 import { type Annotation } from "@/components/annotated-answer";
 import { gradeUnits, type UnitForGrading } from "@/lib/attempt-grading";
 import { gradeAttempt } from "@/lib/grading";
+import { fillMissingAnswers } from "@/lib/submit-answers";
 import { orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
 import { accumulateActiveSeconds, AUTO_SUBMIT_SKILLS } from "@/lib/active-time";
@@ -2805,7 +2806,16 @@ export function AttemptWorkspace({
   const content = (
     <form
       ref={formRef}
-      action={previewMode ? undefined : submitSkill}
+      // Bọc submitSkill để bù đáp án của các part/bước KHÔNG đang mở (không có
+      // input trong DOM) từ state `answers` — xem lib/submit-answers.ts.
+      action={
+        previewMode
+          ? undefined
+          : async (formData: FormData) => {
+              fillMissingAnswers(formData, answers);
+              await submitSkill(formData);
+            }
+      }
       onSubmit={(event) => {
         if (previewMode) {
           event.preventDefault();

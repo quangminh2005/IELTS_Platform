@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { BugReportProvider } from "@/components/bug-report-context";
 import { BugReportDialog } from "@/components/bug-report-dialog";
-import { BugIcon, BugReportFloatingButton } from "@/components/bug-report-button";
+import { BugIcon, BugReportFloatingButton, BugReportNavButton } from "@/components/bug-report-button";
 import { LogoutButton } from "@/components/logout-button";
 import { NotificationBell } from "@/components/notification-bell";
 import { StudentAvatar } from "@/components/student-avatar";
@@ -337,6 +337,7 @@ export function AppShell({
 
           <div className="mt-6 flex-1 overflow-y-auto">
             <NavLinks items={navItems} rootHref={rootHref} />
+            {role === "student" ? <BugReportNavButton /> : null}
           </div>
 
           <div className="mt-4 border-t border-border pt-4">
@@ -375,6 +376,9 @@ export function AppShell({
                   rootHref={rootHref}
                   onNavigate={() => setMobileOpen(false)}
                 />
+                {role === "student" ? (
+                  <BugReportNavButton onNavigate={() => setMobileOpen(false)} />
+                ) : null}
               </div>
 
               <div className="mt-4 border-t border-border pt-4">

@@ -23,9 +23,10 @@ export function BugIcon({ className = "h-5 w-5" }: { className?: string }) {
   );
 }
 
-// Nút nổi góc dưới-phải cho mọi trang học viên. Ẩn khi màn làm bài đã đăng ký ngữ
-// cảnh — màn đó tự đặt BugReportInlineTrigger trong header vì thanh nút cuối trang
-// (Nộp bài, ‹ ›) của nó chiếm đúng góc này.
+// Nút nổi góc dưới-phải cho mọi trang học viên: viên thuốc màu chính có chữ, để
+// học viên nhìn là biết ngay (icon mờ ở góc từng bị bỏ qua). Ẩn khi màn làm bài
+// đã đăng ký ngữ cảnh — màn đó tự đặt BugReportInlineTrigger trong header vì
+// thanh nút cuối trang (Nộp bài, ‹ ›) của nó chiếm đúng góc này.
 export function BugReportFloatingButton() {
   const { available, attemptContext, open } = useBugReport();
   const pathname = usePathname();
@@ -44,9 +45,39 @@ export function BugReportFloatingButton() {
       onClick={open}
       aria-label="Báo lỗi cho giáo viên"
       title="Báo lỗi cho giáo viên"
-      className={`fixed right-4 z-30 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-pop transition hover:border-primary hover:text-primary ${isResultsPage ? "bottom-24" : "bottom-4"}`}
+      className={`fixed right-4 z-30 inline-flex h-11 items-center gap-2 rounded-full bg-primary pl-3.5 pr-4 text-sm font-semibold text-primary-foreground shadow-pop transition hover:bg-primary/90 ${isResultsPage ? "bottom-24" : "bottom-4"}`}
     >
       <BugIcon />
+      Báo lỗi
+    </button>
+  );
+}
+
+// Mục "Báo lỗi" trong menu trái của học viên (cùng khuôn với các mục NavLinks
+// trong app-shell.tsx, nhưng là <button> mở hộp thoại chứ không điều hướng).
+export function BugReportNavButton({ onNavigate }: { onNavigate?: () => void }) {
+  const { available, open } = useBugReport();
+
+  if (!available) {
+    return null;
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        onNavigate?.();
+        open();
+      }}
+      className="mt-1.5 flex w-full items-center gap-3 rounded-lg border border-dashed border-border px-3.5 py-2.5 text-left text-foreground transition hover:border-primary hover:bg-primary/5"
+    >
+      <span className="text-primary">
+        <BugIcon className="h-5 w-5 shrink-0" />
+      </span>
+      <span className="leading-tight">
+        <span className="block text-sm font-semibold">Báo lỗi</span>
+        <span className="block text-xs text-muted-foreground">Gặp trục trặc? Báo cô/thầy ngay</span>
+      </span>
     </button>
   );
 }

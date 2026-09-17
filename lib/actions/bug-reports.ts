@@ -39,11 +39,15 @@ const createSchema = z.object({
     .string()
     .refine(isAllowedBugImageUrl, "Ảnh phải là ảnh tải lên từ trang này.")
     .nullable(),
-  pageUrl: z.string().trim().min(1).max(500),
-  userAgent: z.string().max(500).nullable(),
-  viewport: z.string().max(20).nullable(),
-  attemptId: z.string().max(40).nullable(),
-  contextJson: z.string().max(500).nullable()
+  pageUrl: z
+    .string()
+    .trim()
+    .min(1, { error: "Đường dẫn trang chưa hợp lệ." })
+    .max(500, { error: "Đường dẫn trang chưa hợp lệ." }),
+  userAgent: z.string().max(500, { error: "Thông tin trình duyệt chưa hợp lệ." }).nullable(),
+  viewport: z.string().max(20, { error: "Thông tin màn hình chưa hợp lệ." }).nullable(),
+  attemptId: z.string().max(40, { error: "Mã bài làm chưa hợp lệ." }).nullable(),
+  contextJson: z.string().max(500, { error: "Thông tin ngữ cảnh chưa hợp lệ." }).nullable()
 });
 
 // Phạm vi của giáo viên: báo lỗi của học viên đang thuộc ít nhất một lớp mình dạy.
@@ -78,7 +82,7 @@ async function notifyTeachers(
     where: { classes: { some: { students: { some: { studentId } } } } },
     select: { user: { select: { email: true } } }
   });
-  const recipients = [...new Set(teachers.map((t) => t.user.email).filter(Boolean))];
+  const recipients = [...new Set(teachers.map((t) => t.user.email))];
   const fallback = process.env.GMAIL_USER?.trim() ?? "";
   const to = recipients.length ? recipients.join(", ") : fallback;
   if (!to) {
@@ -102,9 +106,9 @@ async function notifyTeachers(
 }
 
 export async function createBugReport(formData: FormData): Promise<ActionResult> {
-  try {
-    const student = await requireStudent();
+  const student = await requireStudent(); // NGOÀI try: lỗi phân quyền ném ra như cũ
 
+  try {
     const parsed = createSchema.safeParse({
       category: optional(formData.get("category")),
       description: String(formData.get("description") ?? ""),
@@ -157,8 +161,9 @@ const resolveSchema = z.object({
 });
 
 export async function resolveBugReport(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
+
   try {
-    const teacher = await requireTeacher();
     const parsed = resolveSchema.safeParse({
       id: optional(formData.get("id")),
       teacherNote: optional(formData.get("teacherNote"))
@@ -188,8 +193,9 @@ export async function resolveBugReport(formData: FormData): Promise<ActionResult
 }
 
 export async function reopenBugReport(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher(); // NGOÀI try: lỗi phân quyền ném ra như cũ
+
   try {
-    const teacher = await requireTeacher();
     const id = optional(formData.get("id"));
     if (!id) {
       throw new Error("Thiếu mã báo lỗi.");

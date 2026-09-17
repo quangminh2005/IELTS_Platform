@@ -81,9 +81,11 @@ File không import prisma (client component cũng dùng):
 ### Nút nổi + hộp thoại: `components/bug-report-button.tsx`
 
 - Render trong `AppShell` khi `role === "student"`. Nút tròn 44px, icon con
-  bọ, `fixed bottom-4 right-4`, `z-40`. Ở màn làm bài, thanh nút cuối trang
-  (Nộp bài) nằm cao hơn nên không bị che; nếu va chạm thì nâng nút lên
-  `bottom-20` chỉ trên route `/student/assignments/*` và `/student/practice/*`.
+  bọ, `fixed bottom-4 right-4`, `z-30`. Màn làm bài là một khung `fixed inset-0
+  z-50` có thanh nút cuối trang (Nộp bài, ‹ ›) chiếm đúng góc này, nên ở đó nút
+  nổi **ẩn đi** và màn làm bài tự đặt một nút 36px cùng icon vào header của nó
+  (cạnh cụm cỡ chữ/đồng hồ). Hộp thoại dùng `z-[70]` để nổi trên cả khung làm
+  bài lẫn hộp xác nhận nộp bài (`z-[60]`).
 - Hộp thoại portal ra `document.body` (overlay `fixed` bên trong phần tử có
   `animate-fade-in` sẽ bị kẹt — xem bẫy đã ghi nhận). Đóng bằng nút X, Esc,
   bấm nền.

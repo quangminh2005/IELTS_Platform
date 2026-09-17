@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { useBugReport } from "@/components/bug-report-context";
 
 export function BugIcon({ className = "h-5 w-5" }: { className?: string }) {
@@ -26,6 +28,11 @@ export function BugIcon({ className = "h-5 w-5" }: { className?: string }) {
 // (Nộp bài, ‹ ›) của nó chiếm đúng góc này.
 export function BugReportFloatingButton() {
   const { available, attemptContext, open } = useBugReport();
+  const pathname = usePathname();
+  // Trang kết quả (nghe) có thanh phát lại audio dính đáy màn hình
+  // (fixed inset-x-0 bottom-0, xem components/result-answers.tsx) — đẩy nút
+  // báo lỗi lên cao hơn để khỏi đè lên thanh đó.
+  const isResultsPage = pathname?.includes("/results/") ?? false;
 
   if (!available || attemptContext) {
     return null;
@@ -37,7 +44,7 @@ export function BugReportFloatingButton() {
       onClick={open}
       aria-label="Báo lỗi cho giáo viên"
       title="Báo lỗi cho giáo viên"
-      className="fixed bottom-4 right-4 z-30 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-pop transition hover:border-primary hover:text-primary"
+      className={`fixed right-4 z-30 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-pop transition hover:border-primary hover:text-primary ${isResultsPage ? "bottom-24" : "bottom-4"}`}
     >
       <BugIcon />
     </button>

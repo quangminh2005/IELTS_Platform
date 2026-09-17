@@ -2402,6 +2402,18 @@ export function AttemptWorkspace({
     return () => window.clearInterval(intervalId);
   }, [previewMode, activeSkill, persistDraft, formOnScreen]);
 
+  // Đăng ký ngữ cảnh cho nút báo lỗi (bài nào, part nào, bước nào đang mở) và biết
+  // hộp thoại báo lỗi đang mở hay không — cần biết SỚM (trước effect đếm rời tab
+  // ngay dưới đây) để lúc học viên mở hộp chọn ảnh chụp màn hình (OS file picker,
+  // làm tab bị "hidden") không bị tính nhầm là rời tab gian lận. Chỉ một lần gọi
+  // useBugReport() duy nhất trong component, dùng chung cho cả chỗ này lẫn effect
+  // setAttemptContext ở dưới.
+  const { setAttemptContext, isOpen: bugReportIsOpen } = useBugReport();
+  const bugDialogOpenRef = useRef(false);
+  useEffect(() => {
+    bugDialogOpenRef.current = bugReportIsOpen;
+  }, [bugReportIsOpen]);
+
   // Ghi nhận hành vi đáng ngờ: CHỈ ĐẾM, KHÔNG CHẶN. Cố ý không gọi preventDefault để
   // ô tìm kiếm vẫn mở bình thường và học viên không biết mình bị ghi nhận — tính năng
   // này hiệu quả nhất khi học viên không biết nó tồn tại.
@@ -2428,14 +2440,20 @@ export function AttemptWorkspace({
     }
 
     // Chỉ tính khi rời tab quá TAB_AWAY_MIN_MS: thông báo nhảy lên rồi tắt ngay là vô
-    // tình, không phải gian lận.
+    // tình, không phải gian lận. Cũng bỏ qua khi hộp thoại báo lỗi đang mở — học viên
+    // chọn ảnh chụp màn hình qua hộp thoại hệ điều hành cũng làm tab bị "hidden" y hệt
+    // chuyển tab, không được tính là rời tab gian lận.
     let hiddenSince: number | null = null;
     function onVisibilityChange() {
       if (document.hidden) {
         hiddenSince = Date.now();
         return;
       }
-      if (hiddenSince !== null && shouldCountTabAway(Date.now() - hiddenSince)) {
+      if (
+        hiddenSince !== null &&
+        !bugDialogOpenRef.current &&
+        shouldCountTabAway(Date.now() - hiddenSince)
+      ) {
         bump(tabSwitchCountRef, tabSwitchInputRef);
       }
       hiddenSince = null;
@@ -2757,9 +2775,8 @@ export function AttemptWorkspace({
     window.setTimeout(() => scrollToQuestion(entry.anchorId), 80);
   }
 
-  // Đăng ký ngữ cảnh cho nút báo lỗi: bài nào, part nào, bước nào đang mở. Xem
-  // trước (giáo viên) thì không có provider -> setAttemptContext là no-op.
-  const { setAttemptContext } = useBugReport();
+  // setAttemptContext lấy từ useBugReport() đã gọi ở trên. Xem trước (giáo viên)
+  // thì không có provider -> setAttemptContext là no-op.
   const activePartTitle = parts[activePart]?.title ?? "";
   const activePartUnitId = parts[activePart]?.unitId ?? "";
   // unitSteps chỉ có khoá cho phần chạy chế độ từng bước -> phần thường ra undefined.

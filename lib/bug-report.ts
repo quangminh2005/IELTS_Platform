@@ -150,20 +150,21 @@ export type BugReportEmailInput = {
   appUrl: string;
 };
 
-const emailDateFormatter = new Intl.DateTimeFormat("vi-VN", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-  timeZone: "Asia/Ho_Chi_Minh"
-});
-
 export function buildBugReportEmail(input: BugReportEmailInput): {
   subject: string;
   html: string;
   text: string;
 } {
+  // Chỉ dùng ở server (gửi mail báo lỗi) nên khởi tạo ngay trong hàm, không để
+  // ở scope module — module này giờ còn được chuông thông báo phía client import.
+  const emailDateFormatter = new Intl.DateTimeFormat("vi-VN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Ho_Chi_Minh"
+  });
   const subject = `[IELTS] Báo lỗi mới – ${input.studentName}: ${input.categoryLabel}`;
   const link = `${input.appUrl}/teacher/bugs`;
   const when = emailDateFormatter.format(input.createdAt);

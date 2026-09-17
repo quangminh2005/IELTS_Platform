@@ -140,7 +140,7 @@ function Icon({ name }: { name: IconName }) {
         </svg>
       );
     case "bug":
-      return <BugIcon />;
+      return <BugIcon className="h-5 w-5 shrink-0" />;
   }
 }
 

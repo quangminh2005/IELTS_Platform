@@ -46,6 +46,32 @@ const statements = [
   'ALTER TABLE "AssignableUnit" ADD COLUMN IF NOT EXISTS "transcriptTimingJson" TEXT;',
   // Câu nhận xét mẫu gắn theo tiêu chí chấm (null = nhận xét chung)
   'ALTER TABLE "CommentSnippet" ADD COLUMN IF NOT EXISTS "criterion" TEXT;',
+  // Báo lỗi học viên gửi giáo viên: bảng mới, không đụng dữ liệu cũ.
+  `CREATE TABLE IF NOT EXISTS "BugReport" (
+    "id" TEXT NOT NULL,
+    "studentId" TEXT NOT NULL,
+    "category" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "imageUrl" TEXT,
+    "pageUrl" TEXT NOT NULL,
+    "userAgent" TEXT,
+    "viewport" TEXT,
+    "attemptId" TEXT,
+    "contextJson" TEXT,
+    "status" TEXT NOT NULL DEFAULT 'open',
+    "teacherNote" TEXT,
+    "resolvedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "BugReport_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "BugReport_studentId_createdAt_idx" ON "BugReport"("studentId", "createdAt");',
+  'CREATE INDEX IF NOT EXISTS "BugReport_status_createdAt_idx" ON "BugReport"("status", "createdAt");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'BugReport_studentId_fkey') THEN
+      ALTER TABLE "BugReport" ADD CONSTRAINT "BugReport_studentId_fkey"
+      FOREIGN KEY ("studentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
   // Thư viện tự luyện: cờ mở đề, khoá bộ luyện, số thứ tự lượt làm. Đặt TRƯỚC hai
   // câu UPDATE khối lớn bên dưới — nếu một câu UPDATE nặng phía dưới bị timeout
   // (Neon cold-start) thì các cột này vẫn kịp lên prod trước khi vòng lặp dừng

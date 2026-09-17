@@ -15,6 +15,8 @@ datasource db {
 // enum SubmitReason: manual | auto_timeout
 // enum ReviewCriterion (CommentSnippet.criterion, null = nhận xét chung):
 //   taskAchievement | coherence | fluency | lexicalResource | grammar | pronunciation
+// enum BugCategory (BugReport.category): audio | answer | display | other
+// enum BugStatus (BugReport.status): open | resolved
 
 model User {
   id             String          @id @default(cuid())
@@ -94,6 +96,7 @@ model StudentProfile {
 
   vocabProgress VocabProgress[]
   vocabQuizDays VocabQuizDay[]
+  bugReports    BugReport[]
 }
 
 // LƯU Ý VỀ INDEX: Postgres (và Prisma) KHÔNG tự tạo index cho cột khoá ngoại —
@@ -470,4 +473,32 @@ model VocabQuizDay {
   student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([studentId, date])
+}
+
+// Báo lỗi học viên gửi cho giáo viên ngay trên web (nút con bọ ở góc màn hình).
+// Mọi cột "ngữ cảnh" (pageUrl/userAgent/viewport/attemptId/contextJson) do trình
+// duyệt tự điền lúc gửi, học viên chỉ chọn loại + gõ mô tả + (tuỳ chọn) ảnh.
+model BugReport {
+  id          String    @id @default(cuid())
+  studentId   String
+  // audio | answer | display | other — xem comment đầu schema
+  category    String
+  description String
+  imageUrl    String?
+  pageUrl     String
+  userAgent   String?
+  viewport    String?
+  // KHÔNG khoá ngoại: bài làm có thể bị giáo viên reset xoá, báo lỗi vẫn giữ.
+  attemptId   String?
+  // JSON { unitTitle?: string, step?: number } — part/bước đang mở lúc báo
+  contextJson String?
+  // open | resolved
+  status      String    @default("open")
+  teacherNote String?
+  resolvedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  student     StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId, createdAt])
+  @@index([status, createdAt])
 }

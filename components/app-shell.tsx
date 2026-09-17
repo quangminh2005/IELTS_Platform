@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import { BugReportProvider } from "@/components/bug-report-context";
+import { BugReportDialog } from "@/components/bug-report-dialog";
+import { BugIcon, BugReportFloatingButton } from "@/components/bug-report-button";
 import { LogoutButton } from "@/components/logout-button";
 import { NotificationBell } from "@/components/notification-bell";
 import { StudentAvatar } from "@/components/student-avatar";
@@ -31,7 +34,8 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
     { href: "/teacher/assignments", label: "Giao bài", hint: "Bài tập về nhà", icon: "clipboard" },
     { href: "/teacher/calendar", label: "Lịch giao bài", hint: "Theo dõi nộp bài", icon: "calendar" },
     { href: "/teacher/practice", label: "Tự luyện", hint: "Học viên luyện thêm", icon: "chart" },
-    { href: "/teacher/review", label: "Chấm bài", hint: "Writing & Speaking", icon: "check" }
+    { href: "/teacher/review", label: "Chấm bài", hint: "Writing & Speaking", icon: "check" },
+    { href: "/teacher/bugs", label: "Báo lỗi", hint: "Học viên báo trục trặc", icon: "bug" }
   ],
   student: [
     { href: "/student", label: "Tổng quan", hint: "Bài được giao", icon: "home" },
@@ -43,7 +47,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
   ]
 };
 
-type IconName = "home" | "users" | "book" | "clipboard" | "check" | "clock" | "trophy" | "menu" | "close" | "calendar" | "chart";
+type IconName = "home" | "users" | "book" | "clipboard" | "check" | "clock" | "trophy" | "menu" | "close" | "calendar" | "chart" | "bug";
 
 function Icon({ name }: { name: IconName }) {
   const common = {
@@ -135,6 +139,8 @@ function Icon({ name }: { name: IconName }) {
           <path d="M6 6l12 12M18 6 6 18" />
         </svg>
       );
+    case "bug":
+      return <BugIcon />;
   }
 }
 
@@ -242,6 +248,21 @@ function NavLinks({
   );
 }
 
+// Nút báo lỗi + hộp thoại chỉ có ở khu học viên. Bọc cả hai nhánh return (trang
+// kết quả toàn màn hình cũng cần báo lỗi được).
+function withBugReport(role: AppShellRole, node: ReactNode) {
+  if (role !== "student") {
+    return node;
+  }
+  return (
+    <BugReportProvider>
+      {node}
+      <BugReportFloatingButton />
+      <BugReportDialog />
+    </BugReportProvider>
+  );
+}
+
 export function AppShell({
   children,
   role,
@@ -274,7 +295,7 @@ export function AppShell({
   // tạo transform → phá vỡ position:fixed của các overlay con bên trong trang.
   const isFullScreen = pathname.includes("/results/");
   if (isFullScreen) {
-    return <div className="min-h-screen bg-background">{children}</div>;
+    return withBugReport(role, <div className="min-h-screen bg-background">{children}</div>);
   }
 
   // Trang chấm bài chi tiết giữ menu điều hướng nhưng cần bề ngang tối đa: bài
@@ -282,7 +303,8 @@ export function AppShell({
   // cột đọc bài chỉ còn ~270px (hẹp hơn cả khung chấm).
   const isWidePage = /^\/teacher\/review\/[^/]+$/.test(pathname);
 
-  return (
+  return withBugReport(
+    role,
     <div className="min-h-screen">
       {/* Thanh trên cùng cho điện thoại / máy tính bảng */}
       <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-border bg-card/85 px-4 py-3 backdrop-blur lg:hidden">
@@ -374,3 +396,4 @@ export function AppShell({
     </div>
   );
 }
+

@@ -2,6 +2,7 @@ import {
   buildStudentNotifications,
   countUnread,
   NOTIFICATION_LIMIT,
+  type BugResolvedNotificationSource,
   type StudentNotification
 } from "@/lib/notifications";
 import { excludePracticeAssignment } from "@/lib/practice";
@@ -54,6 +55,25 @@ export async function getStudentNotifications(
     })
   ]);
 
+  // Báo lỗi đã được giáo viên xử lý. Truy vấn riêng, bọc try/catch: bảng BugReport
+  // mới thêm, nếu ensure-db chưa kịp chạy trên prod thì chuông vẫn phải hiện hai
+  // nguồn còn lại.
+  let bugs: BugResolvedNotificationSource[] = [];
+  try {
+    bugs = await prisma.bugReport.findMany({
+      where: { studentId, status: "resolved", resolvedAt: { not: null } },
+      orderBy: { resolvedAt: "desc" },
+      take: NOTIFICATION_LIMIT,
+      select: { id: true, category: true, teacherNote: true, resolvedAt: true }
+    }).then((rows) =>
+      rows.flatMap((row) =>
+        row.resolvedAt ? [{ ...row, resolvedAt: row.resolvedAt }] : []
+      )
+    );
+  } catch (error) {
+    console.error("[thong-bao] Không đọc được BugReport:", error);
+  }
+
   const items = buildStudentNotifications(
     reviews.map((review) => ({
       attemptId: review.attemptId,
@@ -66,7 +86,8 @@ export async function getStudentNotifications(
       title: recipient.assignment.title,
       assignedAt: recipient.assignedAt
     })),
-    student?.notificationsReadAt ?? null
+    student?.notificationsReadAt ?? null,
+    bugs
   );
 
   return { items, unreadCount: countUnread(items) };

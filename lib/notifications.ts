@@ -6,9 +6,11 @@
 // Tệp này KHÔNG được import prisma: chuông là client component và import
 // formatRelativeTime từ đây. Phần truy vấn nằm ở lib/notifications-feed.ts.
 
+import { bugCategoryLabel } from "@/lib/bug-report";
+
 export const NOTIFICATION_LIMIT = 30;
 
-export type StudentNotificationType = "review_done" | "assignment_new";
+export type StudentNotificationType = "review_done" | "assignment_new" | "bug_resolved";
 
 export type StudentNotification = {
   // "review:<attemptId>" | "assignment:<recipientId>" — đủ để làm key React và để
@@ -35,6 +37,13 @@ export type AssignmentNotificationSource = {
   assignedAt: Date;
 };
 
+export type BugResolvedNotificationSource = {
+  id: string;
+  category: string;
+  teacherNote: string | null;
+  resolvedAt: Date;
+};
+
 // readAt null = chưa từng có mốc. Coi như đã đọc hết thay vì chưa đọc hết, để học
 // viên mới (hoặc DB chưa kịp có cột) không bị dội cả chục thông báo cũ.
 function isUnread(createdAt: Date, readAt: Date | null): boolean {
@@ -48,7 +57,9 @@ function isUnread(createdAt: Date, readAt: Date | null): boolean {
 export function buildStudentNotifications(
   reviews: ReviewNotificationSource[],
   assignments: AssignmentNotificationSource[],
-  readAt: Date | null
+  readAt: Date | null,
+  // Tham số thứ 4 tuỳ chọn: chỗ gọi cũ và test cũ không phải sửa.
+  bugs: BugResolvedNotificationSource[] = []
 ): StudentNotification[] {
   const items: StudentNotification[] = [
     ...reviews.map((item) => ({
@@ -68,6 +79,15 @@ export function buildStudentNotifications(
       href: `/student/assignments/${item.recipientId}`,
       createdAt: item.assignedAt,
       unread: isUnread(item.assignedAt, readAt)
+    })),
+    ...bugs.map((item) => ({
+      id: `bug:${item.id}`,
+      type: "bug_resolved" as const,
+      title: `Đã xử lý báo lỗi: ${bugCategoryLabel(item.category)}`,
+      detail: item.teacherNote?.trim() ? item.teacherNote.trim() : null,
+      href: "/student/bugs",
+      createdAt: item.resolvedAt,
+      unread: isUnread(item.resolvedAt, readAt)
     }))
   ];
 

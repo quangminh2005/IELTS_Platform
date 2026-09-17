@@ -25,6 +25,11 @@ describe("nguồn thông báo lọc đúng bài tự luyện", () => {
   it("không tự viết chuỗi practice", () => {
     expect(feed).not.toMatch(/mode:\s*["']practice["']/);
   });
+
+  it("nguồn 'báo lỗi đã xử lý' được bọc try/catch (bảng có thể chưa có trên prod)", () => {
+    expect(feed).toContain("prisma.bugReport.findMany");
+    expect(feed).toMatch(/try\s*\{[\s\S]*prisma\.bugReport\.findMany[\s\S]*\}\s*catch/);
+  });
 });
 
 describe("lược đồ thông báo", () => {
@@ -132,6 +137,37 @@ describe("buildStudentNotifications", () => {
     );
 
     expect(buildStudentNotifications(many, more, null)).toHaveLength(NOTIFICATION_LIMIT);
+  });
+
+  it("báo lỗi đã xử lý thành thông báo dẫn tới /student/bugs", () => {
+    const items = buildStudentNotifications(
+      [review("a1", "2026-09-10T10:00:00Z")],
+      [],
+      new Date("2026-09-11T00:00:00Z"),
+      [
+        {
+          id: "b1",
+          category: "audio",
+          teacherNote: "Đã thay file audio.",
+          resolvedAt: new Date("2026-09-12T10:00:00Z")
+        }
+      ]
+    );
+
+    expect(items[0].id).toBe("bug:b1");
+    expect(items[0].type).toBe("bug_resolved");
+    expect(items[0].href).toBe("/student/bugs");
+    expect(items[0].title).toBe("Đã xử lý báo lỗi: Audio không chạy");
+    expect(items[0].detail).toBe("Đã thay file audio.");
+    expect(items[0].unread).toBe(true);
+    expect(items[1].id).toBe("review:a1");
+  });
+
+  it("báo lỗi xử lý không có phản hồi thì detail null", () => {
+    const items = buildStudentNotifications([], [], null, [
+      { id: "b2", category: "other", teacherNote: null, resolvedAt: new Date("2026-09-12T10:00:00Z") }
+    ]);
+    expect(items[0].detail).toBeNull();
   });
 });
 

@@ -26,7 +26,8 @@ export default async function TeacherDashboardPage() {
     pendingReviewCount,
     pendingPracticeReviewCount,
     recentClasses,
-    recentSubmissions
+    recentSubmissions,
+    openBugCount
   ] = await Promise.all([
     prisma.class.count({ where: { teacherId: teacher.id } }),
     prisma.classStudent.findMany({
@@ -93,7 +94,13 @@ export default async function TeacherDashboardPage() {
           select: { assignment: { select: { title: true, mode: true } } }
         }
       }
-    })
+    }),
+    // Báo lỗi học viên đang chờ. Bảng mới -> catch để thiếu bảng không vỡ Tổng quan.
+    prisma.bugReport
+      .count({
+        where: { status: "open", student: { classes: { some: { class: { teacherId: teacher.id } } } } }
+      })
+      .catch(() => 0)
   ]);
   const studentCount = studentMemberships.length;
 
@@ -167,6 +174,17 @@ export default async function TeacherDashboardPage() {
             </Link>
           ) : null}
         </div>
+
+        {openBugCount > 0 ? (
+          <Link
+            href="/teacher/bugs"
+            className="rounded-xl border border-red-400/50 bg-red-500/10 p-5 shadow-card transition hover:border-red-400"
+          >
+            <p className="text-sm text-muted-foreground">Báo lỗi mới</p>
+            <p className="mt-2 text-3xl font-bold tabular-nums text-red-600 dark:text-red-300">{openBugCount}</p>
+            <p className="mt-1 text-sm font-medium text-primary">Xem báo lỗi →</p>
+          </Link>
+        ) : null}
       </section>
 
       <div className="grid gap-5 lg:grid-cols-2">

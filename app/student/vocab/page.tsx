@@ -27,7 +27,7 @@ export default async function StudentVocabPage() {
     // Chỉ ôn những từ ĐÃ TỪNG được phát ra làm từ của ngày.
     prisma.vocabWord.findMany({
       where: { hidden: false, dailies: { some: {} } },
-      select: { id: true, display: true, meaningVi: true }
+      select: { id: true, display: true, meaningVi: true, phonetic: true, exampleEn: true }
     }),
     prisma.vocabProgress.findMany({
       where: { studentId: student.id },
@@ -55,7 +55,9 @@ export default async function StudentVocabPage() {
   const reviewed = pool
     .filter((word) => progressById.has(word.id))
     .map((word) => ({
-      ...word,
+      id: word.id,
+      display: word.display,
+      meaningVi: word.meaningVi,
       correctCount: progressById.get(word.id)?.correctCount ?? 0,
       wrongCount: progressById.get(word.id)?.wrongCount ?? 0
     }))
@@ -67,8 +69,9 @@ export default async function StudentVocabPage() {
         <p className="text-sm font-semibold text-primary">Từ vựng</p>
         <h2 className="mt-1 text-2xl font-bold tracking-tight">Ôn tập từ đã học</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Ôn liên tiếp {sidebar.streakDays} ngày · đã gặp {sidebar.learnedCount} từ. Làm lại
-          bao nhiêu lần cũng được, hệ thống giữ kết quả tốt nhất trong ngày.
+          Ôn liên tiếp {sidebar.streakDays} ngày · đã gặp {sidebar.learnedCount} từ. Mỗi lượt
+          5 câu: chọn nghĩa, chọn từ và điền từ vào câu. Làm lại bao nhiêu lần cũng được,
+          hệ thống giữ kết quả tốt nhất trong ngày.
         </p>
       </header>
 

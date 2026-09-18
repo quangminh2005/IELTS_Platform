@@ -8,12 +8,14 @@ import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { prisma } from "@/lib/prisma";
 import { vietnamDateKey } from "@/lib/vocab-day";
 import { dateKeyToUtcDate } from "@/lib/vocab-daily";
+import { checkVocabAnswer, QUIZ_KINDS } from "@/lib/vocab-quiz";
 
 const submitSchema = z.object({
   answers: z
     .array(
       z.object({
         wordId: z.string().min(1),
+        kind: z.enum(QUIZ_KINDS as [string, ...string[]]).default("meaning"),
         chosen: z.string().min(1)
       })
     )
@@ -28,23 +30,28 @@ export async function submitVocabQuiz(formData: FormData): Promise<ActionResult>
       JSON.parse(String(formData.get("answersJson") ?? "{}"))
     );
 
-    // Không tin điểm client gửi lên — chấm lại bằng nghĩa lưu trong DB.
+    // Không tin điểm client gửi lên — chấm lại bằng dữ liệu lưu trong DB, cùng
+    // một hàm với phần tô màu chữa bài ở client.
     const words = await prisma.vocabWord.findMany({
       where: { id: { in: parsed.answers.map((item) => item.wordId) } },
-      select: { id: true, meaningVi: true }
+      select: { id: true, display: true, meaningVi: true, exampleEn: true }
     });
 
-    const meanings = new Map(words.map((word) => [word.id, word.meaningVi]));
+    const byId = new Map(words.map((word) => [word.id, word]));
     let correct = 0;
 
     for (const answer of parsed.answers) {
-      const expected = meanings.get(answer.wordId);
+      const word = byId.get(answer.wordId);
 
-      if (!expected) {
+      if (!word) {
         continue;
       }
 
-      const isCorrect = expected === answer.chosen;
+      const isCorrect = checkVocabAnswer(
+        answer.kind as (typeof QUIZ_KINDS)[number],
+        word,
+        answer.chosen
+      );
 
       if (isCorrect) {
         correct += 1;

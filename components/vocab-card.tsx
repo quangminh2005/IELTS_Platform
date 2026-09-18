@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SpeakButton } from "@/components/speak-button";
 import type { DailyWord } from "@/lib/vocab-daily";
 
 export function VocabCard({
@@ -23,11 +24,12 @@ export function VocabCard({
 
       {word ? (
         <>
-          <p className="mt-3 flex flex-wrap items-baseline gap-2">
+          <p className="mt-3 flex flex-wrap items-center gap-2">
             <span className="text-xl font-bold tracking-tight">{word.display}</span>
             {word.phonetic ? (
               <span className="text-sm text-muted-foreground">{word.phonetic}</span>
             ) : null}
+            <SpeakButton text={word.display} />
             {word.partOfSpeech ? (
               <span className="text-sm italic text-muted-foreground">
                 ({word.partOfSpeech})
@@ -35,6 +37,9 @@ export function VocabCard({
             ) : null}
           </p>
           <p className="mt-1 text-sm font-medium">{word.meaningVi}</p>
+          {word.definitionEn ? (
+            <p className="mt-0.5 text-xs text-muted-foreground">{word.definitionEn}</p>
+          ) : null}
           <p className="mt-3 border-l-2 border-border pl-3 text-sm italic leading-6 text-muted-foreground">
             “{word.exampleEn}”
           </p>

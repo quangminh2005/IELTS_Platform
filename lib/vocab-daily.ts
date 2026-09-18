@@ -9,6 +9,7 @@ export type DailyWord = {
   phonetic: string | null;
   partOfSpeech: string | null;
   meaningVi: string;
+  definitionEn: string | null;
   exampleEn: string;
   sourceUnitId: string | null;
   // Tên đề gốc, vd "Cambridge 20 · Reading Test 1 — Passage 1". Null với từ nhập
@@ -27,6 +28,7 @@ const WORD_FIELDS = {
   phonetic: true,
   partOfSpeech: true,
   meaningVi: true,
+  definitionEn: true,
   exampleEn: true,
   sourceUnitId: true,
   // select tường minh, không include: content/transcript của phần đề rất nặng.
@@ -41,6 +43,7 @@ type WordRow = {
   phonetic: string | null;
   partOfSpeech: string | null;
   meaningVi: string;
+  definitionEn: string | null;
   exampleEn: string;
   sourceUnitId: string | null;
   sourceUnit: { title: string; material: { title: string } } | null;

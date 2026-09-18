@@ -344,7 +344,9 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
           {/* Cột bài luận có TRẦN (dòng chữ giữ khoảng 70 ký tự — rộng hơn nữa
               thì mắt khó bắt đầu dòng kế) nhưng cũng có SÀN 380px để không bị
               khung chấm ép; phần còn lại nhường hết cho khung chấm. */}
-          <div className="grid gap-6 lg:grid-cols-[minmax(380px,620px)_minmax(340px,1fr)]">
+          {/* Hai cột từ xl: khung chấm có bề rộng tối thiểu ~430px (dãy 11 nút band
+              4.0–9.0 không xuống dòng), cộng bài luận 380px thì dưới xl không đủ chỗ. */}
+          <div className="grid gap-6 xl:grid-cols-[minmax(380px,620px)_minmax(440px,1fr)]">
             <div className="min-w-0 space-y-4">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                 Bài làm của học viên
@@ -515,7 +517,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
 
             {/* Khung chấm dính theo màn hình: đọc tới đâu cho điểm tới đó, không
                 phải cuộn ngược lên tìm nút Lưu. */}
-            <div className="review-form-shell min-w-0 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:self-start lg:overflow-y-auto lg:overflow-x-hidden lg:pr-1">
+            <div className="review-form-shell min-w-0 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:self-start xl:overflow-y-auto xl:overflow-x-hidden xl:pr-1">
               <ReviewForm
                 attemptId={attempt.id}
                 skill={skill}

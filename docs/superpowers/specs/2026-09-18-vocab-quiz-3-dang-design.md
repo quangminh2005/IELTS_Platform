@@ -1,6 +1,6 @@
 # Từ vựng mỗi ngày — quiz 3 dạng + phát âm + chữa bài
 
-Ngày: 2026-09-18. Trạng thái: đã duyệt, đang làm.
+Ngày: 2026-09-18. Trạng thái: đã ship prod 18/9 (commit 02e53142), kiểm tay trên tài khoản học viên.
 
 ## Vì sao
 

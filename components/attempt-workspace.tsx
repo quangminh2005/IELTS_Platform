@@ -163,6 +163,10 @@ type AnswerChange = (questionId: string, value: string) => void;
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 
+// Quá số phần này thì thanh dưới không hiện dải nút "Phần N (x/y)" nữa mà đổi
+// sang ô chọn: đề IELTS chuẩn có 3–4 phần, sách LPTD có 40 unit.
+const MAX_PART_TABS = 4;
+
 // Kết quả chấm tại chỗ cho phòng xem trước (không lưu DB). Hình dạng khớp prop
 // `attempt` của <ResultReview> — tái dùng đúng trang kết quả của học sinh.
 type PreviewResultAnswer = {
@@ -2871,16 +2875,21 @@ export function AttemptWorkspace({
             <button
               type="button"
               onClick={() => setActiveSkill(null)}
+              aria-label="Về chọn kỹ năng"
               className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
             >
-              ‹ Kỹ năng
+              ‹<span className="hidden sm:inline"> Kỹ năng</span>
             </button>
           ) : (
             <Link
               href={previewMode ? "/teacher/materials" : "/student"}
+              aria-label={previewMode ? "Về kho tài liệu" : "Về bảng điều khiển"}
               className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"
             >
-              {previewMode ? "‹ Kho tài liệu" : "‹ Bảng điều khiển"}
+              {/* Màn hẹp (điện thoại) chỉ còn mũi tên: cụm nút bên phải đã chiếm gần
+                  hết 375px, giữ nguyên chữ thì tiêu đề bài bị ép về 0 và các nút
+                  đè lên nhau. */}
+              ‹<span className="hidden sm:inline">{previewMode ? " Kho tài liệu" : " Bảng điều khiển"}</span>
             </Link>
           )}
           <div className="min-w-0">
@@ -2907,7 +2916,7 @@ export function AttemptWorkspace({
             >
               A−
             </button>
-            <span className="border-x border-border px-2 py-2 text-[11px] font-semibold tabular-nums text-muted-foreground">
+            <span className="hidden border-x border-border px-2 py-2 text-[11px] font-semibold tabular-nums text-muted-foreground sm:inline">
               {Math.round(fontScale * 100)}%
             </span>
             <button
@@ -2920,7 +2929,9 @@ export function AttemptWorkspace({
               A+
             </button>
           </div>
-          <AnimatedThemeToggle />
+          {/* Sáng/tối ẩn ở màn hẹp: đổi được từ Tổng quan, không đáng một ô 36px
+              trong header đang thiếu chỗ. */}
+          <AnimatedThemeToggle className="hidden sm:inline-flex" />
           {audioLocked && activeSkill === "listening" && soundCheckDone && lockedTracks.length > 0 ? (
             <LockedListeningAudio
               tracks={lockedTracks}
@@ -3814,7 +3825,10 @@ export function AttemptWorkspace({
             </p>
           ) : null}
 
-          {parts.length > 1 ? (
+          {/* Đề chuẩn (≤ 4 phần) hiện dải nút; tài liệu dài (LPTD 40 unit) đổi
+              sang ô chọn — 40 nút flex-wrap trên điện thoại thành 14 hàng chiếm
+              trọn màn hình, vùng câu hỏi (flex-1) bị ép về 0. */}
+          {parts.length > 1 && parts.length <= MAX_PART_TABS ? (
             <div className="flex flex-wrap items-center gap-2">
               {parts.map((part, index) => {
                 const partAnswered = part.entries.filter(
@@ -3837,6 +3851,28 @@ export function AttemptWorkspace({
                 );
               })}
             </div>
+          ) : null}
+          {parts.length > MAX_PART_TABS ? (
+            <label className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+              <span className="shrink-0">Chuyển phần</span>
+              <select
+                value={activePart}
+                onChange={(event) => goToPart(Number(event.target.value))}
+                aria-label="Chọn phần"
+                className="h-9 min-w-0 flex-1 rounded-md border border-border bg-background px-2 text-sm font-semibold text-foreground sm:max-w-xs"
+              >
+                {parts.map((part, index) => {
+                  const partAnswered = part.entries.filter(
+                    (entry) => (answers[entry.id] ?? "").trim() !== ""
+                  ).length;
+                  return (
+                    <option key={part.unitId} value={index}>
+                      Phần {part.order} · {partAnswered}/{part.entries.length} câu
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
           ) : null}
 
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">

@@ -27,6 +27,9 @@ export function BugIcon({ className = "h-5 w-5" }: { className?: string }) {
 // học viên nhìn là biết ngay (icon mờ ở góc từng bị bỏ qua). Ẩn khi màn làm bài
 // đã đăng ký ngữ cảnh — màn đó tự đặt BugReportInlineTrigger trong header vì
 // thanh nút cuối trang (Nộp bài, ‹ ›) của nó chiếm đúng góc này.
+// Màn hẹp (< sm) chỉ còn hình tròn 44px: viên thuốc có chữ rộng ~120px đè lên
+// nhãn Đúng/Sai bên phải mỗi thẻ câu ở trang kết quả; mục "Báo lỗi" trong menu
+// ☰ vẫn có chữ đầy đủ.
 export function BugReportFloatingButton() {
   const { available, attemptContext, open } = useBugReport();
   const pathname = usePathname();
@@ -45,10 +48,10 @@ export function BugReportFloatingButton() {
       onClick={open}
       aria-label="Báo lỗi cho giáo viên"
       title="Báo lỗi cho giáo viên"
-      className={`fixed right-4 z-30 inline-flex h-11 items-center gap-2 rounded-full bg-primary pl-3.5 pr-4 text-sm font-semibold text-primary-foreground shadow-pop transition hover:bg-primary/90 ${isResultsPage ? "bottom-24" : "bottom-4"}`}
+      className={`fixed right-4 z-30 inline-flex h-11 w-11 items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground shadow-pop transition hover:bg-primary/90 sm:w-auto sm:pl-3.5 sm:pr-4 ${isResultsPage ? "bottom-24" : "bottom-4"}`}
     >
       <BugIcon />
-      Báo lỗi
+      <span className="hidden sm:inline">Báo lỗi</span>
     </button>
   );
 }

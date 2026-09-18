@@ -167,6 +167,13 @@ export default async function StudentDashboardPage() {
 
   const tierProgress = getTierProgress(score.rankingScore);
 
+  // Bài chưa nộp lên trước (mới giao trước), bài đã nộp/đã chấm xuống dưới —
+  // danh sách là thứ học viên cần thấy đầu tiên khi mở trang.
+  const isDoneStatus = (status: string) => status === "submitted" || status === "reviewed";
+  const orderedRecipients = [...recipients].sort(
+    (a, b) => Number(isDoneStatus(a.status)) - Number(isDoneStatus(b.status))
+  );
+
   return (
     <div className="space-y-8">
       <header>
@@ -183,36 +190,9 @@ export default async function StudentDashboardPage() {
         </p>
       </header>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <StreakBadge
-          weeks={streak.weeks}
-          currentWeekCount={streak.currentWeekCount}
-          weeklyGoal={streak.weeklyGoal}
-          atRisk={streak.atRisk}
-        />
-        <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-card">
-          <span className="text-3xl" aria-hidden="true">
-            {tierProgress.tier.icon}
-          </span>
-          <div className="min-w-0">
-            <p className="text-base font-semibold">Hạng {tierProgress.tier.label}</p>
-            <p className="mt-0.5 text-sm text-muted-foreground">
-              {tierProgress.next
-                ? `Còn ${tierProgress.pointsToNext} điểm nữa lên ${tierProgress.next.label}`
-                : "Bạn đang ở đỉnh cao nhất! 💎"}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <VocabCard
-        word={wordOfDay}
-        streakDays={vocabSidebar.streakDays}
-        canQuiz={vocabSidebar.canQuiz}
-      />
-
-      <ProgressRing completed={completedCount} total={recipients.length} />
-
+      {/* Việc chính của học viên đứng đầu trang: trước đây khối này nằm sau
+          chuỗi tuần / hạng / từ vựng / vòng tiến độ, trên điện thoại phải cuộn
+          ~3 màn mới thấy bài cần làm. */}
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <h3 className="text-base font-semibold">Bài được giao</h3>
@@ -220,7 +200,7 @@ export default async function StudentDashboardPage() {
         </div>
         <div className="divide-y divide-border">
           {recipients.length > 0 ? (
-            recipients.map((recipient) => {
+            orderedRecipients.map((recipient) => {
               const latestAttempt = recipient.attempts[0];
               const done =
                 recipient.status === "submitted" || recipient.status === "reviewed";
@@ -313,6 +293,35 @@ export default async function StudentDashboardPage() {
           )}
         </div>
       </section>
+
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <StreakBadge
+          weeks={streak.weeks}
+          currentWeekCount={streak.currentWeekCount}
+          weeklyGoal={streak.weeklyGoal}
+          atRisk={streak.atRisk}
+        />
+        <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-card">
+          <span className="text-3xl" aria-hidden="true">
+            {tierProgress.tier.icon}
+          </span>
+          <div className="min-w-0">
+            <p className="text-base font-semibold">Hạng {tierProgress.tier.label}</p>
+            <p className="mt-0.5 text-sm text-muted-foreground">
+              {tierProgress.next
+                ? `Còn ${tierProgress.pointsToNext} điểm nữa lên ${tierProgress.next.label}`
+                : "Bạn đang ở đỉnh cao nhất! 💎"}
+            </p>
+          </div>
+        </div>
+        <ProgressRing completed={completedCount} total={recipients.length} />
+      </div>
+
+      <VocabCard
+        word={wordOfDay}
+        streakDays={vocabSidebar.streakDays}
+        canQuiz={vocabSidebar.canQuiz}
+      />
     </div>
   );
 }

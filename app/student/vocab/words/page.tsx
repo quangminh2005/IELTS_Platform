@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { SpeakButton } from "@/components/speak-button";
+import { releasedDailyDate } from "@/lib/vocab-daily";
 import { maskWordInSentence } from "@/lib/vocab-quiz";
 import {
   filterVocabWords,
@@ -52,9 +53,10 @@ export default async function StudentVocabWordsPage({
   const query = searchParams?.q?.trim() ?? "";
 
   const [dailies, progress] = await Promise.all([
-    // Chỉ những từ ĐÃ phát. select tường minh: phần đề nguồn có content rất nặng.
+    // Chỉ những từ ĐÃ phát tính đến hôm nay (từ ghim cho ngày mai chưa lộ).
+    // select tường minh: phần đề nguồn có content rất nặng.
     prisma.vocabDaily.findMany({
-      where: { word: { hidden: false } },
+      where: { word: { hidden: false }, date: releasedDailyDate() },
       orderBy: { date: "asc" },
       select: {
         date: true,

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PracticeProgressTable } from "@/components/practice-progress-table";
+import { VocabProgressTable } from "@/components/vocab-progress-table";
 import { formatDuration } from "@/lib/format-duration";
 import { onlyPracticeAssignment } from "@/lib/practice";
 import {
@@ -13,6 +14,8 @@ import {
 } from "@/lib/practice-progress";
 import { prisma } from "@/lib/prisma";
 import { requireTeacherPage } from "@/lib/teacher-page";
+import { vietnamDateKey } from "@/lib/vocab-day";
+import { buildVocabStudentRows, vocabTotals } from "@/lib/vocab-teacher-stats";
 
 type TeacherPracticePageProps = {
   searchParams?: {
@@ -119,6 +122,41 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
 
   const totals = practiceTotals(rows);
 
+  // Số liệu ôn từ vựng của cùng nhóm học viên — quiz nhẹ, kéo hết không cần lọc ngày.
+  const studentIds = students.map((student) => student.id);
+  const [vocabQuizDays, vocabProgress] =
+    studentIds.length > 0
+      ? await Promise.all([
+          prisma.vocabQuizDay.findMany({
+            where: { studentId: { in: studentIds } },
+            select: { studentId: true, date: true, correct: true, total: true }
+          }),
+          prisma.vocabProgress.findMany({
+            where: { studentId: { in: studentIds } },
+            select: { studentId: true, correctCount: true, wrongCount: true }
+          })
+        ])
+      : [[], []];
+
+  const vocabRows = buildVocabStudentRows(
+    students.map((student) => ({
+      id: student.id,
+      displayName: student.displayName,
+      avatarUrl: student.avatarUrl,
+      avatarPreset: student.avatarPreset,
+      userImage: student.user?.image ?? null
+    })),
+    vocabQuizDays.map((day) => ({
+      studentId: day.studentId,
+      date: day.date.toISOString().slice(0, 10),
+      correct: day.correct,
+      total: day.total
+    })),
+    vocabProgress,
+    { today: vietnamDateKey(now), rangeStartKey: rangeStart ? vietnamDateKey(rangeStart) : null }
+  );
+  const vocabSummary = vocabTotals(vocabRows);
+
   const header = (
     <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
       <div>
@@ -209,6 +247,12 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
       value: totals.totalSeconds > 0 ? formatDuration(totals.totalSeconds) : "—",
       note: "Cả nhóm cộng lại",
       accent: "text-blue-600 dark:text-blue-300"
+    },
+    {
+      label: "Có ôn từ vựng",
+      value: `${vocabSummary.activeStudents}/${vocabSummary.totalStudents}`,
+      note: PRACTICE_RANGE_LABELS[range],
+      accent: "text-amber-600 dark:text-amber-300"
     }
   ];
 
@@ -216,7 +260,7 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
     <div className="space-y-8">
       {header}
 
-      <section className="grid gap-4 sm:grid-cols-3">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (
           <div key={card.label} className="rounded-xl border border-border bg-card p-5 shadow-card">
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -234,6 +278,8 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
         Chỉ tính lượt đã nộp. Điểm trung bình lấy từ bài Nghe/Đọc chấm tự động — bài Viết/Nói
         chờ chấm không có phần trăm nên không tính vào đây.
       </p>
+
+      <VocabProgressTable rows={vocabRows} rangeLabel={PRACTICE_RANGE_LABELS[range]} />
     </div>
   );
 }

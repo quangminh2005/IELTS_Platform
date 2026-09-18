@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { VocabQuizForm } from "@/components/vocab-quiz-form";
 import { buildQuiz, MIN_POOL_FOR_QUIZ, QUIZ_SIZE } from "@/lib/vocab-quiz";
-import { getVocabSidebar } from "@/lib/vocab-daily";
+import { getVocabSidebar, releasedDailyDate } from "@/lib/vocab-daily";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +27,7 @@ export default async function StudentVocabPage() {
   const [pool, progress, sidebar] = await Promise.all([
     // Chỉ ôn những từ ĐÃ TỪNG được phát ra làm từ của ngày.
     prisma.vocabWord.findMany({
-      where: { hidden: false, dailies: { some: {} } },
+      where: { hidden: false, dailies: { some: { date: releasedDailyDate() } } },
       select: { id: true, display: true, meaningVi: true, phonetic: true, exampleEn: true }
     }),
     prisma.vocabProgress.findMany({

@@ -22,6 +22,12 @@ export function dateKeyToUtcDate(key: string): Date {
   return new Date(`${key}T00:00:00.000Z`);
 }
 
+// Điều kiện "đã phát tính đến hôm nay" cho VocabDaily.date. Cô có thể ghim sẵn từ
+// cho ngày mai (dòng VocabDaily tương lai) — từ đó chưa được lộ ra quiz/sổ từ.
+export function releasedDailyDate(now = new Date()) {
+  return { lte: dateKeyToUtcDate(vietnamDateKey(now)) };
+}
+
 const WORD_FIELDS = {
   id: true,
   display: true,
@@ -117,7 +123,9 @@ export async function getVocabSidebar(studentId: string, now = new Date()) {
     prisma.vocabProgress.count({ where: { studentId } }),
     // Đếm đúng rổ mà trang quiz sẽ dùng: chỉ từ ĐÃ TỪNG được phát. Đếm cả kho
     // thì nút "Ôn 5 từ cũ" hiện ra trong khi trang quiz lại báo chưa đủ từ.
-    prisma.vocabWord.count({ where: { hidden: false, dailies: { some: {} } } })
+    prisma.vocabWord.count({
+      where: { hidden: false, dailies: { some: { date: releasedDailyDate(now) } } }
+    })
   ]);
 
   const streak = calculateVocabStreak({

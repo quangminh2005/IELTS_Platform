@@ -8,6 +8,7 @@ import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { prisma } from "@/lib/prisma";
 import { vietnamDateKey } from "@/lib/vocab-day";
 import { dateKeyToUtcDate } from "@/lib/vocab-daily";
+import { shiftDateKey } from "@/lib/vocab-streak";
 import { checkVocabAnswer, QUIZ_KINDS } from "@/lib/vocab-quiz";
 
 const submitSchema = z.object({
@@ -167,5 +168,129 @@ export async function updateVocabWord(formData: FormData): Promise<ActionResult>
     return actionOk("Đã lưu thay đổi.");
   } catch (error) {
     return actionFail(error, "Lưu từ");
+  }
+}
+
+const optionalText = z.string().trim().optional().default("");
+
+const createSchema = z.object({
+  display: z
+    .string()
+    .trim()
+    .min(1, "Chưa nhập từ.")
+    .max(60, "Từ quá dài.")
+    .regex(/^[A-Za-z][A-Za-z' -]*$/, "Từ chỉ gồm chữ cái tiếng Anh."),
+  phonetic: optionalText,
+  partOfSpeech: optionalText,
+  meaningVi: z.string().trim().min(1, "Nghĩa tiếng Việt không được để trống."),
+  definitionEn: optionalText,
+  exampleEn: z.string().trim().min(1, "Câu ví dụ không được để trống.")
+});
+
+// Cô thêm từ tay — không gắn phần đề nào, sourceSkill = "manual" để phân biệt với
+// từ rút tự động (listening/reading).
+export async function createVocabWord(formData: FormData): Promise<ActionResult> {
+  try {
+    await requireTeacher();
+
+    const parsed = createSchema.parse({
+      display: formData.get("display"),
+      phonetic: formData.get("phonetic"),
+      partOfSpeech: formData.get("partOfSpeech"),
+      meaningVi: formData.get("meaningVi"),
+      definitionEn: formData.get("definitionEn"),
+      exampleEn: formData.get("exampleEn")
+    });
+
+    const word = parsed.display.toLowerCase();
+
+    const existing = await prisma.vocabWord.findUnique({
+      where: { word },
+      select: { hidden: true }
+    });
+
+    if (existing) {
+      const reason = existing.hidden
+        ? `“${parsed.display}” đã có trong kho nhưng đang ẩn — tìm rồi bấm Bỏ ẩn.`
+        : `“${parsed.display}” đã có trong kho.`;
+
+      return actionFail(new Error(reason), "Thêm từ");
+    }
+
+    await prisma.vocabWord.create({
+      data: {
+        word,
+        display: parsed.display,
+        phonetic: parsed.phonetic || null,
+        partOfSpeech: parsed.partOfSpeech || null,
+        meaningVi: parsed.meaningVi,
+        definitionEn: parsed.definitionEn || null,
+        exampleEn: parsed.exampleEn,
+        sourceSkill: "manual"
+      }
+    });
+
+    revalidatePath("/teacher/vocab");
+
+    return actionOk(`Đã thêm “${parsed.display}” vào kho.`);
+  } catch (error) {
+    return actionFail(error, "Thêm từ");
+  }
+}
+
+function tomorrowDate(now = new Date()): Date {
+  return dateKeyToUtcDate(shiftDateKey(vietnamDateKey(now), 1));
+}
+
+const pinSchema = z.object({ wordId: z.string().min(1) });
+
+// Ghim = ghi sẵn dòng VocabDaily cho ngày mai. getWordOfTheDay thấy đã có dòng
+// thì dùng luôn, không tự chọn. Ghim đè: ngày mai chỉ có một từ.
+export async function pinVocabWordForTomorrow(formData: FormData): Promise<ActionResult> {
+  try {
+    await requireTeacher();
+
+    const parsed = pinSchema.parse({ wordId: formData.get("wordId") });
+
+    const word = await prisma.vocabWord.findUnique({
+      where: { id: parsed.wordId },
+      select: { display: true, hidden: true }
+    });
+
+    if (!word) {
+      return actionFail(new Error("Không tìm thấy từ."), "Ghim từ");
+    }
+
+    if (word.hidden) {
+      return actionFail(new Error("Từ đang ẩn — bỏ ẩn trước rồi mới ghim."), "Ghim từ");
+    }
+
+    const date = tomorrowDate();
+
+    await prisma.vocabDaily.upsert({
+      where: { date },
+      update: { wordId: parsed.wordId },
+      create: { date, wordId: parsed.wordId }
+    });
+
+    revalidatePath("/teacher/vocab");
+
+    return actionOk(`Ngày mai sẽ phát “${word.display}”.`);
+  } catch (error) {
+    return actionFail(error, "Ghim từ");
+  }
+}
+
+export async function unpinVocabTomorrow(): Promise<ActionResult> {
+  try {
+    await requireTeacher();
+
+    await prisma.vocabDaily.deleteMany({ where: { date: tomorrowDate() } });
+
+    revalidatePath("/teacher/vocab");
+
+    return actionOk("Đã bỏ ghim, ngày mai hệ thống tự chọn từ.");
+  } catch (error) {
+    return actionFail(error, "Bỏ ghim");
   }
 }

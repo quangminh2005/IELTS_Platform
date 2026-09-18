@@ -7,6 +7,7 @@ import { SkillTags } from "@/components/skill-tags";
 import { excludePracticeRecipient, onlyPracticeRecipient } from "@/lib/practice";
 import { LateBadge } from "@/components/late-badge";
 import { isSubmissionLate } from "@/lib/late-submission";
+import { statusBadgeClasses } from "@/lib/status-badge";
 
 const tabClass =
   "rounded-full border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground hover:border-primary";
@@ -22,18 +23,6 @@ const STATUS_LABELS: Record<string, string> = {
 
 function formatStatus(status: string) {
   return STATUS_LABELS[status] ?? status.replaceAll("_", " ");
-}
-
-function statusClasses(status: string) {
-  if (status === "reviewed") {
-    return "border-primary/40 bg-primary/10 text-primary";
-  }
-
-  if (status === "submitted") {
-    return "border-accent/50 bg-accent/10 text-accent-foreground dark:text-accent";
-  }
-
-  return "border-border bg-muted text-muted-foreground";
 }
 
 function formatScore(score: number | null, scorePercent: number | null) {
@@ -170,7 +159,7 @@ export default async function StudentHistoryPage({
                     />
                   </div>
                   <span
-                    className={`mt-2 inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${statusClasses(
+                    className={`mt-2 inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${statusBadgeClasses(
                       attempt.status
                     )}`}
                   >

@@ -67,7 +67,7 @@ export default async function StudentVocabPage() {
         <p className="text-sm font-semibold text-primary">Từ vựng</p>
         <h2 className="mt-1 text-2xl font-bold tracking-tight">Ôn tập từ đã học</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Chuỗi {sidebar.streakDays} ngày · đã gặp {sidebar.learnedCount} từ. Làm lại
+          Ôn liên tiếp {sidebar.streakDays} ngày · đã gặp {sidebar.learnedCount} từ. Làm lại
           bao nhiêu lần cũng được, hệ thống giữ kết quả tốt nhất trong ngày.
         </p>
       </header>

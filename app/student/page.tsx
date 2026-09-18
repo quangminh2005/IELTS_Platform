@@ -13,22 +13,7 @@ import { VocabCard } from "@/components/vocab-card";
 import { LateBadge, OverdueBadge } from "@/components/late-badge";
 import { isSubmissionLate } from "@/lib/late-submission";
 import { getVocabSidebar, getWordOfTheDay } from "@/lib/vocab-daily";
-
-function statusClasses(status: string) {
-  if (status === "reviewed") {
-    return "border-primary/40 bg-primary/10 text-primary";
-  }
-
-  if (status === "submitted") {
-    return "border-accent/50 bg-accent/10 text-accent-foreground dark:text-accent";
-  }
-
-  if (status === "in_progress") {
-    return "border-blue-400/40 bg-blue-500/10 text-blue-600 dark:text-blue-300";
-  }
-
-  return "border-border bg-muted text-muted-foreground";
-}
+import { statusBadgeClasses } from "@/lib/status-badge";
 
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
@@ -257,7 +242,7 @@ export default async function StudentDashboardPage() {
                       <OverdueBadge className="px-3 py-1" />
                     ) : (
                       <span
-                        className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses(
+                        className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusBadgeClasses(
                           recipient.status
                         )}`}
                       >

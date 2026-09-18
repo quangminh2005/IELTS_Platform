@@ -108,7 +108,12 @@ export function PracticeLibrary({
                 {item.unitCount} phần · {item.questionCount} câu
               </p>
               <div className="mt-1 flex flex-wrap items-center gap-2">
-                <p className="text-xs font-medium text-primary">{item.progressLabel}</p>
+                {/* "Chưa luyện" (chưa nộp lần nào) đứng cạnh chip "Đang làm dở" đọc
+                    như mâu thuẫn — khi đang dở thì chip đã nói đủ, giấu nhãn đi. */}
+                {item.progressLabel === "Chưa luyện" &&
+                (item.resume || item.units.some((unit) => unit.resume)) ? null : (
+                  <p className="text-xs font-medium text-primary">{item.progressLabel}</p>
+                )}
                 {/* Lượt dở có thể nằm ở một PHẦN (nút "Làm tiếp" khi đó nằm khuất
                     trong danh sách phần đang thu gọn) — chip này để học viên không
                     bỏ quên bài đang làm giữa chừng. */}

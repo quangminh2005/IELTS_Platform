@@ -30,24 +30,38 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
     { href: "/teacher/classes", label: "Lớp học", hint: "Quản lý học viên", icon: "users" },
     { href: "/teacher/ranking", label: "Xếp hạng", hint: "Bảng xếp hạng lớp", icon: "trophy" },
     { href: "/teacher/materials", label: "Tài liệu", hint: "Kho đề & bài", icon: "book" },
-    { href: "/teacher/vocab", label: "Từ vựng", hint: "Kho từ mỗi ngày", icon: "book" },
+    { href: "/teacher/vocab", label: "Từ vựng", hint: "Kho từ mỗi ngày", icon: "vocab" },
     { href: "/teacher/assignments", label: "Giao bài", hint: "Bài tập về nhà", icon: "clipboard" },
     { href: "/teacher/calendar", label: "Lịch giao bài", hint: "Theo dõi nộp bài", icon: "calendar" },
-    { href: "/teacher/practice", label: "Tự luyện", hint: "Học viên luyện thêm", icon: "chart" },
+    { href: "/teacher/practice", label: "Tự luyện", hint: "Học viên luyện thêm", icon: "target" },
     { href: "/teacher/review", label: "Chấm bài", hint: "Writing & Speaking", icon: "check" },
     { href: "/teacher/bugs", label: "Báo lỗi", hint: "Học viên báo trục trặc", icon: "bug" }
   ],
   student: [
     { href: "/student", label: "Tổng quan", hint: "Bài được giao", icon: "home" },
-    { href: "/student/practice", label: "Tự luyện", hint: "Thư viện đề luyện thêm", icon: "book" },
-    { href: "/student/vocab", label: "Từ vựng", hint: "Từ mỗi ngày & ôn tập", icon: "book" },
+    { href: "/student/practice", label: "Tự luyện", hint: "Thư viện đề luyện thêm", icon: "target" },
+    { href: "/student/vocab", label: "Từ vựng", hint: "Từ mỗi ngày & ôn tập", icon: "vocab" },
     { href: "/student/history", label: "Lịch sử", hint: "Kết quả & bài đã làm", icon: "clock" },
     { href: "/student/stats", label: "Tiến bộ", hint: "Biểu đồ & điểm yếu", icon: "chart" },
     { href: "/student/ranking", label: "Xếp hạng", hint: "So với bạn cùng lớp", icon: "trophy" }
   ]
 };
 
-type IconName = "home" | "users" | "book" | "clipboard" | "check" | "clock" | "trophy" | "menu" | "close" | "calendar" | "chart" | "bug";
+type IconName =
+  | "home"
+  | "users"
+  | "book"
+  | "vocab"
+  | "target"
+  | "clipboard"
+  | "check"
+  | "clock"
+  | "trophy"
+  | "menu"
+  | "close"
+  | "calendar"
+  | "chart"
+  | "bug";
 
 function Icon({ name }: { name: IconName }) {
   const common = {
@@ -82,6 +96,25 @@ function Icon({ name }: { name: IconName }) {
         <svg {...common} aria-hidden="true">
           <path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5Z" />
           <path d="M5 19.5A1.5 1.5 0 0 1 6.5 18H19v3H6.5A1.5 1.5 0 0 1 5 19.5Z" />
+        </svg>
+      );
+    case "vocab":
+      // Chữ "Aa" trong khung — từ vựng, khác với "book" (Tài liệu) để icon
+      // sidebar không trùng nhau.
+      return (
+        <svg {...common} aria-hidden="true">
+          <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" />
+          <path d="M7 15.5l2.6-7 2.6 7M8 13h3.2" />
+          <path d="M14.2 15.5v-4.2M14.2 13.4c0-1.2.9-2.1 2.1-2.1 1.1 0 1.9.8 1.9 2v2.2M18.2 14.2h-2.4a1.2 1.2 0 0 0 0 2.4h.6c1 0 1.8-.7 1.8-1.7" />
+        </svg>
+      );
+    case "target":
+      // Bia ngắm — tự luyện.
+      return (
+        <svg {...common} aria-hidden="true">
+          <circle cx="12" cy="12" r="8.5" />
+          <circle cx="12" cy="12" r="4.5" />
+          <circle cx="12" cy="12" r="1" fill="currentColor" />
         </svg>
       );
     case "clipboard":
@@ -230,8 +263,8 @@ function NavLinks({
             aria-current={active ? "page" : undefined}
             className={
               active
-                ? "flex items-center gap-3 rounded-lg border border-primary/30 bg-primary/10 px-3.5 py-2.5 text-primary transition"
-                : "flex items-center gap-3 rounded-lg border border-transparent px-3.5 py-2.5 text-foreground transition hover:border-border hover:bg-muted"
+                ? "flex items-center gap-3 rounded-lg border border-primary/30 bg-primary/10 px-3.5 py-2.5 text-primary transition [@media(max-height:820px)]:py-2"
+                : "flex items-center gap-3 rounded-lg border border-transparent px-3.5 py-2.5 text-foreground transition hover:border-border hover:bg-muted [@media(max-height:820px)]:py-2"
             }
           >
             <span className={active ? "text-primary" : "text-muted-foreground"}>
@@ -239,7 +272,9 @@ function NavLinks({
             </span>
             <span className="leading-tight">
               <span className="block text-sm font-semibold">{item.label}</span>
-              <span className="block text-xs text-muted-foreground">{item.hint}</span>
+              {/* Màn thấp (laptop 768px): bỏ dòng gợi ý để 10 mục của giáo viên
+                  vừa một cột, "Chấm bài"/"Báo lỗi" không bị đẩy xuống phải cuộn. */}
+              <span className="block text-xs text-muted-foreground [@media(max-height:820px)]:hidden">{item.hint}</span>
             </span>
           </Link>
         );

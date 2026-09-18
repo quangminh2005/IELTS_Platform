@@ -336,12 +336,15 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
         </div>
       </header>
 
-      <div className="flex flex-col gap-6 xl:flex-row">
+      {/* Danh sách học sinh chỉ đứng thành cột thứ ba từ 2xl (1536px): trên laptop
+          1366–1440 có sidebar 288px, ba cột làm cột bài luận co còn ~240px — hẹp
+          nhất màn trong khi đó là thứ giáo viên phải đọc. Dưới 2xl nó nằm dưới. */}
+      <div className="flex flex-col gap-6 2xl:flex-row">
         <div className="min-w-0 flex-1">
           {/* Cột bài luận có TRẦN (dòng chữ giữ khoảng 70 ký tự — rộng hơn nữa
-              thì mắt khó bắt đầu dòng kế), phần còn lại nhường hết cho khung
-              chấm; khung chấm đủ rộng sẽ tự tách hai cột. */}
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,620px)_minmax(360px,1fr)]">
+              thì mắt khó bắt đầu dòng kế) nhưng cũng có SÀN 380px để không bị
+              khung chấm ép; phần còn lại nhường hết cho khung chấm. */}
+          <div className="grid gap-6 lg:grid-cols-[minmax(380px,620px)_minmax(340px,1fr)]">
             <div className="min-w-0 space-y-4">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                 Bài làm của học viên
@@ -526,7 +529,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
         </div>
 
         {siblings.length > 1 ? (
-          <aside className="shrink-0 xl:w-64">
+          <aside className="shrink-0 2xl:w-64">
             <div className="rounded-xl border border-border bg-card shadow-card">
               <div className="border-b border-border px-4 py-3">
                 <h3 className="text-sm font-semibold">Học sinh trong bài tập</h3>

@@ -2991,9 +2991,16 @@ export function AttemptWorkspace({
           unit.questions.length > 0 &&
           unit.questions.every((question) => usesLongAnswer(question.questionType));
         const writingBrief = parseWritingBrief(unit.metadataJson);
-        const briefLine = isWriting
-          ? writingBriefLine(unit.defaultTimeLimitMinutes, writingBrief.minWords)
-          : "";
+        // Nhiều đề Cambridge đã in sẵn "You should spend about 20 minutes…" ngay
+        // trong đề bài/hướng dẫn — khi đó không thêm dòng tự sinh nữa, kẻo học
+        // viên thấy cùng một câu hai lần liền nhau.
+        const briefAlreadyInSource = /you should spend about/i.test(
+          [unit.instructions ?? "", unit.content ?? "", ...unit.questions.map((q) => q.prompt ?? "")].join(" ")
+        );
+        const briefLine =
+          isWriting && !briefAlreadyInSource
+            ? writingBriefLine(unit.defaultTimeLimitMinutes, writingBrief.minWords)
+            : "";
         const sourceText = inlineCompletionConsumesContent ? "" : unit.content;
         const sourceType = "content";
         // Cột câu hỏi cũng tô màu được, nhưng lưu riêng để offset của hai cột
@@ -3880,7 +3887,13 @@ export function AttemptWorkspace({
           ) : null}
 
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5 overflow-x-auto">
+            {/* Dải số câu ẩn khi phần chỉ có 1 câu (bài Viết/Nói): một ô số "1"
+                không giúp điều hướng gì mà tốn một dòng trên điện thoại. */}
+            <div
+              className={`min-w-0 flex-1 flex-wrap items-center gap-1.5 overflow-x-auto ${
+                (parts[activePart]?.entries.length ?? 0) > 1 ? "flex" : "hidden"
+              }`}
+            >
               <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Phần {parts[activePart]?.order ?? 1}
               </span>
@@ -3907,7 +3920,8 @@ export function AttemptWorkspace({
                     }}
                     title={isFlagged ? "Flagged" : undefined}
                     className={[
-                      "relative h-8 min-w-8 rounded-md border px-2 text-xs font-semibold transition",
+                      // 40px trên điện thoại (ngón tay), 32px trên máy tính cho gọn.
+                      "relative h-10 min-w-10 rounded-md border px-2 text-xs font-semibold transition sm:h-8 sm:min-w-8",
                       isAnswered
                         ? "border-primary bg-primary text-primary-foreground"
                         : "border-border bg-background text-foreground hover:border-primary",

@@ -204,7 +204,9 @@ function AnswerCard({
           {correctnessLabel(answer.isCorrect)}
         </span>
       </div>
-      {answer.prompt ? (
+      {/* Câu điền chỗ trống thường có prompt chỉ là "Câu 7" (đề nằm trong khối
+          ghi chú/bảng) — in ra thì trùng y hệt tiêu đề ngay trên, bỏ. */}
+      {answer.prompt && !/^\s*(câu|question)\s*\d+\s*[.:]?\s*$/i.test(answer.prompt) ? (
         <p className="mt-2 text-base leading-7 text-muted-foreground">{answer.prompt}</p>
       ) : null}
       <dl className={`mt-3 grid gap-3 text-base ${hasCorrectAnswer ? "sm:grid-cols-2" : ""}`}>

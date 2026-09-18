@@ -72,14 +72,14 @@ export function BugReportNavButton({ onNavigate }: { onNavigate?: () => void }) 
         onNavigate?.();
         open();
       }}
-      className="mt-1.5 flex w-full items-center gap-3 rounded-lg border border-dashed border-border px-3.5 py-2.5 text-left text-foreground transition hover:border-primary hover:bg-primary/5"
+      className="mt-1.5 flex w-full items-center gap-3 rounded-lg border border-dashed border-border px-3.5 py-2.5 text-left text-foreground transition hover:border-primary hover:bg-primary/5 [@media(max-height:820px)]:py-2"
     >
       <span className="text-primary">
         <BugIcon className="h-5 w-5 shrink-0" />
       </span>
       <span className="leading-tight">
         <span className="block text-sm font-semibold">Báo lỗi</span>
-        <span className="block text-xs text-muted-foreground">Gặp trục trặc? Báo cô/thầy ngay</span>
+        <span className="block text-xs text-muted-foreground [@media(max-height:820px)]:hidden">Gặp trục trặc? Báo cô/thầy ngay</span>
       </span>
     </button>
   );

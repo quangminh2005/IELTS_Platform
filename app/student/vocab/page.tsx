@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -49,20 +50,6 @@ export default async function StudentVocabPage() {
     seed: Math.floor(Math.random() * 1000)
   });
 
-  // Danh sách từ đã ôn, sai nhiều xếp trước để học viên biết chỗ cần luyện.
-  const progressById = new Map(progress.map((row) => [row.wordId, row]));
-
-  const reviewed = pool
-    .filter((word) => progressById.has(word.id))
-    .map((word) => ({
-      id: word.id,
-      display: word.display,
-      meaningVi: word.meaningVi,
-      correctCount: progressById.get(word.id)?.correctCount ?? 0,
-      wrongCount: progressById.get(word.id)?.wrongCount ?? 0
-    }))
-    .sort((left, right) => right.wrongCount - left.wrongCount);
-
   return (
     <div className="space-y-6">
       <header>
@@ -84,29 +71,12 @@ export default async function StudentVocabPage() {
         </p>
       )}
 
-      {reviewed.length > 0 ? (
-        <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-          <h3 className="border-b border-border px-5 py-3 text-base font-semibold">
-            Từ đã ôn
-          </h3>
-          <ul className="divide-y divide-border">
-            {reviewed.map((item) => (
-              <li
-                key={item.id}
-                className="flex items-center justify-between gap-3 px-5 py-3 text-sm"
-              >
-                <span>
-                  <span className="font-semibold">{item.display}</span>
-                  <span className="text-muted-foreground"> — {item.meaningVi}</span>
-                </span>
-                <span className="shrink-0 text-xs text-muted-foreground">
-                  đúng {item.correctCount} · sai {item.wrongCount}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
+      <p className="text-sm text-muted-foreground">
+        Sổ từ: {sidebar.learnedCount} từ đã ôn ·{" "}
+        <Link href="/student/vocab/words" className="font-semibold text-primary hover:underline">
+          xem lại tất cả từ đã học →
+        </Link>
+      </p>
     </div>
   );
 }

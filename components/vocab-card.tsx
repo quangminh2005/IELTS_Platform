@@ -48,14 +48,22 @@ export function VocabCard({
               ↳ {word.sourceLabel}
             </p>
           ) : null}
-          {canQuiz ? (
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            {canQuiz ? (
+              <Link
+                href="/student/vocab"
+                className="inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+              >
+                Ôn 5 từ cũ →
+              </Link>
+            ) : null}
             <Link
-              href="/student/vocab"
-              className="mt-4 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+              href="/student/vocab/words"
+              className="text-sm font-semibold text-primary hover:underline"
             >
-              Ôn 5 từ cũ →
+              Xem tất cả từ đã học →
             </Link>
-          ) : null}
+          </div>
         </>
       ) : (
         <p className="mt-3 text-sm text-muted-foreground">

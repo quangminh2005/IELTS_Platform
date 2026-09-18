@@ -1,6 +1,10 @@
 // Danh sách từ học thuật (Academic Word List) dùng làm tầng lọc chính khi rút từ
-// từ đề Listening/Reading. Đang có Sublist 1-5 (300 headword). Muốn mở rộng chỉ
-// cần thêm chuỗi vào mảng dưới đây, không phải sửa code cũng không phải sửa test.
+// từ đề Listening/Reading. Đang có Sublist 1-10 (đủ AWL, trừ vài từ ngắn/từ nối
+// dễ bắt nhầm theo tiền tố: fee→feel, mode→model, via, plus, aid, odd, tape,
+// sole→solemn, grade→gradual, route→routine, found, file, bond, chart, team,
+// và các trạng từ nối furthermore/nevertheless/nonetheless/notwithstanding/
+// albeit/likewise/thereby/whereby/somewhat/so-called). Muốn mở rộng chỉ cần thêm
+// chuỗi vào mảng dưới đây, không phải sửa code cũng không phải sửa test.
 export const AWL_HEADWORDS: readonly string[] = [
   // Sublist 1
   "analyse", "approach", "area", "assess", "assume", "authority", "available",
@@ -52,7 +56,52 @@ export const AWL_HEADWORDS: readonly string[] = [
   "mental", "modify", "monitor", "network", "notion", "objective", "orient",
   "perspective", "precise", "prime", "psychology", "pursue", "ratio", "reject",
   "revenue", "stable", "style", "substitute", "sustain", "symbol", "target",
-  "transit", "trend", "version", "welfare"
+  "transit", "trend", "version", "welfare",
+  // Sublist 6
+  "abstract", "accurate", "acknowledge", "aggregate", "allocate", "assign",
+  "attach", "author", "brief", "capable", "cite", "cooperate", "discriminate",
+  "display", "diverse", "domain", "edit", "enhance", "estate", "exceed",
+  "expert", "explicit", "federal", "flexible", "gender", "ignorant", "incentive",
+  "incidence", "incorporate", "index", "inhibit", "initiate", "input",
+  "instruct", "intelligent", "interval", "lecture", "migrate", "minimum",
+  "ministry", "motive", "neutral", "overseas", "precede", "presume", "rational",
+  "recover", "reveal", "scope", "subsidy", "trace", "transform", "transport",
+  "underlie", "utilise",
+  // Sublist 7
+  "adapt", "adult", "advocate", "channel", "chemical", "classic",
+  "comprehensive", "comprise", "confirm", "contrary", "convert", "couple",
+  "decade", "definite", "deny", "differentiate", "dispose", "dynamic",
+  "eliminate", "empirical", "equip", "extract", "finite", "foundation", "globe",
+  "guarantee", "hierarchy", "identical", "ideology", "infer", "innovate",
+  "insert", "intervene", "isolate", "media", "paradigm", "phenomenon",
+  "priority", "prohibit", "publication", "quote", "release", "reverse",
+  "simulate", "submit", "successor", "survive", "thesis", "topic", "transmit",
+  "ultimate", "unique", "visible", "voluntary",
+  // Sublist 8
+  "abandon", "accompany", "accumulate", "ambiguous", "append", "appreciate",
+  "arbitrary", "automate", "bias", "clarify", "commodity", "complement",
+  "conform", "contemporary", "contradict", "crucial", "currency", "denote",
+  "detect", "deviate", "displace", "drama", "eventual", "exhibit", "exploit",
+  "fluctuate", "guideline", "highlight", "implicit", "induce", "inevitable",
+  "infrastructure", "inspect", "intense", "manipulate", "minimise", "nuclear",
+  "offset", "paragraph", "practitioner", "predominant", "prospect", "radical",
+  "random", "reinforce", "restore", "revise", "schedule", "tense", "terminate",
+  "theme", "uniform", "vehicle", "virtual", "visual", "widespread",
+  // Sublist 9
+  "accommodate", "analogy", "anticipate", "assure", "attain", "behalf", "bulk",
+  "cease", "coherent", "coincide", "commence", "compatible", "concurrent",
+  "confine", "controversy", "converse", "device", "devote", "diminish",
+  "distort", "duration", "erode", "ethic", "format", "inherent", "insight",
+  "integral", "intermediate", "manual", "mature", "mediate", "medium",
+  "military", "minimal", "mutual", "norm", "overlap", "passive", "portion",
+  "preliminary", "protocol", "qualitative", "refine", "relax", "restrain",
+  "revolution", "rigid", "scenario", "sphere", "subordinate", "supplement",
+  "suspend", "temporary", "trigger", "unify", "violate", "vision",
+  // Sublist 10
+  "adjacent", "assemble", "collapse", "colleague", "compile", "conceive",
+  "convince", "depress", "encounter", "enormous", "forthcoming", "incline",
+  "integrity", "intrinsic", "invoke", "levy", "ongoing", "panel", "persist",
+  "pose", "reluctance", "straightforward", "undergo"
 ];
 
 // Từ mà quy tắc so khớp theo tiền tố gốc bắt nhầm: mặt chữ trùng gốc của một
@@ -60,7 +109,12 @@ export const AWL_HEADWORDS: readonly string[] = [
 // phải nhặt ra bằng tay nữa.
 export const FALSE_MATCHES: ReadonlySet<string> = new Set([
   "rang", // quá khứ của "ring", không thuộc họ "range"
-  "equator" // từ địa lý, không thuộc họ "equate"
+  "equator", // từ địa lý, không thuộc họ "equate"
+  "tens", // số đếm, không thuộc họ "tense"
+  "them", // đại từ, không thuộc họ "theme"
+  "divers", // thợ lặn, không thuộc họ "diverse"
+  "inferior", // "kém hơn", không thuộc họ "infer"
+  "appendix" // phụ lục / ruột thừa, không thuộc họ "append"
 ]);
 
 // Gốc từ dùng để so khớp cả họ từ.

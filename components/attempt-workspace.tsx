@@ -2893,7 +2893,11 @@ export function AttemptWorkspace({
             </Link>
           )}
           <div className="min-w-0">
-            <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-primary">
+            {/* Nhãn "Phòng làm bài" ẩn ở màn hẹp (chỉ còn ~85px cho cột tiêu đề,
+                nhãn bị gãy 2 dòng); giữ khi xem trước vì mang huy hiệu. */}
+            <p
+              className={`${previewMode ? "flex" : "hidden sm:flex"} items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-primary`}
+            >
               {previewMode ? "Phòng làm bài" : "Phòng làm bài"}
               {previewMode ? (
                 <span className="rounded-full border border-amber-400/60 bg-amber-400/15 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-300">

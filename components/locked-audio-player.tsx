@@ -212,7 +212,9 @@ export function LockedListeningAudio({ tracks, storageKey }: LockedListeningAudi
         value={muted ? 0 : volume}
         onChange={handleVolume}
         aria-label="Âm lượng"
-        className="audio-range h-1.5 w-20 cursor-pointer"
+        // Màn hẹp giấu thanh trượt (điện thoại có nút âm lượng cứng): header
+        // phòng làm bài ở 375px không đủ chỗ, chỉ giữ chấm trạng thái + nút tắt tiếng.
+        className="audio-range hidden h-1.5 w-20 cursor-pointer sm:block"
         style={{ "--audio-progress": `${volumePct}%` } as React.CSSProperties}
       />
     </div>

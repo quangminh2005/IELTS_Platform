@@ -1,4 +1,5 @@
 import { WEAKEST_MIN_ANSWERS, type GroupStat } from "@/lib/question-stats";
+import { isSubmissionLate } from "@/lib/late-submission";
 import { rankingScorePercent } from "@/lib/student-score";
 
 // Tóm tắt tình hình học tập hiện trên trang báo cáo cho phụ huynh (/ph/<token>).
@@ -51,6 +52,8 @@ export type ParentSummary = {
   from: Date;
   to: Date;
   submittedCount: number;
+  // Trong số bài đã nộp trong kỳ, bao nhiêu bài nộp sau hạn.
+  lateSubmittedCount: number;
   lateOrMissingCount: number;
   averagePercent: number | null;
   averageBand: number | null;
@@ -130,9 +133,15 @@ function computeTrend(current: number | null, previous: number | null): ParentTr
   return "flat";
 }
 
+// Bài nộp sau hạn? Bài không đặt hạn thì không bao giờ trễ.
+export function isItemLate(item: ParentReportItem): boolean {
+  return isSubmissionLate(item.submittedAt, item.deadline);
+}
+
 function buildHeadline(
   period: ParentPeriod,
   submittedCount: number,
+  lateSubmittedCount: number,
   averagePercent: number | null,
   trend: ParentTrend,
   lateOrMissingCount: number
@@ -143,7 +152,8 @@ function buildHeadline(
   if (submittedCount === 0) {
     headline = `Trong ${label} qua, con chưa hoàn thành bài nào.`;
   } else {
-    const parts = [`Trong ${label} qua, con đã hoàn thành ${submittedCount} bài`];
+    const late = lateSubmittedCount > 0 ? ` (${lateSubmittedCount} bài nộp trễ hạn)` : "";
+    const parts = [`Trong ${label} qua, con đã hoàn thành ${submittedCount} bài${late}`];
 
     if (averagePercent !== null) {
       parts.push(`điểm trung bình ${Math.round(averagePercent)}%`);
@@ -213,17 +223,26 @@ export function buildParentSummary(
     }));
 
   const trend = computeTrend(averagePercent, previousPercent);
+  const lateSubmittedCount = done.filter(isItemLate).length;
 
   return {
     period,
     from,
     to,
     submittedCount: done.length,
+    lateSubmittedCount,
     lateOrMissingCount: pending.length,
     averagePercent,
     averageBand: average(bands),
     trend,
-    headline: buildHeadline(period, done.length, averagePercent, trend, pending.length),
+    headline: buildHeadline(
+      period,
+      done.length,
+      lateSubmittedCount,
+      averagePercent,
+      trend,
+      pending.length
+    ),
     done,
     pending,
     comments

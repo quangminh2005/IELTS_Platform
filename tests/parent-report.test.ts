@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildParentSummary,
+  isItemLate,
   pickStrengthsAndWeaknesses,
   periodRange,
   type ParentReportItem
@@ -147,6 +148,30 @@ describe("buildParentSummary", () => {
     const summary = buildParentSummary([], NOW, "week");
 
     expect(summary.headline).toContain("chưa hoàn thành bài nào");
+  });
+
+  it("đếm bài nộp sau hạn và báo trong headline; bài không đặt hạn không bao giờ trễ", () => {
+    const summary = buildParentSummary(
+      [
+        item({ deadline: daysAgo(5), submittedAt: daysAgo(2) }),
+        item({ deadline: daysAgo(1), submittedAt: daysAgo(2) }),
+        item({ deadline: null, submittedAt: daysAgo(2) })
+      ],
+      NOW,
+      "month"
+    );
+
+    expect(summary.lateSubmittedCount).toBe(1);
+    expect(summary.headline).toContain("hoàn thành 3 bài (1 bài nộp trễ hạn)");
+    expect(isItemLate(item({ deadline: daysAgo(5), submittedAt: daysAgo(2) }))).toBe(true);
+    expect(isItemLate(item({ deadline: null }))).toBe(false);
+  });
+
+  it("không nộp trễ bài nào thì headline không nhắc chuyện trễ", () => {
+    const summary = buildParentSummary([item()], NOW, "month");
+
+    expect(summary.lateSubmittedCount).toBe(0);
+    expect(summary.headline).not.toContain("trễ");
   });
 });
 

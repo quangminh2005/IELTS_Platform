@@ -354,7 +354,11 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
         </div>
       </section>
 
-      <ParentContactBlock studentId={student.id} parentLink={parentLink} />
+      <ParentContactBlock
+        studentId={student.id}
+        studentName={student.displayName}
+        parentLink={parentLink}
+      />
 
       {submittedAttempts.length > 0 ? (
         <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">

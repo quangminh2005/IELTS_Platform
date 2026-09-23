@@ -11,21 +11,72 @@ import {
 
 type ParentContactBlockProps = {
   studentId: string;
+  studentName: string;
   // Link đầy đủ để chép. Null khi học viên chưa được tạo link.
   parentLink: string | null;
 };
 
-export function ParentContactBlock({ studentId, parentLink }: ParentContactBlockProps) {
-  const [copied, setCopied] = useState(false);
+type CopyTarget = "link" | "message";
+type CopyState = { target: CopyTarget; ok: boolean } | null;
 
-  async function copyLink() {
+// Tin nhắn soạn sẵn để cô dán thẳng vào Zalo, khỏi gõ lại lời dặn mỗi lần.
+export function parentMessage(studentName: string, link: string): string {
+  return [
+    `Chào anh/chị, đây là link xem tình hình học tập của con ${studentName} ở lớp IELTS:`,
+    link,
+    "Anh/chị bấm vào là xem được, không cần đăng nhập. Trang tự cập nhật mỗi khi con nộp bài hoặc cô chấm bài. Anh/chị giữ link này riêng, đừng chia sẻ ra ngoài giúp cô nhé."
+  ].join("\n");
+}
+
+// Chép vào bộ nhớ tạm. navigator.clipboard chỉ có trên HTTPS và có thể bị trình
+// duyệt từ chối — khi đó thử cách cũ (textarea + execCommand). Trả false nếu cả
+// hai đều hỏng để báo cho cô biết mà tự bôi đen chép tay.
+async function copyText(text: string): Promise<boolean> {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch {
+    // rơi xuống cách cũ bên dưới
+  }
+
+  try {
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(area);
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
+export function ParentContactBlock({ studentId, studentName, parentLink }: ParentContactBlockProps) {
+  const [copyState, setCopyState] = useState<CopyState>(null);
+
+  async function copy(target: CopyTarget) {
     if (!parentLink) {
       return;
     }
 
-    await navigator.clipboard.writeText(parentLink);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 2000);
+    const text = target === "link" ? parentLink : parentMessage(studentName, parentLink);
+    const ok = await copyText(text);
+    setCopyState({ target, ok });
+    window.setTimeout(() => setCopyState(null), ok ? 2000 : 5000);
+  }
+
+  function copyLabel(target: CopyTarget, idle: string) {
+    if (copyState?.target !== target) {
+      return idle;
+    }
+
+    return copyState.ok ? "Đã chép" : "Không chép được";
   }
 
   return (
@@ -45,13 +96,25 @@ export function ParentContactBlock({ studentId, parentLink }: ParentContactBlock
             <p className="break-all rounded-lg border border-border bg-background px-4 py-3 font-mono text-xs">
               {parentLink}
             </p>
+            {copyState && !copyState.ok ? (
+              <p className="text-xs text-red-600 dark:text-red-400">
+                Trình duyệt không cho chép tự động. Hãy bôi đen link ở trên rồi bấm Ctrl+C.
+              </p>
+            ) : null}
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
-                onClick={copyLink}
+                onClick={() => copy("message")}
                 className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
               >
-                {copied ? "Đã chép" : "Chép link"}
+                {copyLabel("message", "Chép tin nhắn gửi phụ huynh")}
+              </button>
+              <button
+                type="button"
+                onClick={() => copy("link")}
+                className="rounded-lg border border-border px-3 py-1.5 text-sm font-semibold transition hover:border-primary"
+              >
+                {copyLabel("link", "Chỉ chép link")}
               </button>
               <ActionForm action={regenerateParentToken}>
                 <input type="hidden" name="studentId" value={studentId} />

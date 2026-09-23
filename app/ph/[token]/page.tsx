@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { ProgressLineChart } from "@/components/progress-line-chart";
 import { StudentAvatar } from "@/components/student-avatar";
 import { formatBand } from "@/lib/band-score";
 import {
   buildParentSummary,
+  isItemLate,
   pickStrengthsAndWeaknesses,
   type ParentReportItem
 } from "@/lib/parent-report";
@@ -16,10 +18,8 @@ import {
 import { buildProgressSeries, questionTypeStatsBySkill } from "@/lib/question-stats";
 import { distinctSkills, SKILL_LABELS } from "@/lib/skills";
 
-// Trang công khai theo link bí mật — không được để công cụ tìm kiếm đánh chỉ mục.
-export const metadata: Metadata = {
-  robots: { index: false, follow: false }
-};
+// generateMetadata và trang cùng tra học viên theo token — cache() để chỉ hỏi DB một lần.
+const getStudent = cache(findStudentByParentToken);
 
 // Dữ liệu thay đổi mỗi khi cô chấm bài; không cache.
 export const dynamic = "force-dynamic";
@@ -34,6 +34,28 @@ const DATE_FORMAT = new Intl.DateTimeFormat("vi-VN", {
   year: "numeric",
   timeZone: "Asia/Ho_Chi_Minh"
 });
+
+// Tiêu đề riêng cho từng học viên: dán link vào Zalo/Messenger thì khung xem trước
+// hiện "Báo cáo học tập – <tên>" thay vì tên chung của web, phụ huynh nhận ra ngay.
+// Trang công khai theo link bí mật — không được để công cụ tìm kiếm đánh chỉ mục.
+export async function generateMetadata({ params }: ParentPageProps): Promise<Metadata> {
+  const student = await getStudent(params.token);
+  const robots = { index: false, follow: false };
+
+  if (!student) {
+    return { title: "Link báo cáo không còn hiệu lực", robots };
+  }
+
+  const title = `Báo cáo học tập – ${student.displayName}`;
+  const description = "Bài đã làm, điểm số, tiến bộ và nhận xét của giáo viên.";
+
+  return {
+    title,
+    description,
+    robots,
+    openGraph: { title, description, type: "website", locale: "vi_VN" }
+  };
+}
 
 function formatDate(value: Date | null): string {
   return value ? DATE_FORMAT.format(value) : "—";
@@ -58,17 +80,18 @@ function scoreLabel(item: ParentReportItem): string {
   return "Chờ cô chấm";
 }
 
-function StatCard({ label, value }: { label: string; value: string }) {
+function StatCard({ label, value, note }: { label: string; value: string; note?: string }) {
   return (
     <div className="rounded-xl border border-border bg-card px-4 py-3 shadow-card">
       <p className="text-xs font-medium text-muted-foreground">{label}</p>
       <p className="mt-1 text-2xl font-bold tracking-tight">{value}</p>
+      {note ? <p className="mt-0.5 text-xs font-medium text-red-600 dark:text-red-400">{note}</p> : null}
     </div>
   );
 }
 
 export default async function ParentReportPage({ params }: ParentPageProps) {
-  const student = await findStudentByParentToken(params.token);
+  const student = await getStudent(params.token);
 
   if (!student) {
     notFound();
@@ -112,7 +135,15 @@ export default async function ParentReportPage({ params }: ParentPageProps) {
       </header>
 
       <section className="grid grid-cols-2 gap-3">
-        <StatCard label="Bài đã hoàn thành (30 ngày)" value={String(summary.submittedCount)} />
+        <StatCard
+          label="Bài đã hoàn thành (30 ngày)"
+          value={String(summary.submittedCount)}
+          note={
+            summary.lateSubmittedCount > 0
+              ? `${summary.lateSubmittedCount} bài nộp trễ hạn`
+              : undefined
+          }
+        />
         <StatCard label="Bài quá hạn chưa làm" value={String(summary.lateOrMissingCount)} />
         <StatCard
           label="Điểm trung bình"
@@ -153,6 +184,13 @@ export default async function ParentReportPage({ params }: ParentPageProps) {
                   {skillsLabel(item.skills)} · nộp {formatDate(item.submittedAt)} ·{" "}
                   <span className="font-semibold text-foreground">{scoreLabel(item)}</span>
                 </p>
+                {isItemLate(item) ? (
+                  <p className="mt-1">
+                    <span className="inline-block rounded-full bg-red-500/10 px-2 py-0.5 text-xs font-semibold text-red-600 dark:text-red-400">
+                      Nộp trễ (hạn {formatDate(item.deadline)})
+                    </span>
+                  </p>
+                ) : null}
               </li>
             ))}
           </ul>

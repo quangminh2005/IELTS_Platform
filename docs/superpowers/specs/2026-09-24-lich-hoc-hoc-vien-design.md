@@ -326,11 +326,11 @@ Mọi action nằm trong `lib/actions/class-schedule.ts`:
   `Trước buổi PĐ K1 · T4 23/9 20:15`.
 - Bấm chip thì điền **cả ngày lẫn giờ** hạn nộp bằng giờ bắt đầu buổi đó. Hiện ô giờ
   `dueTime` là input không kiểm soát nằm ngay trong `AssignmentBuilder` (không phải
-  client component). Cách làm: `DueDateField` nhận thêm prop tuỳ chọn `timeName` /
-  `timeId` / `defaultTime`. Khi có `timeName`, nó tự vẽ ô giờ (state có kiểm soát)
-  cạnh ô ngày. Builder bỏ ô `dueTime` riêng và truyền
-  `timeName="dueTime" defaultTime="23:59"`. `sessionPicks` chỉ dùng được khi có
-  `timeName`. Form sửa bài không truyền các prop này nên giữ nguyên như cũ.
+  client component). Cách làm: tạo client component mới `DueDateTimeInputs` thay cho
+  cụm hai ô "Ngày / Giờ" trong builder. Component này giữ giờ bằng state có kiểm soát
+  và render `DueDateField`. `DueDateField` nhận thêm `sessionPicks` và callback
+  `onPickTime`: bấm chip thì nó tự đặt ngày, rồi gọi `onPickTime(giờ)`. Form sửa bài
+  không truyền các prop này nên giữ nguyên như cũ.
 - Hiện chip của **mọi lớp**, không lọc theo học viên đang chọn: với 3 lớp thì gọn, và
   không phải nối trạng thái giữa các bước của trình giao bài.
 
@@ -354,7 +354,7 @@ File này không phụ thuộc Prisma/React và được test đầy đủ:
 - `planRegularSessions(input) → { create, deleteIds }` — mục 3
 - `numberSessions(sessions) → Map<id, number>`
 - `findNextSession(sessions, now)`
-- `relativeSessionLabel(startsAt, now)` — "Tối nay 20:15", "Ngày mai 9:00", "Thứ 6 26/9 20:15"
+- `relativeSessionLabel(startsAt, now)` — "Tối nay 20:15", "Ngày mai 09:00", "Thứ 6 26/9 20:15" (giờ luôn 2 chữ số)
 - `buildMonthGrid(monthKey, sessions, deadlines)` — ô lưới, sự kiện theo ngày, chấm màu
 - `sessionChangeText(session, className)` — câu thông báo cho `session_change`
 - `isValidMeetingUrl(url)`

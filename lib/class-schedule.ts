@@ -257,3 +257,143 @@ export function sessionNumberText(number: number | null, total: number | null): 
   }
   return total ? `Buổi ${number}/${total}` : `Buổi ${number}`;
 }
+
+// ---- Hiển thị cho học viên ----
+
+// Buổi học tới: buổi có học đầu tiên chưa kết thúc (đang diễn ra cũng tính).
+export function findNextSession<T extends { startsAt: Date; endsAt: Date; status: string }>(
+  sessions: T[],
+  now: Date
+): T | null {
+  let best: T | null = null;
+  for (const session of sessions) {
+    if (session.status !== "scheduled" || session.endsAt.getTime() <= now.getTime()) {
+      continue;
+    }
+    if (!best || session.startsAt.getTime() < best.startsAt.getTime()) {
+      best = session;
+    }
+  }
+  return best;
+}
+
+// "Tối nay 20:15" · "Ngày mai 09:00" · "Thứ 6 26/9 20:15" (trong 6 ngày tới) · "T6 3/10 20:15".
+export function relativeSessionLabel(startsAt: Date, now: Date): string {
+  const dayDiff = Math.round(
+    (vnMidnight(vnDateKey(startsAt)).getTime() - vnMidnight(vnDateKey(now)).getTime()) / DAY_MS
+  );
+  const time = formatVnTime(startsAt);
+
+  if (dayDiff === 0) {
+    const minute = vnMinuteOfDay(startsAt);
+    const part = minute < 12 * 60 ? "Sáng nay" : minute < 18 * 60 ? "Chiều nay" : "Tối nay";
+    return `${part} ${time}`;
+  }
+  if (dayDiff === 1) {
+    return `Ngày mai ${time}`;
+  }
+  if (dayDiff > 1 && dayDiff <= 6) {
+    const shifted = new Date(startsAt.getTime() + VN_OFFSET_MS);
+    return `${WEEKDAY_LONG[vnIsoWeekday(startsAt)]} ${shifted.getUTCDate()}/${shifted.getUTCMonth() + 1} ${time}`;
+  }
+  return `${formatShortDate(startsAt)} ${time}`;
+}
+
+// ---- Thay đổi từng buổi -> thông báo cho học viên ----
+
+export type SessionChangeKind = "cancelled" | "restored" | "moved" | "online" | "offline" | "added";
+
+type SessionState = { status: string; mode: string; startsAt: Date; endsAt: Date };
+
+// Thay đổi đáng báo nhất khi giáo viên sửa một buổi. Buổi đã bắt đầu thì không báo.
+// Ưu tiên: nghỉ > học lại > dời > đổi hình thức. Chỉ đổi ghi chú/link -> null.
+export function detectChangeKind(
+  before: SessionState,
+  after: SessionState,
+  now: Date
+): SessionChangeKind | null {
+  if (before.startsAt.getTime() <= now.getTime()) {
+    return null;
+  }
+  if (before.status !== "cancelled" && after.status === "cancelled") {
+    return "cancelled";
+  }
+  if (before.status === "cancelled" && after.status !== "cancelled") {
+    return "restored";
+  }
+  if (after.status === "cancelled") {
+    return null;
+  }
+  if (
+    before.startsAt.getTime() !== after.startsAt.getTime() ||
+    before.endsAt.getTime() !== after.endsAt.getTime()
+  ) {
+    return "moved";
+  }
+  if (before.mode !== after.mode) {
+    return after.mode === "online" ? "online" : "offline";
+  }
+  return null;
+}
+
+export function sessionChangeText(input: {
+  changeKind: string;
+  kind: string;
+  startsAt: Date;
+  originalStartsAt: Date | null;
+  className: string;
+}): string {
+  const day = formatShortDate(input.startsAt);
+  const time = formatVnTime(input.startsAt);
+  const cls = input.className;
+
+  switch (input.changeKind) {
+    case "cancelled":
+      return `Nghỉ học buổi ${day} (${cls})`;
+    case "restored":
+      return `Buổi ${day} (${cls}) học lại như lịch`;
+    case "moved":
+      return `Buổi ${formatShortDate(input.originalStartsAt ?? input.startsAt)} (${cls}) dời sang ${day} ${time}`;
+    case "online":
+      return `Buổi ${day} (${cls}) chuyển học online`;
+    case "offline":
+      return `Buổi ${day} (${cls}) chuyển về học trực tiếp`;
+    default:
+      return input.kind === "extra"
+        ? `Thêm buổi tăng cường ${day} ${time} (${cls})`
+        : `Thêm buổi học bù ${day} ${time} (${cls})`;
+  }
+}
+
+export function isValidMeetingUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+// ---- Chip hạn nộp "Trước buổi học tới" ----
+
+export type SessionPick = { key: string; label: string; date: string; time: string };
+
+export function buildSessionPicks(
+  sessions: Array<{ classId: string; className: string; startsAt: Date }>
+): SessionPick[] {
+  const firstByClass = new Map<string, { classId: string; className: string; startsAt: Date }>();
+  for (const session of sessions) {
+    const current = firstByClass.get(session.classId);
+    if (!current || session.startsAt.getTime() < current.startsAt.getTime()) {
+      firstByClass.set(session.classId, session);
+    }
+  }
+  return Array.from(firstByClass.values())
+    .sort((a, b) => a.startsAt.getTime() - b.startsAt.getTime())
+    .map((session) => ({
+      key: session.classId,
+      label: `Trước buổi ${session.className} · ${formatShortDate(session.startsAt)} ${formatVnTime(session.startsAt)}`,
+      date: vnDateKey(session.startsAt),
+      time: formatVnTime(session.startsAt)
+    }));
+}

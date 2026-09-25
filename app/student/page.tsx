@@ -14,6 +14,16 @@ import { LateBadge, OverdueBadge } from "@/components/late-badge";
 import { isSubmissionLate } from "@/lib/late-submission";
 import { getVocabSidebar, getWordOfTheDay } from "@/lib/vocab-daily";
 import { statusBadgeClasses } from "@/lib/status-badge";
+import { NextSessionCard } from "@/components/next-session-card";
+import { vnDateKey } from "@/lib/attendance";
+import {
+  findNextSession,
+  numberSessions,
+  relativeSessionLabel,
+  sessionNumberText
+} from "@/lib/class-schedule";
+import { getStudentSchedule } from "@/lib/class-schedule-query";
+import { pendingBeforeSession } from "@/lib/student-calendar";
 
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
@@ -56,9 +66,9 @@ export default async function StudentDashboardPage() {
     redirect("/waiting");
   }
 
-  // Ba truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
-  // một lượt đi/về database thay vì ba lượt nối tiếp.
-  const [recipients, attempts, membership, wordOfDay, vocabSidebar] = await Promise.all([
+  // Các truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
+  // một lượt đi/về database thay vì nhiều lượt nối tiếp.
+  const [recipients, attempts, membership, wordOfDay, vocabSidebar, schedule] = await Promise.all([
     prisma.assignmentRecipient.findMany({
       // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
       where: { studentId: student.id, assignment: excludePracticeAssignment },
@@ -106,7 +116,8 @@ export default async function StudentDashboardPage() {
       include: { class: { select: { weeklyGoal: true } } }
     }),
     getWordOfTheDay(),
-    getVocabSidebar(student.id)
+    getVocabSidebar(student.id),
+    getStudentSchedule(student.id)
   ]);
 
   const pendingCount = recipients.filter(
@@ -120,6 +131,13 @@ export default async function StudentDashboardPage() {
   const weeklyGoal = membership?.class.weeklyGoal ?? 3;
 
   const now = new Date();
+
+  // Buổi học sắp tới (hoặc đang diễn ra) trong mọi lớp học viên đang theo.
+  const nextSession = findNextSession(schedule.sessions, now);
+  const nextSessionClass = nextSession
+    ? schedule.classes.find((classItem) => classItem.id === nextSession.classId) ?? null
+    : null;
+  const nextSessionKey = nextSession ? vnDateKey(nextSession.startsAt) : null;
 
   const submittedDates = attempts
     .filter(
@@ -174,6 +192,30 @@ export default async function StudentDashboardPage() {
             : "Hiện chưa có bài tập nào được giao. Hãy quay lại sau nhé."}
         </p>
       </header>
+
+      {nextSession && nextSessionClass && nextSessionKey ? (
+        <NextSessionCard
+          label={relativeSessionLabel(nextSession.startsAt, now)}
+          classLabel={nextSessionClass.name}
+          numberText={sessionNumberText(
+            numberSessions(
+              schedule.sessions.filter((item) => item.classId === nextSession.classId)
+            ).get(nextSession.id) ?? null,
+            nextSessionClass.totalSessions
+          )}
+          ongoing={nextSession.startsAt.getTime() <= now.getTime()}
+          pendingCount={pendingBeforeSession(
+            recipients.map((recipient) => ({
+              status: recipient.status,
+              deadline: recipient.assignment.deadline
+            })),
+            nextSession.startsAt,
+            now
+          )}
+          meetingUrl={nextSession.mode === "online" ? nextSession.meetingUrl : null}
+          calendarHref={`/student/calendar?m=${nextSessionKey.slice(0, 7)}&d=${nextSessionKey}`}
+        />
+      ) : null}
 
       {/* Việc chính của học viên đứng đầu trang: trước đây khối này nằm sau
           chuỗi tuần / hạng / từ vựng / vòng tiến độ, trên điện thoại phải cuộn

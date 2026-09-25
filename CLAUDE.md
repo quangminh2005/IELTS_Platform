@@ -68,6 +68,9 @@ Content hierarchy: `Material` → `AssignableUnit` (one skill part: a reading pa
 ### Importing materials (JSON)
 Teachers bulk-import Cambridge tests as JSON via `/teacher/materials` (Import block) → `importMaterial` action. The exact schema and the AI-transcription prompt used to produce those files are in [docs/prompt-import-reading.md](docs/prompt-import-reading.md). Sample import payloads live in `tmp/`. Import validates that MC / true-false answers are within `options`.
 
+### Lịch học (`lib/class-schedule.ts`, `lib/class-schedule-sync.ts`)
+Mỗi lớp có lịch cố định hàng tuần (`ClassScheduleSlot`) được đồng bộ thành từng dòng `ClassSession` bằng hàm thuần `planRegularSessions` — action (`lib/actions/class-schedule.ts`) chỉ đọc → tính → ghi trong `$transaction`. Buổi đã sửa tay (`edited`), buổi học bù/tăng cường và buổi trước `scheduleAppliesFrom` không bao giờ bị tạo lại; lớp có `totalSessions` luôn giữ đủ số buổi có học (nghỉ → cuối khoá thêm buổi, học bù → cuối khoá rút buổi). Lớp học liên tục được cron `/api/cron/reminders` nối thêm để luôn có 12 tuần. Học viên xem ở `/student/calendar` (+ thẻ "Buổi học tới" ở `/student`); chuông suy ra từ `ClassSession.changeKind/changedAt` và `Class.scheduleChangedAt`. Giáo viên đặt lịch trong trang chi tiết lớp.
+
 ### Media upload
 Audio/image upload to Vercel Blob two ways: **server-proxied** (`app/api/*/direct-upload`, ~4.5MB serverless body limit) and **client-direct** (`app/api/audio/upload` via `@vercel/blob/client` `handleUpload`). Both require teacher role and use `BLOB_READ_WRITE_TOKEN`.
 

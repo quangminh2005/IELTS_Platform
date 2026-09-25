@@ -1,7 +1,7 @@
 # Thiết kế: Lịch học cho học viên (buổi học + hạn nộp)
 
 Ngày: 2026-09-24
-Trạng thái: người dùng đã duyệt thiết kế qua trao đổi (3 phần), chờ duyệt spec.
+Trạng thái: đã triển khai (2026-09-25), kiểm trên DB test + trình duyệt (giáo viên + học viên, điện thoại, sáng/tối).
 
 ## 1. Mục tiêu
 

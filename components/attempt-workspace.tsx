@@ -40,6 +40,7 @@ import {
   type LineTime
 } from "@/lib/dictation-steps";
 import { AudioRecorderAnswer, type RecorderBusy } from "@/components/audio-recorder-answer";
+import { type InitialSpeakingPlan, SpeakingPlanBox } from "@/components/speaking-plan-box";
 import { LockedListeningAudio, type LockedTrack } from "@/components/locked-audio-player";
 import { SoundCheck } from "@/components/sound-check";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
@@ -141,8 +142,12 @@ type AttemptWorkspaceProps = {
     skillTimeLimitsJson?: string | null;
     // Chế độ thi thật Listening: ẩn thanh audio, tự phát liên tục, chỉ chỉnh âm lượng.
     lockAudio?: boolean;
+    // Số phút lập dàn ý trước mỗi câu Nói (null/không có = tắt).
+    speakingPrepMinutes?: number | null;
     units: AssignmentUnit[];
   };
+  // Dàn ý đã lưu theo questionId (chỉ câu học viên đã bấm bắt đầu chuẩn bị).
+  speakingPlans?: Record<string, InitialSpeakingPlan>;
   highlights: Highlight[];
   savedAnswers: Record<string, string>;
   multiSelectGroups: MultiSelectGroup[];
@@ -2042,9 +2047,19 @@ export function AttemptWorkspace({
   savedAnswers,
   multiSelectGroups,
   attemptSkills = [],
+  speakingPlans = {},
   previewMode = false
 }: AttemptWorkspaceProps) {
   const elapsedRef = useRef<HTMLInputElement>(null);
+  // Dàn ý Speaking theo câu: giữ ở đây để ô dàn ý bị tháo/dựng lại khi đổi part
+  // không quay về trạng thái cũ lúc tải trang.
+  const speakingPlanCacheRef = useRef<Record<string, InitialSpeakingPlan>>({ ...speakingPlans });
+  const handleSpeakingPlanChange = useCallback(
+    (questionId: string, plan: InitialSpeakingPlan) => {
+      speakingPlanCacheRef.current[questionId] = plan;
+    },
+    []
+  );
   const submitReasonRef = useRef<HTMLInputElement>(null);
   const partTimesInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -3294,12 +3309,31 @@ export function AttemptWorkspace({
               {isSpeaking ? (
                 <>
                   <p className="mt-2 text-sm leading-6">{question.prompt}</p>
-                  <AudioRecorderAnswer
-                    questionId={question.id}
-                    initialValue={answers[question.id] ?? ""}
-                    onAnswerChange={handleAnswerChange}
-                    onBusyChange={handleRecorderBusyChange}
-                  />
+                  {assignment.speakingPrepMinutes ? (
+                    <SpeakingPlanBox
+                      attemptId={attempt.id}
+                      questionId={question.id}
+                      prepMinutes={assignment.speakingPrepMinutes}
+                      initialPlan={speakingPlanCacheRef.current[question.id] ?? null}
+                      onPlanChange={handleSpeakingPlanChange}
+                      hasRecording={Boolean(answers[question.id])}
+                      previewMode={previewMode}
+                    >
+                      <AudioRecorderAnswer
+                        questionId={question.id}
+                        initialValue={answers[question.id] ?? ""}
+                        onAnswerChange={handleAnswerChange}
+                        onBusyChange={handleRecorderBusyChange}
+                      />
+                    </SpeakingPlanBox>
+                  ) : (
+                    <AudioRecorderAnswer
+                      questionId={question.id}
+                      initialValue={answers[question.id] ?? ""}
+                      onAnswerChange={handleAnswerChange}
+                      onBusyChange={handleRecorderBusyChange}
+                    />
+                  )}
                 </>
               ) : isDragDrop ? (
                 <DragDropQuestion

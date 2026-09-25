@@ -6,6 +6,7 @@ import { ReviewForm, type ReviewTaskInput } from "@/components/review-form";
 import { TranscribeButton } from "@/components/transcribe-button";
 import { isAudioUrl, parseWritingBrief } from "@/lib/question-interactions";
 import { speakingAnswerSource } from "@/lib/speaking-upload";
+import { formatPlanClock, speakingPlanUsedSeconds } from "@/lib/speaking-plan";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { formatBand } from "@/lib/band-score";
 import { resolveWritingTaskNumber } from "@/lib/writing-review";
@@ -37,6 +38,42 @@ function reviewTaskLabel(title: string, taskNumber: number | null): string {
   return `Task ${taskNumber} · ${title}`;
 }
 
+// Dàn ý học viên viết trong thời gian chuẩn bị (lib/speaking-plan.ts) — để cô thấy
+// học viên lên ý tưởng thế nào trước khi nghe bài nói.
+function SpeakingPlanPanel({
+  plan,
+  prepMinutes
+}: {
+  plan: { text: string; startedAt: Date; lockedAt: Date | null } | undefined;
+  prepMinutes: number;
+}) {
+  if (!plan) {
+    return (
+      <p className="mt-3 rounded-md border border-dashed border-border px-4 py-3 text-xs italic text-muted-foreground">
+        Học viên không lập dàn ý.
+      </p>
+    );
+  }
+
+  const used = speakingPlanUsedSeconds(plan, prepMinutes);
+
+  return (
+    <div className="mt-3 rounded-md border border-primary/40 bg-primary/5 p-4">
+      <p className="flex flex-wrap items-center gap-2 text-xs font-medium text-primary">
+        Dàn ý của học viên
+        <span className="rounded-full border border-border bg-card px-2 py-0.5 text-[11px] font-medium tabular-nums text-muted-foreground">
+          viết trong {formatPlanClock(used)} / {formatPlanClock(prepMinutes * 60)}
+        </span>
+      </p>
+      {plan.text.trim() ? (
+        <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-foreground/90">{plan.text}</p>
+      ) : (
+        <p className="mt-2 text-sm italic text-muted-foreground">Bấm chuẩn bị nhưng không ghi gì.</p>
+      )}
+    </div>
+  );
+}
+
 export default async function ReviewDetailPage({ params }: DetailPageProps) {
   const teacher = await requireTeacherPage();
 
@@ -64,9 +101,12 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
       assignmentRecipient: {
         include: {
           assignment: {
-            select: { id: true, title: true, timeLimitMinutes: true }
+            select: { id: true, title: true, timeLimitMinutes: true, speakingPrepMinutes: true }
           }
         }
+      },
+      speakingPlans: {
+        select: { questionId: true, text: true, startedAt: true, lockedAt: true }
       },
       answers: {
         where: {
@@ -132,6 +172,10 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
   const skills = Array.from(
     new Set(attempt.answers.map((answer) => answer.assignableUnit.skill))
   );
+
+  // Dàn ý Speaking (bài giao có bật lập dàn ý) theo từng câu.
+  const prepMinutes = attempt.assignmentRecipient.assignment.speakingPrepMinutes;
+  const planByQuestion = new Map(attempt.speakingPlans.map((plan) => [plan.questionId, plan]));
   const skill = reviewSkill(skills);
 
   // Tách hai loại câu trong bài Viết/Nói:
@@ -386,6 +430,12 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                         <p className="mt-1 text-sm leading-7 text-foreground/90">
                           {answer.question.prompt}
                         </p>
+                      ) : null}
+                      {prepMinutes && answer.assignableUnit.skill === "speaking" ? (
+                        <SpeakingPlanPanel
+                          plan={answer.questionId ? planByQuestion.get(answer.questionId) : undefined}
+                          prepMinutes={prepMinutes}
+                        />
                       ) : null}
                       <div className="mt-3 rounded-md border border-border bg-background p-4">
                         {answer.value ? (

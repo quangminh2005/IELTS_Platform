@@ -249,6 +249,7 @@ model Question {
   points            Int            @default(1)
   assignableUnit    AssignableUnit @relation(fields: [assignableUnitId], references: [id], onDelete: Cascade)
   answers           Answer[]
+  speakingPlans     SpeakingPlan[]
 
   // Gộp cả `order` vì câu hỏi luôn được lấy theo phần rồi sắp theo số câu.
   @@index([assignableUnitId, order])
@@ -268,6 +269,9 @@ model Assignment {
   // Chế độ thi thật cho Listening: ẩn thanh audio (không play/pause/tua), audio tự
   // phát liên tục, học viên chỉ chỉnh được âm lượng; có màn kiểm tra âm thanh trước.
   lockAudio           Boolean               @default(false)
+  // Speaking: số phút cho học viên lập dàn ý trước khi ghi âm (có đếm ngược, hết giờ
+  // khoá ô dàn ý). Null = tắt. Xem lib/speaking-plan.ts.
+  speakingPrepMinutes Int?
   mode                String                @default("homework")
   // Chỉ có ở "bài giao ảo" của thư viện tự luyện: khoá studentId:materialId:unitId|all.
   // Đảm bảo mỗi (học viên × đề × phạm vi) chỉ sinh đúng một bài giao ảo.
@@ -341,10 +345,31 @@ model Attempt {
   answers               Answer[]
   highlights            Highlight[]
   skills                AttemptSkill[]
+  speakingPlans         SpeakingPlan[]
   review                TeacherReview?
 
   @@index([assignmentRecipientId])
   @@index([studentId])
+}
+
+// Dàn ý học viên viết trong thời gian chuẩn bị của một câu Nói (bài giao có bật
+// Assignment.speakingPrepMinutes). Tách khỏi Answer vì Answer bị xoá/tạo lại mỗi
+// lần lưu nháp và nộp bài. Hết giờ (startedAt + số phút) thì không nhận chữ nữa.
+model SpeakingPlan {
+  id         String    @id @default(cuid())
+  attemptId  String
+  questionId String
+  text       String    @default("")
+  startedAt  DateTime  @default(now())
+  // Mốc khoá: học viên bấm "Xong, nói luôn" hoặc hết giờ. Null = chưa khoá (vẫn có
+  // thể đã quá hạn — lib/speaking-plan.ts tính theo giờ, không chỉ dựa vào cột này).
+  lockedAt   DateTime?
+  updatedAt  DateTime  @updatedAt
+  attempt    Attempt   @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question   Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId, questionId])
+  @@index([questionId])
 }
 
 // Trạng thái làm bài theo từng kỹ năng trong một Attempt. Mỗi kỹ năng là một phiên

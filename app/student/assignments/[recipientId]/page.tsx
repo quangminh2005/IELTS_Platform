@@ -6,6 +6,7 @@ import { examUnitsForStudent } from "@/lib/exam-payload";
 import { detectMultiSelectGroups } from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
+import { speakingPlanRemainingSeconds } from "@/lib/speaking-plan";
 
 type AssignmentAttemptPageProps = {
   params: {
@@ -47,7 +48,7 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
   await ensureAttemptSkills(attempt.id);
   // Đề bài và bài làm đã lưu không phụ thuộc nhau (đều chỉ cần attempt.id đã có ở
   // trên) — tải song song để bớt một lượt đi/về database ở đúng trang nặng nhất.
-  const [recipient, savedAnswerRows] = await Promise.all([
+  const [recipient, savedAnswerRows, speakingPlanRows] = await Promise.all([
     prisma.assignmentRecipient.findFirst({
       where: {
         id: params.recipientId,
@@ -84,6 +85,10 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
     prisma.answer.findMany({
       where: { attemptId: attempt.id },
       select: { questionId: true, value: true }
+    }),
+    prisma.speakingPlan.findMany({
+      where: { attemptId: attempt.id },
+      select: { questionId: true, text: true, startedAt: true, lockedAt: true }
     })
   ]);
 
@@ -103,6 +108,22 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
       savedAnswers[row.questionId] = row.value;
     }
   });
+
+  // Dàn ý Speaking: server tính sẵn số giây chuẩn bị còn lại (không tin đồng hồ máy
+  // học viên). Bài không bật lập dàn ý thì bỏ qua hết.
+  const prepMinutes = recipient.assignment.speakingPrepMinutes;
+  const speakingPlans: Record<string, { text: string; locked: boolean; remainingSeconds: number }> =
+    {};
+  if (prepMinutes) {
+    for (const row of speakingPlanRows) {
+      const remainingSeconds = speakingPlanRemainingSeconds(row, prepMinutes);
+      speakingPlans[row.questionId] = {
+        text: row.text,
+        locked: remainingSeconds === 0,
+        remainingSeconds
+      };
+    }
+  }
 
   // Nhận diện các nhóm "Choose N" để client gộp thành một khối tick nhiều ô.
   // Tính ở server (chỉ truyền id + số lượng, không lộ đáp án cho client).
@@ -132,8 +153,10 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
         timeLimitMinutes: recipient.assignment.timeLimitMinutes,
         skillTimeLimitsJson: recipient.assignment.skillTimeLimitsJson,
         lockAudio: recipient.assignment.lockAudio,
+        speakingPrepMinutes: prepMinutes,
         units: examUnits
       }}
+      speakingPlans={speakingPlans}
       highlights={activeAttempt.highlights}
       savedAnswers={savedAnswers}
       multiSelectGroups={multiSelectGroups}

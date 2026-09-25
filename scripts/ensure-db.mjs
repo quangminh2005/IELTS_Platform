@@ -266,6 +266,32 @@ const statements = [
       FOREIGN KEY ("classId") REFERENCES "Class"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
   END $$;`,
+  // Lập dàn ý trước khi nói: số phút chuẩn bị theo bài giao + bảng dàn ý mới.
+  'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "speakingPrepMinutes" INTEGER;',
+  `CREATE TABLE IF NOT EXISTS "SpeakingPlan" (
+    "id" TEXT NOT NULL,
+    "attemptId" TEXT NOT NULL,
+    "questionId" TEXT NOT NULL,
+    "text" TEXT NOT NULL DEFAULT '',
+    "startedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "lockedAt" TIMESTAMP(3),
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    CONSTRAINT "SpeakingPlan_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "SpeakingPlan_attemptId_questionId_key" ON "SpeakingPlan"("attemptId", "questionId");',
+  'CREATE INDEX IF NOT EXISTS "SpeakingPlan_questionId_idx" ON "SpeakingPlan"("questionId");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'SpeakingPlan_attemptId_fkey') THEN
+      ALTER TABLE "SpeakingPlan" ADD CONSTRAINT "SpeakingPlan_attemptId_fkey"
+      FOREIGN KEY ("attemptId") REFERENCES "Attempt"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'SpeakingPlan_questionId_fkey') THEN
+      ALTER TABLE "SpeakingPlan" ADD CONSTRAINT "SpeakingPlan_questionId_fkey"
+      FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
 ];
 
 const prisma = new PrismaClient();

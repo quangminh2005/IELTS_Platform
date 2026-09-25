@@ -50,6 +50,7 @@ const assignmentSelect = {
   timeLimitMinutes: true,
   skillTimeLimitsJson: true,
   lockAudio: true,
+  speakingPrepMinutes: true,
   mode: true,
   _count: {
     select: {
@@ -180,6 +181,7 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
     timeLimitMinutes: assignment.timeLimitMinutes,
     skillTimeLimitsJson: assignment.skillTimeLimitsJson,
     lockAudio: assignment.lockAudio,
+    speakingPrepMinutes: assignment.speakingPrepMinutes,
     mode: assignment.mode,
     unitCount: assignment._count.units,
     recipientCount: assignment._count.recipients,

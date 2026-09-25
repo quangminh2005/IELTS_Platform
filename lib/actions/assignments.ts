@@ -11,6 +11,7 @@ import { prisma } from "@/lib/prisma";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { serializeSkillTimeLimits } from "@/lib/skill-parse";
 import { SKILL_TIME_ORDER } from "@/lib/skill-times";
+import { parseSpeakingPrepMinutes } from "@/lib/speaking-plan";
 
 const assignmentSchema = z.object({
   title: z.string().trim().min(2, "Tiêu đề bài tập phải có ít nhất 2 ký tự."),
@@ -111,6 +112,14 @@ function readSkillTimeLimits(formData: FormData): Record<string, number> {
   return map;
 }
 
+// Ô "Cho học viên lập dàn ý" + số phút chuẩn bị (null = tắt).
+function readSpeakingPrepMinutes(formData: FormData) {
+  return parseSpeakingPrepMinutes(
+    formData.get("speakingPrepEnabled"),
+    formData.get("speakingPrepMinutes")
+  );
+}
+
 export async function createAssignment(formData: FormData) {
   const teacher = await requireTeacher();
   const parsed = assignmentSchema.safeParse({
@@ -148,6 +157,7 @@ export async function createAssignment(formData: FormData) {
       timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
       skillTimeLimitsJson,
       lockAudio: parsed.data.lockAudio,
+      speakingPrepMinutes: readSpeakingPrepMinutes(formData),
       mode: "homework",
       units: {
         create: unitIds.map((unitId, index) => ({
@@ -255,7 +265,8 @@ export async function updateAssignment(formData: FormData) {
         deadline,
         timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
         skillTimeLimitsJson: serializeSkillTimeLimits(readSkillTimeLimits(formData)),
-        lockAudio: parsed.data.lockAudio
+        lockAudio: parsed.data.lockAudio,
+        speakingPrepMinutes: readSpeakingPrepMinutes(formData)
       }
     }),
     prisma.assignmentUnit.deleteMany({

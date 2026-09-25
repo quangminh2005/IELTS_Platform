@@ -6,6 +6,7 @@ import { useAssignmentEditData } from "@/components/assignment-edit-data";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { DueDateField } from "@/components/due-date-field";
 import { SkillTimeInputs } from "@/components/skill-time-inputs";
+import { SpeakingPrepField } from "@/components/speaking-prep-field";
 import { StudentPicker } from "@/components/student-picker";
 import { UnitPicker } from "@/components/unit-picker";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
@@ -19,6 +20,7 @@ export type AssignmentItem = {
   timeLimitMinutes: number | null;
   skillTimeLimitsJson: string | null;
   lockAudio: boolean;
+  speakingPrepMinutes: number | null;
   mode: string;
   unitCount: number;
   recipientCount: number;
@@ -200,6 +202,11 @@ export function AssignmentEditForm({ assignment }: { assignment: AssignmentItem 
                 </span>
               </span>
             </label>
+          </fieldset>
+
+          <fieldset>
+            <legend className="text-sm font-semibold">Lập dàn ý (Speaking)</legend>
+            <SpeakingPrepField defaultMinutes={assignment.speakingPrepMinutes} />
           </fieldset>
 
           <fieldset>

@@ -1,5 +1,6 @@
 import { DueDateTimeInputs } from "@/components/due-date-time-inputs";
 import { SkillTimeInputs } from "@/components/skill-time-inputs";
+import { SpeakingPrepField } from "@/components/speaking-prep-field";
 import {
   StudentPicker,
   type StudentPickerClass,
@@ -115,6 +116,11 @@ export function AssignmentBuilder({
                   </span>
                 </span>
               </label>
+            </fieldset>
+
+            <fieldset data-wizard-when-skill="speaking">
+              <legend className="text-sm font-semibold">Lập dàn ý (Speaking)</legend>
+              <SpeakingPrepField />
             </fieldset>
           </>
         }

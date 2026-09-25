@@ -10,6 +10,7 @@ const mustExcludePractice = [
   "app/teacher/assignments/page.tsx",
   "app/teacher/calendar/page.tsx",
   "app/student/page.tsx",
+  "app/student/calendar/page.tsx",
   "lib/actions/assignments.ts",
   "app/teacher/students/[studentId]/page.tsx",
   "app/teacher/page.tsx"

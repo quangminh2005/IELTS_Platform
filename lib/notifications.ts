@@ -10,7 +10,12 @@ import { bugCategoryLabel } from "@/lib/bug-report";
 
 export const NOTIFICATION_LIMIT = 30;
 
-export type StudentNotificationType = "review_done" | "assignment_new" | "bug_resolved";
+export type StudentNotificationType =
+  | "review_done"
+  | "assignment_new"
+  | "bug_resolved"
+  | "session_change"
+  | "schedule_update";
 
 export type StudentNotification = {
   // "review:<attemptId>" | "assignment:<recipientId>" — đủ để làm key React và để
@@ -44,6 +49,21 @@ export type BugResolvedNotificationSource = {
   resolvedAt: Date;
 };
 
+// Giáo viên sửa tay một buổi chưa diễn ra (nghỉ, học lại, dời, đổi hình thức, thêm buổi).
+export type SessionChangeNotificationSource = {
+  sessionId: string;
+  text: string; // câu đã dựng sẵn bằng sessionChangeText (lib/class-schedule.ts)
+  dayKey: string; // "YYYY-MM-DD" ngày của buổi học (giờ VN)
+  changedAt: Date;
+};
+
+// Giáo viên đổi lịch cố định của lớp.
+export type ScheduleUpdateNotificationSource = {
+  classId: string;
+  className: string;
+  changedAt: Date;
+};
+
 // readAt null = chưa từng có mốc. Coi như đã đọc hết thay vì chưa đọc hết, để học
 // viên mới (hoặc DB chưa kịp có cột) không bị dội cả chục thông báo cũ.
 function isUnread(createdAt: Date, readAt: Date | null): boolean {
@@ -59,7 +79,12 @@ export function buildStudentNotifications(
   assignments: AssignmentNotificationSource[],
   readAt: Date | null,
   // Tham số thứ 4 tuỳ chọn: chỗ gọi cũ và test cũ không phải sửa.
-  bugs: BugResolvedNotificationSource[] = []
+  bugs: BugResolvedNotificationSource[] = [],
+  // Tham số thứ 5 tuỳ chọn: nguồn lịch học.
+  schedule: {
+    sessions?: SessionChangeNotificationSource[];
+    schedules?: ScheduleUpdateNotificationSource[];
+  } = {}
 ): StudentNotification[] {
   const items: StudentNotification[] = [
     ...reviews.map((item) => ({
@@ -88,6 +113,24 @@ export function buildStudentNotifications(
       href: "/student/bugs",
       createdAt: item.resolvedAt,
       unread: isUnread(item.resolvedAt, readAt)
+    })),
+    ...(schedule.sessions ?? []).map((item) => ({
+      id: `session:${item.sessionId}:${item.changedAt.getTime()}`,
+      type: "session_change" as const,
+      title: item.text,
+      detail: null,
+      href: `/student/calendar?m=${item.dayKey.slice(0, 7)}&d=${item.dayKey}`,
+      createdAt: item.changedAt,
+      unread: isUnread(item.changedAt, readAt)
+    })),
+    ...(schedule.schedules ?? []).map((item) => ({
+      id: `schedule:${item.classId}:${item.changedAt.getTime()}`,
+      type: "schedule_update" as const,
+      title: `Lịch học lớp ${item.className} vừa được cập nhật`,
+      detail: null,
+      href: "/student/calendar",
+      createdAt: item.changedAt,
+      unread: isUnread(item.changedAt, readAt)
     }))
   ];
 

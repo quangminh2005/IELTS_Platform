@@ -17,7 +17,9 @@ export type NotificationFeedItem = {
 const LABELS: Record<StudentNotificationType, string> = {
   review_done: "Đã chấm xong",
   assignment_new: "Bài mới",
-  bug_resolved: "Báo lỗi"
+  bug_resolved: "Báo lỗi",
+  session_change: "Đổi lịch học",
+  schedule_update: "Lịch học"
 };
 
 export function NotificationRow({

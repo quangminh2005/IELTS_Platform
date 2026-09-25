@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildScheduleNotificationSources,
   buildSessionPicks,
   detectChangeKind,
   findNextSession,
@@ -134,5 +135,27 @@ describe("buildSessionPicks", () => {
       { key: "cb", label: "Trước buổi CB K1 · T5 24/9 20:00", date: "2026-09-24", time: "20:00" },
       { key: "k1", label: "Trước buổi PĐ K1 · T5 24/9 20:15", date: "2026-09-24", time: "20:15" }
     ]);
+  });
+});
+
+describe("buildScheduleNotificationSources", () => {
+  const memberships = [
+    { classId: "k1", className: "PĐ K1", joinedAt: at("2026-09-10", "10:00"), scheduleChangedAt: at("2026-09-15", "10:00") },
+    { classId: "k2", className: "PĐ K2", joinedAt: at("2026-09-20", "10:00"), scheduleChangedAt: at("2026-09-15", "10:00") }
+  ];
+
+  it("chỉ báo thay đổi xảy ra sau khi học viên vào lớp", () => {
+    const result = buildScheduleNotificationSources({
+      memberships,
+      sessions: [
+        { id: "a", classId: "k1", startsAt: at("2026-09-26", "20:15"), originalStartsAt: null, kind: "regular", changeKind: "cancelled", changedAt: at("2026-09-21", "09:00") },
+        { id: "b", classId: "k2", startsAt: at("2026-09-26", "09:00"), originalStartsAt: null, kind: "regular", changeKind: "online", changedAt: at("2026-09-18", "09:00") },
+        { id: "c", classId: "k9", startsAt: at("2026-09-26", "09:00"), originalStartsAt: null, kind: "regular", changeKind: "online", changedAt: at("2026-09-21", "09:00") }
+      ]
+    });
+    expect(result.sessions).toEqual([
+      { sessionId: "a", text: "Nghỉ học buổi T7 26/9 (PĐ K1)", dayKey: "2026-09-26", changedAt: at("2026-09-21", "09:00") }
+    ]);
+    expect(result.schedules).toEqual([{ classId: "k1", className: "PĐ K1", changedAt: at("2026-09-15", "10:00") }]);
   });
 });

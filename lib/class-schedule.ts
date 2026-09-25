@@ -3,6 +3,10 @@
 // server lẫn client component. Giờ VN cố định UTC+7 (không có giờ mùa hè).
 
 import { vnDateKey } from "@/lib/attendance";
+import type {
+  ScheduleUpdateNotificationSource,
+  SessionChangeNotificationSource
+} from "@/lib/notifications";
 import { VN_OFFSET_MS } from "@/lib/streak";
 
 const MINUTE_MS = 60 * 1000;
@@ -396,4 +400,57 @@ export function buildSessionPicks(
       date: vnDateKey(session.startsAt),
       time: formatVnTime(session.startsAt)
     }));
+}
+
+// ---- Nguồn chuông thông báo ----
+
+// Nguồn chuông "lịch học" cho một học viên. Chỉ báo thay đổi xảy ra SAU khi học
+// viên vào lớp, để người mới không bị dội thông báo cũ.
+export function buildScheduleNotificationSources(input: {
+  memberships: Array<{ classId: string; className: string; joinedAt: Date; scheduleChangedAt: Date | null }>;
+  sessions: Array<{
+    id: string;
+    classId: string;
+    startsAt: Date;
+    originalStartsAt: Date | null;
+    kind: string;
+    changeKind: string | null;
+    changedAt: Date | null;
+  }>;
+}): { sessions: SessionChangeNotificationSource[]; schedules: ScheduleUpdateNotificationSource[] } {
+  const byClass = new Map(input.memberships.map((membership) => [membership.classId, membership]));
+
+  const sessions = input.sessions.flatMap((session) => {
+    const membership = byClass.get(session.classId);
+    if (
+      !membership ||
+      !session.changeKind ||
+      !session.changedAt ||
+      session.changedAt.getTime() <= membership.joinedAt.getTime()
+    ) {
+      return [];
+    }
+    return [
+      {
+        sessionId: session.id,
+        text: sessionChangeText({
+          changeKind: session.changeKind,
+          kind: session.kind,
+          startsAt: session.startsAt,
+          originalStartsAt: session.originalStartsAt,
+          className: membership.className
+        }),
+        dayKey: vnDateKey(session.startsAt),
+        changedAt: session.changedAt
+      }
+    ];
+  });
+
+  const schedules = input.memberships.flatMap((membership) =>
+    membership.scheduleChangedAt && membership.scheduleChangedAt.getTime() > membership.joinedAt.getTime()
+      ? [{ classId: membership.classId, className: membership.className, changedAt: membership.scheduleChangedAt }]
+      : []
+  );
+
+  return { sessions, schedules };
 }

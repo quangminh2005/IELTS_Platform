@@ -188,3 +188,39 @@ describe("formatRelativeTime", () => {
     expect(formatRelativeTime(new Date("2026-08-01T12:00:00+07:00"), now)).toBe("01/08/2026");
   });
 });
+
+describe("thông báo lịch học", () => {
+  const readAt = new Date("2026-09-20T00:00:00Z");
+
+  it("đổi buổi học và cập nhật lịch cố định thành mục chuông", () => {
+    const items = buildStudentNotifications([], [], readAt, [], {
+      sessions: [
+        {
+          sessionId: "s1",
+          text: "Nghỉ học buổi T7 26/9 (PĐ K1)",
+          dayKey: "2026-09-26",
+          changedAt: new Date("2026-09-21T03:00:00Z")
+        }
+      ],
+      schedules: [{ classId: "k1", className: "PĐ K1", changedAt: new Date("2026-09-19T03:00:00Z") }]
+    });
+
+    expect(items[0]).toMatchObject({
+      type: "session_change",
+      title: "Nghỉ học buổi T7 26/9 (PĐ K1)",
+      href: "/student/calendar?m=2026-09&d=2026-09-26",
+      unread: true
+    });
+    expect(items[1]).toMatchObject({
+      type: "schedule_update",
+      title: "Lịch học lớp PĐ K1 vừa được cập nhật",
+      href: "/student/calendar",
+      unread: false
+    });
+  });
+
+  it("feed đọc lịch học trong try/catch (bảng mới có thể chưa có trên prod)", () => {
+    const feed = readFileSync("lib/notifications-feed.ts", "utf8");
+    expect(feed).toMatch(/try\s*\{[\s\S]*prisma\.classSession\.findMany[\s\S]*\}\s*catch/);
+  });
+});

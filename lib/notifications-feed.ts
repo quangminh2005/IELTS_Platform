@@ -5,6 +5,7 @@ import {
   type BugResolvedNotificationSource,
   type StudentNotification
 } from "@/lib/notifications";
+import { buildScheduleNotificationSources } from "@/lib/class-schedule";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 
@@ -74,6 +75,53 @@ export async function getStudentNotifications(
     console.error("[thong-bao] Không đọc được BugReport:", error);
   }
 
+  // Lịch học (bảng mới) — bọc try/catch như BugReport để chuông không sập theo.
+  let scheduleSources: ReturnType<typeof buildScheduleNotificationSources> = {
+    sessions: [],
+    schedules: []
+  };
+  try {
+    const memberships = await prisma.classStudent.findMany({
+      where: { studentId },
+      select: {
+        classId: true,
+        joinedAt: true,
+        class: { select: { name: true, scheduleChangedAt: true } }
+      }
+    });
+    const changedSessions =
+      memberships.length === 0
+        ? []
+        : await prisma.classSession.findMany({
+            where: {
+              classId: { in: memberships.map((membership) => membership.classId) },
+              changeKind: { not: null }
+            },
+            orderBy: { changedAt: "desc" },
+            take: NOTIFICATION_LIMIT,
+            select: {
+              id: true,
+              classId: true,
+              startsAt: true,
+              originalStartsAt: true,
+              kind: true,
+              changeKind: true,
+              changedAt: true
+            }
+          });
+    scheduleSources = buildScheduleNotificationSources({
+      memberships: memberships.map((membership) => ({
+        classId: membership.classId,
+        className: membership.class.name,
+        joinedAt: membership.joinedAt,
+        scheduleChangedAt: membership.class.scheduleChangedAt
+      })),
+      sessions: changedSessions
+    });
+  } catch (error) {
+    console.error("[thong-bao] Không đọc được lịch học:", error);
+  }
+
   const items = buildStudentNotifications(
     reviews.map((review) => ({
       attemptId: review.attemptId,
@@ -87,7 +135,8 @@ export async function getStudentNotifications(
       assignedAt: recipient.assignedAt
     })),
     student?.notificationsReadAt ?? null,
-    bugs
+    bugs,
+    scheduleSources
   );
 
   return { items, unreadCount: countUnread(items) };

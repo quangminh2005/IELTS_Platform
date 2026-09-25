@@ -108,11 +108,14 @@ export function ActionDeleteButton({
   action,
   confirmMessage,
   className,
+  onResult,
   children
 }: {
   action: ServerAction;
   confirmMessage: string;
   className?: string;
+  // Như ActionForm: cho nơi gọi đóng modal sau khi xoá xong.
+  onResult?: (result: ActionResult) => void;
   children: ReactNode;
 }) {
   const { notify } = useToast();
@@ -123,7 +126,7 @@ export function ActionDeleteButton({
       type="submit"
       disabled={pending}
       className={`${className ?? ""} disabled:cursor-not-allowed disabled:opacity-60`}
-      formAction={(formData) => runAndNotify(action, formData, notify)}
+      formAction={(formData) => runAndNotify(action, formData, notify, onResult)}
       onClick={(event) => {
         if (!window.confirm(confirmMessage)) {
           event.preventDefault();

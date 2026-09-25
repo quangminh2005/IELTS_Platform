@@ -29,3 +29,21 @@ describe("action lịch học của giáo viên", () => {
     expect(actions).toContain('existing.kind === "regular"');
   });
 });
+
+describe("cron nối buổi học", () => {
+  const cron = readFileSync("app/api/cron/reminders/route.ts", "utf8");
+
+  it("gọi topUpClassSessions trong try/catch riêng", () => {
+    expect(cron).toMatch(/try\s*\{\s*sessionsCreated = await topUpClassSessions\(\);\s*\}\s*catch/);
+  });
+
+  // Chỗ kiểm cấu hình mail return sớm — nối buổi phải chạy trước nó.
+  it("nối buổi chạy trước khi kiểm cấu hình mail, sau khi đánh thức DB", () => {
+    const warm = cron.indexOf("warmUpDatabase(");
+    const topUp = cron.indexOf("await topUpClassSessions()");
+    const email = cron.indexOf("isEmailConfigured()");
+    expect(warm).toBeGreaterThan(-1);
+    expect(warm).toBeLessThan(topUp);
+    expect(topUp).toBeLessThan(email);
+  });
+});

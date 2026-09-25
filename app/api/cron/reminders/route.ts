@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { topUpClassSessions } from "@/lib/class-schedule-sync";
 import { warmUpDatabase } from "@/lib/db-warmup";
 import { isEmailConfigured, sendEmail } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
@@ -42,11 +43,6 @@ export async function GET(request: Request): Promise<NextResponse> {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  if (!isEmailConfigured()) {
-    console.warn("[cron/reminders] Bỏ qua: chưa cấu hình GMAIL_USER / GMAIL_APP_PASSWORD.");
-    return NextResponse.json({ skipped: "email_not_configured" });
-  }
-
   // Đánh thức Neon trước: 12h trưa gần như không có ai vào web nên compute đang ngủ,
   // truy vấn đầu tiên hay chết vì chưa kết nối kịp.
   try {
@@ -58,6 +54,20 @@ export async function GET(request: Request): Promise<NextResponse> {
   } catch (error) {
     console.error("[cron/reminders] Không kết nối được database:", error);
     return NextResponse.json({ error: "database_unreachable" }, { status: 503 });
+  }
+
+  // Nối thêm buổi học cho lớp học liên tục (luôn có sẵn 12 tuần). Làm TRƯỚC khi
+  // kiểm cấu hình mail vì việc này không cần mail; lỗi ở đây không chặn nhắc bài.
+  let sessionsCreated = 0;
+  try {
+    sessionsCreated = await topUpClassSessions();
+  } catch (error) {
+    console.error("[cron/reminders] Không nối được buổi học:", error);
+  }
+
+  if (!isEmailConfigured()) {
+    console.warn("[cron/reminders] Bỏ qua: chưa cấu hình GMAIL_USER / GMAIL_APP_PASSWORD.");
+    return NextResponse.json({ skipped: "email_not_configured", sessionsCreated });
   }
 
   const now = new Date();
@@ -128,5 +138,6 @@ export async function GET(request: Request): Promise<NextResponse> {
     students: reminders.length,
     sent,
     failed: results.length - sent,
+    sessionsCreated,
   });
 }

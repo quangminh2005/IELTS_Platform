@@ -1,4 +1,4 @@
-import { DueDateField } from "@/components/due-date-field";
+import { DueDateTimeInputs } from "@/components/due-date-time-inputs";
 import { SkillTimeInputs } from "@/components/skill-time-inputs";
 import {
   StudentPicker,
@@ -9,6 +9,7 @@ import { UnitPicker, type UnitPickerMaterial } from "@/components/unit-picker";
 import { UnitSearchFilter } from "@/components/unit-search-filter";
 import { AssignmentWizard } from "@/components/assignment-wizard";
 import { ResetOnToken } from "@/components/reset-on-token";
+import type { SessionPick } from "@/lib/class-schedule";
 
 type AssignmentBuilderProps = {
   materials: UnitPickerMaterial[];
@@ -17,6 +18,8 @@ type AssignmentBuilderProps = {
   // Đổi sau mỗi lần tạo bài thành công → remount wizard để đóng modal và xoá
   // sạch lựa chọn cũ.
   resetToken: string;
+  // Buổi học sắp tới của từng lớp -> chip hạn nộp "Trước buổi học tới".
+  sessionPicks?: SessionPick[];
 };
 
 const fieldClass =
@@ -29,7 +32,8 @@ export function AssignmentBuilder({
   materials,
   students,
   classOptions,
-  resetToken
+  resetToken,
+  sessionPicks = []
 }: AssignmentBuilderProps) {
   const hasUnits = materials.some((material) => material.units.length > 0);
   const canCreate = hasUnits && students.length > 0;
@@ -79,32 +83,7 @@ export function AssignmentBuilder({
 
             <fieldset>
               <legend className="text-sm font-medium">Hạn nộp</legend>
-              <div className="mt-2 grid gap-3 sm:grid-cols-2">
-                <div>
-                  <label
-                    className="block text-xs font-medium text-muted-foreground"
-                    htmlFor="dueDate"
-                  >
-                    Ngày
-                  </label>
-                  <DueDateField id="dueDate" name="dueDate" quickPicks />
-                </div>
-                <div>
-                  <label
-                    className="block text-xs font-medium text-muted-foreground"
-                    htmlFor="dueTime"
-                  >
-                    Giờ
-                  </label>
-                  <input
-                    id="dueTime"
-                    name="dueTime"
-                    type="time"
-                    defaultValue="23:59"
-                    className={fieldClass}
-                  />
-                </div>
-              </div>
+              <DueDateTimeInputs fieldClass={fieldClass} sessionPicks={sessionPicks} />
             </fieldset>
           </>
         }

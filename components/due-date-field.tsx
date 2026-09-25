@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
+import type { SessionPick } from "@/lib/class-schedule";
 
 type DueDateFieldProps = {
   name?: string;
@@ -11,6 +12,9 @@ type DueDateFieldProps = {
   id?: string;
   // Chip chọn nhanh Hôm nay / Ngày mai / +3 ngày (chỉ dùng ở modal giao bài).
   quickPicks?: boolean;
+  // Chip "Trước buổi <lớp> · T4 23/9 20:15": đặt ngày ở đây, báo giờ ra ngoài qua onPickTime.
+  sessionPicks?: SessionPick[];
+  onPickTime?: (time: string) => void;
 };
 
 function parseYmd(value?: string): Date | undefined {
@@ -42,7 +46,9 @@ export function DueDateField({
   name = "dueDate",
   defaultValue,
   id,
-  quickPicks = false
+  quickPicks = false,
+  sessionPicks,
+  onPickTime
 }: DueDateFieldProps) {
   const [selected, setSelected] = useState<Date | undefined>(() => parseYmd(defaultValue));
   const [open, setOpen] = useState(false);
@@ -114,6 +120,24 @@ export function DueDateField({
                 setSelected(date);
               }}
               className="rounded-full border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground transition hover:border-primary hover:text-primary"
+            >
+              {pick.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
+      {sessionPicks && sessionPicks.length > 0 ? (
+        <div className="mt-1.5 flex flex-wrap gap-1.5">
+          {sessionPicks.map((pick) => (
+            <button
+              key={pick.key}
+              type="button"
+              onClick={() => {
+                setSelected(parseYmd(pick.date));
+                onPickTime?.(pick.time);
+              }}
+              className="rounded-full border border-primary/40 bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary transition hover:border-primary"
             >
               {pick.label}
             </button>

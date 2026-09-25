@@ -3,6 +3,7 @@ import { requireTeacherPage } from "@/lib/teacher-page";
 import { AssignmentBuilder } from "@/components/assignment-builder";
 import { AssignmentList, type AssignmentItem } from "@/components/assignment-list";
 import { NoticeToast } from "@/components/notice-toast";
+import { buildSessionPicks, type SessionPick } from "@/lib/class-schedule";
 import { prisma } from "@/lib/prisma";
 import { excludePracticeAssignment } from "@/lib/practice";
 
@@ -149,6 +150,27 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
   const students = flattenStudents(classes);
   const classOptions = classes.map((classItem) => ({ id: classItem.id, name: classItem.name }));
 
+  // Buổi học sắp tới của từng lớp -> chip hạn nộp "Trước buổi học tới". Bọc
+  // try/catch: bảng lịch học mới thêm, thiếu bảng thì chỉ mất chip.
+  let sessionPicks: SessionPick[] = [];
+  try {
+    const upcoming = await prisma.classSession.findMany({
+      where: { class: { teacherId: teacher.id }, status: "scheduled", startsAt: { gt: new Date() } },
+      orderBy: { startsAt: "asc" },
+      take: 60,
+      select: { classId: true, startsAt: true, class: { select: { name: true } } }
+    });
+    sessionPicks = buildSessionPicks(
+      upcoming.map((session) => ({
+        classId: session.classId,
+        className: session.class.name,
+        startsAt: session.startsAt
+      }))
+    );
+  } catch (error) {
+    console.error("[giao-bai] Không đọc được buổi học sắp tới:", error);
+  }
+
   const assignmentItems: AssignmentItem[] = assignments.map((assignment) => ({
     id: assignment.id,
     createdAt: assignment.createdAt,
@@ -194,6 +216,7 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
               materials={materials}
               students={students}
               classOptions={classOptions}
+              sessionPicks={sessionPicks}
             />
           }
         />

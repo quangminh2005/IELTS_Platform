@@ -17,6 +17,10 @@ datasource db {
 //   taskAchievement | coherence | fluency | lexicalResource | grammar | pronunciation
 // enum BugCategory (BugReport.category): audio | answer | display | other
 // enum BugStatus (BugReport.status): open | resolved
+// enum SessionStatus (ClassSession.status): scheduled | cancelled
+// enum SessionMode (ClassSession.mode): offline | online
+// enum SessionKind (ClassSession.kind): regular | makeup | extra
+// enum SessionChangeKind (ClassSession.changeKind): cancelled | restored | moved | online | offline | added
 
 model User {
   id             String          @id @default(cuid())
@@ -111,13 +115,67 @@ model Class {
   name        String
   description String?
   weeklyGoal  Int?
+  // ---- Lịch học (tuỳ chọn) ----
+  // Ngày khai giảng, lưu mốc 00:00 giờ VN của ngày đó.
+  scheduleStartDate   DateTime?
+  // Số buổi của khoá. Có giá trị -> hiện "Buổi X/Y" và giữ đủ Y buổi có học.
+  totalSessions       Int?
+  // Ngày kết thúc (00:00 giờ VN, tính cả ngày đó). Dùng khi không đặt số buổi.
+  scheduleEndDate     DateTime?
+  // Địa điểm mặc định cho buổi trực tiếp (phòng/địa chỉ), văn bản thuần.
+  location            String?
+  // Lịch cố định áp dụng từ mốc này. Buổi trước mốc không bao giờ bị tạo lại tự động.
+  scheduleAppliesFrom DateTime?
+  // Lần gần nhất lịch cố định thực sự đổi -> thông báo "Lịch học lớp X vừa được cập nhật".
+  scheduleChangedAt   DateTime?
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
   teacher     TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   students    ClassStudent[]
   assignments Assignment[]
+  scheduleSlots ClassScheduleSlot[]
+  sessions      ClassSession[]
 
   @@index([teacherId])
+}
+
+// Một khung giờ trong lịch cố định hàng tuần của lớp.
+model ClassScheduleSlot {
+  id          String @id @default(cuid())
+  classId     String
+  weekday     Int // 1 = Thứ 2 … 6 = Thứ 7, 7 = Chủ nhật (ISO)
+  startMinute Int // phút tính từ 00:00 giờ VN, vd 20:15 = 1215
+  endMinute   Int
+  class       Class  @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@index([classId])
+}
+
+// Một buổi học cụ thể. Buổi theo lịch cố định do lib/class-schedule-sync.ts tạo;
+// giáo viên sửa tay từng buổi (nghỉ, dời, online, ghi chú) hoặc thêm buổi bù.
+model ClassSession {
+  id               String    @id @default(cuid())
+  classId          String
+  startsAt         DateTime
+  endsAt           DateTime
+  status           String    @default("scheduled") // SessionStatus
+  mode             String    @default("offline") // SessionMode
+  kind             String    @default("regular") // SessionKind
+  meetingUrl       String?
+  note             String?
+  // Giờ gốc trước khi dời. Null = chưa từng dời. Dùng để hiện "Dời từ T4 23/9"
+  // và để khung giờ gốc không bị tạo lại thành một buổi trùng.
+  originalStartsAt DateTime?
+  // Giáo viên đã sửa tay -> không bị xoá/tạo lại khi đổi lịch cố định.
+  edited           Boolean   @default(false)
+  // Lần sửa tay gần nhất đáng báo cho học viên (SessionChangeKind) + thời điểm.
+  changeKind       String?
+  changedAt        DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  class            Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@index([classId, startsAt])
 }
 
 model ClassStudent {

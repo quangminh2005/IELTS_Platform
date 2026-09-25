@@ -219,6 +219,53 @@ const statements = [
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "avatarUrl" TEXT;',
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "avatarPreset" TEXT;',
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "coverColor" TEXT;',
+  // Lịch học của lớp: 6 cột tuỳ chọn trên Class + bảng lịch cố định + bảng từng buổi.
+  'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "scheduleStartDate" TIMESTAMP(3);',
+  'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "totalSessions" INTEGER;',
+  'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "scheduleEndDate" TIMESTAMP(3);',
+  'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "location" TEXT;',
+  'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "scheduleAppliesFrom" TIMESTAMP(3);',
+  'ALTER TABLE "Class" ADD COLUMN IF NOT EXISTS "scheduleChangedAt" TIMESTAMP(3);',
+  `CREATE TABLE IF NOT EXISTS "ClassScheduleSlot" (
+    "id" TEXT NOT NULL,
+    "classId" TEXT NOT NULL,
+    "weekday" INTEGER NOT NULL,
+    "startMinute" INTEGER NOT NULL,
+    "endMinute" INTEGER NOT NULL,
+    CONSTRAINT "ClassScheduleSlot_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "ClassScheduleSlot_classId_idx" ON "ClassScheduleSlot"("classId");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ClassScheduleSlot_classId_fkey') THEN
+      ALTER TABLE "ClassScheduleSlot" ADD CONSTRAINT "ClassScheduleSlot_classId_fkey"
+      FOREIGN KEY ("classId") REFERENCES "Class"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `CREATE TABLE IF NOT EXISTS "ClassSession" (
+    "id" TEXT NOT NULL,
+    "classId" TEXT NOT NULL,
+    "startsAt" TIMESTAMP(3) NOT NULL,
+    "endsAt" TIMESTAMP(3) NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'scheduled',
+    "mode" TEXT NOT NULL DEFAULT 'offline',
+    "kind" TEXT NOT NULL DEFAULT 'regular',
+    "meetingUrl" TEXT,
+    "note" TEXT,
+    "originalStartsAt" TIMESTAMP(3),
+    "edited" BOOLEAN NOT NULL DEFAULT false,
+    "changeKind" TEXT,
+    "changedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    CONSTRAINT "ClassSession_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "ClassSession_classId_startsAt_idx" ON "ClassSession"("classId", "startsAt");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ClassSession_classId_fkey') THEN
+      ALTER TABLE "ClassSession" ADD CONSTRAINT "ClassSession_classId_fkey"
+      FOREIGN KEY ("classId") REFERENCES "Class"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
 ];
 
 const prisma = new PrismaClient();

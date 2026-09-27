@@ -20,7 +20,7 @@ const PAGE_SIZE = 30;
 const SOURCE_LABELS: Record<string, string> = {
   listening: "listening",
   reading: "reading",
-  manual: "cô thêm"
+  manual: "thầy thêm"
 };
 
 const inputClass =
@@ -90,7 +90,7 @@ export default async function TeacherVocabPage({
         <p className="text-sm font-semibold text-primary">Trang giáo viên</p>
         <h2 className="mt-1 text-2xl font-bold tracking-tight">Kho từ vựng</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          {total} từ. Từ được rút tự động từ đề Listening và Reading — cô ẩn từ rác,
+          {total} từ. Từ được rút tự động từ đề Listening và Reading — thầy ẩn từ rác,
           sửa nghĩa, thêm từ tay hoặc ghim từ cho ngày mai ở đây.
         </p>
       </header>

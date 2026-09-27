@@ -43,7 +43,7 @@ export function StudentPracticeHistory({ groups, bandsByAttempt }: StudentPracti
       <div className="border-b border-border px-5 py-4">
         <h3 className="text-base font-semibold">Tự luyện</h3>
         <p className="mt-1 text-sm text-muted-foreground">
-          Các đề học viên tự chọn luyện thêm trong thư viện — không phải bài cô giao.
+          Các đề học viên tự chọn luyện thêm trong thư viện — không phải bài thầy giao.
         </p>
       </div>
 

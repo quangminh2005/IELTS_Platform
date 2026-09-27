@@ -3,7 +3,7 @@ import nodemailer, { type Transporter } from "nodemailer";
 // Gửi mail bằng chính Gmail của giáo viên (App Password) vì web chưa có tên miền
 // riêng — Resend và các dịch vụ tương tự đòi tên miền đã xác thực mới cho gửi tới
 // địa chỉ bất kỳ. Cách này còn lợi: học sinh thấy mail đến từ đúng địa chỉ của
-// cô/thầy, và bấm Trả lời thì thư về hộp thư đó. Hạn mức Gmail 500 mail/ngày.
+// thầy, và bấm Trả lời thì thư về hộp thư đó. Hạn mức Gmail 500 mail/ngày.
 // Khi nào có tên miền riêng thì chỉ cần thay file này.
 
 function readEnv(name: string): string | null {

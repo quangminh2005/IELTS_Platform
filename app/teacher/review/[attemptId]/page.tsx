@@ -38,7 +38,7 @@ function reviewTaskLabel(title: string, taskNumber: number | null): string {
   return `Task ${taskNumber} · ${title}`;
 }
 
-// Dàn ý học viên viết trong thời gian chuẩn bị (lib/speaking-plan.ts) — để cô thấy
+// Dàn ý học viên viết trong thời gian chuẩn bị (lib/speaking-plan.ts) — để thầy thấy
 // học viên lên ý tưởng thế nào trước khi nghe bài nói.
 function SpeakingPlanPanel({
   plan,

@@ -46,7 +46,7 @@ export default async function StudentBugsPage() {
         <p className="text-sm font-semibold text-primary">Hỗ trợ</p>
         <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Báo lỗi đã gửi</h2>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          Gặp trục trặc ở bất kỳ trang nào, bấm nút con bọ ở góc màn hình để báo cho cô/thầy.
+          Gặp trục trặc ở bất kỳ trang nào, bấm nút con bọ ở góc màn hình để báo cho thầy.
         </p>
       </header>
 

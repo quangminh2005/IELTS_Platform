@@ -67,7 +67,7 @@ export function VocabCard({
         </>
       ) : (
         <p className="mt-3 text-sm text-muted-foreground">
-          Chưa có từ nào. Cô sẽ bổ sung kho từ vựng sớm nhé.
+          Chưa có từ nào. Thầy sẽ bổ sung kho từ vựng sớm nhé.
         </p>
       )}
     </section>

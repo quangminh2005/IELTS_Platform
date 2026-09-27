@@ -19,18 +19,18 @@ type ParentContactBlockProps = {
 type CopyTarget = "link" | "message";
 type CopyState = { target: CopyTarget; ok: boolean } | null;
 
-// Tin nhắn soạn sẵn để cô dán thẳng vào Zalo, khỏi gõ lại lời dặn mỗi lần.
+// Tin nhắn soạn sẵn để thầy dán thẳng vào Zalo, khỏi gõ lại lời dặn mỗi lần.
 export function parentMessage(studentName: string, link: string): string {
   return [
     `Chào anh/chị, đây là link xem tình hình học tập của con ${studentName} ở lớp IELTS:`,
     link,
-    "Anh/chị bấm vào là xem được, không cần đăng nhập. Trang tự cập nhật mỗi khi con nộp bài hoặc cô chấm bài. Anh/chị giữ link này riêng, đừng chia sẻ ra ngoài giúp cô nhé."
+    "Anh/chị bấm vào là xem được, không cần đăng nhập. Trang tự cập nhật mỗi khi con nộp bài hoặc thầy chấm bài. Anh/chị giữ link này riêng, đừng chia sẻ ra ngoài giúp thầy nhé."
   ].join("\n");
 }
 
 // Chép vào bộ nhớ tạm. navigator.clipboard chỉ có trên HTTPS và có thể bị trình
 // duyệt từ chối — khi đó thử cách cũ (textarea + execCommand). Trả false nếu cả
-// hai đều hỏng để báo cho cô biết mà tự bôi đen chép tay.
+// hai đều hỏng để báo cho thầy biết mà tự bôi đen chép tay.
 async function copyText(text: string): Promise<boolean> {
   try {
     if (navigator.clipboard?.writeText) {

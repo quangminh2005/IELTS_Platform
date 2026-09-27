@@ -160,7 +160,7 @@ export function AudioRecorderAnswer({
       setMessage(source === "uploaded" ? "Đã nộp file ghi âm." : "Đã nộp bản ghi.");
     } catch (error) {
       setStatus("error");
-      setMessage(`Lỗi tải lên: ${(error as Error).message}. Em thử lại giúp cô nhé.`);
+      setMessage(`Lỗi tải lên: ${(error as Error).message}. Em thử lại giúp thầy nhé.`);
     }
   }
 

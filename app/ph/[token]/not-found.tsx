@@ -1,6 +1,6 @@
 // Phụ huynh mở link đã bị thu hồi / đã tạo lại / chép thiếu ký tự. Trước đây rơi
 // vào trang 404 tiếng Anh mặc định của Next ("This page could not be found"),
-// phụ huynh tưởng web hỏng. Trang này nói rõ phải làm gì: xin cô link mới.
+// phụ huynh tưởng web hỏng. Trang này nói rõ phải làm gì: xin thầy link mới.
 //
 // Cố ý KHÔNG có nút về trang chủ / đăng nhập — phụ huynh không có tài khoản.
 export default function ParentLinkNotFound() {
@@ -33,7 +33,7 @@ export default function ParentLinkNotFound() {
           nhắn.
         </p>
         <p className="mt-3 leading-7 text-muted-foreground">
-          Anh/chị vui lòng nhắn cô giáo để nhận link báo cáo mới của con.
+          Anh/chị vui lòng nhắn thầy giáo để nhận link báo cáo mới của con.
         </p>
       </div>
     </main>

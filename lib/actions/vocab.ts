@@ -187,7 +187,7 @@ const createSchema = z.object({
   exampleEn: z.string().trim().min(1, "Câu ví dụ không được để trống.")
 });
 
-// Cô thêm từ tay — không gắn phần đề nào, sourceSkill = "manual" để phân biệt với
+// Thầy thêm từ tay — không gắn phần đề nào, sourceSkill = "manual" để phân biệt với
 // từ rút tự động (listening/reading).
 export async function createVocabWord(formData: FormData): Promise<ActionResult> {
   try {

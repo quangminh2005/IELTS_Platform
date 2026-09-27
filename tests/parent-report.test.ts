@@ -124,7 +124,7 @@ describe("buildParentSummary", () => {
     expect(summary.trend).toBe("unknown");
   });
 
-  it("gom nhận xét của cô trong kỳ", () => {
+  it("gom nhận xét của thầy trong kỳ", () => {
     const summary = buildParentSummary(
       [
         item({

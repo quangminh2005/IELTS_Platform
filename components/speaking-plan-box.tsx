@@ -209,7 +209,7 @@ export function SpeakingPlanBox({
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           Bấm bắt đầu thì đồng hồ chạy luôn (tải lại trang cũng không dừng). Hết giờ, ô dàn ý
-          sẽ khoá lại và em chuyển sang ghi âm. Cô sẽ xem dàn ý của em khi chấm bài.
+          sẽ khoá lại và em chuyển sang ghi âm. Thầy sẽ xem dàn ý của em khi chấm bài.
         </p>
         <button
           type="button"

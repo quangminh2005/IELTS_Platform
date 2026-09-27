@@ -61,7 +61,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 // trên prod đó là địa chỉ demo (teacher@example.com) — Gmail trả thư về ngay
 // (đã xảy ra 17/9/2026). Người nhận là BUG_REPORT_TO (nếu đặt, cách nhau bằng
 // dấu phẩy), không thì chính hộp thư GMAIL_USER đang dùng để gửi — với lớp một
-// giáo viên thì đó chính là Gmail của cô/thầy. Lỗi mail chỉ ghi log: học viên đã
+// giáo viên thì đó chính là Gmail của thầy. Lỗi mail chỉ ghi log: học viên đã
 // lưu xong thì phải thấy "Đã gửi".
 function bugReportRecipients(): string | null {
   const configured = process.env.BUG_REPORT_TO?.trim();
@@ -148,7 +148,7 @@ export async function createBugReport(formData: FormData): Promise<ActionResult>
     revalidatePath("/teacher/bugs");
     revalidatePath("/teacher");
 
-    return actionOk("Đã gửi báo lỗi. Cô/thầy sẽ xem sớm.");
+    return actionOk("Đã gửi báo lỗi. Thầy sẽ xem sớm.");
   } catch (error) {
     return actionFail(error, "Gửi báo lỗi");
   }

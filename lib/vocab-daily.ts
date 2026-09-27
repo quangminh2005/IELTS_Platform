@@ -22,7 +22,7 @@ export function dateKeyToUtcDate(key: string): Date {
   return new Date(`${key}T00:00:00.000Z`);
 }
 
-// Điều kiện "đã phát tính đến hôm nay" cho VocabDaily.date. Cô có thể ghim sẵn từ
+// Điều kiện "đã phát tính đến hôm nay" cho VocabDaily.date. Thầy có thể ghim sẵn từ
 // cho ngày mai (dòng VocabDaily tương lai) — từ đó chưa được lộ ra quiz/sổ từ.
 export function releasedDailyDate(now = new Date()) {
   return { lte: dateKeyToUtcDate(vietnamDateKey(now)) };

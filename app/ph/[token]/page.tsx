@@ -21,7 +21,7 @@ import { distinctSkills, SKILL_LABELS } from "@/lib/skills";
 // generateMetadata và trang cùng tra học viên theo token — cache() để chỉ hỏi DB một lần.
 const getStudent = cache(findStudentByParentToken);
 
-// Dữ liệu thay đổi mỗi khi cô chấm bài; không cache.
+// Dữ liệu thay đổi mỗi khi thầy chấm bài; không cache.
 export const dynamic = "force-dynamic";
 
 type ParentPageProps = {
@@ -77,7 +77,7 @@ function scoreLabel(item: ParentReportItem): string {
     return `Band ${formatBand(item.overallBand)}`;
   }
 
-  return "Chờ cô chấm";
+  return "Chờ thầy chấm";
 }
 
 function StatCard({ label, value, note }: { label: string; value: string; note?: string }) {

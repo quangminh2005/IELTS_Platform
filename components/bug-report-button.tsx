@@ -79,7 +79,7 @@ export function BugReportNavButton({ onNavigate }: { onNavigate?: () => void }) 
       </span>
       <span className="leading-tight">
         <span className="block text-sm font-semibold">Báo lỗi</span>
-        <span className="block text-xs text-muted-foreground [@media(max-height:820px)]:hidden">Gặp trục trặc? Báo cô/thầy ngay</span>
+        <span className="block text-xs text-muted-foreground [@media(max-height:820px)]:hidden">Gặp trục trặc? Báo thầy ngay</span>
       </span>
     </button>
   );

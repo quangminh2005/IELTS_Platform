@@ -8,6 +8,7 @@ import { isSubmissionLate } from "@/lib/late-submission";
 import { auth } from "@/lib/auth";
 import { pickDominantSkill } from "@/lib/celebration";
 import { prisma } from "@/lib/prisma";
+import { visibleResultAnswers } from "@/lib/result-visibility";
 import { SKILL_TIME_LABELS, skillTimesFromParts } from "@/lib/skill-times";
 
 type ResultPageProps = {
@@ -108,6 +109,7 @@ export default async function StudentResultPage({ params, searchParams }: Result
       skills: {
         select: {
           skill: true,
+          status: true,
           score: true,
           scorePercent: true
         }
@@ -119,6 +121,10 @@ export default async function StudentResultPage({ params, searchParams }: Result
     notFound();
   }
 
+  // Giấu câu NHÁP của kỹ năng chưa nộp (kèm dẫn chứng/transcript của chúng) — xem
+  // lib/result-visibility.ts. Mọi chỗ bên dưới chỉ được đọc `visibleAnswers`.
+  const visibleAnswers = visibleResultAnswers(attempt.status, attempt.skills, attempt.answers);
+
   // Xem theo kỹ năng (?skill=): dùng khi học sinh vừa nộp một kỹ năng và muốn xem
   // kết quả ngay, không phải chờ nộp hết bài. Không có param -> giữ trang gộp như cũ.
   const skillFilter = searchParams.skill;
@@ -128,7 +134,7 @@ export default async function StudentResultPage({ params, searchParams }: Result
     : null;
 
   // Các câu đã chấm tự động (Nghe/Đọc) có isCorrect khác null; Viết/Nói = null.
-  const autoSkills = attempt.answers
+  const autoSkills = visibleAnswers
     .filter((answer) => answer.isCorrect !== null)
     .map((answer) => answer.assignableUnit.skill);
   const isManualOnly = autoSkills.length === 0;
@@ -136,15 +142,15 @@ export default async function StudentResultPage({ params, searchParams }: Result
 
   // Gộp thời gian làm bài theo kỹ năng từ partTimesJson (tra kỹ năng của từng phần).
   const unitSkills: Record<string, string> = {};
-  attempt.answers.forEach((answer) => {
+  visibleAnswers.forEach((answer) => {
     unitSkills[answer.assignableUnitId] = answer.assignableUnit.skill;
   });
   const skillTimes = skillTimesFromParts(attempt.partTimesJson, unitSkills);
 
   // Lọc đáp án theo kỹ năng khi xem tức thời (?skill=). Không có param -> giữ nguyên.
   const answers = skillFilter
-    ? attempt.answers.filter((answer) => answer.assignableUnit?.skill === skillFilter)
-    : attempt.answers;
+    ? visibleAnswers.filter((answer) => answer.assignableUnit?.skill === skillFilter)
+    : visibleAnswers;
 
   // Khi xem theo kỹ năng, điểm/% hiển thị lấy từ AttemptSkill của đúng kỹ năng đó
   // (thay vì điểm gộp cả bài).
@@ -155,7 +161,7 @@ export default async function StudentResultPage({ params, searchParams }: Result
         score: skillResult?.score ?? null,
         scorePercent: skillResult?.scorePercent ?? null
       }
-    : attempt;
+    : { ...attempt, answers };
 
   return (
     // Trang kết quả chạy toàn màn hình (giống chin.edu.vn) — AppShell đã bỏ sidebar

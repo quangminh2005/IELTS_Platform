@@ -13,13 +13,13 @@ async function main() {
     update: {
       passwordHash: teacherPassword,
       role: "teacher",
-      name: "Ms. Trang"
+      name: "Mr. Anh Vũ"
     },
     create: {
       email: "teacher@example.com",
       passwordHash: teacherPassword,
       role: "teacher",
-      name: "Ms. Trang"
+      name: "Mr. Anh Vũ"
     }
   });
 
@@ -40,10 +40,10 @@ async function main() {
 
   const teacherProfile = await prisma.teacherProfile.upsert({
     where: { userId: teacher.id },
-    update: { displayName: "Ms. Trang" },
+    update: { displayName: "Mr. Anh Vũ" },
     create: {
       userId: teacher.id,
-      displayName: "Ms. Trang"
+      displayName: "Mr. Anh Vũ"
     }
   });
 

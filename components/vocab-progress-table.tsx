@@ -18,7 +18,8 @@ export function VocabProgressTable({
         <h3 className="text-base font-semibold">Ôn từ vựng</h3>
         <p className="text-xs text-muted-foreground">
           Ngày ôn tính trong {rangeLabel.toLowerCase()}; chuỗi, từ đã gặp và tỉ lệ đúng tính
-          từ đầu.
+          từ đầu. Đã thuộc = thẻ ôn đúng liền nhiều lần (30 ngày mới hỏi lại); quá hạn =
+          thẻ tới hạn mà em chưa ôn.
         </p>
       </div>
       <div className="overflow-x-auto">
@@ -30,6 +31,8 @@ export function VocabProgressTable({
               <th className="px-3 py-2 text-right font-medium">Chuỗi</th>
               <th className="px-3 py-2 text-right font-medium">Từ đã gặp</th>
               <th className="px-3 py-2 text-right font-medium">Đúng</th>
+              <th className="px-3 py-2 text-right font-medium">Đã thuộc</th>
+              <th className="px-3 py-2 text-right font-medium">Quá hạn</th>
               <th className="px-4 py-2 text-right font-medium">Ôn gần nhất</th>
             </tr>
           </thead>
@@ -61,6 +64,14 @@ export function VocabProgressTable({
                   <td className="px-3 py-2 text-right tabular-nums">{row.wordsSeen}</td>
                   <td className="px-3 py-2 text-right tabular-nums">
                     {row.accuracyPercent === null ? "—" : `${row.accuracyPercent}%`}
+                  </td>
+                  <td className="px-3 py-2 text-right tabular-nums">{row.masteredCount}</td>
+                  <td
+                    className={`px-3 py-2 text-right tabular-nums ${
+                      row.overdueCount >= 10 ? "font-semibold text-destructive" : ""
+                    }`}
+                  >
+                    {row.overdueCount}
                   </td>
                   <td className="px-4 py-2 text-right tabular-nums text-muted-foreground">
                     {row.lastQuizDate ? formatVietnamDate(row.lastQuizDate) : "chưa ôn"}

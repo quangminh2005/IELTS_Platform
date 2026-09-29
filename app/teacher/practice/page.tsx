@@ -124,7 +124,7 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
 
   // Số liệu ôn từ vựng của cùng nhóm học viên — quiz nhẹ, kéo hết không cần lọc ngày.
   const studentIds = students.map((student) => student.id);
-  const [vocabQuizDays, vocabProgress] =
+  const [vocabQuizDays, vocabProgress, vocabCards] =
     studentIds.length > 0
       ? await Promise.all([
           prisma.vocabQuizDay.findMany({
@@ -134,9 +134,16 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
           prisma.vocabProgress.findMany({
             where: { studentId: { in: studentIds } },
             select: { studentId: true, correctCount: true, wrongCount: true }
+          }),
+          prisma.vocabDeckCard.findMany({
+            where: {
+              studentId: { in: studentIds },
+              OR: [{ wordId: null }, { word: { hidden: false } }]
+            },
+            select: { studentId: true, box: true, dueDate: true }
           })
         ])
-      : [[], []];
+      : [[], [], []];
 
   const vocabRows = buildVocabStudentRows(
     students.map((student) => ({
@@ -153,7 +160,15 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
       total: day.total
     })),
     vocabProgress,
-    { today: vietnamDateKey(now), rangeStartKey: rangeStart ? vietnamDateKey(rangeStart) : null }
+    {
+      today: vietnamDateKey(now),
+      rangeStartKey: rangeStart ? vietnamDateKey(rangeStart) : null,
+      cards: vocabCards.map((card) => ({
+        studentId: card.studentId,
+        box: card.box,
+        dueDate: card.dueDate.toISOString().slice(0, 10)
+      }))
+    }
   );
   const vocabSummary = vocabTotals(vocabRows);
 

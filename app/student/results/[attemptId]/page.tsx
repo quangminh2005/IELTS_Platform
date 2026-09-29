@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ResultReview } from "@/components/result-review";
+import { VocabSelectionAdder } from "@/components/vocab-selection-adder";
 import { SkillTimeSummary } from "@/components/skill-time-summary";
 import { SubmitCelebration } from "@/components/submit-celebration";
 import { LateBadge } from "@/components/late-badge";
@@ -219,11 +220,14 @@ export default async function StudentResultPage({ params, searchParams }: Result
 
       {/* Nội dung dùng hết chiều ngang màn hình */}
       <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
-        <ResultReview
-          attempt={reviewAttempt}
-          skillTimes={skillTimes}
-          sourceStickyTopClass="lg:top-[88px]"
-        />
+        {/* Bôi đen từ lạ trong bài đọc/transcript → "➕ Sổ từ" (chỉ phía học viên). */}
+        <VocabSelectionAdder attemptId={attempt.id}>
+          <ResultReview
+            attempt={reviewAttempt}
+            skillTimes={skillTimes}
+            sourceStickyTopClass="lg:top-[88px]"
+          />
+        </VocabSelectionAdder>
       </main>
     </div>
   );

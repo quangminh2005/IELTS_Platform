@@ -1,3 +1,4 @@
+import { MASTERED_BOX } from "@/lib/vocab-srs";
 import { calculateVocabStreak } from "@/lib/vocab-streak";
 
 // Số liệu "ôn từ vựng" mà GIÁO VIÊN nhìn thấy trong trang Tự luyện: mỗi học viên
@@ -26,6 +27,13 @@ export type VocabProgressInput = {
   wrongCount: number;
 };
 
+// Một thẻ ôn (VocabDeckCard) — chỉ cần hộp và hạn ôn, dueDate "YYYY-MM-DD".
+export type VocabCardInput = {
+  studentId: string;
+  box: number;
+  dueDate: string;
+};
+
 export type VocabStudentRow = VocabStudentInput & {
   // Số ngày có ôn trong khoảng đang xem.
   daysInRange: number;
@@ -35,14 +43,26 @@ export type VocabStudentRow = VocabStudentInput & {
   // % câu đúng trên mọi lượt ôn; null khi chưa ôn lần nào.
   accuracyPercent: number | null;
   lastQuizDate: string | null;
+  // Thẻ đã thuộc (hộp ≥ 5) và thẻ quá hạn chưa ôn (hạn trước hôm nay).
+  masteredCount: number;
+  overdueCount: number;
 };
 
 export function buildVocabStudentRows(
   students: VocabStudentInput[],
   quizDays: VocabQuizDayInput[],
   progress: VocabProgressInput[],
-  options: { today: string; rangeStartKey: string | null }
+  options: { today: string; rangeStartKey: string | null; cards?: VocabCardInput[] }
 ): VocabStudentRow[] {
+  const cardsByStudent = new Map<string, { mastered: number; overdue: number }>();
+
+  for (const card of options.cards ?? []) {
+    const current = cardsByStudent.get(card.studentId) ?? { mastered: 0, overdue: 0 };
+    current.mastered += card.box >= MASTERED_BOX ? 1 : 0;
+    current.overdue += card.dueDate < options.today ? 1 : 0;
+    cardsByStudent.set(card.studentId, current);
+  }
+
   const daysByStudent = new Map<string, VocabQuizDayInput[]>();
 
   for (const day of quizDays) {
@@ -82,7 +102,9 @@ export function buildVocabStudentRows(
       wordsSeen: stats?.words ?? 0,
       accuracyPercent:
         answered > 0 ? Math.round(((stats?.correct ?? 0) / answered) * 100) : null,
-      lastQuizDate
+      lastQuizDate,
+      masteredCount: cardsByStudent.get(student.id)?.mastered ?? 0,
+      overdueCount: cardsByStudent.get(student.id)?.overdue ?? 0
     };
   });
 

@@ -72,3 +72,23 @@ describe("vocabTotals", () => {
     expect(vocabTotals(build())).toEqual({ activeStudents: 2, totalStudents: 3 });
   });
 });
+
+describe("buildVocabStudentRows — thẻ ôn", () => {
+  it("đếm thẻ đã thuộc (hộp ≥ 5) và thẻ quá hạn (hạn trước hôm nay)", () => {
+    const rows = buildVocabStudentRows(students, quizDays, progress, {
+      today: "2026-09-18",
+      rangeStartKey: null,
+      cards: [
+        { studentId: "s1", box: 5, dueDate: "2026-10-10" },
+        { studentId: "s1", box: 6, dueDate: "2026-09-17" },
+        { studentId: "s1", box: 2, dueDate: "2026-09-18" },
+        { studentId: "s2", box: 1, dueDate: "2026-09-02" }
+      ]
+    });
+
+    const byId = new Map(rows.map((row) => [row.id, row]));
+    expect(byId.get("s1")).toMatchObject({ masteredCount: 2, overdueCount: 1 });
+    expect(byId.get("s2")).toMatchObject({ masteredCount: 0, overdueCount: 1 });
+    expect(byId.get("s3")).toMatchObject({ masteredCount: 0, overdueCount: 0 });
+  });
+});

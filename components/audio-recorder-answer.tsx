@@ -3,6 +3,7 @@
 import { upload } from "@vercel/blob/client";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
 
+import { hasSignal, isMicSilent, meterPercent, peakOf } from "@/lib/mic-level";
 import {
   type SpeakingSource,
   checkSpeakingFile,
@@ -45,11 +46,19 @@ export function AudioRecorderAnswer({
   const [status, setStatus] = useState<"idle" | "recording" | "uploading" | "error">("idle");
   const [seconds, setSeconds] = useState(0);
   const [message, setMessage] = useState("");
+  // Thanh âm lượng (0–100) + cờ "micro không thu được tiếng" lúc đang ghi.
+  const [level, setLevel] = useState(0);
+  const [micSilent, setMicSilent] = useState(false);
+  // Bản ghi vừa lưu mà câm từ đầu đến cuối → cảnh báo cạnh trình phát.
+  const [savedSilent, setSavedSilent] = useState(false);
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
   const timerRef = useRef<number | null>(null);
+  const meterRef = useRef<{ context: AudioContext; interval: number } | null>(null);
+  // null = không đo được (trình duyệt thiếu Web Audio) → không kết luận gì.
+  const heardRef = useRef<boolean | null>(null);
 
   function stopTimer() {
     if (timerRef.current !== null) {
@@ -63,9 +72,74 @@ export function AudioRecorderAnswer({
     streamRef.current = null;
   }
 
+  function stopMeter() {
+    const meter = meterRef.current;
+    if (meter) {
+      window.clearInterval(meter.interval);
+      void meter.context.close().catch(() => undefined);
+      meterRef.current = null;
+    }
+    setLevel(0);
+    setMicSilent(false);
+  }
+
+  // Đo âm lượng micro bằng Web Audio (song song với MediaRecorder, không đụng vào
+  // bản ghi). Lỗi gì ở đây cũng bỏ qua — thanh âm lượng chỉ là phụ, không được
+  // làm hỏng việc ghi âm.
+  function startMeter(stream: MediaStream) {
+    heardRef.current = null;
+    try {
+      type AudioContextConstructor = typeof AudioContext;
+      const Ctor: AudioContextConstructor | undefined =
+        window.AudioContext ??
+        (window as unknown as { webkitAudioContext?: AudioContextConstructor }).webkitAudioContext;
+      if (!Ctor) {
+        return;
+      }
+      const context = new Ctor();
+      void context.resume().catch(() => undefined);
+      const analyser = context.createAnalyser();
+      analyser.fftSize = 2048;
+      context.createMediaStreamSource(stream).connect(analyser);
+      // Nối ra loa qua gain 0: Safari cũ không chạy analyser nếu nhánh không tới
+      // destination; gain 0 để học viên không nghe tiếng mình dội lại.
+      const mute = context.createGain();
+      mute.gain.value = 0;
+      analyser.connect(mute);
+      mute.connect(context.destination);
+
+      const samples = new Float32Array(analyser.fftSize);
+      let lastSignalAt = Date.now();
+      heardRef.current = false;
+
+      const interval = window.setInterval(() => {
+        // Context còn treo (trình duyệt chưa cho chạy) thì mẫu toàn 0 — đừng
+        // báo nhầm là micro hỏng.
+        if (context.state !== "running") {
+          lastSignalAt = Date.now();
+          return;
+        }
+        analyser.getFloatTimeDomainData(samples);
+        const peak = peakOf(samples);
+        const now = Date.now();
+        if (hasSignal(peak)) {
+          lastSignalAt = now;
+          heardRef.current = true;
+        }
+        setLevel(meterPercent(peak));
+        setMicSilent(isMicSilent(lastSignalAt, now));
+      }, 100);
+
+      meterRef.current = { context, interval };
+    } catch {
+      heardRef.current = null;
+    }
+  }
+
   useEffect(() => {
     return () => {
       stopTimer();
+      stopMeter();
       stopTracks();
     };
   }, []);
@@ -107,6 +181,7 @@ export function AudioRecorderAnswer({
       };
 
       recorder.onstop = () => {
+        stopMeter();
         stopTracks();
         // Bỏ ";codecs=…" để khớp allowedContentTypes của route.
         const type = (mimeType || "audio/webm").split(";")[0];
@@ -116,12 +191,15 @@ export function AudioRecorderAnswer({
 
       recorder.start();
       recorderRef.current = recorder;
+      startMeter(stream);
+      setSavedSilent(false);
       setStatus("recording");
       setSeconds(0);
       timerRef.current = window.setInterval(() => setSeconds((prev) => prev + 1), 1000);
     } catch {
       setStatus("error");
       setMessage("Không truy cập được micro. Hãy cho phép quyền micro rồi thử lại.");
+      stopMeter();
       stopTracks();
     }
   }
@@ -156,6 +234,8 @@ export function AudioRecorderAnswer({
 
       setUrl(result.url);
       onAnswerChange(questionId, result.url);
+      // Chỉ bản ghi trực tiếp mới đo được; file tải lên thì không kết luận.
+      setSavedSilent(source === "recorded" && heardRef.current === false);
       setStatus("idle");
       setMessage(source === "uploaded" ? "Đã nộp file ghi âm." : "Đã nộp bản ghi.");
     } catch (error) {
@@ -186,6 +266,7 @@ export function AudioRecorderAnswer({
   }
 
   function clearRecording() {
+    setSavedSilent(false);
     setUrl("");
     onAnswerChange(questionId, "");
     setMessage("");
@@ -232,10 +313,27 @@ export function AudioRecorderAnswer({
               Ghi âm lại
             </button>
             {filePicker("Tải file khác", true)}
-            <span className="text-xs text-emerald-600 dark:text-emerald-300">
-              Đã lưu bản ghi ✓
-            </span>
+            {savedSilent ? null : (
+              <span className="text-xs text-emerald-600 dark:text-emerald-300">
+                Đã lưu bản ghi ✓
+              </span>
+            )}
           </div>
+          {savedSilent ? (
+            <div
+              role="alert"
+              className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-xs leading-5 text-red-700 dark:border-red-800 dark:bg-red-950/40 dark:text-red-300"
+            >
+              <p className="font-semibold">
+                ⚠ Bản ghi này không có tiếng — micro không thu được âm thanh.
+              </p>
+              <p>
+                Em kiểm tra micro (phím tắt micro trên laptop, chọn đúng micro ở biểu tượng ổ khoá
+                cạnh thanh địa chỉ) rồi bấm <b>Ghi âm lại</b> nhé. Nếu vẫn không được, em thu bằng
+                điện thoại rồi bấm <b>Tải file khác</b>.
+              </p>
+            </div>
+          ) : null}
         </div>
       ) : status === "recording" ? (
         <div className="flex flex-wrap items-center gap-3">
@@ -250,6 +348,30 @@ export function AudioRecorderAnswer({
             <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-red-600" />
             Đang ghi… {formatTime(seconds)}
           </span>
+          {/* Thanh âm lượng: nói mà thanh không nhảy = micro không thu. */}
+          <span
+            className="h-2 w-28 overflow-hidden rounded-full bg-border"
+            role="meter"
+            aria-label="Âm lượng micro"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={level}
+          >
+            <span
+              className="block h-full rounded-full bg-emerald-500 transition-[width] duration-100"
+              style={{ width: `${level}%` }}
+            />
+          </span>
+          {micSilent ? (
+            <p
+              role="alert"
+              className="w-full rounded-md border border-red-300 bg-red-50 px-3 py-2 text-xs leading-5 text-red-700 dark:border-red-800 dark:bg-red-950/40 dark:text-red-300"
+            >
+              <b>⚠ Micro không thu được tiếng nào.</b> Nếu em đang nói mà thanh âm lượng không
+              nhảy, hãy bấm Dừng, kiểm tra micro (phím tắt micro trên laptop, chọn đúng micro ở
+              biểu tượng ổ khoá cạnh thanh địa chỉ) rồi ghi lại.
+            </p>
+          ) : null}
         </div>
       ) : (
         <div className="flex flex-wrap items-center gap-2">

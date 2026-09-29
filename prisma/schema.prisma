@@ -21,6 +21,7 @@ datasource db {
 // enum SessionMode (ClassSession.mode): offline | online
 // enum SessionKind (ClassSession.kind): regular | makeup | extra
 // enum SessionChangeKind (ClassSession.changeKind): cancelled | restored | moved | online | offline | added
+// enum DeckCardSource (VocabDeckCard.source): bank | student
 
 model User {
   id             String          @id @default(cuid())
@@ -100,6 +101,7 @@ model StudentProfile {
 
   vocabProgress VocabProgress[]
   vocabQuizDays VocabQuizDay[]
+  vocabCards    VocabDeckCard[]
   bugReports    BugReport[]
 }
 
@@ -514,6 +516,7 @@ model VocabWord {
   sourceUnit AssignableUnit? @relation(fields: [sourceUnitId], references: [id], onDelete: SetNull)
   dailies    VocabDaily[]
   progress   VocabProgress[]
+  deckCards  VocabDeckCard[]
 
   @@index([hidden])
   @@index([sourceUnitId])
@@ -549,13 +552,53 @@ model VocabQuizDay {
   id        String   @id @default(cuid())
   studentId String
   date      DateTime @db.Date
-  correct   Int // kết quả TỐT NHẤT trong ngày
+  // Cộng dồn mọi câu ôn thẻ trong ngày (trước 29/9/2026: kết quả tốt nhất của
+  // quiz 5 câu). Có dòng = ngày đó có ôn → dùng cho chuỗi ngày ôn.
+  correct   Int
   total     Int
   updatedAt DateTime @updatedAt
 
   student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([studentId, date])
+}
+
+// Thẻ ôn từ vựng của MỘT học viên (ôn theo lịch, hộp Leitner — lib/vocab-srs.ts).
+// Có wordId → nội dung đọc từ kho (thầy sửa nghĩa là thẻ đổi theo). Không có
+// wordId → từ học viên tự thêm, nội dung nằm ở các cột display…exampleEn.
+// source chỉ nói nguồn gốc: "bank" = hệ thống phát từ kho (tính vào hạn mức thẻ
+// mới mỗi ngày), "student" = học viên bôi đen ở trang Kết quả (kể cả khi từ đó có
+// sẵn trong kho).
+model VocabDeckCard {
+  id              String    @id @default(cuid())
+  studentId       String
+  // Từ chuẩn hoá chữ thường — chặn một học viên có hai thẻ cùng một từ.
+  wordKey         String
+  source          String
+  wordId          String?
+  display         String?
+  phonetic        String?
+  partOfSpeech    String?
+  meaningVi       String?
+  definitionEn    String?
+  exampleEn       String?
+  // Bài làm nơi học viên bôi đen từ. KHÔNG khoá ngoại: bài có thể bị reset xoá.
+  sourceAttemptId String?
+  // 0 = mới, chưa trả lời lần nào; 1..6 = hộp Leitner.
+  box             Int       @default(0)
+  // Ngày ôn tiếp theo giờ VN (nửa đêm UTC của ngày đó, như VocabDaily.date).
+  dueDate         DateTime  @db.Date
+  reviewCount     Int       @default(0)
+  lapseCount      Int       @default(0)
+  lastReviewedAt  DateTime?
+  createdAt       DateTime  @default(now())
+
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  word    VocabWord?     @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, wordKey])
+  @@index([studentId, dueDate])
+  @@index([wordId])
 }
 
 // Báo lỗi học viên gửi cho giáo viên ngay trên web (nút con bọ ở góc màn hình).

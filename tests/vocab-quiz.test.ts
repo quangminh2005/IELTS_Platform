@@ -1,10 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
-  buildQuiz,
+  buildQuestion,
   checkVocabAnswer,
   maskWordInSentence,
-  QUIZ_SIZE,
-  type ProgressRow,
+  type QuizKind,
   type QuizWord
 } from "../lib/vocab-quiz";
 
@@ -25,140 +24,66 @@ const pool: QuizWord[] = [
   w("w6", "strategy", "chiến lược", "Their marketing strategies changed completely after the merger.")
 ];
 
-const build = (progress: ProgressRow[] = [], seed = 0, count = 3) =>
-  buildQuiz({ pool, progress, count, seed });
+const ask = (word: QuizWord, kind: QuizKind, seed = 0, index = 0) =>
+  buildQuestion({ word, kind, pool, seed, index });
 
-describe("buildQuiz", () => {
-  it("kho dưới 4 từ thì không dựng được quiz", () => {
-    expect(
-      buildQuiz({ pool: pool.slice(0, 3), progress: [], count: 3, seed: 0 })
-    ).toEqual([]);
-  });
-
-  it("trả về đúng số câu yêu cầu", () => {
-    expect(build()).toHaveLength(3);
-  });
-
+describe("buildQuestion", () => {
   it("câu trắc nghiệm có 4 lựa chọn và không lựa chọn nào trùng nhau", () => {
-    for (const question of build([], 0, QUIZ_SIZE)) {
-      if (question.kind === "cloze") {
-        expect(question.options).toEqual([]);
-        continue;
+    for (const word of pool) {
+      for (const kind of ["meaning", "reverse"] as const) {
+        const question = ask(word, kind);
+        expect(question.options).toHaveLength(4);
+        expect(new Set(question.options).size).toBe(4);
       }
-      expect(question.options).toHaveLength(4);
-      expect(new Set(question.options).size).toBe(4);
     }
   });
 
   it("đáp án đúng luôn nằm ở correctIndex, theo đúng chiều hỏi", () => {
-    for (const question of build([], 0, QUIZ_SIZE)) {
-      const word = pool.find((item) => item.id === question.wordId);
-      if (question.kind === "meaning") {
-        expect(question.options[question.correctIndex]).toBe(word?.meaningVi);
-      } else if (question.kind === "reverse") {
-        expect(question.options[question.correctIndex]).toBe(word?.display);
-      }
+    for (const word of pool) {
+      const meaning = ask(word, "meaning");
+      expect(meaning.options[meaning.correctIndex]).toBe(word.meaningVi);
+      expect(meaning.prompt).toBe(word.display);
+
+      const reverse = ask(word, "reverse");
+      expect(reverse.options[reverse.correctIndex]).toBe(word.display);
+      expect(reverse.prompt).toBe(word.meaningVi);
     }
   });
 
-  it("5 câu chia đúng 2 nghĩa / 1 ngược / 2 điền từ", () => {
-    const kinds = build([], 0, QUIZ_SIZE).map((question) => question.kind);
-    expect(kinds.filter((kind) => kind === "meaning")).toHaveLength(2);
-    expect(kinds.filter((kind) => kind === "reverse")).toHaveLength(1);
-    expect(kinds.filter((kind) => kind === "cloze")).toHaveLength(2);
-  });
-
-  it("đổi seed thì thứ tự dạng câu cũng xoay", () => {
-    const a = build([], 0, QUIZ_SIZE).map((question) => question.kind).join(",");
-    const b = build([], 1, QUIZ_SIZE).map((question) => question.kind).join(",");
-    expect(a).not.toBe(b);
+  it("đổi seed/index thì vị trí đáp án đổi", () => {
+    const positions = new Set(
+      [0, 1, 2, 3].map((index) => ask(pool[0], "meaning", 0, index).correctIndex)
+    );
+    expect(positions.size).toBeGreaterThan(1);
   });
 
   it("câu điền từ che đúng từ trong câu ví dụ, kể cả dạng biến thể", () => {
-    for (const question of build([], 0, QUIZ_SIZE)) {
-      if (question.kind !== "cloze") {
-        continue;
-      }
-      const word = pool.find((item) => item.id === question.wordId)!;
+    for (const word of pool) {
+      const question = ask(word, "cloze");
+      expect(question.kind).toBe("cloze");
+      expect(question.options).toEqual([]);
       expect(question.prompt).toContain("____");
       expect(question.prompt.toLowerCase()).not.toContain(word.display.toLowerCase());
     }
   });
 
-  it("từ không xuất hiện trong câu ví dụ thì rơi về dạng nghĩa", () => {
-    const odd = pool.map((item) =>
-      item.id === "w2" ? { ...item, exampleEn: "This sentence mentions nothing relevant." } : item
-    );
-    const questions = buildQuiz({ pool: odd, progress: [], count: QUIZ_SIZE, seed: 0 });
-    const q = questions.find((question) => question.wordId === "w2");
-    expect(q?.kind).not.toBe("cloze");
+  it("từ không xuất hiện trong câu ví dụ thì dạng điền từ rơi về dạng chọn từ", () => {
+    const odd = { ...pool[1], exampleEn: "This sentence mentions nothing relevant." };
+    expect(ask(odd, "cloze").kind).toBe("reverse");
   });
 
   it("câu ngược dùng từ tiếng Anh khác làm nhiễu", () => {
-    const reverse = build([], 0, QUIZ_SIZE).find((question) => question.kind === "reverse")!;
     const displays = new Set(pool.map((item) => item.display));
-    for (const option of reverse.options) {
+    for (const option of ask(pool[0], "reverse").options) {
       expect(displays.has(option)).toBe(true);
     }
   });
 
-  it("không lặp từ trong cùng một lượt", () => {
-    const ids = build().map((question) => question.wordId);
-    expect(new Set(ids).size).toBe(ids.length);
-  });
-
-  it("ưu tiên từ sai nhiều nhất", () => {
-    const progress: ProgressRow[] = [
-      { wordId: "w5", correctCount: 0, wrongCount: 9, lastAnswerAt: new Date() }
-    ];
-    const ids = buildQuiz({ pool, progress, count: 1, seed: 0 }).map(
-      (question) => question.wordId
-    );
-    expect(ids).toContain("w5");
-  });
-
-  it("cùng sai bằng nhau thì ưu tiên từ lâu chưa ôn", () => {
-    // Mọi từ trong rổ đều phải có tiến độ, nếu không từ "chưa ôn lần nào" sẽ
-    // được xếp trước và test đo nhầm.
-    const at = (iso: string) => new Date(iso);
-    const progress: ProgressRow[] = [
-      { wordId: "w1", correctCount: 1, wrongCount: 0, lastAnswerAt: at("2026-08-10T00:00:00Z") },
-      { wordId: "w2", correctCount: 1, wrongCount: 0, lastAnswerAt: at("2026-01-01T00:00:00Z") },
-      { wordId: "w3", correctCount: 1, wrongCount: 0, lastAnswerAt: at("2026-08-09T00:00:00Z") },
-      { wordId: "w4", correctCount: 1, wrongCount: 0, lastAnswerAt: at("2026-08-08T00:00:00Z") }
-    ];
-    const first = buildQuiz({
-      pool: pool.slice(0, 4),
-      progress,
-      count: 1,
-      seed: 0
-    })[0];
-    expect(first.wordId).toBe("w2");
-  });
-
-  it("từ chưa ôn lần nào được ưu tiên trước từ vừa ôn hôm qua", () => {
-    const progress: ProgressRow[] = [
-      {
-        wordId: "w1",
-        correctCount: 1,
-        wrongCount: 0,
-        lastAnswerAt: new Date("2026-08-10T00:00:00Z")
-      }
-    ];
-    const ids = buildQuiz({ pool: pool.slice(0, 4), progress, count: 3, seed: 0 }).map(
-      (question) => question.wordId
-    );
-    expect(ids).not.toContain("w1");
-  });
-
-  it("cùng seed cho kết quả giống hệt nhau", () => {
-    expect(build([], 3)).toEqual(build([], 3));
-  });
-
-  it("đổi seed thì bốc bộ từ khác", () => {
-    const a = build([], 0).map((question) => question.wordId).join(",");
-    const b = build([], 1).map((question) => question.wordId).join(",");
-    expect(a).not.toBe(b);
+  it("từ tự thêm không có trong rổ vẫn có đủ 3 đáp án nhiễu", () => {
+    const custom = w("card-x", "mitigate", "giảm nhẹ", "Trees mitigate the heat.");
+    const question = ask(custom, "meaning");
+    expect(question.options).toHaveLength(4);
+    expect(question.options[question.correctIndex]).toBe("giảm nhẹ");
   });
 });
 

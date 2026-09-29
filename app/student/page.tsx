@@ -13,6 +13,7 @@ import { VocabCard } from "@/components/vocab-card";
 import { LateBadge, OverdueBadge } from "@/components/late-badge";
 import { isSubmissionLate } from "@/lib/late-submission";
 import { getVocabSidebar, getWordOfTheDay } from "@/lib/vocab-daily";
+import { countTodayCards } from "@/lib/vocab-deck";
 import { statusBadgeClasses } from "@/lib/status-badge";
 import { NextSessionCard } from "@/components/next-session-card";
 import { vnDateKey } from "@/lib/attendance";
@@ -68,7 +69,8 @@ export default async function StudentDashboardPage() {
 
   // Các truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
   // một lượt đi/về database thay vì nhiều lượt nối tiếp.
-  const [recipients, attempts, membership, wordOfDay, vocabSidebar, schedule] = await Promise.all([
+  const [recipients, attempts, membership, wordOfDay, vocabSidebar, schedule, vocabToday] =
+    await Promise.all([
     prisma.assignmentRecipient.findMany({
       // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
       where: { studentId: student.id, assignment: excludePracticeAssignment },
@@ -117,7 +119,8 @@ export default async function StudentDashboardPage() {
     }),
     getWordOfTheDay(),
     getVocabSidebar(student.id),
-    getStudentSchedule(student.id)
+    getStudentSchedule(student.id),
+    countTodayCards(student.id)
   ]);
 
   const pendingCount = recipients.filter(
@@ -348,6 +351,7 @@ export default async function StudentDashboardPage() {
         word={wordOfDay}
         streakDays={vocabSidebar.streakDays}
         canQuiz={vocabSidebar.canQuiz}
+        todayCount={vocabToday}
       />
     </div>
   );

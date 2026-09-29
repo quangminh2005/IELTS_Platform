@@ -5,11 +5,14 @@ import type { DailyWord } from "@/lib/vocab-daily";
 export function VocabCard({
   word,
   streakDays,
-  canQuiz
+  canQuiz,
+  todayCount
 }: {
   word: DailyWord | null;
   streakDays: number;
   canQuiz: boolean;
+  // Thẻ đến hạn + thẻ mới còn được học hôm nay (lib/vocab-deck.ts).
+  todayCount: number;
 }) {
   return (
     <section className="rounded-xl border border-border bg-card p-5 shadow-card">
@@ -49,19 +52,21 @@ export function VocabCard({
             </p>
           ) : null}
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            {canQuiz ? (
+            {canQuiz && todayCount > 0 ? (
               <Link
                 href="/student/vocab"
                 className="inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
               >
-                Ôn 5 từ cũ →
+                Ôn thẻ hôm nay ({todayCount}) →
               </Link>
+            ) : canQuiz ? (
+              <span className="text-sm font-semibold text-primary">✓ Hôm nay đã ôn xong</span>
             ) : null}
             <Link
               href="/student/vocab/words"
               className="text-sm font-semibold text-primary hover:underline"
             >
-              Xem tất cả từ đã học →
+              Sổ từ →
             </Link>
           </div>
         </>

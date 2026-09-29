@@ -8,13 +8,6 @@ export type QuizWord = {
   exampleEn: string;
 };
 
-export type ProgressRow = {
-  wordId: string;
-  correctCount: number;
-  wrongCount: number;
-  lastAnswerAt: Date | null;
-};
-
 // meaning: nhìn từ → chọn nghĩa Việt · reverse: nghĩa Việt → chọn từ Anh ·
 // cloze: điền từ vào chỗ trống trong câu ví dụ (gõ tay, luyện chính tả).
 export type QuizKind = "meaning" | "reverse" | "cloze";
@@ -44,30 +37,10 @@ export type QuizQuestion = {
   example: MaskedSentence | null;
 };
 
-export const QUIZ_SIZE = 5;
-
 // Cần 1 đáp án đúng + 3 đáp án nhiễu.
 export const MIN_POOL_FOR_QUIZ = 4;
 
-// Mỗi lượt 5 câu: 2 nghĩa, 1 ngược, 2 điền từ. Xoay theo seed nên từ nào rơi vào
-// dạng nào đổi mỗi lượt.
-const KIND_PATTERN: readonly QuizKind[] = ["meaning", "cloze", "reverse", "cloze", "meaning"];
-
 export const CLOZE_BLANK = "____";
-
-// Lấy sẵn một rổ rộng gấp 3 số câu rồi mới xoay theo seed: vừa giữ được ưu tiên
-// "sai nhiều / lâu chưa ôn", vừa cho mỗi lượt làm lại bốc bộ từ khác.
-const HOT_POOL_FACTOR = 3;
-
-function rotate<T>(items: readonly T[], offset: number): T[] {
-  if (items.length === 0) {
-    return [];
-  }
-
-  const shift = ((offset % items.length) + items.length) % items.length;
-
-  return [...items.slice(shift), ...items.slice(0, shift)];
-}
 
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -142,16 +115,6 @@ export function checkVocabAnswer(
   return acceptedAnswers(kind, word).some((answer) => normalizeAnswer(answer) === value);
 }
 
-function priorityOf(word: QuizWord, progress: Map<string, ProgressRow>) {
-  const row = progress.get(word.id);
-
-  return {
-    wrongCount: row?.wrongCount ?? 0,
-    // Chưa ôn lần nào coi như ôn từ rất lâu rồi.
-    lastAnswerAt: row?.lastAnswerAt?.getTime() ?? Number.NEGATIVE_INFINITY
-  };
-}
-
 // Bốc 3 đáp án nhiễu từ các từ khác trong rổ, không trùng đáp án đúng và không
 // trùng nhau. Rổ nhiễu vẫn thiếu (nhiều từ trùng nghĩa) thì vét nốt theo thứ tự.
 function pickDistractors(input: {
@@ -223,72 +186,41 @@ function buildChoiceQuestion(input: {
   };
 }
 
-export function buildQuiz(input: {
+// Dựng một câu hỏi cho một từ theo dạng đã chọn (lịch ôn quyết định dạng —
+// lib/vocab-srs.ts). Rổ `pool` chỉ để bốc đáp án nhiễu; từ được hỏi không cần nằm
+// trong rổ (từ học viên tự thêm). Câu ví dụ không tìm thấy từ thì không đục lỗ
+// được → dạng điền từ rơi về dạng chọn từ.
+export function buildQuestion(input: {
+  word: QuizWord;
+  kind: QuizKind;
   pool: QuizWord[];
-  progress: ProgressRow[];
-  count: number;
   seed: number;
-}): QuizQuestion[] {
-  if (input.pool.length < MIN_POOL_FOR_QUIZ || input.count <= 0) {
-    return [];
-  }
+  index: number;
+}): QuizQuestion {
+  const { word } = input;
+  const example = maskWordInSentence(word.display, word.exampleEn);
 
-  const progress = new Map(input.progress.map((row) => [row.wordId, row]));
-
-  const ranked = [...input.pool].sort((left, right) => {
-    const a = priorityOf(left, progress);
-    const b = priorityOf(right, progress);
-
-    if (a.wrongCount !== b.wrongCount) {
-      return b.wrongCount - a.wrongCount;
-    }
-
-    if (a.lastAnswerAt !== b.lastAnswerAt) {
-      return a.lastAnswerAt - b.lastAnswerAt;
-    }
-
-    return left.id.localeCompare(right.id);
-  });
-
-  const hotPool = ranked.slice(0, Math.max(input.count, input.count * HOT_POOL_FACTOR));
-  const selected = rotate(hotPool, input.seed).slice(0, input.count);
-
-  // Mẫu dạng câu lặp cho đủ số câu rồi xoay theo seed.
-  const pattern: QuizKind[] = [];
-
-  while (pattern.length < selected.length) {
-    pattern.push(...KIND_PATTERN);
-  }
-
-  const kinds = rotate(pattern.slice(0, selected.length), input.seed);
-
-  return selected.map((word, questionIndex) => {
-    const example = maskWordInSentence(word.display, word.exampleEn);
-    const wanted = kinds[questionIndex];
-
-    if (wanted === "cloze" && example) {
-      return {
-        wordId: word.id,
-        kind: "cloze",
-        display: word.display,
-        phonetic: word.phonetic,
-        meaningVi: word.meaningVi,
-        exampleEn: word.exampleEn,
-        prompt: `${example.before}${CLOZE_BLANK}${example.after}`,
-        options: [],
-        correctIndex: -1,
-        example
-      };
-    }
-
-    return buildChoiceQuestion({
-      pool: input.pool,
-      word,
-      // Câu ví dụ không tìm thấy từ (không đục lỗ được) thì hỏi nghĩa thay.
-      kind: wanted === "reverse" ? "reverse" : "meaning",
-      seed: input.seed,
-      questionIndex,
+  if (input.kind === "cloze" && example) {
+    return {
+      wordId: word.id,
+      kind: "cloze",
+      display: word.display,
+      phonetic: word.phonetic,
+      meaningVi: word.meaningVi,
+      exampleEn: word.exampleEn,
+      prompt: `${example.before}${CLOZE_BLANK}${example.after}`,
+      options: [],
+      correctIndex: -1,
       example
-    });
+    };
+  }
+
+  return buildChoiceQuestion({
+    pool: input.pool,
+    word,
+    kind: input.kind === "meaning" ? "meaning" : "reverse",
+    seed: input.seed,
+    questionIndex: input.index,
+    example
   });
 }

@@ -120,12 +120,10 @@ export async function getVocabSidebar(studentId: string, now = new Date()) {
       where: { studentId },
       select: { date: true }
     }),
-    prisma.vocabProgress.count({ where: { studentId } }),
-    // Đếm đúng rổ mà trang quiz sẽ dùng: chỉ từ ĐÃ TỪNG được phát. Đếm cả kho
-    // thì nút "Ôn 5 từ cũ" hiện ra trong khi trang quiz lại báo chưa đủ từ.
-    prisma.vocabWord.count({
-      where: { hidden: false, dailies: { some: { date: releasedDailyDate(now) } } }
-    })
+    // Số từ trong Sổ từ = số thẻ ôn của học viên (lib/vocab-deck.ts).
+    prisma.vocabDeckCard.count({ where: { studentId } }),
+    // Cần đủ từ trong kho mới dựng được câu trắc nghiệm 4 lựa chọn.
+    prisma.vocabWord.count({ where: { hidden: false } })
   ]);
 
   const streak = calculateVocabStreak({

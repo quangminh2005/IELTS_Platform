@@ -1,7 +1,50 @@
 import { matchesSearch } from "@/lib/assignment-wizard";
+import { cardState, type CardState } from "@/lib/vocab-srs";
 
-// Một dòng trong Sổ từ của học viên: từ đã phát + kết quả ôn của riêng em đó.
+// "unstudied" = từ đã phát nhưng học viên chưa có thẻ (chưa học lần nào).
+export type WordStatus = CardState | "unstudied";
+
+// Một dòng trong Sổ từ của học viên: một thẻ ôn, hoặc một từ đã phát chưa học.
 export type VocabWordEntry = {
+  id: string;
+  cardId: string | null;
+  display: string;
+  phonetic: string | null;
+  partOfSpeech: string | null;
+  meaningVi: string;
+  definitionEn: string | null;
+  exampleEn: string;
+  sourceLabel: string | null;
+  // Ngày gom nhóm (yyyy-mm-dd giờ VN): ngày thêm thẻ, hoặc ngày phát với từ chưa học.
+  dateKey: string;
+  status: WordStatus;
+  // Ngày ôn tiếp (yyyy-mm-dd), null với từ chưa học.
+  dueDate: string | null;
+  // Học viên tự bôi đen thêm ở trang Kết quả.
+  selfAdded: boolean;
+  // Nghĩa do học viên tự gõ (không phải từ kho) → được sửa.
+  editable: boolean;
+};
+
+export type DeckCardInput = {
+  id: string;
+  wordId: string | null;
+  source: string;
+  box: number;
+  dueDate: string;
+  createdKey: string;
+  content: {
+    display: string;
+    phonetic: string | null;
+    partOfSpeech: string | null;
+    meaningVi: string;
+    definitionEn: string | null;
+    exampleEn: string;
+  };
+  sourceLabel: string | null;
+};
+
+export type ReleasedWordInput = {
   id: string;
   display: string;
   phonetic: string | null;
@@ -10,17 +53,53 @@ export type VocabWordEntry = {
   definitionEn: string | null;
   exampleEn: string;
   sourceLabel: string | null;
-  // Ngày phát (yyyy-mm-dd theo giờ VN). Từ phát nhiều lần lấy lần đầu.
   releasedOn: string;
-  correctCount: number;
-  wrongCount: number;
 };
 
-export type VocabDateGroup = {
-  date: string;
-  label: string;
-  words: VocabWordEntry[];
-};
+// Ghép thẻ của học viên với các từ đã phát mà em đó chưa học. Từ phát nhiều lần
+// (kho xoay vòng) chỉ giữ lần phát đầu; từ đã có thẻ thì lấy theo thẻ.
+export function buildVocabWordEntries(
+  cards: DeckCardInput[],
+  released: ReleasedWordInput[]
+): VocabWordEntry[] {
+  const entries: VocabWordEntry[] = cards.map((card) => ({
+    id: card.id,
+    cardId: card.id,
+    ...card.content,
+    sourceLabel: card.sourceLabel,
+    dateKey: card.createdKey,
+    status: cardState(card.box),
+    dueDate: card.dueDate,
+    selfAdded: card.source === "student",
+    editable: card.source === "student" && card.wordId === null
+  }));
+
+  const carded = new Set(cards.map((card) => card.wordId).filter(Boolean));
+  const firstRelease = new Map<string, ReleasedWordInput>();
+
+  for (const word of released) {
+    const seen = firstRelease.get(word.id);
+
+    if (!carded.has(word.id) && (!seen || word.releasedOn < seen.releasedOn)) {
+      firstRelease.set(word.id, word);
+    }
+  }
+
+  for (const word of firstRelease.values()) {
+    const { releasedOn, ...rest } = word;
+    entries.push({
+      ...rest,
+      cardId: null,
+      dateKey: releasedOn,
+      status: "unstudied",
+      dueDate: null,
+      selfAdded: false,
+      editable: false
+    });
+  }
+
+  return entries;
+}
 
 // Tìm theo từ tiếng Anh hoặc nghĩa Việt; gõ không dấu vẫn ra nhờ matchesSearch.
 export function filterVocabWords(words: VocabWordEntry[], query: string): VocabWordEntry[] {
@@ -42,16 +121,32 @@ export function formatVietnamDate(key: string): string {
   return `${day}/${month}/${year}`;
 }
 
+export type VocabDateGroup = {
+  date: string;
+  label: string;
+  words: VocabWordEntry[];
+};
+
 export function groupVocabWordsByDate(words: VocabWordEntry[]): VocabDateGroup[] {
   const byDate = new Map<string, VocabWordEntry[]>();
 
   for (const word of words) {
-    const bucket = byDate.get(word.releasedOn) ?? [];
+    const bucket = byDate.get(word.dateKey) ?? [];
     bucket.push(word);
-    byDate.set(word.releasedOn, bucket);
+    byDate.set(word.dateKey, bucket);
   }
 
   return [...byDate.entries()]
     .sort(([a], [b]) => (a < b ? 1 : a > b ? -1 : 0))
     .map(([date, items]) => ({ date, label: formatVietnamDate(date), words: items }));
+}
+
+export function countByStatus(words: VocabWordEntry[]): Record<WordStatus, number> {
+  const counts: Record<WordStatus, number> = { unstudied: 0, new: 0, learning: 0, mastered: 0 };
+
+  for (const word of words) {
+    counts[word.status] += 1;
+  }
+
+  return counts;
 }

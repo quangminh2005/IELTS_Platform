@@ -2,13 +2,17 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { VocabQuizForm } from "@/components/vocab-quiz-form";
-import { buildQuiz, MIN_POOL_FOR_QUIZ, QUIZ_SIZE } from "@/lib/vocab-quiz";
-import { getVocabSidebar, releasedDailyDate } from "@/lib/vocab-daily";
+import { VocabReviewSession } from "@/components/vocab-review-session";
+import { getReviewSession } from "@/lib/vocab-deck";
+import { getVocabSidebar } from "@/lib/vocab-daily";
 
 export const dynamic = "force-dynamic";
 
-export default async function StudentVocabPage() {
+export default async function StudentVocabPage({
+  searchParams
+}: {
+  searchParams?: { more?: string };
+}) {
   const session = await auth();
 
   if (!session?.user?.id || session.user.role !== "student") {
@@ -24,58 +28,58 @@ export default async function StudentVocabPage() {
     redirect("/waiting");
   }
 
-  const [pool, progress, sidebar] = await Promise.all([
-    // Chỉ ôn những từ ĐÃ TỪNG được phát ra làm từ của ngày.
-    prisma.vocabWord.findMany({
-      where: { hidden: false, dailies: { some: { date: releasedDailyDate() } } },
-      select: { id: true, display: true, meaningVi: true, phonetic: true, exampleEn: true }
-    }),
-    prisma.vocabProgress.findMany({
-      where: { studentId: student.id },
-      select: {
-        wordId: true,
-        correctCount: true,
-        wrongCount: true,
-        lastAnswerAt: true
-      }
-    }),
+  // ?more=N: đã bấm "Học thêm 5 từ" N lần trong hôm nay.
+  const extraBatches = Math.max(0, Math.min(Number.parseInt(searchParams?.more ?? "0", 10) || 0, 10));
+  const [review, sidebar] = await Promise.all([
+    getReviewSession(student.id, { extraBatches }),
     getVocabSidebar(student.id)
   ]);
-
-  // Mỗi lần vào trang bốc một bộ khác — đây chính là nút "làm lại".
-  const questions = buildQuiz({
-    pool,
-    progress,
-    count: QUIZ_SIZE,
-    seed: Math.floor(Math.random() * 1000)
-  });
+  const moreHref = `/student/vocab?more=${extraBatches + 1}`;
 
   return (
     <div className="space-y-6">
       <header>
         <p className="text-sm font-semibold text-primary">Từ vựng</p>
-        <h2 className="mt-1 text-2xl font-bold tracking-tight">Ôn tập từ đã học</h2>
+        <h2 className="mt-1 text-2xl font-bold tracking-tight">Ôn thẻ hôm nay</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Ôn liên tiếp {sidebar.streakDays} ngày · đã gặp {sidebar.learnedCount} từ. Mỗi lượt
-          5 câu: chọn nghĩa, chọn từ và điền từ vào câu. Làm lại bao nhiêu lần cũng được,
-          hệ thống giữ kết quả tốt nhất trong ngày.
+          Hôm nay: <strong className="text-foreground">{review.dueCount}</strong> thẻ đến hạn ·{" "}
+          <strong className="text-foreground">{review.newCount}</strong> thẻ mới
+          {sidebar.streakDays > 0 ? ` · 🔥 ôn liên tiếp ${sidebar.streakDays} ngày` : ""}. Nhớ
+          đúng thì thẻ giãn ra lâu hơn mới hỏi lại; quên thì ngày mai ôn lại.
         </p>
       </header>
 
-      {questions.length > 0 ? (
-        <VocabQuizForm questions={questions} />
+      {review.items.length > 0 ? (
+        <VocabReviewSession
+          items={review.items}
+          moreHref={review.canLearnMore ? moreHref : null}
+        />
       ) : (
-        <p className="rounded-xl border border-border bg-card p-6 text-center text-sm text-muted-foreground">
-          Cần ít nhất {MIN_POOL_FOR_QUIZ} từ đã phát mới ôn được. Quay lại sau vài
-          ngày nhé.
-        </p>
+        <section className="rounded-xl border border-border bg-card p-6 text-center shadow-card">
+          <p className="text-3xl" aria-hidden="true">
+            ✅
+          </p>
+          <h3 className="mt-2 text-lg font-bold">Hôm nay hết thẻ cần ôn rồi!</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Mai quay lại ôn tiếp nhé. Muốn học thêm thì bấm bên dưới.
+          </p>
+          {review.canLearnMore ? (
+            <a
+              href={moreHref}
+              className="mt-4 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+            >
+              Học thêm 5 từ mới
+            </a>
+          ) : null}
+        </section>
       )}
 
       <p className="text-sm text-muted-foreground">
-        Sổ từ: {sidebar.learnedCount} từ đã ôn ·{" "}
+        Sổ từ: {sidebar.learnedCount} từ ·{" "}
         <Link href="/student/vocab/words" className="font-semibold text-primary hover:underline">
-          xem lại tất cả từ đã học →
-        </Link>
+          xem lại tất cả từ →
+        </Link>{" "}
+        · Gặp từ lạ trong bài đọc/nghe? Ở trang Kết quả, bôi đen từ đó rồi bấm “➕ Sổ từ”.
       </p>
     </div>
   );

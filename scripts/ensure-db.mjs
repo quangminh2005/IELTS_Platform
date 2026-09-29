@@ -292,6 +292,43 @@ const statements = [
       FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
   END $$;`,
+  // Thẻ ôn Sổ từ theo lịch (29/9/2026): bảng mới, không đụng dữ liệu cũ.
+  `CREATE TABLE IF NOT EXISTS "VocabDeckCard" (
+    "id" TEXT NOT NULL,
+    "studentId" TEXT NOT NULL,
+    "wordKey" TEXT NOT NULL,
+    "source" TEXT NOT NULL,
+    "wordId" TEXT,
+    "display" TEXT,
+    "phonetic" TEXT,
+    "partOfSpeech" TEXT,
+    "meaningVi" TEXT,
+    "definitionEn" TEXT,
+    "exampleEn" TEXT,
+    "sourceAttemptId" TEXT,
+    "box" INTEGER NOT NULL DEFAULT 0,
+    "dueDate" DATE NOT NULL,
+    "reviewCount" INTEGER NOT NULL DEFAULT 0,
+    "lapseCount" INTEGER NOT NULL DEFAULT 0,
+    "lastReviewedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "VocabDeckCard_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "VocabDeckCard_studentId_wordKey_key" ON "VocabDeckCard"("studentId", "wordKey");',
+  'CREATE INDEX IF NOT EXISTS "VocabDeckCard_studentId_dueDate_idx" ON "VocabDeckCard"("studentId", "dueDate");',
+  'CREATE INDEX IF NOT EXISTS "VocabDeckCard_wordId_idx" ON "VocabDeckCard"("wordId");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'VocabDeckCard_studentId_fkey') THEN
+      ALTER TABLE "VocabDeckCard" ADD CONSTRAINT "VocabDeckCard_studentId_fkey"
+      FOREIGN KEY ("studentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'VocabDeckCard_wordId_fkey') THEN
+      ALTER TABLE "VocabDeckCard" ADD CONSTRAINT "VocabDeckCard_wordId_fkey"
+      FOREIGN KEY ("wordId") REFERENCES "VocabWord"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
 ];
 
 const prisma = new PrismaClient();

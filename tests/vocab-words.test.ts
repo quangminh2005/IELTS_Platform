@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildVocabWordEntries,
+  countByStatus,
   filterVocabWords,
   groupVocabWordsByDate,
+  type DeckCardInput,
+  type ReleasedWordInput,
   type VocabWordEntry
 } from "../lib/vocab-words";
 
@@ -19,9 +23,12 @@ const entry = (
   definitionEn: null,
   exampleEn: `Example with ${display}.`,
   sourceLabel: null,
-  releasedOn,
-  correctCount: 0,
-  wrongCount: 0
+  cardId: null,
+  dateKey: releasedOn,
+  status: "unstudied",
+  dueDate: null,
+  selfAdded: false,
+  editable: false
 });
 
 const words: VocabWordEntry[] = [
@@ -61,5 +68,81 @@ describe("groupVocabWordsByDate", () => {
 
   it("danh sách rỗng thì không có nhóm", () => {
     expect(groupVocabWordsByDate([])).toEqual([]);
+  });
+});
+
+const content = (display: string, meaningVi: string) => ({
+  display,
+  phonetic: null,
+  partOfSpeech: null,
+  meaningVi,
+  definitionEn: null,
+  exampleEn: `Example with ${display}.`
+});
+
+const card = (over: Partial<DeckCardInput> & { id: string }): DeckCardInput => ({
+  wordId: null,
+  source: "bank",
+  box: 1,
+  dueDate: "2026-09-30",
+  createdKey: "2026-09-29",
+  content: content("policy", "chính sách"),
+  sourceLabel: null,
+  ...over
+});
+
+const released = (id: string, display: string, releasedOn: string): ReleasedWordInput => ({
+  id,
+  ...content(display, "nghĩa"),
+  sourceLabel: null,
+  releasedOn
+});
+
+describe("buildVocabWordEntries", () => {
+  it("từ đã phát nhưng chưa có thẻ hiện là 'chưa học', từ có thẻ thì theo thẻ", () => {
+    const entries = buildVocabWordEntries(
+      [card({ id: "c1", wordId: "w1", box: 5 })],
+      [released("w1", "policy", "2026-09-01"), released("w2", "research", "2026-09-02")]
+    );
+
+    expect(entries.map((e) => [e.id, e.status])).toEqual([
+      ["c1", "mastered"],
+      ["w2", "unstudied"]
+    ]);
+    expect(entries[1].dateKey).toBe("2026-09-02");
+  });
+
+  it("từ phát lại nhiều lần chỉ giữ lần phát đầu", () => {
+    const entries = buildVocabWordEntries(
+      [],
+      [released("w2", "research", "2026-09-20"), released("w2", "research", "2026-09-02")]
+    );
+
+    expect(entries).toHaveLength(1);
+    expect(entries[0].dateKey).toBe("2026-09-02");
+  });
+
+  it("chỉ từ học viên tự gõ nghĩa mới sửa được; từ tự thêm có sẵn trong kho thì không", () => {
+    const entries = buildVocabWordEntries(
+      [
+        card({ id: "own", source: "student", content: content("mitigate", "giảm nhẹ") }),
+        card({ id: "bank", source: "student", wordId: "w9" })
+      ],
+      []
+    );
+
+    expect(entries.map((e) => [e.id, e.selfAdded, e.editable])).toEqual([
+      ["own", true, true],
+      ["bank", true, false]
+    ]);
+  });
+
+  it("đếm theo trạng thái", () => {
+    const entries = buildVocabWordEntries(
+      [card({ id: "a", box: 0 }), card({ id: "b", box: 2 }), card({ id: "c", box: 6 })],
+      [released("w5", "impact", "2026-09-05")]
+    );
+
+    expect(countByStatus(entries)).toEqual({ unstudied: 1, new: 1, learning: 1, mastered: 1 });
   });
 });

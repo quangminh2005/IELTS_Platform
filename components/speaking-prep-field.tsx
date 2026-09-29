@@ -1,17 +1,10 @@
-import {
-  SPEAKING_PREP_CHOICES,
-  SPEAKING_PREP_DEFAULT_SECONDS,
-  formatPrepDuration
-} from "@/lib/speaking-plan";
+import { SPEAKING_PREP_DEFAULT_SECONDS, splitSpeakingPrep } from "@/lib/speaking-plan";
 
-// Ô "Cho học viên lập dàn ý" + thời gian chuẩn bị mỗi câu, dùng chung cho form giao
-// bài và form sửa bài giao. Server đọc bằng parseSpeakingPrepSeconds (lib/speaking-plan.ts).
+// Ô "Cho học viên lập dàn ý" + thời gian chuẩn bị mỗi câu ([số] [phút|giây]), dùng
+// chung cho form giao bài và form sửa bài giao. Server đọc bằng parseSpeakingPrepSeconds
+// (lib/speaking-plan.ts) và kẹp trong 15 giây – 10 phút.
 export function SpeakingPrepField({ defaultSeconds }: { defaultSeconds?: number | null }) {
-  const current = defaultSeconds ?? SPEAKING_PREP_DEFAULT_SECONDS;
-  // Bài giao cũ có thể mang số lẻ không nằm trong danh sách — vẫn giữ để không đổi ngầm.
-  const choices = SPEAKING_PREP_CHOICES.includes(current)
-    ? SPEAKING_PREP_CHOICES
-    : [...SPEAKING_PREP_CHOICES, current].sort((a, b) => a - b);
+  const current = splitSpeakingPrep(defaultSeconds ?? SPEAKING_PREP_DEFAULT_SECONDS);
 
   return (
     <label className="mt-2 flex cursor-pointer items-start gap-2.5 rounded-lg border border-border bg-background p-3">
@@ -27,19 +20,28 @@ export function SpeakingPrepField({ defaultSeconds }: { defaultSeconds?: number 
           Mỗi câu Nói có ô viết dàn ý + đồng hồ đếm ngược; hết giờ thì ô khoá lại và học viên
           mới được ghi âm. Thầy xem dàn ý ở trang chấm bài.
         </span>
-        <span className="mt-2 flex items-center gap-2 text-xs">
+        <span className="mt-2 flex flex-wrap items-center gap-2 text-xs">
           Thời gian chuẩn bị mỗi câu
+          <input
+            type="number"
+            name="speakingPrepAmount"
+            min={1}
+            max={600}
+            step="any"
+            defaultValue={current.amount}
+            className="w-16 rounded-md border border-border bg-background px-2 py-1 text-sm outline-none ring-primary/40 focus:ring-2"
+          />
           <select
-            name="speakingPrepSeconds"
-            defaultValue={String(current)}
+            name="speakingPrepUnit"
+            defaultValue={current.unit}
             className="rounded-md border border-border bg-background px-2 py-1 text-sm outline-none ring-primary/40 focus:ring-2"
           >
-            {choices.map((seconds) => (
-              <option key={seconds} value={seconds}>
-                {formatPrepDuration(seconds)}
-              </option>
-            ))}
+            <option value="minutes">phút</option>
+            <option value="seconds">giây</option>
           </select>
+        </span>
+        <span className="mt-1 block text-[11px] text-muted-foreground">
+          Từ 15 giây đến 10 phút — vd Part 1 chọn 30 giây, Part 2 chọn 1 phút.
         </span>
       </span>
     </label>

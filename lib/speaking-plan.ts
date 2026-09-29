@@ -8,26 +8,37 @@
 export const SPEAKING_PREP_MIN_SECONDS = 15;
 export const SPEAKING_PREP_MAX_SECONDS = 600;
 export const SPEAKING_PREP_DEFAULT_SECONDS = 60;
-// Các mức cho thầy chọn trong form giao bài.
-export const SPEAKING_PREP_CHOICES = [15, 30, 45, 60, 90, 120, 180, 240, 300, 420, 600];
 // Cho lần lưu cuối đến trễ vài giây (mạng điện thoại chậm) mà không mất chữ.
 export const SPEAKING_PLAN_GRACE_SECONDS = 10;
 export const SPEAKING_PLAN_MAX_LENGTH = 5000;
 
-// Đọc ô "Cho lập dàn ý" + số giây trong form giao bài. Không tick = null (tắt).
-// Số giây trống/không hợp lệ thì lấy mặc định; kẹp trong [15, 600].
+export type SpeakingPrepUnit = "minutes" | "seconds";
+
+// Đọc ô "Cho lập dàn ý" + [số] [phút|giây] trong form giao bài, quy ra giây.
+// Không tick = null (tắt). Số trống/không hợp lệ thì lấy mặc định (1 phút); kết quả
+// kẹp trong [15 giây, 10 phút]. Đơn vị không rõ thì hiểu là phút như form cũ.
 export function parseSpeakingPrepSeconds(
   enabled: FormDataEntryValue | null,
-  seconds: FormDataEntryValue | null
+  amount: FormDataEntryValue | null,
+  unit: FormDataEntryValue | null
 ): number | null {
   if (enabled !== "on" && enabled !== "true") {
     return null;
   }
-  const value = Math.floor(Number(seconds));
+  const value = Number(amount);
   if (!Number.isFinite(value) || value <= 0) {
     return SPEAKING_PREP_DEFAULT_SECONDS;
   }
-  return Math.min(SPEAKING_PREP_MAX_SECONDS, Math.max(SPEAKING_PREP_MIN_SECONDS, value));
+  const seconds = Math.round(unit === "seconds" ? value : value * 60);
+  return Math.min(SPEAKING_PREP_MAX_SECONDS, Math.max(SPEAKING_PREP_MIN_SECONDS, seconds));
+}
+
+// Ngược lại: hiện số giây đã lưu trong form sửa bài giao. Tròn phút thì hiện theo
+// phút (giống form cũ), lẻ thì hiện theo giây.
+export function splitSpeakingPrep(seconds: number): { amount: number; unit: SpeakingPrepUnit } {
+  return seconds % 60 === 0
+    ? { amount: seconds / 60, unit: "minutes" }
+    : { amount: seconds, unit: "seconds" };
 }
 
 // Số giây chuẩn bị của một bài giao (null = tắt). Ưu tiên cột giây; bài giao tạo

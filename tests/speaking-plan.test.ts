@@ -9,6 +9,7 @@ import {
   assignmentPrepSeconds,
   formatPrepDuration,
   parseSpeakingPrepSeconds,
+  splitSpeakingPrep,
   speakingPlanRemainingSeconds,
   speakingPlanUsedSeconds
 } from "@/lib/speaking-plan";
@@ -18,21 +19,34 @@ const at = (seconds: number) => new Date(start.getTime() + seconds * 1000);
 
 describe("parseSpeakingPrepSeconds", () => {
   it("không tick = tắt", () => {
-    expect(parseSpeakingPrepSeconds(null, "30")).toBeNull();
-    expect(parseSpeakingPrepSeconds("", "30")).toBeNull();
+    expect(parseSpeakingPrepSeconds(null, "30", "seconds")).toBeNull();
+    expect(parseSpeakingPrepSeconds("", "2", "minutes")).toBeNull();
   });
 
-  it("tick mà số giây trống/sai thì lấy mặc định 60", () => {
-    expect(parseSpeakingPrepSeconds("on", "")).toBe(60);
-    expect(parseSpeakingPrepSeconds("on", null)).toBe(60);
-    expect(parseSpeakingPrepSeconds("on", "abc")).toBe(60);
+  it("tick mà số trống/sai thì lấy mặc định 1 phút", () => {
+    expect(parseSpeakingPrepSeconds("on", "", "minutes")).toBe(60);
+    expect(parseSpeakingPrepSeconds("on", null, "seconds")).toBe(60);
+    expect(parseSpeakingPrepSeconds("on", "abc", "minutes")).toBe(60);
   });
 
-  it("nhận 30 giây, kẹp trong 15–600 giây", () => {
-    expect(parseSpeakingPrepSeconds("on", "30")).toBe(30);
-    expect(parseSpeakingPrepSeconds("on", "90.7")).toBe(90);
-    expect(parseSpeakingPrepSeconds("on", "5")).toBe(15);
-    expect(parseSpeakingPrepSeconds("on", "9999")).toBe(600);
+  it("giữ kiểu nhập phút như cũ", () => {
+    expect(parseSpeakingPrepSeconds("on", "3", "minutes")).toBe(180);
+    expect(parseSpeakingPrepSeconds("on", "1.5", "minutes")).toBe(90);
+    expect(parseSpeakingPrepSeconds("on", "99", "minutes")).toBe(600);
+    // Không có đơn vị (form cũ) thì hiểu là phút.
+    expect(parseSpeakingPrepSeconds("on", "2", null)).toBe(120);
+  });
+
+  it("nhập theo giây: 30 giây cho Part 1, kẹp trong 15–600 giây", () => {
+    expect(parseSpeakingPrepSeconds("on", "30", "seconds")).toBe(30);
+    expect(parseSpeakingPrepSeconds("on", "5", "seconds")).toBe(15);
+    expect(parseSpeakingPrepSeconds("on", "9999", "seconds")).toBe(600);
+  });
+
+  it("form sửa bài hiện lại đúng đơn vị", () => {
+    expect(splitSpeakingPrep(120)).toEqual({ amount: 2, unit: "minutes" });
+    expect(splitSpeakingPrep(30)).toEqual({ amount: 30, unit: "seconds" });
+    expect(splitSpeakingPrep(90)).toEqual({ amount: 90, unit: "seconds" });
   });
 });
 

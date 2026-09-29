@@ -118,7 +118,8 @@ function readSpeakingPrep(formData: FormData) {
   return {
     speakingPrepSeconds: parseSpeakingPrepSeconds(
       formData.get("speakingPrepEnabled"),
-      formData.get("speakingPrepSeconds")
+      formData.get("speakingPrepAmount"),
+      formData.get("speakingPrepUnit")
     ),
     speakingPrepMinutes: null
   };

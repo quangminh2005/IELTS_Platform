@@ -7,8 +7,13 @@ import { hasSignal, isMicSilent, meterPercent, peakOf } from "@/lib/mic-level";
 import {
   type SpeakingSource,
   checkSpeakingFile,
+  isUploadStalled,
   speakingUploadName
 } from "@/lib/speaking-upload";
+
+// Bản ghi đang chờ lên server. Giữ lại sau khi tải hỏng để học viên bấm "Tải lại
+// bản ghi" — bắt ghi âm lại cả câu chỉ vì mạng chập chờn là quá phí.
+type PendingUpload = { body: Blob; contentType: string; source: SpeakingSource };
 
 // Trạng thái "bận": bản ghi chưa nằm an toàn trên server. Màn làm bài dùng cờ
 // này để chặn nộp bài — bấm Nộp lúc này là mất trắng bản ghi.
@@ -59,6 +64,20 @@ export function AudioRecorderAnswer({
   const meterRef = useRef<{ context: AudioContext; interval: number } | null>(null);
   // null = không đo được (trình duyệt thiếu Web Audio) → không kết luận gì.
   const heardRef = useRef<boolean | null>(null);
+  const pendingRef = useRef<PendingUpload | null>(null);
+  const [canRetry, setCanRetry] = useState(false);
+  // Mỗi lần tải lên một số mới: lượt đã bị huỷ vì treo mà lát sau mới trả kết
+  // quả thì bỏ qua, không được ghi đè lên lượt học viên vừa bấm lại.
+  const uploadSeqRef = useRef(0);
+  const uploadAbortRef = useRef<{ controller: AbortController; watchdog: number } | null>(null);
+
+  function stopUploadWatch() {
+    const current = uploadAbortRef.current;
+    if (current) {
+      window.clearInterval(current.watchdog);
+      uploadAbortRef.current = null;
+    }
+  }
 
   function stopTimer() {
     if (timerRef.current !== null) {
@@ -141,6 +160,8 @@ export function AudioRecorderAnswer({
       stopTimer();
       stopMeter();
       stopTracks();
+      uploadAbortRef.current?.controller.abort();
+      stopUploadWatch();
     };
   }, []);
 
@@ -191,6 +212,9 @@ export function AudioRecorderAnswer({
 
       recorder.start();
       recorderRef.current = recorder;
+      // Ghi bản mới thì bỏ bản cũ đang chờ tải lại.
+      pendingRef.current = null;
+      setCanRetry(false);
       startMeter(stream);
       setSavedSilent(false);
       setStatus("recording");
@@ -217,21 +241,63 @@ export function AudioRecorderAnswer({
   // máy — nhờ vậy cờ bận (chặn nộp bài) bảo vệ cả hai như nhau.
   async function uploadRecording(body: Blob, contentType: string, source: SpeakingSource) {
     const label = source === "uploaded" ? "Đang tải file lên" : "Đang tải bản ghi lên";
+    pendingRef.current = { body, contentType, source };
+    setCanRetry(false);
     setStatus("uploading");
     setMessage(`${label}… 0%`);
+
+    // Canh treo: không nhích byte nào suốt SPEAKING_UPLOAD_STALL_MS thì huỷ và
+    // báo lỗi ngay, thay vì để thư viện âm thầm thử lại hơn 15 phút.
+    uploadAbortRef.current?.controller.abort();
+    stopUploadWatch();
+    const seq = ++uploadSeqRef.current;
+    const controller = new AbortController();
+    let lastProgressAt = Date.now();
+    let stalled = false;
+    const watchdog = window.setInterval(() => {
+      if (isUploadStalled(lastProgressAt, Date.now())) {
+        stalled = true;
+        controller.abort();
+        stopUploadWatch();
+        failUpload(
+          "Mạng đang yếu nên bản ghi tải mãi không lên. Bản ghi vẫn còn — em đổi sang Wi-Fi/4G ổn định hơn rồi bấm «Tải lại bản ghi» nhé."
+        );
+      }
+    }, 5000);
+    uploadAbortRef.current = { controller, watchdog };
+
+    function failUpload(text: string) {
+      if (seq !== uploadSeqRef.current) {
+        return;
+      }
+      setStatus("error");
+      setCanRetry(true);
+      setMessage(text);
+    }
 
     try {
       const result = await upload(speakingUploadName(questionId, source, contentType), body, {
         access: "public",
         handleUploadUrl: "/api/speaking/upload",
         contentType,
+        abortSignal: controller.signal,
         onUploadProgress: ({ percentage }) => {
+          lastProgressAt = Date.now();
+          if (seq !== uploadSeqRef.current) {
+            return;
+          }
           // File thu từ điện thoại thường nặng hơn bản ghi trên web — không có %
           // thì học viên tưởng máy treo rồi bỏ đi.
           setMessage(`${label}… ${Math.round(percentage)}%`);
         }
       });
 
+      if (seq !== uploadSeqRef.current) {
+        return;
+      }
+      stopUploadWatch();
+      pendingRef.current = null;
+      setCanRetry(false);
       setUrl(result.url);
       onAnswerChange(questionId, result.url);
       // Chỉ bản ghi trực tiếp mới đo được; file tải lên thì không kết luận.
@@ -239,8 +305,24 @@ export function AudioRecorderAnswer({
       setStatus("idle");
       setMessage(source === "uploaded" ? "Đã nộp file ghi âm." : "Đã nộp bản ghi.");
     } catch (error) {
-      setStatus("error");
-      setMessage(`Lỗi tải lên: ${(error as Error).message}. Em thử lại giúp thầy nhé.`);
+      if (seq !== uploadSeqRef.current) {
+        return;
+      }
+      stopUploadWatch();
+      // Treo thì watchdog đã báo lỗi rồi, đừng đè bằng thông báo "aborted" khó hiểu.
+      if (stalled) {
+        return;
+      }
+      failUpload(
+        `Lỗi tải lên: ${(error as Error).message}. Bản ghi vẫn còn — em bấm «Tải lại bản ghi» nhé.`
+      );
+    }
+  }
+
+  function retryUpload() {
+    const pending = pendingRef.current;
+    if (pending) {
+      void uploadRecording(pending.body, pending.contentType, pending.source);
     }
   }
 
@@ -375,6 +457,15 @@ export function AudioRecorderAnswer({
         </div>
       ) : (
         <div className="flex flex-wrap items-center gap-2">
+          {status === "error" && canRetry ? (
+            <button
+              type="button"
+              onClick={retryUpload}
+              className="inline-flex items-center gap-2 rounded-md bg-amber-500 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-600"
+            >
+              ↻ Tải lại bản ghi
+            </button>
+          ) : null}
           <button
             type="button"
             onClick={startRecording}

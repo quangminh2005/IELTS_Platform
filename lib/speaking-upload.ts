@@ -14,6 +14,21 @@
 // thông, nên chốt phải nằm ở chỗ rẻ nhất.
 export const SPEAKING_MAX_BYTES = 30 * 1024 * 1024;
 
+// Quá chừng này mà không nhích thêm byte nào thì coi như tải lên đã treo.
+//
+// Sự cố 29/9/2026: học viên làm bài trong trình duyệt của Zalo, mạng chỉ còn
+// 3–25 KB/s. @vercel/blob tự thử lại tới 10 lần với thời gian chờ tăng gấp đôi
+// (1s, 2s, 4s… cộng lại hơn 15 phút) và XHR không có timeout, nên màn hình đứng ở
+// "Đang tải bản ghi lên…" gần như vô hạn, nút bị khoá, cờ bận chặn luôn nút Nộp.
+// 60 giây: mạng 3 KB/s vẫn nhích đều từng khối nên không bị cắt oan; còn đứng
+// im cả phút thì học viên cần được báo và cho thử lại.
+export const SPEAKING_UPLOAD_STALL_MS = 60 * 1000;
+
+/** Tải lên đã đứng im (không có tiến độ mới) quá lâu chưa. */
+export function isUploadStalled(lastProgressAt: number, now: number): boolean {
+  return now - lastProgressAt >= SPEAKING_UPLOAD_STALL_MS;
+}
+
 // Đuôi file -> content type gửi lên. Danh sách này phải nằm trong
 // allowedContentTypes của app/api/speaking/upload/route.ts, nếu không server sẽ
 // từ chối SAU KHI file đã tải xong.

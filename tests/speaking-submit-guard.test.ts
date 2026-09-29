@@ -62,4 +62,12 @@ describe("chốt chặn nộp bài khi đang ghi âm", () => {
     // "Còn 1 câu chưa trả lời" quá mơ hồ với bài Nói — phải nói thẳng.
     expect(workspace).toMatch(/chưa có bản ghi âm/i);
   });
+
+  it("tải lên bị treo thì huỷ, báo lỗi và cho tải lại mà không phải ghi lại", () => {
+    // 29/9/2026: mạng yếu làm upload treo vô hạn, nút khoá, cờ bận chặn luôn Nộp bài.
+    expect(recorder).toContain("abortSignal: controller.signal");
+    expect(recorder).toContain("isUploadStalled(");
+    expect(recorder).toContain("pendingRef");
+    expect(recorder).toMatch(/onClick=\{retryUpload\}/);
+  });
 });

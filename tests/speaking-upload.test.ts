@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   SPEAKING_MAX_BYTES,
+  SPEAKING_UPLOAD_STALL_MS,
   checkSpeakingFile,
+  isUploadStalled,
   speakingAnswerSource,
   speakingUploadName
 } from "@/lib/speaking-upload";
@@ -122,5 +124,22 @@ describe("speakingAnswerSource", () => {
     expect(speakingAnswerSource(`${host}/audio-part1.mp3`)).toBe("unknown");
     expect(speakingAnswerSource("")).toBe("unknown");
     expect(speakingAnswerSource("khong-phai-url")).toBe("unknown");
+  });
+});
+
+describe("isUploadStalled", () => {
+  // Sự cố 29/9/2026: mạng 3 KB/s trong trình duyệt Zalo, thư viện tự thử lại hơn
+  // 15 phút nên học viên thấy "Đang tải…" mãi không xong.
+  it("chưa tới ngưỡng thì chưa coi là treo", () => {
+    expect(isUploadStalled(1000, 1000 + SPEAKING_UPLOAD_STALL_MS - 1)).toBe(false);
+  });
+
+  it("đứng im đủ ngưỡng thì coi là treo", () => {
+    expect(isUploadStalled(1000, 1000 + SPEAKING_UPLOAD_STALL_MS)).toBe(true);
+  });
+
+  it("ngưỡng đủ rộng cho mạng rất chậm nhưng vẫn nhích", () => {
+    expect(SPEAKING_UPLOAD_STALL_MS).toBeGreaterThanOrEqual(30_000);
+    expect(SPEAKING_UPLOAD_STALL_MS).toBeLessThanOrEqual(120_000);
   });
 });

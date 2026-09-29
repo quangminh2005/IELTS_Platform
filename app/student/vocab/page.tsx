@@ -79,6 +79,10 @@ export default async function StudentVocabPage({
         <Link href="/student/vocab/words" className="font-semibold text-primary hover:underline">
           xem lại tất cả từ →
         </Link>{" "}
+        ·{" "}
+        <Link href="/student/vocab/flashcards" className="font-semibold text-primary hover:underline">
+          🃏 lật thẻ
+        </Link>{" "}
         · Gặp từ lạ trong bài đọc/nghe? Ở trang Kết quả, bôi đen từ đó rồi bấm “➕ Sổ từ”.
       </p>
     </div>

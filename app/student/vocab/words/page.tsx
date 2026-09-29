@@ -4,17 +4,13 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { SpeakButton } from "@/components/speak-button";
 import { VocabWordEdit } from "@/components/vocab-word-edit";
-import { vietnamDateKey } from "@/lib/vocab-day";
-import { releasedDailyDate } from "@/lib/vocab-daily";
-import { CARD_SELECT, resolveCard } from "@/lib/vocab-deck";
+import { getWordBook } from "@/lib/vocab-deck";
 import { maskWordInSentence } from "@/lib/vocab-quiz";
 import {
-  buildVocabWordEntries,
   countByStatus,
   filterVocabWords,
   formatVietnamDate,
   groupVocabWordsByDate,
-  type DeckCardInput,
   type VocabWordEntry,
   type WordStatus
 } from "@/lib/vocab-words";
@@ -58,9 +54,6 @@ function statusLabel(word: VocabWordEntry): string {
   }
 }
 
-const unitLabel = (unit: { title: string; material: { title: string } } | null) =>
-  unit ? `${unit.material.title} — ${unit.title}` : null;
-
 export default async function StudentVocabWordsPage({
   searchParams
 }: {
@@ -82,73 +75,7 @@ export default async function StudentVocabWordsPage({
   }
 
   const query = searchParams?.q?.trim() ?? "";
-  // select tường minh: phần đề nguồn có content rất nặng.
-  const sourceUnit = {
-    select: { title: true, material: { select: { title: true } } }
-  } as const;
-
-  const [cardRows, dailies] = await Promise.all([
-    prisma.vocabDeckCard.findMany({
-      where: { studentId: student.id },
-      select: {
-        ...CARD_SELECT,
-        word: { select: { ...CARD_SELECT.word.select, sourceUnit } }
-      }
-    }),
-    // Chỉ những từ ĐÃ phát tính đến hôm nay (từ ghim cho ngày mai chưa lộ).
-    prisma.vocabDaily.findMany({
-      where: { word: { hidden: false }, date: releasedDailyDate() },
-      select: {
-        date: true,
-        word: {
-          select: {
-            id: true,
-            display: true,
-            phonetic: true,
-            partOfSpeech: true,
-            meaningVi: true,
-            definitionEn: true,
-            exampleEn: true,
-            sourceUnit
-          }
-        }
-      }
-    })
-  ]);
-
-  const cards: DeckCardInput[] = [];
-
-  for (const row of cardRows) {
-    const card = resolveCard(row);
-
-    if (!card) {
-      continue;
-    }
-
-    cards.push({
-      id: card.id,
-      wordId: card.wordId,
-      source: card.source,
-      box: card.box,
-      dueDate: card.dueDate,
-      createdKey: vietnamDateKey(card.createdAt),
-      content: card.content,
-      sourceLabel: unitLabel(row.word?.sourceUnit ?? null)
-    });
-  }
-
-  const entries = buildVocabWordEntries(
-    cards,
-    dailies.map(({ date, word }) => {
-      const { sourceUnit: unit, ...rest } = word;
-
-      return {
-        ...rest,
-        sourceLabel: unitLabel(unit),
-        releasedOn: date.toISOString().slice(0, 10)
-      };
-    })
-  );
+  const entries = await getWordBook(student.id);
   const counts = countByStatus(entries);
   const groups = groupVocabWordsByDate(filterVocabWords(entries, query));
 
@@ -161,7 +88,15 @@ export default async function StudentVocabWordsPage({
           </Link>{" "}
           / Sổ từ
         </p>
-        <h2 className="mt-1 text-2xl font-bold tracking-tight">Sổ từ của bạn</h2>
+        <div className="mt-1 flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-2xl font-bold tracking-tight">Sổ từ của bạn</h2>
+          <Link
+            href="/student/vocab/flashcards"
+            className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+          >
+            🃏 Lật thẻ
+          </Link>
+        </div>
         <p className="mt-2 text-sm text-muted-foreground">
           {entries.length} từ · đã thuộc {counts.mastered} · đang học{" "}
           {counts.learning + counts.new} · chưa học {counts.unstudied}. Bấm 🔊 để nghe phát âm.

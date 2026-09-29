@@ -150,3 +150,38 @@ export function countByStatus(words: VocabWordEntry[]): Record<WordStatus, numbe
 
   return counts;
 }
+
+// Nhóm thẻ để lật (trang Lật thẻ). Lật thẻ chỉ để xem, KHÔNG đổi lịch ôn.
+export const FLASHCARD_GROUPS = ["learning", "self", "mastered", "all"] as const;
+
+export type FlashcardGroup = (typeof FLASHCARD_GROUPS)[number];
+
+export const FLASHCARD_GROUP_LABELS: Record<FlashcardGroup, string> = {
+  learning: "Đang học",
+  self: "Tự thêm",
+  mastered: "Đã thuộc",
+  all: "Tất cả"
+};
+
+export function parseFlashcardGroup(value: string | undefined): FlashcardGroup {
+  return (FLASHCARD_GROUPS as readonly string[]).includes(value ?? "")
+    ? (value as FlashcardGroup)
+    : "learning";
+}
+
+// "Đang học" gồm cả thẻ mới — những từ cần nhìn lại nhiều nhất.
+export function wordsForFlashcards(
+  words: VocabWordEntry[],
+  group: FlashcardGroup
+): VocabWordEntry[] {
+  switch (group) {
+    case "learning":
+      return words.filter((word) => word.status === "new" || word.status === "learning");
+    case "self":
+      return words.filter((word) => word.selfAdded);
+    case "mastered":
+      return words.filter((word) => word.status === "mastered");
+    case "all":
+      return words;
+  }
+}

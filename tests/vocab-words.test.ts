@@ -4,6 +4,8 @@ import {
   countByStatus,
   filterVocabWords,
   groupVocabWordsByDate,
+  parseFlashcardGroup,
+  wordsForFlashcards,
   type DeckCardInput,
   type ReleasedWordInput,
   type VocabWordEntry
@@ -144,5 +146,32 @@ describe("buildVocabWordEntries", () => {
     );
 
     expect(countByStatus(entries)).toEqual({ unstudied: 1, new: 1, learning: 1, mastered: 1 });
+  });
+});
+
+describe("wordsForFlashcards / parseFlashcardGroup", () => {
+  const entries = buildVocabWordEntries(
+    [
+      card({ id: "new", box: 0 }),
+      card({ id: "learning", box: 3 }),
+      card({ id: "mastered", box: 5 }),
+      card({ id: "self", box: 1, source: "student", content: content("mitigate", "giảm nhẹ") })
+    ],
+    [released("w9", "impact", "2026-09-05")]
+  );
+  const ids = (group: Parameters<typeof wordsForFlashcards>[1]) =>
+    wordsForFlashcards(entries, group).map((e) => e.id);
+
+  it("lọc đúng từng nhóm", () => {
+    expect(ids("learning")).toEqual(["new", "learning", "self"]);
+    expect(ids("self")).toEqual(["self"]);
+    expect(ids("mastered")).toEqual(["mastered"]);
+    expect(ids("all")).toHaveLength(5);
+  });
+
+  it("nhóm lạ trên URL rơi về 'đang học'", () => {
+    expect(parseFlashcardGroup("mastered")).toBe("mastered");
+    expect(parseFlashcardGroup("xyz")).toBe("learning");
+    expect(parseFlashcardGroup(undefined)).toBe("learning");
   });
 });

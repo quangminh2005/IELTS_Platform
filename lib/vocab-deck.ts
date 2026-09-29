@@ -1,7 +1,12 @@
 import { prisma } from "@/lib/prisma";
 import { vietnamDateKey } from "@/lib/vocab-day";
-import { dateKeyToUtcDate } from "@/lib/vocab-daily";
+import { dateKeyToUtcDate, releasedDailyDate } from "@/lib/vocab-daily";
 import type { QuizWord } from "@/lib/vocab-quiz";
+import {
+  buildVocabWordEntries,
+  type DeckCardInput,
+  type VocabWordEntry
+} from "@/lib/vocab-words";
 import {
   buildReviewSession,
   legacyBox,
@@ -327,4 +332,81 @@ export async function countTodayCards(studentId: string, now = new Date()): Prom
     dueCount +
     Math.min(newCardAllowance({ introducedToday, extraBatches: 0 }), remainingInBank)
   );
+}
+
+const unitLabel = (unit: { title: string; material: { title: string } } | null) =>
+  unit ? `${unit.material.title} — ${unit.title}` : null;
+
+// Toàn bộ Sổ từ của học viên: mọi thẻ ôn + các từ đã phát mà em đó chưa học.
+// Dùng chung cho trang Sổ từ và trang Lật thẻ.
+export async function getWordBook(studentId: string): Promise<VocabWordEntry[]> {
+  // select tường minh: phần đề nguồn có content rất nặng.
+  const sourceUnit = {
+    select: { title: true, material: { select: { title: true } } }
+  } as const;
+
+  const [cardRows, dailies] = await Promise.all([
+    prisma.vocabDeckCard.findMany({
+      where: { studentId },
+      select: {
+        ...CARD_SELECT,
+        word: { select: { ...CARD_SELECT.word.select, sourceUnit } }
+      }
+    }),
+    // Chỉ những từ ĐÃ phát tính đến hôm nay (từ ghim cho ngày mai chưa lộ).
+    prisma.vocabDaily.findMany({
+      where: { word: { hidden: false }, date: releasedDailyDate() },
+      select: {
+        date: true,
+        word: {
+          select: {
+            id: true,
+            display: true,
+            phonetic: true,
+            partOfSpeech: true,
+            meaningVi: true,
+            definitionEn: true,
+            exampleEn: true,
+            sourceUnit
+          }
+        }
+      }
+    })
+  ]);
+
+  const cards: DeckCardInput[] = [];
+
+  for (const row of cardRows) {
+    const card = resolveCard(row);
+
+    if (!card) {
+      continue;
+    }
+
+    cards.push({
+      id: card.id,
+      wordId: card.wordId,
+      source: card.source,
+      box: card.box,
+      dueDate: card.dueDate,
+      createdKey: vietnamDateKey(card.createdAt),
+      content: card.content,
+      sourceLabel: unitLabel(row.word?.sourceUnit ?? null)
+    });
+  }
+
+  const entries = buildVocabWordEntries(
+    cards,
+    dailies.map(({ date, word }) => {
+      const { sourceUnit: unit, ...rest } = word;
+
+      return {
+        ...rest,
+        sourceLabel: unitLabel(unit),
+        releasedOn: date.toISOString().slice(0, 10)
+      };
+    })
+  );
+
+  return entries;
 }

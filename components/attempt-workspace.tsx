@@ -144,6 +144,8 @@ type AttemptWorkspaceProps = {
     lockAudio?: boolean;
     // Số giây lập dàn ý trước mỗi câu Nói (null/không có = tắt).
     speakingPrepSeconds?: number | null;
+    // Dàn ý chung cả bài: một ô + một đồng hồ ở đầu phần Nói thay cho mỗi câu một ô.
+    speakingPrepShared?: boolean;
     units: AssignmentUnit[];
   };
   // Dàn ý đã lưu theo questionId (chỉ câu học viên đã bấm bắt đầu chuẩn bị).
@@ -2054,11 +2056,44 @@ export function AttemptWorkspace({
   // Dàn ý Speaking theo câu: giữ ở đây để ô dàn ý bị tháo/dựng lại khi đổi part
   // không quay về trạng thái cũ lúc tải trang.
   const speakingPlanCacheRef = useRef<Record<string, InitialSpeakingPlan>>({ ...speakingPlans });
+  // Dàn ý chung cả bài: gắn vào câu Nói đầu tiên (server cũng chỉ nhận câu này).
+  // Nút ghi âm các câu chỉ mở khi dàn ý chung đã khoá — hoặc đã có bản ghi từ trước
+  // (vd thầy bật tuỳ chọn sau khi học viên đã ghi âm).
+  const sharedPrep = Boolean(assignment.speakingPrepSeconds && assignment.speakingPrepShared);
+  const sharedPlanQuestionId = useMemo(() => {
+    for (const entry of assignment.units) {
+      if (entry.assignableUnit.skill === "speaking" && entry.assignableUnit.questions.length > 0) {
+        return entry.assignableUnit.questions[0].id;
+      }
+    }
+    return null;
+  }, [assignment.units]);
+  const sharedPlanHadRecording = useMemo(
+    () =>
+      assignment.units.some(
+        (entry) =>
+          entry.assignableUnit.skill === "speaking" &&
+          entry.assignableUnit.questions.some((question) => Boolean(savedAnswers[question.id]))
+      ),
+    // Chỉ xét lúc dựng trang.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+  const [sharedPlanOpen, setSharedPlanOpen] = useState(() => {
+    if (sharedPlanHadRecording) {
+      return true;
+    }
+    const plan = sharedPlanQuestionId ? speakingPlans[sharedPlanQuestionId] : undefined;
+    return Boolean(plan && (plan.locked || plan.remainingSeconds <= 0));
+  });
   const handleSpeakingPlanChange = useCallback(
     (questionId: string, plan: InitialSpeakingPlan) => {
       speakingPlanCacheRef.current[questionId] = plan;
+      if (plan.locked && questionId === sharedPlanQuestionId) {
+        setSharedPlanOpen(true);
+      }
     },
-    []
+    [sharedPlanQuestionId]
   );
   const submitReasonRef = useRef<HTMLInputElement>(null);
   const partTimesInputRef = useRef<HTMLInputElement>(null);
@@ -3309,7 +3344,20 @@ export function AttemptWorkspace({
               {isSpeaking ? (
                 <>
                   <p className="mt-2 text-sm leading-6">{question.prompt}</p>
-                  {assignment.speakingPrepSeconds ? (
+                  {sharedPrep ? (
+                    sharedPlanOpen ? (
+                      <AudioRecorderAnswer
+                        questionId={question.id}
+                        initialValue={answers[question.id] ?? ""}
+                        onAnswerChange={handleAnswerChange}
+                        onBusyChange={handleRecorderBusyChange}
+                      />
+                    ) : (
+                      <p className="mt-3 rounded-md border border-dashed border-border px-3 py-2 text-xs text-muted-foreground">
+                        Em lập dàn ý ở ô phía trên trước — hết giờ chuẩn bị thì nút ghi âm mới mở.
+                      </p>
+                    )
+                  ) : assignment.speakingPrepSeconds ? (
                     <SpeakingPlanBox
                       attemptId={attempt.id}
                       questionId={question.id}
@@ -3750,7 +3798,29 @@ export function AttemptWorkspace({
             {stepMode && stepCount > 0 ? (
               stepContent
             ) : orderedSections.length > 0 ? (
-              orderedSections.map((section) => section.node)
+              <>
+                {sharedPrep &&
+                sharedPlanQuestionId &&
+                assignment.speakingPrepSeconds &&
+                unit.skill === "speaking" ? (
+                  <SpeakingPlanBox
+                    key={`shared-plan-${unit.id}`}
+                    attemptId={attempt.id}
+                    questionId={sharedPlanQuestionId}
+                    prepSeconds={assignment.speakingPrepSeconds}
+                    initialPlan={speakingPlanCacheRef.current[sharedPlanQuestionId] ?? null}
+                    onPlanChange={handleSpeakingPlanChange}
+                    hasRecording={sharedPlanHadRecording}
+                    previewMode={previewMode}
+                    shared
+                  >
+                    <p className="text-xs text-muted-foreground">
+                      Đã hết giờ chuẩn bị — em ghi âm từng câu bên dưới.
+                    </p>
+                  </SpeakingPlanBox>
+                ) : null}
+                {orderedSections.map((section) => section.node)}
+              </>
             ) : (
               <p className="rounded-md border border-border bg-muted/60 p-4 text-sm text-muted-foreground">
                 Phần này không có câu hỏi tự động chấm.

@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import {
   SPEAKING_PLAN_MAX_LENGTH,
   assignmentPrepSeconds,
+  isSharedSpeakingPrep,
   canEditSpeakingPlan,
   speakingPlanDeadline,
   speakingPlanRemainingSeconds
@@ -43,7 +44,12 @@ async function loadPlanContext(
       assignmentRecipient: {
         select: {
           assignment: {
-            select: { id: true, speakingPrepSeconds: true, speakingPrepMinutes: true }
+            select: {
+              id: true,
+              speakingPrepSeconds: true,
+              speakingPrepMinutes: true,
+              speakingPrepScope: true
+            }
           }
         }
       }
@@ -73,6 +79,23 @@ async function loadPlanContext(
   });
   if (!question) {
     return { error: "Câu hỏi không thuộc bài này." };
+  }
+
+  // Dàn ý chung cả bài: chỉ nhận ở câu Nói đầu tiên của bài giao, để học viên không
+  // mở thêm ô ở câu khác mà xin thêm giờ.
+  if (isSharedSpeakingPrep(assignment.speakingPrepScope)) {
+    const firstUnit = await prisma.assignmentUnit.findFirst({
+      where: { assignmentId: assignment.id, assignableUnit: { skill: "speaking" } },
+      orderBy: { order: "asc" },
+      select: {
+        assignableUnit: {
+          select: { questions: { orderBy: { order: "asc" }, take: 1, select: { id: true } } }
+        }
+      }
+    });
+    if (firstUnit?.assignableUnit.questions[0]?.id !== questionId) {
+      return { error: "Bài này lập dàn ý chung — em làm ở ô dàn ý đầu phần Nói." };
+    }
   }
 
   return { prepSeconds };

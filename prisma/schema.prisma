@@ -22,6 +22,7 @@ datasource db {
 // enum SessionKind (ClassSession.kind): regular | makeup | extra
 // enum SessionChangeKind (ClassSession.changeKind): cancelled | restored | moved | online | offline | added
 // enum DeckCardSource (VocabDeckCard.source): bank | student
+// enum SpeakingPrepScope (Assignment.speakingPrepScope, null = per_question): per_question | shared
 
 model User {
   id             String          @id @default(cuid())
@@ -277,6 +278,8 @@ model Assignment {
   // Cột cũ (tính bằng phút) của bài giao tạo trước khi có speakingPrepSeconds — chỉ
   // còn đọc qua assignmentPrepSeconds(), bài mới/sửa đều ghi null.
   speakingPrepMinutes Int?
+  // Chuẩn bị theo từng câu ("per_question", null) hay một khoảng chung cả bài ("shared").
+  speakingPrepScope   String?
   mode                String                @default("homework")
   // Chỉ có ở "bài giao ảo" của thư viện tự luyện: khoá studentId:materialId:unitId|all.
   // Đảm bảo mỗi (học viên × đề × phạm vi) chỉ sinh đúng một bài giao ảo.

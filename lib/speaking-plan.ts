@@ -14,6 +14,20 @@ export const SPEAKING_PLAN_MAX_LENGTH = 5000;
 
 export type SpeakingPrepUnit = "minutes" | "seconds";
 
+// Kiểu chuẩn bị (Assignment.speakingPrepScope):
+// - "per_question": mỗi câu Nói một ô dàn ý + đồng hồ riêng (mặc định, cả null).
+// - "shared": một ô dàn ý + một đồng hồ chung cho cả phần Nói; hết giờ mới mở ghi
+//   âm cho tất cả các câu. Dàn ý chung lưu ở SpeakingPlan của câu Nói ĐẦU TIÊN.
+export type SpeakingPrepScope = "per_question" | "shared";
+
+export function parseSpeakingPrepScope(value: FormDataEntryValue | null): SpeakingPrepScope {
+  return value === "shared" ? "shared" : "per_question";
+}
+
+export function isSharedSpeakingPrep(scope: string | null | undefined): boolean {
+  return scope === "shared";
+}
+
 // Đọc ô "Cho lập dàn ý" + [số] [phút|giây] trong form giao bài, quy ra giây.
 // Không tick = null (tắt). Số trống/không hợp lệ thì lấy mặc định (1 phút); kết quả
 // kẹp trong [15 giây, 10 phút]. Đơn vị không rõ thì hiểu là phút như form cũ.

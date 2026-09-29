@@ -31,6 +31,7 @@ export function SpeakingPlanBox({
   initialPlan,
   hasRecording,
   previewMode = false,
+  shared = false,
   onPlanChange,
   children
 }: {
@@ -41,6 +42,9 @@ export function SpeakingPlanBox({
   // Câu đã có bản ghi từ trước (vd GV bật tuỳ chọn sau khi học viên đã ghi): không chặn.
   hasRecording: boolean;
   previewMode?: boolean;
+  // Dàn ý chung cả bài (Assignment.speakingPrepScope = "shared"): một ô ở đầu phần
+  // Nói, children là lời nhắc; nút ghi âm từng câu do màn làm bài tự mở khi khoá.
+  shared?: boolean;
   // Báo trạng thái ra màn làm bài để giữ lại khi ô bị dựng lại (đổi part/bước).
   onPlanChange?: (questionId: string, plan: InitialSpeakingPlan) => void;
   children: ReactNode;
@@ -209,7 +213,9 @@ export function SpeakingPlanBox({
     return (
       <div className="mt-3 rounded-lg border border-dashed border-primary/50 bg-primary/5 p-4">
         <p className="text-sm font-medium">
-          Em có {formatPrepDuration(prepSeconds)} để lập dàn ý trước khi nói.
+          {shared
+            ? `Em có ${formatPrepDuration(prepSeconds)} để lập dàn ý cho TẤT CẢ các câu trước khi nói.`
+            : `Em có ${formatPrepDuration(prepSeconds)} để lập dàn ý trước khi nói.`}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           Bấm bắt đầu thì đồng hồ chạy luôn (tải lại trang cũng không dừng). Hết giờ, ô dàn ý
@@ -242,7 +248,8 @@ export function SpeakingPlanBox({
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm font-semibold">
-            {planning ? "Dàn ý của em" : "Dàn ý của em (đã khoá)"}
+            {shared ? "Dàn ý chung cả bài" : "Dàn ý của em"}
+            {planning ? "" : " (đã khoá)"}
           </p>
           {planning ? (
             <span
@@ -268,7 +275,7 @@ export function SpeakingPlanBox({
               dirtyRef.current = true;
             }}
             maxLength={SPEAKING_PLAN_MAX_LENGTH}
-            rows={6}
+            rows={shared ? 8 : 6}
             autoFocus
             placeholder="Ghi nhanh ý chính, từ khoá, ví dụ… (không cần viết thành câu hoàn chỉnh)"
             className="mt-2 w-full resize-y rounded-md border border-border bg-background/60 px-3 py-2 text-sm leading-6 outline-none focus:border-primary"
@@ -312,7 +319,9 @@ export function SpeakingPlanBox({
 
       {planning ? (
         <p className="text-xs text-muted-foreground">
-          Phần ghi âm sẽ mở khi hết giờ chuẩn bị.
+          {shared
+            ? "Nút ghi âm của các câu bên dưới sẽ mở khi hết giờ chuẩn bị."
+            : "Phần ghi âm sẽ mở khi hết giờ chuẩn bị."}
         </p>
       ) : (
         children

@@ -6,7 +6,11 @@ import { examUnitsForStudent } from "@/lib/exam-payload";
 import { detectMultiSelectGroups } from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
-import { assignmentPrepSeconds, speakingPlanRemainingSeconds } from "@/lib/speaking-plan";
+import {
+  assignmentPrepSeconds,
+  isSharedSpeakingPrep,
+  speakingPlanRemainingSeconds
+} from "@/lib/speaking-plan";
 
 type AssignmentAttemptPageProps = {
   params: {
@@ -154,6 +158,7 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
         skillTimeLimitsJson: recipient.assignment.skillTimeLimitsJson,
         lockAudio: recipient.assignment.lockAudio,
         speakingPrepSeconds: prepSeconds,
+        speakingPrepShared: isSharedSpeakingPrep(recipient.assignment.speakingPrepScope),
         units: examUnits
       }}
       speakingPlans={speakingPlans}

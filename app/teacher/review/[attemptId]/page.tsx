@@ -9,6 +9,7 @@ import { speakingAnswerSource } from "@/lib/speaking-upload";
 import {
   assignmentPrepSeconds,
   formatPlanClock,
+  isSharedSpeakingPrep,
   speakingPlanUsedSeconds
 } from "@/lib/speaking-plan";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
@@ -46,10 +47,13 @@ function reviewTaskLabel(title: string, taskNumber: number | null): string {
 // học viên lên ý tưởng thế nào trước khi nghe bài nói.
 function SpeakingPlanPanel({
   plan,
-  prepSeconds
+  prepSeconds,
+  shared = false
 }: {
   plan: { text: string; startedAt: Date; lockedAt: Date | null } | undefined;
   prepSeconds: number;
+  // Dàn ý chung cả bài: chỉ hiện một lần ở câu Nói đầu tiên.
+  shared?: boolean;
 }) {
   if (!plan) {
     return (
@@ -64,7 +68,7 @@ function SpeakingPlanPanel({
   return (
     <div className="mt-3 rounded-md border border-primary/40 bg-primary/5 p-4">
       <p className="flex flex-wrap items-center gap-2 text-xs font-medium text-primary">
-        Dàn ý của học viên
+        {shared ? "Dàn ý chung cả bài của học viên" : "Dàn ý của học viên"}
         <span className="rounded-full border border-border bg-card px-2 py-0.5 text-[11px] font-medium tabular-nums text-muted-foreground">
           viết trong {formatPlanClock(used)} / {formatPlanClock(prepSeconds)}
         </span>
@@ -110,7 +114,8 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
               title: true,
               timeLimitMinutes: true,
               speakingPrepSeconds: true,
-              speakingPrepMinutes: true
+              speakingPrepMinutes: true,
+              speakingPrepScope: true
             }
           }
         }
@@ -185,6 +190,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
 
   // Dàn ý Speaking (bài giao có bật lập dàn ý) theo từng câu.
   const prepSeconds = assignmentPrepSeconds(attempt.assignmentRecipient.assignment);
+  const sharedPrep = isSharedSpeakingPrep(attempt.assignmentRecipient.assignment.speakingPrepScope);
   const planByQuestion = new Map(attempt.speakingPlans.map((plan) => [plan.questionId, plan]));
   const skill = reviewSkill(skills);
 
@@ -233,6 +239,11 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
       (a, b) =>
         (a.taskNumber ?? 99) - (b.taskNumber ?? 99) || a.unit.unitNumber - b.unit.unitNumber
     );
+  // Dàn ý chung cả bài hiện ở câu Nói đầu tiên theo đúng thứ tự trên trang.
+  const firstSpeakingAnswerId =
+    essayUnits
+      .flatMap((entry) => entry.answers)
+      .find((answer) => answer.assignableUnit.skill === "speaking")?.id ?? null;
 
   const gapFillUnits = unitOrder
     .filter((unitId) => (autoByUnit.get(unitId)?.length ?? 0) > 0)
@@ -441,7 +452,13 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                           {answer.question.prompt}
                         </p>
                       ) : null}
-                      {prepSeconds && answer.assignableUnit.skill === "speaking" ? (
+                      {prepSeconds && sharedPrep && answer.id === firstSpeakingAnswerId ? (
+                        <SpeakingPlanPanel
+                          plan={attempt.speakingPlans[0]}
+                          prepSeconds={prepSeconds}
+                          shared
+                        />
+                      ) : prepSeconds && !sharedPrep && answer.assignableUnit.skill === "speaking" ? (
                         <SpeakingPlanPanel
                           plan={answer.questionId ? planByQuestion.get(answer.questionId) : undefined}
                           prepSeconds={prepSeconds}

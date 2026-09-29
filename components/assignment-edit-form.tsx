@@ -21,6 +21,7 @@ export type AssignmentItem = {
   skillTimeLimitsJson: string | null;
   lockAudio: boolean;
   speakingPrepSeconds: number | null;
+  speakingPrepScope: string | null;
   mode: string;
   unitCount: number;
   recipientCount: number;
@@ -206,7 +207,10 @@ export function AssignmentEditForm({ assignment }: { assignment: AssignmentItem 
 
           <fieldset>
             <legend className="text-sm font-semibold">Lập dàn ý (Speaking)</legend>
-            <SpeakingPrepField defaultSeconds={assignment.speakingPrepSeconds} />
+            <SpeakingPrepField
+              defaultSeconds={assignment.speakingPrepSeconds}
+              defaultScope={assignment.speakingPrepScope}
+            />
           </fieldset>
 
           <fieldset>

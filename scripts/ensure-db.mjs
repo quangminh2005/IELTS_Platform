@@ -270,6 +270,8 @@ const statements = [
   'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "speakingPrepMinutes" INTEGER;',
   // Thời gian chuẩn bị tính bằng giây (giao được 30 giây/câu cho Part 1).
   'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "speakingPrepSeconds" INTEGER;',
+  // Chuẩn bị theo từng câu hay một khoảng chung cả bài.
+  'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "speakingPrepScope" TEXT;',
   `CREATE TABLE IF NOT EXISTS "SpeakingPlan" (
     "id" TEXT NOT NULL,
     "attemptId" TEXT NOT NULL,

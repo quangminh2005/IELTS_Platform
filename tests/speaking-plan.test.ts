@@ -8,6 +8,8 @@ import {
   formatPlanClock,
   assignmentPrepSeconds,
   formatPrepDuration,
+  isSharedSpeakingPrep,
+  parseSpeakingPrepScope,
   parseSpeakingPrepSeconds,
   splitSpeakingPrep,
   speakingPlanRemainingSeconds,
@@ -47,6 +49,16 @@ describe("parseSpeakingPrepSeconds", () => {
     expect(splitSpeakingPrep(120)).toEqual({ amount: 2, unit: "minutes" });
     expect(splitSpeakingPrep(30)).toEqual({ amount: 30, unit: "seconds" });
     expect(splitSpeakingPrep(90)).toEqual({ amount: 90, unit: "seconds" });
+  });
+});
+
+describe("kiểu chuẩn bị (mỗi câu / chung cả bài)", () => {
+  it("chỉ \"shared\" mới là chung cả bài, còn lại là mỗi câu", () => {
+    expect(parseSpeakingPrepScope("shared")).toBe("shared");
+    expect(parseSpeakingPrepScope("per_question")).toBe("per_question");
+    expect(parseSpeakingPrepScope(null)).toBe("per_question");
+    expect(isSharedSpeakingPrep("shared")).toBe(true);
+    expect(isSharedSpeakingPrep(null)).toBe(false);
   });
 });
 
@@ -120,6 +132,10 @@ describe("chốt chặn cấu trúc", () => {
     }
   });
 
+  it("dàn ý chung chỉ nhận ở câu Nói đầu tiên", () => {
+    expect(action).toContain("isSharedSpeakingPrep(assignment.speakingPrepScope)");
+  });
+
   it("server tự quyết còn nhận chữ theo giờ, không tin client", () => {
     expect(action).toContain("canEditSpeakingPlan(");
   });
@@ -127,6 +143,7 @@ describe("chốt chặn cấu trúc", () => {
   it("ensure-db đưa cột + bảng mới lên prod", () => {
     expect(ensureDb).toContain('"speakingPrepMinutes"');
     expect(ensureDb).toContain('"speakingPrepSeconds"');
+    expect(ensureDb).toContain('"speakingPrepScope"');
     expect(ensureDb).toContain('CREATE TABLE IF NOT EXISTS "SpeakingPlan"');
   });
 });

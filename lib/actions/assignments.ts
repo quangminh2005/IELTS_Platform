@@ -11,7 +11,7 @@ import { prisma } from "@/lib/prisma";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { serializeSkillTimeLimits } from "@/lib/skill-parse";
 import { SKILL_TIME_ORDER } from "@/lib/skill-times";
-import { parseSpeakingPrepSeconds } from "@/lib/speaking-plan";
+import { parseSpeakingPrepScope, parseSpeakingPrepSeconds } from "@/lib/speaking-plan";
 
 const assignmentSchema = z.object({
   title: z.string().trim().min(2, "Tiêu đề bài tập phải có ít nhất 2 ký tự."),
@@ -115,13 +115,17 @@ function readSkillTimeLimits(formData: FormData): Record<string, number> {
 // Ô "Cho học viên lập dàn ý" + số giây chuẩn bị (null = tắt). Cột phút cũ luôn ghi
 // null để assignmentPrepSeconds() chỉ còn đọc cột giây.
 function readSpeakingPrep(formData: FormData) {
+  const speakingPrepSeconds = parseSpeakingPrepSeconds(
+    formData.get("speakingPrepEnabled"),
+    formData.get("speakingPrepAmount"),
+    formData.get("speakingPrepUnit")
+  );
   return {
-    speakingPrepSeconds: parseSpeakingPrepSeconds(
-      formData.get("speakingPrepEnabled"),
-      formData.get("speakingPrepAmount"),
-      formData.get("speakingPrepUnit")
-    ),
-    speakingPrepMinutes: null
+    speakingPrepSeconds,
+    speakingPrepMinutes: null,
+    speakingPrepScope: speakingPrepSeconds
+      ? parseSpeakingPrepScope(formData.get("speakingPrepScope"))
+      : null
   };
 }
 

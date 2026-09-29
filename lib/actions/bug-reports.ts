@@ -169,7 +169,9 @@ export async function resolveBugReport(formData: FormData): Promise<ActionResult
   try {
     const parsed = resolveSchema.safeParse({
       id: optional(formData.get("id")),
-      teacherNote: optional(formData.get("teacherNote"))
+      // Textarea gửi xuống dòng dạng "\r\n" (2 ký tự) trong khi maxLength ở trình
+      // duyệt đếm 1 — không đổi về "\n" thì viết sát giới hạn sẽ bị server từ chối.
+      teacherNote: optional(formData.get("teacherNote"))?.replace(/\r\n/g, "\n") ?? null
     });
     if (!parsed.success) {
       throw new Error(parsed.error.issues[0]?.message ?? "Dữ liệu chưa hợp lệ.");

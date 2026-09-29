@@ -50,7 +50,8 @@ export function NotificationRow({
         }
       />
       <span className="min-w-0 flex-1 leading-tight">
-        <span className="block text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {/* Phản hồi báo lỗi có thể dài tới 2000 ký tự — chuông chỉ hiện 2 dòng. */}
+        <span className="line-clamp-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
           {LABELS[item.type]}
           {item.detail ? ` · ${item.detail}` : ""}
         </span>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { StudentAvatar } from "@/components/student-avatar";
 import { reopenBugReport, resolveBugReport } from "@/lib/actions/bug-reports";
@@ -35,6 +36,10 @@ export type TeacherBugReportRow = {
 
 export function BugReportTeacherRow({ report }: { report: TeacherBugReportRow }) {
   const resolved = report.status === "resolved";
+  // Đếm ký tự để thầy biết còn viết được bao nhiêu (giới hạn ở BUG_TEACHER_NOTE_MAX).
+  const [noteLength, setNoteLength] = useState(0);
+  // Bấm "Mở lại" thì ô phản hồi hiện lại trống — bộ đếm cũng về 0.
+  useEffect(() => setNoteLength(0), [resolved]);
 
   return (
     <article className="rounded-xl border border-border bg-card p-4 shadow-card">
@@ -127,23 +132,31 @@ export function BugReportTeacherRow({ report }: { report: TeacherBugReportRow })
           </ActionForm>
         </div>
       ) : (
-        <ActionForm action={resolveBugReport} className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end">
+        <ActionForm action={resolveBugReport} className="mt-4 flex flex-col gap-2">
           <input type="hidden" name="id" value={report.id} />
-          <label className="flex-1 text-xs font-semibold text-muted-foreground">
+          <label className="text-xs font-semibold text-muted-foreground">
             Phản hồi cho học viên (tuỳ chọn)
-            <input
+            {/* Khung nhiều dòng, kéo giãn được: phản hồi thường là hướng dẫn vài bước. */}
+            <textarea
               name="teacherNote"
+              rows={4}
               maxLength={BUG_TEACHER_NOTE_MAX}
+              onChange={(event) => setNoteLength(event.target.value.length)}
               placeholder="Ví dụ: Đã thay file audio, em thử lại nhé."
-              className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-normal text-foreground focus:border-primary focus:outline-none"
+              className="mt-1 block w-full resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm font-normal leading-6 text-foreground focus:border-primary focus:outline-none"
             />
           </label>
-          <ActionSubmitButton
-            pendingLabel="Đang lưu…"
-            className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card hover:bg-primary/90"
-          >
-            Đã xử lý
-          </ActionSubmitButton>
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-xs text-muted-foreground">
+              {noteLength}/{BUG_TEACHER_NOTE_MAX} ký tự
+            </span>
+            <ActionSubmitButton
+              pendingLabel="Đang lưu…"
+              className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card hover:bg-primary/90"
+            >
+              Đã xử lý
+            </ActionSubmitButton>
+          </div>
         </ActionForm>
       )}
     </article>

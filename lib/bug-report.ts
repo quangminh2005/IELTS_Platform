@@ -19,7 +19,8 @@ export const BUG_STATUS_VALUES = ["open", "resolved"] as const;
 export type BugStatus = (typeof BUG_STATUS_VALUES)[number];
 
 export const BUG_DESCRIPTION_MAX = 1000;
-export const BUG_TEACHER_NOTE_MAX = 500;
+// Đủ cho một phản hồi hướng dẫn nhiều bước (cột DB là TEXT, không giới hạn).
+export const BUG_TEACHER_NOTE_MAX = 2000;
 // Chống spam: quá số này trong 24 giờ thì từ chối.
 export const BUG_DAILY_LIMIT = 10;
 // Ảnh đã được trình duyệt thu nhỏ (cạnh dài 1280px, webp/jpeg) nên hiếm khi quá 300KB.

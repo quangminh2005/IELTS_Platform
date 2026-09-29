@@ -10,6 +10,7 @@ import {
   isUploadStalled,
   speakingUploadName
 } from "@/lib/speaking-upload";
+import { repairRecordedBlob } from "@/lib/webm-timestamps";
 
 // Bản ghi đang chờ lên server. Giữ lại sau khi tải hỏng để học viên bấm "Tải lại
 // bản ghi" — bắt ghi âm lại cả câu chỉ vì mạng chập chờn là quá phí.
@@ -207,7 +208,10 @@ export function AudioRecorderAnswer({
         // Bỏ ";codecs=…" để khớp allowedContentTypes của route.
         const type = (mimeType || "audio/webm").split(";")[0];
         const blob = new Blob(chunksRef.current, { type });
-        void uploadRecording(blob, type, "recorded");
+        // Chrome trên Android (nhất là trình duyệt trong Zalo) có khi ghi mốc thời
+        // gian nhảy vọt → bản ghi 30 giây hiện thành 5 phút, thậm chí 7 tiếng. Sửa
+        // ngay trên máy trước khi tải lên; sửa không được thì gửi nguyên bản gốc.
+        void repairRecordedBlob(blob).then((body) => uploadRecording(body, type, "recorded"));
       };
 
       recorder.start();

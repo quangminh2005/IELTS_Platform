@@ -115,3 +115,79 @@ export function parseDictionaryEntry(json: unknown): DictionaryEntry | null {
 
   return { phonetic, partOfSpeech, definitionEn };
 }
+
+type WiktionarySense = {
+  partOfSpeech?: unknown;
+  definitions?: Array<{ definition?: unknown }>;
+};
+
+const HTML_ENTITIES: Record<string, string> = {
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&quot;": '"',
+  "&#39;": "'",
+  "&nbsp;": " "
+};
+
+function stripHtml(value: string): string {
+  return value
+    .replace(/<[^>]*>/g, "")
+    .replace(/&(amp|lt|gt|quot|#39|nbsp);/g, (entity) => HTML_ENTITIES[entity] ?? entity)
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Đọc kết quả Wiktionary REST (/page/definition/{từ}) — nguồn dự phòng khi
+// api.dictionaryapi.dev không vào được (từ máy ở VN có lúc bị chặn hẳn). Không
+// có phiên âm; nghĩa là HTML nên phải bóc thẻ.
+export function parseWiktionaryEntry(json: unknown): DictionaryEntry | null {
+  const senses = (json as { en?: WiktionarySense[] } | null)?.en;
+
+  if (!Array.isArray(senses)) {
+    return null;
+  }
+
+  for (const sense of senses) {
+    for (const item of sense.definitions ?? []) {
+      const definition = typeof item?.definition === "string" ? stripHtml(item.definition) : "";
+
+      if (definition.length > 0) {
+        const partOfSpeech = text(sense.partOfSpeech);
+
+        return {
+          phonetic: null,
+          partOfSpeech: partOfSpeech ? partOfSpeech.toLowerCase() : null,
+          definitionEn: definition
+        };
+      }
+    }
+  }
+
+  return null;
+}
+
+// Gộp hai nguồn: ưu tiên dictionaryapi (có phiên âm), thiếu gì lấy Wiktionary bù.
+export function mergeDictionaryEntries(
+  primary: DictionaryEntry | null,
+  fallback: DictionaryEntry | null
+): DictionaryEntry | null {
+  if (!primary && !fallback) {
+    return null;
+  }
+
+  return {
+    phonetic: primary?.phonetic ?? fallback?.phonetic ?? null,
+    partOfSpeech: primary?.partOfSpeech ?? fallback?.partOfSpeech ?? null,
+    definitionEn: primary?.definitionEn ?? fallback?.definitionEn ?? null
+  };
+}
+
+// Từ bôi đen ở đầu câu thường viết hoa ("Library") — đưa về chữ thường cho Sổ từ.
+// Chỉ hạ khi mỗi từ chỉ hoa chữ cái đầu; giữ nguyên viết tắt kiểu "UK", "NASA".
+export function toLearnerForm(text: string): string {
+  const value = cleanSelection(text);
+  const onlyInitialCaps = value.split(" ").every((part) => /^[A-Z]?[a-z'’-]*$/.test(part));
+
+  return onlyInitialCaps ? value.toLowerCase() : value;
+}

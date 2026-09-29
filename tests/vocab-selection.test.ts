@@ -2,8 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   cleanSelection,
   isAddableSelection,
+  mergeDictionaryEntries,
   parseDictionaryEntry,
-  sentenceAround
+  parseWiktionaryEntry,
+  sentenceAround,
+  toLearnerForm
 } from "../lib/vocab-selection";
 
 describe("cleanSelection / isAddableSelection", () => {
@@ -85,5 +88,54 @@ describe("parseDictionaryEntry", () => {
     expect(parseDictionaryEntry({ title: "No Definitions Found" })).toBeNull();
     expect(parseDictionaryEntry(null)).toBeNull();
     expect(parseDictionaryEntry([{}])).toBeNull();
+  });
+});
+
+describe("parseWiktionaryEntry / mergeDictionaryEntries", () => {
+  it("bóc thẻ HTML, bỏ nghĩa rỗng, từ loại chữ thường", () => {
+    const json = {
+      en: [
+        {
+          partOfSpeech: "Verb",
+          definitions: [
+            { definition: "<span></span>" },
+            {
+              definition:
+                '<span class="x"></span> To <a href="/wiki/reduce">reduce</a> &amp; <b>lessen</b>.'
+            }
+          ]
+        }
+      ]
+    };
+
+    expect(parseWiktionaryEntry(json)).toEqual({
+      phonetic: null,
+      partOfSpeech: "verb",
+      definitionEn: "To reduce & lessen."
+    });
+  });
+
+  it("không có mục tiếng Anh thì trả null", () => {
+    expect(parseWiktionaryEntry({ fr: [] })).toBeNull();
+    expect(parseWiktionaryEntry(null)).toBeNull();
+  });
+
+  it("ưu tiên nguồn chính, thiếu thì lấy nguồn dự phòng", () => {
+    expect(
+      mergeDictionaryEntries(
+        { phonetic: "/x/", partOfSpeech: null, definitionEn: null },
+        { phonetic: null, partOfSpeech: "verb", definitionEn: "To x." }
+      )
+    ).toEqual({ phonetic: "/x/", partOfSpeech: "verb", definitionEn: "To x." });
+    expect(mergeDictionaryEntries(null, null)).toBeNull();
+  });
+});
+
+describe("toLearnerForm", () => {
+  it("hạ chữ hoa đầu câu, giữ viết tắt", () => {
+    expect(toLearnerForm("Library.")).toBe("library");
+    expect(toLearnerForm("Take part")).toBe("take part");
+    expect(toLearnerForm("NASA")).toBe("NASA");
+    expect(toLearnerForm("iPhone")).toBe("iPhone");
   });
 });

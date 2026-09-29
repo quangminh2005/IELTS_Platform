@@ -9,7 +9,13 @@ import { vietnamDateKey } from "@/lib/vocab-day";
 import { dateKeyToUtcDate } from "@/lib/vocab-daily";
 import { CARD_SELECT, resolveCard } from "@/lib/vocab-deck";
 import { checkVocabAnswer, QUIZ_KINDS, type QuizKind } from "@/lib/vocab-quiz";
-import { cleanSelection, isAddableSelection, parseDictionaryEntry } from "@/lib/vocab-selection";
+import {
+  cleanSelection,
+  isAddableSelection,
+  mergeDictionaryEntries,
+  parseDictionaryEntry,
+  parseWiktionaryEntry
+} from "@/lib/vocab-selection";
 import { nextSchedule, normalizeWordKey } from "@/lib/vocab-srs";
 
 // ── Ôn thẻ ──────────────────────────────────────────────────────────────────
@@ -178,23 +184,35 @@ export type LookupResult = {
 };
 
 const DICTIONARY_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+const WIKTIONARY_URL = "https://en.wiktionary.org/api/rest_v1/page/definition/";
+const LOOKUP_TIMEOUT_MS = 4000;
 
-async function fetchDictionary(key: string) {
+async function fetchJson(url: string): Promise<unknown> {
   try {
-    const response = await fetch(`${DICTIONARY_URL}${encodeURIComponent(key)}`, {
-      signal: AbortSignal.timeout(4000),
-      cache: "no-store"
+    const response = await fetch(url, {
+      signal: AbortSignal.timeout(LOOKUP_TIMEOUT_MS),
+      cache: "no-store",
+      // Wiktionary yêu cầu User-Agent tự giới thiệu.
+      headers: { "User-Agent": "ielts-platform-vocab/1.0 (lookup for students)" }
     });
 
-    if (!response.ok) {
-      return null;
-    }
-
-    return parseDictionaryEntry(await response.json());
+    return response.ok ? await response.json() : null;
   } catch {
-    // Mạng chậm/từ điển sập → học viên tự gõ, không báo lỗi.
+    // Mạng chậm/nguồn sập → trả rỗng, học viên tự gõ.
     return null;
   }
+}
+
+// Gọi song song hai nguồn: dictionaryapi.dev (có phiên âm) và Wiktionary (dự
+// phòng — dictionaryapi có lúc không vào được từ mạng VN). Tối đa ~4 giây.
+async function fetchDictionary(key: string) {
+  const word = encodeURIComponent(key);
+  const [primary, fallback] = await Promise.all([
+    fetchJson(`${DICTIONARY_URL}${word}`),
+    fetchJson(`${WIKTIONARY_URL}${word}`)
+  ]);
+
+  return mergeDictionaryEntries(parseDictionaryEntry(primary), parseWiktionaryEntry(fallback));
 }
 
 export async function lookupVocabWord(raw: string): Promise<LookupResult> {

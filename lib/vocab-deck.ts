@@ -308,7 +308,7 @@ export async function countTodayCards(studentId: string, now = new Date()): Prom
 
   await ensureLegacyCards(studentId, now);
 
-  const [dueCount, introducedToday] = await Promise.all([
+  const [dueCount, introducedToday, remainingInBank] = await Promise.all([
     prisma.vocabDeckCard.count({
       where: {
         studentId,
@@ -318,8 +318,13 @@ export async function countTodayCards(studentId: string, now = new Date()): Prom
     }),
     prisma.vocabDeckCard.count({
       where: { studentId, source: "bank", createdAt: { gte: vietnamDayStart(todayKey) } }
-    })
+    }),
+    // Kho đã học hết thì không hứa thẻ mới.
+    prisma.vocabWord.count({ where: { hidden: false, deckCards: { none: { studentId } } } })
   ]);
 
-  return dueCount + newCardAllowance({ introducedToday, extraBatches: 0 });
+  return (
+    dueCount +
+    Math.min(newCardAllowance({ introducedToday, extraBatches: 0 }), remainingInBank)
+  );
 }

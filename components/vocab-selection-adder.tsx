@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { useSelectionCapture } from "@/components/use-selection-capture";
 import { addStudentVocabWord, lookupVocabWord, type LookupResult } from "@/lib/actions/vocab-deck";
-import { cleanSelection, isAddableSelection, sentenceAround } from "@/lib/vocab-selection";
+import { cleanSelection, isAddableSelection, sentenceAround, toLearnerForm } from "@/lib/vocab-selection";
 
 /*
   Bôi đen 1–3 từ tiếng Anh ở trang Kết quả → nút nổi "➕ Sổ từ" → khung thêm từ.
@@ -275,7 +275,7 @@ export function VocabSelectionAdder({
               // Giữ nguyên vùng bôi đen khi bấm trên máy tính.
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => {
-                setDraft({ display: cleanSelection(bubble.text), sentence: bubble.sentence });
+                setDraft({ display: toLearnerForm(bubble.text), sentence: bubble.sentence });
                 setBubble(null);
                 window.getSelection()?.removeAllRanges();
               }}

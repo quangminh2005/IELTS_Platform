@@ -268,6 +268,8 @@ const statements = [
   END $$;`,
   // Lập dàn ý trước khi nói: số phút chuẩn bị theo bài giao + bảng dàn ý mới.
   'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "speakingPrepMinutes" INTEGER;',
+  // Thời gian chuẩn bị tính bằng giây (giao được 30 giây/câu cho Part 1).
+  'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "speakingPrepSeconds" INTEGER;',
   `CREATE TABLE IF NOT EXISTS "SpeakingPlan" (
     "id" TEXT NOT NULL,
     "attemptId" TEXT NOT NULL,

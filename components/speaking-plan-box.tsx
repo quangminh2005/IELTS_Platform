@@ -3,7 +3,11 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 import { saveSpeakingPlan, startSpeakingPlan } from "@/lib/actions/speaking-plan";
-import { SPEAKING_PLAN_MAX_LENGTH, formatPlanClock } from "@/lib/speaking-plan";
+import {
+  SPEAKING_PLAN_MAX_LENGTH,
+  formatPlanClock,
+  formatPrepDuration
+} from "@/lib/speaking-plan";
 
 // Trạng thái dàn ý đọc từ DB lúc dựng trang (server tính sẵn số giây còn lại để
 // không lệ thuộc đồng hồ máy học viên).
@@ -23,7 +27,7 @@ const AUTOSAVE_MS = 3000;
 export function SpeakingPlanBox({
   attemptId,
   questionId,
-  prepMinutes,
+  prepSeconds,
   initialPlan,
   hasRecording,
   previewMode = false,
@@ -32,7 +36,7 @@ export function SpeakingPlanBox({
 }: {
   attemptId: string;
   questionId: string;
-  prepMinutes: number;
+  prepSeconds: number;
   initialPlan: InitialSpeakingPlan | null;
   // Câu đã có bản ghi từ trước (vd GV bật tuỳ chọn sau khi học viên đã ghi): không chặn.
   hasRecording: boolean;
@@ -48,7 +52,7 @@ export function SpeakingPlanBox({
     return initialPlan.locked || initialPlan.remainingSeconds <= 0 ? "locked" : "planning";
   });
   const [text, setText] = useState(initialPlan?.text ?? "");
-  const [remaining, setRemaining] = useState(initialPlan?.remainingSeconds ?? prepMinutes * 60);
+  const [remaining, setRemaining] = useState(initialPlan?.remainingSeconds ?? prepSeconds);
   const [message, setMessage] = useState("");
   const [confirmingDone, setConfirmingDone] = useState(false);
 
@@ -170,7 +174,7 @@ export function SpeakingPlanBox({
   async function handleStart() {
     setMessage("");
     if (previewMode) {
-      applyRemaining(prepMinutes * 60);
+      applyRemaining(prepSeconds);
       setPhase("planning");
       return;
     }
@@ -205,7 +209,7 @@ export function SpeakingPlanBox({
     return (
       <div className="mt-3 rounded-lg border border-dashed border-primary/50 bg-primary/5 p-4">
         <p className="text-sm font-medium">
-          Em có {prepMinutes} phút để lập dàn ý trước khi nói.
+          Em có {formatPrepDuration(prepSeconds)} để lập dàn ý trước khi nói.
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           Bấm bắt đầu thì đồng hồ chạy luôn (tải lại trang cũng không dừng). Hết giờ, ô dàn ý
@@ -217,7 +221,7 @@ export function SpeakingPlanBox({
           disabled={phase === "starting"}
           className="mt-3 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
         >
-          {phase === "starting" ? "Đang bắt đầu…" : `Bắt đầu chuẩn bị (${prepMinutes} phút)`}
+          {phase === "starting" ? "Đang bắt đầu…" : `Bắt đầu chuẩn bị (${formatPrepDuration(prepSeconds)})`}
         </button>
         {message ? <p className="mt-2 text-xs text-red-600 dark:text-red-300">{message}</p> : null}
       </div>

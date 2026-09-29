@@ -142,8 +142,8 @@ type AttemptWorkspaceProps = {
     skillTimeLimitsJson?: string | null;
     // Chế độ thi thật Listening: ẩn thanh audio, tự phát liên tục, chỉ chỉnh âm lượng.
     lockAudio?: boolean;
-    // Số phút lập dàn ý trước mỗi câu Nói (null/không có = tắt).
-    speakingPrepMinutes?: number | null;
+    // Số giây lập dàn ý trước mỗi câu Nói (null/không có = tắt).
+    speakingPrepSeconds?: number | null;
     units: AssignmentUnit[];
   };
   // Dàn ý đã lưu theo questionId (chỉ câu học viên đã bấm bắt đầu chuẩn bị).
@@ -3309,11 +3309,11 @@ export function AttemptWorkspace({
               {isSpeaking ? (
                 <>
                   <p className="mt-2 text-sm leading-6">{question.prompt}</p>
-                  {assignment.speakingPrepMinutes ? (
+                  {assignment.speakingPrepSeconds ? (
                     <SpeakingPlanBox
                       attemptId={attempt.id}
                       questionId={question.id}
-                      prepMinutes={assignment.speakingPrepMinutes}
+                      prepSeconds={assignment.speakingPrepSeconds}
                       initialPlan={speakingPlanCacheRef.current[question.id] ?? null}
                       onPlanChange={handleSpeakingPlanChange}
                       hasRecording={Boolean(answers[question.id])}

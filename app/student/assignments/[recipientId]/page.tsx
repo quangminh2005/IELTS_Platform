@@ -6,7 +6,7 @@ import { examUnitsForStudent } from "@/lib/exam-payload";
 import { detectMultiSelectGroups } from "@/lib/multi-select";
 import { parseQuestionOptions } from "@/lib/question-interactions";
 import { prisma } from "@/lib/prisma";
-import { speakingPlanRemainingSeconds } from "@/lib/speaking-plan";
+import { assignmentPrepSeconds, speakingPlanRemainingSeconds } from "@/lib/speaking-plan";
 
 type AssignmentAttemptPageProps = {
   params: {
@@ -111,12 +111,12 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
 
   // Dàn ý Speaking: server tính sẵn số giây chuẩn bị còn lại (không tin đồng hồ máy
   // học viên). Bài không bật lập dàn ý thì bỏ qua hết.
-  const prepMinutes = recipient.assignment.speakingPrepMinutes;
+  const prepSeconds = assignmentPrepSeconds(recipient.assignment);
   const speakingPlans: Record<string, { text: string; locked: boolean; remainingSeconds: number }> =
     {};
-  if (prepMinutes) {
+  if (prepSeconds) {
     for (const row of speakingPlanRows) {
-      const remainingSeconds = speakingPlanRemainingSeconds(row, prepMinutes);
+      const remainingSeconds = speakingPlanRemainingSeconds(row, prepSeconds);
       speakingPlans[row.questionId] = {
         text: row.text,
         locked: remainingSeconds === 0,
@@ -153,7 +153,7 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
         timeLimitMinutes: recipient.assignment.timeLimitMinutes,
         skillTimeLimitsJson: recipient.assignment.skillTimeLimitsJson,
         lockAudio: recipient.assignment.lockAudio,
-        speakingPrepMinutes: prepMinutes,
+        speakingPrepSeconds: prepSeconds,
         units: examUnits
       }}
       speakingPlans={speakingPlans}

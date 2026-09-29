@@ -11,7 +11,7 @@ import { prisma } from "@/lib/prisma";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { serializeSkillTimeLimits } from "@/lib/skill-parse";
 import { SKILL_TIME_ORDER } from "@/lib/skill-times";
-import { parseSpeakingPrepMinutes } from "@/lib/speaking-plan";
+import { parseSpeakingPrepSeconds } from "@/lib/speaking-plan";
 
 const assignmentSchema = z.object({
   title: z.string().trim().min(2, "Tiêu đề bài tập phải có ít nhất 2 ký tự."),
@@ -112,12 +112,16 @@ function readSkillTimeLimits(formData: FormData): Record<string, number> {
   return map;
 }
 
-// Ô "Cho học viên lập dàn ý" + số phút chuẩn bị (null = tắt).
-function readSpeakingPrepMinutes(formData: FormData) {
-  return parseSpeakingPrepMinutes(
-    formData.get("speakingPrepEnabled"),
-    formData.get("speakingPrepMinutes")
-  );
+// Ô "Cho học viên lập dàn ý" + số giây chuẩn bị (null = tắt). Cột phút cũ luôn ghi
+// null để assignmentPrepSeconds() chỉ còn đọc cột giây.
+function readSpeakingPrep(formData: FormData) {
+  return {
+    speakingPrepSeconds: parseSpeakingPrepSeconds(
+      formData.get("speakingPrepEnabled"),
+      formData.get("speakingPrepSeconds")
+    ),
+    speakingPrepMinutes: null
+  };
 }
 
 export async function createAssignment(formData: FormData) {
@@ -157,7 +161,7 @@ export async function createAssignment(formData: FormData) {
       timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
       skillTimeLimitsJson,
       lockAudio: parsed.data.lockAudio,
-      speakingPrepMinutes: readSpeakingPrepMinutes(formData),
+      ...readSpeakingPrep(formData),
       mode: "homework",
       units: {
         create: unitIds.map((unitId, index) => ({
@@ -266,7 +270,7 @@ export async function updateAssignment(formData: FormData) {
         timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
         skillTimeLimitsJson: serializeSkillTimeLimits(readSkillTimeLimits(formData)),
         lockAudio: parsed.data.lockAudio,
-        speakingPrepMinutes: readSpeakingPrepMinutes(formData)
+        ...readSpeakingPrep(formData)
       }
     }),
     prisma.assignmentUnit.deleteMany({

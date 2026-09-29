@@ -6,6 +6,7 @@ import { requireStudent } from "@/lib/actions/attempts";
 import { prisma } from "@/lib/prisma";
 import {
   SPEAKING_PLAN_MAX_LENGTH,
+  assignmentPrepSeconds,
   canEditSpeakingPlan,
   speakingPlanDeadline,
   speakingPlanRemainingSeconds
@@ -29,18 +30,22 @@ const saveSchema = targetSchema.extend({
 });
 
 // Kiểm: lượt làm bài của đúng học viên, đang mở, phần Nói chưa nộp, bài giao có bật
-// lập dàn ý, và câu hỏi là câu Nói thuộc chính bài giao đó. Trả số phút chuẩn bị.
+// lập dàn ý, và câu hỏi là câu Nói thuộc chính bài giao đó. Trả số giây chuẩn bị.
 async function loadPlanContext(
   studentId: string,
   attemptId: string,
   questionId: string
-): Promise<{ prepMinutes: number } | { error: string }> {
+): Promise<{ prepSeconds: number } | { error: string }> {
   const attempt = await prisma.attempt.findFirst({
     where: { id: attemptId, studentId, status: "in_progress" },
     select: {
       skills: { where: { skill: "speaking" }, select: { status: true } },
       assignmentRecipient: {
-        select: { assignment: { select: { id: true, speakingPrepMinutes: true } } }
+        select: {
+          assignment: {
+            select: { id: true, speakingPrepSeconds: true, speakingPrepMinutes: true }
+          }
+        }
       }
     }
   });
@@ -51,7 +56,8 @@ async function loadPlanContext(
     return { error: "Phần Nói đã nộp rồi." };
   }
   const { assignment } = attempt.assignmentRecipient;
-  if (!assignment.speakingPrepMinutes) {
+  const prepSeconds = assignmentPrepSeconds(assignment);
+  if (!prepSeconds) {
     return { error: "Bài này không có phần lập dàn ý." };
   }
 
@@ -69,7 +75,7 @@ async function loadPlanContext(
     return { error: "Câu hỏi không thuộc bài này." };
   }
 
-  return { prepMinutes: assignment.speakingPrepMinutes };
+  return { prepSeconds };
 }
 
 // Học viên bấm "Bắt đầu chuẩn bị". Gọi lại nhiều lần (bấm đúp, tải lại trang) vẫn
@@ -97,7 +103,7 @@ export async function startSpeakingPlan(input: {
     select: { text: true, startedAt: true, lockedAt: true }
   });
 
-  const remainingSeconds = speakingPlanRemainingSeconds(plan, context.prepMinutes);
+  const remainingSeconds = speakingPlanRemainingSeconds(plan, context.prepSeconds);
   return { ok: true, text: plan.text, locked: remainingSeconds === 0, remainingSeconds };
 }
 
@@ -130,13 +136,13 @@ export async function saveSpeakingPlan(input: {
   }
 
   const now = new Date();
-  if (canEditSpeakingPlan(plan, context.prepMinutes, now)) {
+  if (canEditSpeakingPlan(plan, context.prepSeconds, now)) {
     const saved = await prisma.speakingPlan.update({
       where: { id: plan.id },
       data: { text, ...(lock ? { lockedAt: now } : {}) },
       select: { text: true, startedAt: true, lockedAt: true }
     });
-    const remainingSeconds = speakingPlanRemainingSeconds(saved, context.prepMinutes, now);
+    const remainingSeconds = speakingPlanRemainingSeconds(saved, context.prepSeconds, now);
     return { ok: true, text: saved.text, locked: remainingSeconds === 0, remainingSeconds };
   }
 
@@ -144,7 +150,7 @@ export async function saveSpeakingPlan(input: {
   if (!plan.lockedAt) {
     await prisma.speakingPlan.update({
       where: { id: plan.id },
-      data: { lockedAt: speakingPlanDeadline(plan.startedAt, context.prepMinutes) }
+      data: { lockedAt: speakingPlanDeadline(plan.startedAt, context.prepSeconds) }
     });
   }
   return { ok: true, text: plan.text, locked: true, remainingSeconds: 0 };

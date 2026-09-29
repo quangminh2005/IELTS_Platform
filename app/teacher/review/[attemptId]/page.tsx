@@ -6,7 +6,11 @@ import { ReviewForm, type ReviewTaskInput } from "@/components/review-form";
 import { TranscribeButton } from "@/components/transcribe-button";
 import { isAudioUrl, parseWritingBrief } from "@/lib/question-interactions";
 import { speakingAnswerSource } from "@/lib/speaking-upload";
-import { formatPlanClock, speakingPlanUsedSeconds } from "@/lib/speaking-plan";
+import {
+  assignmentPrepSeconds,
+  formatPlanClock,
+  speakingPlanUsedSeconds
+} from "@/lib/speaking-plan";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { formatBand } from "@/lib/band-score";
 import { resolveWritingTaskNumber } from "@/lib/writing-review";
@@ -42,10 +46,10 @@ function reviewTaskLabel(title: string, taskNumber: number | null): string {
 // học viên lên ý tưởng thế nào trước khi nghe bài nói.
 function SpeakingPlanPanel({
   plan,
-  prepMinutes
+  prepSeconds
 }: {
   plan: { text: string; startedAt: Date; lockedAt: Date | null } | undefined;
-  prepMinutes: number;
+  prepSeconds: number;
 }) {
   if (!plan) {
     return (
@@ -55,14 +59,14 @@ function SpeakingPlanPanel({
     );
   }
 
-  const used = speakingPlanUsedSeconds(plan, prepMinutes);
+  const used = speakingPlanUsedSeconds(plan, prepSeconds);
 
   return (
     <div className="mt-3 rounded-md border border-primary/40 bg-primary/5 p-4">
       <p className="flex flex-wrap items-center gap-2 text-xs font-medium text-primary">
         Dàn ý của học viên
         <span className="rounded-full border border-border bg-card px-2 py-0.5 text-[11px] font-medium tabular-nums text-muted-foreground">
-          viết trong {formatPlanClock(used)} / {formatPlanClock(prepMinutes * 60)}
+          viết trong {formatPlanClock(used)} / {formatPlanClock(prepSeconds)}
         </span>
       </p>
       {plan.text.trim() ? (
@@ -101,7 +105,13 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
       assignmentRecipient: {
         include: {
           assignment: {
-            select: { id: true, title: true, timeLimitMinutes: true, speakingPrepMinutes: true }
+            select: {
+              id: true,
+              title: true,
+              timeLimitMinutes: true,
+              speakingPrepSeconds: true,
+              speakingPrepMinutes: true
+            }
           }
         }
       },
@@ -174,7 +184,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
   );
 
   // Dàn ý Speaking (bài giao có bật lập dàn ý) theo từng câu.
-  const prepMinutes = attempt.assignmentRecipient.assignment.speakingPrepMinutes;
+  const prepSeconds = assignmentPrepSeconds(attempt.assignmentRecipient.assignment);
   const planByQuestion = new Map(attempt.speakingPlans.map((plan) => [plan.questionId, plan]));
   const skill = reviewSkill(skills);
 
@@ -431,10 +441,10 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                           {answer.question.prompt}
                         </p>
                       ) : null}
-                      {prepMinutes && answer.assignableUnit.skill === "speaking" ? (
+                      {prepSeconds && answer.assignableUnit.skill === "speaking" ? (
                         <SpeakingPlanPanel
                           plan={answer.questionId ? planByQuestion.get(answer.questionId) : undefined}
-                          prepMinutes={prepMinutes}
+                          prepSeconds={prepSeconds}
                         />
                       ) : null}
                       <div className="mt-3 rounded-md border border-border bg-background p-4">

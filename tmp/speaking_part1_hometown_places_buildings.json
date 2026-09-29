@@ -1,0 +1,47 @@
+{
+  "title": "IELTS Speaking Part 1 – Hometown: Places & Buildings",
+  "skill": "speaking",
+  "sourceLabel": "IELTS Speaking Part 1 – chủ đề Hometown (địa điểm & công trình)",
+  "description": "Speaking Part 1 chủ đề Hometown – địa điểm và công trình ở quê: 5 câu, mỗi câu ghi âm riêng. Khi giao bài nên bật lập dàn ý 30 giây/câu. Giáo viên nghe và chấm tay theo tiêu chí IELTS Speaking.",
+  "units": [
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 1,
+      "title": "Speaking Part 1 – Hometown: Places & Buildings",
+      "instructions": "Part 1 — Introduction and interview. Answer the questions below about your hometown. Record a separate answer for each question, speaking for about 20–30 seconds on each. Give reasons and examples.",
+      "content": "Hometown: places and buildings\n\nNow let's talk about your hometown.\n\n1. Is there a place in your hometown that you try to avoid?\n2. What is the strangest building you have seen in your hometown?\n3. Is there a place in your hometown where you would never want to live?\n4. Do you think any buildings in your hometown are ugly?\n5. What place in your hometown would you show to a foreign visitor first?",
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "speaking_task",
+          "prompt": "Is there a place in your hometown that you try to avoid?",
+          "points": 9
+        },
+        {
+          "order": 2,
+          "questionType": "speaking_task",
+          "prompt": "What is the strangest building you have seen in your hometown?",
+          "points": 9
+        },
+        {
+          "order": 3,
+          "questionType": "speaking_task",
+          "prompt": "Is there a place in your hometown where you would never want to live?",
+          "points": 9
+        },
+        {
+          "order": 4,
+          "questionType": "speaking_task",
+          "prompt": "Do you think any buildings in your hometown are ugly?",
+          "points": 9
+        },
+        {
+          "order": 5,
+          "questionType": "speaking_task",
+          "prompt": "What place in your hometown would you show to a foreign visitor first?",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

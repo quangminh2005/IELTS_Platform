@@ -271,8 +271,11 @@ model Assignment {
   // Chế độ thi thật cho Listening: ẩn thanh audio (không play/pause/tua), audio tự
   // phát liên tục, học viên chỉ chỉnh được âm lượng; có màn kiểm tra âm thanh trước.
   lockAudio           Boolean               @default(false)
-  // Speaking: số phút cho học viên lập dàn ý trước khi ghi âm (có đếm ngược, hết giờ
-  // khoá ô dàn ý). Null = tắt. Xem lib/speaking-plan.ts.
+  // Speaking: số giây cho học viên lập dàn ý trước khi ghi âm mỗi câu (có đếm ngược,
+  // hết giờ khoá ô dàn ý). Null = tắt. Xem lib/speaking-plan.ts.
+  speakingPrepSeconds Int?
+  // Cột cũ (tính bằng phút) của bài giao tạo trước khi có speakingPrepSeconds — chỉ
+  // còn đọc qua assignmentPrepSeconds(), bài mới/sửa đều ghi null.
   speakingPrepMinutes Int?
   mode                String                @default("homework")
   // Chỉ có ở "bài giao ảo" của thư viện tự luyện: khoá studentId:materialId:unitId|all.
@@ -355,8 +358,8 @@ model Attempt {
 }
 
 // Dàn ý học viên viết trong thời gian chuẩn bị của một câu Nói (bài giao có bật
-// Assignment.speakingPrepMinutes). Tách khỏi Answer vì Answer bị xoá/tạo lại mỗi
-// lần lưu nháp và nộp bài. Hết giờ (startedAt + số phút) thì không nhận chữ nữa.
+// Assignment.speakingPrepSeconds). Tách khỏi Answer vì Answer bị xoá/tạo lại mỗi
+// lần lưu nháp và nộp bài. Hết giờ (startedAt + số giây) thì không nhận chữ nữa.
 model SpeakingPlan {
   id         String    @id @default(cuid())
   attemptId  String

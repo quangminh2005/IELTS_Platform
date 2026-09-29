@@ -6,6 +6,7 @@ import { NoticeToast } from "@/components/notice-toast";
 import { buildSessionPicks, type SessionPick } from "@/lib/class-schedule";
 import { prisma } from "@/lib/prisma";
 import { excludePracticeAssignment } from "@/lib/practice";
+import { assignmentPrepSeconds } from "@/lib/speaking-plan";
 
 // Cây chọn phần chỉ cần vài field ngắn. KHÔNG dùng include (lấy cả content,
 // transcript, transcriptTimingJson, metadataJson) — riêng phần đó đã ~5MB và bị
@@ -50,6 +51,7 @@ const assignmentSelect = {
   timeLimitMinutes: true,
   skillTimeLimitsJson: true,
   lockAudio: true,
+  speakingPrepSeconds: true,
   speakingPrepMinutes: true,
   mode: true,
   _count: {
@@ -181,7 +183,7 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
     timeLimitMinutes: assignment.timeLimitMinutes,
     skillTimeLimitsJson: assignment.skillTimeLimitsJson,
     lockAudio: assignment.lockAudio,
-    speakingPrepMinutes: assignment.speakingPrepMinutes,
+    speakingPrepSeconds: assignmentPrepSeconds(assignment),
     mode: assignment.mode,
     unitCount: assignment._count.units,
     recipientCount: assignment._count.recipients,

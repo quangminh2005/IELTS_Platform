@@ -5,9 +5,11 @@ import {
   deriveSeries,
   filterAndSortMaterials,
   filterMaterials,
+  groupBookShelves,
   type MaterialFilters,
   type MaterialMeta
 } from "../lib/materials-filter";
+import { UNNAMED_SHELF } from "../lib/material-category";
 
 describe("deriveSeries", () => {
   it("lấy phần trước dấu en-dash", () => {
@@ -102,6 +104,7 @@ function meta(overrides: Partial<MaterialMeta>): MaterialMeta {
     },
     searchText: "title",
     practiceOpen: false,
+    category: "book",
     ...overrides
   };
 }
@@ -112,6 +115,7 @@ const baseFilters: MaterialFilters = {
   series: "all",
   status: "all",
   practice: "all",
+  category: "all",
   sort: "newest"
 };
 
@@ -166,6 +170,7 @@ describe("filterAndSortMaterials", () => {
 
 describe("lọc theo thư viện tự luyện", () => {
   const base = {
+    category: "book" as const,
     skill: "reading",
     series: "Cambridge",
     unitCount: 3,
@@ -193,5 +198,41 @@ describe("lọc theo thư viện tự luyện", () => {
   it('chọn "open" thì chỉ còn đề đang mở tự luyện', () => {
     const result = filterMaterials(metas, { ...defaultMaterialFilters, practice: "open" });
     expect(result.map((meta) => meta.id)).toEqual(["m1"]);
+  });
+});
+
+describe("lọc theo loại + sắp theo tên", () => {
+  const items = [
+    meta({ id: "h", category: "homework", series: "Homework", title: "Homework 1" }),
+    meta({ id: "t10", title: "IELTS Master - Reading Test 10" }),
+    meta({ id: "t2", title: "IELTS Master - Reading Test 2" })
+  ];
+
+  it("category homework chỉ còn bài tập", () => {
+    const out = filterAndSortMaterials(items, { ...baseFilters, category: "homework" });
+    expect(out.map((m) => m.id)).toEqual(["h"]);
+  });
+
+  it("sort title so số tự nhiên", () => {
+    const out = filterAndSortMaterials(items, { ...baseFilters, category: "book", sort: "title" });
+    expect(out.map((m) => m.id)).toEqual(["t2", "t10"]);
+  });
+});
+
+describe("groupBookShelves", () => {
+  it("gom theo series, bỏ homework, kệ chưa đặt tên xuống cuối", () => {
+    const shelves = groupBookShelves([
+      meta({ id: "1", series: "IELTS Master – Reading", skill: "reading", practiceOpen: true }),
+      meta({ id: "2", series: "IELTS Master – Reading", skill: "reading" }),
+      meta({ id: "3", series: UNNAMED_SHELF, skill: "writing" }),
+      meta({ id: "4", series: "Cambridge IELTS 20", skill: "speaking" }),
+      meta({ id: "5", series: "Cambridge IELTS 20", skill: "listening" }),
+      meta({ id: "6", category: "homework", series: "Homework" })
+    ]);
+    expect(shelves).toEqual([
+      { name: "Cambridge IELTS 20", skills: ["listening", "speaking"], count: 2, practiceOpenCount: 0 },
+      { name: "IELTS Master – Reading", skills: ["reading"], count: 2, practiceOpenCount: 1 },
+      { name: UNNAMED_SHELF, skills: ["writing"], count: 1, practiceOpenCount: 0 }
+    ]);
   });
 });

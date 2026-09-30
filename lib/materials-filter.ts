@@ -1,7 +1,9 @@
 // Logic thuần cho bộ lọc Kho đề (search / filter / sort / tag trạng thái).
 // Tách khỏi UI để unit-test dễ dàng (xem tests/materials-filter.test.ts).
 
-export type SortKey = "newest" | "questions" | "parts" | "assigned";
+import { UNNAMED_SHELF, type MaterialCategory } from "./material-category";
+
+export type SortKey = "newest" | "title" | "questions" | "parts" | "assigned";
 
 export type StatusFilter =
   | "all"
@@ -39,6 +41,8 @@ export type MaterialMeta = {
   searchText: string;
   // Đề có đang nằm trong thư viện tự luyện của học viên không.
   practiceOpen: boolean;
+  // Sách/bộ đề hay bài tập hàng tuần. Với sách, `series` là tên kệ sách.
+  category: MaterialCategory;
 };
 
 export type PracticeFilter = "all" | "open";
@@ -49,6 +53,7 @@ export type MaterialFilters = {
   series: string; // "all" hoặc tên bộ sách
   status: StatusFilter;
   practice: PracticeFilter; // "all" hoặc "open"
+  category: "all" | MaterialCategory;
   sort: SortKey;
 };
 
@@ -58,6 +63,7 @@ export const defaultMaterialFilters: MaterialFilters = {
   series: "all",
   status: "all",
   practice: "all",
+  category: "all",
   sort: "newest"
 };
 
@@ -135,6 +141,7 @@ export function filterMaterials(
   const query = filters.search.trim().toLowerCase();
   return metas.filter((meta) => {
     if (query && !meta.searchText.includes(query)) return false;
+    if (filters.category !== "all" && meta.category !== filters.category) return false;
     if (filters.skill !== "all" && meta.skill !== filters.skill) return false;
     if (filters.series !== "all" && meta.series !== filters.series) return false;
     if (filters.practice === "open" && !meta.practiceOpen) return false;
@@ -152,6 +159,12 @@ export function sortMaterials(
     b.createdAtMs - a.createdAtMs;
   const sorted = [...metas];
   switch (sort) {
+    case "title":
+      // So số tự nhiên: "Test 2" đứng trước "Test 10".
+      sorted.sort(
+        (a, b) => a.title.localeCompare(b.title, "vi", { numeric: true }) || byNewest(a, b)
+      );
+      break;
     case "questions":
       sorted.sort(
         (a, b) => b.questionCount - a.questionCount || byNewest(a, b)
@@ -173,6 +186,45 @@ export function sortMaterials(
       break;
   }
   return sorted;
+}
+
+export type BookShelf = {
+  name: string;
+  skills: string[];
+  count: number;
+  practiceOpenCount: number;
+};
+
+const SKILL_ORDER = ["listening", "reading", "writing", "speaking"];
+
+// Gom đề loại "sách" thành các kệ theo tên sách (series). Kệ chưa đặt tên xuống cuối.
+export function groupBookShelves(metas: MaterialMeta[]): BookShelf[] {
+  const shelves = new Map<
+    string,
+    { skills: Set<string>; count: number; practiceOpenCount: number }
+  >();
+  for (const meta of metas) {
+    if (meta.category !== "book") continue;
+    const shelf = shelves.get(meta.series) ?? {
+      skills: new Set<string>(),
+      count: 0,
+      practiceOpenCount: 0
+    };
+    shelf.skills.add(meta.skill);
+    shelf.count += 1;
+    if (meta.practiceOpen) shelf.practiceOpenCount += 1;
+    shelves.set(meta.series, shelf);
+  }
+  return Array.from(shelves, ([name, shelf]) => ({
+    name,
+    skills: SKILL_ORDER.filter((skill) => shelf.skills.has(skill)),
+    count: shelf.count,
+    practiceOpenCount: shelf.practiceOpenCount
+  })).sort((a, b) => {
+    if (a.name === UNNAMED_SHELF) return 1;
+    if (b.name === UNNAMED_SHELF) return -1;
+    return a.name.localeCompare(b.name, "vi", { numeric: true });
+  });
 }
 
 export function filterAndSortMaterials(

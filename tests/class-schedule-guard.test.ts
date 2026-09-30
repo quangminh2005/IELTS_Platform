@@ -47,3 +47,28 @@ describe("cron nối buổi học", () => {
     expect(topUp).toBeLessThan(email);
   });
 });
+
+describe("tab Lịch học riêng của giáo viên", () => {
+  const page = readFileSync("app/teacher/schedule/page.tsx", "utf8");
+  const classPage = readFileSync("app/teacher/classes/[classId]/page.tsx", "utf8");
+  const shell = readFileSync("components/app-shell.tsx", "utf8");
+
+  it("trang dùng requireTeacherPage và chỉ lấy lớp của giáo viên đang đăng nhập", () => {
+    expect(page).toContain("await requireTeacherPage()");
+    expect(page).toContain("teacherId: teacher.id");
+  });
+
+  it("có mục menu Lịch học cho giáo viên", () => {
+    expect(shell).toContain('href: "/teacher/schedule"');
+  });
+
+  // Khối lịch đã chuyển hẳn sang tab mới — trang lớp chỉ còn link sang đó.
+  it("trang chi tiết lớp chỉ còn link sang tab Lịch học", () => {
+    expect(classPage).toContain("/teacher/schedule?classId=");
+    expect(classPage).not.toContain("ClassScheduleForm");
+  });
+
+  it("lưu lịch xong thì làm mới cả tab Lịch học", () => {
+    expect(actions).toContain('revalidatePath("/teacher/schedule")');
+  });
+});

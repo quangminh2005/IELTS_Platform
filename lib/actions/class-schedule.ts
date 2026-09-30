@@ -87,6 +87,7 @@ function parseSessionFields(formData: FormData) {
 
 function revalidateSchedule(classId: string) {
   revalidatePath(`/teacher/classes/${classId}`);
+  revalidatePath("/teacher/schedule");
   revalidatePath("/teacher/assignments");
   revalidatePath("/student");
   revalidatePath("/student/calendar");

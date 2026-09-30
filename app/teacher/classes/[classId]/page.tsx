@@ -7,13 +7,8 @@ import {
 } from "@/lib/actions/classes";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { ActionDeleteButton, ActionForm, ActionSubmitButton } from "@/components/action-form";
-import { ClassScheduleForm } from "@/components/class-schedule-form";
-import { ClassSessionList } from "@/components/class-session-list";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { StudentAvatar } from "@/components/student-avatar";
-import { vnDateKey } from "@/lib/attendance";
-import { formatHm, numberSessions } from "@/lib/class-schedule";
-import { getClassScheduleForTeacher } from "@/lib/class-schedule-query";
 import { prisma } from "@/lib/prisma";
 
 type ClassDetailPageProps = {
@@ -52,11 +47,6 @@ export default async function TeacherClassDetailPage({ params }: ClassDetailPage
     notFound();
   }
 
-  const schedule = await getClassScheduleForTeacher(classItem.id);
-  const now = new Date();
-  const todayKey = vnDateKey(now);
-  const sessionNumbers = schedule ? numberSessions(schedule.sessions) : new Map<string, number>();
-
   return (
     <div className="space-y-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -74,10 +64,17 @@ export default async function TeacherClassDetailPage({ params }: ClassDetailPage
             </p>
           ) : null}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex w-fit rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
             {classItem.students.length} học viên
           </span>
+          {/* Lịch học của lớp nằm ở tab riêng, mở thẳng đúng lớp này. */}
+          <Link
+            href={`/teacher/schedule?classId=${classItem.id}`}
+            className="inline-flex items-center gap-1 rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-semibold text-primary transition hover:border-primary"
+          >
+            Lịch học của lớp →
+          </Link>
           <form action={deleteClass}>
             <input type="hidden" name="classId" value={classItem.id} />
             <ConfirmSubmitButton
@@ -178,56 +175,6 @@ export default async function TeacherClassDetailPage({ params }: ClassDetailPage
             Thêm học viên
           </ActionSubmitButton>
         </ActionForm>
-      </section>
-
-      <section className="space-y-3">
-        <div>
-          <h3 className="text-lg font-semibold">Lịch học</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Học viên của lớp thấy lịch này ở trang Lịch học và nhận chuông khi có buổi nghỉ, dời,
-            chuyển online hay học bù.
-          </p>
-        </div>
-        {schedule ? (
-          <div className="grid gap-5 lg:grid-cols-[24rem_minmax(0,1fr)]">
-            <ClassScheduleForm
-              classId={classItem.id}
-              initialSlots={schedule.slots.map((slot) => ({
-                weekday: slot.weekday,
-                start: formatHm(slot.startMinute),
-                end: formatHm(slot.endMinute)
-              }))}
-              startDate={schedule.scheduleStartDate ? vnDateKey(schedule.scheduleStartDate) : ""}
-              totalSessions={schedule.totalSessions}
-              endDate={schedule.scheduleEndDate ? vnDateKey(schedule.scheduleEndDate) : ""}
-              location={schedule.location ?? ""}
-              hasSessions={schedule.sessions.length > 0}
-              todayKey={todayKey}
-            />
-            <ClassSessionList
-              classId={classItem.id}
-              total={schedule.totalSessions}
-              nowIso={now.toISOString()}
-              todayKey={todayKey}
-              sessions={schedule.sessions.map((session) => ({
-                id: session.id,
-                startsAt: session.startsAt.toISOString(),
-                endsAt: session.endsAt.toISOString(),
-                status: session.status,
-                mode: session.mode,
-                kind: session.kind,
-                meetingUrl: session.meetingUrl,
-                note: session.note,
-                originalStartsAt: session.originalStartsAt?.toISOString() ?? null,
-                number: sessionNumbers.get(session.id) ?? null
-              }))}
-            />
-          </div>
-        ) : (
-          <p className="rounded-xl border border-border bg-card px-5 py-4 text-sm text-muted-foreground">
-            Chưa tải được lịch học. Tải lại trang sau ít phút.
-          </p>
-        )}
       </section>
     </div>
   );

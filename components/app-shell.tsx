@@ -28,6 +28,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
   teacher: [
     { href: "/teacher", label: "Tổng quan", hint: "Bảng điều khiển", icon: "home" },
     { href: "/teacher/classes", label: "Lớp học", hint: "Quản lý học viên", icon: "users" },
+    { href: "/teacher/schedule", label: "Lịch học", hint: "Buổi học từng lớp", icon: "schedule" },
     { href: "/teacher/ranking", label: "Xếp hạng", hint: "Bảng xếp hạng lớp", icon: "trophy" },
     { href: "/teacher/materials", label: "Tài liệu", hint: "Kho đề & bài", icon: "book" },
     { href: "/teacher/vocab", label: "Từ vựng", hint: "Kho từ mỗi ngày", icon: "vocab" },
@@ -39,7 +40,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
   ],
   student: [
     { href: "/student", label: "Tổng quan", hint: "Bài được giao", icon: "home" },
-    { href: "/student/calendar", label: "Lịch học", hint: "Buổi học & hạn nộp", icon: "calendar" },
+    { href: "/student/calendar", label: "Lịch học", hint: "Buổi học & hạn nộp", icon: "schedule" },
     { href: "/student/practice", label: "Tự luyện", hint: "Thư viện đề luyện thêm", icon: "target" },
     { href: "/student/vocab", label: "Từ vựng", hint: "Từ mỗi ngày & ôn tập", icon: "vocab" },
     { href: "/student/history", label: "Lịch sử", hint: "Kết quả & bài đã làm", icon: "clock" },
@@ -61,6 +62,7 @@ type IconName =
   | "menu"
   | "close"
   | "calendar"
+  | "schedule"
   | "chart"
   | "bug";
 
@@ -152,6 +154,15 @@ function Icon({ name }: { name: IconName }) {
         <svg {...common} aria-hidden="true">
           <rect x="3.5" y="5" width="17" height="15" rx="2" />
           <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" />
+        </svg>
+      );
+    // Lịch học: tờ lịch có chấm từng ngày — khác icon "calendar" của Lịch giao bài.
+    case "schedule":
+      return (
+        <svg {...common} aria-hidden="true">
+          <rect x="3.5" y="5" width="17" height="15" rx="2" />
+          <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" />
+          <path d="M8 13.5h.01M12 13.5h.01M16 13.5h.01M8 17h.01M12 17h.01" strokeWidth={2.6} />
         </svg>
       );
     case "chart":

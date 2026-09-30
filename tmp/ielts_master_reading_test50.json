@@ -1,0 +1,746 @@
+{
+ "title": "IELTS Master - Reading Test 50",
+ "skill": "reading",
+ "sourceLabel": "IELTS Master - Reading Test 50",
+ "category": "book",
+ "bookName": "IELTS Master – Reading",
+ "description": "Đề đọc IELTS Master Test 50: The coral reefs of Agatti Island / Urban planning in Singapore / Spices.",
+ "units": [
+  {
+   "unitType": "reading_passage",
+   "unitNumber": 1,
+   "title": "Passage 1 - The coral reefs of Agatti Island",
+   "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.",
+   "content": "A Agatti is one of the Lakshadweep Islands off the southwest coast of India. These islands are surrounded by lagoons and coral reefs which are in turn surrounded by the open ocean. Coral reefs, which are formed from the skeletons of minute sea creatures, give shelter to a variety of plants and animals, and therefore have the potential to provide a stream of diverse benefits to the inhabitants of Agatti Island.\n\nB In the first place, the reefs provide food and other products for consumption by the islanders themselves. Foods include different types of fish, octopus and molluscs, and in the case of poorer families these constitute as much as 90% of the protein they consume. Reef resources are also used for medicinal purposes. For example, the money cowrie, a shell known locally as Vallakavadi, is commonly made into a paste and used as a home remedy to treat cysts in the eye.\n\nC In addition, the reef contributes to income generation. According to a recent survey, 20% of the households on Agatti report lagoon fishing, or shingle, mollusc, octopus and cowrie collection as their main occupation (Hoon et al, 2002). For poor households, the direct contribution of the reef to their financial resources is significant: 12% of poor households are completely dependent on the reef for their household income, while 59% of poor households rely on the reef for 70% of their household income, and the remaining 29% for 50% of their household income.\n\nD Bartering of reef resources also commonly takes place, both between islanders and between islands. For example, Agatti Island is known for its abundance of octopus, and this is often used to obtain products from nearby Androth Island. Locally, reef products may be given by islanders in return for favours, such as help in constructing a house or net mending, or for other products such as rice, coconuts or fish.\n\nE The investment required to exploit the reefs is minimal. It involves simple, locally available tools and equipment, some of which can be used without a boat, such as the fishing practice known as Kat moodsal. This is carried out in the shallow eastern lagoon of Agatti by children and adults, close to shore at low tide, throughout the year. A small cast net, a leaf bag, and plastic slippers are all that are required, and the activity can yield 10-12 small fish (approximately 1 kg) for household consumption. Cast nets are not expensive, and all the households in Agatti own at least one. Even the boats, which operate in the lagoon and near-shore reef, are constructed locally and have low running costs. They are either small, non-mechanised, traditional wooden rowing boats, known as Thonis, or rafts, known as Tharappam.\n\nF During more than 400 years of occupation and survival, the Agatti islanders have developed an intimate knowledge of the reefs. They have knowledge of numerous different types of fish and where they can be found according to the tide or lunar cycle. They have also developed a local naming system or folk taxonomy, naming fish according to their shape. Sometimes the same species is given different names depending on its size and age. For example, a full grown Emperor fish is called Metti and a juvenile is called Killokam. The abundance of each species at different fishing grounds is also well known. Along with this knowledge of reef resources, the islanders have developed a wide range of skills and techniques for exploiting them. A multitude of different fishing techniques are still used by the islanders, each targeting different areas of the reef and particular species.\n\nG The reef plays an important role in the social lives of the islanders too, being an integral part of traditions and rituals. Most of the island's folklore revolves around the reef and sea. There is hardly any tale or song which does not mention the traditional sailing crafts, known as Odams, the journeys of enterprising 'heroes', the adventures of sea fishing and encounters with sea creatures. Songs that women sing recollect women looking for returning Odams, and requesting the waves to be gentler and the breeze just right for the sails. There are stories of the benevolent sea ghost baluvam, whose coming to shore is considered a harbinger of prosperity for that year, bringing more coconuts, more fish and general well-being.\n\nH The reef is regarded by the islanders as common property, and all the islanders are entitled to use the lagoon and reef resources. In the past, fishing groups would obtain permission from the Amin (island head person) and go fishing in the grounds allotted by him. On their return, the Amin would be given a share of the catch, normally one of the best or biggest fish. This practice no longer exists, but there is still a code of conduct or etiquette for exploiting the reef, and common respect for this is an effective way of avoiding conflict or disputes.\n\nI Exploitation of such vast and diverse resources as the reefs and lagoon surrounding the island has encouraged collaborative efforts, mainly for purposes of safety, but also as a necessity in the operation of many fishing techniques. For example, an indigenous gear and operation known as Bala fadal involves 25-30 men. Reef gleaning for cowrie collection by groups of 6-10 women is also a common activity, and even today, although its economic significance is marginal, it continues as a recreational activity.",
+   "defaultTimeLimitMinutes": 20,
+   "metadata": {
+    "groupInstructions": {
+     "1": "Reading Passage 1 has nine paragraphs A-I.\nChoose the correct heading for each paragraph from the list of headings below.\nWrite the correct number i-xii in boxes 1-9 on your answer sheet.\n\nList of Headings\n:::box\ni Island legends\nii Resources for exchange\niii Competition for fishing rights\niv The low cost of equipment\nv Agatti's favourable location\nvi Rising income levels\nvii The social nature of reef occupations\nviii Resources for islanders' own use\nix High levels of expertise\nx Alternative sources of employment\nxi Resources for earning money\nxii Social rights and obligations\n:::",
+     "10": "Choose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 10-13 on your answer sheet."
+    }
+   },
+   "questions": [
+    {
+     "order": 1,
+     "questionType": "matching",
+     "prompt": "Paragraph A",
+     "answer": [
+      "v Agatti's favourable location"
+     ],
+     "explanation": "Đoạn A giới thiệu VỊ TRÍ của Agatti: đảo nằm ngoài khơi Ấn Độ, được bao quanh bởi phá và rạn san hô, nên có tiềm năng mang lại đủ loại lợi ích cho cư dân. → v Agatti's favourable location.",
+     "points": 1,
+     "evidence": "These islands are surrounded by lagoons and coral reefs which are in turn surrounded by the open ocean. / therefore have the potential to provide a stream of diverse benefits to the inhabitants of Agatti Island.",
+     "options": [
+      "i Island legends",
+      "ii Resources for exchange",
+      "iii Competition for fishing rights",
+      "iv The low cost of equipment",
+      "v Agatti's favourable location",
+      "vi Rising income levels",
+      "vii The social nature of reef occupations",
+      "viii Resources for islanders' own use",
+      "ix High levels of expertise",
+      "x Alternative sources of employment",
+      "xi Resources for earning money",
+      "xii Social rights and obligations"
+     ]
+    },
+    {
+     "order": 2,
+     "questionType": "matching",
+     "prompt": "Paragraph B",
+     "answer": [
+      "viii Resources for islanders' own use"
+     ],
+     "explanation": "Đoạn B nói rạn san hô cung cấp thức ăn và sản phẩm để CHÍNH NGƯỜI DÂN ĐẢO TỰ DÙNG: cá, bạch tuộc, nhuyễn thể, cả vỏ ốc làm thuốc chữa bệnh mắt. → viii Resources for islanders' own use.",
+     "points": 1,
+     "evidence": "In the first place, the reefs provide food and other products for consumption by the islanders themselves.",
+     "options": [
+      "i Island legends",
+      "ii Resources for exchange",
+      "iii Competition for fishing rights",
+      "iv The low cost of equipment",
+      "v Agatti's favourable location",
+      "vi Rising income levels",
+      "vii The social nature of reef occupations",
+      "viii Resources for islanders' own use",
+      "ix High levels of expertise",
+      "x Alternative sources of employment",
+      "xi Resources for earning money",
+      "xii Social rights and obligations"
+     ]
+    },
+    {
+     "order": 3,
+     "questionType": "matching",
+     "prompt": "Paragraph C",
+     "answer": [
+      "xi Resources for earning money"
+     ],
+     "explanation": "Đoạn C nói rạn san hô giúp TẠO THU NHẬP: 20% hộ gia đình sống chủ yếu bằng nghề đánh bắt, nhiều hộ nghèo phụ thuộc hoàn toàn vào rạn. Bẫy: \"vi Rising income levels\" - bài chỉ nói thu nhập ĐẾN TỪ rạn san hô, không nói thu nhập đang TĂNG. → xi Resources for earning money.",
+     "points": 1,
+     "evidence": "In addition, the reef contributes to income generation.",
+     "options": [
+      "i Island legends",
+      "ii Resources for exchange",
+      "iii Competition for fishing rights",
+      "iv The low cost of equipment",
+      "v Agatti's favourable location",
+      "vi Rising income levels",
+      "vii The social nature of reef occupations",
+      "viii Resources for islanders' own use",
+      "ix High levels of expertise",
+      "x Alternative sources of employment",
+      "xi Resources for earning money",
+      "xii Social rights and obligations"
+     ]
+    },
+    {
+     "order": 4,
+     "questionType": "matching",
+     "prompt": "Paragraph D",
+     "answer": [
+      "ii Resources for exchange"
+     ],
+     "explanation": "Đoạn D nói về việc ĐỔI CHÁC sản vật rạn san hô giữa người trong đảo và giữa các đảo - vd đổi bạch tuộc lấy hàng từ đảo Androth, hay lấy gạo, dừa, cá. → ii Resources for exchange.",
+     "points": 1,
+     "evidence": "Bartering of reef resources also commonly takes place, both between islanders and between islands.",
+     "options": [
+      "i Island legends",
+      "ii Resources for exchange",
+      "iii Competition for fishing rights",
+      "iv The low cost of equipment",
+      "v Agatti's favourable location",
+      "vi Rising income levels",
+      "vii The social nature of reef occupations",
+      "viii Resources for islanders' own use",
+      "ix High levels of expertise",
+      "x Alternative sources of employment",
+      "xi Resources for earning money",
+      "xii Social rights and obligations"
+     ]
+    },
+    {
+     "order": 5,
+     "questionType": "matching",
+     "prompt": "Paragraph E",
+     "answer": [
+      "iv The low cost of equipment"
+     ],
+     "explanation": "Đoạn E nói khai thác rạn san hô cần VỐN RẤT ÍT: dụng cụ đơn giản, có sẵn ở địa phương, lưới quăng rẻ, thuyền tự đóng và chi phí vận hành thấp. → iv The low cost of equipment.",
+     "points": 1,
+     "evidence": "The investment required to exploit the reefs is minimal. It involves simple, locally available tools and equipment",
+     "options": [
+      "i Island legends",
+      "ii Resources for exchange",
+      "iii Competition for fishing rights",
+      "iv The low cost of equipment",
+      "v Agatti's favourable location",
+      "vi Rising income levels",
+      "vii The social nature of reef occupations",
+      "viii Resources for islanders' own use",
+      "ix High levels of expertise",
+      "x Alternative sources of employment",
+      "xi Resources for earning money",
+      "xii Social rights and obligations"
+     ]
+    },
+    {
+     "order": 6,
+     "questionType": "matching",
+     "prompt": "Paragraph F",
+     "answer": [
+      "ix High levels of expertise"
+     ],
+     "explanation": "Đoạn F nói qua hơn 400 năm, người dân đảo có HIỂU BIẾT SÂU SẮC về rạn san hô: biết từng loại cá ở đâu theo con nước, có hệ thống tên gọi riêng, và rất nhiều kỹ thuật đánh bắt. → ix High levels of expertise.",
+     "points": 1,
+     "evidence": "During more than 400 years of occupation and survival, the Agatti islanders have developed an intimate knowledge of the reefs.",
+     "options": [
+      "i Island legends",
+      "ii Resources for exchange",
+      "iii Competition for fishing rights",
+      "iv The low cost of equipment",
+      "v Agatti's favourable location",
+      "vi Rising income levels",
+      "vii The social nature of reef occupations",
+      "viii Resources for islanders' own use",
+      "ix High levels of expertise",
+      "x Alternative sources of employment",
+      "xi Resources for earning money",
+      "xii Social rights and obligations"
+     ]
+    },
+    {
+     "order": 7,
+     "questionType": "matching",
+     "prompt": "Paragraph G",
+     "answer": [
+      "i Island legends"
+     ],
+     "explanation": "Đoạn G nói về văn hoá dân gian: gần như mọi câu chuyện, bài hát đều nhắc tới biển và rạn san hô, có cả truyền thuyết về con ma biển hiền lành baluvam. → i Island legends.",
+     "points": 1,
+     "evidence": "Most of the island's folklore revolves around the reef and sea.",
+     "options": [
+      "i Island legends",
+      "ii Resources for exchange",
+      "iii Competition for fishing rights",
+      "iv The low cost of equipment",
+      "v Agatti's favourable location",
+      "vi Rising income levels",
+      "vii The social nature of reef occupations",
+      "viii Resources for islanders' own use",
+      "ix High levels of expertise",
+      "x Alternative sources of employment",
+      "xi Resources for earning money",
+      "xii Social rights and obligations"
+     ]
+    },
+    {
+     "order": 8,
+     "questionType": "matching",
+     "prompt": "Paragraph H",
+     "answer": [
+      "xii Social rights and obligations"
+     ],
+     "explanation": "Đoạn H nói rạn san hô là TÀI SẢN CHUNG, ai cũng có QUYỀN dùng, nhưng vẫn phải giữ một bộ quy tắc ứng xử - tức vừa có quyền vừa có nghĩa vụ. Bẫy: \"iii Competition for fishing rights\" - bài nói việc tôn trọng quy tắc giúp TRÁNH tranh chấp, không nói có cạnh tranh. → xii Social rights and obligations.",
+     "points": 1,
+     "evidence": "The reef is regarded by the islanders as common property, and all the islanders are entitled to use the lagoon and reef resources. / there is still a code of conduct or etiquette for exploiting the reef",
+     "options": [
+      "i Island legends",
+      "ii Resources for exchange",
+      "iii Competition for fishing rights",
+      "iv The low cost of equipment",
+      "v Agatti's favourable location",
+      "vi Rising income levels",
+      "vii The social nature of reef occupations",
+      "viii Resources for islanders' own use",
+      "ix High levels of expertise",
+      "x Alternative sources of employment",
+      "xi Resources for earning money",
+      "xii Social rights and obligations"
+     ]
+    },
+    {
+     "order": 9,
+     "questionType": "matching",
+     "prompt": "Paragraph I",
+     "answer": [
+      "vii The social nature of reef occupations"
+     ],
+     "explanation": "Đoạn I nói việc khai thác rạn san hô cần LÀM CHUNG theo nhóm: kỹ thuật Bala fadal cần 25-30 người đàn ông, phụ nữ đi nhặt vỏ ốc theo nhóm 6-10 người. → vii The social nature of reef occupations.",
+     "points": 1,
+     "evidence": "Exploitation of such vast and diverse resources as the reefs and lagoon surrounding the island has encouraged collaborative efforts",
+     "options": [
+      "i Island legends",
+      "ii Resources for exchange",
+      "iii Competition for fishing rights",
+      "iv The low cost of equipment",
+      "v Agatti's favourable location",
+      "vi Rising income levels",
+      "vii The social nature of reef occupations",
+      "viii Resources for islanders' own use",
+      "ix High levels of expertise",
+      "x Alternative sources of employment",
+      "xi Resources for earning money",
+      "xii Social rights and obligations"
+     ]
+    },
+    {
+     "order": 10,
+     "questionType": "multiple_choice",
+     "prompt": "What proportion of poor households get all their income from reef products?",
+     "answer": [
+      "A 12%"
+     ],
+     "explanation": "\"Get ALL their income\" = \"completely dependent\": 12% hộ nghèo phụ thuộc HOÀN TOÀN vào rạn san hô. Bẫy: 20% là tỉ lệ hộ gia đình NÓI CHUNG coi nghề đánh bắt là nghề chính; 59% và 29% là các hộ nghèo chỉ dựa vào rạn cho 70% hoặc 50% thu nhập. → A.",
+     "points": 1,
+     "evidence": "12% of poor households are completely dependent on the reef for their household income",
+     "options": [
+      "A 12%",
+      "B 20%",
+      "C 29%",
+      "D 59%"
+     ]
+    },
+    {
+     "order": 11,
+     "questionType": "multiple_choice",
+     "prompt": "Kat moodsal fishing",
+     "answer": [
+      "C requires little investment."
+     ],
+     "explanation": "Đoạn E mở đầu bằng câu vốn đầu tư để khai thác rạn san hô là RẤT ÍT, rồi lấy Kat moodsal làm ví dụ: chỉ cần một cái lưới quăng nhỏ, một túi lá và đôi dép nhựa. Bẫy: A sai vì hoạt động diễn ra QUANH NĂM; B sai vì cá bắt được để nhà ăn; D sai vì hình thức này làm được mà KHÔNG CẦN thuyền. → C.",
+     "points": 1,
+     "evidence": "The investment required to exploit the reefs is minimal. / A small cast net, a leaf bag, and plastic slippers are all that are required, and the activity can yield 10-12 small fish (approximately 1 kg) for household consumption.",
+     "options": [
+      "A is a seasonal activity.",
+      "B is a commercial activity.",
+      "C requires little investment.",
+      "D requires use of a rowing boat."
+     ]
+    },
+    {
+     "order": 12,
+     "questionType": "multiple_choice",
+     "prompt": "Which characteristic of present-day islanders do the writers describe?",
+     "answer": [
+      "B fishing expertise"
+     ],
+     "explanation": "Đoạn F nói người dân đảo có hiểu biết sâu sắc về rạn san hô và phát triển đủ loại kỹ năng, kỹ thuật đánh bắt - và rất nhiều kỹ thuật trong đó VẪN ĐANG được dùng. Các ý sức khoẻ, lòng dũng cảm, trí tưởng tượng không được bài mô tả là đặc điểm của người dân ngày nay. → B.",
+     "points": 1,
+     "evidence": "the islanders have developed a wide range of skills and techniques for exploiting them. A multitude of different fishing techniques are still used by the islanders",
+     "options": [
+      "A physical strength",
+      "B fishing expertise",
+      "C courage",
+      "D imagination"
+     ]
+    },
+    {
+     "order": 13,
+     "questionType": "multiple_choice",
+     "prompt": "What do the writers say about the system for using the reef on Agatti?",
+     "answer": [
+      "D There is open access."
+     ],
+     "explanation": "Rạn san hô là tài sản chung, MỌI người dân đảo đều có quyền dùng → ai cũng được vào khai thác. Bẫy: B - việc xin phép trưởng đảo (Amin) là chuyện NGÀY XƯA và nay không còn; A - phần cá chia cho Amin là con ngon nhất, không phải chia đều; C - bài nói quy tắc chung giúp TRÁNH tranh chấp. → D.",
+     "points": 1,
+     "evidence": "The reef is regarded by the islanders as common property, and all the islanders are entitled to use the lagoon and reef resources.",
+     "options": [
+      "A Fish catches are shared equally.",
+      "B The reef owner issues permits.",
+      "C There are frequent disputes.",
+      "D There is open access."
+     ]
+    }
+   ]
+  },
+  {
+   "unitType": "reading_passage",
+   "unitNumber": 2,
+   "title": "Passage 2 - Urban planning in Singapore",
+   "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.",
+   "content": "British merchants established a trading post in Singapore in the early nineteenth century, and for more than a century trading interests dominated. However, in 1965 the newly independent island state was cut off from its hinterland, and so it set about pursuing a survival strategy. The good international communications it already enjoyed provided a useful base, but it was decided that if Singapore was to secure its economic future, it must develop its industry. To this end, new institutional structures were needed to facilitate, develop, and control foreign investment. One of the most important of these was the Economic Development Board (EDB), an arm of government that developed strategies for attracting investment. Thus from the outset, the Singaporean government was involved in city promotion.\n\nTowards the end of the twentieth century, the government realised that, due to limits on both the size of the country's workforce and its land area, its labour-intensive industries were becoming increasingly uncompetitive. So an economic committee was established which concluded that Singapore should focus on developing as a service centre, and seek to attract company headquarters to serve South East Asia, and develop tourism, banking, and offshore activities. The land required for this service-sector orientation had been acquired in the early 1970s, when the government realised that it lacked the banking infrastructure for a modern economy. So a new banking and corporate district, known as the 'Golden Shoe', was planned, incorporating the historic commercial area. This district now houses all the major companies and various government financial agencies.\n\nSingapore's current economic strategy is closely linked to land use and development planning. Although it is already a major city, the current development plan seeks to ensure Singapore's continued economic growth through restructuring, to ensure that the facilities needed by future business are planned now. These include transport and telecommunication infrastructure, land, and environmental quality. A major concern is to avoid congestion in the central area, and so the latest plan deviates from previous plans by having a strong decentralisation policy. The plan makes provision for four major regional centres, each serving 800,000 people, but this does not mean that the existing central business district will not also grow. A major extension planned around Marina Bay draws on examples of other 'world cities', especially those with waterside central areas such as Sydney and San Francisco. The project involves major land reclamation of 667 hectares in total. Part of this has already been developed as a conference and exhibition zone, and the rest will be used for other facilities. However the need for vitality has been recognised and a mixed zoning approach has been adopted, to include housing and entertainment.\n\nOne of the new features of the current plan is a broader conception of what contributes to economic success. It encompasses high quality residential provision, a good environment, leisure facilities and exciting city life. Thus there is more provision for low-density housing, often in waterfront communities linked to beaches and recreational facilities. However, the lower housing densities will put considerable pressure on the very limited land available for development, and this creates problems for another of the plan's aims, which is to stress environmental quality. More and more of the remaining open area will be developed, and the only natural landscape surviving will be a small zone in the centre of the island which serves as a water catchment area. Environmental policy is therefore very much concerned with making the built environment more green by introducing more plants - what is referred to as the 'beautification' of Singapore. The plan focuses on green zones defining the boundaries of settlements, and running along transport corridors. The incidental green provision within housing areas is also given considerable attention.\n\nMuch of the environmental provision, for example golf courses, recreation areas, and beaches, is linked to the prime objective of attracting business. The plan places much emphasis on good leisure provision and the need to exploit Singapore's island setting. One way of doing this is through further land reclamation, to create a whole new island devoted to leisure and luxury housing which will stretch from the central area to the airport. A current concern also appears to be how to use the planning system to create opportunities for greater spontaneity: planners have recently given much attention to the concept of the 24-hour city and the cafe society. For example, a promotion has taken place along the Singapore river to create a cafe zone. This has included the realisation, rather late in the day, of the value of retaining older buildings, and the creation of a continuous riverside promenade. Since the relaxation in 1996 of strict guidelines on outdoor eating areas, this has become an extremely popular area in the evenings. Also, in 1998 the Urban Redevelopment Authority created a new entertainment area in the centre of the city which they are promoting as 'the city's one-stop, dynamic entertainment scene'.\n\nIn conclusion, the economic development of Singapore has been very consciously centrally planned, and the latest strategy is very clearly oriented to establishing Singapore as a leading 'world city'. It is well placed to succeed, for a variety of reasons. It can draw upon its historic roots as a world trading centre; it has invested heavily in telecommunications and air transport infrastructure; it is well located in relation to other Asian economies; it has developed a safe and clean environment; and it has utilised the international language of English.",
+   "defaultTimeLimitMinutes": 20,
+   "metadata": {
+    "groupInstructions": {
+     "14": "Complete the summary below using words from the box.\nWrite your answers in boxes 14-19 on your answer sheet.\n:::box\nDecentralization | Agriculture | Tourism | Hygiene\nHospitals | Fuel | Industry | Service\nTrade | Loans | Deregulation | Recycling\nLabour | Transport | Entertainment | Beautification\n:::",
+     "20": "Do the following statements agree with the information given in Reading Passage 2?\nIn boxes 20-26 on your answer sheet, write\n:::box\nTRUE if the statement is true according to the passage\nFALSE if the statement is false according to the passage\nNOT GIVEN if the information is not given in the passage\n:::"
+    },
+    "groupTitles": {
+     "14": "Singapore"
+    },
+    "noteBody": "When Singapore became an independent, self-sufficient state it decided to build up its [[14]], and government organisations were created to support this policy. However, this initial plan met with limited success due to a shortage of [[15]] and land. It was therefore decided to develop the [[16]] sector of the economy instead.\n\nSingapore is now a leading city, but planners are working to ensure that its economy continues to grow. In contrast to previous policies, there is emphasis on [[17]]. In addition, land will be recovered to extend the financial district, and provide [[18]] as well as housing. The government also plans to improve the quality of Singapore's environment, but due to the shortage of natural landscapes it will concentrate instead on what it calls [[19]]."
+   },
+   "questions": [
+    {
+     "order": 14,
+     "questionType": "note_completion",
+     "prompt": "Câu 14",
+     "answer": [
+      "industry"
+     ],
+     "explanation": "Sau khi độc lập năm 1965, Singapore quyết định muốn đảm bảo tương lai kinh tế thì phải phát triển CÔNG NGHIỆP, và lập ra các cơ quan như EDB để thu hút đầu tư. → Industry.",
+     "points": 1,
+     "evidence": "but it was decided that if Singapore was to secure its economic future, it must develop its industry."
+    },
+    {
+     "order": 15,
+     "questionType": "note_completion",
+     "prompt": "Câu 15",
+     "answer": [
+      "labour",
+      "labor"
+     ],
+     "explanation": "Kế hoạch ban đầu gặp khó vì cả lực lượng LAO ĐỘNG lẫn diện tích đất đều có hạn (\"workforce\" = labour). → Labour.",
+     "points": 1,
+     "evidence": "due to limits on both the size of the country's workforce and its land area, its labour-intensive industries were becoming increasingly uncompetitive."
+    },
+    {
+     "order": 16,
+     "questionType": "note_completion",
+     "prompt": "Câu 16",
+     "answer": [
+      "service"
+     ],
+     "explanation": "Uỷ ban kinh tế kết luận Singapore nên chuyển sang làm trung tâm DỊCH VỤ: trụ sở công ty, du lịch, ngân hàng. Bẫy: \"Tourism\" chỉ là MỘT mảng trong khu vực dịch vụ, và chỗ trống đứng trước chữ \"sector\" (service sector). → Service.",
+     "points": 1,
+     "evidence": "So an economic committee was established which concluded that Singapore should focus on developing as a service centre"
+    },
+    {
+     "order": 17,
+     "questionType": "note_completion",
+     "prompt": "Câu 17",
+     "answer": [
+      "decentralization",
+      "decentralisation"
+     ],
+     "explanation": "Khác với các kế hoạch trước, kế hoạch mới nhất có chính sách PHI TẬP TRUNG mạnh mẽ để tránh ùn tắc ở khu trung tâm - lập bốn trung tâm vùng. → Decentralization.",
+     "points": 1,
+     "evidence": "the latest plan deviates from previous plans by having a strong decentralisation policy."
+    },
+    {
+     "order": 18,
+     "questionType": "note_completion",
+     "prompt": "Câu 18",
+     "answer": [
+      "entertainment"
+     ],
+     "explanation": "Khu mở rộng quanh vịnh Marina (đất lấn biển) áp dụng cách phân vùng hỗn hợp, gồm cả nhà ở lẫn GIẢI TRÍ. → Entertainment.",
+     "points": 1,
+     "evidence": "However the need for vitality has been recognised and a mixed zoning approach has been adopted, to include housing and entertainment."
+    },
+    {
+     "order": 19,
+     "questionType": "note_completion",
+     "prompt": "Câu 19",
+     "answer": [
+      "beautification"
+     ],
+     "explanation": "Vì cảnh quan tự nhiên gần như không còn, chính sách môi trường tập trung vào việc phủ xanh khu đô thị bằng cây cối - được gọi là \"LÀM ĐẸP\" Singapore. → Beautification.",
+     "points": 1,
+     "evidence": "Environmental policy is therefore very much concerned with making the built environment more green by introducing more plants - what is referred to as the 'beautification' of Singapore."
+    },
+    {
+     "order": 20,
+     "questionType": "true_false_not_given",
+     "prompt": "After 1965, the Singaporean government switched the focus of the island's economy.",
+     "answer": [
+      "TRUE"
+     ],
+     "explanation": "Trước đó hơn một thế kỷ, THƯƠNG MẠI giữ vai trò chủ đạo; từ năm 1965 Singapore chuyển sang phát triển CÔNG NGHIỆP (và sau này là dịch vụ). → TRUE.",
+     "points": 1,
+     "evidence": "for more than a century trading interests dominated. However, in 1965 the newly independent island state was cut off from its hinterland, and so it set about pursuing a survival strategy. / it must develop its industry."
+    },
+    {
+     "order": 21,
+     "questionType": "true_false_not_given",
+     "prompt": "The creation of Singapore's financial centre was delayed while a suitable site was found.",
+     "answer": [
+      "FALSE"
+     ],
+     "explanation": "Ngược lại: đất cho khu dịch vụ đã được thu xếp TỪ SỚM - đầu thập niên 1970 - khi chính phủ nhận ra còn thiếu hạ tầng ngân hàng, rồi quy hoạch khu \"Golden Shoe\". Không hề có chuyện trì hoãn vì phải tìm địa điểm. → FALSE.",
+     "points": 1,
+     "evidence": "The land required for this service-sector orientation had been acquired in the early 1970s, when the government realised that it lacked the banking infrastructure for a modern economy."
+    },
+    {
+     "order": 22,
+     "questionType": "true_false_not_given",
+     "prompt": "Singapore's four regional centres will eventually be the same size as its central business district.",
+     "answer": [
+      "NOT GIVEN"
+     ],
+     "explanation": "Bài chỉ nói mỗi trung tâm vùng phục vụ 800.000 dân và khu thương mại trung tâm hiện có VẪN sẽ tiếp tục phát triển. Không có thông tin nào so sánh quy mô cuối cùng của hai bên. → NOT GIVEN.",
+     "points": 1
+    },
+    {
+     "order": 23,
+     "questionType": "true_false_not_given",
+     "prompt": "Planners have modelled new urban developments on other coastal cities.",
+     "answer": [
+      "TRUE"
+     ],
+     "explanation": "Khu mở rộng quanh vịnh Marina lấy ví dụ từ các \"thành phố thế giới\" khác, nhất là những nơi có khu trung tâm VEN BIỂN như Sydney và San Francisco. → TRUE.",
+     "points": 1,
+     "evidence": "A major extension planned around Marina Bay draws on examples of other 'world cities', especially those with waterside central areas such as Sydney and San Francisco."
+    },
+    {
+     "order": 24,
+     "questionType": "true_false_not_given",
+     "prompt": "Plants and trees are amongst the current priorities for Singapore's city planners.",
+     "answer": [
+      "TRUE"
+     ],
+     "explanation": "Chính sách môi trường hiện nay rất chú trọng việc phủ xanh khu đô thị bằng cách TRỒNG THÊM CÂY, cùng các dải xanh dọc ranh giới khu dân cư và hành lang giao thông. → TRUE.",
+     "points": 1,
+     "evidence": "Environmental policy is therefore very much concerned with making the built environment more green by introducing more plants"
+    },
+    {
+     "order": 25,
+     "questionType": "true_false_not_given",
+     "prompt": "The government has enacted new laws to protect Singapore's old buildings.",
+     "answer": [
+      "NOT GIVEN"
+     ],
+     "explanation": "Bài chỉ nói người ta nhận ra (hơi muộn) giá trị của việc GIỮ LẠI các toà nhà cũ ven sông Singapore. Không nhắc tới việc ban hành luật nào để bảo vệ chúng. Bẫy: năm 1996 có NỚI LỎNG quy định về chỗ ăn uống ngoài trời - không liên quan tới nhà cũ. → NOT GIVEN.",
+     "points": 1
+    },
+    {
+     "order": 26,
+     "questionType": "true_false_not_given",
+     "prompt": "Singapore will find it difficult to compete with leading cities in other parts of the world.",
+     "answer": [
+      "FALSE"
+     ],
+     "explanation": "Kết bài khẳng định Singapore có VỊ THẾ TỐT để thành công, rồi liệt kê hàng loạt lý do: gốc gác trung tâm thương mại, đầu tư mạnh vào viễn thông và hàng không, vị trí gần các nền kinh tế châu Á, môi trường an toàn sạch sẽ, dùng tiếng Anh. → FALSE.",
+     "points": 1,
+     "evidence": "It is well placed to succeed, for a variety of reasons."
+    }
+   ]
+  },
+  {
+   "unitType": "reading_passage",
+   "unitNumber": 3,
+   "title": "Passage 3 - Spices",
+   "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.",
+   "content": "A Spice plants, such as coriander, cardamom or ginger, contain compounds which, when added to food, give it a distinctive flavour. Spices have been used for centuries in the preparation of both meat dishes for consumption and meat dishes for long-term storage. However, an initial analysis of traditional meat-based recipes indicated that spices are not used equally in different countries and regions, so we set about investigating global patterns of spice use.\n\nB We hypothesized initially that the benefit of spices might lie in their anti-microbial properties. Those compounds in spice plants which give them their distinctive flavours probably first evolved to fight enemies such as plant-eating insects, fungi, and bacteria. Many of the organisms which afflict spice plants attack humans too, in particular the bacteria and fungi that live on and in dead plant and animal matter. So if spices kill these organisms, or inhibit their production of toxins, spice use in food might reduce our own chances of contracting food poisoning.\n\nC The results of our investigation supported this hypothesis. In common with other researchers, we found that all spices for which we could locate appropriate information have some antibacterial effects: half inhibit more than 75% of bacteria, and four (garlic, onion, allspice and oregano) inhibit 100% of those bacteria tested. In addition, many spices are powerful fungicides.\n\nD Studies also show that when combined, spices exhibit even greater anti-bacterial properties than when each is used alone. This is interesting because the food recipes we used in our sample specify an average of four different spices. Some spices are so frequently combined that the blends have acquired special names, such as 'chili powder' (typically a mixture of red pepper, onion, paprika, garlic, cumin and oregano) and 'oriental five spice' (pepper, cinnamon, anise, fennel and cloves). One intriguing example is the French 'quatre epices' (pepper, cloves, ginger and nutmeg) which is often used in making sausages. Sausages are a rich medium for bacterial growth, and have frequently been implicated as the source of death from the botulism toxin, so the value of the anti-bacterial compounds in spices used for sausage preparation is obvious.\n\nE A second hypothesis we made was that spice use would be heaviest in areas where foods spoil most quickly. Studies indicate that rates of bacterial growth increase dramatically with air temperature. Meat dishes that are prepared in advance and stored at room temperatures for more than a few hours, especially in tropical climates, typically show massive increases in bacterial counts. Of course temperatures within houses, particularly in areas where food is prepared and stored, may differ from those of the outside air, but usually it is even hotter in the kitchen.\n\nF Our survey of recipes from around the world confirmed this hypothesis: we found that countries with higher than average temperatures used more spices. Indeed, in hot countries nearly every meat-based recipe calls for at least one spice, and most include many spices, whereas in cooler ones, substantial proportions of dishes are prepared without spices, or with just a few. In other words, there is a significant positive correlation between mean temperature and the average quantity of spices used in cooking.\n\nG But if the main function of spices is to make food safer to eat, how did our ancestors know which ones to use in the first place? It seems likely that people who happened to add spice plants to meat during preparation, especially in hot climates, would have been less likely to suffer from food poisoning than those who did not. Spice users may also have been able to store foods for longer before they spoiled, enabling them to tolerate longer periods of scarcity. Observation and imitation of the eating habits of these healthier individuals by others could spread spice use rapidly through a society. Also, families that used appropriate spices would rear a greater number of more healthy offspring, to whom spice-use traditions had been demonstrated, and who possessed appropriate taste receptors.\n\nH Another question which arises is why did people develop a taste for spicy foods? One possibility involves learned taste aversions. It is known that when people eat something that makes them ill, they tend to avoid that taste subsequently. The adaptive value of such learning is obvious. Adding a spice to a food that caused sickness might alter its taste enough to make it palatable again (i.e. it tastes like a different food), as well as kill the micro-organisms that caused the illness, thus rendering it safe for consumption. By this process, food aversions would more often be associated with unspiced (and therefore unsafe) foods, and food likings would be associated with spicy foods, especially in places where foods spoil rapidly. Over time people would have developed a natural preference for spicy food.\n\nI Of course, spice use is not the only way to avoid food poisoning. Cooking, and completely consuming wild game immediately after slaughter reduces opportunities for the growth of micro-organisms. However, this is practical only where fresh meat is abundant year-round. In areas where fresh meat is not consistently available, preservation may be accomplished by thoroughly cooking, salting, smoking, drying, and spicing meats. Indeed, salt has been used worldwide for centuries to preserve food. We suggest that all these practices have been adopted for essentially the same reason: to minimize the effects of harmful, food-borne organisms.",
+   "defaultTimeLimitMinutes": 20,
+   "metadata": {
+    "groupInstructions": {
+     "27": "Reading Passage 3 has nine paragraphs, labelled A-I.\nWhich paragraph contains the following information?\nWrite the correct letter A-I in boxes 27-33 on your answer sheet.\nNB You may use any letter more than once.",
+     "34": "Answer the questions below with words taken from Reading Passage 3.\nUse NO MORE THAN TWO WORDS for each answer.\nWrite your answers in boxes 34-39 on your answer sheet.",
+     "40": "Choose the correct letter, A, B, C or D.\nWrite the correct letter in box 40 on your answer sheet."
+    }
+   },
+   "questions": [
+    {
+     "order": 27,
+     "questionType": "matching",
+     "prompt": "an example of a food which particularly benefits from the addition of spices",
+     "answer": [
+      "D"
+     ],
+     "explanation": "Đoạn D lấy XÚC XÍCH làm ví dụ: đây là môi trường vi khuẩn sinh sôi mạnh, từng gây chết người vì độc tố botulism, nên giá trị kháng khuẩn của gia vị khi làm xúc xích là quá rõ. → D.",
+     "points": 1,
+     "evidence": "Sausages are a rich medium for bacterial growth, and have frequently been implicated as the source of death from the botulism toxin, so the value of the anti-bacterial compounds in spices used for sausage preparation is obvious.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ]
+    },
+    {
+     "order": 28,
+     "questionType": "matching",
+     "prompt": "a range of methods for making food safer to eat",
+     "answer": [
+      "I"
+     ],
+     "explanation": "Đoạn I liệt kê NHIỀU CÁCH bảo quản thịt: nấu chín kỹ, ướp muối, hun khói, phơi khô và tẩm gia vị - tất cả đều nhằm hạn chế sinh vật gây hại trong thức ăn. → I.",
+     "points": 1,
+     "evidence": "In areas where fresh meat is not consistently available, preservation may be accomplished by thoroughly cooking, salting, smoking, drying, and spicing meats.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ]
+    },
+    {
+     "order": 29,
+     "questionType": "matching",
+     "prompt": "a comparison between countries with different climate types",
+     "answer": [
+      "F"
+     ],
+     "explanation": "Đoạn F SO SÁNH nước nóng với nước mát hơn: ở nước nóng gần như món thịt nào cũng có gia vị, còn ở nước mát hơn nhiều món nấu không có hoặc rất ít gia vị. Bẫy: đoạn E chỉ nói nhiệt độ làm vi khuẩn tăng nhanh, chưa so sánh các nước. → F.",
+     "points": 1,
+     "evidence": "we found that countries with higher than average temperatures used more spices. Indeed, in hot countries nearly every meat-based recipe calls for at least one spice, and most include many spices, whereas in cooler ones, substantial proportions of dishes are prepared without spices, or with just a few.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ]
+    },
+    {
+     "order": 30,
+     "questionType": "matching",
+     "prompt": "an explanation of how people first learned to select appropriate spices",
+     "answer": [
+      "G"
+     ],
+     "explanation": "Đoạn G đặt câu hỏi tổ tiên ta làm sao BIẾT dùng loại gia vị nào, rồi giải thích: người tình cờ cho gia vị vào thịt thì ít bị ngộ độc hơn, người khác quan sát và bắt chước theo. → G.",
+     "points": 1,
+     "evidence": "But if the main function of spices is to make food safer to eat, how did our ancestors know which ones to use in the first place?",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ]
+    },
+    {
+     "order": 31,
+     "questionType": "matching",
+     "prompt": "a method of enhancing the effectiveness of individual spices",
+     "answer": [
+      "D"
+     ],
+     "explanation": "Đoạn D nói khi KẾT HỢP nhiều gia vị với nhau, khả năng kháng khuẩn còn mạnh hơn khi dùng từng loại riêng lẻ - đó là cách tăng hiệu quả của từng gia vị. Lưu ý: đề cho phép dùng lại một chữ cái, câu 27 cũng là D. → D.",
+     "points": 1,
+     "evidence": "Studies also show that when combined, spices exhibit even greater anti-bacterial properties than when each is used alone.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ]
+    },
+    {
+     "order": 32,
+     "questionType": "matching",
+     "prompt": "the relative effectiveness of certain spices against harmful organisms",
+     "answer": [
+      "C"
+     ],
+     "explanation": "Đoạn C so sánh MỨC ĐỘ hiệu quả giữa các gia vị: một nửa ức chế hơn 75% vi khuẩn, còn bốn loại (tỏi, hành, tiêu Jamaica, kinh giới) ức chế 100%. → C.",
+     "points": 1,
+     "evidence": "half inhibit more than 75% of bacteria, and four (garlic, onion, allspice and oregano) inhibit 100% of those bacteria tested.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ]
+    },
+    {
+     "order": 33,
+     "questionType": "matching",
+     "prompt": "the possible origins of a dislike for unspiced foods",
+     "answer": [
+      "H"
+     ],
+     "explanation": "Đoạn H giải thích vì sao người ta SỢ món không gia vị: ai ăn phải món gây bệnh thì về sau tránh vị đó, và cảm giác ghê sợ này thường gắn với món KHÔNG gia vị (tức kém an toàn). → H.",
+     "points": 1,
+     "evidence": "By this process, food aversions would more often be associated with unspiced (and therefore unsafe) foods",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ]
+    },
+    {
+     "order": 34,
+     "questionType": "short_answer",
+     "prompt": "According to the writers, what might be the use of spices in cooking help people to avoid?",
+     "answer": [
+      "food poisoning"
+     ],
+     "explanation": "Giả thuyết đầu tiên của tác giả: nếu gia vị diệt được vi khuẩn, nấm hoặc ngăn chúng tạo độc tố thì dùng gia vị sẽ giảm nguy cơ bị NGỘ ĐỘC THỰC PHẨM. → food poisoning.",
+     "points": 1,
+     "evidence": "So if spices kill these organisms, or inhibit their production of toxins, spice use in food might reduce our own chances of contracting food poisoning."
+    },
+    {
+     "order": 35,
+     "questionType": "short_answer",
+     "prompt": "What proportion of bacteria in food do four of the spices tested destroy?",
+     "answer": [
+      "100%",
+      "100 %",
+      "100 percent",
+      "100 per cent",
+      "one hundred percent",
+      "one hundred per cent"
+     ],
+     "explanation": "Bốn loại gia vị - tỏi, hành, tiêu Jamaica và kinh giới - ức chế 100% số vi khuẩn được thử. Bẫy: 75% là mức của MỘT NỬA số gia vị, không phải bốn loại này. → 100%.",
+     "points": 1,
+     "evidence": "four (garlic, onion, allspice and oregano) inhibit 100% of those bacteria tested."
+    },
+    {
+     "order": 36,
+     "questionType": "short_answer",
+     "prompt": "Which food often contains a spice known as 'quatre epices'?",
+     "answer": [
+      "sausages",
+      "sausage"
+     ],
+     "explanation": "Hỗn hợp gia vị Pháp 'quatre epices' (tiêu, đinh hương, gừng, nhục đậu khấu) thường được dùng để làm XÚC XÍCH. → sausages.",
+     "points": 1,
+     "evidence": "One intriguing example is the French 'quatre epices' (pepper, cloves, ginger and nutmeg) which is often used in making sausages."
+    },
+    {
+     "order": 37,
+     "questionType": "short_answer",
+     "prompt": "Which types of country use the fewest number of spices in cooking?",
+     "answer": [
+      "cooler ones",
+      "cooler countries",
+      "cooler",
+      "the cooler ones"
+     ],
+     "explanation": "Ở các nước MÁT HƠN, phần lớn món ăn được nấu không có gia vị hoặc chỉ dùng rất ít - trái ngược với các nước nóng. → cooler ones.",
+     "points": 1,
+     "evidence": "whereas in cooler ones, substantial proportions of dishes are prepared without spices, or with just a few."
+    },
+    {
+     "order": 38,
+     "questionType": "short_answer",
+     "prompt": "What might food aversions often be associated with?",
+     "answer": [
+      "unspiced foods",
+      "unspiced food",
+      "unspiced"
+     ],
+     "explanation": "Theo đoạn H, cảm giác ghê sợ một món ăn thường gắn với những món KHÔNG CÓ GIA VỊ (và vì thế kém an toàn). → unspiced foods.",
+     "points": 1,
+     "evidence": "By this process, food aversions would more often be associated with unspiced (and therefore unsafe) foods"
+    },
+    {
+     "order": 39,
+     "questionType": "short_answer",
+     "prompt": "Apart from spices, which substance is used in all countries to preserve food?",
+     "answer": [
+      "salt"
+     ],
+     "explanation": "\"Used in all countries\" = \"used worldwide\": MUỐI đã được dùng khắp thế giới hàng thế kỷ để bảo quản thức ăn. → salt.",
+     "points": 1,
+     "evidence": "Indeed, salt has been used worldwide for centuries to preserve food."
+    },
+    {
+     "order": 40,
+     "questionType": "multiple_choice",
+     "prompt": "Which is the best title for Reading Passage 3?",
+     "answer": [
+      "A The function of spices in food preparation"
+     ],
+     "explanation": "Cả bài xoay quanh VAI TRÒ của gia vị khi chế biến thức ăn: diệt vi khuẩn, giúp món ăn an toàn, dùng nhiều ở nước nóng, và vì sao con người thích món có gia vị. Bẫy: B - bảo quản thức ăn chỉ là một phần (đoạn I); C - bài có khảo sát công thức nấu ăn nhưng không giới thiệu công thức nào; D - bài không phân tích hoá học của cây gia vị. → A.",
+     "points": 1,
+     "options": [
+      "A The function of spices in food preparation",
+      "B A history of food preservation techniques",
+      "C Traditional recipes from around the world",
+      "D An analysis of the chemical properties of spice plants"
+     ]
+    }
+   ]
+  }
+ ]
+}

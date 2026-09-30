@@ -7,6 +7,7 @@ import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { requireTeacher } from "@/lib/actions/classes";
 import { normalizeAnswer } from "@/lib/grading";
 import { materialNoticePath } from "@/lib/material-notices";
+import { normalizeCategoryFields } from "@/lib/material-category";
 import { prisma } from "@/lib/prisma";
 import { syncTranscriptTiming } from "@/lib/transcript-sync";
 
@@ -173,13 +174,19 @@ export async function createMaterial(formData: FormData): Promise<ActionResult> 
       throw new Error(parsed.error.issues[0]?.message ?? "Thông tin tài liệu chưa hợp lệ.");
     }
 
+    const categoryFields = normalizeCategoryFields({
+      category: formData.get("category"),
+      bookName: formData.get("bookName")
+    });
+
     await prisma.material.create({
       data: {
         teacherId: teacher.id,
         skill: parsed.data.skill,
         title: parsed.data.title,
         sourceLabel: optionalText(parsed.data.sourceLabel),
-        description: optionalText(parsed.data.description)
+        description: optionalText(parsed.data.description),
+        ...categoryFields
       }
     });
 
@@ -207,6 +214,11 @@ export async function updateMaterial(formData: FormData): Promise<ActionResult> 
       throw new Error(parsed.error.issues[0]?.message ?? "Thông tin tài liệu chưa hợp lệ.");
     }
 
+    const categoryFields = normalizeCategoryFields({
+      category: formData.get("category"),
+      bookName: formData.get("bookName")
+    });
+
     const result = await prisma.material.updateMany({
       where: {
         id,
@@ -216,7 +228,8 @@ export async function updateMaterial(formData: FormData): Promise<ActionResult> 
         skill: parsed.data.skill,
         title: parsed.data.title,
         sourceLabel: optionalText(parsed.data.sourceLabel),
-        description: optionalText(parsed.data.description)
+        description: optionalText(parsed.data.description),
+        ...categoryFields
       }
     });
 
@@ -704,6 +717,9 @@ const importMaterialSchema = z.object({
   skill: z.enum(skills),
   sourceLabel: z.string().trim().optional(),
   description: z.string().trim().optional(),
+  // Loại tài liệu (book | homework) + tên sách; không ghi thì lấy theo ô chọn trên form nhập.
+  category: z.string().optional(),
+  bookName: z.string().optional(),
   units: z.array(importUnitSchema).min(1, "Need at least one unit.")
 });
 
@@ -856,6 +872,11 @@ export async function importMaterial(
 
   const data = parsed.data;
   const semanticErrors = validateImport(data);
+  // JSON có ghi loại thì theo JSON; không thì theo ô chọn trên form nhập.
+  const categoryFields = normalizeCategoryFields({
+    category: data.category ?? formData.get("category"),
+    bookName: data.bookName ?? formData.get("bookName")
+  });
 
   if (semanticErrors.length > 0) {
     return importError(semanticErrors[0]);
@@ -870,6 +891,7 @@ export async function importMaterial(
       title: data.title,
       sourceLabel: optionalText(data.sourceLabel),
       description: optionalText(data.description),
+      ...categoryFields,
       units: {
         create: data.units.map((unit) => ({
           skill: data.skill,

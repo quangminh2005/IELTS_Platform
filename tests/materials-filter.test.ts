@@ -236,3 +236,43 @@ describe("groupBookShelves", () => {
     ]);
   });
 });
+
+describe("sort title theo số Test, bất kể kiểu gạch / cách đặt tên", () => {
+  const items = [
+    meta({ id: "l24", title: "IELTS Master - Listening Test 24" }),
+    meta({ id: "l1", title: "IELTS Master – Listening Test 1" }),
+    meta({ id: "l3", title: "IELTS Master – Listening Test 3" }),
+    meta({ id: "r9", title: "IELTS Master – Test 9 (Reading)" }),
+    meta({ id: "r31", title: "IELTS Master - Reading Test 31" }),
+    meta({ id: "r2", title: "IELTS Master – Reading Test 2" })
+  ];
+
+  it("Listening: 1, 3, 24", () => {
+    const out = filterAndSortMaterials(items.slice(0, 3), { ...baseFilters, sort: "title" });
+    expect(out.map((m) => m.id)).toEqual(["l1", "l3", "l24"]);
+  });
+
+  it("Reading lẫn 2 kiểu tên: 2, 9, 31", () => {
+    const out = filterAndSortMaterials(items.slice(3), { ...baseFilters, sort: "title" });
+    expect(out.map((m) => m.id)).toEqual(["r2", "r9", "r31"]);
+  });
+
+  it("cùng số Test thì theo tên (Cambridge: Listening, Reading, Speaking, Writing)", () => {
+    const cam = [
+      meta({ id: "w", title: "Cambridge IELTS 20 – Test 1 (Writing)" }),
+      meta({ id: "l2", title: "Cambridge IELTS 20 – Test 2 (Listening)" }),
+      meta({ id: "l", title: "Cambridge IELTS 20 – Test 1 (Listening)" })
+    ];
+    const out = filterAndSortMaterials(cam, { ...baseFilters, sort: "title" });
+    expect(out.map((m) => m.id)).toEqual(["l", "w", "l2"]);
+  });
+
+  it("không có chữ Test thì so tên tự nhiên", () => {
+    const lptd = [
+      meta({ id: "d4", title: "Listening Practice Through Dictation 4" }),
+      meta({ id: "d1", title: "Listening Practice Through Dictation 1" })
+    ];
+    const out = filterAndSortMaterials(lptd, { ...baseFilters, sort: "title" });
+    expect(out.map((m) => m.id)).toEqual(["d1", "d4"]);
+  });
+});

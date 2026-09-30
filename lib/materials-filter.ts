@@ -150,6 +150,22 @@ export function filterMaterials(
   });
 }
 
+// Số đề trong tên: "… Listening Test 24", "… – Test 9 (Reading)", "… Unit 3".
+const TEST_NUMBER = /\b(?:test|unit|chapter)\s*(\d+)/i;
+
+// Tên đề trên prod đặt không đồng nhất (gạch dài "–" lẫn gạch ngắn "-", "Reading Test 2"
+// lẫn "Test 9 (Reading)"), nên ưu tiên so theo số Test; không có số thì so tên tự nhiên
+// ("Test 2" trước "Test 10") sau khi quy mọi kiểu gạch về một.
+function compareTitles(a: string, b: string): number {
+  const numberA = TEST_NUMBER.exec(a)?.[1];
+  const numberB = TEST_NUMBER.exec(b)?.[1];
+  if (numberA && numberB && numberA !== numberB) {
+    return Number(numberA) - Number(numberB);
+  }
+  const normalize = (title: string) => title.replace(/[‐‑‒–—―−]/g, "-").replace(/\s+/g, " ").trim();
+  return normalize(a).localeCompare(normalize(b), "vi", { numeric: true });
+}
+
 // Sắp xếp: tạo bản sao, không đụng mảng gốc. Tie-break luôn về mới nhất cho ổn định.
 export function sortMaterials(
   metas: MaterialMeta[],
@@ -160,10 +176,7 @@ export function sortMaterials(
   const sorted = [...metas];
   switch (sort) {
     case "title":
-      // So số tự nhiên: "Test 2" đứng trước "Test 10".
-      sorted.sort(
-        (a, b) => a.title.localeCompare(b.title, "vi", { numeric: true }) || byNewest(a, b)
-      );
+      sorted.sort((a, b) => compareTitles(a.title, b.title) || byNewest(a, b));
       break;
     case "questions":
       sorted.sort(

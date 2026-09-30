@@ -80,6 +80,9 @@ const statements = [
   'ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "practiceOpen" BOOLEAN NOT NULL DEFAULT false;',
   // Ẩn thanh audio khi học viên TỰ LUYỆN đề này (chế độ thi thật, đặt theo từng đề).
   'ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "practiceLockAudio" BOOLEAN NOT NULL DEFAULT false;',
+  // Kho tài liệu chia 2 mục: sách/bộ đề (gom theo tên sách) và bài tập hàng tuần.
+  `ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "category" TEXT NOT NULL DEFAULT 'homework';`,
+  'ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "bookName" TEXT;',
   'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "practiceScopeKey" TEXT;',
   'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "attemptRound" INTEGER NOT NULL DEFAULT 1;',
   'CREATE UNIQUE INDEX IF NOT EXISTS "Assignment_practiceScopeKey_key" ON "Assignment"("practiceScopeKey");',

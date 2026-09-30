@@ -2,6 +2,7 @@ import type { Prisma } from "@prisma/client";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import Link from "next/link";
 import { ActionDeleteButton, ActionForm, ActionSubmitButton } from "@/components/action-form";
+import { BookNameDatalist, MaterialCategoryFields } from "@/components/material-category-fields";
 import { MaterialUnitsPanel } from "@/components/material-units-panel";
 import { MaterialsBrowser, type MaterialBrowserItem } from "@/components/materials-browser";
 import {
@@ -19,6 +20,7 @@ import {
   deriveSeries,
   type MaterialStatusFlags
 } from "@/lib/materials-filter";
+import { UNNAMED_SHELF } from "@/lib/material-category";
 import { prisma } from "@/lib/prisma";
 
 // Query nhẹ: trang danh sách chỉ cần đủ dữ liệu để vẽ thẻ + tính cờ trạng thái.
@@ -31,6 +33,8 @@ const materialSelect = {
   sourceLabel: true,
   practiceOpen: true,
   practiceLockAudio: true,
+  category: true,
+  bookName: true,
   description: true,
   createdAt: true,
   units: {
@@ -141,6 +145,7 @@ type TeacherMaterialsPageProps = {
   searchParams?: {
     materialsMessage?: string;
     materialsStatus?: string;
+    tab?: string;
   };
 };
 
@@ -148,6 +153,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
   const teacher = await requireTeacherPage();
   const materialsMessage = searchParams?.materialsMessage;
   const materialsStatus = searchParams?.materialsStatus === "success" ? "success" : "error";
+  const initialTab = searchParams?.tab === "homework" ? "homework" : "book";
   // Hai truy vấn chỉ cần teacher.id, không phụ thuộc nhau -> chạy song song.
   const [materials, assignmentUnits] = await Promise.all([
     prisma.material.findMany({
@@ -171,6 +177,10 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
       sum + material.units.reduce((unitSum, unit) => unitSum + unit._count.questions, 0),
     0
   );
+  // Tên sách đã dùng — gợi ý cho ô "Tên sách" để các đề cùng sách về chung một kệ.
+  const bookNames = Array.from(
+    new Set(materials.map((material) => material.bookName).filter((name): name is string => Boolean(name)))
+  ).sort((a, b) => a.localeCompare(b, "vi", { numeric: true }));
   const lastAssignedByMaterial = new Map<string, number>();
   for (const link of assignmentUnits) {
     const materialId = link.assignableUnit.materialId;
@@ -228,8 +238,10 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
       ) : null}
 
       <section className="space-y-4">
+        <BookNameDatalist id="book-name-options" bookNames={bookNames} />
         {materials.length > 0 ? (
           <MaterialsBrowser
+            initialTab={initialTab}
             items={materials.map((material): MaterialBrowserItem => {
               const materialQuestions = material.units.reduce(
                 (sum, unit) => sum + unit._count.questions,
@@ -248,7 +260,12 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                 id: material.id,
                 title: material.title,
                 skill: material.skill,
-                series: deriveSeries(material.sourceLabel, material.title),
+                category: material.category === "book" ? ("book" as const) : ("homework" as const),
+                // Sách: series = tên kệ. Bài tập: suy từ nguồn/tiêu đề như trước.
+                series:
+                  material.category === "book"
+                    ? material.bookName ?? UNNAMED_SHELF
+                    : deriveSeries(material.sourceLabel, material.title),
                 unitCount: material._count.units,
                 questionCount: materialQuestions,
                 createdAtMs: material.createdAt.getTime(),
@@ -404,6 +421,13 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                             />
                           </div>
                         </div>
+                        <MaterialCategoryFields
+                          idPrefix={`material-${material.id}`}
+                          listId="book-name-options"
+                          defaultCategory={material.category === "book" ? "book" : "homework"}
+                          defaultBookName={material.bookName}
+                          fieldClass={fieldClass}
+                        />
                         <div className="flex flex-wrap gap-2">
                           <ActionSubmitButton className={secondaryButtonClass}>
                             Lưu tài liệu

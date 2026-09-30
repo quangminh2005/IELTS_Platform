@@ -2,6 +2,7 @@ import { createMaterial, createQuestion, createUnit } from "@/lib/actions/materi
 import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { AudioUpload } from "@/components/audio-upload";
 import { ImageUpload } from "@/components/image-upload";
+import { MaterialCategoryFields } from "@/components/material-category-fields";
 import { QuestionFields } from "@/components/question-fields";
 
 type MaterialEditorQuestion = {
@@ -93,6 +94,10 @@ export function MaterialEditor({ materials }: MaterialEditorProps) {
           placeholder="Cambridge 18, đề thi thử, bài báo..."
           className={fieldClass}
         />
+
+        <div className="mt-4">
+          <MaterialCategoryFields idPrefix="new-material" listId="book-name-options" fieldClass={fieldClass} />
+        </div>
 
         <label className="mt-4 block text-sm font-medium" htmlFor="material-description">
           Mô tả

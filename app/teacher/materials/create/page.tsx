@@ -1,11 +1,19 @@
 import Link from "next/link";
 import { requireTeacherPage } from "@/lib/teacher-page";
+import { BookNameDatalist } from "@/components/material-category-fields";
 import { MaterialEditor } from "@/components/material-editor";
 import { MaterialImport } from "@/components/material-import";
 import { prisma } from "@/lib/prisma";
 
 export default async function CreateMaterialPage() {
   const teacher = await requireTeacherPage();
+  // Tên sách đã dùng — gợi ý cho ô "Tên sách" ở cả form tạo lẫn form nhập JSON.
+  const bookNameRowsPromise = prisma.material.findMany({
+    where: { teacherId: teacher.id, bookName: { not: null } },
+    distinct: ["bookName"],
+    select: { bookName: true },
+    orderBy: { bookName: "asc" }
+  });
   const materials = await prisma.material.findMany({
     where: { teacherId: teacher.id },
     orderBy: { createdAt: "desc" },
@@ -30,8 +38,13 @@ export default async function CreateMaterialPage() {
     }
   });
 
+  const bookNames = (await bookNameRowsPromise)
+    .map((row) => row.bookName)
+    .filter((name): name is string => Boolean(name));
+
   return (
     <div className="space-y-8">
+      <BookNameDatalist id="book-name-options" bookNames={bookNames} />
       <Link
         href="/teacher/materials"
         className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-primary transition hover:border-primary"

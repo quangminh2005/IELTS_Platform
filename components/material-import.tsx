@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import { MaterialCategoryFields } from "@/components/material-category-fields";
 import { importMaterial, type ImportMaterialState } from "@/lib/actions/materials";
 
 const initialState: ImportMaterialState = { status: "idle", message: "" };
@@ -91,6 +92,11 @@ export function MaterialImport() {
       ) : null}
 
       <form action={formAction} className="mt-4 space-y-3">
+        <MaterialCategoryFields
+          idPrefix="import"
+          listId="book-name-options"
+          fieldClass="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:ring-2"
+        />
         <textarea
           name="payload"
           rows={10}
@@ -123,6 +129,10 @@ export function MaterialImport() {
           <li>
             <code>answer</code> có thể là chuỗi hoặc mảng (nhiều đáp án chấp nhận được).{" "}
             <code>metadata</code> là object tùy ý.
+          </li>
+          <li>
+            <code>category</code> (book | homework) và <code>bookName</code> ghi trong JSON sẽ được
+            ưu tiên hơn ô chọn phía trên.
           </li>
         </ul>
         <pre className="mt-3 overflow-x-auto rounded-md border border-border bg-background/60 p-3 text-xs leading-5">

@@ -9,6 +9,8 @@ import {
   questionTypeStatsBySkill
 } from "@/lib/question-stats";
 import { countsForStats } from "@/lib/practice";
+import { ActivityHeatmap } from "@/components/activity-heatmap";
+import { getActivityHeatmap } from "@/lib/activity-heatmap-data";
 
 export default async function StudentStatsPage() {
   const session = await auth();
@@ -26,28 +28,31 @@ export default async function StudentStatsPage() {
     redirect("/waiting");
   }
 
-  const attempts = await prisma.attempt.findMany({
-    // Lượt luyện lại (round ≥ 2) không phản ánh năng lực thật -> không vào thống kê.
-    where: {
-      studentId: student.id,
-      status: { in: ["submitted", "reviewed"] },
-      ...countsForStats
-    },
-    select: {
-      submittedAt: true,
-      startedAt: true,
-      assignmentRecipient: {
-        select: { assignment: { select: { title: true } } }
+  const [heatmap, attempts] = await Promise.all([
+    getActivityHeatmap(student.id),
+    prisma.attempt.findMany({
+      // Lượt luyện lại (round ≥ 2) không phản ánh năng lực thật -> không vào thống kê.
+      where: {
+        studentId: student.id,
+        status: { in: ["submitted", "reviewed"] },
+        ...countsForStats
       },
-      answers: {
-        select: {
-          isCorrect: true,
-          assignableUnit: { select: { skill: true } },
-          question: { select: { questionType: true } }
+      select: {
+        submittedAt: true,
+        startedAt: true,
+        assignmentRecipient: {
+          select: { assignment: { select: { title: true } } }
+        },
+        answers: {
+          select: {
+            isCorrect: true,
+            assignableUnit: { select: { skill: true } },
+            question: { select: { questionType: true } }
+          }
         }
       }
-    }
-  });
+    })
+  ]);
 
   const header = (
     <header>
@@ -59,12 +64,18 @@ export default async function StudentStatsPage() {
     </header>
   );
 
+  // Bảng ô vuông luôn hiện — HS chưa nộp bài vẫn có thể đã ôn Sổ từ.
+  const heatmapBlock = (
+    <ActivityHeatmap weeks={heatmap.weeks} summary={heatmap.summary} message={heatmap.message} />
+  );
+
   if (attempts.length === 0) {
     return (
       <div className="space-y-8">
         {header}
+        {heatmapBlock}
         <section className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
-          <p className="text-sm font-medium">Chưa có dữ liệu tiến bộ</p>
+          <p className="text-sm font-medium">Chưa có điểm bài nào</p>
           <p className="mt-1 text-sm text-muted-foreground">
             Nộp bài đầu tiên để xem tiến bộ của bạn.
           </p>
@@ -104,6 +115,8 @@ export default async function StudentStatsPage() {
   return (
     <div className="space-y-8">
       {header}
+
+      {heatmapBlock}
 
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="border-b border-border px-5 py-4">

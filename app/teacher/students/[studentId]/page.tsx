@@ -23,6 +23,8 @@ import {
 import { countsForStats, excludePracticeAssignment, onlyPracticeAssignment } from "@/lib/practice";
 import { groupPracticeAttempts } from "@/lib/practice-progress";
 import { StudentPracticeHistory } from "@/components/student-practice-history";
+import { ActivityHeatmap } from "@/components/activity-heatmap";
+import { getActivityHeatmap } from "@/lib/activity-heatmap-data";
 
 type StudentPageProps = {
   params: {
@@ -167,6 +169,9 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
       questionType: answer.question?.questionType ?? null
     }))
   }));
+
+  // Lịch chăm học: mọi lượt nộp (bài giao + tự luyện) và ngày ôn Sổ từ.
+  const heatmap = await getActivityHeatmap(student.id);
 
   // Khối "Tự luyện": các đề học viên tự chọn luyện thêm. Đây là truy vấn riêng vì
   // student.recipients ở trên đã loại hẳn bài tự luyện. Đếm MỌI lượt (kể cả lượt
@@ -359,6 +364,9 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
         studentName={student.displayName}
         parentLink={parentLink}
       />
+
+      {/* Không truyền message — câu nhận xét viết cho học viên. */}
+      <ActivityHeatmap weeks={heatmap.weeks} summary={heatmap.summary} />
 
       {submittedAttempts.length > 0 ? (
         <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">

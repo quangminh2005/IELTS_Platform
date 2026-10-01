@@ -11,10 +11,10 @@ import {
 
 // --muted ở chế độ sáng trùng màu nền thẻ → ô trống dùng màu viền cho thấy rõ.
 const LEVEL_CLASSES: Record<ActivityLevel, string> = {
-  0: "bg-border/60",
-  1: "bg-primary/25",
-  2: "bg-primary/50",
-  3: "bg-primary/75",
+  0: "bg-border/60 dark:bg-border/40",
+  1: "bg-primary/35",
+  2: "bg-primary/55",
+  3: "bg-primary/80",
   4: "bg-primary"
 };
 

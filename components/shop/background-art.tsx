@@ -266,10 +266,11 @@ const ART: Record<string, Scene> = {
           <rect key={y} x={376 + index * 4} y={y} width={48 - index * 8} height="2" rx="1" fill="#fff7ad" opacity="0.6" />
         ))}
         <g fill="#3b0a1a" opacity="0.82">
-          <Palm x={262} bottom={124} height={58} lean={-6} />
-          <Palm x={548} bottom={124} height={64} lean={7} />
-          <Palm x={70} bottom={124} height={50} lean={5} />
-          <Palm x={735} bottom={124} height={52} lean={-5} />
+          {/* Hai cây sát mặt trời để thẻ Cửa hàng 16:10 (chỉ thấy x ≈ 290–510) vẫn có. */}
+          <Palm x={318} bottom={124} height={56} lean={-6} />
+          <Palm x={490} bottom={124} height={62} lean={7} />
+          <Palm x={140} bottom={124} height={50} lean={5} />
+          <Palm x={680} bottom={124} height={52} lean={-5} />
         </g>
       </>
     )

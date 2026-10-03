@@ -174,19 +174,21 @@ export default async function StudentShopPage({
 
   function preview(item: ResolvedItem) {
     if (item.category === "background") {
-      return <BackgroundArt artKey={item.artKey} className="aspect-[5/2] w-full" />;
+      // Khổ 16:10 như thẻ nền của chin — cảnh vẽ 800×140 nên chỉ thấy khúc giữa,
+      // chi tiết chính đã đặt sẵn ở giữa (xem components/shop/background-art.tsx).
+      return <BackgroundArt artKey={item.artKey} className="aspect-[16/10] w-full" />;
     }
     // Xem thử khung ngay quanh avatar của chính học viên. Vẽ thẳng theo artKey vì
     // thẻ mẫu đồ thành tích (chưa có tháng nào) không có mã món thật.
     return (
-      <div className="flex h-32 w-full items-center justify-center bg-muted/40">
-        <span className="relative inline-flex h-16 w-16 shrink-0 rounded-full">
+      <div className="flex aspect-[16/10] w-full items-center justify-center bg-muted/40">
+        <span className="relative inline-flex h-24 w-24 shrink-0 rounded-full">
           <StudentAvatar
             avatarUrl={profile.avatarUrl}
             avatarPreset={profile.avatarPreset}
             userImage={profile.user?.image ?? null}
             displayName={profile.displayName}
-            size="lg"
+            size="xl"
           />
           <FrameArt
             artKey={item.artKey}
@@ -200,7 +202,7 @@ export default async function StudentShopPage({
   const linkBase = "rounded-lg px-3 py-2 text-sm font-semibold transition";
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
+    <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
       <aside className="space-y-4 lg:sticky lg:top-8 lg:self-start">
         <div className="rounded-xl border border-border bg-card p-4 shadow-card">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Số dư</p>
@@ -257,6 +259,11 @@ export default async function StudentShopPage({
       <section className="min-w-0">
         <h2 className="text-xl font-bold tracking-tight">
           {TABS.find((item) => item.key === tab)?.label}
+          {tab !== "history" ? (
+            <span className="ml-2 text-sm font-normal text-muted-foreground">
+              {cardsFor(tab).length} vật phẩm
+            </span>
+          ) : null}
         </h2>
 
         {tab === "history" ? (
@@ -283,9 +290,9 @@ export default async function StudentShopPage({
             </ul>
           )
         ) : (
-          // Tối đa 3 cột: khung nội dung bị bó max-w-5xl cạnh menu, 4 cột thì thẻ chỉ
-          // còn ~110px, nút giá gãy dòng.
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          // Trang này dùng hết bề ngang (AppShell coi là trang rộng) nên thẻ to như
+          // chin: thẻ nên rộng ≥ 220px, nhiều cột hơn khi màn hình lớn.
+          <div className="mt-4 grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {cardsFor(tab).map(({ item, state }) => (
               <ShopItemCard
                 key={`${item.key}-${state}`}

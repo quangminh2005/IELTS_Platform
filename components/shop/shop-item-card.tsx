@@ -17,7 +17,7 @@ const numberFormat = new Intl.NumberFormat("vi-VN");
 
 export type ShopCardState = "owned" | "equipped" | "buyable" | "short" | "locked";
 
-const BUTTON = "w-full rounded-lg px-3 py-2 text-sm font-semibold transition";
+const PILL = "inline-flex shrink-0 items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-semibold transition";
 
 // Mua 2 bước ngay trên thẻ (không dùng window.confirm — trên điện thoại hộp thoại
 // gốc dễ bấm nhầm và chặn công cụ kiểm thử).
@@ -60,19 +60,20 @@ export function ShopItemCard({
           {rarityLabel}
         </span>
       </div>
-      <div className="flex flex-1 flex-col gap-2 p-3">
-        <p className="text-sm font-semibold leading-tight">{name}</p>
-        {description ? <p className="text-xs text-muted-foreground">{description}</p> : null}
-        <div className="mt-auto pt-1">
+      {/* Hàng dưới kiểu chin: tên bên trái, nút giá/trang bị gọn bên phải. */}
+      <div className="flex flex-1 flex-col gap-1 p-3 sm:px-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="min-w-0 text-sm font-semibold leading-tight sm:text-base">{name}</p>
           {state === "equipped" ? (
             <ActionForm action={equipItem}>
               <input type="hidden" name="category" value={category} />
               <input type="hidden" name="itemKey" value="" />
               <ActionSubmitButton
                 pendingLabel="Đang tháo…"
-                className={`${BUTTON} border border-primary/40 bg-primary/10 text-primary hover:bg-primary/20`}
+                title="Bấm để tháo"
+                className={`${PILL} border border-primary/40 bg-primary/10 text-primary hover:bg-primary/20`}
               >
-                ✓ Đang dùng · Tháo
+                ✓ Đang dùng
               </ActionSubmitButton>
             </ActionForm>
           ) : state === "owned" ? (
@@ -81,31 +82,28 @@ export function ShopItemCard({
               <input type="hidden" name="itemKey" value={itemKey} />
               <ActionSubmitButton
                 pendingLabel="Đang trang bị…"
-                className={`${BUTTON} bg-primary text-primary-foreground hover:bg-primary/90`}
+                className={`${PILL} bg-primary text-primary-foreground hover:bg-primary/90`}
               >
                 Trang bị
               </ActionSubmitButton>
             </ActionForm>
           ) : state === "locked" ? (
-            <p className={`${BUTTON} cursor-default border border-border text-center text-muted-foreground`}>
-              🔒 Mở bằng thành tích
-            </p>
+            <span className={`${PILL} cursor-default border border-border text-muted-foreground`}>🔒 Khoá</span>
           ) : state === "short" ? (
-            <p className={`${BUTTON} cursor-default border border-border text-center text-muted-foreground`}>
-              <span className="block">🪙 {numberFormat.format(price ?? 0)}</span>
-              <span className="block text-[11px] font-medium">còn thiếu {numberFormat.format((price ?? 0) - coins)}</span>
-            </p>
+            <span className={`${PILL} cursor-default border border-border tabular-nums text-muted-foreground`}>
+              🪙 {numberFormat.format(price ?? 0)}
+            </span>
           ) : confirming ? (
-            <ActionForm action={buyItem} onResult={() => setConfirming(false)} className="flex gap-2">
+            <ActionForm action={buyItem} onResult={() => setConfirming(false)} className="flex gap-1.5">
               <input type="hidden" name="itemKey" value={itemKey} />
               <button
                 type="button"
                 onClick={() => setConfirming(false)}
-                className={`${BUTTON} border border-border hover:bg-muted`}
+                className={`${PILL} border border-border hover:bg-muted`}
               >
                 Huỷ
               </button>
-              <ActionSubmitButton pendingLabel="Đang mua…" className={`${BUTTON} bg-amber-500 text-white hover:bg-amber-600`}>
+              <ActionSubmitButton pendingLabel="Đang mua…" className={`${PILL} bg-amber-500 text-white hover:bg-amber-600`}>
                 Mua luôn
               </ActionSubmitButton>
             </ActionForm>
@@ -113,12 +111,23 @@ export function ShopItemCard({
             <button
               type="button"
               onClick={() => setConfirming(true)}
-              className={`${BUTTON} bg-amber-500 text-white hover:bg-amber-600`}
+              className={`${PILL} bg-white text-slate-900 ring-1 ring-border tabular-nums hover:bg-amber-50 dark:ring-0`}
             >
-              Mua 🪙 {numberFormat.format(price ?? 0)}
+              🪙 {numberFormat.format(price ?? 0)}
             </button>
           )}
         </div>
+        {confirming && state === "buyable" ? (
+          <p className="text-xs text-muted-foreground">
+            Mua với giá {numberFormat.format(price ?? 0)} Xu? Còn lại {numberFormat.format(coins - (price ?? 0))} Xu.
+          </p>
+        ) : state === "short" ? (
+          <p className="text-xs text-muted-foreground">
+            Còn thiếu {numberFormat.format((price ?? 0) - coins)} Xu
+          </p>
+        ) : description ? (
+          <p className="text-xs text-muted-foreground">{description}</p>
+        ) : null}
       </div>
     </div>
   );

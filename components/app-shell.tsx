@@ -379,7 +379,8 @@ export function AppShell({
   // Trang chấm bài chi tiết giữ menu điều hướng nhưng cần bề ngang tối đa: bài
   // luận + khung chấm + danh sách học sinh nằm cạnh nhau, bó trong max-w-5xl thì
   // cột đọc bài chỉ còn ~270px (hẹp hơn cả khung chấm).
-  const isWidePage = /^\/teacher\/review\/[^/]+$/.test(pathname);
+  // Cửa hàng cũng rộng: thẻ nền/khung to như chin.edu.vn, bó max-w-5xl thì thẻ bé tí.
+  const isWidePage = /^\/teacher\/review\/[^/]+$/.test(pathname) || pathname === "/student/shop";
 
   return withBugReport(
     role,

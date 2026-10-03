@@ -76,6 +76,7 @@ model CoinTransaction {
   key       String   // khoá chống trùng, xem bảng trên
   amount    Int
   note      String?  // "Reading Test 3 – Passage 2", "Ôn 24 thẻ", "Mua nền Cực quang"
+  attemptId String?  // lượt sinh ra dòng (popup chúc mừng hiện "+N Xu"); chuỗi trơn, không khoá ngoại
   createdAt DateTime @default(now())
   student   StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
   @@unique([studentId, key])
@@ -162,8 +163,10 @@ chuyển động). SVG phải vẽ đúng trên iOS Safari 15.6 (tránh tính n�
 ## 6. Giao diện
 
 **Học viên**
-- **Chip "🪙 420"** trên thanh trên cùng (`AppShell`, phía HS) cạnh avatar → link
-  `/student/shop`. Thêm mục "Cửa hàng" vào menu học viên. Layout HS đọc thêm cột `coins`.
+- **Chip "🪙 420"** thay nhãn "Học viên" ở sidebar (máy tính) và drawer menu (điện
+  thoại) → link `/student/shop`. Thanh trên cùng của điện thoại không đủ chỗ ở khổ
+  375px nên không đặt ở đó. Thêm mục "Cửa hàng" vào menu học viên. Layout HS đọc thêm
+  cột `coins`, `equippedFrame`.
 - **`/student/shop`** (trang server, đồng bộ ví trước khi render): cột trái = số dư,
   mục Nền / Khung / Lịch sử Xu, lọc độ hiếm; phải = lưới thẻ (điện thoại 2 cột, máy
   tính 4–5 cột). Thẻ khung xem thử ngay quanh avatar của chính HS. Nút theo trạng
@@ -173,7 +176,8 @@ chuyển động). SVG phải vẽ đúng trên iOS Safari 15.6 (tránh tính n�
 - **Lịch sử Xu**: danh sách dòng sổ mới nhất trước, "+16 · Reading Test 3 – Passage 2 · 2/10".
 - **Popup chúc mừng sau nộp** (`submit-celebration`) thêm dòng "+18 🪙 Xu"; lượt làm
   lại hiện "Lượt làm lại không cộng Xu". Số Xu lấy từ sổ theo attempt vừa nộp.
-- **Sửa hồ sơ** (`profile-editor`): thêm ô chọn nhanh nền/khung trong số đồ đã có.
+- **Trang bị/tháo chỉ làm ở Cửa hàng** (đơn giản hơn ô chọn trong "Sửa hồ sơ"); trang
+  hồ sơ có link "Đổi nền & khung ở Cửa hàng →".
 
 **Hiển thị đồ**
 - `StudentAvatar` thêm prop tuỳ chọn `frame?: string | null` → vẽ khung SVG đè quanh

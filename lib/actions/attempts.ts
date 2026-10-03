@@ -15,6 +15,7 @@ import { isSkillTimeUp, skillBudgetSeconds } from "@/lib/active-time";
 import { mergeCount } from "@/lib/proctor-signals";
 import { planDraftWrite } from "@/lib/draft-answers";
 import { prisma } from "@/lib/prisma";
+import { syncWallet } from "@/lib/wallet";
 
 const highlightSchema = z.object({
   attemptId: z.string().trim().min(1),
@@ -402,6 +403,14 @@ export async function submitSkill(formData: FormData) {
       finalized = true;
     }
   });
+
+  // Cộng Xu cho các phần vừa nộp. Lỗi ví KHÔNG được chặn nộp bài — lần mở Cửa
+  // hàng sau sẽ tự bù (syncWallet idempotent).
+  try {
+    await syncWallet(student.id, { attemptId: attempt.id });
+  } catch (error) {
+    console.error("[wallet] không cộng được Xu sau khi nộp", error);
+  }
 
   revalidatePath("/student");
   revalidatePath("/student/history");

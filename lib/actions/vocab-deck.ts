@@ -17,6 +17,7 @@ import {
   parseWiktionaryEntry
 } from "@/lib/vocab-selection";
 import { nextSchedule, normalizeWordKey } from "@/lib/vocab-srs";
+import { syncVocabToday } from "@/lib/wallet";
 
 // ── Ôn thẻ ──────────────────────────────────────────────────────────────────
 
@@ -163,6 +164,13 @@ export async function answerVocabCard(input: {
         total: 1
       }
     });
+
+    // Xu ôn từ hôm nay (2 thẻ = 1 Xu, trần 15). Lỗi ví không làm mất câu đã ôn.
+    try {
+      await syncVocabToday(student.id, now);
+    } catch (error) {
+      console.error("[wallet] không cộng được Xu ôn từ", error);
+    }
 
     return { ok: true };
   } catch (error) {

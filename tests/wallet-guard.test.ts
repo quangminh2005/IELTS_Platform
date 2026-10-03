@@ -29,3 +29,24 @@ describe("Xu — schema + ensure-db", () => {
     expect(ensureDb).toContain('ADD COLUMN IF NOT EXISTS "equippedFrame" TEXT');
   });
 });
+
+describe("Xu — móc ví không chặn nộp bài", () => {
+  it("submitSkill đồng bộ ví theo attempt, bọc try/catch", () => {
+    expect(read("lib/actions/attempts.ts")).toMatch(
+      /try\s*\{\s*await syncWallet\(student\.id, \{ attemptId: attempt\.id \}\);?\s*\}\s*catch/
+    );
+  });
+
+  it("answerVocabCard đồng bộ Xu ôn từ hôm nay, bọc try/catch", () => {
+    expect(read("lib/actions/vocab-deck.ts")).toMatch(
+      /try\s*\{\s*await syncVocabToday\(student\.id, now\);?\s*\}\s*catch/
+    );
+  });
+
+  it("mọi lần ghi ví khoá dòng học viên và đặt lại số dư bằng tổng sổ", () => {
+    const wallet = read("lib/wallet.ts");
+    expect(wallet).toContain("FOR UPDATE");
+    expect(wallet).toContain("_sum: { amount: true }");
+    expect(wallet).not.toMatch(/coins:\s*\{\s*(increment|decrement)/);
+  });
+});

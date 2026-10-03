@@ -18,7 +18,8 @@ import {
 
 // Đọc dữ liệu Tổng kết tháng cho CẢ TRƯỜNG. Không có bảng riêng: suy ra từ giờ
 // nộp từng kỹ năng, kết quả chấm từng câu và ngày ôn Sổ từ.
-async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> {
+// Export để script hồi tố Xu (chạy ngoài Next, không dùng được unstable_cache) gọi thẳng.
+export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> {
   const { start, end } = monthRange(monthKey);
 
   const [skillRows, legacyAttempts, vocabRows] = await Promise.all([

@@ -4,7 +4,8 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { SkillTags } from "@/components/skill-tags";
 import { ProgressRing } from "@/components/progress-ring";
-import { calculateWeekStreak } from "@/lib/streak";
+import { formatWeekRange } from "@/lib/streak";
+import { getWeekStreak } from "@/lib/streak-data";
 import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
@@ -72,7 +73,7 @@ export default async function StudentDashboardPage() {
 
   // Các truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
   // một lượt đi/về database thay vì nhiều lượt nối tiếp.
-  const [recipients, attempts, membership, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup] =
+  const [recipients, attempts, weekStreak, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup] =
     await Promise.all([
     prisma.assignmentRecipient.findMany({
       // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
@@ -115,11 +116,8 @@ export default async function StudentDashboardPage() {
         review: { select: { overallBand: true } }
       }
     }),
-    prisma.classStudent.findFirst({
-      where: { studentId: student.id },
-      orderBy: { joinedAt: "desc" },
-      include: { class: { select: { weeklyGoal: true } } }
-    }),
+    // Chuỗi tuần + tuần lỡ cứu được bằng Xu (một nguồn với trang Hồ sơ).
+    getWeekStreak(student.id),
     getWordOfTheDay(),
     getVocabSidebar(student.id),
     getStudentSchedule(student.id),
@@ -136,8 +134,6 @@ export default async function StudentDashboardPage() {
     (recipient) => recipient.status === "submitted" || recipient.status === "reviewed"
   ).length;
 
-  const weeklyGoal = membership?.class.weeklyGoal ?? 3;
-
   const now = new Date();
 
   // Buổi học sắp tới (hoặc đang diễn ra) trong mọi lớp học viên đang theo.
@@ -147,15 +143,7 @@ export default async function StudentDashboardPage() {
     : null;
   const nextSessionKey = nextSession ? vnDateKey(nextSession.startsAt) : null;
 
-  const submittedDates = attempts
-    .filter(
-      (attempt) =>
-        (attempt.status === "submitted" || attempt.status === "reviewed") &&
-        attempt.submittedAt !== null
-    )
-    .map((attempt) => attempt.submittedAt as Date);
-
-  const streak = calculateWeekStreak({ submittedAt: submittedDates, weeklyGoal, now });
+  const streak = weekStreak.streak;
 
   // Chuỗi hoạt động tính MỌI lượt (kể cả luyện lại); điểm xếp hạng chỉ lượt đầu —
   // việc lọc lượt nằm trong rankingScoreFromRecipientsAndAttempts (lib/student-score.ts),
@@ -341,6 +329,16 @@ export default async function StudentDashboardPage() {
           currentWeekCount={streak.currentWeekCount}
           weeklyGoal={streak.weeklyGoal}
           atRisk={streak.atRisk}
+          restore={
+            weekStreak.offer
+              ? {
+                  lostWeeks: weekStreak.offer.lostWeeks,
+                  weekLabel: formatWeekRange(weekStreak.offer.weekKey),
+                  price: weekStreak.price,
+                  coins: weekStreak.coins
+                }
+              : null
+          }
         />
         <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-card">
           <span className="text-3xl" aria-hidden="true">

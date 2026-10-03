@@ -119,3 +119,31 @@ describe("Xu — đồ hiện khắp nơi", () => {
     expect(read("components/submit-celebration.tsx")).toContain("coinsEarned");
   });
 });
+
+describe("Xu — khôi phục chuỗi tuần", () => {
+  it("schema + type có kind streak_restore", () => {
+    expect(read("prisma/schema.prisma")).toMatch(/\/\/ enum CoinKind[^\n]*streak_restore/);
+    expect(read("lib/coins.ts")).toContain('"streak_restore"');
+  });
+
+  it("restoreStreak: requireStudent trước, server tự tính tuần, khoá dòng + đặt lại số dư", () => {
+    const action = read("lib/actions/streak.ts");
+    expect(action).toMatch(
+      /export async function restoreStreak\(\): Promise<ActionResult> \{\s*try \{\s*const student = await requireStudent\(\);/
+    );
+    expect(action).not.toContain("formData");
+    expect(action).toContain("lockStudent(tx, student.id)");
+    expect(action).toContain("getWeekStreak(student.id, now, tx)");
+    expect(action).toContain("recomputeCoins(tx, student.id)");
+    expect(action).toContain('kind: "streak_restore"');
+  });
+
+  it.each(["app/student/page.tsx", "app/student/profile/page.tsx"])(
+    "%s lấy chuỗi tuần từ getWeekStreak (một nguồn)",
+    (path) => {
+      const page = read(path);
+      expect(page).toContain("getWeekStreak(");
+      expect(page).not.toContain("calculateWeekStreak(");
+    }
+  );
+});

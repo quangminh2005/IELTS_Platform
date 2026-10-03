@@ -11,7 +11,8 @@ import { averageBandsBySkillAcrossAttempts, formatBand, SKILL_SHORT_LABELS } fro
 import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 import { getTierProgress } from "@/lib/rank-tier";
-import { calculateWeekStreak, VN_OFFSET_MS } from "@/lib/streak";
+import { VN_OFFSET_MS } from "@/lib/streak";
+import { getWeekStreak } from "@/lib/streak-data";
 import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 
 export const dynamic = "force-dynamic";
@@ -76,12 +77,7 @@ export default async function StudentProfilePage({
       equippedFrame: true,
       targetBand: true,
       createdAt: true,
-      user: { select: { image: true } },
-      classes: {
-        orderBy: { joinedAt: "desc" },
-        take: 1,
-        select: { class: { select: { weeklyGoal: true } } }
-      }
+      user: { select: { image: true } }
     }
   });
 
@@ -165,11 +161,8 @@ export default async function StudentProfilePage({
 
   const tierProgress = getTierProgress(rankingScore.rankingScore);
 
-  const streak = calculateWeekStreak({
-    submittedAt,
-    weeklyGoal: student.classes[0]?.class.weeklyGoal ?? 1,
-    now: new Date()
-  });
+  // Cùng nguồn với trang chủ (mọi lượt nộp + tuần đã cứu bằng Xu).
+  const { streak } = await getWeekStreak(student.id);
 
   const now = new Date();
   const nowVN = new Date(now.getTime() + VN_OFFSET_MS);

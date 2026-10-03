@@ -55,12 +55,20 @@ export default async function StudentStatsPage() {
   ]);
 
   const header = (
-    <header>
-      <p className="text-sm font-semibold text-primary">Nhìn lại chặng đường</p>
-      <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Tiến bộ</h2>
-      <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-        Điểm các bài đã nộp theo thời gian và dạng câu bạn làm tốt / cần luyện thêm.
-      </p>
+    <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p className="text-sm font-semibold text-primary">Nhìn lại chặng đường</p>
+        <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Tiến bộ</h2>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+          Điểm các bài đã nộp theo thời gian và dạng câu bạn làm tốt / cần luyện thêm.
+        </p>
+      </div>
+      <Link
+        href="/student/recap"
+        className="inline-flex shrink-0 items-center gap-2 self-start rounded-lg border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary/15 sm:self-auto"
+      >
+        ✦ Tổng kết tháng
+      </Link>
     </header>
   );
 

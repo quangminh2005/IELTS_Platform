@@ -25,6 +25,9 @@ import {
 } from "@/lib/class-schedule";
 import { getStudentSchedule } from "@/lib/class-schedule-query";
 import { pendingBeforeSession } from "@/lib/student-calendar";
+import { getStudentRecapPopup } from "@/lib/monthly-recap-data";
+import { MonthlyRecapDialog } from "@/components/monthly-recap-dialog";
+import { MonthlyRecapPanel } from "@/components/monthly-recap-panel";
 
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
@@ -69,7 +72,7 @@ export default async function StudentDashboardPage() {
 
   // Các truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
   // một lượt đi/về database thay vì nhiều lượt nối tiếp.
-  const [recipients, attempts, membership, wordOfDay, vocabSidebar, schedule, vocabToday] =
+  const [recipients, attempts, membership, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup] =
     await Promise.all([
     prisma.assignmentRecipient.findMany({
       // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
@@ -120,7 +123,9 @@ export default async function StudentDashboardPage() {
     getWordOfTheDay(),
     getVocabSidebar(student.id),
     getStudentSchedule(student.id),
-    countTodayCards(student.id)
+    countTodayCards(student.id),
+    // Tổng kết tháng trước — chỉ có trong 7 ngày đầu tháng, lỗi thì trả null.
+    getStudentRecapPopup(student.id)
   ]);
 
   const pendingCount = recipients.filter(
@@ -182,6 +187,12 @@ export default async function StudentDashboardPage() {
 
   return (
     <div className="space-y-8">
+      {recapPopup ? (
+        <MonthlyRecapDialog monthKey={recapPopup.recap.monthKey}>
+          <MonthlyRecapPanel recap={recapPopup.recap} view={recapPopup.view} closeMode="dialog" />
+        </MonthlyRecapDialog>
+      ) : null}
+
       <header>
         <p className="text-sm font-semibold text-primary">Trang học viên</p>
         <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">

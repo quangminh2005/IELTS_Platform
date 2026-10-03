@@ -24,6 +24,8 @@ datasource db {
 // enum DeckCardSource (VocabDeckCard.source): bank | student
 // enum SpeakingPrepScope (Assignment.speakingPrepScope, null = per_question): per_question | shared
 // enum MaterialCategory (Material.category): book | homework
+// enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase
+// enum ItemSource (StudentItem.source): purchase | achievement
 
 model User {
   id             String          @id @default(cuid())
@@ -93,6 +95,13 @@ model StudentProfile {
   // chưa có link. Giáo viên bấm "Tạo lại link" -> đổi mã, link cũ chết ngay.
   // Sinh bằng crypto.randomBytes(24).toString("base64url").
   parentToken         String?   @unique
+  // Số dư Xu lưu sẵn — LUÔN bằng SUM(CoinTransaction.amount) của học viên, chỉ được
+  // ghi qua lib/wallet.ts (khoá dòng FOR UPDATE rồi đặt lại bằng tổng sổ).
+  coins               Int       @default(0)
+  // Mã đồ đang trang bị (lib/shop-catalog.ts). Null = không trang bị: bìa dùng
+  // coverColor như cũ, avatar không khung.
+  equippedBackground  String?
+  equippedFrame       String?
   user        User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
   classes     ClassStudent[]
   recipients  AssignmentRecipient[]
@@ -105,6 +114,9 @@ model StudentProfile {
   vocabQuizDays VocabQuizDay[]
   vocabCards    VocabDeckCard[]
   bugReports    BugReport[]
+
+  coinTransactions CoinTransaction[]
+  items            StudentItem[]
 }
 
 // LƯU Ý VỀ INDEX: Postgres (và Prisma) KHÔNG tự tạo index cho cột khoá ngoại —
@@ -638,4 +650,39 @@ model BugReport {
 
   @@index([studentId, createdAt])
   @@index([status, createdAt])
+}
+
+// Một dòng sổ Xu. amount > 0 là cộng, < 0 là trừ. key chống cộng trùng (xem
+// lib/coins.ts). KHÔNG có khoá ngoại tới Attempt/Assignment: thầy reset lượt (xoá
+// cascade) thì dòng sổ vẫn còn → làm lại không cày thêm Xu được.
+model CoinTransaction {
+  id        String   @id @default(cuid())
+  studentId String
+  // earn_unit | earn_vocab | purchase — xem comment đầu schema
+  kind      String
+  key       String
+  amount    Int
+  note      String?
+  // Lượt làm sinh ra dòng này (để popup chúc mừng hiện "+N Xu"). Chuỗi trơn.
+  attemptId String?
+  createdAt DateTime @default(now())
+
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, key])
+}
+
+// Đồ học viên đang sở hữu. itemKey là mã trong lib/shop-catalog.ts; đồ thành
+// tích kèm tháng, vd "frame:champion@2026-09".
+model StudentItem {
+  id        String   @id @default(cuid())
+  studentId String
+  itemKey   String
+  // purchase | achievement — xem comment đầu schema
+  source    String
+  createdAt DateTime @default(now())
+
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, itemKey])
 }

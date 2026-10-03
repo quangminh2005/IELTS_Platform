@@ -336,6 +336,43 @@ const statements = [
       FOREIGN KEY ("wordId") REFERENCES "VocabWord"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
   END $$;`,
+  // Xu & Cửa hàng (Đợt 1): sổ Xu, đồ sở hữu, số dư + đồ đang trang bị.
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "coins" INTEGER NOT NULL DEFAULT 0;',
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "equippedBackground" TEXT;',
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "equippedFrame" TEXT;',
+  `CREATE TABLE IF NOT EXISTS "CoinTransaction" (
+    "id" TEXT NOT NULL,
+    "studentId" TEXT NOT NULL,
+    "kind" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "amount" INTEGER NOT NULL,
+    "note" TEXT,
+    "attemptId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "CoinTransaction_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "CoinTransaction_studentId_key_key" ON "CoinTransaction"("studentId", "key");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'CoinTransaction_studentId_fkey') THEN
+      ALTER TABLE "CoinTransaction" ADD CONSTRAINT "CoinTransaction_studentId_fkey"
+      FOREIGN KEY ("studentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `CREATE TABLE IF NOT EXISTS "StudentItem" (
+    "id" TEXT NOT NULL,
+    "studentId" TEXT NOT NULL,
+    "itemKey" TEXT NOT NULL,
+    "source" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "StudentItem_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "StudentItem_studentId_itemKey_key" ON "StudentItem"("studentId", "itemKey");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'StudentItem_studentId_fkey') THEN
+      ALTER TABLE "StudentItem" ADD CONSTRAINT "StudentItem_studentId_fkey"
+      FOREIGN KEY ("studentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
 ];
 
 const prisma = new PrismaClient();

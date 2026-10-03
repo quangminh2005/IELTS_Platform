@@ -83,13 +83,19 @@ describe("Xu — trang Cửa hàng", () => {
 });
 
 describe("Xu — đồ hiện khắp nơi", () => {
-  it.each([
-    "app/student/profile/page.tsx",
-    "app/student/profile/[studentId]/page.tsx",
-    "components/student-wallet-summary.tsx"
-  ])("%s dùng ProfileCover", (path) => {
-    expect(read(path)).toContain("<ProfileCover");
-  });
+  it.each(["components/profile-hero.tsx", "components/student-wallet-summary.tsx"])(
+    "%s dùng ProfileCover",
+    (path) => {
+      expect(read(path)).toContain("<ProfileCover");
+    }
+  );
+
+  it.each(["app/student/profile/page.tsx", "app/student/profile/[studentId]/page.tsx"])(
+    "%s dùng banner hồ sơ to kiểu chin",
+    (path) => {
+      expect(read(path)).toContain("<ProfileHero");
+    }
+  );
 
   it("trang học viên phía thầy có khối Xu", () => {
     expect(read("app/teacher/students/[studentId]/page.tsx")).toContain("<StudentWalletSummary");

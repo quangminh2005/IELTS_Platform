@@ -1,7 +1,6 @@
 import { notFound, redirect } from "next/navigation";
-import { ProfileCover } from "@/components/profile-cover";
+import { ProfileHero } from "@/components/profile-hero";
 import { RankTierBadge } from "@/components/rank-tier-badge";
-import { StudentAvatar } from "@/components/student-avatar";
 import { auth } from "@/lib/auth";
 import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
@@ -116,27 +115,23 @@ export default async function ClassmateProfilePage({
   return (
     <div className="space-y-6">
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-        <ProfileCover backgroundKey={classmate.equippedBackground} coverColor={classmate.coverColor} />
-        <div className="-mt-12 px-5 pb-5">
-          <StudentAvatar
-            avatarUrl={classmate.avatarUrl}
-            avatarPreset={classmate.avatarPreset}
-            userImage={classmate.user?.image ?? null}
-            displayName={classmate.displayName}
-            size="xl"
-            className="ring-4 ring-card"
-            frame={classmate.equippedFrame}
-          />
-          <h2 className="mt-3 text-2xl font-bold tracking-tight">
-            {classmate.displayName}
-          </h2>
+        <ProfileHero
+          backgroundKey={classmate.equippedBackground}
+          coverColor={classmate.coverColor}
+          frame={classmate.equippedFrame}
+          avatarUrl={classmate.avatarUrl}
+          avatarPreset={classmate.avatarPreset}
+          userImage={classmate.user?.image ?? null}
+          displayName={classmate.displayName}
+        />
+        <div className="px-5 pb-5 pt-4 text-center">
           {/* Text thuần — bio do người khác nhập. */}
           {classmate.bio ? (
-            <p className="mt-2 max-w-prose whitespace-pre-line text-sm text-muted-foreground">
+            <p className="mx-auto max-w-prose whitespace-pre-line text-sm text-muted-foreground">
               {classmate.bio}
             </p>
           ) : null}
-          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
             <span>Tham gia từ {joined}</span>
             <span aria-hidden="true">·</span>
             <RankTierBadge tier={tierProgress.tier} />

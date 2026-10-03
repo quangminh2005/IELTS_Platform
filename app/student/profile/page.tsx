@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AttendanceCalendar } from "@/components/attendance-calendar";
-import { ProfileCover } from "@/components/profile-cover";
+import { ProfileHero } from "@/components/profile-hero";
 import { ProfileEditor } from "@/components/profile-editor";
 import { RankTierBadge } from "@/components/rank-tier-badge";
-import { StudentAvatar } from "@/components/student-avatar";
 import { updateMyProfile } from "@/lib/actions/profile";
 import { auth } from "@/lib/auth";
 import { buildAttendanceMonth } from "@/lib/attendance";
@@ -208,27 +207,23 @@ export default async function StudentProfilePage({
   return (
     <div className="space-y-8">
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-        <ProfileCover backgroundKey={student.equippedBackground} coverColor={student.coverColor} />
-        <div className="-mt-12 px-5 pb-5">
-          <StudentAvatar
-            avatarUrl={student.avatarUrl}
-            avatarPreset={student.avatarPreset}
-            userImage={student.user?.image ?? null}
-            displayName={student.displayName}
-            size="xl"
-            className="ring-4 ring-card"
-            frame={student.equippedFrame}
-          />
-          <h2 className="mt-3 text-2xl font-bold tracking-tight">
-            {student.displayName}
-          </h2>
+        <ProfileHero
+          backgroundKey={student.equippedBackground}
+          coverColor={student.coverColor}
+          frame={student.equippedFrame}
+          avatarUrl={student.avatarUrl}
+          avatarPreset={student.avatarPreset}
+          userImage={student.user?.image ?? null}
+          displayName={student.displayName}
+        />
+        <div className="px-5 pb-5 pt-4 text-center">
           {/* Bio là chữ do học viên nhập — render text thuần, không bao giờ HTML. */}
           {student.bio ? (
-            <p className="mt-2 max-w-prose whitespace-pre-line text-sm text-muted-foreground">
+            <p className="mx-auto max-w-prose whitespace-pre-line text-sm text-muted-foreground">
               {student.bio}
             </p>
           ) : null}
-          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
             <span>Tham gia từ {joined}</span>
             <span aria-hidden="true">·</span>
             <RankTierBadge tier={tierProgress.tier} />

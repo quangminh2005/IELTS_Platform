@@ -46,7 +46,9 @@ const config: Config = {
       },
       animation: {
         "fade-in": "fade-in 0.35s ease both",
-        "fade-in-soft": "fade-in-soft 0.9s ease both"
+        "fade-in-soft": "fade-in-soft 0.9s ease both",
+        // Vòng lửa khung "Phượng hoàng" ở Cửa hàng (keyframes spin có sẵn của Tailwind).
+        "spin-slow": "spin 9s linear infinite"
       }
     }
   },

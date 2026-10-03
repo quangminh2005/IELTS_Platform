@@ -1,3 +1,5 @@
+import { FrameArt } from "@/components/shop/frame-art";
+import { resolveItem } from "@/lib/shop-catalog";
 import { resolveStudentAvatar } from "@/lib/student-avatar";
 
 // Component hiện avatar dùng chung cho MỌI nơi: thanh điều hướng, bảng xếp hạng,
@@ -25,7 +27,8 @@ export function StudentAvatar({
   userImage,
   displayName,
   size = "md",
-  className = ""
+  className = "",
+  frame = null
 }: {
   avatarUrl: string | null;
   avatarPreset: string | null;
@@ -33,6 +36,8 @@ export function StudentAvatar({
   displayName: string;
   size?: keyof typeof SIZES;
   className?: string;
+  // Mã khung avatar đang trang bị (lib/shop-catalog.ts). Mã lạ / không phải khung → bỏ.
+  frame?: string | null;
 }) {
   const source = resolveStudentAvatar({
     avatarUrl,
@@ -43,8 +48,10 @@ export function StudentAvatar({
   const dimension = SIZES[size];
   const shared = `${dimension.box} shrink-0 rounded-full object-cover ${className}`;
 
+  let avatar: JSX.Element;
+
   if (source.kind === "image") {
-    return (
+    avatar = (
       // Ảnh từ Blob/Google, không qua trình tối ưu ảnh của Next để khỏi tốn hạn mức
       // biến đổi ảnh. referrerPolicy="no-referrer": không gửi Referer tới Google
       // khi ảnh là ảnh Google Account — thiếu dòng này một số tài khoản sẽ không
@@ -58,18 +65,36 @@ export function StudentAvatar({
         referrerPolicy="no-referrer"
       />
     );
+  } else {
+    const content = source.kind === "preset" ? source.emoji : source.text;
+    const contentClass = source.kind === "preset" ? dimension.emoji : dimension.text;
+
+    avatar = (
+      <span
+        aria-label={`Ảnh đại diện của ${displayName}`}
+        role="img"
+        className={`${dimension.box} shrink-0 rounded-full ${source.colorClass} ${className} inline-flex items-center justify-center font-bold text-white`}
+      >
+        <span className={contentClass}>{content}</span>
+      </span>
+    );
   }
 
-  const content = source.kind === "preset" ? source.emoji : source.text;
-  const contentClass = source.kind === "preset" ? dimension.emoji : dimension.text;
+  const frameItem = resolveItem(frame);
 
+  if (!frameItem || frameItem.category !== "frame") {
+    return avatar;
+  }
+
+  // Khung tràn ra ngoài hộp avatar bằng định vị tuyệt đối → kích thước hộp giữ
+  // nguyên, hàng danh sách / bục xếp hạng không bị xô lệch.
   return (
-    <span
-      aria-label={`Ảnh đại diện của ${displayName}`}
-      role="img"
-      className={`${dimension.box} shrink-0 rounded-full ${source.colorClass} ${className} inline-flex items-center justify-center font-bold text-white`}
-    >
-      <span className={contentClass}>{content}</span>
+    <span className={`relative inline-flex shrink-0 rounded-full ${dimension.box}`}>
+      {avatar}
+      <FrameArt
+        artKey={frameItem.artKey}
+        className="pointer-events-none absolute -inset-[18%] h-[136%] w-[136%]"
+      />
     </span>
   );
 }

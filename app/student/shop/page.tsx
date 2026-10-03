@@ -283,7 +283,9 @@ export default async function StudentShopPage({
             </ul>
           )
         ) : (
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+          // Tối đa 3 cột: khung nội dung bị bó max-w-5xl cạnh menu, 4 cột thì thẻ chỉ
+          // còn ~110px, nút giá gãy dòng.
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {cardsFor(tab).map(({ item, state }) => (
               <ShopItemCard
                 key={`${item.key}-${state}`}

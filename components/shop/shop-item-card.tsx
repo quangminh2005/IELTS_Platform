@@ -92,7 +92,8 @@ export function ShopItemCard({
             </p>
           ) : state === "short" ? (
             <p className={`${BUTTON} cursor-default border border-border text-center text-muted-foreground`}>
-              🪙 {numberFormat.format(price ?? 0)} · thiếu {numberFormat.format((price ?? 0) - coins)}
+              <span className="block">🪙 {numberFormat.format(price ?? 0)}</span>
+              <span className="block text-[11px] font-medium">còn thiếu {numberFormat.format((price ?? 0) - coins)}</span>
             </p>
           ) : confirming ? (
             <ActionForm action={buyItem} onResult={() => setConfirming(false)} className="flex gap-2">

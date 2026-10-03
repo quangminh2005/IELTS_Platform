@@ -115,6 +115,7 @@ export function MonthlyRecapBoard({
                     avatarUrl={entry.avatarUrl}
                     avatarPreset={entry.avatarPreset}
                     userImage={entry.userImage}
+                    frame={entry.equippedFrame}
                     displayName={entry.displayName}
                     size={style.size}
                     className={`mt-1 ring-4 ${style.ring} ${style.shine}`}
@@ -156,6 +157,7 @@ export function MonthlyRecapBoard({
                       avatarUrl={entry.avatarUrl}
                       avatarPreset={entry.avatarPreset}
                       userImage={entry.userImage}
+                      frame={entry.equippedFrame}
                       displayName={entry.displayName}
                       size="sm"
                     />

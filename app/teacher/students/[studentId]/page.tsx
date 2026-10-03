@@ -10,6 +10,7 @@ import { ProctorFlag } from "@/components/proctor-flag";
 import { ParentContactBlock } from "@/components/parent-contact-block";
 import { ProfileEditor } from "@/components/profile-editor";
 import { StudentAvatar } from "@/components/student-avatar";
+import { StudentWalletSummary } from "@/components/student-wallet-summary";
 import { resolveAppUrl } from "@/lib/app-url";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
@@ -172,6 +173,21 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
 
   // Lịch chăm học: mọi lượt nộp (bài giao + tự luyện) và ngày ôn Sổ từ.
   const heatmap = await getActivityHeatmap(student.id);
+
+  // Xu & đồ trang trí (chỉ xem). coins/equipped* đã có sẵn nhờ include ở trên.
+  const [walletItems, walletTransactions] = await Promise.all([
+    prisma.studentItem.findMany({
+      where: { studentId: student.id },
+      orderBy: { createdAt: "asc" },
+      select: { itemKey: true }
+    }),
+    prisma.coinTransaction.findMany({
+      where: { studentId: student.id },
+      orderBy: { createdAt: "desc" },
+      take: 20,
+      select: { id: true, amount: true, note: true, createdAt: true }
+    })
+  ]);
 
   // Khối "Tự luyện": các đề học viên tự chọn luyện thêm. Đây là truy vấn riêng vì
   // student.recipients ở trên đã loại hẳn bài tự luyện. Đếm MỌI lượt (kể cả lượt
@@ -342,6 +358,15 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           </div>
         </details>
       </section>
+
+      <StudentWalletSummary
+        coins={student.coins}
+        equippedBackground={student.equippedBackground}
+        equippedFrame={student.equippedFrame}
+        coverColor={student.coverColor}
+        itemKeys={walletItems.map((item) => item.itemKey)}
+        transactions={walletTransactions}
+      />
 
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="border-b border-border px-5 py-4">

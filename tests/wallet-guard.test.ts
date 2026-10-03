@@ -81,3 +81,35 @@ describe("Xu — trang Cửa hàng", () => {
     expect(shell).toContain("CoinChip");
   });
 });
+
+describe("Xu — đồ hiện khắp nơi", () => {
+  it.each([
+    "app/student/profile/page.tsx",
+    "app/student/profile/[studentId]/page.tsx",
+    "components/student-wallet-summary.tsx"
+  ])("%s dùng ProfileCover", (path) => {
+    expect(read(path)).toContain("<ProfileCover");
+  });
+
+  it("trang học viên phía thầy có khối Xu", () => {
+    expect(read("app/teacher/students/[studentId]/page.tsx")).toContain("<StudentWalletSummary");
+  });
+
+  it.each([
+    "components/class-ranking-board.tsx",
+    "components/monthly-recap-board.tsx",
+    "components/monthly-recap-panel.tsx",
+    "app/student/profile/page.tsx",
+    "app/student/profile/[studentId]/page.tsx"
+  ])("%s truyền frame cho avatar", (path) => {
+    expect(read(path)).toMatch(/frame=\{/);
+  });
+
+  it("Tổng kết tháng đổi khoá cache khi thêm khung", () => {
+    expect(read("lib/monthly-recap-data.ts")).toContain('"monthly-recap-v2"');
+  });
+
+  it("popup chúc mừng nhận số Xu", () => {
+    expect(read("components/submit-celebration.tsx")).toContain("coinsEarned");
+  });
+});

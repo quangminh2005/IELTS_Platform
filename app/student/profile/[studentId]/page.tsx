@@ -1,11 +1,11 @@
 import { notFound, redirect } from "next/navigation";
+import { ProfileCover } from "@/components/profile-cover";
 import { RankTierBadge } from "@/components/rank-tier-badge";
 import { StudentAvatar } from "@/components/student-avatar";
 import { auth } from "@/lib/auth";
 import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 import { getTierProgress } from "@/lib/rank-tier";
-import { coverClassName } from "@/lib/student-avatar";
 import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 
 export const dynamic = "force-dynamic";
@@ -52,6 +52,8 @@ export default async function ClassmateProfilePage({
       avatarUrl: true,
       avatarPreset: true,
       coverColor: true,
+      equippedBackground: true,
+      equippedFrame: true,
       createdAt: true,
       user: { select: { image: true } }
     }
@@ -114,7 +116,7 @@ export default async function ClassmateProfilePage({
   return (
     <div className="space-y-6">
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-        <div className={`h-32 ${coverClassName(classmate.coverColor)}`} />
+        <ProfileCover backgroundKey={classmate.equippedBackground} coverColor={classmate.coverColor} />
         <div className="-mt-12 px-5 pb-5">
           <StudentAvatar
             avatarUrl={classmate.avatarUrl}
@@ -123,6 +125,7 @@ export default async function ClassmateProfilePage({
             displayName={classmate.displayName}
             size="xl"
             className="ring-4 ring-card"
+            frame={classmate.equippedFrame}
           />
           <h2 className="mt-3 text-2xl font-bold tracking-tight">
             {classmate.displayName}

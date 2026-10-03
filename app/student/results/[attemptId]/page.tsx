@@ -141,6 +141,12 @@ export default async function StudentResultPage({ params, searchParams }: Result
   const isManualOnly = autoSkills.length === 0;
   const dominantSkill = pickDominantSkill(autoSkills);
 
+  // Xu lượt này đã cộng (ghi sổ ngay khi nộp) — hiện trong popup chúc mừng.
+  const coinSum = await prisma.coinTransaction.aggregate({
+    where: { studentId: student.id, attemptId: attempt.id },
+    _sum: { amount: true }
+  });
+
   // Gộp thời gian làm bài theo kỹ năng từ partTimesJson (tra kỹ năng của từng phần).
   const unitSkills: Record<string, string> = {};
   visibleAnswers.forEach((answer) => {
@@ -173,6 +179,8 @@ export default async function StudentResultPage({ params, searchParams }: Result
           scorePercent={attempt.scorePercent}
           isManualOnly={isManualOnly}
           dominantSkill={dominantSkill}
+          coinsEarned={coinSum._sum.amount ?? 0}
+          isRetry={attempt.attemptRound >= 2}
         />
       ) : null}
 

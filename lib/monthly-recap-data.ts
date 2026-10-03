@@ -178,6 +178,7 @@ export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> 
             displayName: true,
             avatarUrl: true,
             avatarPreset: true,
+            equippedFrame: true,
             user: { select: { image: true } }
           }
         })
@@ -186,15 +187,17 @@ export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> 
         displayName: student.displayName,
         avatarUrl: student.avatarUrl,
         avatarPreset: student.avatarPreset,
-        userImage: student.user?.image ?? null
+        userImage: student.user?.image ?? null,
+        equippedFrame: student.equippedFrame
       }))
     : [];
 
   return buildMonthlyRecap({ monthKey, units, submits, vocab, students });
 }
 
-// Tháng đã kết thúc gần như không đổi → cache 1 ngày cho nhẹ Neon.
-const loadClosedMonthRecap = unstable_cache(loadMonthlyRecap, ["monthly-recap-v1"], {
+// Tháng đã kết thúc gần như không đổi → cache 1 ngày cho nhẹ Neon. v2: thêm khung
+// avatar (Xu & Cửa hàng) — HS đổi khung thì bảng tháng cũ có thể trễ tới 1 ngày.
+const loadClosedMonthRecap = unstable_cache(loadMonthlyRecap, ["monthly-recap-v2"], {
   revalidate: 86400
 });
 

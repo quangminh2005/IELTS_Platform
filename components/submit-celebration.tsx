@@ -18,10 +18,15 @@ export function SubmitCelebration({
   scorePercent,
   isManualOnly,
   dominantSkill,
+  coinsEarned = 0,
+  isRetry = false,
 }: {
   scorePercent: number | null;
   isManualOnly: boolean;
   dominantSkill: string | null;
+  // Xu cộng cho lượt này (sổ Xu) và lượt làm lại (không cộng Xu).
+  coinsEarned?: number;
+  isRetry?: boolean;
 }) {
   const params = useSearchParams();
   const router = useRouter();
@@ -95,6 +100,13 @@ export function SubmitCelebration({
         {scorePercent !== null && !isManualOnly ? (
           <p className="mt-3 text-2xl font-bold tabular-nums text-primary">
             {Math.round(scorePercent)}%
+          </p>
+        ) : null}
+        {isRetry ? (
+          <p className="mt-2 text-xs text-muted-foreground">Lượt làm lại không cộng Xu.</p>
+        ) : coinsEarned > 0 ? (
+          <p className="mt-3 inline-flex items-center gap-1 rounded-full bg-amber-400/15 px-3 py-1 text-sm font-bold text-amber-700 dark:text-amber-300">
+            +{coinsEarned} 🪙 Xu
           </p>
         ) : null}
         <button

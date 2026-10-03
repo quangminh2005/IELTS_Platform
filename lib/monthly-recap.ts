@@ -99,6 +99,7 @@ export type RecapStudentInfo = {
   avatarUrl: string | null;
   avatarPreset: string | null;
   userImage: string | null;
+  equippedFrame?: string | null;
 };
 
 export type RecapEntry = {
@@ -107,6 +108,7 @@ export type RecapEntry = {
   avatarUrl: string | null;
   avatarPreset: string | null;
   userImage: string | null;
+  equippedFrame?: string | null;
   xp: number;
   activeDays: number;
   activeDayKeys: string[]; // "YYYY-MM-DD", tăng dần
@@ -221,6 +223,7 @@ export function buildMonthlyRecap(input: {
       avatarUrl: info.avatarUrl,
       avatarPreset: info.avatarPreset,
       userImage: info.userImage,
+      equippedFrame: info.equippedFrame ?? null,
       xp: row.xp,
       activeDays: activeDayKeys.length,
       activeDayKeys,

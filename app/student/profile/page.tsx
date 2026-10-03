@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AttendanceCalendar } from "@/components/attendance-calendar";
+import { ProfileCover } from "@/components/profile-cover";
 import { ProfileEditor } from "@/components/profile-editor";
 import { RankTierBadge } from "@/components/rank-tier-badge";
 import { StudentAvatar } from "@/components/student-avatar";
@@ -11,7 +13,6 @@ import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 import { getTierProgress } from "@/lib/rank-tier";
 import { calculateWeekStreak, VN_OFFSET_MS } from "@/lib/streak";
-import { coverClassName } from "@/lib/student-avatar";
 import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 
 export const dynamic = "force-dynamic";
@@ -72,6 +73,8 @@ export default async function StudentProfilePage({
       avatarUrl: true,
       avatarPreset: true,
       coverColor: true,
+      equippedBackground: true,
+      equippedFrame: true,
       targetBand: true,
       createdAt: true,
       user: { select: { image: true } },
@@ -205,7 +208,7 @@ export default async function StudentProfilePage({
   return (
     <div className="space-y-8">
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-        <div className={`h-32 ${coverClassName(student.coverColor)}`} />
+        <ProfileCover backgroundKey={student.equippedBackground} coverColor={student.coverColor} />
         <div className="-mt-12 px-5 pb-5">
           <StudentAvatar
             avatarUrl={student.avatarUrl}
@@ -214,6 +217,7 @@ export default async function StudentProfilePage({
             displayName={student.displayName}
             size="xl"
             className="ring-4 ring-card"
+            frame={student.equippedFrame}
           />
           <h2 className="mt-3 text-2xl font-bold tracking-tight">
             {student.displayName}
@@ -234,6 +238,10 @@ export default async function StudentProfilePage({
                 <span>Mục tiêu {formatBand(student.targetBand)}</span>
               </>
             ) : null}
+            <span aria-hidden="true">·</span>
+            <Link href="/student/shop" className="text-primary hover:underline">
+              Đổi nền & khung ở Cửa hàng →
+            </Link>
           </div>
         </div>
       </section>

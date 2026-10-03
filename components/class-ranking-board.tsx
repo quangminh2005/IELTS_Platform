@@ -163,6 +163,7 @@ export function ClassRankingBoard({
                   avatarUrl={rankedStudent.avatarUrl}
                   avatarPreset={rankedStudent.avatarPreset}
                   userImage={rankedStudent.userImage}
+                  frame={rankedStudent.equippedFrame}
                   displayName={rankedStudent.displayName}
                   size={style.size}
                   className={`ring-4 ${style.ring} ${style.shine}`}
@@ -241,6 +242,7 @@ export function ClassRankingBoard({
                       avatarUrl={rankedStudent.avatarUrl}
                       avatarPreset={rankedStudent.avatarPreset}
                       userImage={rankedStudent.userImage}
+                      frame={rankedStudent.equippedFrame}
                       displayName={rankedStudent.displayName}
                       size="list"
                     />
@@ -324,6 +326,7 @@ export function ClassRankingBoard({
                   avatarUrl={rankedStudent.avatarUrl}
                   avatarPreset={rankedStudent.avatarPreset}
                   userImage={rankedStudent.userImage}
+                  frame={rankedStudent.equippedFrame}
                   displayName={rankedStudent.displayName}
                   size="list"
                   className="opacity-70"

@@ -15,6 +15,8 @@ export type RankedClassStudent = {
   avatarUrl: string | null;
   avatarPreset: string | null;
   userImage: string | null;
+  // Khung avatar mua ở Cửa hàng (lib/shop-catalog.ts).
+  equippedFrame?: string | null;
   averageScorePercent: number;
   averageBandValue: number | null;
   completionRate: number;
@@ -43,6 +45,7 @@ export type ClassmateRow = {
   avatarUrl: string | null;
   avatarPreset: string | null;
   userImage: string | null;
+  equippedFrame?: string | null;
   attempts: Array<{
     scorePercent: number | null;
     startedAt: Date;
@@ -182,6 +185,7 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
         avatarUrl: row.avatarUrl,
         avatarPreset: row.avatarPreset,
         userImage: row.userImage,
+        equippedFrame: row.equippedFrame ?? null,
         averageScorePercent: score.averageScorePercent,
         averageBandValue: averageBand(attemptBands),
         completionRate: score.completionRate,
@@ -319,6 +323,7 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
       avatarUrl: classmate.student.avatarUrl,
       avatarPreset: classmate.student.avatarPreset,
       userImage: classmate.student.user?.image ?? null,
+      equippedFrame: classmate.student.equippedFrame,
       attempts: classmate.student.attempts.map((attempt) => ({
         scorePercent: attempt.scorePercent,
         startedAt: attempt.startedAt,

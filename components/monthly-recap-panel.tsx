@@ -160,6 +160,7 @@ function PersonalCard({
           avatarUrl={entry.avatarUrl}
           avatarPreset={entry.avatarPreset}
           userImage={entry.userImage}
+          frame={entry.equippedFrame}
           displayName={entry.displayName}
           size="md"
           className="ring-2 ring-primary"

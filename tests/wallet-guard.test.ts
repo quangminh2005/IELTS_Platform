@@ -50,3 +50,22 @@ describe("Xu — móc ví không chặn nộp bài", () => {
     expect(wallet).not.toMatch(/coins:\s*\{\s*(increment|decrement)/);
   });
 });
+
+describe("Xu — action cửa hàng", () => {
+  it("mọi action gọi requireStudent đầu tiên", () => {
+    const bodies = read("lib/actions/shop.ts").split("export async function").slice(1);
+    expect(bodies.length).toBe(2);
+    for (const body of bodies) {
+      expect(body).toMatch(
+        /^\s*\w+\(formData: FormData\): Promise<ActionResult> \{\s*try \{\s*const student = await requireStudent\(\);/
+      );
+    }
+  });
+
+  it("mua: không bán đồ không có giá, khoá dòng, đặt lại số dư trong transaction", () => {
+    const shop = read("lib/actions/shop.ts");
+    expect(shop).toContain("item.price === null");
+    expect(shop).toContain("lockStudent(tx, student.id)");
+    expect(shop).toContain("recomputeCoins(tx, student.id)");
+  });
+});

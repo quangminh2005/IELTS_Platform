@@ -69,3 +69,15 @@ describe("Xu — action cửa hàng", () => {
     expect(shop).toContain("recomputeCoins(tx, student.id)");
   });
 });
+
+describe("Xu — trang Cửa hàng", () => {
+  it("trang shop đồng bộ ví trong try/catch trước khi đọc số dư", () => {
+    expect(read("app/student/shop/page.tsx")).toMatch(/try\s*\{\s*await syncWallet\(student\.id\);?\s*\}\s*catch/);
+  });
+
+  it("menu học viên có Cửa hàng; AppShell hiện chip Xu", () => {
+    const shell = read("components/app-shell.tsx");
+    expect(shell).toContain('href: "/student/shop"');
+    expect(shell).toContain("CoinChip");
+  });
+});

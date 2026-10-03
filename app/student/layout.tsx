@@ -10,8 +10,8 @@ export default async function StudentLayout({
 }>) {
   const session = await auth();
 
-  // Chỉ lấy đúng bốn cột cần để vẽ avatar — layout chạy trên MỌI trang của học
-  // viên nên truy vấn phải nhẹ.
+  // Chỉ lấy đúng các cột cần cho avatar + chip Xu — layout chạy trên MỌI trang
+  // của học viên nên truy vấn phải nhẹ.
   const student = session?.user?.id
     ? await prisma.studentProfile.findUnique({
         where: { userId: session.user.id },
@@ -19,6 +19,8 @@ export default async function StudentLayout({
           displayName: true,
           avatarUrl: true,
           avatarPreset: true,
+          coins: true,
+          equippedFrame: true,
           user: { select: { image: true } }
         }
       })
@@ -34,7 +36,9 @@ export default async function StudentLayout({
                 displayName: student.displayName,
                 avatarUrl: student.avatarUrl,
                 avatarPreset: student.avatarPreset,
-                userImage: student.user?.image ?? null
+                userImage: student.user?.image ?? null,
+                coins: student.coins,
+                frame: student.equippedFrame
               }
             : undefined
         }

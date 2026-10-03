@@ -22,6 +22,8 @@ type StudentAvatarInfo = {
   avatarUrl: string | null;
   avatarPreset: string | null;
   userImage: string | null;
+  coins: number;
+  frame: string | null;
 };
 
 const navByRole: Record<AppShellRole, NavItem[]> = {
@@ -45,7 +47,8 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
     { href: "/student/vocab", label: "Từ vựng", hint: "Từ mỗi ngày & ôn tập", icon: "vocab" },
     { href: "/student/history", label: "Lịch sử", hint: "Kết quả & bài đã làm", icon: "clock" },
     { href: "/student/stats", label: "Tiến bộ", hint: "Biểu đồ & điểm yếu", icon: "chart" },
-    { href: "/student/ranking", label: "Xếp hạng", hint: "So với bạn cùng lớp", icon: "trophy" }
+    { href: "/student/ranking", label: "Xếp hạng", hint: "So với bạn cùng lớp", icon: "trophy" },
+    { href: "/student/shop", label: "Cửa hàng", hint: "Đổi Xu lấy đồ trang trí", icon: "shop" }
   ]
 };
 
@@ -64,6 +67,7 @@ type IconName =
   | "calendar"
   | "schedule"
   | "chart"
+  | "shop"
   | "bug";
 
 function Icon({ name }: { name: IconName }) {
@@ -184,6 +188,14 @@ function Icon({ name }: { name: IconName }) {
           <path d="M6 6l12 12M18 6 6 18" />
         </svg>
       );
+    // Cửa hàng: túi mua sắm.
+    case "shop":
+      return (
+        <svg {...common} aria-hidden="true">
+          <path d="M5 8h14l-1.2 11.2a1.5 1.5 0 0 1-1.5 1.3H7.7a1.5 1.5 0 0 1-1.5-1.3z" />
+          <path d="M9 8V6.5a3 3 0 0 1 6 0V8" />
+        </svg>
+      );
     case "bug":
       return <BugIcon className="h-5 w-5 shrink-0" />;
   }
@@ -214,12 +226,31 @@ function HeaderActions({
             userImage={studentAvatar.userImage}
             displayName={studentAvatar.displayName}
             size="list"
+            frame={studentAvatar.frame}
           />
         </Link>
       ) : null}
       {role === "student" ? <NotificationBell /> : null}
       <AnimatedThemeToggle className="h-9 w-9 p-0" />
     </div>
+  );
+}
+
+const coinFormat = new Intl.NumberFormat("vi-VN");
+
+// Chip số dư Xu — thay nhãn "Học viên" ở sidebar và drawer (thanh trên cùng của
+// điện thoại không đủ chỗ ở khổ 375px).
+function CoinChip({ coins, onNavigate }: { coins: number; onNavigate?: () => void }) {
+  return (
+    <Link
+      href="/student/shop"
+      onClick={onNavigate}
+      aria-label={`Số dư ${coinFormat.format(coins)} Xu — mở Cửa hàng`}
+      className="inline-flex w-fit items-center gap-1.5 rounded-full border border-amber-400/50 bg-amber-400/15 px-3 py-1 text-xs font-bold tabular-nums text-amber-700 transition hover:bg-amber-400/25 dark:text-amber-300"
+    >
+      <span aria-hidden="true">🪙</span>
+      {coinFormat.format(coins)}
+    </Link>
   );
 }
 
@@ -376,9 +407,13 @@ export function AppShell({
           <Brand role={role} />
 
           <div className="mt-5 flex items-center justify-between gap-3">
-            <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold capitalize text-primary">
-              {role === "teacher" ? "Giáo viên" : "Học viên"}
-            </span>
+            {role === "student" && studentAvatar ? (
+              <CoinChip coins={studentAvatar.coins} />
+            ) : (
+              <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold capitalize text-primary">
+                {role === "teacher" ? "Giáo viên" : "Học viên"}
+              </span>
+            )}
             <HeaderActions role={role} studentAvatar={studentAvatar} />
           </div>
 
@@ -413,9 +448,15 @@ export function AppShell({
                 </button>
               </div>
 
-              <span className="mt-5 inline-flex w-fit items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold capitalize text-primary">
-                {role === "teacher" ? "Giáo viên" : "Học viên"}
-              </span>
+              {role === "student" && studentAvatar ? (
+                <div className="mt-5">
+                  <CoinChip coins={studentAvatar.coins} onNavigate={() => setMobileOpen(false)} />
+                </div>
+              ) : (
+                <span className="mt-5 inline-flex w-fit items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold capitalize text-primary">
+                  {role === "teacher" ? "Giáo viên" : "Học viên"}
+                </span>
+              )}
 
               <div className="mt-6 flex-1 overflow-y-auto">
                 <NavLinks

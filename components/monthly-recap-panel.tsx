@@ -123,13 +123,23 @@ function DayStrip({ monthKey, days, activeKeys }: { monthKey: string; days: numb
   );
 }
 
-function PersonalCard({ recap, view }: { recap: MonthlyRecap; view: StudentRecapView }) {
+function PersonalCard({
+  recap,
+  view,
+  className = ""
+}: {
+  recap: MonthlyRecap;
+  view: StudentRecapView;
+  className?: string;
+}) {
   const entry = view.entry;
   const month = Number(recap.monthKey.slice(5));
 
   if (!entry) {
     return (
-      <section className="flex flex-col items-center justify-center rounded-2xl border border-primary/40 bg-card p-6 text-center shadow-card">
+      <section
+        className={`flex flex-col items-center justify-center rounded-2xl border border-primary/40 bg-card p-6 text-center shadow-card ${className}`}
+      >
         <span aria-hidden="true" className="text-4xl">
           🌱
         </span>
@@ -144,7 +154,7 @@ function PersonalCard({ recap, view }: { recap: MonthlyRecap; view: StudentRecap
   const skillChips = SKILL_ORDER.filter((skill) => (entry.unitsBySkill[skill] ?? 0) > 0);
 
   return (
-    <section className="flex min-w-0 flex-col rounded-2xl border border-primary/40 bg-card p-4 shadow-card">
+    <section className={`flex min-w-0 flex-col rounded-2xl border border-primary/40 bg-card p-4 shadow-card ${className}`}>
       <div className="flex items-center gap-3">
         <StudentAvatar
           avatarUrl={entry.avatarUrl}
@@ -252,8 +262,11 @@ export function MonthlyRecapPanel({
         </p>
       </header>
 
-      <div className="relative mt-5 grid gap-4 lg:grid-cols-3">
-        <PersonalCard recap={recap} view={view} />
+      {/* Popup rộng (max-w-6xl) → 3 cột. Trang /student/recap nằm trong khung
+          max-w-5xl có sidebar nên hẹp hơn nhiều → thẻ cá nhân một hàng, hai bảng
+          cạnh nhau, kẻo tên học viên bị cắt cụt. */}
+      <div className={`relative mt-5 grid gap-4 ${closeMode === "dialog" ? "lg:grid-cols-3" : "md:grid-cols-2"}`}>
+        <PersonalCard recap={recap} view={view} className={closeMode === "dialog" ? "" : "md:col-span-2"} />
         <MonthlyRecapBoard
           eyebrow={`Top 10 · tháng ${Number(recap.monthKey.slice(5))}`}
           title="Top XP tháng"

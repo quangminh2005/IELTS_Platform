@@ -39,6 +39,14 @@ export const SHOP_ITEMS: CatalogItem[] = [
   { key: "bg:snow-peaks", name: "Núi tuyết", category: "background", rarity: "epic", price: 1200 },
   { key: "bg:old-library", name: "Thư viện cổ", category: "background", rarity: "epic", price: 1200 },
   { key: "bg:galaxy", name: "Thiên hà", category: "background", rarity: "legendary", price: 3000 },
+  {
+    key: "bg:starry-van-gogh",
+    name: "Đêm đầy sao",
+    category: "background",
+    rarity: "legendary",
+    price: 2500,
+    description: "Tranh của Van Gogh, 1889"
+  },
   { key: "frame:wood", name: "Khung gỗ", category: "frame", rarity: "common", price: 200 },
   { key: "frame:bronze", name: "Khung đồng", category: "frame", rarity: "common", price: 300 },
   { key: "frame:silver", name: "Khung bạc", category: "frame", rarity: "rare", price: 700 },

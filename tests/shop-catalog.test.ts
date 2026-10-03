@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import {
   ACHIEVEMENT_TEMPLATES,
   ART_KEYS,
@@ -28,8 +28,8 @@ describe("danh mục đồ", () => {
     }
   });
 
-  it("đủ 11 nền + 7 khung", () => {
-    expect(SHOP_ITEMS.filter((item) => item.category === "background")).toHaveLength(11);
+  it("đủ 12 nền + 7 khung", () => {
+    expect(SHOP_ITEMS.filter((item) => item.category === "background")).toHaveLength(12);
     expect(SHOP_ITEMS.filter((item) => item.category === "frame")).toHaveLength(7);
   });
 });
@@ -135,6 +135,13 @@ describe("mọi đồ đều có hình, hình không dùng id", () => {
   it("hiệu ứng động chỉ trong motion-safe", () => {
     for (const source of sources()) {
       expect(source).not.toMatch(/(^|[\s"'`])animate-/);
+    }
+  });
+
+  it("nền dùng ảnh tranh trỏ tới file có thật trong public/", () => {
+    const bg = readFileSync("components/shop/background-art.tsx", "utf8");
+    for (const match of Array.from(bg.matchAll(/src: "(\/shop\/[^"]+)"/g))) {
+      expect(existsSync(`public${match[1]}`)).toBe(true);
     }
   });
 

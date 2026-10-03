@@ -175,7 +175,11 @@ const SHELVES = [
   { y: 132, books: shelfBooks(132, 159) }
 ];
 
-type Scene = { sky: CSSProperties["backgroundImage"]; draw: () => ReactNode };
+// Cảnh vẽ SVG (draw) hoặc ảnh tranh có sẵn (image, file tĩnh trong public/shop —
+// phục vụ qua CDN của Vercel, KHÔNG qua Blob). sky là màu nền lúc ảnh chưa tải xong.
+type Scene =
+  | { sky: CSSProperties["backgroundImage"]; draw: () => ReactNode }
+  | { sky: CSSProperties["backgroundImage"]; image: { src: string; position: string } };
 
 const ART: Record<string, Scene> = {
   "bg:starry-night": {
@@ -403,6 +407,12 @@ const ART: Record<string, Scene> = {
       </>
     )
   },
+  // "Đêm đầy sao" (Van Gogh, 1889 — phạm vi công cộng). Bìa dài chỉ thấy một dải
+  // ngang → neo ở 15% chiều cao để giữ trọn mặt trăng, xoáy mây và các vì sao.
+  "bg:starry-van-gogh": {
+    sky: "linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%)",
+    image: { src: "/shop/starry-night-van-gogh.webp", position: "50% 15%" }
+  },
   "bg:diligent": {
     sky: "linear-gradient(180deg, #fde68a 0%, #f59e0b 100%)",
     draw: () => (
@@ -438,14 +448,27 @@ export function BackgroundArt({ artKey, className = "" }: { artKey: string; clas
       style={{ backgroundImage: scene.sky }}
       aria-hidden="true"
     >
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        preserveAspectRatio="xMidYMid slice"
-        focusable="false"
-        className="absolute inset-0 h-full w-full"
-      >
-        {scene.draw()}
-      </svg>
+      {"image" in scene ? (
+        // Ảnh tĩnh nhỏ (~260KB), không qua trình tối ưu ảnh của Next để khỏi tốn hạn mức.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={scene.image.src}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ objectPosition: scene.image.position }}
+        />
+      ) : (
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          preserveAspectRatio="xMidYMid slice"
+          focusable="false"
+          className="absolute inset-0 h-full w-full"
+        >
+          {scene.draw()}
+        </svg>
+      )}
     </div>
   );
 }

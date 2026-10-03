@@ -24,7 +24,7 @@ datasource db {
 // enum DeckCardSource (VocabDeckCard.source): bank | student
 // enum SpeakingPrepScope (Assignment.speakingPrepScope, null = per_question): per_question | shared
 // enum MaterialCategory (Material.category): book | homework
-// enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase
+// enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase | streak_restore
 // enum ItemSource (StudentItem.source): purchase | achievement
 
 model User {
@@ -658,7 +658,7 @@ model BugReport {
 model CoinTransaction {
   id        String   @id @default(cuid())
   studentId String
-  // earn_unit | earn_vocab | purchase — xem comment đầu schema
+  // earn_unit | earn_vocab | purchase | streak_restore — xem comment đầu schema
   kind      String
   key       String
   amount    Int

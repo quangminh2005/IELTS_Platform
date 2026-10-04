@@ -4,7 +4,13 @@ import { unitXp, vocabDayXp } from "@/lib/monthly-xp";
 // đổi tỉ lệ thì sửa COINS_PER_XP; dòng sổ đã ghi không bị ảnh hưởng.
 export const COINS_PER_XP = 1;
 
-export type CoinKind = "earn_unit" | "earn_vocab" | "purchase" | "streak_restore";
+export type CoinKind =
+  | "earn_unit"
+  | "earn_vocab"
+  | "purchase"
+  | "streak_restore"
+  | "reward_redeem"
+  | "reward_refund";
 
 // Một phần (AssignableUnit) trong một lượt làm LƯỢT ĐẦU (attemptRound = 1).
 export type CoinUnitRow = {

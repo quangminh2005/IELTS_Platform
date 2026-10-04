@@ -46,13 +46,14 @@ if (!token) {
 const doDelete = process.argv.includes("--delete-confirmed");
 
 // --- Danh sách URL đang được dùng: hỏi thẳng DB prod, không tin ảnh chụp cũ ---
-// URL blob nằm ở NĂM chỗ: AssignableUnit.audioUrl (file nghe của đề),
+// URL blob nằm ở SÁU chỗ: AssignableUnit.audioUrl (file nghe của đề),
 // AssignableUnit.metadataJson (ảnh chèn vào đề), Answer.value (BÀI GHI ÂM
 // SPEAKING CỦA HỌC VIÊN — cột này bị bỏ sót cho tới 2026-08-09, khi đó chưa em
 // nào làm bài Nói; thiếu nó thì mỗi lần dọn là xoá sạch bài nói của học viên),
 // BugReport.imageUrl (ảnh chụp màn hình học viên gửi kèm báo lỗi) và
-// StudentProfile.avatarUrl (ảnh đại diện học viên).
-// Truy vấn dưới đây quét cả năm bằng regex, nên thêm ảnh/bản ghi mới không sót.
+// StudentProfile.avatarUrl (ảnh đại diện học viên) và Reward.imageUrl (ảnh món
+// quà thầy tạo ở trang Đổi quà).
+// Truy vấn dưới đây quét cả sáu bằng regex, nên thêm ảnh/bản ghi mới không sót.
 // LƯU Ý: mọi cột mới lưu URL Blob (thêm sau này) PHẢI được thêm vào CTE này,
 // không thì lần dọn kế tiếp sẽ coi file đó là mồ côi và xoá mất.
 const prisma = new PrismaClient({
@@ -66,6 +67,7 @@ const rows = await prisma.$queryRawUnsafe(`
     UNION ALL SELECT "value" FROM "Answer"
     UNION ALL SELECT "imageUrl" FROM "BugReport" WHERE "imageUrl" IS NOT NULL
     UNION ALL SELECT "avatarUrl" FROM "StudentProfile" WHERE "avatarUrl" IS NOT NULL
+    UNION ALL SELECT "imageUrl" FROM "Reward" WHERE "imageUrl" IS NOT NULL
   )
   SELECT DISTINCT m[1] AS url
     FROM src, LATERAL regexp_matches(

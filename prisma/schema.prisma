@@ -24,7 +24,9 @@ datasource db {
 // enum DeckCardSource (VocabDeckCard.source): bank | student
 // enum SpeakingPrepScope (Assignment.speakingPrepScope, null = per_question): per_question | shared
 // enum MaterialCategory (Material.category): book | homework
-// enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase | streak_restore
+// enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund
+// enum RewardLimitPeriod (Reward.limitPeriod): month | ever
+// enum RedemptionStatus (RewardRedemption.status): pending | delivered | rejected | cancelled
 // enum ItemSource (StudentItem.source): purchase | achievement
 
 model User {
@@ -66,27 +68,28 @@ model TeacherProfile {
   reviews           TeacherReview[]
   commentSnippets   CommentSnippet[]
   answerAnnotations AnswerAnnotation[]
+  rewards           Reward[]
 }
 
 model StudentProfile {
-  id          String                @id @default(cuid())
-  userId      String?               @unique
-  email       String                @unique
-  displayName String
-  targetBand  Float?
+  id                  String                @id @default(cuid())
+  userId              String?               @unique
+  email               String                @unique
+  displayName         String
+  targetBand          Float?
   // Giới thiệu ngắn học viên tự viết, tối đa 280 ký tự. Văn bản thuần — chỗ hiển
   // thị KHÔNG được dùng dangerouslySetInnerHTML.
-  bio          String?
+  bio                 String?
   // Ảnh đại diện học viên tự tải lên (Vercel Blob). Thứ tự ưu tiên khi hiện avatar
   // nằm trong lib/student-avatar.ts: ảnh này -> avatarPreset -> User.image -> chữ cái.
-  avatarUrl    String?
+  avatarUrl           String?
   // Mã avatar có sẵn (emoji + màu), giá trị hợp lệ liệt kê trong AVATAR_PRESETS
   // của lib/student-avatar.ts.
-  avatarPreset String?
+  avatarPreset        String?
   // Mã màu dải bìa trang hồ sơ, giá trị hợp lệ trong COVER_COLORS của
   // lib/student-avatar.ts. Không nhận mã hex tự do — tránh chữ chìm vào nền.
-  coverColor   String?
-  createdAt   DateTime              @default(now())
+  coverColor          String?
+  createdAt           DateTime              @default(now())
   // Mốc thời gian học viên xem chuông thông báo lần gần nhất. Mục nào mới hơn mốc
   // này thì tính là chưa đọc. Null = coi như đã đọc hết (học viên có từ trước khi
   // thêm cột), để người mới không bị dội cả chục thông báo cũ.
@@ -94,21 +97,21 @@ model StudentProfile {
   // Mã bí mật của link báo cáo cho phụ huynh (/ph/<token>). Null = học viên này
   // chưa có link. Giáo viên bấm "Tạo lại link" -> đổi mã, link cũ chết ngay.
   // Sinh bằng crypto.randomBytes(24).toString("base64url").
-  parentToken         String?   @unique
+  parentToken         String?               @unique
   // Số dư Xu lưu sẵn — LUÔN bằng SUM(CoinTransaction.amount) của học viên, chỉ được
   // ghi qua lib/wallet.ts (khoá dòng FOR UPDATE rồi đặt lại bằng tổng sổ).
-  coins               Int       @default(0)
+  coins               Int                   @default(0)
   // Mã đồ đang trang bị (lib/shop-catalog.ts). Null = không trang bị: bìa dùng
   // coverColor như cũ, avatar không khung.
   equippedBackground  String?
   equippedFrame       String?
-  user        User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
-  classes     ClassStudent[]
-  recipients  AssignmentRecipient[]
-  attempts    Attempt[]
-  answers     Answer[]
-  highlights  Highlight[]
-  reviews     TeacherReview[]
+  user                User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  classes             ClassStudent[]
+  recipients          AssignmentRecipient[]
+  attempts            Attempt[]
+  answers             Answer[]
+  highlights          Highlight[]
+  reviews             TeacherReview[]
 
   vocabProgress VocabProgress[]
   vocabQuizDays VocabQuizDay[]
@@ -116,6 +119,7 @@ model StudentProfile {
   bugReports    BugReport[]
 
   coinTransactions CoinTransaction[]
+  redemptions      RewardRedemption[]
   items            StudentItem[]
 }
 
@@ -126,11 +130,11 @@ model StudentProfile {
 // @@unique (vd AssignmentRecipient.assignmentId) — lúc đó index unique đã lo rồi.
 
 model Class {
-  id          String         @id @default(cuid())
-  teacherId   String
-  name        String
-  description String?
-  weeklyGoal  Int?
+  id                  String              @id @default(cuid())
+  teacherId           String
+  name                String
+  description         String?
+  weeklyGoal          Int?
   // ---- Lịch học (tuỳ chọn) ----
   // Ngày khai giảng, lưu mốc 00:00 giờ VN của ngày đó.
   scheduleStartDate   DateTime?
@@ -144,13 +148,13 @@ model Class {
   scheduleAppliesFrom DateTime?
   // Lần gần nhất lịch cố định thực sự đổi -> thông báo "Lịch học lớp X vừa được cập nhật".
   scheduleChangedAt   DateTime?
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-  teacher     TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
-  students    ClassStudent[]
-  assignments Assignment[]
-  scheduleSlots ClassScheduleSlot[]
-  sessions      ClassSession[]
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  teacher             TeacherProfile      @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  students            ClassStudent[]
+  assignments         Assignment[]
+  scheduleSlots       ClassScheduleSlot[]
+  sessions            ClassSession[]
 
   @@index([teacherId])
 }
@@ -207,25 +211,25 @@ model ClassStudent {
 }
 
 model Material {
-  id          String           @id @default(cuid())
-  teacherId   String
-  skill       String
-  title       String
-  description String?
-  sourceLabel String?
+  id                String           @id @default(cuid())
+  teacherId         String
+  skill             String
+  title             String
+  description       String?
+  sourceLabel       String?
   // Đề có nằm trong thư viện tự luyện của học viên không (mở là mở cho MỌI học viên).
-  practiceOpen Boolean @default(false)
+  practiceOpen      Boolean          @default(false)
   // Khi học viên tự luyện đề này: có ẩn thanh audio (chế độ thi thật) hay không.
   // Chỉ có ý nghĩa với đề Listening; bài giao thường vẫn dùng Assignment.lockAudio riêng.
-  practiceLockAudio Boolean @default(false)
+  practiceLockAudio Boolean          @default(false)
   // Loại tài liệu: "book" = sách/bộ đề in sẵn (gom theo bookName thành kệ), "homework" = bài tập hàng tuần.
-  category    String           @default("homework")
+  category          String           @default("homework")
   // Tên kệ sách (vd "IELTS Master – Listening"); null với bài tập hàng tuần.
-  bookName    String?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  teacher     TeacherProfile   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
-  units       AssignableUnit[]
+  bookName          String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  teacher           TeacherProfile   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  units             AssignableUnit[]
 
   @@index([teacherId])
 }
@@ -628,7 +632,7 @@ model VocabDeckCard {
 // Mọi cột "ngữ cảnh" (pageUrl/userAgent/viewport/attemptId/contextJson) do trình
 // duyệt tự điền lúc gửi, học viên chỉ chọn loại + gõ mô tả + (tuỳ chọn) ảnh.
 model BugReport {
-  id          String    @id @default(cuid())
+  id          String         @id @default(cuid())
   studentId   String
   // audio | answer | display | other — xem comment đầu schema
   category    String
@@ -642,10 +646,10 @@ model BugReport {
   // JSON { unitTitle?: string, step?: number } — part/bước đang mở lúc báo
   contextJson String?
   // open | resolved
-  status      String    @default("open")
+  status      String         @default("open")
   teacherNote String?
   resolvedAt  DateTime?
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime       @default(now())
   student     StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@index([studentId, createdAt])
@@ -658,7 +662,7 @@ model BugReport {
 model CoinTransaction {
   id        String   @id @default(cuid())
   studentId String
-  // earn_unit | earn_vocab | purchase | streak_restore — xem comment đầu schema
+  // earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund — xem comment đầu schema
   kind      String
   key       String
   amount    Int
@@ -685,4 +689,54 @@ model StudentItem {
   student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([studentId, itemKey])
+}
+
+// Quà ngoài đời thầy tạo để học viên đổi bằng Xu (Đợt 3). Đã có phiếu thì không xoá
+// được (FK Restrict) — chỉ ẩn bằng active = false.
+model Reward {
+  id              String   @id @default(cuid())
+  teacherId       String
+  emoji           String
+  // Ảnh thật tuỳ chọn (Vercel Blob) — có ảnh thì hiện ảnh thay emoji.
+  imageUrl        String?
+  name            String
+  description     String?
+  price           Int
+  // Tổng số lượng; còn lại = stock − số phiếu pending|delivered. null = không giới hạn.
+  stock           Int?
+  // Mỗi em được đổi tối đa bao nhiêu lần trong kỳ. null = không giới hạn.
+  limitPerStudent Int?
+  // month | ever — xem comment đầu schema
+  limitPeriod     String   @default("month")
+  active          Boolean  @default(true)
+  sortOrder       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  teacher     TeacherProfile     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  redemptions RewardRedemption[]
+
+  @@index([teacherId, active])
+}
+
+// Phiếu đổi quà. Tên/emoji/giá chụp lại lúc đổi để thầy sửa món sau không làm đổi phiếu cũ.
+model RewardRedemption {
+  id          String    @id @default(cuid())
+  rewardId    String
+  studentId   String
+  rewardName  String
+  rewardEmoji String
+  price       Int
+  // pending | delivered | rejected | cancelled — xem comment đầu schema
+  status      String    @default("pending")
+  teacherNote String?
+  resolvedAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  reward  Reward         @relation(fields: [rewardId], references: [id], onDelete: Restrict)
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
+  @@index([studentId, createdAt])
+  @@index([rewardId, status])
 }

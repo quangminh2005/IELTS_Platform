@@ -373,6 +373,59 @@ const statements = [
       FOREIGN KEY ("studentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
   END $$;`,
+  // Xu Đợt 3: quà ngoài đời + phiếu đổi quà.
+  `CREATE TABLE IF NOT EXISTS "Reward" (
+    "id" TEXT NOT NULL,
+    "teacherId" TEXT NOT NULL,
+    "emoji" TEXT NOT NULL,
+    "imageUrl" TEXT,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "price" INTEGER NOT NULL,
+    "stock" INTEGER,
+    "limitPerStudent" INTEGER,
+    "limitPeriod" TEXT NOT NULL DEFAULT 'month',
+    "active" BOOLEAN NOT NULL DEFAULT true,
+    "sortOrder" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    CONSTRAINT "Reward_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "Reward_teacherId_active_idx" ON "Reward"("teacherId", "active");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'Reward_teacherId_fkey') THEN
+      ALTER TABLE "Reward" ADD CONSTRAINT "Reward_teacherId_fkey"
+      FOREIGN KEY ("teacherId") REFERENCES "TeacherProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `CREATE TABLE IF NOT EXISTS "RewardRedemption" (
+    "id" TEXT NOT NULL,
+    "rewardId" TEXT NOT NULL,
+    "studentId" TEXT NOT NULL,
+    "rewardName" TEXT NOT NULL,
+    "rewardEmoji" TEXT NOT NULL,
+    "price" INTEGER NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'pending',
+    "teacherNote" TEXT,
+    "resolvedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "RewardRedemption_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "RewardRedemption_status_createdAt_idx" ON "RewardRedemption"("status", "createdAt");',
+  'CREATE INDEX IF NOT EXISTS "RewardRedemption_studentId_createdAt_idx" ON "RewardRedemption"("studentId", "createdAt");',
+  'CREATE INDEX IF NOT EXISTS "RewardRedemption_rewardId_status_idx" ON "RewardRedemption"("rewardId", "status");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'RewardRedemption_rewardId_fkey') THEN
+      ALTER TABLE "RewardRedemption" ADD CONSTRAINT "RewardRedemption_rewardId_fkey"
+      FOREIGN KEY ("rewardId") REFERENCES "Reward"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'RewardRedemption_studentId_fkey') THEN
+      ALTER TABLE "RewardRedemption" ADD CONSTRAINT "RewardRedemption_studentId_fkey"
+      FOREIGN KEY ("studentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
 ];
 
 const prisma = new PrismaClient();

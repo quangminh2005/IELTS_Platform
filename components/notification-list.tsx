@@ -19,7 +19,9 @@ const LABELS: Record<StudentNotificationType, string> = {
   assignment_new: "Bài mới",
   bug_resolved: "Báo lỗi",
   session_change: "Đổi lịch học",
-  schedule_update: "Lịch học"
+  schedule_update: "Lịch học",
+  reward_delivered: "Đã nhận quà",
+  reward_rejected: "Đổi quà"
 };
 
 export function NotificationRow({

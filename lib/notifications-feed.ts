@@ -3,6 +3,7 @@ import {
   countUnread,
   NOTIFICATION_LIMIT,
   type BugResolvedNotificationSource,
+  type RewardNotificationSource,
   type StudentNotification
 } from "@/lib/notifications";
 import { buildScheduleNotificationSources } from "@/lib/class-schedule";
@@ -122,6 +123,24 @@ export async function getStudentNotifications(
     console.error("[thong-bao] Không đọc được lịch học:", error);
   }
 
+  // Phiếu đổi quà đã trao / bị từ chối (bảng mới) — bọc try/catch như trên.
+  let rewardSources: RewardNotificationSource[] = [];
+  try {
+    const rows = await prisma.rewardRedemption.findMany({
+      where: { studentId, status: { in: ["delivered", "rejected"] }, resolvedAt: { not: null } },
+      orderBy: { resolvedAt: "desc" },
+      take: NOTIFICATION_LIMIT,
+      select: { id: true, rewardName: true, status: true, teacherNote: true, resolvedAt: true }
+    });
+    rewardSources = rows.flatMap((row) =>
+      row.resolvedAt && (row.status === "delivered" || row.status === "rejected")
+        ? [{ ...row, status: row.status, resolvedAt: row.resolvedAt }]
+        : []
+    );
+  } catch (error) {
+    console.error("[thong-bao] Không đọc được phiếu đổi quà:", error);
+  }
+
   const items = buildStudentNotifications(
     reviews.map((review) => ({
       attemptId: review.attemptId,
@@ -136,7 +155,8 @@ export async function getStudentNotifications(
     })),
     student?.notificationsReadAt ?? null,
     bugs,
-    scheduleSources
+    scheduleSources,
+    rewardSources
   );
 
   return { items, unreadCount: countUnread(items) };

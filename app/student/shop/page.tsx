@@ -2,10 +2,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { BackgroundArt } from "@/components/shop/background-art";
 import { FrameArt } from "@/components/shop/frame-art";
+import { CancelRedemptionButton, RewardCard } from "@/components/shop/reward-card";
 import { ShopItemCard, type ShopCardState } from "@/components/shop/shop-item-card";
 import { StudentAvatar } from "@/components/student-avatar";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getStudentRewards } from "@/lib/reward-data";
+import { REDEMPTION_STATUS_CLASSES, REDEMPTION_STATUS_LABELS } from "@/lib/rewards";
 import {
   ACHIEVEMENT_TEMPLATES,
   RARITY_LABELS,
@@ -28,16 +31,17 @@ const dateFormat = new Intl.DateTimeFormat("vi-VN", {
   timeZone: "Asia/Ho_Chi_Minh"
 });
 
-type Tab = ItemCategory | "history";
+type Tab = ItemCategory | "reward" | "history";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "background", label: "Nền" },
   { key: "frame", label: "Khung" },
+  { key: "reward", label: "Quà" },
   { key: "history", label: "Lịch sử Xu" }
 ];
 
 function parseTab(raw: string | undefined): Tab {
-  return raw === "frame" || raw === "history" ? raw : "background";
+  return raw === "frame" || raw === "reward" || raw === "history" ? raw : "background";
 }
 
 function parseRarity(raw: string | undefined): ItemRarity | null {
@@ -85,7 +89,8 @@ export default async function StudentShopPage({
   }
 
   const tab = parseTab(searchParams?.tab);
-  const rarityFilter = tab === "history" ? null : parseRarity(searchParams?.rarity);
+  const isItemTab = tab === "background" || tab === "frame";
+  const rarityFilter = isItemTab ? parseRarity(searchParams?.rarity) : null;
 
   const [profile, ownedRows, transactions] = await Promise.all([
     prisma.studentProfile.findUniqueOrThrow({
@@ -113,6 +118,7 @@ export default async function StudentShopPage({
 
   const owned = new Set(ownedRows.map((row) => row.itemKey));
   const coins = profile.coins;
+  const rewards = tab === "reward" ? await getStudentRewards(student.id, coins) : null;
 
   function cardsFor(category: ItemCategory): Card[] {
     const equipped = category === "background" ? profile.equippedBackground : profile.equippedFrame;
@@ -231,7 +237,7 @@ export default async function StudentShopPage({
           ))}
         </nav>
 
-        {tab !== "history" ? (
+        {isItemTab ? (
           <div>
             <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Độ hiếm</p>
             <div className="flex flex-wrap gap-1.5">
@@ -260,14 +266,61 @@ export default async function StudentShopPage({
       <section className="min-w-0">
         <h2 className="text-xl font-bold tracking-tight">
           {TABS.find((item) => item.key === tab)?.label}
-          {tab !== "history" ? (
+          {isItemTab ? (
             <span className="ml-2 text-sm font-normal text-muted-foreground">
               {cardsFor(tab).length} vật phẩm
             </span>
           ) : null}
         </h2>
 
-        {tab === "history" ? (
+        {rewards ? (
+          <>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Đổi Xu lấy quà thật — Xu bị trừ ngay, thầy sẽ trao quà trên lớp. Thầy chưa trao thì em vẫn huỷ được.
+            </p>
+            {rewards.cards.length === 0 ? (
+              <p className="mt-4 rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
+                Thầy chưa bày món quà nào — quay lại sau nhé!
+              </p>
+            ) : (
+              <div className="mt-4 grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                {rewards.cards.map((card) => (
+                  <RewardCard key={`${card.id}-${card.state}`} {...card} coins={coins} />
+                ))}
+              </div>
+            )}
+
+            {rewards.redemptions.length > 0 ? (
+              <div className="mt-8">
+                <h3 className="text-base font-bold">Phiếu đổi quà của em</h3>
+                <ul className="mt-3 divide-y divide-border rounded-xl border border-border bg-card shadow-card">
+                  {rewards.redemptions.map((row) => (
+                    <li key={row.id} className="flex flex-wrap items-center gap-x-3 gap-y-1.5 px-4 py-3">
+                      <span className="text-2xl" aria-hidden="true">
+                        {row.rewardEmoji}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold">{row.rewardName}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {dateFormat.format(row.createdAt)} · 🪙 {numberFormat.format(row.price)}
+                          {row.teacherNote ? ` · Thầy ghi: ${row.teacherNote}` : ""}
+                        </p>
+                      </div>
+                      <span
+                        className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${REDEMPTION_STATUS_CLASSES[row.status]}`}
+                      >
+                        {REDEMPTION_STATUS_LABELS[row.status]}
+                      </span>
+                      {row.status === "pending" ? (
+                        <CancelRedemptionButton redemptionId={row.id} price={row.price} />
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </>
+        ) : tab === "history" ? (
           transactions.length === 0 ? (
             <p className="mt-4 rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
               Chưa có giao dịch nào — làm bài đầu tiên để nhận Xu nhé!
@@ -290,7 +343,7 @@ export default async function StudentShopPage({
               ))}
             </ul>
           )
-        ) : (
+        ) : isItemTab ? (
           // Trang này dùng hết bề ngang (AppShell coi là trang rộng) nên thẻ to như
           // chin: thẻ nên rộng ≥ 220px, nhiều cột hơn khi màn hình lớn.
           <div className="mt-4 grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
@@ -310,7 +363,7 @@ export default async function StudentShopPage({
               />
             ))}
           </div>
-        )}
+        ) : null}
       </section>
     </div>
   );

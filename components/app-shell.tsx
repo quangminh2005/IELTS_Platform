@@ -38,6 +38,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
     { href: "/teacher/calendar", label: "Lịch giao bài", hint: "Theo dõi nộp bài", icon: "calendar" },
     { href: "/teacher/practice", label: "Tự luyện", hint: "Học viên luyện thêm", icon: "target" },
     { href: "/teacher/review", label: "Chấm bài", hint: "Writing & Speaking", icon: "check" },
+    { href: "/teacher/rewards", label: "Đổi quà", hint: "Quà học viên đổi bằng Xu", icon: "gift" },
     { href: "/teacher/bugs", label: "Báo lỗi", hint: "Học viên báo trục trặc", icon: "bug" }
   ],
   student: [
@@ -68,6 +69,7 @@ type IconName =
   | "schedule"
   | "chart"
   | "shop"
+  | "gift"
   | "bug";
 
 function Icon({ name }: { name: IconName }) {
@@ -196,6 +198,15 @@ function Icon({ name }: { name: IconName }) {
           <path d="M9 8V6.5a3 3 0 0 1 6 0V8" />
         </svg>
       );
+    // Đổi quà: hộp quà có nơ.
+    case "gift":
+      return (
+        <svg {...common} aria-hidden="true">
+          <rect x="4" y="9" width="16" height="11" rx="1.5" />
+          <path d="M3 9h18M12 9v11" />
+          <path d="M12 9c-1.5-3-5-3.5-5-1.5S10 9 12 9c2 0 5 .5 5-1.5S13.5 6 12 9z" />
+        </svg>
+      );
     case "bug":
       return <BugIcon className="h-5 w-5 shrink-0" />;
   }
@@ -282,14 +293,17 @@ function useIsActive() {
   };
 }
 
+// navBadges: số đỏ cạnh mục menu, theo href (vd phiếu đổi quà đang chờ trao).
 function NavLinks({
   items,
   rootHref,
-  onNavigate
+  onNavigate,
+  navBadges
 }: {
   items: NavItem[];
   rootHref: string;
   onNavigate?: () => void;
+  navBadges?: Record<string, number>;
 }) {
   const isActive = useIsActive();
 
@@ -313,12 +327,20 @@ function NavLinks({
             <span className={active ? "text-primary" : "text-muted-foreground"}>
               <Icon name={item.icon} />
             </span>
-            <span className="leading-tight">
+            <span className="min-w-0 flex-1 leading-tight">
               <span className="block text-sm font-semibold">{item.label}</span>
-              {/* Màn thấp (laptop 768px): bỏ dòng gợi ý để 10 mục của giáo viên
+              {/* Màn thấp (laptop 768px): bỏ dòng gợi ý để 12 mục của giáo viên
                   vừa một cột, "Chấm bài"/"Báo lỗi" không bị đẩy xuống phải cuộn. */}
               <span className="block text-xs text-muted-foreground [@media(max-height:820px)]:hidden">{item.hint}</span>
             </span>
+            {navBadges?.[item.href] ? (
+              <span
+                className="ml-auto inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-red-600 px-1.5 text-[11px] font-bold tabular-nums text-white"
+                aria-label={`${navBadges[item.href]} mục đang chờ`}
+              >
+                {navBadges[item.href]}
+              </span>
+            ) : null}
           </Link>
         );
       })}
@@ -344,11 +366,13 @@ function withBugReport(role: AppShellRole, node: ReactNode) {
 export function AppShell({
   children,
   role,
-  studentAvatar
+  studentAvatar,
+  navBadges
 }: {
   children: ReactNode;
   role: AppShellRole;
   studentAvatar?: StudentAvatarInfo;
+  navBadges?: Record<string, number>;
 }) {
   const navItems = navByRole[role];
   const rootHref = role === "teacher" ? "/teacher" : "/student";
@@ -419,7 +443,7 @@ export function AppShell({
           </div>
 
           <div className="mt-6 flex-1 overflow-y-auto">
-            <NavLinks items={navItems} rootHref={rootHref} />
+            <NavLinks items={navItems} rootHref={rootHref} navBadges={navBadges} />
             {role === "student" ? <BugReportNavButton /> : null}
           </div>
 
@@ -464,6 +488,7 @@ export function AppShell({
                   items={navItems}
                   rootHref={rootHref}
                   onNavigate={() => setMobileOpen(false)}
+                  navBadges={navBadges}
                 />
                 {role === "student" ? (
                   <BugReportNavButton onNavigate={() => setMobileOpen(false)} />

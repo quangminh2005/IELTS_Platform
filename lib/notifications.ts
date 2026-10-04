@@ -15,7 +15,9 @@ export type StudentNotificationType =
   | "assignment_new"
   | "bug_resolved"
   | "session_change"
-  | "schedule_update";
+  | "schedule_update"
+  | "reward_delivered"
+  | "reward_rejected";
 
 export type StudentNotification = {
   // "review:<attemptId>" | "assignment:<recipientId>" — đủ để làm key React và để
@@ -64,6 +66,15 @@ export type ScheduleUpdateNotificationSource = {
   changedAt: Date;
 };
 
+// Phiếu đổi quà thầy đã trao hoặc từ chối (Xu Đợt 3).
+export type RewardNotificationSource = {
+  id: string;
+  rewardName: string;
+  status: "delivered" | "rejected";
+  teacherNote: string | null;
+  resolvedAt: Date;
+};
+
 // readAt null = chưa từng có mốc. Coi như đã đọc hết thay vì chưa đọc hết, để học
 // viên mới (hoặc DB chưa kịp có cột) không bị dội cả chục thông báo cũ.
 function isUnread(createdAt: Date, readAt: Date | null): boolean {
@@ -84,7 +95,9 @@ export function buildStudentNotifications(
   schedule: {
     sessions?: SessionChangeNotificationSource[];
     schedules?: ScheduleUpdateNotificationSource[];
-  } = {}
+  } = {},
+  // Tham số thứ 6 tuỳ chọn: phiếu đổi quà đã xử lý.
+  rewards: RewardNotificationSource[] = []
 ): StudentNotification[] {
   const items: StudentNotification[] = [
     ...reviews.map((item) => ({
@@ -131,6 +144,18 @@ export function buildStudentNotifications(
       href: "/student/calendar",
       createdAt: item.changedAt,
       unread: isUnread(item.changedAt, readAt)
+    })),
+    ...rewards.map((item) => ({
+      id: `reward:${item.id}`,
+      type: item.status === "delivered" ? ("reward_delivered" as const) : ("reward_rejected" as const),
+      title:
+        item.status === "delivered"
+          ? `Thầy đã trao quà: ${item.rewardName}`
+          : `Phiếu đổi ${item.rewardName} bị từ chối — đã hoàn Xu`,
+      detail: item.teacherNote?.trim() ? item.teacherNote.trim() : null,
+      href: "/student/shop?tab=reward",
+      createdAt: item.resolvedAt,
+      unread: isUnread(item.resolvedAt, readAt)
     }))
   ];
 

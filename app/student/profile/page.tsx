@@ -75,6 +75,7 @@ export default async function StudentProfilePage({
       coverColor: true,
       equippedBackground: true,
       equippedFrame: true,
+      equippedMascot: true,
       targetBand: true,
       createdAt: true,
       user: { select: { image: true } }
@@ -204,6 +205,7 @@ export default async function StudentProfilePage({
           backgroundKey={student.equippedBackground}
           coverColor={student.coverColor}
           frame={student.equippedFrame}
+          mascotKey={student.equippedMascot}
           avatarUrl={student.avatarUrl}
           avatarPreset={student.avatarPreset}
           userImage={student.user?.image ?? null}
@@ -228,7 +230,7 @@ export default async function StudentProfilePage({
             ) : null}
             <span aria-hidden="true">·</span>
             <Link href="/student/shop" className="text-primary hover:underline">
-              Đổi nền & khung ở Cửa hàng →
+              Đổi nền, khung & linh vật ở Cửa hàng →
             </Link>
           </div>
         </div>

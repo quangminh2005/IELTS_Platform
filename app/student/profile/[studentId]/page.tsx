@@ -53,6 +53,7 @@ export default async function ClassmateProfilePage({
       coverColor: true,
       equippedBackground: true,
       equippedFrame: true,
+      equippedMascot: true,
       createdAt: true,
       user: { select: { image: true } }
     }
@@ -119,6 +120,7 @@ export default async function ClassmateProfilePage({
           backgroundKey={classmate.equippedBackground}
           coverColor={classmate.coverColor}
           frame={classmate.equippedFrame}
+          mascotKey={classmate.equippedMascot}
           avatarUrl={classmate.avatarUrl}
           avatarPreset={classmate.avatarPreset}
           userImage={classmate.user?.image ?? null}

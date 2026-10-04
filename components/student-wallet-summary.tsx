@@ -1,4 +1,6 @@
 import { ProfileCover } from "@/components/profile-cover";
+import { EquippedMascot } from "@/components/shop/mascot-art";
+import { MASCOTS, mascotKey } from "@/lib/mascots";
 import { resolveItem } from "@/lib/shop-catalog";
 
 const numberFormat = new Intl.NumberFormat("vi-VN");
@@ -15,6 +17,7 @@ export function StudentWalletSummary({
   coins,
   equippedBackground,
   equippedFrame,
+  equippedMascot,
   coverColor,
   itemKeys,
   transactions
@@ -22,6 +25,7 @@ export function StudentWalletSummary({
   coins: number;
   equippedBackground: string | null;
   equippedFrame: string | null;
+  equippedMascot: string | null;
   coverColor: string | null;
   itemKeys: string[];
   transactions: { id: string; amount: number; note: string | null; createdAt: Date }[];
@@ -29,6 +33,11 @@ export function StudentWalletSummary({
   const items = itemKeys
     .map((key) => resolveItem(key))
     .filter((item): item is NonNullable<typeof item> => item !== null);
+  // Linh vật: tên con + số tư thế đã có ("Đứng yên" đi kèm con).
+  const mascots = MASCOTS.filter((mascot) => itemKeys.includes(mascotKey(mascot.id))).map((mascot) => ({
+    name: mascot.name,
+    poses: 1 + itemKeys.filter((key) => key.startsWith(`pose:${mascot.id}:`)).length
+  }));
 
   return (
     <section className="rounded-xl border border-border bg-card p-5 shadow-card">
@@ -39,11 +48,10 @@ export function StudentWalletSummary({
         </p>
       </div>
 
-      <ProfileCover
-        backgroundKey={equippedBackground}
-        coverColor={coverColor}
-        className="mt-3 h-20 rounded-lg"
-      />
+      <div className="relative mt-3">
+        <ProfileCover backgroundKey={equippedBackground} coverColor={coverColor} className="h-20 rounded-lg" />
+        <EquippedMascot poseKey={equippedMascot} className="absolute bottom-0 right-2 h-20 w-20" />
+      </div>
 
       <p className="mt-3 text-sm">
         <span className="font-medium">Đồ đang có: </span>
@@ -61,6 +69,12 @@ export function StudentWalletSummary({
           ))
         )}
       </p>
+      {mascots.length > 0 ? (
+        <p className="mt-1 text-sm">
+          <span className="font-medium">Linh vật: </span>
+          {mascots.map((mascot) => `${mascot.name} (${mascot.poses} tư thế)`).join(", ")}
+        </p>
+      ) : null}
 
       {transactions.length > 0 ? (
         <details className="mt-3">

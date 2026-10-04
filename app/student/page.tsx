@@ -9,6 +9,8 @@ import { getDayStreak } from "@/lib/day-streak-data";
 import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
+import { EquippedMascot } from "@/components/shop/mascot-art";
+import { resolvePose } from "@/lib/mascots";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { VocabCard } from "@/components/vocab-card";
 import { LateBadge, OverdueBadge } from "@/components/late-badge";
@@ -64,7 +66,7 @@ export default async function StudentDashboardPage() {
 
   const student = await prisma.studentProfile.findUnique({
     where: { userId: session.user.id },
-    select: { id: true, displayName: true }
+    select: { id: true, displayName: true, equippedMascot: true }
   });
 
   if (!student) {
@@ -325,6 +327,11 @@ export default async function StudentDashboardPage() {
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <StreakBadge
+          mascot={
+            resolvePose(student.equippedMascot) ? (
+              <EquippedMascot poseKey={student.equippedMascot} className="-my-2 block h-16 w-16" />
+            ) : undefined
+          }
           days={streak.days}
           activeToday={streak.activeToday}
           restore={

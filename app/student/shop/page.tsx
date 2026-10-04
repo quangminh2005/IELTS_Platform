@@ -2,10 +2,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { BackgroundArt } from "@/components/shop/background-art";
 import { FrameArt } from "@/components/shop/frame-art";
+import { MascotSection } from "@/components/shop/mascot-section";
 import { CancelRedemptionButton, RewardCard } from "@/components/shop/reward-card";
 import { ShopItemCard, type ShopCardState } from "@/components/shop/shop-item-card";
 import { StudentAvatar } from "@/components/student-avatar";
 import { auth } from "@/lib/auth";
+import { getDayStreak } from "@/lib/day-streak-data";
+import { MASCOTS, MASCOT_POSES, mascotKey, ownsPose, poseKey, poseName } from "@/lib/mascots";
 import { prisma } from "@/lib/prisma";
 import { getStudentRewards } from "@/lib/reward-data";
 import { REDEMPTION_STATUS_CLASSES, REDEMPTION_STATUS_LABELS } from "@/lib/rewards";
@@ -31,17 +34,18 @@ const dateFormat = new Intl.DateTimeFormat("vi-VN", {
   timeZone: "Asia/Ho_Chi_Minh"
 });
 
-type Tab = ItemCategory | "reward" | "history";
+type Tab = ItemCategory | "mascot" | "reward" | "history";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "background", label: "Nền" },
   { key: "frame", label: "Khung" },
+  { key: "mascot", label: "Linh vật" },
   { key: "reward", label: "Quà" },
   { key: "history", label: "Lịch sử Xu" }
 ];
 
 function parseTab(raw: string | undefined): Tab {
-  return raw === "frame" || raw === "reward" || raw === "history" ? raw : "background";
+  return raw === "frame" || raw === "mascot" || raw === "reward" || raw === "history" ? raw : "background";
 }
 
 function parseRarity(raw: string | undefined): ItemRarity | null {
@@ -102,6 +106,7 @@ export default async function StudentShopPage({
         avatarPreset: true,
         equippedBackground: true,
         equippedFrame: true,
+        equippedMascot: true,
         user: { select: { image: true } }
       }
     }),
@@ -119,6 +124,8 @@ export default async function StudentShopPage({
   const owned = new Set(ownedRows.map((row) => row.itemKey));
   const coins = profile.coins;
   const rewards = tab === "reward" ? await getStudentRewards(student.id, coins) : null;
+  // Chuỗi ngày hiện tại — để biết tư thế nào mở được "bằng chuỗi".
+  const streakDays = tab === "mascot" ? (await getDayStreak(student.id)).streak.days : 0;
 
   function cardsFor(category: ItemCategory): Card[] {
     const equipped = category === "background" ? profile.equippedBackground : profile.equippedFrame;
@@ -270,10 +277,47 @@ export default async function StudentShopPage({
             <span className="ml-2 text-sm font-normal text-muted-foreground">
               {cardsFor(tab).length} vật phẩm
             </span>
+          ) : tab === "mascot" ? (
+            <span className="ml-2 text-sm font-normal text-muted-foreground">{MASCOTS.length} linh vật</span>
           ) : null}
         </h2>
 
-        {rewards ? (
+        {tab === "mascot" ? (
+          <>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Mua linh vật để có tư thế &quot;Đứng yên&quot;, rồi mở thêm tư thế bằng Xu — vài tư thế mở được bằng chuỗi
+              ngày 🔥 (đang có {streakDays} ngày). Linh vật đứng trên bìa hồ sơ và thẻ chuỗi ở trang chủ.
+            </p>
+            <div className="mt-4 space-y-5">
+              {MASCOTS.map((mascot) => (
+                <MascotSection
+                  key={mascot.id}
+                  id={mascot.id}
+                  name={mascot.name}
+                  description={mascot.description}
+                  price={mascot.price}
+                  rarity={mascot.rarity}
+                  rarityLabel={RARITY_LABELS[mascot.rarity]}
+                  ownedMascot={owned.has(mascotKey(mascot.id))}
+                  poses={MASCOT_POSES.map((pose) => {
+                    const key = poseKey(mascot.id, pose.id);
+                    return {
+                      key,
+                      id: pose.id,
+                      name: poseName(mascot, pose),
+                      price: pose.price,
+                      streakDays: pose.streakDays,
+                      owned: ownsPose(owned, key) || (pose.id === "idle")
+                    };
+                  })}
+                  equippedKey={profile.equippedMascot}
+                  coins={coins}
+                  streakDays={streakDays}
+                />
+              ))}
+            </div>
+          </>
+        ) : rewards ? (
           <>
             <p className="mt-1 text-sm text-muted-foreground">
               Đổi Xu lấy quà thật — Xu bị trừ ngay, thầy sẽ trao quà trên lớp. Thầy chưa trao thì em vẫn huỷ được.

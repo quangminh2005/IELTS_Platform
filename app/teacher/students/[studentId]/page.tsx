@@ -363,6 +363,7 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
         coins={student.coins}
         equippedBackground={student.equippedBackground}
         equippedFrame={student.equippedFrame}
+        equippedMascot={student.equippedMascot}
         coverColor={student.coverColor}
         itemKeys={walletItems.map((item) => item.itemKey)}
         transactions={walletTransactions}

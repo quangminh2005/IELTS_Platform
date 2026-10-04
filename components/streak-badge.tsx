@@ -3,7 +3,8 @@ import { StreakRestoreButton } from "@/components/streak-restore-button";
 
 // Thẻ chuỗi ngày 🔥 ở trang chủ. Nhận số liệu đã tính từ lib/day-streak-data.
 // Có `restore` = hôm qua bị lỡ nhưng còn cứu được bằng Xu → thẻ đổi sang mời khôi phục.
-// `mascot` = linh vật đang trang bị, đứng bên phải thẻ.
+// `mascot` = linh vật đang trang bị — đứng THAY biểu tượng 🔥 bên trái (kèm ngọn lửa
+// nhỏ ở góc) để thẻ hẹp trong lưới 3 cột không bị ép chữ.
 export function StreakBadge({
   days,
   activeToday,
@@ -18,9 +19,7 @@ export function StreakBadge({
   if (restore) {
     return (
       <div className="flex items-start gap-3 rounded-xl border border-amber-400/70 bg-amber-50 px-4 py-3 shadow-card dark:border-amber-500/50 dark:bg-amber-950/30">
-        <span className="text-3xl grayscale" aria-hidden="true">
-          🔥
-        </span>
+        <StreakIcon mascot={mascot} icon="🔥" muted />
         <div className="min-w-0 flex-1 space-y-2">
           <div>
             <p className="text-base font-semibold">Chuỗi {restore.lostDays} ngày đã đứt</p>
@@ -30,16 +29,13 @@ export function StreakBadge({
           </div>
           <StreakRestoreButton price={restore.price} coins={restore.coins} />
         </div>
-        {mascot}
       </div>
     );
   }
 
   return (
     <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-card">
-      <span className="text-3xl" aria-hidden="true">
-        {days > 0 ? "🔥" : "✨"}
-      </span>
+      <StreakIcon mascot={mascot} icon={days > 0 ? "🔥" : "✨"} />
       <div className="min-w-0 flex-1">
         <p className="text-base font-semibold">{days > 0 ? `Chuỗi ${days} ngày` : "Bắt đầu chuỗi ngày"}</p>
         <p
@@ -54,7 +50,24 @@ export function StreakBadge({
               : "Nộp 1 bài hoặc ôn 1 thẻ Sổ từ hôm nay để bắt đầu"}
         </p>
       </div>
-      {mascot}
     </div>
+  );
+}
+
+function StreakIcon({ mascot, icon, muted = false }: { mascot?: ReactNode; icon: string; muted?: boolean }) {
+  if (!mascot) {
+    return (
+      <span className={`text-3xl ${muted ? "grayscale" : ""}`} aria-hidden="true">
+        {icon}
+      </span>
+    );
+  }
+  return (
+    <span className="relative shrink-0">
+      {mascot}
+      <span className={`absolute -bottom-1 -right-1 text-lg ${muted ? "grayscale" : ""}`} aria-hidden="true">
+        {icon}
+      </span>
+    </span>
   );
 }

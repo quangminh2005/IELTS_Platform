@@ -570,7 +570,7 @@ function Zzz({ still }: { still: boolean }) {
     [186, 32, 12]
   ];
   return (
-    <g fill="#7C8DB5" fontWeight={800} fontFamily="ui-rounded, system-ui, sans-serif">
+    <g fill="#7C8DB5" fontWeight={800} fontFamily="ui-rounded, system-ui, sans-serif" aria-hidden="true">
       {letters.map(([x, y, size], index) => (
         <text
           key={x}

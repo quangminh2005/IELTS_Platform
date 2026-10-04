@@ -340,6 +340,8 @@ const statements = [
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "coins" INTEGER NOT NULL DEFAULT 0;',
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "equippedBackground" TEXT;',
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "equippedFrame" TEXT;',
+  // Linh vật (Đợt 4): tư thế đang trang bị.
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "equippedMascot" TEXT;',
   `CREATE TABLE IF NOT EXISTS "CoinTransaction" (
     "id" TEXT NOT NULL,
     "studentId" TEXT NOT NULL,

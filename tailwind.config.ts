@@ -81,6 +81,85 @@ const config: Config = {
           "0%": { transform: "translateY(0)", opacity: "0" },
           "15%": { opacity: "1" },
           "100%": { transform: "translateY(-16px)", opacity: "0" }
+        },
+        // ---- Linh vật (components/shop/mascot-art.tsx) — gốc xoay đặt ở từng phần tử ----
+        // Nhún nhẹ cả người.
+        "mascot-bob": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-3px)" }
+        },
+        // Chớp mắt: gần như cả chu kỳ mở, nhắm rất nhanh.
+        "mascot-blink": {
+          "0%, 90%, 100%": { transform: "scaleY(1)" },
+          "94%": { transform: "scaleY(0.1)" }
+        },
+        // Vẫy tay quanh vai.
+        "mascot-wave": {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "25%": { transform: "rotate(16deg)" },
+          "50%": { transform: "rotate(-4deg)" },
+          "75%": { transform: "rotate(16deg)" }
+        },
+        // Gật gù (đọc sách, phun lửa).
+        "mascot-nod": {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "50%": { transform: "rotate(3deg)" }
+        },
+        // Lật trang: tờ giấy gập qua gáy sách rồi nghỉ.
+        "mascot-page": {
+          "0%, 55%": { transform: "scaleX(1)", opacity: "0" },
+          "60%": { opacity: "1" },
+          "80%": { transform: "scaleX(-1)", opacity: "1" },
+          "85%, 100%": { transform: "scaleX(-1)", opacity: "0" }
+        },
+        // Nhảy mừng có co giãn.
+        "mascot-hop": {
+          "0%, 100%": { transform: "translateY(0) scale(1.05, 0.95)" },
+          "35%": { transform: "translateY(-14px) scale(0.96, 1.04)" },
+          "65%": { transform: "translateY(0) scale(1.04, 0.96)" },
+          "80%": { transform: "translateY(0) scale(1, 1)" }
+        },
+        // Ngủ: thở chậm.
+        "mascot-breathe": {
+          "0%, 100%": { transform: "scale(1, 1)" },
+          "50%": { transform: "scale(1.03, 0.97)" }
+        },
+        // Chữ Z / nốt nhạc bay lên rồi tan.
+        "mascot-float": {
+          "0%": { transform: "translate(0, 0)", opacity: "0" },
+          "20%": { opacity: "1" },
+          "100%": { transform: "translate(8px, -22px)", opacity: "0" }
+        },
+        // Tua mũ tốt nghiệp đung đưa.
+        "mascot-swing": {
+          "0%, 100%": { transform: "rotate(-6deg)" },
+          "50%": { transform: "rotate(8deg)" }
+        },
+        // Lắc lư theo nhạc.
+        "mascot-sway": {
+          "0%, 100%": { transform: "rotate(-5deg)" },
+          "50%": { transform: "rotate(5deg)" }
+        },
+        // Kính lúp soi qua soi lại.
+        "mascot-scan": {
+          "0%, 100%": { transform: "rotate(-5deg)" },
+          "50%": { transform: "rotate(6deg)" }
+        },
+        // Lửa phụt.
+        "mascot-flame": {
+          "0%, 100%": { transform: "scale(1, 1)" },
+          "30%": { transform: "scale(1.08, 0.9)" },
+          "60%": { transform: "scale(0.94, 1.08)" }
+        },
+        // Đập cánh (cánh phải là bản lật gương nên dùng chung).
+        "mascot-flap": {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "50%": { transform: "rotate(14deg)" }
+        },
+        // Ngoáy đuôi.
+        "mascot-tail": {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "50%": { transform: "rotate(-7deg)" }
         }
       },
       animation: {
@@ -95,7 +174,21 @@ const config: Config = {
         "frame-flap-r": "frame-flap-r 3.2s ease-in-out infinite",
         "frame-pulse": "frame-pulse 2.8s ease-in-out infinite",
         "frame-flicker": "frame-flicker 1.3s ease-in-out infinite",
-        "frame-ember": "frame-ember 2.6s ease-out infinite"
+        "frame-ember": "frame-ember 2.6s ease-out infinite",
+        "mascot-bob": "mascot-bob 3s ease-in-out infinite",
+        "mascot-blink": "mascot-blink 4.5s ease-in-out infinite",
+        "mascot-wave": "mascot-wave 1.6s ease-in-out infinite",
+        "mascot-nod": "mascot-nod 3.2s ease-in-out infinite",
+        "mascot-page": "mascot-page 4s ease-in-out infinite",
+        "mascot-hop": "mascot-hop 1.1s ease-in-out infinite",
+        "mascot-breathe": "mascot-breathe 3.6s ease-in-out infinite",
+        "mascot-float": "mascot-float 2.7s ease-out infinite",
+        "mascot-swing": "mascot-swing 2s ease-in-out infinite",
+        "mascot-sway": "mascot-sway 1.2s ease-in-out infinite",
+        "mascot-scan": "mascot-scan 2.6s ease-in-out infinite",
+        "mascot-flame": "mascot-flame 0.6s ease-in-out infinite",
+        "mascot-flap": "mascot-flap 1.8s ease-in-out infinite",
+        "mascot-tail": "mascot-tail 2.4s ease-in-out infinite"
       }
     }
   },

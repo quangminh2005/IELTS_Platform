@@ -30,7 +30,12 @@ import { gradeAttempt } from "@/lib/grading";
 import { fillMissingAnswers } from "@/lib/submit-answers";
 import { orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
-import { accumulateActiveSeconds, AUTO_SUBMIT_SKILLS } from "@/lib/active-time";
+import {
+  accumulateActiveSeconds,
+  AUTO_SUBMIT_SKILLS,
+  resolveSkillBudgetSeconds,
+  totalRemainingSeconds
+} from "@/lib/active-time";
 import { parsePartTimes, SKILL_TIME_LABELS } from "@/lib/skill-times";
 import { AudioPlayer, type AudioPlayerControls } from "@/components/audio-player";
 import {
@@ -140,6 +145,8 @@ type AttemptWorkspaceProps = {
     instructions: string | null;
     timeLimitMinutes: number | null;
     skillTimeLimitsJson?: string | null;
+    // "Tổng thời gian cả bài" (phút): một đồng hồ chung cho Listening/Reading/Writing.
+    totalTimeLimitMinutes?: number | null;
     // Chế độ thi thật Listening: ẩn thanh audio, tự phát liên tục, chỉ chỉnh âm lượng.
     lockAudio?: boolean;
     // Số giây lập dàn ý trước mỗi câu Nói (null/không có = tắt).
@@ -1857,6 +1864,22 @@ function ChoiceGridQuestionSet({
   );
 }
 
+// Giây đã làm theo kỹ năng: lấy max giữa giá trị server (AttemptSkill) và giá trị
+// đếm được trong phiên trang này.
+function mergeElapsed(
+  rows: Array<{ skill: string; elapsedSeconds: number }>,
+  live: Record<string, number>
+): Record<string, number> {
+  const result: Record<string, number> = {};
+  for (const row of rows) {
+    result[row.skill] = row.elapsedSeconds ?? 0;
+  }
+  for (const [skill, seconds] of Object.entries(live)) {
+    result[skill] = Math.max(result[skill] ?? 0, seconds);
+  }
+  return result;
+}
+
 // Đồng hồ đếm ngược — cố tình làm TO và nổi bật vì học viên hay quên nhìn giờ.
 // Ba mức: bình thường → sắp hết (còn ≤ 5 phút, màu hổ phách) → gấp (còn ≤ 1 phút,
 // màu đỏ + nhấp nháy). Thanh mảnh dưới đáy cho thấy phần thời gian còn lại.
@@ -2106,6 +2129,15 @@ export function AttemptWorkspace({
   const findAttemptCountRef = useRef(attempt.findAttemptCount ?? 0);
   // Bộ đếm "thời gian làm thực" (giây) của kỹ năng đang mở + cờ chống tự-nộp trùng.
   const consumedRef = useRef(0);
+  // Thời gian làm thực đã đếm trong phiên trang này, theo từng kỹ năng — để đổi
+  // kỹ năng (nút "‹ Kỹ năng") không mang giây của kỹ năng trước sang kỹ năng sau,
+  // và để chế độ "Tổng cả bài" biết các kỹ năng khác đã dùng bao nhiêu giờ (giá trị
+  // AttemptSkill từ server chỉ mới tới lúc tải trang).
+  const liveElapsedRef = useRef<Record<string, number>>({});
+  // Trường ẩn gửi kèm lúc nộp: giây đã làm của từng kỹ năng (chế độ tổng cần để
+  // server không lệch với đồng hồ client khi heartbeat chưa kịp lưu).
+  const skillElapsedInputRef = useRef<HTMLInputElement>(null);
+  const [liveElapsed, setLiveElapsed] = useState<Record<string, number>>({});
   const autoSubmittedRef = useRef(false);
   const timeLimitMinutes = assignment.timeLimitMinutes;
 
@@ -2353,12 +2385,30 @@ export function AttemptWorkspace({
     });
   }, []);
 
-  // Giới hạn = phút cấu hình cho kỹ năng đó; bài 1 kỹ năng không có cấu hình riêng
-  // thì dùng thời gian chung của bài (giữ hành vi cũ). null = không giới hạn.
+  // Ngân sách (giây) của kỹ năng đang mở. Chế độ "Tổng cả bài": tổng − thời gian
+  // đã dùng ở các kỹ năng khác (đọc từ AttemptSkill lúc render). Không thì = phút
+  // cấu hình cho kỹ năng đó; bài 1 kỹ năng không có cấu hình riêng thì dùng thời
+  // gian chung của bài (giữ hành vi cũ). null = không giới hạn.
+  const totalMinutes = assignment.totalTimeLimitMinutes ?? null;
   const activeSkillRow = attemptSkills.find((row) => row.skill === activeSkill);
-  const activeSkillLimit = activeSkill
-    ? skillLimits[activeSkill] ?? (isMultiSkill ? null : timeLimitMinutes)
-    : timeLimitMinutes;
+  const elapsedBySkill = useMemo(
+    () => mergeElapsed(attemptSkills, liveElapsed),
+    [attemptSkills, liveElapsed]
+  );
+  const activeBudgetSeconds = activeSkill
+    ? resolveSkillBudgetSeconds({
+        skill: activeSkill,
+        skillLimits,
+        isMultiSkill,
+        fallbackMinutes: timeLimitMinutes,
+        totalMinutes,
+        elapsedBySkill
+      })
+    : null;
+  // Thanh tiến độ của đồng hồ: chế độ tổng tính theo cả bài, không theo phần còn lại.
+  const hasActiveBudget = activeBudgetSeconds != null;
+  const countdownBudgetSeconds =
+    totalMinutes != null && activeBudgetSeconds != null ? totalMinutes * 60 : activeBudgetSeconds;
 
   // Tự động nộp kỹ năng khi hết giờ: chỉ Listening/Reading/Writing, không xem trước,
   // và chỉ một lần. Gọi requestSubmit() nên KHÔNG đi qua hộp thoại xác nhận của nút Nộp.
@@ -2557,8 +2607,22 @@ export function AttemptWorkspace({
     // Lấy max chứ không gán đè: effect này chạy lại mỗi khi đóng/mở màn kiểm tra
     // âm thanh hay khi giới hạn giờ đổi, mà giá trị trong DB thường vẫn là 0 —
     // gán đè sẽ kéo đồng hồ về 0 và khiến tự-nộp-hết-giờ không bao giờ chạy.
-    consumedRef.current = Math.max(consumedRef.current, activeSkillRow?.elapsedSeconds ?? 0);
-    const budgetSeconds = activeSkillLimit != null ? activeSkillLimit * 60 : null;
+    // Nguồn là giờ đã đếm của CHÍNH kỹ năng này (không phải kỹ năng mở trước đó).
+    const skill = activeSkill;
+    consumedRef.current = Math.max(
+      liveElapsedRef.current[skill] ?? 0,
+      activeSkillRow?.elapsedSeconds ?? 0
+    );
+    // Ngân sách tính tại đây từ ref (không lấy từ render) để effect không phải phụ
+    // thuộc vào liveElapsed — nếu không, lưu giờ lúc dọn effect sẽ kích chạy lại vô hạn.
+    const budgetSeconds = resolveSkillBudgetSeconds({
+      skill,
+      skillLimits,
+      isMultiSkill,
+      fallbackMinutes: timeLimitMinutes,
+      totalMinutes,
+      elapsedBySkill: mergeElapsed(attemptSkills, liveElapsedRef.current)
+    });
     let lastTick = Date.now();
 
     function tick() {
@@ -2571,6 +2635,12 @@ export function AttemptWorkspace({
       }
       if (partTimesInputRef.current) {
         partTimesInputRef.current.value = JSON.stringify(snapshotPartTimes());
+      }
+      if (skillElapsedInputRef.current) {
+        skillElapsedInputRef.current.value = JSON.stringify({
+          ...mergeElapsed(attemptSkills, liveElapsedRef.current),
+          [skill]: Math.floor(consumedRef.current)
+        });
       }
       // Render lại từ RSC (vd. revalidatePath khi startSkillSession) đặt hidden input về
       // defaultValue cũ đọc từ DB, xoá mất giá trị vừa bump — nên phải đồng bộ lại từ ref
@@ -2595,12 +2665,24 @@ export function AttemptWorkspace({
 
     tick();
     const intervalId = window.setInterval(tick, 1000);
-    return () => window.clearInterval(intervalId);
+    return () => {
+      window.clearInterval(intervalId);
+      const seconds = Math.floor(consumedRef.current);
+      if (liveElapsedRef.current[skill] !== seconds) {
+        liveElapsedRef.current = { ...liveElapsedRef.current, [skill]: seconds };
+        setLiveElapsed(liveElapsedRef.current);
+      }
+    };
   }, [
     previewMode,
     activeSkill,
     needsSoundCheck,
-    activeSkillLimit,
+    hasActiveBudget,
+    skillLimits,
+    isMultiSkill,
+    timeLimitMinutes,
+    totalMinutes,
+    attemptSkills,
     activeSkillRow?.elapsedSeconds,
     snapshotPartTimes,
     maybeAutoSubmit
@@ -2917,6 +2999,7 @@ export function AttemptWorkspace({
         defaultValue={attempt.findAttemptCount ?? 0}
       />
       <input ref={submitReasonRef} type="hidden" name="submitReason" defaultValue="manual" />
+      <input ref={skillElapsedInputRef} type="hidden" name="skillElapsedJson" defaultValue="" />
       <input type="hidden" name="recipientId" value={recipientId} />
 
       <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-4 py-3">
@@ -2992,8 +3075,8 @@ export function AttemptWorkspace({
               storageKey={`lockedAudio_${attempt.id}`}
             />
           ) : null}
-          {activeSkillLimit != null && remaining != null ? (
-            <CountdownTimer remainingSeconds={remaining} budgetSeconds={activeSkillLimit * 60} />
+          {hasActiveBudget && remaining != null ? (
+            <CountdownTimer remainingSeconds={remaining} budgetSeconds={countdownBudgetSeconds} />
           ) : null}
         </div>
       </header>
@@ -4206,9 +4289,14 @@ export function AttemptWorkspace({
               (sum, unit) => sum + unit.assignableUnit.questions.length,
               0
             ),
-            minutes: skillLimits[skill] ?? null
+            minutes: totalMinutes != null ? null : skillLimits[skill] ?? null
           };
         })}
+        totalTime={
+          totalMinutes != null
+            ? { minutes: totalMinutes, remainingSeconds: totalRemainingSeconds(totalMinutes, elapsedBySkill) }
+            : null
+        }
         onOpen={openSkill}
         onViewResult={(skill) => {
           window.location.href = `/student/results/${attempt.id}?skill=${skill}`;

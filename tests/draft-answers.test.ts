@@ -89,8 +89,10 @@ describe("chống tái phát lỗi buổi kiểm tra 24/07/2026", () => {
     expect(attempts).toContain(
       'Math.max(parsed.data.elapsedSeconds, skillRow?.elapsedSeconds ?? 0)'
     );
-    expect(workspace).toContain(
-      "Math.max(consumedRef.current, activeSkillRow?.elapsedSeconds ?? 0)"
+    // Đồng hồ khởi động lại từ max(giờ đã đếm của CHÍNH kỹ năng này, giá trị DB) —
+    // không về 0, và không mang giây của kỹ năng mở trước đó sang (5/10/2026).
+    expect(workspace).toMatch(
+      /consumedRef\.current = Math\.max\(\s*liveElapsedRef\.current\[skill\] \?\? 0,\s*activeSkillRow\?\.elapsedSeconds \?\? 0\s*\)/
     );
   });
 

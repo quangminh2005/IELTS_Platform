@@ -1,5 +1,6 @@
 "use client";
 
+import { AUTO_SUBMIT_SKILLS } from "@/lib/active-time";
 import { SKILL_TIME_LABELS } from "@/lib/skill-times";
 
 export type SkillPickerItem = {
@@ -16,7 +17,14 @@ type SkillPickerProps = {
   onOpen: (skill: string) => void;
   onViewResult: (skill: string) => void;
   onExit: () => void;
+  // Chế độ "Tổng thời gian cả bài": tổng phút + số giây còn lại của cả bài.
+  totalTime?: { minutes: number; remainingSeconds: number } | null;
 };
+
+function formatClock(totalSeconds: number) {
+  const left = Math.max(0, Math.floor(totalSeconds));
+  return `${Math.floor(left / 60)}:${String(left % 60).padStart(2, "0")}`;
+}
 
 const STATUS_LABEL: Record<string, string> = {
   not_started: "Chưa làm",
@@ -24,7 +32,14 @@ const STATUS_LABEL: Record<string, string> = {
   submitted: "Đã nộp"
 };
 
-export function SkillPicker({ title, items, onOpen, onViewResult, onExit }: SkillPickerProps) {
+export function SkillPicker({
+  title,
+  items,
+  onOpen,
+  onViewResult,
+  onExit,
+  totalTime = null
+}: SkillPickerProps) {
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-background">
       <header className="flex items-center justify-between border-b border-border bg-card px-4 py-3">
@@ -43,6 +58,17 @@ export function SkillPicker({ title, items, onOpen, onViewResult, onExit }: Skil
         <p className="text-sm text-muted-foreground">
           Chọn kỹ năng để bắt đầu. Mỗi kỹ năng là một phiên riêng, nộp xong sẽ khoá lại.
         </p>
+        {totalTime ? (
+          <div className="rounded-xl border border-primary/40 bg-primary/10 p-4 text-sm">
+            <p className="font-semibold text-primary">
+              Tổng thời gian cả bài: {totalTime.minutes} phút · còn {formatClock(totalTime.remainingSeconds)}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Các kỹ năng dùng chung một đồng hồ, chỉ chạy khi em đang làm bài. Hết giờ thì cả bài
+              tự nộp — phần chưa làm sẽ tính là bỏ trống, nên hãy tự chia thời gian nhé.
+            </p>
+          </div>
+        ) : null}
         {items.map((item) => {
           const label = SKILL_TIME_LABELS[item.skill] ?? item.skill;
           const submitted = item.status === "submitted";
@@ -55,7 +81,11 @@ export function SkillPicker({ title, items, onOpen, onViewResult, onExit }: Skil
                 <p className="text-base font-semibold">{label}</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
                   {item.partCount} phần · {item.questionCount} câu
-                  {item.minutes ? ` · ${item.minutes} phút` : " · không giới hạn"}
+                  {totalTime && AUTO_SUBMIT_SKILLS.has(item.skill)
+                    ? " · tính vào tổng giờ"
+                    : item.minutes
+                      ? ` · ${item.minutes} phút`
+                      : " · không giới hạn"}
                 </p>
                 <span
                   className={[

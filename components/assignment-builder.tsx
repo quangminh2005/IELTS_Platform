@@ -91,10 +91,7 @@ export function AssignmentBuilder({
         settingsRight={
           <>
             <fieldset>
-              <legend className="text-sm font-semibold">Thời gian mỗi kỹ năng</legend>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Mỗi kỹ năng là một phiên riêng, có đồng hồ riêng. Bỏ trống = không giới hạn.
-              </p>
+              <legend className="text-sm font-semibold">Thời gian làm bài</legend>
               <div className="mt-3">
                 <SkillTimeInputs unitSkills={unitSkills} />
               </div>

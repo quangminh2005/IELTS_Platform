@@ -156,6 +156,7 @@ export default async function AssignmentAttemptPage({ params }: AssignmentAttemp
         instructions: recipient.assignment.instructions,
         timeLimitMinutes: recipient.assignment.timeLimitMinutes,
         skillTimeLimitsJson: recipient.assignment.skillTimeLimitsJson,
+        totalTimeLimitMinutes: recipient.assignment.totalTimeLimitMinutes,
         lockAudio: recipient.assignment.lockAudio,
         speakingPrepSeconds: prepSeconds,
         speakingPrepShared: isSharedSpeakingPrep(recipient.assignment.speakingPrepScope),

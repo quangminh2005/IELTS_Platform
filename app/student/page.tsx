@@ -249,9 +249,11 @@ export default async function StudentDashboardPage() {
                     <p className="font-semibold">{recipient.assignment.title}</p>
                     <p className="mt-1 text-sm text-muted-foreground">
                       {recipient.assignment._count.units} phần
-                      {recipient.assignment.timeLimitMinutes
-                        ? ` · ${recipient.assignment.timeLimitMinutes} phút`
-                        : ""}
+                      {recipient.assignment.totalTimeLimitMinutes
+                        ? ` · ${recipient.assignment.totalTimeLimitMinutes} phút cả bài`
+                        : recipient.assignment.timeLimitMinutes
+                          ? ` · ${recipient.assignment.timeLimitMinutes} phút`
+                          : ""}
                     </p>
                     {deadline ? (
                       <p

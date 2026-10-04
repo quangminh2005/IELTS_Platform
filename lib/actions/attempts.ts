@@ -11,7 +11,7 @@ import { gradeUnits } from "@/lib/attempt-grading";
 import { allSkillsSubmitted, orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
 import { sanitizePartTimesJson } from "@/lib/skill-times";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
-import { isSkillTimeUp, skillBudgetSeconds } from "@/lib/active-time";
+import { AUTO_SUBMIT_SKILLS, isSkillTimeUp, resolveSkillBudgetSeconds } from "@/lib/active-time";
 import { mergeCount } from "@/lib/proctor-signals";
 import { planDraftWrite } from "@/lib/draft-answers";
 import { prisma } from "@/lib/prisma";
@@ -191,6 +191,24 @@ export async function startSkillSession(formData: FormData) {
   }
 }
 
+// skillElapsedJson client gửi lúc nộp: { kỹ năng: giây }. Bỏ khoá lạ/giá trị hỏng.
+function parseSkillElapsed(raw: FormDataEntryValue | null): Record<string, number> {
+  try {
+    const parsed = JSON.parse(String(raw ?? "")) as unknown;
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+    const result: Record<string, number> = {};
+    for (const [skill, value] of Object.entries(parsed as Record<string, unknown>)) {
+      const seconds = Number(value);
+      if (AUTO_SUBMIT_SKILLS.has(skill) && Number.isFinite(seconds) && seconds >= 0) {
+        result[skill] = Math.floor(seconds);
+      }
+    }
+    return result;
+  } catch {
+    return {};
+  }
+}
+
 const submitSkillSchema = z.object({
   attemptId: z.string().trim().min(1),
   skill: z.enum(["listening", "reading", "writing", "speaking"]),
@@ -254,31 +272,60 @@ export async function submitSkill(formData: FormData) {
     redirect(`/student/results/${attempt.id}?skill=${parsed.data.skill}`);
   }
 
+  const assignment = attempt.assignmentRecipient.assignment;
+  const assignmentSkills = orderedSkillsOfAssignment(assignment.units);
+  const currentElapsed = Math.max(parsed.data.elapsedSeconds, skillRow?.elapsedSeconds ?? 0);
+  // Chế độ "Tổng thời gian cả bài": hết giờ hợp lệ thì nộp luôn mọi kỹ năng tính
+  // giờ (Listening/Reading/Writing) còn chưa nộp, đáp án lấy từ nháp đã tự lưu.
+  let cascadeSkills: string[] = [];
+
   // Tự động nộp khi hết giờ: chỉ chấp nhận khi kỹ năng THẬT SỰ đã dùng hết ngân
   // sách thời gian (chống nộp non do client lỗi). Speaking không bao giờ tự nộp.
   if (parsed.data.submitReason === "auto_timeout") {
     if (parsed.data.skill === "speaking") {
       return;
     }
-    const assignment = attempt.assignmentRecipient.assignment;
-    const isMultiSkill = orderedSkillsOfAssignment(assignment.units).length > 1;
-    const budget = skillBudgetSeconds(
-      parsed.data.skill,
-      parseSkillTimeLimits(assignment.skillTimeLimitsJson),
-      isMultiSkill,
-      assignment.timeLimitMinutes
+    const elapsedBySkill: Record<string, number> = Object.fromEntries(
+      attempt.skills.map((row) => [row.skill, row.elapsedSeconds ?? 0])
     );
+    // Chế độ tổng: heartbeat lưu giờ ~10s/lần nên DB có thể chậm hơn đồng hồ client
+    // → lấy max với số client gửi kèm. Số client chỉ có thể làm "hết giờ" SỚM hơn
+    // (học viên tự nộp sớm), không kéo dài giờ làm được.
+    if (assignment.totalTimeLimitMinutes != null) {
+      const clientElapsed = parseSkillElapsed(formData.get("skillElapsedJson"));
+      for (const [skill, seconds] of Object.entries(clientElapsed)) {
+        elapsedBySkill[skill] = Math.max(elapsedBySkill[skill] ?? 0, seconds);
+      }
+    }
+    elapsedBySkill[parsed.data.skill] = currentElapsed;
+    const budget = resolveSkillBudgetSeconds({
+      skill: parsed.data.skill,
+      skillLimits: parseSkillTimeLimits(assignment.skillTimeLimitsJson),
+      isMultiSkill: assignmentSkills.length > 1,
+      fallbackMinutes: assignment.timeLimitMinutes,
+      totalMinutes: assignment.totalTimeLimitMinutes,
+      elapsedBySkill
+    });
     if (budget == null) {
       return; // kỹ năng không giới hạn giờ → không tự nộp.
     }
-    const elapsed = Math.max(parsed.data.elapsedSeconds, skillRow?.elapsedSeconds ?? 0);
-    if (!isSkillTimeUp(elapsed, budget)) {
+    if (!isSkillTimeUp(currentElapsed, budget)) {
       return; // client gửi nhầm lúc chưa hết giờ.
+    }
+    if (assignment.totalTimeLimitMinutes != null) {
+      const submittedSkills = new Set(
+        attempt.skills.filter((row) => row.status === "submitted").map((row) => row.skill)
+      );
+      cascadeSkills = assignmentSkills.filter(
+        (skill) =>
+          skill !== parsed.data.skill && AUTO_SUBMIT_SKILLS.has(skill) && !submittedSkills.has(skill)
+      );
     }
   }
 
-  const allUnits = attempt.assignmentRecipient.assignment.units;
-  const skillUnits = unitsForSkill(allUnits, parsed.data.skill);
+  const allUnits = assignment.units;
+  const skillsToSubmit = [parsed.data.skill, ...cascadeSkills];
+  const skillUnits = skillsToSubmit.flatMap((skill) => unitsForSkill(allUnits, skill));
   const skillUnitIds = skillUnits.map((u) => u.assignableUnitId);
 
   // Lớp phòng thủ thứ hai (sau fillMissingAnswers ở client): câu nào form KHÔNG
@@ -293,30 +340,39 @@ export async function submitSkill(formData: FormData) {
   });
   const draftByQuestion = new Map(draftRows.map((row) => [row.questionId, row.value]));
 
-  const graded = gradeUnits(
-    skillUnits.map((au) => ({
-      assignableUnitId: au.assignableUnitId,
-      skill: au.assignableUnit.skill,
-      content: au.assignableUnit.content,
-      transcript: au.assignableUnit.transcript,
-      questions: au.assignableUnit.questions
-    })),
-    (questionId) =>
-      formData.has(`q_${questionId}`)
-        ? String(formData.get(`q_${questionId}`) ?? "")
-        : draftByQuestion.get(questionId) ?? ""
+  const answerOf = (questionId: string) =>
+    formData.has(`q_${questionId}`)
+      ? String(formData.get(`q_${questionId}`) ?? "")
+      : draftByQuestion.get(questionId) ?? "";
+  // Chấm riêng từng kỹ năng (điểm AttemptSkill tính theo kỹ năng). Thường chỉ có
+  // một kỹ năng; chế độ tổng hết giờ thì thêm các kỹ năng nộp dây chuyền.
+  const gradedSkills = skillsToSubmit.map((skill) => {
+    const graded = gradeUnits(
+      unitsForSkill(allUnits, skill).map((au) => ({
+        assignableUnitId: au.assignableUnitId,
+        skill: au.assignableUnit.skill,
+        content: au.assignableUnit.content,
+        transcript: au.assignableUnit.transcript,
+        questions: au.assignableUnit.questions
+      })),
+      answerOf
+    );
+    const skillGrade = gradeAttempt(graded.gradeItems);
+    // Kỹ năng không có câu tự chấm nào (bài luận Viết / ghi âm Nói) — gradeAttempt([])
+    // sẽ trả score/scorePercent = 0, gây hiểu nhầm là "0%". Lưu null để trang kết quả
+    // hiển thị "chờ chấm" thay vì điểm giả. Ngược lại, bài Viết dạng điền chỗ trống
+    // (có đáp án) vẫn ra điểm ngay như Nghe/Đọc.
+    const manualSkill = graded.gradeItems.length === 0;
+    return {
+      skill,
+      answerRows: graded.answerRows,
+      score: manualSkill ? null : skillGrade.score,
+      scorePercent: manualSkill ? null : skillGrade.scorePercent
+    };
+  });
+  const answerRows = gradedSkills.flatMap((item) =>
+    item.answerRows.map((row) => ({ ...row, attemptId: attempt.id, studentId: student.id }))
   );
-  const answerRows = graded.answerRows.map((row) => ({
-    ...row,
-    attemptId: attempt.id,
-    studentId: student.id
-  }));
-  const skillGrade = gradeAttempt(graded.gradeItems);
-  // Kỹ năng không có câu tự chấm nào (bài luận Viết / ghi âm Nói) — gradeAttempt([])
-  // sẽ trả score/scorePercent = 0, gây hiểu nhầm là "0%". Lưu null để trang kết quả
-  // hiển thị "chờ chấm" thay vì điểm giả. Ngược lại, bài Viết dạng điền chỗ trống
-  // (có đáp án) vẫn ra điểm ngay như Nghe/Đọc.
-  const manualSkill = graded.gradeItems.length === 0;
 
   const submittedAt = new Date();
   // Đánh dấu khi đây là lần nộp làm hoàn tất cả Attempt (kỹ năng cuối cùng), để
@@ -332,19 +388,34 @@ export async function submitSkill(formData: FormData) {
     if (answerRows.length > 0) {
       await tx.answer.createMany({ data: answerRows });
     }
-    await tx.attemptSkill.update({
-      where: { attemptId_skill: { attemptId: attempt.id, skill: parsed.data.skill } },
-      data: {
-        status: "submitted",
-        submittedAt,
-        // Lấy max chứ không ghi đè: trường ẩn elapsedSeconds trên form bị RSC
-        // render lại đặt về defaultValue (giá trị cũ trong DB, thường là 0), nên
-        // nộp ngay sau một lần render lại sẽ xoá mất giờ mà heartbeat đã tích.
-        elapsedSeconds: Math.max(parsed.data.elapsedSeconds, skillRow?.elapsedSeconds ?? 0),
-        score: manualSkill ? null : skillGrade.score,
-        scorePercent: manualSkill ? null : skillGrade.scorePercent
-      }
-    });
+    for (const item of gradedSkills) {
+      const isCurrent = item.skill === parsed.data.skill;
+      const existingElapsed =
+        attempt.skills.find((row) => row.skill === item.skill)?.elapsedSeconds ?? 0;
+      // upsert: kỹ năng nộp dây chuyền có thể chưa từng mở (chưa chắc có hàng).
+      await tx.attemptSkill.upsert({
+        where: { attemptId_skill: { attemptId: attempt.id, skill: item.skill } },
+        create: {
+          attemptId: attempt.id,
+          skill: item.skill,
+          status: "submitted",
+          submittedAt,
+          elapsedSeconds: isCurrent ? currentElapsed : 0,
+          score: item.score,
+          scorePercent: item.scorePercent
+        },
+        update: {
+          status: "submitted",
+          submittedAt,
+          // Lấy max chứ không ghi đè: trường ẩn elapsedSeconds trên form bị RSC
+          // render lại đặt về defaultValue (giá trị cũ trong DB, thường là 0), nên
+          // nộp ngay sau một lần render lại sẽ xoá mất giờ mà heartbeat đã tích.
+          elapsedSeconds: isCurrent ? currentElapsed : existingElapsed,
+          score: item.score,
+          scorePercent: item.scorePercent
+        }
+      });
+    }
 
     // Ghi nhận hành vi đáng ngờ: gắn với cả Attempt (không tách theo kỹ năng). Chạy ở
     // MỌI lượt nộp chứ không chỉ lượt cuối, vì heartbeat gần nhất có thể đã cũ tới 10

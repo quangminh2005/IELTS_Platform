@@ -282,37 +282,41 @@ model Question {
 }
 
 model Assignment {
-  id                  String                @id @default(cuid())
-  teacherId           String
-  classId             String?
-  title               String
-  instructions        String?
-  deadline            DateTime?
-  timeLimitMinutes    Int?
+  id                    String                @id @default(cuid())
+  teacherId             String
+  classId               String?
+  title                 String
+  instructions          String?
+  deadline              DateTime?
+  timeLimitMinutes      Int?
   // Thời gian làm bài theo từng kỹ năng: JSON { "listening": 30, "reading": 60 } (phút).
   // Kỹ năng không có khóa = không đếm ngược. timeLimitMinutes giữ làm fallback/1 kỹ năng.
-  skillTimeLimitsJson String?
+  skillTimeLimitsJson   String?
+  // Chế độ "Tổng thời gian cả bài" (phút): một đồng hồ chung cộng dồn Listening/
+  // Reading/Writing; hết giờ thì nộp mọi kỹ năng đó. Null = đặt giờ theo từng kỹ năng
+  // (skillTimeLimitsJson). Speaking không tính giờ. Xem lib/active-time.ts.
+  totalTimeLimitMinutes Int?
   // Chế độ thi thật cho Listening: ẩn thanh audio (không play/pause/tua), audio tự
   // phát liên tục, học viên chỉ chỉnh được âm lượng; có màn kiểm tra âm thanh trước.
-  lockAudio           Boolean               @default(false)
+  lockAudio             Boolean               @default(false)
   // Speaking: số giây cho học viên lập dàn ý trước khi ghi âm mỗi câu (có đếm ngược,
   // hết giờ khoá ô dàn ý). Null = tắt. Xem lib/speaking-plan.ts.
-  speakingPrepSeconds Int?
+  speakingPrepSeconds   Int?
   // Cột cũ (tính bằng phút) của bài giao tạo trước khi có speakingPrepSeconds — chỉ
   // còn đọc qua assignmentPrepSeconds(), bài mới/sửa đều ghi null.
-  speakingPrepMinutes Int?
+  speakingPrepMinutes   Int?
   // Chuẩn bị theo từng câu ("per_question", null) hay một khoảng chung cả bài ("shared").
-  speakingPrepScope   String?
-  mode                String                @default("homework")
+  speakingPrepScope     String?
+  mode                  String                @default("homework")
   // Chỉ có ở "bài giao ảo" của thư viện tự luyện: khoá studentId:materialId:unitId|all.
   // Đảm bảo mỗi (học viên × đề × phạm vi) chỉ sinh đúng một bài giao ảo.
-  practiceScopeKey    String?               @unique
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  teacher             TeacherProfile        @relation(fields: [teacherId], references: [id], onDelete: Cascade)
-  class               Class?                @relation(fields: [classId], references: [id], onDelete: SetNull)
-  units               AssignmentUnit[]
-  recipients          AssignmentRecipient[]
+  practiceScopeKey      String?               @unique
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  teacher               TeacherProfile        @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  class                 Class?                @relation(fields: [classId], references: [id], onDelete: SetNull)
+  units                 AssignmentUnit[]
+  recipients            AssignmentRecipient[]
 
   @@index([teacherId])
   @@index([classId])

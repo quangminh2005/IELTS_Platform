@@ -112,6 +112,26 @@ function readSkillTimeLimits(formData: FormData): Record<string, number> {
   return map;
 }
 
+// Nút gạt "Theo từng kỹ năng" / "Tổng cả bài". Chế độ tổng: một ô phút chung,
+// bỏ giới hạn từng kỹ năng. Chế độ từng kỹ năng (mặc định): như cũ.
+function readTimeLimits(formData: FormData): {
+  totalTimeLimitMinutes: number | null;
+  skillTimeLimitsJson: string | null;
+} {
+  if (formData.get("timeMode") === "total") {
+    const minutes = Number(formData.get("totalTimeMinutes"));
+    if (Number.isFinite(minutes) && minutes >= 1) {
+      return { totalTimeLimitMinutes: Math.floor(minutes), skillTimeLimitsJson: null };
+    }
+    // Chọn "Tổng" mà để trống = không giới hạn giờ.
+    return { totalTimeLimitMinutes: null, skillTimeLimitsJson: null };
+  }
+  return {
+    totalTimeLimitMinutes: null,
+    skillTimeLimitsJson: serializeSkillTimeLimits(readSkillTimeLimits(formData))
+  };
+}
+
 // Ô "Cho học viên lập dàn ý" + số giây chuẩn bị (null = tắt). Cột phút cũ luôn ghi
 // null để assignmentPrepSeconds() chỉ còn đọc cột giây.
 function readSpeakingPrep(formData: FormData) {
@@ -154,8 +174,6 @@ export async function createAssignment(formData: FormData) {
 
   await verifyUnitsAndStudents(teacher.id, unitIds, studentIds);
 
-  const skillTimeLimitsJson = serializeSkillTimeLimits(readSkillTimeLimits(formData));
-
   await prisma.assignment.create({
     data: {
       teacherId: teacher.id,
@@ -164,7 +182,7 @@ export async function createAssignment(formData: FormData) {
       instructions: optionalText(parsed.data.instructions),
       deadline,
       timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
-      skillTimeLimitsJson,
+      ...readTimeLimits(formData),
       lockAudio: parsed.data.lockAudio,
       ...readSpeakingPrep(formData),
       mode: "homework",
@@ -273,7 +291,7 @@ export async function updateAssignment(formData: FormData) {
         instructions: optionalText(parsed.data.instructions),
         deadline,
         timeLimitMinutes: parsed.data.timeLimitMinutes ?? null,
-        skillTimeLimitsJson: serializeSkillTimeLimits(readSkillTimeLimits(formData)),
+        ...readTimeLimits(formData),
         lockAudio: parsed.data.lockAudio,
         ...readSpeakingPrep(formData)
       }

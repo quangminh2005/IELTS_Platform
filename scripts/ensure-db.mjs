@@ -84,6 +84,8 @@ const statements = [
   `ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "category" TEXT NOT NULL DEFAULT 'homework';`,
   'ALTER TABLE "Material" ADD COLUMN IF NOT EXISTS "bookName" TEXT;',
   'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "practiceScopeKey" TEXT;',
+  // Tổng thời gian cả bài (một đồng hồ chung cho bài nhiều kỹ năng), 5/10/2026
+  'ALTER TABLE "Assignment" ADD COLUMN IF NOT EXISTS "totalTimeLimitMinutes" INTEGER;',
   'ALTER TABLE "Attempt" ADD COLUMN IF NOT EXISTS "attemptRound" INTEGER NOT NULL DEFAULT 1;',
   'CREATE UNIQUE INDEX IF NOT EXISTS "Assignment_practiceScopeKey_key" ON "Assignment"("practiceScopeKey");',
   // Chặn dò mật khẩu giáo viên: bảng đếm số lần đăng nhập SAI. Bảng mới, không

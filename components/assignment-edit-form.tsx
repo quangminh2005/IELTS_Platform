@@ -19,6 +19,7 @@ export type AssignmentItem = {
   deadline: Date | null;
   timeLimitMinutes: number | null;
   skillTimeLimitsJson: string | null;
+  totalTimeLimitMinutes: number | null;
   lockAudio: boolean;
   speakingPrepSeconds: number | null;
   speakingPrepScope: string | null;
@@ -174,14 +175,12 @@ export function AssignmentEditForm({ assignment }: { assignment: AssignmentItem 
           </fieldset>
 
           <fieldset>
-            <legend className="text-sm font-semibold">Thời gian mỗi kỹ năng</legend>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Mỗi kỹ năng là một phiên riêng, có đồng hồ riêng. Bỏ trống = không giới hạn.
-            </p>
+            <legend className="text-sm font-semibold">Thời gian làm bài</legend>
             <div className="mt-2">
               <SkillTimeInputs
                 unitSkills={unitSkills}
                 defaultValues={parseSkillTimeLimits(assignment.skillTimeLimitsJson)}
+                defaultTotalMinutes={assignment.totalTimeLimitMinutes}
               />
             </div>
           </fieldset>

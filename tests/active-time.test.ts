@@ -4,7 +4,10 @@ import {
   AUTO_SUBMIT_SKILLS,
   accumulateActiveSeconds,
   skillBudgetSeconds,
-  isSkillTimeUp
+  isSkillTimeUp,
+  resolveSkillBudgetSeconds,
+  totalModeBudgetSeconds,
+  totalRemainingSeconds
 } from "@/lib/active-time";
 
 describe("accumulateActiveSeconds", () => {
@@ -60,5 +63,53 @@ describe("AUTO_SUBMIT_SKILLS", () => {
     expect(AUTO_SUBMIT_SKILLS.has("reading")).toBe(true);
     expect(AUTO_SUBMIT_SKILLS.has("writing")).toBe(true);
     expect(AUTO_SUBMIT_SKILLS.has("speaking")).toBe(false);
+  });
+});
+
+describe("chế độ tổng thời gian cả bài", () => {
+  it("totalRemainingSeconds trừ thời gian mọi kỹ năng tính giờ, bỏ qua Speaking", () => {
+    expect(totalRemainingSeconds(30, { reading: 600, writing: 120, speaking: 999 })).toBe(1800 - 720);
+  });
+
+  it("totalRemainingSeconds không âm", () => {
+    expect(totalRemainingSeconds(1, { reading: 500 })).toBe(0);
+  });
+
+  it("ngân sách kỹ năng đang mở = tổng − thời gian các kỹ năng KHÁC", () => {
+    expect(totalModeBudgetSeconds("writing", 30, { reading: 1320, writing: 60 })).toBe(1800 - 1320);
+  });
+
+  it("Speaking không có ngân sách trong chế độ tổng", () => {
+    expect(totalModeBudgetSeconds("speaking", 30, { reading: 100 })).toBeNull();
+  });
+
+  it("ngân sách không âm khi kỹ năng khác đã ăn hết tổng", () => {
+    expect(totalModeBudgetSeconds("writing", 10, { reading: 900 })).toBe(0);
+  });
+
+  it("resolveSkillBudgetSeconds ưu tiên tổng khi có totalMinutes", () => {
+    expect(
+      resolveSkillBudgetSeconds({
+        skill: "reading",
+        skillLimits: { reading: 99 },
+        isMultiSkill: true,
+        fallbackMinutes: null,
+        totalMinutes: 30,
+        elapsedBySkill: { writing: 300 }
+      })
+    ).toBe(1500);
+  });
+
+  it("resolveSkillBudgetSeconds giữ hành vi cũ khi không có totalMinutes", () => {
+    expect(
+      resolveSkillBudgetSeconds({
+        skill: "reading",
+        skillLimits: { reading: 20 },
+        isMultiSkill: true,
+        fallbackMinutes: null,
+        totalMinutes: null,
+        elapsedBySkill: {}
+      })
+    ).toBe(1200);
   });
 });

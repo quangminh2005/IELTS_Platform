@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { allSkillsSubmitted, orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
+import {
+  allSkillsSubmitted,
+  orderedSkillsOfAssignment,
+  pickerSkillStatus,
+  unitsForSkill
+} from "@/lib/skill-sessions";
 
 const units = [
   { assignableUnit: { skill: "reading" } },
@@ -20,5 +25,22 @@ describe("skill sessions", () => {
     expect(allSkillsSubmitted([{ status: "submitted" }, { status: "submitted" }])).toBe(true);
     expect(allSkillsSubmitted([{ status: "submitted" }, { status: "in_progress" }])).toBe(false);
     expect(allSkillsSubmitted([])).toBe(false);
+  });
+});
+
+describe("pickerSkillStatus", () => {
+  it("kỹ năng vừa mở trong phiên trang hiện 'Đang làm' dù dữ liệu server còn cũ", () => {
+    expect(pickerSkillStatus("not_started", true)).toBe("in_progress");
+    expect(pickerSkillStatus(undefined, true)).toBe("in_progress");
+  });
+
+  it("chưa mở thì giữ trạng thái server", () => {
+    expect(pickerSkillStatus("not_started", false)).toBe("not_started");
+    expect(pickerSkillStatus(undefined, false)).toBe("not_started");
+    expect(pickerSkillStatus("in_progress", false)).toBe("in_progress");
+  });
+
+  it("đã nộp luôn là đã nộp", () => {
+    expect(pickerSkillStatus("submitted", true)).toBe("submitted");
   });
 });

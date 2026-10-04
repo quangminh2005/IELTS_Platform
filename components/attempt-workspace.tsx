@@ -28,7 +28,7 @@ import { type Annotation } from "@/components/annotated-answer";
 import { gradeUnits, type UnitForGrading } from "@/lib/attempt-grading";
 import { gradeAttempt } from "@/lib/grading";
 import { fillMissingAnswers } from "@/lib/submit-answers";
-import { orderedSkillsOfAssignment, unitsForSkill } from "@/lib/skill-sessions";
+import { orderedSkillsOfAssignment, pickerSkillStatus, unitsForSkill } from "@/lib/skill-sessions";
 import { parseSkillTimeLimits } from "@/lib/skill-parse";
 import {
   accumulateActiveSeconds,
@@ -2155,6 +2155,9 @@ export function AttemptWorkspace({
   // Kỹ năng đang mở phiên; null = đang ở màn chọn kỹ năng. Bài 1 kỹ năng (và mọi
   // bài khi xem trước KHÔNG multi-skill) tự mở luôn để giữ hành vi cũ; bài nhiều
   // kỹ năng bắt đầu ở màn chọn (trừ xem trước — xem trước hiện tất cả phần).
+  // Kỹ năng đã mở trong phiên trang này — để màn chọn kỹ năng hiện "Đang làm"
+  // ngay (dữ liệu attemptSkills từ server chỉ mới tới lúc tải trang).
+  const [openedSkills, setOpenedSkills] = useState<Set<string>>(() => new Set());
   const [activeSkill, setActiveSkill] = useState<string | null>(() =>
     !isMultiSkill && !previewMode ? skillOrder[0] ?? null : null
   );
@@ -2431,6 +2434,7 @@ export function AttemptWorkspace({
       formData.set("skill", skill);
       await startSkillSession(formData);
     }
+    setOpenedSkills((previous) => (previous.has(skill) ? previous : new Set(previous).add(skill)));
     setActiveSkill(skill);
   }
 
@@ -4283,7 +4287,7 @@ export function AttemptWorkspace({
           const row = attemptSkills.find((item) => item.skill === skill);
           return {
             skill,
-            status: row?.status ?? "not_started",
+            status: pickerSkillStatus(row?.status, openedSkills.has(skill)),
             partCount: units.length,
             questionCount: units.reduce(
               (sum, unit) => sum + unit.assignableUnit.questions.length,

@@ -3,14 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ActionForm, ActionSubmitButton } from "@/components/action-form";
-import { updateClassInfo, updateClassWeeklyGoal } from "@/lib/actions/classes";
+import { updateClassInfo } from "@/lib/actions/classes";
 
 type TeacherClassCardProps = {
   classItem: {
     id: string;
     name: string;
     description: string | null;
-    weeklyGoal: number | null;
     studentCount: number;
   };
 };
@@ -100,24 +99,7 @@ export function TeacherClassCard({ classItem }: TeacherClassCardProps) {
       )}
 
       <div className="flex flex-wrap items-center gap-2 border-t border-border px-5 py-3">
-        <ActionForm action={updateClassWeeklyGoal} className="flex items-center gap-2">
-          <input type="hidden" name="classId" value={classItem.id} />
-          <label className="text-sm text-muted-foreground" htmlFor={`goal-${classItem.id}`}>
-            Chỉ tiêu bài/tuần
-          </label>
-          <input
-            id={`goal-${classItem.id}`}
-            name="weeklyGoal"
-            type="number"
-            min={1}
-            max={50}
-            defaultValue={classItem.weeklyGoal ?? 3}
-            className="w-20 rounded-lg border border-border bg-background px-3 py-1.5 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
-          />
-          <ActionSubmitButton className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-semibold text-primary transition hover:border-primary">
-            Lưu
-          </ActionSubmitButton>
-        </ActionForm>
+        {/* Chỉ tiêu bài/tuần đã ẩn: chuỗi giờ tính theo NGÀY (Đợt 4), cột weeklyGoal giữ nguyên. */}
 
         {editing ? null : (
           <button

@@ -4,8 +4,8 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { SkillTags } from "@/components/skill-tags";
 import { ProgressRing } from "@/components/progress-ring";
-import { formatWeekRange } from "@/lib/streak";
-import { getWeekStreak } from "@/lib/streak-data";
+import { formatDayShort } from "@/lib/day-streak";
+import { getDayStreak } from "@/lib/day-streak-data";
 import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 import { getTierProgress } from "@/lib/rank-tier";
 import { StreakBadge } from "@/components/streak-badge";
@@ -73,7 +73,7 @@ export default async function StudentDashboardPage() {
 
   // Các truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
   // một lượt đi/về database thay vì nhiều lượt nối tiếp.
-  const [recipients, attempts, weekStreak, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup] =
+  const [recipients, attempts, dayStreak, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup] =
     await Promise.all([
     prisma.assignmentRecipient.findMany({
       // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
@@ -116,8 +116,8 @@ export default async function StudentDashboardPage() {
         review: { select: { overallBand: true } }
       }
     }),
-    // Chuỗi tuần + tuần lỡ cứu được bằng Xu (một nguồn với trang Hồ sơ).
-    getWeekStreak(student.id),
+    // Chuỗi ngày + ngày lỡ cứu được bằng Xu (một nguồn với Hồ sơ, Từ vựng).
+    getDayStreak(student.id),
     getWordOfTheDay(),
     getVocabSidebar(student.id),
     getStudentSchedule(student.id),
@@ -143,7 +143,7 @@ export default async function StudentDashboardPage() {
     : null;
   const nextSessionKey = nextSession ? vnDateKey(nextSession.startsAt) : null;
 
-  const streak = weekStreak.streak;
+  const streak = dayStreak.streak;
 
   // Chuỗi hoạt động tính MỌI lượt (kể cả luyện lại); điểm xếp hạng chỉ lượt đầu —
   // việc lọc lượt nằm trong rankingScoreFromRecipientsAndAttempts (lib/student-score.ts),
@@ -325,17 +325,15 @@ export default async function StudentDashboardPage() {
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <StreakBadge
-          weeks={streak.weeks}
-          currentWeekCount={streak.currentWeekCount}
-          weeklyGoal={streak.weeklyGoal}
-          atRisk={streak.atRisk}
+          days={streak.days}
+          activeToday={streak.activeToday}
           restore={
-            weekStreak.offer
+            dayStreak.offer
               ? {
-                  lostWeeks: weekStreak.offer.lostWeeks,
-                  weekLabel: formatWeekRange(weekStreak.offer.weekKey),
-                  price: weekStreak.price,
-                  coins: weekStreak.coins
+                  lostDays: dayStreak.offer.lostDays,
+                  dayLabel: formatDayShort(dayStreak.offer.dayKey),
+                  price: dayStreak.price,
+                  coins: dayStreak.coins
                 }
               : null
           }
@@ -358,7 +356,6 @@ export default async function StudentDashboardPage() {
 
       <VocabCard
         word={wordOfDay}
-        streakDays={vocabSidebar.streakDays}
         canQuiz={vocabSidebar.canQuiz}
         todayCount={vocabToday}
       />

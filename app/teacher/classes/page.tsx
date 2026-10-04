@@ -57,7 +57,6 @@ export default async function TeacherClassesPage({ searchParams }: TeacherClasse
                   id: classItem.id,
                   name: classItem.name,
                   description: classItem.description,
-                  weeklyGoal: classItem.weeklyGoal,
                   studentCount: classItem._count.students
                 }}
               />

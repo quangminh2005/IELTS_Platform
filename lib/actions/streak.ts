@@ -3,48 +3,49 @@
 import { revalidatePath } from "next/cache";
 import { requireStudent } from "@/lib/actions/attempts";
 import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
+import { dayRestoreKey, formatDayShort } from "@/lib/day-streak";
+import { getDayStreak } from "@/lib/day-streak-data";
 import { prisma } from "@/lib/prisma";
-import { formatWeekRange, restoreKey } from "@/lib/streak";
-import { getWeekStreak } from "@/lib/streak-data";
 import { lockStudent, recomputeCoins } from "@/lib/wallet";
 
 const numberFormat = new Intl.NumberFormat("vi-VN");
 
-// Khôi phục chuỗi tuần bằng Xu. Không nhận gì từ form: server tự tính tuần cứu được
-// và giá, sau khi đã khoá dòng học viên — bấm hai lần thì lần sau thấy tuần đã cứu.
+// Khôi phục chuỗi ngày bằng Xu. Không nhận gì từ form: server tự tính ngày cứu được
+// và giá, sau khi đã khoá dòng học viên — bấm hai lần thì lần sau thấy ngày đã cứu.
 export async function restoreStreak(): Promise<ActionResult> {
   try {
     const student = await requireStudent();
     const now = new Date();
 
-    const week = await prisma.$transaction(async (tx) => {
+    const day = await prisma.$transaction(async (tx) => {
       await lockStudent(tx, student.id);
 
-      const data = await getWeekStreak(student.id, now, tx);
-      if (!data.offer) throw new Error("Không có tuần nào cần khôi phục.");
+      const data = await getDayStreak(student.id, now, tx);
+      if (!data.offer) throw new Error("Không có ngày nào cần khôi phục.");
       if (data.coins < data.price) {
         throw new Error(`Không đủ Xu — còn thiếu ${numberFormat.format(data.price - data.coins)} Xu.`);
       }
 
-      const range = formatWeekRange(data.offer.weekKey);
+      const label = formatDayShort(data.offer.dayKey);
       await tx.coinTransaction.create({
         data: {
           studentId: student.id,
           kind: "streak_restore",
-          key: restoreKey(data.offer.weekKey),
+          key: dayRestoreKey(data.offer.dayKey),
           amount: -data.price,
-          note: `Khôi phục chuỗi tuần ${range}`
+          note: `Khôi phục chuỗi ngày ${label}`
         }
       });
       await recomputeCoins(tx, student.id);
-      return range;
+      return label;
     });
 
     revalidatePath("/student");
     revalidatePath("/student/profile");
+    revalidatePath("/student/stats");
     // Chip Xu nằm ở layout học viên.
     revalidatePath("/student", "layout");
-    return actionOk(`Đã khôi phục tuần ${week} — chuỗi tiếp tục 🔥`);
+    return actionOk(`Đã khôi phục ngày ${day} — chuỗi tiếp tục 🔥`);
   } catch (error) {
     return actionFail(error, "Khôi phục chuỗi");
   }

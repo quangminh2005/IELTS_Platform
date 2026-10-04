@@ -12,7 +12,7 @@ import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 import { getTierProgress } from "@/lib/rank-tier";
 import { VN_OFFSET_MS } from "@/lib/streak";
-import { getWeekStreak } from "@/lib/streak-data";
+import { getDayStreak } from "@/lib/day-streak-data";
 import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
 
 export const dynamic = "force-dynamic";
@@ -161,8 +161,8 @@ export default async function StudentProfilePage({
 
   const tierProgress = getTierProgress(rankingScore.rankingScore);
 
-  // Cùng nguồn với trang chủ (mọi lượt nộp + tuần đã cứu bằng Xu).
-  const { streak } = await getWeekStreak(student.id);
+  // Cùng nguồn với trang chủ (mọi lượt nộp + ôn Sổ từ + ngày đã cứu bằng Xu).
+  const { streak } = await getDayStreak(student.id);
 
   const now = new Date();
   const nowVN = new Date(now.getTime() + VN_OFFSET_MS);
@@ -237,7 +237,7 @@ export default async function StudentProfilePage({
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Bài đã nộp" value={String(submittedAt.length)} />
         <StatCard label="Từ vựng đã học" value={String(vocabWordCount)} />
-        <StatCard label="Chuỗi tuần" value={`${streak.weeks} tuần`} />
+        <StatCard label="Chuỗi ngày" value={`${streak.days} ngày`} />
         <StatCard
           label="Band trung bình"
           value={

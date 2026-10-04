@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { VocabReviewSession } from "@/components/vocab-review-session";
 import { getReviewSession } from "@/lib/vocab-deck";
+import { getDayStreak } from "@/lib/day-streak-data";
 import { getVocabSidebar } from "@/lib/vocab-daily";
 
 export const dynamic = "force-dynamic";
@@ -30,10 +31,12 @@ export default async function StudentVocabPage({
 
   // ?more=N: đã bấm "Học thêm 5 từ" N lần trong hôm nay.
   const extraBatches = Math.max(0, Math.min(Number.parseInt(searchParams?.more ?? "0", 10) || 0, 10));
-  const [review, sidebar] = await Promise.all([
+  const [review, sidebar, dayStreak] = await Promise.all([
     getReviewSession(student.id, { extraBatches }),
-    getVocabSidebar(student.id)
+    getVocabSidebar(student.id),
+    getDayStreak(student.id)
   ]);
+  const streakDays = dayStreak.streak.days;
   const moreHref = `/student/vocab?more=${extraBatches + 1}`;
 
   return (
@@ -44,7 +47,7 @@ export default async function StudentVocabPage({
         <p className="mt-2 text-sm text-muted-foreground">
           Hôm nay: <strong className="text-foreground">{review.dueCount}</strong> thẻ đến hạn ·{" "}
           <strong className="text-foreground">{review.newCount}</strong> thẻ mới
-          {sidebar.streakDays > 0 ? ` · 🔥 ôn liên tiếp ${sidebar.streakDays} ngày` : ""}. Nhớ
+          {streakDays > 0 ? ` · 🔥 chuỗi ${streakDays} ngày` : ""}. Nhớ
           đúng thì thẻ giãn ra lâu hơn mới hỏi lại; quên thì ngày mai ôn lại.
         </p>
       </header>

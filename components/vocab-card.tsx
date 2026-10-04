@@ -4,26 +4,18 @@ import type { DailyWord } from "@/lib/vocab-daily";
 
 export function VocabCard({
   word,
-  streakDays,
   canQuiz,
   todayCount
 }: {
   word: DailyWord | null;
-  streakDays: number;
   canQuiz: boolean;
   // Thẻ đến hạn + thẻ mới còn được học hôm nay (lib/vocab-deck.ts).
   todayCount: number;
 }) {
   return (
     <section className="rounded-xl border border-border bg-card p-5 shadow-card">
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="text-base font-semibold">Từ vựng hôm nay</h3>
-        {streakDays > 0 ? (
-          <span className="rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-600 dark:text-amber-300">
-            🔥 chuỗi {streakDays} ngày
-          </span>
-        ) : null}
-      </div>
+      {/* Chuỗi 🔥 đã gộp vào chuỗi ngày chung ở thẻ chuỗi trang chủ (Đợt 4). */}
+      <h3 className="text-base font-semibold">Từ vựng hôm nay</h3>
 
       {word ? (
         <>

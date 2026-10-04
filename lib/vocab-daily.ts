@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import { pickNextWord, vietnamDateKey, vietnamDayNumber } from "@/lib/vocab-day";
-import { calculateVocabStreak } from "@/lib/vocab-streak";
 import { MIN_POOL_FOR_QUIZ } from "@/lib/vocab-quiz";
 
 export type DailyWord = {
@@ -114,25 +113,16 @@ export async function getWordOfTheDay(now = new Date()): Promise<DailyWord | nul
   return saved ? toDailyWord(saved.word) : null;
 }
 
-export async function getVocabSidebar(studentId: string, now = new Date()) {
-  const [quizDays, learnedCount, poolCount] = await Promise.all([
-    prisma.vocabQuizDay.findMany({
-      where: { studentId },
-      select: { date: true }
-    }),
+// Chuỗi 🔥 không còn ở đây — đã gộp vào chuỗi ngày chung (lib/day-streak-data.ts).
+export async function getVocabSidebar(studentId: string) {
+  const [learnedCount, poolCount] = await Promise.all([
     // Số từ trong Sổ từ = số thẻ ôn của học viên (lib/vocab-deck.ts).
     prisma.vocabDeckCard.count({ where: { studentId } }),
     // Cần đủ từ trong kho mới dựng được câu trắc nghiệm 4 lựa chọn.
     prisma.vocabWord.count({ where: { hidden: false } })
   ]);
 
-  const streak = calculateVocabStreak({
-    days: quizDays.map((row) => row.date.toISOString().slice(0, 10)),
-    today: vietnamDateKey(now)
-  });
-
   return {
-    streakDays: streak.days,
     learnedCount,
     canQuiz: poolCount >= MIN_POOL_FOR_QUIZ
   };

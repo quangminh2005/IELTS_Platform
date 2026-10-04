@@ -1,5 +1,6 @@
 import { vietnamDateKey } from "@/lib/vocab-day";
-import { calculateVocabStreak, shiftDateKey } from "@/lib/vocab-streak";
+import { calculateDayStreak } from "@/lib/day-streak";
+import { shiftDateKey } from "@/lib/vocab-streak";
 
 // Bảng ô vuông 53 tuần kiểu GitHub ở trang Tiến bộ (ý tưởng từ EasyEnglish).
 // Logic thuần — phần đọc DB nằm ở lib/activity-heatmap-data.ts. Khoá ngày
@@ -88,6 +89,13 @@ export function buildActivityDays(input: {
   return days;
 }
 
+// Các ngày "có học" — dùng chung cho chuỗi ngày 🔥 (lib/day-streak-data.ts).
+export function activeDayKeys(days: Map<string, ActivityDay>): string[] {
+  return Array.from(days.entries())
+    .filter(([, day]) => day.count > 0)
+    .map(([date]) => date);
+}
+
 export function activityLevel(count: number): ActivityLevel {
   if (count <= 0) return 0;
   if (count === 1) return 1;
@@ -138,6 +146,8 @@ export function buildHeatmapGrid(input: {
 export function summarizeActivity(input: {
   days: Map<string, ActivityDay>;
   today: string;
+  // Ngày cứu chuỗi bằng Xu: chỉ nối "ngày liền hiện tại" cho khớp thẻ 🔥, không tô ô.
+  restoredDays?: string[];
 }): ActivitySummary {
   const start = heatmapStartKey(input.today);
   const recentStart = shiftDateKey(input.today, -(RECENT_DAYS - 1));
@@ -163,8 +173,9 @@ export function summarizeActivity(input: {
     }
   }
 
-  const streak = calculateVocabStreak({
-    days: active.map(([date]) => date),
+  const streak = calculateDayStreak({
+    activeDays: active.map(([date]) => date),
+    restoredDays: input.restoredDays ?? [],
     today: input.today
   });
 

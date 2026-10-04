@@ -93,6 +93,8 @@ export function StudentAvatar({
       {avatar}
       <FrameArt
         artKey={frameItem.artKey}
+        // Avatar nhỏ ở danh sách: bỏ tia sao/tàn lửa/quầng sáng cho đỡ rối mắt.
+        lite={size === "sm" || size === "list"}
         className="pointer-events-none absolute -inset-[18%] h-[136%] w-[136%]"
       />
     </span>

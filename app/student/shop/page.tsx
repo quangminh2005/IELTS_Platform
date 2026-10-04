@@ -180,9 +180,10 @@ export default async function StudentShopPage({
     }
     // Xem thử khung ngay quanh avatar của chính học viên. Vẽ thẳng theo artKey vì
     // thẻ mẫu đồ thành tích (chưa có tháng nào) không có mã món thật.
+    // Điện thoại 2 cột (thẻ chỉ ~190px) thu nhỏ 75% để cánh khung không bị cắt.
     return (
       <div className="flex aspect-[16/10] w-full items-center justify-center bg-muted/40">
-        <span className="relative inline-flex h-24 w-24 shrink-0 rounded-full">
+        <span className="relative inline-flex h-24 w-24 shrink-0 rounded-full max-sm:scale-75">
           <StudentAvatar
             avatarUrl={profile.avatarUrl}
             avatarPreset={profile.avatarPreset}

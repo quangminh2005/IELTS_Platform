@@ -77,16 +77,58 @@ export default async function StudentVocabPage({
         </section>
       )}
 
+      {/* Hai lối vào Sổ từ làm thành thẻ bấm to — dòng chữ nhỏ cũ học viên hay bỏ sót. */}
+      <section className="grid gap-3 sm:grid-cols-2">
+        <Link
+          href="/student/vocab/words"
+          className="group flex items-center gap-4 rounded-xl border border-primary/40 bg-primary/10 p-4 shadow-card transition hover:-translate-y-0.5 hover:border-primary hover:bg-primary/15"
+        >
+          <span
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-2xl"
+            aria-hidden="true"
+          >
+            📖
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-bold text-foreground">Xem lại tất cả từ</span>
+            <span className="block text-sm text-muted-foreground">
+              Sổ từ của em đang có <strong className="text-foreground">{sidebar.learnedCount}</strong> từ
+            </span>
+          </span>
+          <span
+            className="text-xl font-bold text-primary transition group-hover:translate-x-1"
+            aria-hidden="true"
+          >
+            →
+          </span>
+        </Link>
+        <Link
+          href="/student/vocab/flashcards"
+          className="group flex items-center gap-4 rounded-xl border border-primary/40 bg-primary/10 p-4 shadow-card transition hover:-translate-y-0.5 hover:border-primary hover:bg-primary/15"
+        >
+          <span
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-2xl"
+            aria-hidden="true"
+          >
+            🃏
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-bold text-foreground">Lật thẻ</span>
+            <span className="block text-sm text-muted-foreground">
+              Ôn nhanh: xem từ, đoán nghĩa rồi lật thẻ kiểm tra
+            </span>
+          </span>
+          <span
+            className="text-xl font-bold text-primary transition group-hover:translate-x-1"
+            aria-hidden="true"
+          >
+            →
+          </span>
+        </Link>
+      </section>
+
       <p className="text-sm text-muted-foreground">
-        Sổ từ: {sidebar.learnedCount} từ ·{" "}
-        <Link href="/student/vocab/words" className="font-semibold text-primary hover:underline">
-          xem lại tất cả từ →
-        </Link>{" "}
-        ·{" "}
-        <Link href="/student/vocab/flashcards" className="font-semibold text-primary hover:underline">
-          🃏 lật thẻ
-        </Link>{" "}
-        · Gặp từ lạ trong bài đọc/nghe? Ở trang Kết quả, bôi đen từ đó rồi bấm “➕ Sổ từ”.
+        💡 Gặp từ lạ trong bài đọc/nghe? Ở trang Kết quả, bôi đen từ đó rồi bấm “➕ Sổ từ”.
       </p>
     </div>
   );

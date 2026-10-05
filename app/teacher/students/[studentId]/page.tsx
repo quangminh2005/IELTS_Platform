@@ -360,11 +360,13 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
       </section>
 
       <StudentWalletSummary
+        studentId={student.id}
         coins={student.coins}
         equippedBackground={student.equippedBackground}
         equippedFrame={student.equippedFrame}
         equippedMascot={student.equippedMascot}
         coverColor={student.coverColor}
+        coverImageUrl={student.coverImageUrl}
         itemKeys={walletItems.map((item) => item.itemKey)}
         transactions={walletTransactions}
       />

@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { ProfileHero } from "@/components/profile-hero";
+import { MascotCard, TierCard } from "@/components/profile-side-cards";
 import { RankTierBadge } from "@/components/rank-tier-badge";
 import { auth } from "@/lib/auth";
 import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
@@ -51,6 +52,7 @@ export default async function ClassmateProfilePage({
       avatarUrl: true,
       avatarPreset: true,
       coverColor: true,
+      coverImageUrl: true,
       equippedBackground: true,
       equippedFrame: true,
       equippedMascot: true,
@@ -113,14 +115,16 @@ export default async function ClassmateProfilePage({
     year: "numeric"
   }).format(classmate.createdAt);
 
+  // Cùng bố cục 2 cột với hồ sơ của mình, nhưng không có bút chì, lịch chăm học,
+  // thống kê hay con số điểm — chỉ trang trí + tên bậc.
   return (
-    <div className="space-y-6">
-      <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+    <div className="mx-auto flex max-w-[1400px] flex-col gap-6 xl:grid xl:grid-cols-[minmax(0,1fr)_340px] xl:items-start">
+      <section className="min-w-0 overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <ProfileHero
           backgroundKey={classmate.equippedBackground}
           coverColor={classmate.coverColor}
+          coverImageUrl={classmate.coverImageUrl}
           frame={classmate.equippedFrame}
-          mascotKey={classmate.equippedMascot}
           avatarUrl={classmate.avatarUrl}
           avatarPreset={classmate.avatarPreset}
           userImage={classmate.user?.image ?? null}
@@ -140,6 +144,11 @@ export default async function ClassmateProfilePage({
           </div>
         </div>
       </section>
+
+      <aside className="flex flex-col gap-4">
+        <TierCard tier={tierProgress.tier} />
+        <MascotCard poseKey={classmate.equippedMascot} own={false} />
+      </aside>
     </div>
   );
 }

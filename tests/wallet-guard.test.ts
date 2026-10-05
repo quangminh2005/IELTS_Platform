@@ -90,12 +90,20 @@ describe("Xu — đồ hiện khắp nơi", () => {
     }
   );
 
-  it.each(["app/student/profile/page.tsx", "app/student/profile/[studentId]/page.tsx"])(
+  // Hồ sơ của mình đi qua MyProfileHero (bút chì + bảng chỉnh sửa, 5/10/2026),
+  // component đó mới render ProfileHero.
+  it.each(["components/my-profile-hero.tsx", "app/student/profile/[studentId]/page.tsx"])(
     "%s dùng banner hồ sơ to kiểu chin",
     (path) => {
       expect(read(path)).toContain("<ProfileHero");
     }
   );
+
+  it("hồ sơ của mình dùng MyProfileHero và truyền khung đang trang bị", () => {
+    const page = read("app/student/profile/page.tsx");
+    expect(page).toContain("<MyProfileHero");
+    expect(page).toContain("equippedFrame: student.equippedFrame");
+  });
 
   it("trang học viên phía thầy có khối Xu", () => {
     expect(read("app/teacher/students/[studentId]/page.tsx")).toContain("<StudentWalletSummary");
@@ -105,7 +113,7 @@ describe("Xu — đồ hiện khắp nơi", () => {
     "components/class-ranking-board.tsx",
     "components/monthly-recap-board.tsx",
     "components/monthly-recap-panel.tsx",
-    "app/student/profile/page.tsx",
+    "components/my-profile-hero.tsx",
     "app/student/profile/[studentId]/page.tsx"
   ])("%s truyền frame cho avatar", (path) => {
     expect(read(path)).toMatch(/frame=\{/);

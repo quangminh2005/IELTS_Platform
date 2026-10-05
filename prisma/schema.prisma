@@ -103,8 +103,12 @@ model StudentProfile {
   coins               Int                   @default(0)
   // Mã đồ đang trang bị (lib/shop-catalog.ts). Null = không trang bị: bìa dùng
   // coverColor như cũ, avatar không khung.
+  // Ngoài mã Cửa hàng còn nhận "custom:image" = dùng ảnh nền tự tải (coverImageUrl).
   equippedBackground  String?
   equippedFrame       String?
+  // Ảnh nền bìa học viên tự tải (Vercel Blob, thư mục covers/). Chỉ hiện khi
+  // equippedBackground = "custom:image"; chọn màu/nền khác thì ảnh vẫn giữ để chọn lại.
+  coverImageUrl       String?
   // Tư thế linh vật đang dùng, "pose:<con>:<tư thế>" (lib/mascots.ts)
   equippedMascot      String?
   user                User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)

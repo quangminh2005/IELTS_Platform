@@ -404,7 +404,12 @@ export function AppShell({
   // luận + khung chấm + danh sách học sinh nằm cạnh nhau, bó trong max-w-5xl thì
   // cột đọc bài chỉ còn ~270px (hẹp hơn cả khung chấm).
   // Cửa hàng cũng rộng: thẻ nền/khung to như chin.edu.vn, bó max-w-5xl thì thẻ bé tí.
-  const isWidePage = /^\/teacher\/review\/[^/]+$/.test(pathname) || pathname === "/student/shop";
+  // Hồ sơ học viên bố cục 2 cột kiểu chin — trang tự bó max-w-[1400px].
+  const isWidePage =
+    /^\/teacher\/review\/[^/]+$/.test(pathname) ||
+    pathname === "/student/shop" ||
+    pathname === "/student/profile" ||
+    pathname.startsWith("/student/profile/");
 
   return withBugReport(
     role,

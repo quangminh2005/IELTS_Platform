@@ -100,6 +100,12 @@ function initialsColor(name: string): string {
 // task sau) luôn ghi vào "avatars/<id>.webp" nên mọi avatar hợp lệ đều khớp
 // tiền tố này.
 export function isAllowedAvatarUrl(url: string): boolean {
+  return isOwnBlobFileIn(url, "avatars");
+}
+
+// Chốt dùng chung cho mọi ảnh học viên tự tải (avatars/, covers/ — xem
+// lib/profile-cover.ts): đúng Blob store của mình VÀ đúng thư mục.
+export function isOwnBlobFileIn(url: string, folder: "avatars" | "covers"): boolean {
   let parsed: URL;
 
   try {
@@ -118,7 +124,8 @@ export function isAllowedAvatarUrl(url: string): boolean {
     return false;
   }
 
-  if (!parsed.pathname.startsWith("/avatars/")) {
+  const prefix = `/${folder}/`;
+  if (!parsed.pathname.startsWith(prefix)) {
     return false;
   }
 
@@ -128,7 +135,7 @@ export function isAllowedAvatarUrl(url: string): boolean {
   // năng vô hại (Blob store khớp theo chuỗi thô, del() cũng gửi thẳng chuỗi thô),
   // nhưng cái giá để chặn chỉ là một dòng, còn cái giá đoán sai là mất file audio
   // vĩnh viễn — nên chặn hẳn.
-  const rest = parsed.pathname.slice("/avatars/".length);
+  const rest = parsed.pathname.slice(prefix.length);
   if (/%[0-9a-fA-F]{2}/.test(rest)) {
     return false;
   }

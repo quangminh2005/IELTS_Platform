@@ -7,6 +7,8 @@ import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { requireStudent } from "@/lib/actions/attempts";
 import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
+import { CUSTOM_COVER_KEY, isAllowedCoverUrl } from "@/lib/profile-cover";
+import { resolveItem } from "@/lib/shop-catalog";
 import {
   AVATAR_PRESET_KEYS,
   COVER_COLOR_KEYS,
@@ -183,6 +185,117 @@ async function deleteOldAvatar(oldUrl: string | null, newUrl: string | null) {
   }
 }
 
+// ---- Phần CHỈ học viên tự sửa được (bảng "Chỉnh sửa hồ sơ" kiểu chin, 5/10/2026) ----
+// Tách khỏi decorationSchema có chủ ý: decorationSchema là thứ giáo viên cũng đi qua
+// (readDecorationPatch), còn tên hiển thị tự đặt, ảnh nền và nền/khung đang dùng chỉ
+// học viên chọn cho chính mình. Mỗi trường gate bằng formData.has(...): tab cũ còn
+// chạy bản form trước (Skew Protection) không gửi các ô này thì giữ nguyên, không xoá.
+
+const displayNameSchema = z
+  .string()
+  .trim()
+  .min(1, "Tên hiển thị không được để trống.")
+  .max(40, "Tên hiển thị tối đa 40 ký tự.");
+
+const coverImageUrlSchema = z
+  .string()
+  .refine(isAllowedCoverUrl, "Ảnh nền phải là ảnh tải lên từ trang này.")
+  .nullable();
+
+type SelfExtras = {
+  displayName?: string;
+  coverImageUrl?: string | null;
+  equippedBackground?: string | null;
+  equippedFrame?: string | null;
+};
+
+// Nền/khung chỉ trang bị được món ĐÃ SỞ HỮU (StudentItem) — cùng luật với equipItem
+// ở Cửa hàng. "custom:image" chỉ hợp lệ khi có ảnh nền.
+async function readSelfExtras(
+  formData: FormData,
+  student: { id: string; coverImageUrl: string | null }
+): Promise<SelfExtras> {
+  const extras: SelfExtras = {};
+
+  if (formData.has("displayName")) {
+    extras.displayName = parseFieldOrThrow(displayNameSchema, String(formData.get("displayName") ?? ""));
+  }
+  if (formData.has("coverImageUrl")) {
+    extras.coverImageUrl = parseFieldOrThrow(
+      coverImageUrlSchema,
+      optional(formData.get("coverImageUrl"))
+    );
+  }
+
+  const coverImageAfter = "coverImageUrl" in extras ? extras.coverImageUrl ?? null : student.coverImageUrl;
+  const toCheck: string[] = [];
+
+  if (formData.has("equippedBackground")) {
+    const key = optional(formData.get("equippedBackground"));
+    if (key === CUSTOM_COVER_KEY) {
+      if (!coverImageAfter) {
+        throw new Error("Hãy tải ảnh nền lên trước khi chọn.");
+      }
+    } else if (key !== null) {
+      if (resolveItem(key)?.category !== "background") throw new Error("Nền không hợp lệ.");
+      toCheck.push(key);
+    }
+    extras.equippedBackground = key;
+  }
+
+  if (formData.has("equippedFrame")) {
+    const key = optional(formData.get("equippedFrame"));
+    if (key !== null) {
+      if (resolveItem(key)?.category !== "frame") throw new Error("Khung không hợp lệ.");
+      toCheck.push(key);
+    }
+    extras.equippedFrame = key;
+  }
+
+  if (toCheck.length > 0) {
+    const owned = await prisma.studentItem.findMany({
+      where: { studentId: student.id, itemKey: { in: toCheck } },
+      select: { itemKey: true }
+    });
+    if (owned.length !== new Set(toCheck).size) {
+      throw new Error("Bạn chưa có món đồ này — mua ở Cửa hàng trước nhé.");
+    }
+  }
+
+  return extras;
+}
+
+// Cùng lý do với assertAvatarUrlNotTaken: không cho "mượn" URL ảnh nền của bạn học
+// rồi đổi ảnh để deleteOldCover() xoá mất ảnh của người kia.
+async function assertCoverUrlNotTaken(newUrl: string | null | undefined, ownerId: string) {
+  if (!newUrl) {
+    return;
+  }
+
+  const taken = await prisma.studentProfile.findFirst({
+    where: { coverImageUrl: newUrl, id: { not: ownerId } },
+    select: { id: true }
+  });
+
+  if (taken) {
+    throw new Error("Ảnh nền này đang thuộc về một học viên khác.");
+  }
+}
+
+// Như deleteOldAvatar: gọi SAU KHI ghi DB, chốt isAllowedCoverUrl(oldUrl) bắt buộc
+// (chỉ xoá file trong covers/), xoá hỏng thì để lại file rác cho blob-orphans dọn.
+async function deleteOldCover(oldUrl: string | null, newUrl: string | null) {
+  if (!oldUrl || oldUrl === newUrl || !isAllowedCoverUrl(oldUrl)) {
+    return;
+  }
+
+  try {
+    await del(oldUrl);
+  } catch {
+    // Bỏ qua có chủ ý — xem chú thích trên.
+  }
+}
+
 const teacherFieldsSchema = z.object({
   studentId: z.string().min(1, "Thiếu mã học viên."),
   displayName: z.string().min(1, "Tên học viên không được để trống."),
@@ -196,20 +309,28 @@ export async function updateMyProfile(formData: FormData): Promise<ActionResult>
 
   try {
     const data = readDecoration(formData);
+    const extras = await readSelfExtras(formData, student);
 
     await assertAvatarUrlNotTaken(data.avatarUrl, student.id);
+    await assertCoverUrlNotTaken(extras.coverImageUrl, student.id);
 
     await prisma.studentProfile.update({
       where: { id: student.id },
-      data
+      data: { ...data, ...extras }
     });
 
     // Xoá ảnh cũ SAU KHI ghi DB thành công — xem chú thích trên deleteOldAvatar().
     await deleteOldAvatar(student.avatarUrl, data.avatarUrl);
+    if ("coverImageUrl" in extras) {
+      await deleteOldCover(student.coverImageUrl, extras.coverImageUrl ?? null);
+    }
 
     revalidatePath("/student/profile");
     revalidatePath("/student");
     revalidatePath("/student/ranking");
+    // Tên/khung/nền hiện ở sidebar, Cửa hàng và trang phía giáo viên.
+    revalidatePath("/student", "layout");
+    revalidatePath("/student/shop");
     return actionOk("Đã lưu hồ sơ.");
   } catch (error) {
     return actionFail(error, "Lưu hồ sơ");
@@ -292,5 +413,46 @@ export async function updateStudentProfile(formData: FormData): Promise<ActionRe
     return actionOk(`Đã lưu hồ sơ của "${fields.data.displayName}".`);
   } catch (error) {
     return actionFail(error, "Lưu hồ sơ học viên");
+  }
+}
+
+// Giáo viên gỡ ảnh nền học viên tự tải (ảnh không phù hợp). Chỉ học viên trong lớp
+// của thầy; bìa quay về màu bìa nếu học viên đang dùng ảnh đó.
+export async function removeStudentCoverImage(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher();
+
+  try {
+    const studentId = z.string().min(1, "Thiếu mã học viên.").parse(formData.get("studentId"));
+
+    const student = await prisma.studentProfile.findFirst({
+      where: {
+        id: studentId,
+        classes: { some: { class: { teacherId: teacher.id } } }
+      },
+      select: { id: true, coverImageUrl: true, equippedBackground: true }
+    });
+
+    if (!student) {
+      throw new Error("Không tìm thấy học viên này trong lớp của bạn.");
+    }
+    if (!student.coverImageUrl) {
+      return actionOk("Học viên này không có ảnh nền.");
+    }
+
+    await prisma.studentProfile.update({
+      where: { id: student.id },
+      data: {
+        coverImageUrl: null,
+        ...(student.equippedBackground === CUSTOM_COVER_KEY ? { equippedBackground: null } : {})
+      }
+    });
+
+    await deleteOldCover(student.coverImageUrl, null);
+
+    revalidatePath(`/teacher/students/${student.id}`);
+    revalidatePath("/student/profile");
+    return actionOk("Đã gỡ ảnh nền của học viên.");
+  } catch (error) {
+    return actionFail(error, "Gỡ ảnh nền");
   }
 }

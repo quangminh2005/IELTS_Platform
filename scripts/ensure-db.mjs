@@ -344,6 +344,8 @@ const statements = [
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "equippedFrame" TEXT;',
   // Linh vật (Đợt 4): tư thế đang trang bị.
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "equippedMascot" TEXT;',
+  // Ảnh nền bìa tự tải (hồ sơ kiểu chin, 5/10/2026).
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "coverImageUrl" TEXT;',
   `CREATE TABLE IF NOT EXISTS "CoinTransaction" (
     "id" TEXT NOT NULL,
     "studentId" TEXT NOT NULL,

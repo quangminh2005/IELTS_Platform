@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AttendanceCalendar } from "@/components/attendance-calendar";
-import { ProfileHero } from "@/components/profile-hero";
-import { ProfileEditor } from "@/components/profile-editor";
+import { MyProfileHero } from "@/components/my-profile-hero";
+import { MascotCard, StatGrid, TierCard } from "@/components/profile-side-cards";
 import { RankTierBadge } from "@/components/rank-tier-badge";
 import { updateMyProfile } from "@/lib/actions/profile";
 import { auth } from "@/lib/auth";
@@ -11,6 +10,8 @@ import { averageBandsBySkillAcrossAttempts, formatBand, SKILL_SHORT_LABELS } fro
 import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 import { getTierProgress } from "@/lib/rank-tier";
+import { resolveItem } from "@/lib/shop-catalog";
+import { DEFAULT_COVER_KEY } from "@/lib/student-avatar";
 import { VN_OFFSET_MS } from "@/lib/streak";
 import { getDayStreak } from "@/lib/day-streak-data";
 import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
@@ -73,6 +74,7 @@ export default async function StudentProfilePage({
       avatarUrl: true,
       avatarPreset: true,
       coverColor: true,
+      coverImageUrl: true,
       equippedBackground: true,
       equippedFrame: true,
       equippedMascot: true,
@@ -86,9 +88,9 @@ export default async function StudentProfilePage({
     redirect("/waiting");
   }
 
-  // Sáu truy vấn dưới đây độc lập với nhau, chỉ phụ thuộc student.id đã có ở
+  // Các truy vấn dưới đây độc lập với nhau, chỉ phụ thuộc student.id đã có ở
   // trên — gộp Promise.all để chạy song song thay vì nối đuôi tuần tự.
-  const [attempts, vocabDays, vocabWordCount, recipients, rankingAttempts] = await Promise.all([
+  const [attempts, vocabDays, vocabWordCount, recipients, rankingAttempts, ownedItems] = await Promise.all([
     prisma.attempt.findMany({
       where: { studentId: student.id, submittedAt: { not: null }, ...countsForStats },
       select: {
@@ -127,6 +129,11 @@ export default async function StudentProfilePage({
         attemptRound: true,
         review: { select: { overallBand: true } }
       }
+    }),
+    // Nền/khung đã sở hữu — cho mục "đã mở khóa" trong bảng chỉnh sửa.
+    prisma.studentItem.findMany({
+      where: { studentId: student.id },
+      select: { itemKey: true }
     })
   ]);
 
@@ -198,94 +205,79 @@ export default async function StudentProfilePage({
     year: "numeric"
   }).format(student.createdAt);
 
+  const ownedKeys = ownedItems.map((row) => row.itemKey);
+  const ownedOf = (category: "background" | "frame") =>
+    ownedKeys.filter((key) => resolveItem(key)?.category === category);
+
+  const bandText =
+    bands.length > 0
+      ? bands
+          .map((band) => `${SKILL_SHORT_LABELS[band.skill] ?? band.skill} ${formatBand(band.band)}`)
+          .join(" · ")
+      : "Chưa có";
+
+  // Bố cục 2 cột kiểu chin từ màn xl: trái = bìa + lịch, phải = hạng/thống kê/linh
+  // vật. Màn nhỏ xếp một cột theo thứ tự bìa → thẻ phải → lịch: cột trái dùng
+  // `contents` để bìa và lịch thành phần tử con trực tiếp của flex, xếp bằng order.
   return (
-    <div className="space-y-8">
-      <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-        <ProfileHero
-          backgroundKey={student.equippedBackground}
-          coverColor={student.coverColor}
-          frame={student.equippedFrame}
-          mascotKey={student.equippedMascot}
-          avatarUrl={student.avatarUrl}
-          avatarPreset={student.avatarPreset}
-          userImage={student.user?.image ?? null}
-          displayName={student.displayName}
-        />
-        <div className="px-5 pb-5 pt-4 text-center">
-          {/* Bio là chữ do học viên nhập — render text thuần, không bao giờ HTML. */}
-          {student.bio ? (
-            <p className="mx-auto max-w-prose whitespace-pre-line text-sm text-muted-foreground">
-              {student.bio}
-            </p>
-          ) : null}
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
-            <span>Tham gia từ {joined}</span>
-            <span aria-hidden="true">·</span>
-            <RankTierBadge tier={tierProgress.tier} />
-            {student.targetBand !== null ? (
-              <>
-                <span aria-hidden="true">·</span>
-                <span>Mục tiêu {formatBand(student.targetBand)}</span>
-              </>
-            ) : null}
-            <span aria-hidden="true">·</span>
-            <Link href="/student/shop" className="text-primary hover:underline">
-              Đổi nền, khung & linh vật ở Cửa hàng →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Bài đã nộp" value={String(submittedAt.length)} />
-        <StatCard label="Từ vựng đã học" value={String(vocabWordCount)} />
-        <StatCard label="Chuỗi ngày" value={`${streak.days} ngày`} />
-        <StatCard
-          label="Band trung bình"
-          value={
-            bands.length > 0
-              ? bands
-                  .map(
-                    (band) =>
-                      `${SKILL_SHORT_LABELS[band.skill] ?? band.skill} ${formatBand(band.band)}`
-                  )
-                  .join(" · ")
-              : "Chưa có"
-          }
-        />
-      </section>
-
-      <AttendanceCalendar data={attendance} prevHref={prevMonthHref} nextHref={nextMonthHref} />
-
-      <section className="rounded-xl border border-border bg-card p-5 shadow-card">
-        <h3 className="text-sm font-semibold">Chỉnh sửa hồ sơ</h3>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Tên và email do giáo viên quản lý.
-        </p>
-        <div className="mt-4">
-          <ProfileEditor
+    <div className="mx-auto flex max-w-[1400px] flex-col gap-6 xl:grid xl:grid-cols-[minmax(0,1fr)_340px] xl:items-start">
+      <div className="contents xl:flex xl:min-w-0 xl:flex-col xl:gap-6">
+        <section className="order-1 overflow-hidden rounded-xl border border-border bg-card shadow-card">
+          <MyProfileHero
             action={updateMyProfile}
-            initial={{
+            userImage={student.user?.image ?? null}
+            ownedBackgroundKeys={ownedOf("background")}
+            ownedFrameKeys={ownedOf("frame")}
+            saved={{
               displayName: student.displayName,
-              bio: student.bio,
+              bio: student.bio ?? "",
               avatarUrl: student.avatarUrl,
               avatarPreset: student.avatarPreset,
-              userImage: student.user?.image ?? null,
-              coverColor: student.coverColor,
-              targetBand: student.targetBand
+              coverColor: student.coverColor ?? DEFAULT_COVER_KEY,
+              coverImageUrl: student.coverImageUrl,
+              equippedBackground: student.equippedBackground,
+              equippedFrame: student.equippedFrame,
+              targetBand: student.targetBand !== null ? String(student.targetBand) : ""
             }}
           />
-        </div>
-      </section>
-    </div>
-  );
-}
+          <div className="px-5 pb-5 pt-4 text-center">
+            {/* Bio là chữ do học viên nhập — render text thuần, không bao giờ HTML. */}
+            {student.bio ? (
+              <p className="mx-auto max-w-prose whitespace-pre-line text-sm text-muted-foreground">
+                {student.bio}
+              </p>
+            ) : null}
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
+              <span>Tham gia từ {joined}</span>
+              <span aria-hidden="true">·</span>
+              <RankTierBadge tier={tierProgress.tier} />
+              {student.targetBand !== null ? (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>Mục tiêu {formatBand(student.targetBand)}</span>
+                </>
+              ) : null}
+            </div>
+          </div>
+        </section>
 
-function StatCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-border bg-card p-4 shadow-card">
-      <p className="text-xs font-medium uppercase text-muted-foreground">{label}</p>
-      <p className="mt-1 text-lg font-bold">{value}</p>
+        <div className="order-3">
+          <AttendanceCalendar data={attendance} prevHref={prevMonthHref} nextHref={nextMonthHref} />
+        </div>
+      </div>
+
+      <aside className="order-2 flex flex-col gap-4 xl:order-none">
+        <TierCard tier={tierProgress.tier} detail={{ ...tierProgress, score: rankingScore.rankingScore }} />
+        <StatGrid
+          stats={[
+            { label: "Bài đã nộp", value: String(submittedAt.length) },
+            { label: "Từ vựng đã học", value: String(vocabWordCount) },
+            { label: "Chuỗi ngày", value: `${streak.days} ngày` },
+            { label: "Band trung bình", value: bandText }
+          ]}
+        />
+        <MascotCard poseKey={student.equippedMascot} own />
+      </aside>
     </div>
   );
 }

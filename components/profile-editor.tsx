@@ -3,6 +3,7 @@
 import { useId, useRef, useState } from "react";
 import { ActionForm, type ServerAction } from "@/components/action-form";
 import { StudentAvatar } from "@/components/student-avatar";
+import { shrinkToSquareWebp } from "@/lib/image-shrink";
 import {
   AVATAR_PRESETS,
   COVER_COLORS,
@@ -36,44 +37,6 @@ const BIO_LIMIT = 280;
 type ProfileEditorMode = "self" | "teacherPatch";
 
 type DecorationField = "bio" | "avatarUrl" | "avatarPreset" | "coverColor" | "targetBand";
-
-// Cắt vuông + thu về 256px + xuất webp NGAY TRONG TRÌNH DUYỆT trước khi gửi.
-// Ảnh gốc từ điện thoại thường 3–5MB; sau bước này còn khoảng 20KB.
-async function shrinkToSquareWebp(file: File): Promise<Blob> {
-  const bitmap = await createImageBitmap(file);
-  const side = Math.min(bitmap.width, bitmap.height);
-  const canvas = document.createElement("canvas");
-  canvas.width = 256;
-  canvas.height = 256;
-
-  const ctx = canvas.getContext("2d");
-  if (!ctx) {
-    throw new Error("Trình duyệt không xử lý được ảnh này.");
-  }
-
-  // Cắt phần vuông ở giữa ảnh gốc rồi vẽ đầy khung 256x256.
-  ctx.drawImage(
-    bitmap,
-    (bitmap.width - side) / 2,
-    (bitmap.height - side) / 2,
-    side,
-    side,
-    0,
-    0,
-    256,
-    256
-  );
-  bitmap.close();
-
-  return new Promise((resolve, reject) => {
-    canvas.toBlob(
-      (blob) =>
-        blob ? resolve(blob) : reject(new Error("Không nén được ảnh.")),
-      "image/webp",
-      0.85
-    );
-  });
-}
 
 export function ProfileEditor({
   action,

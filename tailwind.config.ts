@@ -38,6 +38,11 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(6px)" },
           to: { opacity: "1", transform: "translateY(0)" }
         },
+        // Bảng "Chỉnh sửa hồ sơ" trượt vào từ mép phải.
+        "drawer-in": {
+          from: { transform: "translateX(100%)" },
+          to: { transform: "translateX(0)" }
+        },
         // Bản chỉ đổi độ trong — dùng cho mảng nền, vì translateY sẽ kéo lệch cả lớp.
         "fade-in-soft": {
           from: { opacity: "0" },
@@ -164,6 +169,7 @@ const config: Config = {
       },
       animation: {
         "fade-in": "fade-in 0.35s ease both",
+        "drawer-in": "drawer-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both",
         "fade-in-soft": "fade-in-soft 0.9s ease both",
         // Vòng lửa khung "Phượng hoàng" ở Cửa hàng (keyframes spin có sẵn của Tailwind).
         "spin-slow": "spin 9s linear infinite",

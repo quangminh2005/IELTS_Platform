@@ -1,23 +1,34 @@
 import { BackgroundArt } from "@/components/shop/background-art";
-import { resolveItem } from "@/lib/shop-catalog";
-import { coverClassName } from "@/lib/student-avatar";
+import { resolveCover } from "@/lib/profile-cover";
 
-// Dải bìa trang hồ sơ: nền mua ở Cửa hàng nếu đang trang bị, không thì màu bìa
-// miễn phí như cũ.
+// Dải bìa trang hồ sơ: nền mua ở Cửa hàng, ảnh nền tự tải hoặc màu bìa miễn phí —
+// thứ tự quyết định nằm ở resolveCover (lib/profile-cover.ts).
 export function ProfileCover({
   backgroundKey,
   coverColor,
+  coverImageUrl = null,
   className = "h-32"
 }: {
   backgroundKey: string | null;
   coverColor: string | null;
+  coverImageUrl?: string | null;
   className?: string;
 }) {
-  const item = resolveItem(backgroundKey);
+  const cover = resolveCover({ equippedBackground: backgroundKey, coverImageUrl, coverColor });
 
-  if (item?.category === "background") {
-    return <BackgroundArt artKey={item.artKey} className={className} />;
+  if (cover.kind === "art") {
+    return <BackgroundArt artKey={cover.artKey} className={className} />;
   }
 
-  return <div className={`${className} ${coverClassName(coverColor)}`} />;
+  if (cover.kind === "image") {
+    return (
+      <div className={`relative overflow-hidden bg-muted ${className}`}>
+        {/* Ảnh Blob do học viên tải — không qua trình tối ưu ảnh của Next. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={cover.src} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      </div>
+    );
+  }
+
+  return <div className={`${className} ${cover.className}`} />;
 }

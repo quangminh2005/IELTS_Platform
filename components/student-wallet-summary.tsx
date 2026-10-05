@@ -1,4 +1,7 @@
+import { ActionDeleteButton, ActionForm } from "@/components/action-form";
 import { ProfileCover } from "@/components/profile-cover";
+import { removeStudentCoverImage } from "@/lib/actions/profile";
+import { CUSTOM_COVER_KEY } from "@/lib/profile-cover";
 import { EquippedMascot } from "@/components/shop/mascot-art";
 import { MASCOTS, mascotKey } from "@/lib/mascots";
 import { resolveItem } from "@/lib/shop-catalog";
@@ -12,21 +15,26 @@ const dateFormat = new Intl.DateTimeFormat("vi-VN", {
 });
 
 // Khối "Xu & đồ trang trí" ở trang học viên phía giáo viên. Chỉ xem — thầy không
-// cộng/trừ Xu tay ở Đợt 1.
+// cộng/trừ Xu tay ở Đợt 1. Ngoại lệ duy nhất: gỡ ảnh nền học viên tự tải nếu ảnh
+// không phù hợp (bạn cùng lớp nhìn thấy ảnh này ở trang hồ sơ).
 export function StudentWalletSummary({
+  studentId,
   coins,
   equippedBackground,
   equippedFrame,
   equippedMascot,
   coverColor,
+  coverImageUrl,
   itemKeys,
   transactions
 }: {
+  studentId: string;
   coins: number;
   equippedBackground: string | null;
   equippedFrame: string | null;
   equippedMascot: string | null;
   coverColor: string | null;
+  coverImageUrl: string | null;
   itemKeys: string[];
   transactions: { id: string; amount: number; note: string | null; createdAt: Date }[];
 }) {
@@ -49,9 +57,34 @@ export function StudentWalletSummary({
       </div>
 
       <div className="relative mt-3">
-        <ProfileCover backgroundKey={equippedBackground} coverColor={coverColor} className="h-20 rounded-lg" />
+        <ProfileCover
+          backgroundKey={equippedBackground}
+          coverColor={coverColor}
+          coverImageUrl={coverImageUrl}
+          className="h-20 rounded-lg"
+        />
         <EquippedMascot poseKey={equippedMascot} className="absolute bottom-0 right-2 h-20 w-20" />
       </div>
+
+      {coverImageUrl ? (
+        <ActionForm action={removeStudentCoverImage} className="mt-2 flex flex-wrap items-center gap-2 text-sm">
+          <input type="hidden" name="studentId" value={studentId} />
+          <span className="text-muted-foreground">
+            Học viên có ảnh nền tự tải
+            {equippedBackground === CUSTOM_COVER_KEY ? " (đang dùng)" : ""}.{" "}
+            <a href={coverImageUrl} target="_blank" rel="noreferrer" className="text-primary hover:underline">
+              Xem ảnh
+            </a>
+          </span>
+          <ActionDeleteButton
+            action={removeStudentCoverImage}
+            confirmMessage="Gỡ ảnh nền này? Ảnh bị xoá hẳn, bìa của học viên quay về màu bìa."
+            className="rounded-lg border border-rose-300 px-2.5 py-1 text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:border-rose-800 dark:text-rose-400 dark:hover:bg-rose-950"
+          >
+            Gỡ ảnh nền
+          </ActionDeleteButton>
+        </ActionForm>
+      ) : null}
 
       <p className="mt-3 text-sm">
         <span className="font-medium">Đồ đang có: </span>

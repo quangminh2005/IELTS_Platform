@@ -434,6 +434,39 @@ const statements = [
       FOREIGN KEY ("studentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
   END $$;`,
+  // AI chấm Writing/Speaking (5/10/2026): bảng mới + giới hạn lượt/ngày của thầy.
+  'ALTER TABLE "TeacherProfile" ADD COLUMN IF NOT EXISTS "aiDailyLimit" INTEGER;',
+  `CREATE TABLE IF NOT EXISTS "AiReview" (
+    "id" TEXT NOT NULL,
+    "attemptId" TEXT NOT NULL,
+    "studentId" TEXT NOT NULL,
+    "requestedBy" TEXT NOT NULL,
+    "status" TEXT NOT NULL,
+    "model" TEXT NOT NULL,
+    "resultJson" TEXT,
+    "errorMessage" TEXT,
+    "inputTokens" INTEGER,
+    "cachedInputTokens" INTEGER,
+    "outputTokens" INTEGER,
+    "costUsd" DOUBLE PRECISION,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    CONSTRAINT "AiReview_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "AiReview_attemptId_idx" ON "AiReview"("attemptId");',
+  'CREATE INDEX IF NOT EXISTS "AiReview_studentId_createdAt_idx" ON "AiReview"("studentId", "createdAt");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'AiReview_attemptId_fkey') THEN
+      ALTER TABLE "AiReview" ADD CONSTRAINT "AiReview_attemptId_fkey"
+      FOREIGN KEY ("attemptId") REFERENCES "Attempt"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'AiReview_studentId_fkey') THEN
+      ALTER TABLE "AiReview" ADD CONSTRAINT "AiReview_studentId_fkey"
+      FOREIGN KEY ("studentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
 ];
 
 const prisma = new PrismaClient();

@@ -28,6 +28,8 @@ datasource db {
 // enum RewardLimitPeriod (Reward.limitPeriod): month | ever
 // enum RedemptionStatus (RewardRedemption.status): pending | delivered | rejected | cancelled
 // enum ItemSource (StudentItem.source): purchase | achievement | streak (tư thế linh vật mở bằng chuỗi ngày)
+// enum AiRequester (AiReview.requestedBy): teacher | student
+// enum AiReviewStatus (AiReview.status): pending | done | failed
 
 model User {
   id             String          @id @default(cuid())
@@ -60,6 +62,8 @@ model TeacherProfile {
   id                String             @id @default(cuid())
   userId            String             @unique
   displayName       String?
+  // Số lượt AI chấm mỗi học viên được dùng mỗi ngày cho bài tự luyện (null = 3).
+  aiDailyLimit      Int?
   createdAt         DateTime           @default(now())
   user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   classes           Class[]
@@ -127,6 +131,7 @@ model StudentProfile {
   coinTransactions CoinTransaction[]
   redemptions      RewardRedemption[]
   items            StudentItem[]
+  aiReviews        AiReview[]
 }
 
 // LƯU Ý VỀ INDEX: Postgres (và Prisma) KHÔNG tự tạo index cho cột khoá ngoại —
@@ -388,6 +393,7 @@ model Attempt {
   highlights            Highlight[]
   skills                AttemptSkill[]
   speakingPlans         SpeakingPlan[]
+  aiReviews             AiReview[]
   review                TeacherReview?
 
   @@index([assignmentRecipientId])
@@ -517,6 +523,32 @@ model TeacherReview {
   @@unique([attemptId])
   @@index([teacherId])
   @@index([studentId])
+}
+
+// Một lượt AI chấm một bài làm Writing/Speaking (spec 2026-10-05). Tách riêng khỏi
+// TeacherReview: điểm AI không bao giờ lẫn vào điểm thầy chấm.
+model AiReview {
+  id                String         @id @default(cuid())
+  attemptId         String
+  // Chép từ Attempt để đếm lượt/ngày của học viên nhanh.
+  studentId         String
+  requestedBy       String
+  status            String
+  model             String
+  // AiGradingResult (lib/ai-grading/types.ts), chỉ có khi status = done.
+  resultJson        String?
+  errorMessage      String?
+  inputTokens       Int?
+  cachedInputTokens Int?
+  outputTokens      Int?
+  costUsd           Float?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  attempt           Attempt        @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  student           StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([attemptId])
+  @@index([studentId, createdAt])
 }
 
 // Ngân hàng nhận xét mẫu của giáo viên: các câu nhận xét dùng lại nhiều lần khi

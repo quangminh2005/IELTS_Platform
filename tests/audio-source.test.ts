@@ -43,7 +43,8 @@ describe("chốt nguồn file ghi âm được phép tải về", () => {
 });
 
 describe("hành động phiên âm", () => {
-  const source = readFileSync(join(root, "lib", "actions", "transcribe.ts"), "utf8");
+  // Phần tải audio + gọi Groq đã tách sang lib/groq-transcribe.ts (dùng chung với AI chấm).
+  const source = readFileSync(join(root, "lib", "groq-transcribe.ts"), "utf8");
 
   it("chốt URL trước khi fetch", () => {
     expect(source).toContain("isAllowedAudioUrl");

@@ -1,6 +1,48 @@
 import { isAllowedAudioUrl } from "@/lib/audio-source";
+import { repairWebmTimestamps } from "@/lib/webm-timestamps";
 
-export type TranscribeAudioResult = { ok: true; transcript: string } | { ok: false; error: string };
+// reason giúp nơi gọi xử lý riêng: "empty" = bản ghi rỗng (AI chấm bỏ qua câu đó
+// thay vì hỏng cả bài), "rate_limit" = Groq hết hạn mức tạm thời.
+export type TranscribeAudioResult =
+  | { ok: true; transcript: string }
+  | { ok: false; error: string; reason: "empty" | "rate_limit" | "other" };
+
+export function isWebmAudio(contentType: string, url: string): boolean {
+  return contentType.includes("webm") || /\.webm(\?|#|$)/i.test(url);
+}
+
+// Sự cố 5/10/2026: bản ghi WebM cũ (trước khi trình ghi âm có bước sửa mốc lúc tải
+// lên, xem lib/webm-timestamps.ts) mang mốc thời gian tới 7 tiếng dù tiếng nói chỉ
+// ~30 giây. Groq tính theo mốc đó → coi là hàng giờ âm thanh, từ chối (413) và còn
+// làm nghẽn hạn mức 7.200 giây/giờ của gói miễn phí, kéo các bài bình thường lỗi
+// theo. Sửa mốc ngay trên máy chủ trước khi gửi; sửa không được thì gửi nguyên bản.
+export function prepareAudioBytes(bytes: Uint8Array, webm: boolean): Uint8Array {
+  if (!webm) {
+    return bytes;
+  }
+  try {
+    return repairWebmTimestamps(bytes) ?? bytes;
+  } catch {
+    return bytes;
+  }
+}
+
+export function groqErrorMessage(
+  status: number,
+  body: string
+): { error: string; reason: "empty" | "rate_limit" | "other" } {
+  if (body.includes("empty_audio_file")) {
+    return { error: "Bản ghi trống, không có tiếng để phiên âm.", reason: "empty" };
+  }
+  if (status === 429 || body.includes("rate_limit_exceeded") || body.includes("seconds of audio per hour")) {
+    return {
+      error:
+        "Dịch vụ phiên âm (Groq, gói miễn phí) đang vượt hạn mức 2 giờ âm thanh mỗi giờ. Đợi vài phút rồi thử lại.",
+      reason: "rate_limit"
+    };
+  }
+  return { error: `Lỗi Groq (${status}): ${body.slice(0, 200)}`, reason: "other" };
+}
 
 // Phiên âm một bản ghi Speaking bằng Groq (Whisper-large-v3-turbo). KHÔNG kiểm quyền —
 // nơi gọi (server action) phải kiểm trước. Dùng chung cho nút "Phiên âm" và AI chấm.
@@ -9,7 +51,8 @@ export async function transcribeAudioUrl(audioUrl: string): Promise<TranscribeAu
   if (!apiKey) {
     return {
       ok: false,
-      error: "Chưa cấu hình GROQ_API_KEY trên máy chủ. Thêm biến môi trường này trên Vercel rồi thử lại."
+      error: "Chưa cấu hình GROQ_API_KEY trên máy chủ. Thêm biến môi trường này trên Vercel rồi thử lại.",
+      reason: "other"
     };
   }
 
@@ -19,7 +62,8 @@ export async function transcribeAudioUrl(audioUrl: string): Promise<TranscribeAu
   if (!isAllowedAudioUrl(audioUrl)) {
     return {
       ok: false,
-      error: "Bản ghi của câu này không nằm ở kho file hợp lệ nên không phiên âm được."
+      error: "Bản ghi của câu này không nằm ở kho file hợp lệ nên không phiên âm được.",
+      reason: "other"
     };
   }
 
@@ -30,14 +74,23 @@ export async function transcribeAudioUrl(audioUrl: string): Promise<TranscribeAu
   try {
     audioResponse = await fetch(audioUrl, { redirect: "error" });
   } catch {
-    return { ok: false, error: "Không tải được file ghi âm." };
+    return { ok: false, error: "Không tải được file ghi âm.", reason: "other" };
   }
   if (!audioResponse.ok) {
-    return { ok: false, error: `Không tải được file ghi âm (HTTP ${audioResponse.status}).` };
+    return { ok: false, error: `Không tải được file ghi âm (HTTP ${audioResponse.status}).`, reason: "other" };
   }
 
-  const audioBuffer = await audioResponse.arrayBuffer();
   const contentType = audioResponse.headers.get("content-type") || "audio/webm";
+  const original = new Uint8Array(await audioResponse.arrayBuffer());
+  if (original.byteLength === 0) {
+    return {
+      ok: false,
+      error: "File ghi âm của câu này rỗng (0 byte) — có thể lúc nộp bài tải lên bị hỏng.",
+      reason: "empty"
+    };
+  }
+
+  const audioBytes = prepareAudioBytes(original, isWebmAudio(contentType, audioUrl));
   const ext = contentType.includes("mp4")
     ? "mp4"
     : contentType.includes("ogg")
@@ -45,7 +98,7 @@ export async function transcribeAudioUrl(audioUrl: string): Promise<TranscribeAu
       : contentType.includes("mpeg")
         ? "mp3"
         : "webm";
-  const file = new File([audioBuffer], `answer.${ext}`, { type: contentType });
+  const file = new File([new Uint8Array(audioBytes)], `answer.${ext}`, { type: contentType });
 
   const form = new FormData();
   form.append("file", file);
@@ -62,17 +115,16 @@ export async function transcribeAudioUrl(audioUrl: string): Promise<TranscribeAu
     });
 
     if (!res.ok) {
-      const detail = (await res.text()).slice(0, 200);
-      return { ok: false, error: `Lỗi Groq (${res.status}): ${detail}` };
+      return { ok: false, ...groqErrorMessage(res.status, await res.text()) };
     }
 
     transcript = (await res.text()).trim();
   } catch (error) {
-    return { ok: false, error: `Lỗi gọi Groq: ${(error as Error).message}` };
+    return { ok: false, error: `Lỗi gọi Groq: ${(error as Error).message}`, reason: "other" };
   }
 
   if (!transcript) {
-    return { ok: false, error: "Không nhận được nội dung phiên âm (bản ghi có thể trống)." };
+    return { ok: false, error: "Không nhận được nội dung phiên âm (bản ghi có thể trống).", reason: "empty" };
   }
 
   return { ok: true, transcript };

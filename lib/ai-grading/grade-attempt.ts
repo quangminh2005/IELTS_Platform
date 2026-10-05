@@ -108,7 +108,8 @@ export async function runAiGrading(params: {
 }
 
 // Speaking: câu nào chưa có bản phiên âm thì phiên âm bằng Groq rồi lưu luôn vào
-// Answer.transcript (thầy cũng thấy ở trang chấm). Lỗi một câu → lỗi cả lượt.
+// Answer.transcript (thầy cũng thấy ở trang chấm). Bản ghi RỖNG (file 0 byte do tải
+// lên hỏng) thì bỏ qua câu đó và chấm các câu còn lại; lỗi khác → lỗi cả lượt.
 async function ensureSpeakingTranscripts(rows: AnswerRow[]): Promise<void> {
   for (const row of rows) {
     if (row.assignableUnit.skill !== "speaking") continue;
@@ -119,6 +120,7 @@ async function ensureSpeakingTranscripts(rows: AnswerRow[]): Promise<void> {
       : await transcribeAudioUrl(row.value);
 
     if (!result.ok) {
+      if (result.reason === "empty") continue;
       throw new AiCallError(`Không phiên âm được bản ghi: ${result.error}`);
     }
 

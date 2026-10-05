@@ -5,6 +5,7 @@ import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { BandPicker } from "@/components/band-picker";
 import { CommentBankChips, CommentBankManager, type Snippet } from "@/components/comment-bank";
 import { saveTeacherReview } from "@/lib/actions/reviews";
+import type { AiReviewSuggestion } from "@/lib/ai-grading/review-fill";
 import {
   draftFingerprint,
   parseReviewDraft,
@@ -38,6 +39,8 @@ type ReviewFormProps = {
   // Khi có bài kế tiếp chưa chấm, hiện thêm nút "Lưu & chấm bài tiếp".
   nextAttemptId?: string | null;
   snippets?: Snippet[];
+  // Bản nháp AI của bài này (nếu có) — nút "Điền từ bản nháp AI" chép vào phiếu, chưa lưu.
+  aiSuggestion?: AiReviewSuggestion | null;
   review?: {
     overallBand: number | null;
     criteriaScoresJson: string | null;
@@ -107,6 +110,7 @@ export function ReviewForm({
   tasks,
   nextAttemptId,
   snippets = [],
+  aiSuggestion = null,
   review
 }: ReviewFormProps) {
   const criteria = criteriaForSkill(skill);
@@ -272,6 +276,33 @@ export function ReviewForm({
     setDetailed((current) => (current.trim() ? `${current}\n${text}` : text));
   }
 
+  function applyAiSuggestion() {
+    if (!aiSuggestion) {
+      return;
+    }
+
+    setScores((current) => {
+      const next = { ...current };
+      for (const task of tasks) {
+        const suggested = aiSuggestion.scores[task.unitId];
+        if (suggested) {
+          next[task.unitId] = { ...(current[task.unitId] ?? {}), ...suggested };
+        }
+      }
+      return next;
+    });
+    if (aiSuggestion.summary) {
+      setSummary(aiSuggestion.summary);
+    }
+    if (aiSuggestion.detailed) {
+      setDetailed((current) =>
+        current.trim() ? `${current}\n\n${aiSuggestion.detailed}` : aiSuggestion.detailed
+      );
+    }
+    // Để band tổng tự tính lại từ tiêu chí vừa điền.
+    setManualBand(false);
+  }
+
   const multiTask = tasks.length > 1;
 
   const overallHint =
@@ -287,6 +318,15 @@ export function ReviewForm({
 
   return (
     <div className="grid gap-4">
+      {aiSuggestion ? (
+        <button
+          type="button"
+          onClick={applyAiSuggestion}
+          className="w-fit rounded-lg border border-violet-400/60 bg-violet-500/10 px-3 py-1.5 text-xs font-semibold text-violet-700 transition hover:bg-violet-500/20 dark:text-violet-300"
+        >
+          🤖 Điền từ bản nháp AI
+        </button>
+      ) : null}
       {restoredDraft ? (
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-amber-400/50 bg-amber-500/10 px-3 py-2 text-xs text-amber-700 dark:text-amber-300">
           <span>Đã khôi phục bản nháp chưa lưu.</span>

@@ -2,6 +2,12 @@ import Link from "next/link";
 import { requireTeacherPage } from "@/lib/teacher-page";
 import { notFound } from "next/navigation";
 import { AnnotatedAnswer } from "@/components/annotated-answer";
+import { AiErrorList } from "@/components/ai-grading/ai-error-list";
+import { TeacherAiPanel } from "@/components/ai-grading/teacher-ai-panel";
+import { isAiGradingEnabled } from "@/lib/ai-grading/openai";
+import { aiSuggestionForReview } from "@/lib/ai-grading/review-fill";
+import type { AiError } from "@/lib/ai-grading/types";
+import { AI_REVIEW_VIEW_SELECT, toAiReviewView } from "@/lib/ai-grading/views";
 import { ReviewForm, type ReviewTaskInput } from "@/components/review-form";
 import { TranscribeButton } from "@/components/transcribe-button";
 import { isAudioUrl, parseWritingBrief } from "@/lib/question-interactions";
@@ -310,6 +316,31 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
     snippets = [];
   }
 
+  // AI chấm nháp: lượt gần nhất (để báo đang chấm/lỗi) + lượt xong gần nhất (để hiện).
+  const aiEnabled = isAiGradingEnabled();
+  const now = new Date();
+  const [aiLatestRow, aiDoneRow] = await Promise.all([
+    prisma.aiReview.findFirst({
+      where: { attemptId: attempt.id },
+      orderBy: { createdAt: "desc" },
+      select: AI_REVIEW_VIEW_SELECT
+    }),
+    prisma.aiReview.findFirst({
+      where: { attemptId: attempt.id, status: "done" },
+      orderBy: { createdAt: "desc" },
+      select: AI_REVIEW_VIEW_SELECT
+    })
+  ]);
+  const aiLatest = aiLatestRow ? toAiReviewView(aiLatestRow, now) : null;
+  const aiDone = aiDoneRow ? toAiReviewView(aiDoneRow, now) : null;
+  const aiResult = aiDone?.result ?? null;
+  const aiErrorsByAnswer = new Map<string, AiError[]>();
+  for (const task of aiResult?.skill === "writing" ? aiResult.tasks : []) {
+    for (const error of task.errors) {
+      aiErrorsByAnswer.set(error.answerId, [...(aiErrorsByAnswer.get(error.answerId) ?? []), error]);
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -520,6 +551,14 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                                 {minWords !== null ? `${words} / ${minWords} từ` : `${words} từ`}
                                 {tooShort ? ` · thiếu ${minWords - words} từ` : ""}
                               </p>
+                              {aiDone && aiErrorsByAnswer.has(answer.id) ? (
+                                <AiErrorList
+                                  aiReviewId={aiDone.id}
+                                  answerId={answer.id}
+                                  text={answer.value}
+                                  errors={aiErrorsByAnswer.get(answer.id)!}
+                                />
+                              ) : null}
                             </>
                           )
                         ) : (
@@ -595,12 +634,14 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
             {/* Khung chấm dính theo màn hình: đọc tới đâu cho điểm tới đó, không
                 phải cuộn ngược lên tìm nút Lưu. */}
             <div className="review-form-shell min-w-0 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:self-start xl:overflow-y-auto xl:overflow-x-hidden xl:pr-1">
+              <TeacherAiPanel attemptId={attempt.id} enabled={aiEnabled} latest={aiLatest} done={aiDone} />
               <ReviewForm
                 attemptId={attempt.id}
                 skill={skill}
                 tasks={reviewTasks}
                 nextAttemptId={nextUngraded?.id ?? null}
                 snippets={snippets}
+                aiSuggestion={aiResult ? aiSuggestionForReview(aiResult) : null}
                 review={attempt.review}
               />
             </div>

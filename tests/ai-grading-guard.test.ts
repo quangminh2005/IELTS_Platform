@@ -43,3 +43,30 @@ describe("AI chấm — chỉ một nơi gọi OpenAI", () => {
     expect(offenders).toEqual(["lib/ai-grading/openai.ts"]);
   });
 });
+
+describe("AI chấm — server action", () => {
+  const source = read("lib/actions/ai-grading.ts");
+  const chunks = source.split("export async function ").slice(1);
+
+  it("có đủ 3 action", () => {
+    expect(chunks.map((chunk) => chunk.slice(0, chunk.indexOf("(")))).toEqual([
+      "requestTeacherAiReview",
+      "requestStudentAiReview",
+      "updateAiDailyLimit"
+    ]);
+  });
+
+  it.each(chunks.map((chunk) => [chunk.slice(0, chunk.indexOf("(")), chunk] as const))(
+    "%s gọi requireTeacher/requireStudent trước mọi truy vấn",
+    (_name, chunk) => {
+      const firstAwait = chunk.slice(chunk.indexOf("await "), chunk.indexOf("await ") + 40);
+      expect(firstAwait).toMatch(/await require(Teacher|Student)\(\)/);
+    }
+  );
+
+  it("học viên chỉ được nhờ AI chấm bài tự luyện", () => {
+    const student = chunks.find((chunk) => chunk.startsWith("requestStudentAiReview"))!;
+    expect(student).toContain("onlyPracticeRecipient");
+    expect(student).not.toMatch(/["']practice["']/);
+  });
+});

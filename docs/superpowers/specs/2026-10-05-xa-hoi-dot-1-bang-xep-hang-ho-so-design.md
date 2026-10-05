@@ -155,8 +155,8 @@ cuối: "Bạn · chưa có XP tháng này" (Học Bá) hoặc "Bạn · chưa c
 - `xp-board-header.tsx`, `streak-board-header.tsx`;
 - `streak-tier-chip.tsx`.
 
-Trang này dùng bố cục rộng như hồ sơ (`max-w-[1400px]`), bảng nằm giữa, rộng tối đa
-khoảng 720px như chin.
+Trang giữ khung thường của AppShell (`max-w-5xl`), không thêm vào `isWidePage`. Cột
+bảng nằm giữa, rộng tối đa `max-w-3xl` (khoảng 768px) như chin.
 
 ## 6. Hồ sơ mở toàn trường — `/student/profile/[studentId]`
 

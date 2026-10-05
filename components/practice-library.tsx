@@ -3,8 +3,23 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal, useFormStatus } from "react-dom";
 import { startPractice } from "@/lib/actions/practice";
+import { XP_HIDDEN_AUDIO_FACTOR } from "@/lib/monthly-xp";
 import type { PracticeMaterialItem, PracticeResumeState } from "@/lib/practice-library";
 import { SKILL_LABELS } from "@/lib/skills";
+
+// "+50%" — đọc thẳng hệ số trong lib/monthly-xp.ts để nhãn không lệch cách cộng thật.
+const HIDDEN_AUDIO_BONUS = `+${Math.round((XP_HIDDEN_AUDIO_FACTOR - 1) * 100)}%`;
+// Nhớ lựa chọn "ẩn thanh audio" lần trước của học viên (tiện, không bắt buộc).
+const HIDE_AUDIO_STORAGE_KEY = "practiceHideAudio";
+
+// Hỏi "ẩn thanh audio" hay không: "none" = phạm vi không có audio Nghe; "forced" =
+// thầy đã bật ẩn cho đề (học viên không gỡ được).
+type AudioChoice = "none" | "choice" | "forced";
+
+function audioChoiceOf(hasAudio: boolean, forced: boolean): AudioChoice {
+  if (!hasAudio) return "none";
+  return forced ? "forced" : "choice";
+}
 
 // Nhãn cho chip lọc: "Tất cả" (không lọc) + nhãn kỹ năng chuẩn từ lib/skills.ts —
 // dùng chung một nguồn với các trang học viên khác (Nghe/Đọc/Viết/Nói).
@@ -26,6 +41,7 @@ type PracticeTarget = {
   resume: PracticeResumeState | null;
   // Học viên bấm "Làm lại": bỏ lượt dở, làm lại từ đầu với lựa chọn giờ mới.
   restart: boolean;
+  audio: AudioChoice;
 };
 
 export function PracticeLibrary({
@@ -142,7 +158,8 @@ export function PracticeLibrary({
                     unitId: null,
                     label: item.title,
                     resume: item.resume,
-                    restart: false
+                    restart: false,
+                    audio: audioChoiceOf(item.hasAudio, item.lockAudioForced)
                   }}
                   onOpenDialog={setTarget}
                   className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground"
@@ -158,7 +175,8 @@ export function PracticeLibrary({
                         unitId: null,
                         label: item.title,
                         resume: item.resume,
-                        restart: true
+                        restart: true,
+                        audio: audioChoiceOf(item.hasAudio, item.lockAudioForced)
                       })
                     }
                     className="rounded-md border border-border px-3 py-2 text-sm font-semibold text-muted-foreground hover:border-primary hover:text-foreground"
@@ -195,7 +213,8 @@ export function PracticeLibrary({
                             unitId: unit.id,
                             label: `${item.title} — ${unit.title}`,
                             resume: unit.resume,
-                            restart: false
+                            restart: false,
+                            audio: audioChoiceOf(unit.hasAudio, item.lockAudioForced)
                           }}
                           onOpenDialog={setTarget}
                           className="rounded-md border border-border px-2.5 py-1.5 text-xs font-semibold hover:border-primary"
@@ -211,7 +230,8 @@ export function PracticeLibrary({
                                 unitId: unit.id,
                                 label: `${item.title} — ${unit.title}`,
                                 resume: unit.resume,
-                                restart: true
+                                restart: true,
+                                audio: audioChoiceOf(unit.hasAudio, item.lockAudioForced)
                               })
                             }
                             className="rounded-md border border-border px-2.5 py-1.5 text-xs font-semibold text-muted-foreground hover:border-primary hover:text-foreground"
@@ -280,10 +300,30 @@ function TimeChoiceDialog({
 }) {
   // Chỉ dựng portal sau khi mount ở client (document.body đã sẵn sàng).
   const [mounted, setMounted] = useState(false);
+  const [hideAudio, setHideAudio] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    try {
+      setHideAudio(window.localStorage.getItem(HIDE_AUDIO_STORAGE_KEY) === "1");
+    } catch {
+      // localStorage bị chặn (riêng tư/iOS) -> mặc định không ẩn.
+    }
   }, []);
+
+  // Chỉ hỏi khi mở lượt MỚI (luyện lần đầu hoặc "Làm lại"): lượt đang dở giữ nguyên
+  // chế độ audio — đổi giữa chừng thì nghe xong mới bật ẩn để ăn thưởng.
+  const asksAudio = target.audio !== "none" && (!target.resume || target.restart);
+  const audioHidden = target.audio === "forced" || hideAudio;
+
+  function toggleHideAudio(next: boolean) {
+    setHideAudio(next);
+    try {
+      window.localStorage.setItem(HIDE_AUDIO_STORAGE_KEY, next ? "1" : "0");
+    } catch {
+      // Không lưu được thì thôi, lựa chọn vẫn có tác dụng cho lần bấm này.
+    }
+  }
 
   if (!mounted) {
     return null;
@@ -307,11 +347,45 @@ function TimeChoiceDialog({
               : "Em muốn làm bài này thế nào?"}
         </p>
 
+        {asksAudio ? (
+          <label
+            className={`mt-4 flex items-start gap-3 rounded-lg border p-3 transition ${
+              audioHidden ? "border-primary bg-primary/10" : "border-border hover:border-primary"
+            } ${target.audio === "forced" ? "cursor-default" : "cursor-pointer"}`}
+          >
+            <input
+              type="checkbox"
+              checked={audioHidden}
+              disabled={target.audio === "forced"}
+              onChange={(event) => toggleHideAudio(event.target.checked)}
+              className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+            />
+            <span className="min-w-0 flex-1">
+              <span className="flex flex-wrap items-center gap-2 text-sm font-semibold">
+                🎧 Ẩn thanh audio
+                <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs font-bold text-amber-600 dark:text-amber-300">
+                  {HIDDEN_AUDIO_BONUS} XP & Xu
+                </span>
+              </span>
+              <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
+                Audio tự phát một lượt như thi thật, không tua hay dừng được. Phần Nghe được
+                thưởng thêm {HIDDEN_AUDIO_BONUS} XP & Xu.
+              </span>
+              {target.audio === "forced" ? (
+                <span className="mt-1 block text-xs font-medium text-primary">
+                  Thầy đã bật chế độ này cho đề — em vẫn được thưởng.
+                </span>
+              ) : null}
+            </span>
+          </label>
+        ) : null}
+
         <div className="mt-4 space-y-2">
           <form action={startPractice}>
             <input type="hidden" name="materialId" value={target.materialId} />
             <input type="hidden" name="unitId" value={target.unitId ?? ""} />
             <input type="hidden" name="restart" value={target.restart ? "1" : "0"} />
+            <input type="hidden" name="hideAudio" value={asksAudio && audioHidden ? "1" : "0"} />
             <input type="hidden" name="timed" value="1" />
             <PracticeSubmitButton
               className="w-full rounded-md bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground"
@@ -327,6 +401,7 @@ function TimeChoiceDialog({
             <input type="hidden" name="materialId" value={target.materialId} />
             <input type="hidden" name="unitId" value={target.unitId ?? ""} />
             <input type="hidden" name="restart" value={target.restart ? "1" : "0"} />
+            <input type="hidden" name="hideAudio" value={asksAudio && audioHidden ? "1" : "0"} />
             <input type="hidden" name="timed" value="0" />
             <PracticeSubmitButton
               className="w-full rounded-md border border-border px-3 py-2.5 text-sm font-semibold hover:border-primary"

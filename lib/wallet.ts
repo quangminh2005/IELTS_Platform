@@ -35,6 +35,7 @@ async function loadUnitRows(studentId: string, attemptId?: string): Promise<Coin
     select: {
       id: true,
       submittedAt: true,
+      audioHidden: true,
       skills: { select: { skill: true, submittedAt: true } },
       assignmentRecipient: { select: { assignment: { select: { id: true, mode: true } } } }
     }
@@ -126,6 +127,8 @@ async function loadUnitRows(studentId: string, attemptId?: string): Promise<Coin
       gradedCount: row.graded,
       correctCount: row.correct,
       manualAnswered: row.manual,
+      // Thưởng ẩn audio chỉ áp cho phần Nghe — Reading/Writing cùng lượt không có audio.
+      audioHidden: attempt.audioHidden && unit.skill === "listening",
       note: `${unit.material.title} – ${unit.title}`
     });
   });

@@ -48,11 +48,14 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
         title: true,
         skill: true,
         sourceLabel: true,
+        practiceLockAudio: true,
         units: {
           orderBy: [{ unitNumber: "asc" }, { createdAt: "asc" }],
           select: {
             id: true,
             title: true,
+            skill: true,
+            audioUrl: true,
             _count: { select: { questions: true } }
           }
         }
@@ -118,6 +121,8 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
         0
       );
       const progress = progressByMaterial.get(material.id);
+      const unitHasAudio = (unit: (typeof material.units)[number]) =>
+        unit.skill === "listening" && Boolean(unit.audioUrl);
 
       return {
         id: material.id,
@@ -131,11 +136,14 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
           progress?.bestCorrect ?? null,
           questionCount
         ),
+        hasAudio: material.units.some(unitHasAudio),
+        lockAudioForced: material.practiceLockAudio,
         resume: unfinishedByScope.get(practiceScopeKey(student.id, material.id, null)) ?? null,
         units: material.units.map((unit) => ({
           id: unit.id,
           title: unit.title,
           questionCount: unit._count.questions,
+          hasAudio: unitHasAudio(unit),
           resume: unfinishedByScope.get(practiceScopeKey(student.id, material.id, unit.id)) ?? null
         }))
       };

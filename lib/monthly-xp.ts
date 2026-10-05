@@ -15,12 +15,17 @@ export const XP_VOCAB_CARDS_PER_POINT = 2;
 export const XP_VOCAB_DAILY_CAP = 15;
 // Lượt tự luyện thứ 2 trở đi (đã biết đáp án) chỉ được một phần XP.
 export const XP_RETRY_FACTOR = 0.5;
+// Phần Nghe làm ở chế độ ẩn thanh audio (nghe một lượt, không tua/dừng như thi thật)
+// được nhân XP — và Xu ăn theo XP nên cũng được nhân theo.
+export const XP_HIDDEN_AUDIO_FACTOR = 1.5;
 
 export type UnitXpInput = {
   gradedCount: number; // số câu tự chấm đã có kết quả đúng/sai
   correctCount: number;
   manualAnswered: boolean; // có ít nhất một câu chấm tay không để trống
   attemptRound: number;
+  // Chỉ true với phần Nghe của lượt tự luyện có ẩn thanh audio (Attempt.audioHidden).
+  audioHidden?: boolean;
 };
 
 export function unitXp(input: UnitXpInput): number {
@@ -32,6 +37,10 @@ export function unitXp(input: UnitXpInput): number {
 
   if (input.manualAnswered) {
     xp += XP_MANUAL_UNIT;
+  }
+
+  if (input.audioHidden) {
+    xp = Math.floor(xp * XP_HIDDEN_AUDIO_FACTOR);
   }
 
   return input.attemptRound >= 2 ? Math.floor(xp * XP_RETRY_FACTOR) : xp;

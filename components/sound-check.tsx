@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { XP_HIDDEN_AUDIO_FACTOR } from "@/lib/monthly-xp";
 
 // Màn "Kiểm tra âm thanh" trước khi vào bài Listening ở chế độ thi thật (ẩn thanh
 // audio). Học viên phát thử một đoạn chuông ngắn để chỉnh loa/tai nghe, sau đó bấm
@@ -22,11 +23,13 @@ const HeadphoneIcon = () => (
 
 type SoundCheckProps = {
   title: string;
+  // Lượt tự luyện học viên tự chọn ẩn thanh audio → nhắc phần thưởng thêm.
+  audioBonus?: boolean;
   onContinue: () => void;
   onExit: () => void;
 };
 
-export function SoundCheck({ title, onContinue, onExit }: SoundCheckProps) {
+export function SoundCheck({ title, audioBonus = false, onContinue, onExit }: SoundCheckProps) {
   const [playing, setPlaying] = useState(false);
   const contextRef = useRef<AudioContext | null>(null);
   const stopTimerRef = useRef<number | null>(null);
@@ -110,6 +113,12 @@ export function SoundCheck({ title, onContinue, onExit }: SoundCheckProps) {
             >
               {playing ? "Đang phát thử..." : "Phát thử âm thanh"}
             </button>
+            {audioBonus ? (
+              <p className="rounded-lg bg-amber-500/10 px-3 py-2 text-xs font-medium text-amber-700 dark:text-amber-300">
+                🎧 Chế độ ẩn thanh audio: phần Nghe được thưởng thêm{" "}
+                {Math.round((XP_HIDDEN_AUDIO_FACTOR - 1) * 100)}% XP &amp; Xu.
+              </p>
+            ) : null}
             <p className="flex items-center justify-center gap-1.5 text-xs font-medium text-red-600 dark:text-red-400">
               <span aria-hidden="true">⚠</span>
               Nếu bạn không nghe rõ, vui lòng báo cho giáo viên.

@@ -376,6 +376,9 @@ model Attempt {
   // Số lần học viên nhấn Ctrl+F / F3 khi làm bài. Chỉ là manh mối để hỏi lại học
   // viên, KHÔNG phải bằng chứng: mở ô tìm kiếm qua menu ⋮ thì không đếm được.
   findAttemptCount      Int                 @default(0)
+  // Tự luyện: học viên chọn "Ẩn thanh audio" (hoặc thầy bắt buộc ẩn cho đề) lúc mở
+  // lượt này. Phần Nghe của lượt được thưởng thêm XP & Xu (lib/monthly-xp.ts).
+  audioHidden           Boolean             @default(false)
   score                 Float?
   scorePercent          Float?
   autoGradedAt          DateTime?

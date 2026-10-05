@@ -110,6 +110,8 @@ export type PracticeUnitItem = {
   id: string;
   title: string;
   questionCount: number;
+  // Phần Nghe có audio — mới có nghĩa khi hỏi "ẩn thanh audio".
+  hasAudio: boolean;
   // null = chưa có lượt nào đang dở ở phần này.
   resume: PracticeResumeState | null;
 };
@@ -122,6 +124,11 @@ export type PracticeMaterialItem = {
   unitCount: number;
   questionCount: number;
   progressLabel: string;
+  // Có ít nhất một phần Nghe có audio (luyện cả đề mới hỏi "ẩn thanh audio").
+  hasAudio: boolean;
+  // Thầy bật "ẩn thanh audio" cho đề (Material.practiceLockAudio) — luôn ẩn, học
+  // viên không gỡ được nhưng vẫn được thưởng.
+  lockAudioForced: boolean;
   // Lượt đang dở của phạm vi CẢ ĐỀ (phạm vi từng phần nằm ở units[].resume).
   resume: PracticeResumeState | null;
   units: PracticeUnitItem[];

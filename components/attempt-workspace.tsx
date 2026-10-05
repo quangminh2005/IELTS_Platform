@@ -139,6 +139,8 @@ type AttemptWorkspaceProps = {
     // Số đếm hành vi đáng ngờ. Optional vì phòng xem trước không có Attempt thật.
     tabSwitchCount?: number;
     findAttemptCount?: number;
+    // Lượt tự luyện có ẩn thanh audio — phần Nghe được thưởng thêm XP & Xu.
+    audioHidden?: boolean;
   };
   assignment: {
     title: string;
@@ -4320,6 +4322,7 @@ export function AttemptWorkspace({
     return createPortal(
       <SoundCheck
         title={assignment.title}
+        audioBonus={Boolean(attempt.audioHidden)}
         onContinue={() => setSoundCheckDone(true)}
         onExit={() => {
           if (isMultiSkill) {

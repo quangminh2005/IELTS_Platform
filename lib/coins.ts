@@ -22,6 +22,8 @@ export type CoinUnitRow = {
   gradedCount: number;
   correctCount: number;
   manualAnswered: boolean;
+  // Phần Nghe làm ở chế độ ẩn thanh audio → thưởng thêm (XP_HIDDEN_AUDIO_FACTOR).
+  audioHidden?: boolean;
   note: string; // "Tên đề – Tên phần"
 };
 
@@ -34,7 +36,9 @@ export type CoinEntryDraft = {
   createdAt: Date;
 };
 
-export function unitCoins(row: Pick<CoinUnitRow, "gradedCount" | "correctCount" | "manualAnswered">): number {
+export function unitCoins(
+  row: Pick<CoinUnitRow, "gradedCount" | "correctCount" | "manualAnswered" | "audioHidden">
+): number {
   return Math.floor(unitXp({ ...row, attemptRound: 1 }) * COINS_PER_XP);
 }
 

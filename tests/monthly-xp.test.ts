@@ -32,6 +32,13 @@ describe("unitXp", () => {
     expect(unitXp({ ...base, gradedCount: 10, correctCount: 7, attemptRound: 2 })).toBe(8);
     expect(unitXp({ ...base, manualAnswered: true, attemptRound: 3 })).toBe(10);
   });
+
+  it("phần Nghe ẩn thanh audio được ×1.5, làm tròn xuống, trước khi giảm lượt sau", () => {
+    expect(unitXp({ ...base, gradedCount: 10, correctCount: 7, audioHidden: true })).toBe(25);
+    expect(unitXp({ ...base, gradedCount: 10, correctCount: 10, audioHidden: true })).toBe(30);
+    expect(unitXp({ ...base, gradedCount: 10, correctCount: 7, audioHidden: true, attemptRound: 2 })).toBe(12);
+    expect(unitXp({ ...base, audioHidden: true })).toBe(0);
+  });
 });
 
 describe("vocabDayXp", () => {

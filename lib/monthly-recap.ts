@@ -86,6 +86,7 @@ export type RecapUnitRow = {
   gradedCount: number;
   correctCount: number;
   manualAnswered: boolean;
+  audioHidden?: boolean; // phần Nghe làm ở chế độ ẩn thanh audio
 };
 
 // Một lần nộp kỹ năng (hoặc cả bài với Attempt cũ) — chỉ để đếm ngày học.

@@ -29,7 +29,7 @@ export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> 
         attemptId: true,
         skill: true,
         submittedAt: true,
-        attempt: { select: { studentId: true, attemptRound: true } }
+        attempt: { select: { studentId: true, attemptRound: true, audioHidden: true } }
       }
     }),
     // Bài nộp cũ không có giờ nộp từng kỹ năng → mọi phần lấy giờ nộp cả bài
@@ -39,7 +39,7 @@ export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> 
         submittedAt: { gte: start, lt: end },
         skills: { none: { submittedAt: { not: null } } }
       },
-      select: { id: true, studentId: true, attemptRound: true, submittedAt: true }
+      select: { id: true, studentId: true, attemptRound: true, audioHidden: true, submittedAt: true }
     }),
     prisma.vocabQuizDay.findMany({
       where: {
@@ -52,7 +52,7 @@ export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> 
     })
   ]);
 
-  type Submit = { studentId: string; attemptRound: number; submittedAt: Date };
+  type Submit = { studentId: string; attemptRound: number; audioHidden: boolean; submittedAt: Date };
   // Khoá "attemptId:skill" → giờ nộp kỹ năng đó trong tháng.
   const skillSubmits = new Map<string, Submit>();
   const legacySubmits = new Map<string, Submit>();
@@ -63,6 +63,7 @@ export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> 
     const submit = {
       studentId: row.attempt.studentId,
       attemptRound: row.attempt.attemptRound,
+      audioHidden: row.attempt.audioHidden,
       submittedAt: row.submittedAt
     };
     skillSubmits.set(`${row.attemptId}:${row.skill}`, submit);
@@ -71,7 +72,12 @@ export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> 
 
   for (const row of legacyAttempts) {
     if (!row.submittedAt) continue;
-    const submit = { studentId: row.studentId, attemptRound: row.attemptRound, submittedAt: row.submittedAt };
+    const submit = {
+      studentId: row.studentId,
+      attemptRound: row.attemptRound,
+      audioHidden: row.audioHidden,
+      submittedAt: row.submittedAt
+    };
     legacySubmits.set(row.id, submit);
     submits.push(submit);
   }
@@ -155,7 +161,8 @@ export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> 
       attemptRound: submit.attemptRound,
       gradedCount: row.graded,
       correctCount: row.correct,
-      manualAnswered: row.manual
+      manualAnswered: row.manual,
+      audioHidden: submit.audioHidden && skill === "listening"
     });
   });
 

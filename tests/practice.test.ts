@@ -161,6 +161,7 @@ describe("cột mới đã khai báo đủ chỗ", () => {
     expect(schema).toMatch(/practiceLockAudio\s+Boolean\s+@default\(false\)/);
     expect(schema).toMatch(/practiceScopeKey\s+String\?\s+@unique/);
     expect(schema).toMatch(/attemptRound\s+Int\s+@default\(1\)/);
+    expect(schema).toMatch(/audioHidden\s+Boolean\s+@default\(false\)/);
   });
 
   // Dự án không dùng migrations: cột mới chỉ lên được prod qua ensure-db.mjs.
@@ -169,6 +170,7 @@ describe("cột mới đã khai báo đủ chỗ", () => {
     expect(ensureDb).toContain('"Material" ADD COLUMN IF NOT EXISTS "practiceLockAudio"');
     expect(ensureDb).toContain('"Assignment" ADD COLUMN IF NOT EXISTS "practiceScopeKey"');
     expect(ensureDb).toContain('"Attempt" ADD COLUMN IF NOT EXISTS "attemptRound"');
+    expect(ensureDb).toContain('"Attempt" ADD COLUMN IF NOT EXISTS "audioHidden"');
     expect(ensureDb).toContain('"Assignment_practiceScopeKey_key"');
   });
 });

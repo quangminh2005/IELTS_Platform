@@ -5,6 +5,7 @@ import { RankMedal } from "@/components/rank-medal";
 import { auth } from "@/lib/auth";
 import { COINS_PER_XP } from "@/lib/coins";
 import {
+  XP_HIDDEN_AUDIO_FACTOR,
   XP_MANUAL_UNIT,
   XP_UNIT_ACCURACY_MAX,
   XP_UNIT_BASE,
@@ -42,6 +43,12 @@ const EARN_GROUPS: { title: string; description: string; rules: EarnRule[] }[] =
         reward: `+${XP_MANUAL_UNIT} XP / phần`,
         example: `VD: nộp Task 1 + Task 2 → ${XP_MANUAL_UNIT * 2} XP`,
         note: "Cộng ngay khi nộp, không phải chờ thầy chấm."
+      },
+      {
+        title: "Tự luyện Nghe ẩn thanh audio",
+        reward: `+${Math.round((XP_HIDDEN_AUDIO_FACTOR - 1) * 100)}% XP`,
+        example: `VD: ${exampleUnitXp} XP → ${Math.floor(exampleUnitXp * XP_HIDDEN_AUDIO_FACTOR)} XP`,
+        note: "Tích ô \"Ẩn thanh audio\" khi mở đề Nghe — audio phát một lượt như thi thật."
       },
       {
         title: "Chỉ tính lượt đầu",

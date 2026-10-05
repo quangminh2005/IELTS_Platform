@@ -20,7 +20,10 @@ const startPracticeSchema = z.object({
   unitId: z.string().trim().optional(),
   timed: z.enum(["0", "1"]),
   // "1" = bỏ hẳn lượt đang làm dở để làm lại từ đầu. Vắng mặt = làm tiếp như thường.
-  restart: z.enum(["0", "1"]).optional()
+  restart: z.enum(["0", "1"]).optional(),
+  // "1" = học viên chọn ẩn thanh audio (nghe một lượt như thi thật) — được thưởng
+  // thêm XP & Xu phần Nghe. Chỉ áp cho lượt MỚI; lượt đang dở giữ nguyên chế độ.
+  hideAudio: z.enum(["0", "1"]).optional()
 });
 
 // Học viên bấm luyện một đề (hoặc một phần). Tạo ngầm "bài giao ảo" cho riêng em đó
@@ -33,7 +36,8 @@ export async function startPractice(formData: FormData): Promise<never> {
     materialId: formData.get("materialId"),
     unitId: formData.get("unitId") ?? undefined,
     timed: formData.get("timed"),
-    restart: formData.get("restart") ?? undefined
+    restart: formData.get("restart") ?? undefined,
+    hideAudio: formData.get("hideAudio") ?? undefined
   });
 
   if (!parsed.success) {
@@ -91,6 +95,9 @@ export async function startPractice(formData: FormData): Promise<never> {
   const timed = parsed.data.timed === "1";
   const skillTimeLimitsJson = practiceSkillTimeLimits(units, timed);
   const title = unitId ? `${material.title} — ${units[0].title}` : material.title;
+  // Thầy bật "ẩn audio" cho đề thì luôn ẩn (học viên không gỡ được); không thì theo
+  // lựa chọn của học viên ở hộp thoại.
+  const lockAudio = material.practiceLockAudio || parsed.data.hideAudio === "1";
 
   const existingAssignment = await prisma.assignment.findUnique({
     where: { practiceScopeKey: scopeKey },
@@ -124,10 +131,10 @@ export async function startPractice(formData: FormData): Promise<never> {
           deadline: null,
           mode: PRACTICE_MODE,
           practiceScopeKey: scopeKey,
-          // Ẩn/hiện thanh audio theo cài đặt hiện tại của đề (giáo viên bật ở
-          // /teacher/materials). Bộ luyện đóng băng nội dung, nhưng cờ này được
-          // đồng bộ lại ở mỗi lượt MỚI phía dưới.
-          lockAudio: material.practiceLockAudio,
+          // Ẩn/hiện thanh audio theo cài đặt của đề (giáo viên bật ở
+          // /teacher/materials) hoặc lựa chọn của học viên. Bộ luyện đóng băng nội
+          // dung, nhưng cờ này được đồng bộ lại ở mỗi lượt MỚI phía dưới.
+          lockAudio,
           units: {
             create: units.map((unit, index) => ({
               assignableUnitId: unit.id,
@@ -214,8 +221,7 @@ export async function startPractice(formData: FormData): Promise<never> {
     redirect(`/student/assignments/${recipient.id}`);
   }
 
-  // Lượt mới: áp lựa chọn tính giờ CỦA LẦN BẤM NÀY (và cài đặt ẩn thanh audio hiện tại
-  // của đề) rồi mới tạo Attempt, gộp trong một transaction để không bao giờ có Attempt
+  // Lượt mới: áp lựa chọn tính giờ và ẩn thanh audio CỦA LẦN BẤM NÀY rồi mới tạo Attempt, gộp trong một transaction để không bao giờ có Attempt
   // mới với skillTimeLimitsJson của lượt cũ. Lượt đang làm dở KHÔNG bị đổi cờ audio —
   // đổi luật giữa chừng sẽ khiến học viên mất quyền tua ngay giữa bài.
   const recipientId = recipient.id;
@@ -230,7 +236,7 @@ export async function startPractice(formData: FormData): Promise<never> {
 
     await tx.assignment.update({
       where: { id: assignmentId },
-      data: { skillTimeLimitsJson, lockAudio: material.practiceLockAudio }
+      data: { skillTimeLimitsJson, lockAudio }
     });
 
     await tx.attempt.create({
@@ -238,7 +244,10 @@ export async function startPractice(formData: FormData): Promise<never> {
         assignmentRecipientId: recipientId,
         studentId: student.id,
         status: "in_progress",
-        attemptRound: decision.attemptRound
+        attemptRound: decision.attemptRound,
+        // Ghi lại theo TỪNG LƯỢT (cờ trên bộ luyện đổi theo lượt sau) để XP/Xu
+        // tính lại về sau vẫn đúng chế độ em đã làm.
+        audioHidden: lockAudio
       }
     });
 

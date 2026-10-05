@@ -36,6 +36,11 @@ describe("unitCoins", () => {
     expect(unitCoins(row({ gradedCount: 0, correctCount: 0, manualAnswered: true }))).toBe(20);
     expect(unitCoins(row({ gradedCount: 0, correctCount: 0 }))).toBe(0);
   });
+
+  it("phần Nghe tự luyện ẩn thanh audio được thưởng thêm theo XP", () => {
+    expect(unitCoins(row({ audioHidden: true }))).toBe(22);
+    expect(unitCoins(row({ correctCount: 10, audioHidden: true }))).toBe(30);
+  });
 });
 
 describe("khoá", () => {

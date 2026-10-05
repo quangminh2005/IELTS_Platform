@@ -59,6 +59,23 @@ describe("buildGradingInput", () => {
     ]);
   });
 
+  it("chỉ gửi ảnh PNG/JPEG/WebP/GIF — bỏ SVG (OpenAI không nhận)", () => {
+    const images = [
+      "data:image/svg+xml;utf8,%3Csvg%3E",
+      "https://x.public.blob.vercel-storage.com/map.svg",
+      "data:image/jpeg;base64,AAAA",
+      "https://x.public.blob.vercel-storage.com/chart.png",
+      "/local/chart.png"
+    ];
+    const input = buildGradingInput([
+      { ...writingRows[1], assignableUnit: { ...task1Unit, metadataJson: JSON.stringify({ images }) } }
+    ])!;
+    expect(input.tasks[0].images).toEqual([
+      "data:image/jpeg;base64,AAAA",
+      "https://x.public.blob.vercel-storage.com/chart.png"
+    ]);
+  });
+
   it("không có gì để chấm → null", () => {
     expect(buildGradingInput([])).toBeNull();
     expect(buildGradingInput([writingRows[3]])).toBeNull();

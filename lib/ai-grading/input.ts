@@ -46,8 +46,13 @@ export function countWords(text: string): number {
 }
 
 // Ảnh gửi cho model phải là https hoặc data URI ảnh — đường dẫn tương đối model không mở được.
+// OpenAI chỉ nhận PNG/JPEG/WebP/GIF: đề có biểu đồ vẽ lại bằng SVG (data:image/svg+xml)
+// mà gửi đi là hỏng cả lượt, nên bỏ qua (model vẫn chấm được từ phần chữ của đề).
 function usableImage(url: string): boolean {
-  return url.startsWith("https://") || url.startsWith("data:image/");
+  if (url.startsWith("data:")) {
+    return /^data:image\/(png|jpe?g|webp|gif)[;,]/i.test(url);
+  }
+  return url.startsWith("https://") && !/\.svg(\?|#|$)/i.test(url);
 }
 
 // Dựng đầu vào một lượt chấm từ các câu trả lời của lần nộp. Chỉ lấy câu chấm tay

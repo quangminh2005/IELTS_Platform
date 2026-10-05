@@ -7,6 +7,7 @@ import { hasSignal, isMicSilent, meterPercent, peakOf } from "@/lib/mic-level";
 import {
   type SpeakingSource,
   checkSpeakingFile,
+  isEmptyRecording,
   isUploadStalled,
   speakingUploadName
 } from "@/lib/speaking-upload";
@@ -66,6 +67,9 @@ export function AudioRecorderAnswer({
   // null = không đo được (trình duyệt thiếu Web Audio) → không kết luận gì.
   const heardRef = useRef<boolean | null>(null);
   const pendingRef = useRef<PendingUpload | null>(null);
+  // Bản đã lưu trước khi bấm "Ghi âm lại". Lần ghi mới mà rỗng thì trả bản này về,
+  // không để học viên mất bản ghi tốt chỉ vì máy trục trặc ở lần sau.
+  const previousUrlRef = useRef("");
   const [canRetry, setCanRetry] = useState(false);
   // Mỗi lần tải lên một số mới: lượt đã bị huỷ vì treo mà lát sau mới trả kết
   // quả thì bỏ qua, không được ghi đè lên lượt học viên vừa bấm lại.
@@ -208,6 +212,12 @@ export function AudioRecorderAnswer({
         // Bỏ ";codecs=…" để khớp allowedContentTypes của route.
         const type = (mimeType || "audio/webm").split(";")[0];
         const blob = new Blob(chunksRef.current, { type });
+        // Máy không thu được gì (iPhone từng ra file 0 byte) → không tải lên, giữ
+        // nguyên bản đã lưu trước đó nếu có.
+        if (isEmptyRecording(blob.size)) {
+          rejectEmptyRecording();
+          return;
+        }
         // Chrome trên Android (nhất là trình duyệt trong Zalo) có khi ghi mốc thời
         // gian nhảy vọt → bản ghi 30 giây hiện thành 5 phút, thậm chí 7 tiếng. Sửa
         // ngay trên máy trước khi tải lên; sửa không được thì gửi nguyên bản gốc.
@@ -239,6 +249,22 @@ export function AudioRecorderAnswer({
       setStatus("uploading");
       setMessage("Đang tải bản ghi lên…");
     }
+  }
+
+  function rejectEmptyRecording() {
+    const previous = previousUrlRef.current;
+    setStatus("error");
+    if (previous) {
+      setUrl(previous);
+      onAnswerChange(questionId, previous);
+      setMessage(
+        "Lần ghi vừa rồi máy không thu được gì (bản ghi rỗng) nên vẫn giữ bản ghi cũ của em. Muốn ghi lại thì em tắt bớt ứng dụng khác, đừng khoá màn hình trong lúc ghi rồi thử lại nhé."
+      );
+      return;
+    }
+    setMessage(
+      "Máy không thu được gì (bản ghi rỗng). Em tải lại trang, cho phép micro rồi ghi lại — đừng khoá màn hình hay chuyển ứng dụng trong lúc ghi nhé. Vẫn không được thì em thu bằng ứng dụng ghi âm của điện thoại rồi bấm «Tải file ghi âm lên»."
+    );
   }
 
   // Một đường tải lên duy nhất cho cả bản ghi trực tiếp lẫn file học viên chọn từ
@@ -301,6 +327,7 @@ export function AudioRecorderAnswer({
       }
       stopUploadWatch();
       pendingRef.current = null;
+      previousUrlRef.current = "";
       setCanRetry(false);
       setUrl(result.url);
       onAnswerChange(questionId, result.url);
@@ -352,6 +379,7 @@ export function AudioRecorderAnswer({
   }
 
   function clearRecording() {
+    previousUrlRef.current = url;
     setSavedSilent(false);
     setUrl("");
     onAnswerChange(questionId, "");

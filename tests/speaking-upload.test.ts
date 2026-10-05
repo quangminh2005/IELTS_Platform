@@ -3,6 +3,7 @@ import {
   SPEAKING_MAX_BYTES,
   SPEAKING_UPLOAD_STALL_MS,
   checkSpeakingFile,
+  isEmptyRecording,
   isUploadStalled,
   speakingAnswerSource,
   speakingUploadName
@@ -141,5 +142,21 @@ describe("isUploadStalled", () => {
   it("ngưỡng đủ rộng cho mạng rất chậm nhưng vẫn nhích", () => {
     expect(SPEAKING_UPLOAD_STALL_MS).toBeGreaterThanOrEqual(30_000);
     expect(SPEAKING_UPLOAD_STALL_MS).toBeLessThanOrEqual(120_000);
+  });
+});
+
+describe("isEmptyRecording", () => {
+  it("bản ghi 0 byte là rỗng", () => {
+    // Sự cố 3/10/2026: iPhone ghi xong ra file .m4a 0 byte, vẫn được tải lên và
+    // đè mất bản ghi 2 phút trước đó của học viên.
+    expect(isEmptyRecording(0)).toBe(true);
+  });
+
+  it("vài trăm byte (chỉ có phần đầu file, chưa có tiếng) cũng là rỗng", () => {
+    expect(isEmptyRecording(600)).toBe(true);
+  });
+
+  it("bản ghi ngắn có tiếng thật (3 giây ≈ 70KB) không bị coi là rỗng", () => {
+    expect(isEmptyRecording(71_520)).toBe(false);
   });
 });

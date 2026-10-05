@@ -24,6 +24,19 @@ export const SPEAKING_MAX_BYTES = 30 * 1024 * 1024;
 // im cả phút thì học viên cần được báo và cho thử lại.
 export const SPEAKING_UPLOAD_STALL_MS = 60 * 1000;
 
+// Bản ghi nhỏ hơn chừng này thì chắc chắn không có tiếng (chỉ có phần đầu file
+// hoặc rỗng hẳn). Bản ghi thật ngắn nhất từng gặp — 3 giây trên iPhone — đã ~70KB.
+//
+// Sự cố 3/10/2026: iPhone của học viên ghi xong ra file .m4a 0 byte. Ô ghi âm
+// vẫn tải lên và lưu làm bài nộp, đè mất bản ghi 2 phút có tiếng ghi trước đó —
+// thầy mở chấm thì trình phát 0:00, AI báo "bài làm trống".
+export const SPEAKING_MIN_RECORDING_BYTES = 1024;
+
+/** Bản ghi trực tiếp rỗng (máy không thu được gì) — không được tải lên. */
+export function isEmptyRecording(size: number): boolean {
+  return size < SPEAKING_MIN_RECORDING_BYTES;
+}
+
 /** Tải lên đã đứng im (không có tiến độ mới) quá lâu chưa. */
 export function isUploadStalled(lastProgressAt: number, now: number): boolean {
   return now - lastProgressAt >= SPEAKING_UPLOAD_STALL_MS;

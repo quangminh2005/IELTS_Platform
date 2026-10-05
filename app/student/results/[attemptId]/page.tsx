@@ -10,6 +10,11 @@ import { auth } from "@/lib/auth";
 import { pickDominantSkill } from "@/lib/celebration";
 import { prisma } from "@/lib/prisma";
 import { visibleResultAnswers } from "@/lib/result-visibility";
+import { StudentAiFeedback, type StudentAiEssay } from "@/components/ai-grading/student-ai-feedback";
+import { isAiGradingEnabled } from "@/lib/ai-grading/openai";
+import { effectiveDailyLimit, remainingAiQuota, vnDayStart } from "@/lib/ai-grading/quota";
+import { AI_REVIEW_VIEW_SELECT, toAiReviewView } from "@/lib/ai-grading/views";
+import { PRACTICE_MODE } from "@/lib/practice";
 import { SKILL_TIME_LABELS, skillTimesFromParts } from "@/lib/skill-times";
 
 type ResultPageProps = {
@@ -49,7 +54,10 @@ export default async function StudentResultPage({ params, searchParams }: Result
             select: {
               title: true,
               // Hạn nộp để gắn nhãn "Nộp trễ" cho lượt làm này.
-              deadline: true
+              deadline: true,
+              // Khối "Nhận xét AI" chỉ có ở bài tự luyện; giới hạn lượt theo thầy sở hữu bài.
+              mode: true,
+              teacherId: true
             }
           }
         }
@@ -170,6 +178,62 @@ export default async function StudentResultPage({ params, searchParams }: Result
       }
     : { ...attempt, answers };
 
+  // Nhận xét AI — chỉ bài tự luyện có phần Writing/Speaking chấm tay. Đọc từ
+  // `answers` (đã lọc câu nháp + theo ?skill=) như mọi phần khác của trang.
+  const assignmentInfo = attempt.assignmentRecipient.assignment;
+  const aiEssays: StudentAiEssay[] = answers
+    .filter(
+      (answer) =>
+        answer.isCorrect === null &&
+        (answer.assignableUnit.skill === "writing" || answer.assignableUnit.skill === "speaking") &&
+        answer.value.trim().length > 0
+    )
+    .map((answer) => ({
+      answerId: answer.id,
+      label: answer.question
+        ? `${answer.assignableUnit.title} · Câu ${answer.question.order}`
+        : answer.assignableUnit.title,
+      // Speaking chưa có bản phiên âm thì để trống — máy chủ tự phiên âm khi chấm.
+      text: answer.assignableUnit.skill === "speaking" ? (answer.transcript ?? "").trim() : answer.value.trim()
+    }));
+  let aiBlock: JSX.Element | null = null;
+
+  if (assignmentInfo.mode === PRACTICE_MODE && aiEssays.length > 0) {
+    const now = new Date();
+    const [aiRow, ownerTeacher, usedToday] = await Promise.all([
+      prisma.aiReview.findFirst({
+        where: { attemptId: attempt.id, requestedBy: "student" },
+        orderBy: { createdAt: "desc" },
+        select: AI_REVIEW_VIEW_SELECT
+      }),
+      prisma.teacherProfile.findUnique({
+        where: { id: assignmentInfo.teacherId },
+        select: { aiDailyLimit: true }
+      }),
+      prisma.aiReview.count({
+        where: {
+          studentId: student.id,
+          requestedBy: "student",
+          status: "done",
+          createdAt: { gte: vnDayStart(now) }
+        }
+      })
+    ]);
+    const limit = effectiveDailyLimit(ownerTeacher?.aiDailyLimit);
+
+    aiBlock = (
+      <StudentAiFeedback
+        attemptId={attempt.id}
+        enabled={isAiGradingEnabled()}
+        view={aiRow ? toAiReviewView(aiRow, now) : null}
+        remaining={remainingAiQuota(limit, usedToday)}
+        limit={limit}
+        teacherReviewed={Boolean(attempt.review)}
+        essays={aiEssays}
+      />
+    );
+  }
+
   return (
     // Trang kết quả chạy toàn màn hình (giống chin.edu.vn) — AppShell đã bỏ sidebar
     // + khung max-w cho route /results/, ở đây chỉ cần dùng hết chiều ngang.
@@ -229,6 +293,8 @@ export default async function StudentResultPage({ params, searchParams }: Result
       {/* Nội dung dùng hết chiều ngang màn hình */}
       <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
         {/* Bôi đen từ lạ trong bài đọc/transcript → "➕ Sổ từ" (chỉ phía học viên). */}
+        {/* Thầy đã chấm → nhận xét thầy (trong ResultReview) ở trên, khối AI thu gọn bên dưới. */}
+        {attempt.review ? null : aiBlock}
         <VocabSelectionAdder attemptId={attempt.id}>
           <ResultReview
             attempt={reviewAttempt}
@@ -236,6 +302,7 @@ export default async function StudentResultPage({ params, searchParams }: Result
             sourceStickyTopClass="lg:top-[88px]"
           />
         </VocabSelectionAdder>
+        {attempt.review ? aiBlock : null}
       </main>
     </div>
   );

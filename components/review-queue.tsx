@@ -24,6 +24,8 @@ export type QueueRow = {
   durationSuspect: boolean;
   tabSwitchCount: number;
   findAttemptCount: number;
+  // Bài đã có lượt AI chấm xong (thầy bấm hoặc học viên nhờ ở bài tự luyện).
+  aiGraded: boolean;
 };
 
 type ReviewQueueProps = {
@@ -236,6 +238,11 @@ export function ReviewQueue({ rows }: ReviewQueueProps) {
                         {row.isLate ? (
                           <span className="rounded-full border border-red-400/50 bg-red-500/10 px-2.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-300">
                             Trễ hạn
+                          </span>
+                        ) : null}
+                        {row.aiGraded ? (
+                          <span className="rounded-full border border-violet-400/50 bg-violet-500/10 px-2.5 py-0.5 text-xs font-medium text-violet-600 dark:text-violet-300">
+                            AI đã chấm
                           </span>
                         ) : null}
                       </div>

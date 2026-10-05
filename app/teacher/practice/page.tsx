@@ -1,5 +1,8 @@
 import Link from "next/link";
+import { AiSettingsCard } from "@/components/ai-grading/ai-settings-card";
 import { PracticeProgressTable } from "@/components/practice-progress-table";
+import { isAiGradingEnabled } from "@/lib/ai-grading/openai";
+import { effectiveDailyLimit, vnMonthStart } from "@/lib/ai-grading/quota";
 import { VocabProgressTable } from "@/components/vocab-progress-table";
 import { formatDuration } from "@/lib/format-duration";
 import { onlyPracticeAssignment } from "@/lib/practice";
@@ -224,10 +227,33 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
     </header>
   );
 
+  // AI chấm: giới hạn lượt + chi phí tháng (mọi lượt done của bài thuộc thầy này).
+  const [teacherSettings, aiMonth] = await Promise.all([
+    prisma.teacherProfile.findUnique({ where: { id: teacher.id }, select: { aiDailyLimit: true } }),
+    prisma.aiReview.aggregate({
+      where: {
+        status: "done",
+        createdAt: { gte: vnMonthStart(now) },
+        attempt: { assignmentRecipient: { assignment: { teacherId: teacher.id } } }
+      },
+      _count: { _all: true },
+      _sum: { costUsd: true }
+    })
+  ]);
+  const aiCard = (
+    <AiSettingsCard
+      enabled={isAiGradingEnabled()}
+      limit={effectiveDailyLimit(teacherSettings?.aiDailyLimit)}
+      monthCount={aiMonth._count._all}
+      monthCostUsd={aiMonth._sum.costUsd ?? 0}
+    />
+  );
+
   if (rows.length === 0) {
     return (
       <div className="space-y-8">
         {header}
+        {aiCard}
         <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
           <p className="text-sm font-medium">Chưa có học viên nào trong lớp</p>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -274,6 +300,7 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
   return (
     <div className="space-y-8">
       {header}
+      {aiCard}
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (

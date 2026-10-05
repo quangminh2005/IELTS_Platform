@@ -69,6 +69,11 @@ export default async function TeacherReviewPage({
         review: {
           select: { reviewedAt: true }
         },
+        aiReviews: {
+          where: { status: "done" },
+          select: { id: true },
+          take: 1
+        },
         assignmentRecipient: {
           include: {
             assignment: {
@@ -125,7 +130,8 @@ export default async function TeacherReviewPage({
       durationLabel: formatDuration(attempt.elapsedSeconds),
       durationSuspect: durationExceedsLimit(attempt.elapsedSeconds, assignment.timeLimitMinutes),
       tabSwitchCount: attempt.tabSwitchCount,
-      findAttemptCount: attempt.findAttemptCount
+      findAttemptCount: attempt.findAttemptCount,
+      aiGraded: attempt.aiReviews.length > 0
     };
   });
 

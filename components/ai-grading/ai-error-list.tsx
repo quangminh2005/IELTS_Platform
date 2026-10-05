@@ -55,12 +55,12 @@ export function AiErrorList({
   const visible = errors.filter((error) => !hidden.has(error.id));
 
   function hide(ids: string[]) {
-    setHidden((current) => {
-      const next = new Set(current);
-      ids.forEach((id) => next.add(id));
-      writeHidden(key, next);
-      return next;
-    });
+    // Mỗi bài luận có một danh sách riêng nhưng DÙNG CHUNG một khoá theo lượt AI —
+    // phải gộp với bản đang lưu, không thì danh sách này ghi đè mất lỗi danh sách
+    // kia đã xử lý (lỗi đã Giữ hiện lại sau khi tải trang, bấm Giữ lần nữa là trùng).
+    const next = new Set([...readHidden(key), ...Array.from(hidden), ...ids]);
+    writeHidden(key, next);
+    setHidden(next);
   }
 
   async function keep(list: AiError[]) {

@@ -27,7 +27,9 @@ export function AiScoreCard({
         </span>
         <span className="text-2xl font-bold tabular-nums text-primary">{formatBand(overall)}</span>
         {result.skill === "speaking" ? (
-          <span className="text-xs text-muted-foreground">(chưa tính Pronunciation)</span>
+          <span className="text-xs text-muted-foreground">
+            (chưa tính Pronunciation; Fluency chỉ ước lượng từ bản chép lời)
+          </span>
         ) : null}
       </div>
 

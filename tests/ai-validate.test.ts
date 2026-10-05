@@ -51,6 +51,15 @@ describe("validateTaskOutput", () => {
     expect(result.errors[1].category).toBe("grammar");
   });
 
+  it("đổi mã nội bộ A1, A2… trong nhận xét thành chữ học viên hiểu được", () => {
+    const raw = good();
+    raw.criteria[0].reason = "Ở A1 và A12 bài mở rộng ý tốt.";
+    raw.summary = "Câu A3 còn ngắn.";
+    const result = validateTaskOutput(raw, task, "writing", 0);
+    expect(result.criteria[0].reason).toBe("Ở câu trả lời số 1 và câu trả lời số 12 bài mở rộng ý tốt.");
+    expect(result.summary).toBe("Câu câu trả lời số 3 còn ngắn.");
+  });
+
   it("band không phải bội số 0,5 → lỗi cả lượt", () => {
     const raw = good();
     raw.criteria[0].band = 6.3;

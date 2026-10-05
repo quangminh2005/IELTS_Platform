@@ -61,6 +61,7 @@ export function buildSystemPrompt(skill: AiSkill, taskNumber: 1 | 2): string {
     '- "answer_ref": the ref of the response the quote comes from (for example "A1");',
     '- "category": grammar | vocabulary | spelling | punctuation | coherence.',
     "Never invent errors. If a sentence is correct, do not list it.",
+    'In "reason" and "summary", never mention the response refs (A1, A2, ...): the student cannot see them. Refer to the question topic or quote the words instead.',
     ""
   ];
 
@@ -73,6 +74,7 @@ export function buildSystemPrompt(skill: AiSkill, taskNumber: 1 | 2): string {
     rules.push(
       "You only have an automatic speech-recognition transcript of the recording, not the audio. Do NOT grade Pronunciation.",
       "Judge Fluency and Coherence only from what the transcript shows (hesitation markers, repetition, self-correction, length and development of answers). Do not penalise punctuation or capitalisation of the transcript.",
+      "Speech recognition often removes hesitations, fillers, long pauses and false starts, so a clean transcript does NOT prove the speech was fluent. Be conservative with Fluency and Coherence: base it mainly on coherence, linking and how fully answers are developed, and do not award a band above the other criteria just because the transcript reads smoothly.",
       "The transcript may contain recognition mistakes: only list an error when you are confident it was really said.",
       ""
     );

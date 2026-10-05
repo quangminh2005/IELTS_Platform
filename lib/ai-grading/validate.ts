@@ -20,6 +20,11 @@ const MAX_SUMMARY = 1500;
 const MAX_FIELD = 400;
 const MAX_ERRORS = 40;
 
+// Học viên không thấy mã nội bộ A1, A2… — model lỡ nhắc thì đổi thành chữ dễ hiểu.
+function humanizeRefs(text: string): string {
+  return text.replace(/\bA(\d+)\b/g, "câu trả lời số $1");
+}
+
 function clip(value: unknown, max: number): string {
   const text = String(value ?? "").trim();
   return text.length > max ? `${text.slice(0, max - 1)}…` : text;
@@ -64,7 +69,7 @@ export function validateTaskOutput(
     if (!isValidBand(item.band)) {
       throw new AiOutputError(`AI cho band không hợp lệ (${String(item.band)}) ở tiêu chí ${key}.`);
     }
-    byKey.set(key, { key, band: item.band, reason: clip(item.reason, MAX_REASON) });
+    byKey.set(key, { key, band: item.band, reason: humanizeRefs(clip(item.reason, MAX_REASON)) });
   }
 
   if (byKey.size !== keys.length) {
@@ -102,7 +107,7 @@ export function validateTaskOutput(
       answerId: answer.answerId,
       quote: clip(quote, MAX_FIELD),
       correction: clip(item.correction, MAX_FIELD),
-      explanation: clip(item.explanation, MAX_FIELD),
+      explanation: humanizeRefs(clip(item.explanation, MAX_FIELD)),
       category
     });
   }
@@ -112,7 +117,7 @@ export function validateTaskOutput(
     label: task.label,
     taskNumber: task.taskNumber,
     criteria,
-    summary: clip(output.summary, MAX_SUMMARY),
+    summary: humanizeRefs(clip(output.summary, MAX_SUMMARY)),
     errors
   };
 }

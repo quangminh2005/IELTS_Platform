@@ -98,6 +98,11 @@ describe("prompt", () => {
     expect(t1).toContain("Band 0");
   });
 
+  it("dặn không nhắc mã nội bộ trong nhận xét; Speaking dặn thận trọng với Fluency", () => {
+    expect(buildSystemPrompt("writing", 2)).toContain("never mention the response refs");
+    expect(buildSystemPrompt("speaking", 2)).toContain("removes hesitations");
+  });
+
   it("Speaking không đưa bảng Pronunciation", () => {
     const system = buildSystemPrompt("speaking", 2);
     expect(system).toContain("- Fluency");

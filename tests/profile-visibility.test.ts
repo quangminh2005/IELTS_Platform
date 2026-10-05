@@ -41,28 +41,21 @@ describe("hồ sơ rút gọn của bạn cùng lớp", () => {
     expect(source).not.toContain("attemptSkill:");
   });
 
-  it("chip hạng chỉ được tính qua helper dùng chung, không tự chấm điểm riêng", () => {
-    // LỊCH SỬ: bài test này trước đây cấm trang chạm tới Attempt/AssignmentRecipient
-    // DƯỚI BẤT KỲ HÌNH THỨC NÀO (cấm cả literal "attempts:" và "recipients:").
-    // Spec §6 (2026-08-27) đổi luật: bản rút gọn được phép hiện CHIP HẠNG — thứ
-    // vốn đã công khai trên bảng xếp hạng lớp (class-ranking-board), không phải
-    // dữ liệu riêng tư mới. Để hiện chip hạng, trang buộc phải đọc Attempt +
-    // AssignmentRecipient, nên lệnh cấm tuyệt đối cũ giờ chặn nhầm một tính năng
-    // đã được duyệt trong spec.
-    //
-    // Ranh giới mới siết ở đúng chỗ cần bảo vệ: trang này KHÔNG được tự viết công
-    // thức chấm điểm của riêng nó — phải đi qua ĐÚNG MỘT helper dùng chung
-    // (rankingScoreFromRecipientsAndAttempts + getTierProgress, cùng cặp mà
-    // app/student/profile/page.tsx — hồ sơ của chính mình — đang dùng) rồi chỉ
-    // render kết quả qua RankTierBadge (chip icon + nhãn bậc, không có con số).
-    // Thiếu một trong ba cái tên dưới đây tức là ai đó đã tự chế đường tính điểm
-    // riêng — đúng thứ có thể khiến hai trang ra hai bậc khác nhau cho cùng một
-    // học viên, hoặc mở đường lộ điểm số thô ra ngoài.
-    // Kiểm bằng cú pháp GỌI HÀM (có dấu ngoặc mở) — chỉ import tên rồi không gọi
-    // (hoặc tự chế object tier bằng tay) phải lọt qua bài test này.
-    expect(source).toMatch(/rankingScoreFromRecipientsAndAttempts\(/);
-    expect(source).toMatch(/getTierProgress\(/);
+  it("hạng chỉ lấy qua nguồn XP dùng chung, chỉ in TÊN cấp", () => {
+    // LỊCH SỬ: trước 5/10/2026 chip là bậc theo điểm xếp hạng (rankingScore...).
+    // Hạng đấu nay là XP tích luỹ (spec 2026-10-05-hang-dau-xp-kieu-chin) — trang
+    // này phải đọc XP qua ĐÚNG một helper dùng chung (getLifetimeXp, cùng hồ sơ của
+    // mình) và chỉ render qua RankTierBadge / RankCard showXp={false} (chỉ tên cấp).
+    expect(source).toMatch(/getLifetimeXp\(/);
     expect(source).toContain("<RankTierBadge");
+    expect(source).toMatch(/<RankCard[^>]*showXp=\{false\}/);
+    expect(source).not.toMatch(/<RankCard[^>]*showXp(\s|\/|>)(?!=)/);
+  });
+
+  it("không in số XP của bạn học ra giao diện", () => {
+    // Truyền làm prop (xp={lifetimeXp}) thì được; in thẳng ra JSX ({lifetimeXp}) thì không.
+    expect(source).not.toMatch(/(?<!=)\{\s*lifetimeXp\s*\}/);
+    expect(source).not.toMatch(/formatXp|xpFormat/);
   });
 
   it("không in điểm số / band thô ra giao diện — chỉ tier được đưa vào chip", () => {

@@ -1,42 +1,34 @@
 import Link from "next/link";
 import { EquippedMascot } from "@/components/shop/mascot-art";
 import { resolvePose } from "@/lib/mascots";
-import type { Tier, TierProgress } from "@/lib/rank-tier";
+import { RankMedal } from "@/components/rank-medal";
+import { getXpProgress, levelName } from "@/lib/xp-rank";
 
 // Các thẻ cột phải của trang hồ sơ (bố cục 2 cột kiểu chin, 5/10/2026).
 
-// Thẻ Hạng đấu. `detail` (điểm + tiến độ) chỉ truyền ở hồ sơ CỦA MÌNH — hồ sơ bạn
-// cùng lớp chỉ đưa vào đúng `tier`, không con số nào (xem profile-visibility.test.ts).
-export function TierCard({ tier, detail = null }: { tier: Tier; detail?: TierProgress & { score: number } | null }) {
-  const score = detail ? detail.score : null;
-  const next = detail?.next ?? null;
-  const pointsToNext = detail?.pointsToNext ?? null;
-  const percent =
-    score !== null && next ? Math.max(0, Math.min(100, ((score - tier.min) / (next.min - tier.min)) * 100)) : 100;
+const xpFormat = new Intl.NumberFormat("vi-VN");
+
+// Thẻ Hạng đấu (XP tích luỹ, lib/xp-rank.ts). `showXp` chỉ bật ở hồ sơ CỦA MÌNH —
+// hồ sơ bạn cùng lớp chỉ hiện huy hiệu + tên cấp, không con số nào.
+export function RankCard({ xp, showXp }: { xp: number; showXp: boolean }) {
+  const { current, next, xpToNext, percent } = getXpProgress(xp);
 
   return (
     <section className="rounded-xl border border-border bg-card p-5 shadow-card">
       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Hạng đấu</p>
       <div className="mt-2 flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className={`text-3xl font-extrabold tracking-tight ${tier.badgeClass.replace(/bg-\S+/g, "")}`}>
-            {tier.label}
-          </p>
-          {score !== null ? (
+          <p className={`text-3xl font-extrabold tracking-tight ${current.rank.textClass}`}>{levelName(current)}</p>
+          {showXp ? (
             <p className="mt-1 text-sm text-muted-foreground">
-              Điểm xếp hạng <span className="font-semibold text-foreground tabular-nums">{Math.round(score)}</span>
+              Tổng <span className="font-semibold tabular-nums text-foreground">{xpFormat.format(xp)}</span> XP
             </p>
           ) : null}
         </div>
-        <span
-          aria-hidden="true"
-          className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-4xl ${tier.badgeClass}`}
-        >
-          {tier.icon}
-        </span>
+        <RankMedal rankKey={current.rank.key} level={current.levelIndex} className="h-20 w-20 shrink-0 drop-shadow-lg" />
       </div>
 
-      {score !== null ? (
+      {showXp ? (
         <>
           <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-muted">
             <div
@@ -45,12 +37,12 @@ export function TierCard({ tier, detail = null }: { tier: Tier; detail?: TierPro
             />
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
-            {next && pointsToNext !== null
-              ? `Còn ${pointsToNext} điểm để lên ${next.label}.`
-              : "Bạn đang ở bậc cao nhất!"}
+            {next && xpToNext !== null
+              ? `Còn ${xpFormat.format(xpToNext)} XP để lên ${levelName(next)}.`
+              : "Bạn đã ở cấp cao nhất!"}
           </p>
-          <Link href="/student/ranking" className="mt-2 inline-block text-sm text-primary hover:underline">
-            Xem bảng xếp hạng →
+          <Link href="/student/ranks" className="mt-2 inline-block text-sm text-primary hover:underline">
+            Xem chi tiết hạng đấu →
           </Link>
         </>
       ) : null}

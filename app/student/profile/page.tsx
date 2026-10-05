@@ -1,20 +1,19 @@
 import { redirect } from "next/navigation";
 import { AttendanceCalendar } from "@/components/attendance-calendar";
 import { MyProfileHero } from "@/components/my-profile-hero";
-import { MascotCard, StatGrid, TierCard } from "@/components/profile-side-cards";
+import { MascotCard, RankCard, StatGrid } from "@/components/profile-side-cards";
 import { RankTierBadge } from "@/components/rank-tier-badge";
 import { updateMyProfile } from "@/lib/actions/profile";
 import { auth } from "@/lib/auth";
 import { buildAttendanceMonth } from "@/lib/attendance";
 import { averageBandsBySkillAcrossAttempts, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
-import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
+import { countsForStats } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
-import { getTierProgress } from "@/lib/rank-tier";
 import { resolveItem } from "@/lib/shop-catalog";
 import { DEFAULT_COVER_KEY } from "@/lib/student-avatar";
 import { VN_OFFSET_MS } from "@/lib/streak";
 import { getDayStreak } from "@/lib/day-streak-data";
-import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
+import { getLifetimeXp } from "@/lib/xp-rank-data";
 
 export const dynamic = "force-dynamic";
 
@@ -90,7 +89,7 @@ export default async function StudentProfilePage({
 
   // Các truy vấn dưới đây độc lập với nhau, chỉ phụ thuộc student.id đã có ở
   // trên — gộp Promise.all để chạy song song thay vì nối đuôi tuần tự.
-  const [attempts, vocabDays, vocabWordCount, recipients, rankingAttempts, ownedItems] = await Promise.all([
+  const [attempts, vocabDays, vocabWordCount, lifetimeXp, ownedItems] = await Promise.all([
     prisma.attempt.findMany({
       where: { studentId: student.id, submittedAt: { not: null }, ...countsForStats },
       select: {
@@ -109,27 +108,8 @@ export default async function StudentProfilePage({
     prisma.vocabProgress.count({
       where: { studentId: student.id }
     }),
-    // Dữ liệu cho chip hạng ở header — cùng cách trang Tổng quan (app/student/page.tsx)
-    // tính điểm xếp hạng, qua helper dùng chung rankingScoreFromRecipientsAndAttempts.
-    prisma.assignmentRecipient.findMany({
-      where: { studentId: student.id, assignment: excludePracticeAssignment },
-      // Mốc nộp + hạn nộp để biết bài nào nộp trễ (chỉ được nửa suất hoàn thành).
-      select: {
-        status: true,
-        submittedAt: true,
-        assignment: { select: { deadline: true } }
-      }
-    }),
-    prisma.attempt.findMany({
-      where: { studentId: student.id, ...countsForStats },
-      select: {
-        scorePercent: true,
-        startedAt: true,
-        submittedAt: true,
-        attemptRound: true,
-        review: { select: { overallBand: true } }
-      }
-    }),
+    // Hạng đấu = XP tích luỹ trọn đời (lib/xp-rank.ts).
+    getLifetimeXp(student.id),
     // Nền/khung đã sở hữu — cho mục "đã mở khóa" trong bảng chỉnh sửa.
     prisma.studentItem.findMany({
       where: { studentId: student.id },
@@ -151,23 +131,6 @@ export default async function StudentProfilePage({
       }))
     )
   );
-
-  const rankingScore = rankingScoreFromRecipientsAndAttempts({
-    recipients: recipients.map((recipient) => ({
-      status: recipient.status,
-      submittedAt: recipient.submittedAt,
-      deadline: recipient.assignment.deadline
-    })),
-    attempts: rankingAttempts.map((attempt) => ({
-      scorePercent: attempt.scorePercent,
-      startedAt: attempt.startedAt,
-      submittedAt: attempt.submittedAt,
-      attemptRound: attempt.attemptRound,
-      overallBand: attempt.review?.overallBand ?? null
-    }))
-  });
-
-  const tierProgress = getTierProgress(rankingScore.rankingScore);
 
   // Cùng nguồn với trang chủ (mọi lượt nộp + ôn Sổ từ + ngày đã cứu bằng Xu).
   const { streak } = await getDayStreak(student.id);
@@ -250,7 +213,7 @@ export default async function StudentProfilePage({
             <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
               <span>Tham gia từ {joined}</span>
               <span aria-hidden="true">·</span>
-              <RankTierBadge tier={tierProgress.tier} />
+              <RankTierBadge xp={lifetimeXp} />
               {student.targetBand !== null ? (
                 <>
                   <span aria-hidden="true">·</span>
@@ -267,7 +230,7 @@ export default async function StudentProfilePage({
       </div>
 
       <aside className="order-2 flex flex-col gap-4 xl:order-none">
-        <TierCard tier={tierProgress.tier} detail={{ ...tierProgress, score: rankingScore.rankingScore }} />
+        <RankCard xp={lifetimeXp} showXp />
         <StatGrid
           stats={[
             { label: "Bài đã nộp", value: String(submittedAt.length) },

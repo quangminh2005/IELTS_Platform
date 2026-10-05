@@ -181,7 +181,7 @@ export function ClassRankingBoard({
                   <RankChange change={rankedStudent.rankChange} showNew={hasTrendData} />
                 </p>
                 <div className="mt-1">
-                  <RankTierBadge score={rankedStudent.rankingScore} />
+                  <RankTierBadge xp={rankedStudent.lifetimeXp ?? 0} />
                 </div>
                 <p className="mt-1 text-center text-[11px] leading-4 text-muted-foreground">
                   {averageLabel(rankedStudent)}
@@ -256,7 +256,7 @@ export function ClassRankingBoard({
                         ) : null}
                       </p>
                       <div className="mt-1">
-                        <RankTierBadge score={rankedStudent.rankingScore} />
+                        <RankTierBadge xp={rankedStudent.lifetimeXp ?? 0} />
                       </div>
                       <p className="mt-2 grid gap-1 text-sm text-muted-foreground md:hidden">
                         <span>Điểm TB: {averageLabel(rankedStudent)}</span>

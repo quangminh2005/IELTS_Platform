@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -60,7 +61,11 @@ export default async function StudentRankingPage() {
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
           So sánh tiến độ trong lớp <span className="font-medium text-foreground">{membership.class.name}</span>.
           Điểm xếp hạng kết hợp điểm trung bình, mức độ hoàn thành và hoạt động gần đây.
+          Chip hạng cạnh tên là hạng đấu theo XP tích luỹ.
         </p>
+        <Link href="/student/ranks" className="mt-2 inline-block text-sm font-semibold text-primary hover:underline">
+          Xem hệ thống hạng đấu →
+        </Link>
       </header>
 
       <ClassRankingBoard

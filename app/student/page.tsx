@@ -6,8 +6,9 @@ import { SkillTags } from "@/components/skill-tags";
 import { ProgressRing } from "@/components/progress-ring";
 import { formatDayShort } from "@/lib/day-streak";
 import { getDayStreak } from "@/lib/day-streak-data";
-import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
-import { getTierProgress } from "@/lib/rank-tier";
+import { RankMedal } from "@/components/rank-medal";
+import { getXpProgress, levelName } from "@/lib/xp-rank";
+import { getLifetimeXp } from "@/lib/xp-rank-data";
 import { StreakBadge } from "@/components/streak-badge";
 import { EquippedMascot } from "@/components/shop/mascot-art";
 import { resolvePose } from "@/lib/mascots";
@@ -75,7 +76,7 @@ export default async function StudentDashboardPage() {
 
   // Các truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
   // một lượt đi/về database thay vì nhiều lượt nối tiếp.
-  const [recipients, attempts, dayStreak, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup] =
+  const [recipients, lifetimeXp, dayStreak, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup] =
     await Promise.all([
     prisma.assignmentRecipient.findMany({
       // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
@@ -105,19 +106,8 @@ export default async function StudentDashboardPage() {
         }
       }
     }),
-    prisma.attempt.findMany({
-      where: { studentId: student.id },
-      select: {
-        scorePercent: true,
-        startedAt: true,
-        submittedAt: true,
-        status: true,
-        attemptRound: true,
-        // Band giáo viên chấm (Viết/Nói) — để bài chấm tay cũng được tính vào điểm
-        // xếp hạng ở đây giống trang Xếp hạng, không bị bỏ trắng.
-        review: { select: { overallBand: true } }
-      }
-    }),
+    // Hạng đấu = XP tích luỹ trọn đời (lib/xp-rank.ts).
+    getLifetimeXp(student.id),
     // Chuỗi ngày + ngày lỡ cứu được bằng Xu (một nguồn với Hồ sơ, Từ vựng).
     getDayStreak(student.id),
     getWordOfTheDay(),
@@ -147,26 +137,7 @@ export default async function StudentDashboardPage() {
 
   const streak = dayStreak.streak;
 
-  // Chuỗi hoạt động tính MỌI lượt (kể cả luyện lại); điểm xếp hạng chỉ lượt đầu —
-  // việc lọc lượt nằm trong rankingScoreFromRecipientsAndAttempts (lib/student-score.ts),
-  // dùng chung với trang Hồ sơ để không lặp logic lọc/tính % ở hai nơi.
-  const score = rankingScoreFromRecipientsAndAttempts({
-    recipients: recipients.map((recipient) => ({
-      status: recipient.status,
-      submittedAt: recipient.submittedAt,
-      deadline: recipient.assignment.deadline
-    })),
-    attempts: attempts.map((attempt) => ({
-      scorePercent: attempt.scorePercent,
-      startedAt: attempt.startedAt,
-      submittedAt: attempt.submittedAt,
-      attemptRound: attempt.attemptRound,
-      overallBand: attempt.review?.overallBand ?? null
-    })),
-    now
-  });
-
-  const tierProgress = getTierProgress(score.rankingScore);
+  const rankProgress = getXpProgress(lifetimeXp);
 
   // Bài chưa nộp lên trước (mới giao trước), bài đã nộp/đã chấm xuống dưới —
   // danh sách là thứ học viên cần thấy đầu tiên khi mở trang.
@@ -347,19 +318,24 @@ export default async function StudentDashboardPage() {
               : null
           }
         />
-        <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-card">
-          <span className="text-3xl" aria-hidden="true">
-            {tierProgress.tier.icon}
-          </span>
+        <Link
+          href="/student/ranks"
+          className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-card transition hover:border-primary/50"
+        >
+          <RankMedal
+            rankKey={rankProgress.current.rank.key}
+            level={rankProgress.current.levelIndex}
+            className="h-12 w-12 shrink-0"
+          />
           <div className="min-w-0">
-            <p className="text-base font-semibold">Hạng {tierProgress.tier.label}</p>
+            <p className="text-base font-semibold">Hạng {levelName(rankProgress.current)}</p>
             <p className="mt-0.5 text-sm text-muted-foreground">
-              {tierProgress.next
-                ? `Còn ${tierProgress.pointsToNext} điểm nữa lên ${tierProgress.next.label}`
-                : "Bạn đang ở đỉnh cao nhất! 💎"}
+              {rankProgress.next && rankProgress.xpToNext !== null
+                ? `Còn ${rankProgress.xpToNext} XP nữa lên ${levelName(rankProgress.next)}`
+                : "Bạn đang ở đỉnh cao nhất! 👑"}
             </p>
           </div>
-        </div>
+        </Link>
         <ProgressRing completed={completedCount} total={recipients.length} />
       </div>
 

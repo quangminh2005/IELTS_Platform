@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { getLifetimeXpMap } from "@/lib/xp-rank-data";
 import { attemptBandFromCounts, averageBand, type SkillCount } from "@/lib/band-score";
 import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
 import { isSubmissionLate } from "@/lib/late-submission";
@@ -17,6 +18,9 @@ export type RankedClassStudent = {
   userImage: string | null;
   // Khung avatar mua ở Cửa hàng (lib/shop-catalog.ts).
   equippedFrame?: string | null;
+  // XP tích luỹ trọn đời — CHỈ để hiện chip hạng đấu (lib/xp-rank.ts). Thứ tự bảng
+  // vẫn theo rankingScore. getClassRanking gắn vào; thiếu = 0.
+  lifetimeXp?: number;
   averageScorePercent: number;
   averageBandValue: number | null;
   completionRate: number;
@@ -316,7 +320,7 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
     classmates.flatMap((classmate) => classmate.student.attempts.map((attempt) => attempt.id))
   );
 
-  return rankClassmates(
+  const ranked = rankClassmates(
     classmates.map((classmate) => ({
       id: classmate.student.id,
       displayName: classmate.student.displayName,
@@ -340,4 +344,7 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
       }))
     }))
   );
+
+  const xpByStudent = await getLifetimeXpMap(ranked.map((student) => student.id));
+  return ranked.map((student) => ({ ...student, lifetimeXp: xpByStudent.get(student.id) ?? 0 }));
 }

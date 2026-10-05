@@ -1,12 +1,10 @@
 import { notFound, redirect } from "next/navigation";
 import { ProfileHero } from "@/components/profile-hero";
-import { MascotCard, TierCard } from "@/components/profile-side-cards";
+import { MascotCard, RankCard } from "@/components/profile-side-cards";
 import { RankTierBadge } from "@/components/rank-tier-badge";
 import { auth } from "@/lib/auth";
-import { countsForStats, excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
-import { getTierProgress } from "@/lib/rank-tier";
-import { rankingScoreFromRecipientsAndAttempts } from "@/lib/student-score";
+import { getLifetimeXp } from "@/lib/xp-rank-data";
 
 export const dynamic = "force-dynamic";
 
@@ -65,49 +63,10 @@ export default async function ClassmateProfilePage({
     notFound();
   }
 
-  // Chip hạng: tính ĐÚNG MỘT CÁCH DUY NHẤT trong cả app, qua helper dùng chung
-  // rankingScoreFromRecipientsAndAttempts — cùng cách app/student/profile/page.tsx
-  // (hồ sơ của chính mình) đang tính. Không tự chấm điểm riêng ở đây, để tránh
-  // hai bậc khác nhau cho cùng một học viên ở hai trang.
-  const recipients = await prisma.assignmentRecipient.findMany({
-    where: { studentId: classmate.id, assignment: excludePracticeAssignment },
-    // Mốc nộp + hạn nộp để biết bài nào nộp trễ (chỉ được nửa suất hoàn thành).
-    select: {
-      status: true,
-      submittedAt: true,
-      assignment: { select: { deadline: true } }
-    }
-  });
-
-  const rankingAttempts = await prisma.attempt.findMany({
-    where: { studentId: classmate.id, ...countsForStats },
-    select: {
-      scorePercent: true,
-      startedAt: true,
-      submittedAt: true,
-      attemptRound: true,
-      review: { select: { overallBand: true } }
-    }
-  });
-
-  const rankingScore = rankingScoreFromRecipientsAndAttempts({
-    recipients: recipients.map((recipient) => ({
-      status: recipient.status,
-      submittedAt: recipient.submittedAt,
-      deadline: recipient.assignment.deadline
-    })),
-    attempts: rankingAttempts.map((attempt) => ({
-      scorePercent: attempt.scorePercent,
-      startedAt: attempt.startedAt,
-      submittedAt: attempt.submittedAt,
-      attemptRound: attempt.attemptRound,
-      overallBand: attempt.review?.overallBand ?? null
-    }))
-  });
-
-  // Chỉ lấy TÊN BẬC (tier) để render chip — không có con số điểm xếp hạng thô
-  // nào chảy tới JSX bên dưới.
-  const tierProgress = getTierProgress(rankingScore.rankingScore);
+  // Hạng đấu: XP tích luỹ qua đúng MỘT nguồn dùng chung (getLifetimeXp, cùng chỗ
+  // hồ sơ của mình đọc). Chỉ đưa vào chip/thẻ hạng — các component đó chỉ in TÊN
+  // cấp, không in con số XP của bạn học.
+  const lifetimeXp = await getLifetimeXp(classmate.id);
 
   const joined = new Intl.DateTimeFormat("vi-VN", {
     day: "numeric",
@@ -140,13 +99,13 @@ export default async function ClassmateProfilePage({
           <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-sm text-muted-foreground">
             <span>Tham gia từ {joined}</span>
             <span aria-hidden="true">·</span>
-            <RankTierBadge tier={tierProgress.tier} />
+            <RankTierBadge xp={lifetimeXp} />
           </div>
         </div>
       </section>
 
       <aside className="flex flex-col gap-4">
-        <TierCard tier={tierProgress.tier} />
+        <RankCard xp={lifetimeXp} showXp={false} />
         <MascotCard poseKey={classmate.equippedMascot} own={false} />
       </aside>
     </div>

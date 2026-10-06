@@ -271,8 +271,9 @@ export function ProfileEditDrawer({
                 backgroundKey={draft.equippedBackground}
                 coverColor={draft.coverColor}
                 coverImageUrl={draft.coverImageUrl}
-                className="h-36 rounded-lg"
-                fit="contain"
+                className="rounded-lg"
+                heightClassName="h-36"
+                fit="natural"
               />
 
               <div className="mt-3 flex flex-wrap gap-2.5">

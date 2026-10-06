@@ -8,8 +8,9 @@ import type { CSSProperties, ReactNode } from "react";
 // Vì vậy mỗi tranh có position riêng (object-position) neo dải ngang vào chi tiết đẹp nhất
 // (trăng, mặt trời, con sóng…). sky là màu nền lúc ảnh chưa tải xong.
 //
-// fit="contain" (bìa trang hồ sơ, kiểu chin.edu.vn): hiện TRỌN tranh, không cắt; phần thừa
-// hai bên lấp bằng chính bức tranh phóng to + làm mờ. position chỉ áp dụng cho fit="cover".
+// fit="natural" (bìa trang hồ sơ, kiểu chin.edu.vn): khung lấy ĐÚNG tỉ lệ của tranh (ratio =
+// rộng/cao file ảnh) nên tranh hiện trọn và lấp kín, không cắt, không viền mờ — đổi lại bìa
+// cao theo tranh. heightClassName chỉ dùng khi không có tỉ lệ (nền vẽ SVG).
 //
 // Nền thành tích (bg:diligent) vẫn vẽ SVG viewBox 800×140 phủ kín (slice): chi tiết chính
 // đặt ở GIỮA, trong y 20–120. LUẬT: không thẻ defs, không id, không gradient SVG
@@ -20,26 +21,27 @@ const H = 140;
 
 type Scene =
   | { sky: CSSProperties["backgroundImage"]; draw: () => ReactNode }
-  | { sky: CSSProperties["backgroundImage"]; image: { src: string; position: string } };
+  | { sky: CSSProperties["backgroundImage"]; image: { src: string; position: string; ratio: string } };
 
-function painting(file: string, position: string, sky: string): Scene {
-  return { sky: `linear-gradient(${sky}, ${sky})`, image: { src: `/shop/${file}.webp`, position } };
+// ratio = "rộng / cao" của file webp — đổi file ảnh thì sửa luôn số này.
+function painting(file: string, position: string, sky: string, ratio: string): Scene {
+  return { sky: `linear-gradient(${sky}, ${sky})`, image: { src: `/shop/${file}.webp`, position, ratio } };
 }
 
 const ART: Record<string, Scene> = {
-  "bg:starry-night": painting("moonlit-dnieper-kuindzhi", "50% 12%", "#1e2a4a"),
-  "bg:meadow": painting("poppy-field-monet", "50% 60%", "#c9cfb8"),
-  "bg:ocean": painting("cliff-pourville-monet", "50% 35%", "#7aa6c9"),
-  "bg:pink-clouds": painting("almond-blossom-van-gogh", "50% 50%", "#7fb3c4"),
-  "bg:sunset": painting("impression-sunrise-monet", "50% 33%", "#6f8a8a"),
-  "bg:bamboo": painting("water-lilies-bridge-monet", "50% 40%", "#3f6b4a"),
-  "bg:city-night": painting("starry-rhone-van-gogh", "50% 55%", "#1e3a6b"),
-  "bg:aurora": painting("aurora-borealis-church", "50% 28%", "#2a2a26"),
-  "bg:snow-peaks": painting("red-fuji-hokusai", "50% 35%", "#3a5a8a"),
-  "bg:old-library": painting("view-of-delft-vermeer", "50% 70%", "#a9b4b8"),
-  "bg:galaxy": painting("great-wave-hokusai", "50% 55%", "#e8dcc0"),
+  "bg:starry-night": painting("moonlit-dnieper-kuindzhi", "50% 12%", "#1e2a4a", "1200 / 1061"),
+  "bg:meadow": painting("poppy-field-monet", "50% 60%", "#c9cfb8", "1200 / 915"),
+  "bg:ocean": painting("cliff-pourville-monet", "50% 35%", "#7aa6c9", "1200 / 962"),
+  "bg:pink-clouds": painting("almond-blossom-van-gogh", "50% 50%", "#7fb3c4", "1200 / 948"),
+  "bg:sunset": painting("impression-sunrise-monet", "50% 33%", "#6f8a8a", "1200 / 931"),
+  "bg:bamboo": painting("water-lilies-bridge-monet", "50% 40%", "#3f6b4a", "1200 / 1151"),
+  "bg:city-night": painting("starry-rhone-van-gogh", "50% 55%", "#1e3a6b", "1200 / 930"),
+  "bg:aurora": painting("aurora-borealis-church", "50% 28%", "#2a2a26", "1200 / 808"),
+  "bg:snow-peaks": painting("red-fuji-hokusai", "50% 35%", "#3a5a8a", "1200 / 810"),
+  "bg:old-library": painting("view-of-delft-vermeer", "50% 70%", "#a9b4b8", "1200 / 1000"),
+  "bg:galaxy": painting("great-wave-hokusai", "50% 55%", "#e8dcc0", "1200 / 807"),
   // "Đêm đầy sao" (Van Gogh, 1889). Neo 15% để giữ trọn mặt trăng, xoáy mây và các vì sao.
-  "bg:starry-van-gogh": painting("starry-night-van-gogh", "50% 15%", "#1e3a8a"),
+  "bg:starry-van-gogh": painting("starry-night-van-gogh", "50% 15%", "#1e3a8a", "1200 / 951"),
   "bg:diligent": {
     sky: "linear-gradient(180deg, #fde68a 0%, #f59e0b 100%)",
     draw: () => (
@@ -65,11 +67,13 @@ const ART: Record<string, Scene> = {
 export function BackgroundArt({
   artKey,
   className = "",
+  heightClassName = "",
   fit = "cover"
 }: {
   artKey: string;
   className?: string;
-  fit?: "cover" | "contain";
+  heightClassName?: string;
+  fit?: "cover" | "natural";
 }) {
   const scene = ART[artKey];
 
@@ -77,15 +81,15 @@ export function BackgroundArt({
     return null;
   }
 
+  const natural = fit === "natural" && "image" in scene;
+
   return (
     <div
-      className={`relative overflow-hidden ${className}`}
-      style={{ backgroundImage: scene.sky }}
+      className={`relative overflow-hidden ${className} ${natural ? "" : heightClassName}`}
+      style={{ backgroundImage: scene.sky, aspectRatio: natural ? scene.image.ratio : undefined }}
       aria-hidden="true"
     >
-      {"image" in scene && fit === "contain" ? (
-        <WholeImage src={scene.image.src} />
-      ) : "image" in scene ? (
+      {"image" in scene ? (
         // Ảnh tĩnh nhỏ (≤ ~380KB), không qua trình tối ưu ảnh của Next để khỏi tốn hạn mức.
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -107,32 +111,5 @@ export function BackgroundArt({
         </svg>
       )}
     </div>
-  );
-}
-
-// Ảnh hiện trọn trong khung: lớp dưới là chính ảnh phủ kín + làm mờ để lấp hai bên,
-// lớp trên là ảnh object-contain. Dùng chung cho tranh Cửa hàng và ảnh nền tự tải.
-export function WholeImage({ src, lazy = true }: { src: string; lazy?: boolean }) {
-  const loading = lazy ? "lazy" : undefined;
-  return (
-    <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt=""
-        loading={loading}
-        decoding="async"
-        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-80 blur-xl"
-      />
-      <div className="absolute inset-0 bg-black/25" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt=""
-        loading={loading}
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-contain"
-      />
-    </>
   );
 }

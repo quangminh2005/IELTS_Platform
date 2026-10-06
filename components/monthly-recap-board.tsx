@@ -44,9 +44,9 @@ export function MonthlyRecapBoard({
   metric: "xp" | "days";
   limit?: number;
   highlightStudentId?: string | null;
-  // Chỉ giáo viên mới bấm được vào tên (mở trang học viên). Học viên xem bảng
-  // toàn trường nên không link sang hồ sơ bạn lớp khác.
-  profileLinkTarget?: "teacher";
+  // Đích khi bấm tên: giáo viên → trang học viên; học viên → hồ sơ (mở toàn trường từ
+  // Mạng xã hội Đợt 1). Không truyền → chỉ là chữ.
+  profileLinkTarget?: "teacher" | "student";
   emptyText: string;
 }) {
   const shown = limit ? entries.slice(0, limit) : entries;
@@ -60,6 +60,16 @@ export function MonthlyRecapBoard({
       return (
         <Link
           href={`/teacher/students/${entry.studentId}`}
+          className={`${className} rounded transition hover:text-primary hover:underline`}
+        >
+          {entry.displayName}
+        </Link>
+      );
+    }
+    if (profileLinkTarget === "student") {
+      return (
+        <Link
+          href={`/student/profile/${entry.studentId}`}
           className={`${className} rounded transition hover:text-primary hover:underline`}
         >
           {entry.displayName}

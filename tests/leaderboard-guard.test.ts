@@ -25,3 +25,23 @@ describe("bảng xếp hạng — cache", () => {
     expect(source).toContain("tags: [LEADERBOARD_CACHE_TAG]");
   });
 });
+
+describe("trang Xếp hạng học viên", () => {
+  const page = read("app/student/ranking/page.tsx");
+
+  it("có đủ 3 bảng và lấy tham số qua resolveRankingParams", () => {
+    expect(page).toContain("resolveRankingParams(");
+    expect(page).toContain("<XpBoardHeader");
+    expect(page).toContain("<StreakBoardHeader");
+    expect(page).toContain("<ClassRankingBoard");
+  });
+
+  it("bảng Học Bá/Chuỗi link sang hồ sơ học viên, không sang trang giáo viên", () => {
+    expect(page).toMatch(/<LeaderboardBoard[^>]*linkTarget="student"/);
+    expect(page).not.toContain('linkTarget="teacher"');
+  });
+
+  it("Tổng kết tháng của học viên link tên sang hồ sơ", () => {
+    expect(read("components/monthly-recap-panel.tsx")).toContain('profileLinkTarget="student"');
+  });
+});

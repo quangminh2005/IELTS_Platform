@@ -276,6 +276,7 @@ export function MonthlyRecapPanel({
           metric="xp"
           limit={10}
           highlightStudentId={studentId}
+          profileLinkTarget="student"
           emptyText="Tháng này chưa ai có XP."
         />
         <MonthlyRecapBoard
@@ -286,6 +287,7 @@ export function MonthlyRecapPanel({
           metric="days"
           limit={10}
           highlightStudentId={studentId}
+          profileLinkTarget="student"
           emptyText="Tháng này chưa ai học."
         />
       </div>

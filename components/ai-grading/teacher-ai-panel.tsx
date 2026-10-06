@@ -1,7 +1,7 @@
 import { AiRequestButton } from "@/components/ai-grading/ai-request-button";
 import { AiScoreCard } from "@/components/ai-grading/ai-score-card";
 import { requestTeacherAiReview } from "@/lib/actions/ai-grading";
-import type { AiReviewView } from "@/lib/ai-grading/views";
+import { formatAiUsageLine, type AiReviewView, type AiUsageView } from "@/lib/ai-grading/views";
 
 // Khung "Bản nháp của AI" phía trên phiếu chấm. latest = lượt gần nhất (bất kể trạng
 // thái), done = lượt xong gần nhất (có thể do học viên nhờ ở bài tự luyện).
@@ -9,12 +9,15 @@ export function TeacherAiPanel({
   attemptId,
   enabled,
   latest,
-  done
+  done,
+  usage
 }: {
   attemptId: string;
   enabled: boolean;
   latest: AiReviewView | null;
   done: AiReviewView | null;
+  // Model / token / chi phí của lượt "done" đang hiện — chỉ trang của thầy truyền vào.
+  usage: AiUsageView | null;
 }) {
   if (!enabled && !done?.result) return null;
 
@@ -51,6 +54,7 @@ export function TeacherAiPanel({
             <p className="text-xs text-muted-foreground">Học viên đã tự nhờ AI chấm bài tự luyện này.</p>
           ) : null}
           <AiScoreCard result={done.result} audience="teacher" />
+          {usage ? <p className="text-xs text-muted-foreground">{formatAiUsageLine(usage)}</p> : null}
           <p className="text-xs text-muted-foreground">
             Bấm “Điền từ bản nháp AI” trong phiếu chấm để chép điểm và nhận xét — chưa có gì được lưu cho
             đến khi thầy bấm Lưu.

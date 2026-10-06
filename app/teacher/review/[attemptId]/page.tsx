@@ -7,7 +7,12 @@ import { TeacherAiPanel } from "@/components/ai-grading/teacher-ai-panel";
 import { isAiGradingEnabled } from "@/lib/ai-grading/openai";
 import { aiSuggestionForReview } from "@/lib/ai-grading/review-fill";
 import type { AiError } from "@/lib/ai-grading/types";
-import { AI_REVIEW_VIEW_SELECT, toAiReviewView } from "@/lib/ai-grading/views";
+import {
+  AI_REVIEW_USAGE_SELECT,
+  AI_REVIEW_VIEW_SELECT,
+  toAiReviewView,
+  toAiUsageView
+} from "@/lib/ai-grading/views";
 import { ReviewForm, type ReviewTaskInput } from "@/components/review-form";
 import { TranscribeButton } from "@/components/transcribe-button";
 import { isAudioUrl, parseWritingBrief } from "@/lib/question-interactions";
@@ -344,11 +349,12 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
     prisma.aiReview.findFirst({
       where: { attemptId: attempt.id, status: "done" },
       orderBy: { createdAt: "desc" },
-      select: AI_REVIEW_VIEW_SELECT
+      select: { ...AI_REVIEW_VIEW_SELECT, ...AI_REVIEW_USAGE_SELECT }
     })
   ]);
   const aiLatest = aiLatestRow ? toAiReviewView(aiLatestRow, now) : null;
   const aiDone = aiDoneRow ? toAiReviewView(aiDoneRow, now) : null;
+  const aiUsage = aiDoneRow ? toAiUsageView(aiDoneRow) : null;
   const aiResult = aiDone?.result ?? null;
   const aiErrorsByAnswer = new Map<string, AiError[]>();
   for (const task of aiResult?.skill === "writing" ? aiResult.tasks : []) {
@@ -661,7 +667,13 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
             {/* Khung chấm dính theo màn hình: đọc tới đâu cho điểm tới đó, không
                 phải cuộn ngược lên tìm nút Lưu. */}
             <div className="review-form-shell min-w-0 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:self-start xl:overflow-y-auto xl:overflow-x-hidden xl:pr-1">
-              <TeacherAiPanel attemptId={attempt.id} enabled={aiEnabled} latest={aiLatest} done={aiDone} />
+              <TeacherAiPanel
+                attemptId={attempt.id}
+                enabled={aiEnabled}
+                latest={aiLatest}
+                done={aiDone}
+                usage={aiUsage}
+              />
               <ReviewForm
                 attemptId={attempt.id}
                 skill={skill}

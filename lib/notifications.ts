@@ -7,7 +7,8 @@
 // formatRelativeTime từ đây. Phần truy vấn nằm ở lib/notifications-feed.ts.
 
 import { bugCategoryLabel } from "@/lib/bug-report";
-import type { SocialNotificationGroup } from "@/lib/social";
+import { namesSentence, type SocialNotificationGroup } from "@/lib/social";
+import { vietnamDateKey } from "@/lib/vocab-day";
 
 export const NOTIFICATION_LIMIT = 30;
 
@@ -21,7 +22,9 @@ export type StudentNotificationType =
   | "reward_rejected"
   | "monthly_prize"
   | "follow_new"
-  | "reaction_new";
+  | "reaction_new"
+  | "feed_heart"
+  | "feed_comment";
 
 export type StudentNotification = {
   // "review:<attemptId>" | "assignment:<recipientId>" — đủ để làm key React và để
@@ -87,6 +90,43 @@ export type PrizeNotificationSource = {
   createdAt: Date;
 };
 
+// Bảng tin (Mạng xã hội Đợt 3): người khác thả tim / bình luận hoạt động của mình.
+export type FeedHeartNotificationSource = { userId: string; name: string; createdAt: Date };
+export type FeedCommentNotificationSource = {
+  id: string;
+  eventKey: string;
+  name: string;
+  body: string;
+  createdAt: Date;
+};
+
+const COMMENT_EXCERPT = 80;
+
+// Tim gộp theo ngày VN: tên theo lần tim đầu tiên trong ngày, mỗi người một lần.
+function groupHeartsByDay(hearts: FeedHeartNotificationSource[]) {
+  const days = new Map<string, { names: string[]; seen: Set<string>; latest: Date }>();
+  const sorted = hearts.slice().sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+  for (const heart of sorted) {
+    const dayKey = vietnamDateKey(heart.createdAt);
+    let day = days.get(dayKey);
+    if (!day) {
+      day = { names: [], seen: new Set(), latest: heart.createdAt };
+      days.set(dayKey, day);
+    }
+    if (!day.seen.has(heart.userId)) {
+      day.seen.add(heart.userId);
+      day.names.push(heart.name);
+    }
+    if (heart.createdAt.getTime() > day.latest.getTime()) day.latest = heart.createdAt;
+  }
+  return Array.from(days.entries()).map(([dayKey, day]) => ({ dayKey, ...day }));
+}
+
+function excerpt(body: string): string {
+  const text = body.replace(/\s+/g, " ").trim();
+  return text.length > COMMENT_EXCERPT ? `${text.slice(0, COMMENT_EXCERPT)}…` : text;
+}
+
 // readAt null = chưa từng có mốc. Coi như đã đọc hết thay vì chưa đọc hết, để học
 // viên mới (hoặc DB chưa kịp có cột) không bị dội cả chục thông báo cũ.
 function isUnread(createdAt: Date, readAt: Date | null): boolean {
@@ -113,7 +153,9 @@ export function buildStudentNotifications(
   // Tham số thứ 7 tuỳ chọn: thưởng Xu Học Bá tháng.
   prizes: PrizeNotificationSource[] = [],
   // Tham số thứ 8 tuỳ chọn: theo dõi + cảm xúc, đã gộp theo ngày (lib/social.ts).
-  social: SocialNotificationGroup[] = []
+  social: SocialNotificationGroup[] = [],
+  // Tham số thứ 9 tuỳ chọn: tim + bình luận bảng tin của người khác vào hoạt động của mình.
+  feed: { hearts?: FeedHeartNotificationSource[]; comments?: FeedCommentNotificationSource[] } = {}
 ): StudentNotification[] {
   const items: StudentNotification[] = [
     ...reviews.map((item) => ({
@@ -188,6 +230,24 @@ export function buildStudentNotifications(
       title: item.title,
       detail: null,
       href: "/student/profile",
+      createdAt: item.createdAt,
+      unread: isUnread(item.createdAt, readAt)
+    })),
+    ...groupHeartsByDay(feed.hearts ?? []).map((day) => ({
+      id: `feed_heart:${day.dayKey}`,
+      type: "feed_heart" as const,
+      title: `${namesSentence(day.names)} đã thả tim hoạt động của bạn`,
+      detail: null,
+      href: "/student/feed?scope=school",
+      createdAt: day.latest,
+      unread: isUnread(day.latest, readAt)
+    })),
+    ...(feed.comments ?? []).map((item) => ({
+      id: `feed_comment:${item.id}`,
+      type: "feed_comment" as const,
+      title: `${item.name} bình luận: “${excerpt(item.body)}”`,
+      detail: null,
+      href: `/student/feed?focus=${encodeURIComponent(item.eventKey)}`,
       createdAt: item.createdAt,
       unread: isUnread(item.createdAt, readAt)
     }))

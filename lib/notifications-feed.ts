@@ -1,5 +1,7 @@
 import {
   buildStudentNotifications,
+  type FeedCommentNotificationSource,
+  type FeedHeartNotificationSource,
   countUnread,
   NOTIFICATION_LIMIT,
   type BugResolvedNotificationSource,
@@ -11,6 +13,25 @@ import { buildScheduleNotificationSources } from "@/lib/class-schedule";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 import { groupSocialNotifications, isReactionKind, type SocialNotificationGroup } from "@/lib/social";
+
+// Tên hiển thị của người tim / bình luận (thầy hoặc học viên).
+type FeedActor = {
+  name: string | null;
+  teacherProfile: { displayName: string | null } | null;
+  studentProfile: { displayName: string } | null;
+};
+
+const feedActorSelect = {
+  name: true,
+  teacherProfile: { select: { displayName: true } },
+  studentProfile: { select: { displayName: true } }
+} as const;
+
+function feedActorName(actor: FeedActor): string {
+  return actor.studentProfile?.displayName ?? actor.teacherProfile?.displayName ?? actor.name ?? "Thầy";
+}
+
+const FEED_KEY_KINDS = ["work", "streak", "rank", "vocab", "item", "prize"] as const;
 
 // Theo dõi + cảm xúc (Mạng xã hội Đợt 2): chỉ gom 30 ngày gần nhất, tối đa 200 dòng
 // mỗi bảng — đủ cho chuông 30 mục, không kéo cả lịch sử.
@@ -35,7 +56,7 @@ export async function getStudentNotifications(
   const [student, reviews, recipients] = await Promise.all([
     prisma.studentProfile.findUnique({
       where: { id: studentId },
-      select: { notificationsReadAt: true }
+      select: { notificationsReadAt: true, userId: true }
     }),
     prisma.teacherReview.findMany({
       where: { studentId },
@@ -191,6 +212,44 @@ export async function getStudentNotifications(
     console.error("[thong-bao] Không đọc được theo dõi / cảm xúc:", error);
   }
 
+  // Tim + bình luận bảng tin (bảng mới) — bọc try/catch như các nguồn trên. Bỏ của
+  // chính mình. FeedHeart không lưu chủ hoạt động → lọc theo tiền tố eventKey.
+  let feedHearts: FeedHeartNotificationSource[] = [];
+  let feedComments: FeedCommentNotificationSource[] = [];
+  if (student?.userId) {
+    try {
+      const since = new Date(Date.now() - SOCIAL_WINDOW_MS);
+      const [hearts, comments] = await Promise.all([
+        prisma.feedHeart.findMany({
+          where: {
+            OR: FEED_KEY_KINDS.map((kind) => ({ eventKey: { startsWith: `${kind}:${studentId}:` } })),
+            userId: { not: student.userId },
+            createdAt: { gte: since }
+          },
+          orderBy: { createdAt: "desc" },
+          take: SOCIAL_ROW_LIMIT,
+          select: { userId: true, createdAt: true, user: { select: feedActorSelect } }
+        }),
+        prisma.feedComment.findMany({
+          where: { ownerStudentId: studentId, authorUserId: { not: student.userId }, createdAt: { gte: since } },
+          orderBy: { createdAt: "desc" },
+          take: NOTIFICATION_LIMIT,
+          select: { id: true, eventKey: true, body: true, createdAt: true, author: { select: feedActorSelect } }
+        })
+      ]);
+      feedHearts = hearts.map((row) => ({ userId: row.userId, name: feedActorName(row.user), createdAt: row.createdAt }));
+      feedComments = comments.map((row) => ({
+        id: row.id,
+        eventKey: row.eventKey,
+        name: feedActorName(row.author),
+        body: row.body,
+        createdAt: row.createdAt
+      }));
+    } catch (error) {
+      console.error("[thong-bao] Không đọc được tim / bình luận bảng tin:", error);
+    }
+  }
+
   const items = buildStudentNotifications(
     reviews.map((review) => ({
       attemptId: review.attemptId,
@@ -208,7 +267,8 @@ export async function getStudentNotifications(
     scheduleSources,
     rewardSources,
     prizeSources,
-    socialGroups
+    socialGroups,
+    { hearts: feedHearts, comments: feedComments }
   );
 
   return { items, unreadCount: countUnread(items) };

@@ -24,7 +24,9 @@ const LABELS: Record<StudentNotificationType, string> = {
   reward_rejected: "Đổi quà",
   monthly_prize: "Thưởng Học Bá",
   follow_new: "Theo dõi",
-  reaction_new: "Cảm xúc"
+  reaction_new: "Cảm xúc",
+  feed_heart: "Bảng tin",
+  feed_comment: "Bình luận"
 };
 
 export function NotificationRow({

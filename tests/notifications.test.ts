@@ -282,3 +282,52 @@ describe("theo dõi + cảm xúc trong chuông (Mạng xã hội Đợt 2)", () 
     expect(feed).toMatch(/prisma\.follow\.findMany[\s\S]*?prisma\.profileReaction\.findMany[\s\S]*?catch \(error\)/);
   });
 });
+
+describe("tim + bình luận bảng tin trong chuông (Mạng xã hội Đợt 3)", () => {
+  const readAt = new Date("2026-10-06T04:00:00Z");
+
+  it("tim gộp theo ngày VN, mỗi người một lần", () => {
+    const items = buildStudentNotifications([], [], readAt, [], {}, [], [], [], {
+      hearts: [
+        { userId: "u1", name: "Linh", createdAt: new Date("2026-10-06T05:00:00Z") },
+        { userId: "u2", name: "Minh", createdAt: new Date("2026-10-06T06:00:00Z") },
+        { userId: "u1", name: "Linh", createdAt: new Date("2026-10-06T07:00:00Z") },
+        { userId: "u3", name: "An", createdAt: new Date("2026-10-04T05:00:00Z") }
+      ]
+    });
+
+    expect(items.map((item) => [item.id, item.type, item.title, item.unread])).toEqual([
+      ["feed_heart:2026-10-06", "feed_heart", "Linh và Minh đã thả tim hoạt động của bạn", true],
+      ["feed_heart:2026-10-04", "feed_heart", "An đã thả tim hoạt động của bạn", false]
+    ]);
+    expect(items[0].href).toBe("/student/feed?scope=school");
+  });
+
+  it("mỗi bình luận một dòng, trích 80 ký tự, mở thẳng hoạt động", () => {
+    const long = "a".repeat(100);
+    const items = buildStudentNotifications([], [], readAt, [], {}, [], [], [], {
+      comments: [
+        {
+          id: "c1",
+          eventKey: "work:s1:a1:2026-10-06",
+          name: "Thầy Anh Vũ",
+          body: long,
+          createdAt: new Date("2026-10-06T05:00:00Z")
+        }
+      ]
+    });
+
+    expect(items[0]).toMatchObject({
+      id: "feed_comment:c1",
+      type: "feed_comment",
+      title: `Thầy Anh Vũ bình luận: “${"a".repeat(80)}…”`,
+      href: `/student/feed?focus=${encodeURIComponent("work:s1:a1:2026-10-06")}`
+    });
+  });
+
+  it("feed đọc tim + bình luận trong try/catch, bỏ của chính mình", () => {
+    const feed = readFileSync("lib/notifications-feed.ts", "utf8");
+    expect(feed).toMatch(/prisma\.feedHeart\.findMany[\s\S]*?prisma\.feedComment\.findMany[\s\S]*?catch \(error\)/);
+    expect(feed.match(/not: student\.userId/g)?.length ?? 0).toBe(2);
+  });
+});

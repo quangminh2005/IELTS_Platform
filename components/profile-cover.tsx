@@ -31,12 +31,12 @@ export function ProfileCover({
   if (cover.kind === "image") {
     // Ảnh Blob do học viên tải — không qua trình tối ưu ảnh của Next.
     if (fit === "natural") {
-      // Không biết trước tỉ lệ: ảnh nằm trong dòng chảy (h-auto) để khung cao theo ảnh; chặn
-      // ảnh quá dọc (85vh) và quá dẹt (đủ chỗ avatar + tên) — chỉ hai ca hiếm đó mới bị cắt.
+      // Không biết trước tỉ lệ: ảnh nằm trong dòng chảy (h-auto) để khung cao theo ảnh, trong
+      // khoảng 224–384px như tranh Cửa hàng (ngoài khoảng đó object-cover cắt nhẹ ở giữa).
       return (
         <div className={`relative overflow-hidden bg-muted ${className}`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={cover.src} alt="" className="block h-auto max-h-[85vh] min-h-[14rem] w-full object-cover" />
+          <img src={cover.src} alt="" className="block h-auto max-h-96 min-h-[14rem] w-full object-cover" />
         </div>
       );
     }

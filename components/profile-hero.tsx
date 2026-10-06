@@ -7,7 +7,8 @@ import { StudentAvatar } from "@/components/student-avatar";
 // tải hoặc màu bìa), avatar có khung nằm GIỮA bìa, tên đặt trong nhãn tối để đọc
 // được trên mọi nền. Dùng chung cho hồ sơ của mình và hồ sơ bạn cùng lớp.
 //
-// Tranh/ảnh nền hiện TRỌN (fit="natural"): bìa cao theo tỉ lệ ảnh, không cắt, không viền mờ.
+// Tranh/ảnh nền (fit="natural"): bìa cao theo tỉ lệ ảnh, tối đa 384px — điện thoại thấy
+// trọn tranh, máy tính phủ kín và cắt nhẹ mép trên/dưới.
 // Bìa màu/nền vẽ thì cao 224px (điện thoại) / 384px: avatar 96px + khung tràn 18% ≈ 131px,
 // cộng nhãn tên vẫn còn chỗ thở.
 // Linh vật: hai trang hồ sơ đặt nó ở thẻ riêng cột phải (bố cục 2 cột 5/10/2026),

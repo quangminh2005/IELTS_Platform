@@ -8,9 +8,12 @@ import type { CSSProperties, ReactNode } from "react";
 // Vì vậy mỗi tranh có position riêng (object-position) neo dải ngang vào chi tiết đẹp nhất
 // (trăng, mặt trời, con sóng…). sky là màu nền lúc ảnh chưa tải xong.
 //
-// fit="natural" (bìa trang hồ sơ, kiểu chin.edu.vn): khung lấy ĐÚNG tỉ lệ của tranh (ratio =
-// rộng/cao file ảnh) nên tranh hiện trọn và lấp kín, không cắt, không viền mờ — đổi lại bìa
-// cao theo tranh. heightClassName chỉ dùng khi không có tỉ lệ (nền vẽ SVG).
+// fit="natural" (bìa trang hồ sơ, kiểu chin.edu.vn): khung lấy tỉ lệ của tranh (ratio =
+// rộng/cao file ảnh) nhưng cao tối đa 384px (max-h-96). Điện thoại khung hẹp → tranh hiện
+// trọn; máy tính khung rộng → chạm trần 384px (≈ 2:1), tranh phủ kín và chỉ cắt nhẹ mép
+// trên/dưới theo position. Thầy không ưng viền mờ hai bên lẫn bìa cao ~640px (6/10/2026).
+// w-full là BẮT BUỘC: thiếu nó, max-h + aspect-ratio làm trình duyệt co luôn chiều rộng.
+// heightClassName chỉ dùng khi không có tỉ lệ (nền vẽ SVG).
 //
 // Nền thành tích (bg:diligent) vẫn vẽ SVG viewBox 800×140 phủ kín (slice): chi tiết chính
 // đặt ở GIỮA, trong y 20–120. LUẬT: không thẻ defs, không id, không gradient SVG
@@ -85,7 +88,7 @@ export function BackgroundArt({
 
   return (
     <div
-      className={`relative overflow-hidden ${className} ${natural ? "" : heightClassName}`}
+      className={`relative overflow-hidden ${className} ${natural ? "w-full max-h-96" : heightClassName}`}
       style={{ backgroundImage: scene.sky, aspectRatio: natural ? scene.image.ratio : undefined }}
       aria-hidden="true"
     >

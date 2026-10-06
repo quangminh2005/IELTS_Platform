@@ -180,7 +180,9 @@ export async function loadMonthlyRecap(monthKey: string): Promise<MonthlyRecap> 
   const students: RecapStudentInfo[] = studentIds.length
     ? (
         await prisma.studentProfile.findMany({
-          where: { id: { in: studentIds } },
+          // Tài khoản thử thầy đã ẩn → không có thông tin → buildMonthlyRecap bỏ qua
+          // (không lên Học Bá / Tổng kết tháng, không được xét thưởng Xu, đồ thành tích).
+          where: { id: { in: studentIds }, hiddenFromBoards: false },
           select: {
             id: true,
             displayName: true,

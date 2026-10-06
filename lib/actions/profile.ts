@@ -1,9 +1,10 @@
 "use server";
 
 import { del } from "@vercel/blob";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
+import { LEADERBOARD_CACHE_TAG } from "@/lib/leaderboard";
 import { requireStudent } from "@/lib/actions/attempts";
 import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
@@ -454,5 +455,40 @@ export async function removeStudentCoverImage(formData: FormData): Promise<Actio
     return actionOk("Đã gỡ ảnh nền của học viên.");
   } catch (error) {
     return actionFail(error, "Gỡ ảnh nền");
+  }
+}
+
+// Giáo viên ẩn/hiện một học viên trên mọi bảng xếp hạng (tài khoản thử). Chỉ học viên
+// trong lớp của thầy. Học Bá tháng hiện tại + Chuỗi đổi ngay (xoá cache bảng); bảng
+// các tháng đã qua cache 1 ngày nên tới hôm sau mới đổi.
+export async function setHiddenFromBoards(formData: FormData): Promise<ActionResult> {
+  const teacher = await requireTeacher();
+
+  try {
+    const studentId = z.string().min(1, "Thiếu mã học viên.").parse(formData.get("studentId"));
+    const hidden = formData.get("hidden") === "1";
+
+    const student = await prisma.studentProfile.findFirst({
+      where: {
+        id: studentId,
+        classes: { some: { class: { teacherId: teacher.id } } }
+      },
+      select: { id: true }
+    });
+
+    if (!student) {
+      throw new Error("Không tìm thấy học viên này trong lớp của bạn.");
+    }
+
+    await prisma.studentProfile.update({
+      where: { id: student.id },
+      data: { hiddenFromBoards: hidden }
+    });
+
+    revalidateTag(LEADERBOARD_CACHE_TAG);
+    revalidatePath(`/teacher/students/${student.id}`);
+    return actionOk(hidden ? "Đã ẩn học viên khỏi bảng xếp hạng." : "Học viên đã hiện lại trên bảng xếp hạng.");
+  } catch (error) {
+    return actionFail(error, "Ẩn/hiện trên bảng xếp hạng");
   }
 }

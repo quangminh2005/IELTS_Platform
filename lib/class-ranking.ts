@@ -273,7 +273,8 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
   const firstPracticeRound = { assignment: onlyPracticeAssignment };
 
   const classmates = await prisma.classStudent.findMany({
-    where: { classId },
+    // Tài khoản thử thầy đã ẩn không lên bảng Điểm lớp.
+    where: { classId, student: { hiddenFromBoards: false } },
     orderBy: { joinedAt: "asc" },
     include: {
       student: {

@@ -74,3 +74,31 @@ describe("tab Chuỗi của giáo viên", () => {
     expect(page).toMatch(/async function StreakView[\s\S]*?where: \{ teacherId \}/);
   });
 });
+
+describe("ẩn tài khoản thử khỏi bảng xếp hạng", () => {
+  it("cột hiddenFromBoards có trong schema và ensure-db (tự lên prod khi build)", () => {
+    expect(read("prisma/schema.prisma")).toMatch(/hiddenFromBoards\s+Boolean\s+@default\(false\)/);
+    expect(read("scripts/ensure-db.mjs")).toContain(
+      'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "hiddenFromBoards" BOOLEAN NOT NULL DEFAULT false;'
+    );
+  });
+
+  it.each(["lib/monthly-recap-data.ts", "lib/leaderboard-data.ts", "lib/class-ranking.ts"])(
+    "%s lọc bỏ học viên đã ẩn",
+    (path) => {
+      expect(read(path)).toContain("hiddenFromBoards: false");
+    }
+  );
+
+  it("action bật/tắt: requireTeacher trước, chỉ học viên lớp của thầy, làm mới cache bảng", () => {
+    const source = read("lib/actions/profile.ts");
+    const action = source.slice(source.indexOf("export async function setHiddenFromBoards"));
+    expect(action).toMatch(/^export async function setHiddenFromBoards\(formData: FormData\): Promise<ActionResult> \{\s*const teacher = await requireTeacher\(\);/);
+    expect(action).toMatch(/classes: \{ some: \{ class: \{ teacherId: teacher\.id \} \} \}/);
+    expect(action).toContain("revalidateTag(LEADERBOARD_CACHE_TAG)");
+  });
+
+  it("trang học viên phía thầy có công tắc", () => {
+    expect(read("app/teacher/students/[studentId]/page.tsx")).toContain("<BoardVisibilityToggle");
+  });
+});

@@ -11,6 +11,7 @@ import { ParentContactBlock } from "@/components/parent-contact-block";
 import { ProfileEditor } from "@/components/profile-editor";
 import { StudentAvatar } from "@/components/student-avatar";
 import { StudentWalletSummary } from "@/components/student-wallet-summary";
+import { BoardVisibilityToggle } from "@/components/board-visibility-toggle";
 import { resolveAppUrl } from "@/lib/app-url";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
@@ -370,6 +371,8 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
         itemKeys={walletItems.map((item) => item.itemKey)}
         transactions={walletTransactions}
       />
+
+      <BoardVisibilityToggle studentId={student.id} hidden={student.hiddenFromBoards} />
 
       <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
         <div className="border-b border-border px-5 py-4">

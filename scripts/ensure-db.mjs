@@ -348,6 +348,8 @@ const statements = [
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "equippedMascot" TEXT;',
   // Ảnh nền bìa tự tải (hồ sơ kiểu chin, 5/10/2026).
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "coverImageUrl" TEXT;',
+  // Ẩn tài khoản thử khỏi mọi bảng xếp hạng (Mạng xã hội Đợt 1, 6/10/2026).
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "hiddenFromBoards" BOOLEAN NOT NULL DEFAULT false;',
   `CREATE TABLE IF NOT EXISTS "CoinTransaction" (
     "id" TEXT NOT NULL,
     "studentId" TEXT NOT NULL,

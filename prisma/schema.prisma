@@ -115,6 +115,9 @@ model StudentProfile {
   coverImageUrl       String?
   // Tư thế linh vật đang dùng, "pose:<con>:<tư thế>" (lib/mascots.ts)
   equippedMascot      String?
+  // Tài khoản thử của thầy: không hiện trên mọi bảng xếp hạng (Học Bá, Chuỗi, Điểm
+  // lớp, Tổng kết tháng) và không được xét thưởng Xu tháng. Thầy bật ở trang học viên.
+  hiddenFromBoards    Boolean               @default(false)
   user                User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
   classes             ClassStudent[]
   recipients          AssignmentRecipient[]

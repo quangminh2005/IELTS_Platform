@@ -24,7 +24,8 @@ export async function loadBoardPeople(ids: string[]): Promise<Map<string, BoardP
   if (ids.length === 0) return new Map();
 
   const rows = await prisma.studentProfile.findMany({
-    where: { id: { in: ids } },
+    // Tài khoản thử thầy đã ẩn không lên bảng.
+    where: { id: { in: ids }, hiddenFromBoards: false },
     select: {
       id: true,
       displayName: true,

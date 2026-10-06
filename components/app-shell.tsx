@@ -48,7 +48,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
     { href: "/student/vocab", label: "Từ vựng", hint: "Từ mỗi ngày & ôn tập", icon: "vocab" },
     { href: "/student/history", label: "Lịch sử", hint: "Kết quả & bài đã làm", icon: "clock" },
     { href: "/student/stats", label: "Tiến bộ", hint: "Biểu đồ & điểm yếu", icon: "chart" },
-    { href: "/student/ranking", label: "Xếp hạng", hint: "So với bạn cùng lớp", icon: "trophy" },
+    { href: "/student/ranking", label: "Xếp hạng", hint: "Lớp & toàn trường", icon: "trophy" },
     { href: "/student/shop", label: "Cửa hàng", hint: "Đổi Xu lấy đồ trang trí", icon: "shop" }
   ]
 };

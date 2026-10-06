@@ -21,6 +21,8 @@ import { classMemberIds, getStreakBoard } from "@/lib/leaderboard-data";
 import { monthKeyOf } from "@/lib/monthly-recap";
 import { getMonthlyRecap } from "@/lib/monthly-recap-data";
 import { prisma } from "@/lib/prisma";
+import { friendScope } from "@/lib/social";
+import { getFollowingIds } from "@/lib/social-data";
 import { getLifetimeXpMap } from "@/lib/xp-rank-data";
 
 export const dynamic = "force-dynamic";
@@ -38,6 +40,21 @@ function NoClass() {
       <p className="mt-1 text-sm text-muted-foreground">
         Chọn “Toàn trường” để so tài với cả trường, hoặc chờ thầy thêm bạn vào lớp.
       </p>
+    </div>
+  );
+}
+
+// Phạm vi Bạn bè mà chưa theo dõi ai (Mạng xã hội Đợt 2).
+function NoFriends() {
+  return (
+    <div className="rounded-xl border border-border bg-card px-5 py-12 text-center shadow-card">
+      <p className="text-sm font-medium">Bạn chưa theo dõi ai</p>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Theo dõi bạn bè để so XP và chuỗi với nhau ở đây.
+      </p>
+      <Link href="/student/profile#ban-be" className="mt-3 inline-block text-sm font-semibold text-primary hover:underline">
+        Tìm bạn →
+      </Link>
     </div>
   );
 }
@@ -96,6 +113,7 @@ export default async function StudentRankingPage({
   };
 
   let body: JSX.Element;
+  const friendIds = params.board !== "class" && params.scope === "friends" ? await getFollowingIds(student.id) : [];
 
   if (params.board === "class") {
     body = selectedClass ? (
@@ -109,9 +127,18 @@ export default async function StudentRankingPage({
     );
   } else if (params.scope === "class" && !selectedClass) {
     body = <NoClass />;
+  } else if (params.scope === "friends" && friendIds.length === 0) {
+    body = <NoFriends />;
   } else {
-    const members = params.scope === "class" && selectedClass ? await classMemberIds(selectedClass.id) : null;
-    const where = members && selectedClass ? `Lớp ${selectedClass.name}` : "Cả trường";
+    // Bạn bè = mình + người mình theo dõi; Lớp = học viên của lớp; null = cả trường.
+    const members =
+      params.scope === "friends"
+        ? friendScope(student.id, friendIds)
+        : params.scope === "class" && selectedClass
+          ? await classMemberIds(selectedClass.id)
+          : null;
+    const where =
+      params.scope === "friends" ? "Nhóm bạn của bạn" : members && selectedClass ? `Lớp ${selectedClass.name}` : "Cả trường";
 
     if (params.board === "xp") {
       const recap = await getMonthlyRecap(params.monthKey, now);

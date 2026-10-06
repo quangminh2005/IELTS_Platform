@@ -48,6 +48,12 @@ export function RankingSwitcher({
           aria-label="Phạm vi"
           className="inline-flex rounded-xl border border-border bg-border/30 p-1 dark:bg-border/20"
         >
+          <Link
+            href={rankingHref({ ...params, scope: "friends" }, context)}
+            className={tabClass(params.scope === "friends")}
+          >
+            Bạn bè
+          </Link>
           <Link href={rankingHref({ ...params, scope: "class" }, context)} className={tabClass(params.scope === "class")}>
             Lớp
           </Link>

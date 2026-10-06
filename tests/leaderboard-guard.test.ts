@@ -41,6 +41,13 @@ describe("trang Xếp hạng học viên", () => {
     expect(page).not.toContain('linkTarget="teacher"');
   });
 
+  it("phạm vi Bạn bè (Đợt 2) = mình + người mình theo dõi, chưa theo dõi ai thì mời tìm bạn", () => {
+    expect(page).toContain("getFollowingIds(student.id)");
+    expect(page).toContain("friendScope(student.id, friendIds)");
+    expect(page).toContain('href="/student/profile#ban-be"');
+    expect(read("components/leaderboard/ranking-switcher.tsx")).toContain('scope: "friends"');
+  });
+
   it("Tổng kết tháng của học viên link tên sang hồ sơ", () => {
     expect(read("components/monthly-recap-panel.tsx")).toContain('profileLinkTarget="student"');
   });

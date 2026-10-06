@@ -20,7 +20,8 @@ export function PersonRow({
   const href = person.studentId === meId ? "/student/profile" : `/student/profile/${person.studentId}`;
 
   return (
-    <li className="flex items-center gap-3 py-1.5">
+    // px-1: khung avatar (Cửa hàng) to hơn avatar một chút, không để tràn mép thẻ.
+    <li className="flex items-center gap-3 px-1 py-1.5">
       <StudentAvatar
         avatarUrl={person.avatarUrl}
         avatarPreset={person.avatarPreset}

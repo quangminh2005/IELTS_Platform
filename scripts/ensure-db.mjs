@@ -469,6 +469,49 @@ const statements = [
       FOREIGN KEY ("studentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
   END $$;`,
+  // Mạng xã hội Đợt 2: theo dõi + cảm xúc.
+  `CREATE TABLE IF NOT EXISTS "Follow" (
+    "followerId" TEXT NOT NULL,
+    "followingId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Follow_pkey" PRIMARY KEY ("followerId", "followingId")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "Follow_followingId_createdAt_idx" ON "Follow"("followingId", "createdAt");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'Follow_followerId_fkey') THEN
+      ALTER TABLE "Follow" ADD CONSTRAINT "Follow_followerId_fkey"
+      FOREIGN KEY ("followerId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'Follow_followingId_fkey') THEN
+      ALTER TABLE "Follow" ADD CONSTRAINT "Follow_followingId_fkey"
+      FOREIGN KEY ("followingId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `CREATE TABLE IF NOT EXISTS "ProfileReaction" (
+    "id" TEXT NOT NULL,
+    "fromId" TEXT NOT NULL,
+    "toId" TEXT NOT NULL,
+    "kind" TEXT NOT NULL,
+    "dayKey" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "ProfileReaction_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE UNIQUE INDEX IF NOT EXISTS "ProfileReaction_fromId_toId_kind_dayKey_key" ON "ProfileReaction"("fromId", "toId", "kind", "dayKey");',
+  'CREATE INDEX IF NOT EXISTS "ProfileReaction_toId_createdAt_idx" ON "ProfileReaction"("toId", "createdAt");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ProfileReaction_fromId_fkey') THEN
+      ALTER TABLE "ProfileReaction" ADD CONSTRAINT "ProfileReaction_fromId_fkey"
+      FOREIGN KEY ("fromId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ProfileReaction_toId_fkey') THEN
+      ALTER TABLE "ProfileReaction" ADD CONSTRAINT "ProfileReaction_toId_fkey"
+      FOREIGN KEY ("toId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
 ];
 
 const prisma = new PrismaClient();

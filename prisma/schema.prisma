@@ -30,6 +30,7 @@ datasource db {
 // enum ItemSource (StudentItem.source): purchase | achievement | streak (tư thế linh vật mở bằng chuỗi ngày)
 // enum AiRequester (AiReview.requestedBy): teacher | student
 // enum AiReviewStatus (AiReview.status): pending | done | failed
+// enum ReactionKind (ProfileReaction.kind): cheer | fire | target
 
 model User {
   id             String          @id @default(cuid())
@@ -135,6 +136,12 @@ model StudentProfile {
   redemptions      RewardRedemption[]
   items            StudentItem[]
   aiReviews        AiReview[]
+
+  // Mạng xã hội Đợt 2: theo dõi một chiều + cảm xúc lên hồ sơ.
+  following     Follow[]          @relation("FollowFollower")
+  followers     Follow[]          @relation("FollowFollowing")
+  reactionsSent ProfileReaction[] @relation("ReactionFrom")
+  reactionsGot  ProfileReaction[] @relation("ReactionTo")
 }
 
 // LƯU Ý VỀ INDEX: Postgres (và Prisma) KHÔNG tự tạo index cho cột khoá ngoại —
@@ -787,4 +794,35 @@ model RewardRedemption {
   @@index([status, createdAt])
   @@index([studentId, createdAt])
   @@index([rewardId, status])
+}
+
+// Mạng xã hội Đợt 2 (spec 2026-10-06-xa-hoi-dot-2): follower đang theo dõi following.
+// Một chiều, không cần duyệt. Bỏ theo dõi = xoá dòng (không giữ lịch sử).
+model Follow {
+  followerId  String
+  followingId String
+  createdAt   DateTime       @default(now())
+  follower    StudentProfile @relation("FollowFollower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   StudentProfile @relation("FollowFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+  @@index([followingId, createdAt])
+}
+
+// Cảm xúc thả lên hồ sơ bạn. Mỗi loại 1 lần/ngày/người — ràng buộc unique giữ luật
+// này ở tầng DB. Không gỡ được, không cộng Xu/XP.
+model ProfileReaction {
+  id        String         @id @default(cuid())
+  fromId    String
+  toId      String
+  // cheer | fire | target (comment ReactionKind ở đầu file)
+  kind      String
+  // "YYYY-MM-DD" giờ VN (vietnamDateKey)
+  dayKey    String
+  createdAt DateTime       @default(now())
+  from      StudentProfile @relation("ReactionFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  to        StudentProfile @relation("ReactionTo", fields: [toId], references: [id], onDelete: Cascade)
+
+  @@unique([fromId, toId, kind, dayKey])
+  @@index([toId, createdAt])
 }

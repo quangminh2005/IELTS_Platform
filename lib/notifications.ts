@@ -7,6 +7,7 @@
 // formatRelativeTime từ đây. Phần truy vấn nằm ở lib/notifications-feed.ts.
 
 import { bugCategoryLabel } from "@/lib/bug-report";
+import type { SocialNotificationGroup } from "@/lib/social";
 
 export const NOTIFICATION_LIMIT = 30;
 
@@ -18,7 +19,9 @@ export type StudentNotificationType =
   | "schedule_update"
   | "reward_delivered"
   | "reward_rejected"
-  | "monthly_prize";
+  | "monthly_prize"
+  | "follow_new"
+  | "reaction_new";
 
 export type StudentNotification = {
   // "review:<attemptId>" | "assignment:<recipientId>" — đủ để làm key React và để
@@ -108,7 +111,9 @@ export function buildStudentNotifications(
   // Tham số thứ 6 tuỳ chọn: phiếu đổi quà đã xử lý.
   rewards: RewardNotificationSource[] = [],
   // Tham số thứ 7 tuỳ chọn: thưởng Xu Học Bá tháng.
-  prizes: PrizeNotificationSource[] = []
+  prizes: PrizeNotificationSource[] = [],
+  // Tham số thứ 8 tuỳ chọn: theo dõi + cảm xúc, đã gộp theo ngày (lib/social.ts).
+  social: SocialNotificationGroup[] = []
 ): StudentNotification[] {
   const items: StudentNotification[] = [
     ...reviews.map((item) => ({
@@ -174,6 +179,15 @@ export function buildStudentNotifications(
       title: `🏆 ${item.note ?? "Thưởng Học Bá tháng"} — +${item.amount} Xu`,
       detail: null,
       href: `/student/ranking?month=${item.key.slice("prize:xp:".length)}`,
+      createdAt: item.createdAt,
+      unread: isUnread(item.createdAt, readAt)
+    })),
+    ...social.map((item) => ({
+      id: `${item.kind}:${item.dayKey}`,
+      type: item.kind === "follow" ? ("follow_new" as const) : ("reaction_new" as const),
+      title: item.title,
+      detail: null,
+      href: "/student/profile",
       createdAt: item.createdAt,
       unread: isUnread(item.createdAt, readAt)
     }))

@@ -10,6 +10,12 @@ import {
 import { buildScheduleNotificationSources } from "@/lib/class-schedule";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
+import { groupSocialNotifications, isReactionKind, type SocialNotificationGroup } from "@/lib/social";
+
+// Theo dõi + cảm xúc (Mạng xã hội Đợt 2): chỉ gom 30 ngày gần nhất, tối đa 200 dòng
+// mỗi bảng — đủ cho chuông 30 mục, không kéo cả lịch sử.
+const SOCIAL_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
+const SOCIAL_ROW_LIMIT = 200;
 
 export type StudentNotificationFeed = {
   items: StudentNotification[];
@@ -155,6 +161,36 @@ export async function getStudentNotifications(
     console.error("[thong-bao] Không đọc được thưởng Học Bá:", error);
   }
 
+  // Theo dõi + cảm xúc (bảng mới) — bọc try/catch như các nguồn trên.
+  let socialGroups: SocialNotificationGroup[] = [];
+  try {
+    const since = new Date(Date.now() - SOCIAL_WINDOW_MS);
+    const [follows, reactions] = await Promise.all([
+      prisma.follow.findMany({
+        where: { followingId: studentId, createdAt: { gte: since } },
+        orderBy: { createdAt: "desc" },
+        take: SOCIAL_ROW_LIMIT,
+        select: { followerId: true, createdAt: true, follower: { select: { displayName: true } } }
+      }),
+      prisma.profileReaction.findMany({
+        where: { toId: studentId, createdAt: { gte: since } },
+        orderBy: { createdAt: "desc" },
+        take: SOCIAL_ROW_LIMIT,
+        select: { fromId: true, kind: true, createdAt: true, from: { select: { displayName: true } } }
+      })
+    ]);
+    socialGroups = groupSocialNotifications(
+      follows.map((row) => ({ followerId: row.followerId, name: row.follower.displayName, createdAt: row.createdAt })),
+      reactions.flatMap((row) =>
+        isReactionKind(row.kind)
+          ? [{ fromId: row.fromId, name: row.from.displayName, kind: row.kind, createdAt: row.createdAt }]
+          : []
+      )
+    );
+  } catch (error) {
+    console.error("[thong-bao] Không đọc được theo dõi / cảm xúc:", error);
+  }
+
   const items = buildStudentNotifications(
     reviews.map((review) => ({
       attemptId: review.attemptId,
@@ -171,7 +207,8 @@ export async function getStudentNotifications(
     bugs,
     scheduleSources,
     rewardSources,
-    prizeSources
+    prizeSources,
+    socialGroups
   );
 
   return { items, unreadCount: countUnread(items) };

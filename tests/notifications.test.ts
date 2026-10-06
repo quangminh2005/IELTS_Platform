@@ -245,3 +245,40 @@ describe("thưởng Học Bá tháng trong chuông", () => {
     });
   });
 });
+
+describe("theo dõi + cảm xúc trong chuông (Mạng xã hội Đợt 2)", () => {
+  it("mỗi nhóm ngày thành một dòng, mở hồ sơ của mình", () => {
+    const readAt = new Date("2026-10-06T04:00:00Z");
+    const items = buildStudentNotifications([], [], readAt, [], {}, [], [], [
+      {
+        kind: "reaction",
+        dayKey: "2026-10-06",
+        title: "Linh và Minh đã gửi 👏🔥 cho bạn",
+        createdAt: new Date("2026-10-06T05:00:00Z")
+      },
+      {
+        kind: "follow",
+        dayKey: "2026-10-05",
+        title: "Linh đã theo dõi bạn",
+        createdAt: new Date("2026-10-05T05:00:00Z")
+      }
+    ]);
+
+    expect(items).toMatchObject([
+      {
+        id: "reaction:2026-10-06",
+        type: "reaction_new",
+        title: "Linh và Minh đã gửi 👏🔥 cho bạn",
+        href: "/student/profile",
+        unread: true
+      },
+      { id: "follow:2026-10-05", type: "follow_new", href: "/student/profile", unread: false }
+    ]);
+  });
+
+  it("feed đọc 2 bảng mới trong try/catch và gộp qua groupSocialNotifications", () => {
+    const feed = readFileSync("lib/notifications-feed.ts", "utf8");
+    expect(feed).toContain("groupSocialNotifications(");
+    expect(feed).toMatch(/prisma\.follow\.findMany[\s\S]*?prisma\.profileReaction\.findMany[\s\S]*?catch \(error\)/);
+  });
+});

@@ -3,6 +3,9 @@ import { AttendanceCalendar } from "@/components/attendance-calendar";
 import { MyProfileHero } from "@/components/my-profile-hero";
 import { MascotCard, RankCard, StatGrid } from "@/components/profile-side-cards";
 import { RankTierBadge } from "@/components/rank-tier-badge";
+import { FollowStats } from "@/components/social/follow-stats";
+import { FriendsCard } from "@/components/social/friends-card";
+import { ReactionBar } from "@/components/social/reaction-bar";
 import { updateMyProfile } from "@/lib/actions/profile";
 import { auth } from "@/lib/auth";
 import { activeDayKeys } from "@/lib/activity-heatmap";
@@ -15,6 +18,14 @@ import { DEFAULT_COVER_KEY } from "@/lib/student-avatar";
 import { VN_OFFSET_MS } from "@/lib/streak";
 import { getDayStreak, loadActivityDays } from "@/lib/day-streak-data";
 import { getLifetimeXp } from "@/lib/xp-rank-data";
+import {
+  getClassmateSuggestions,
+  getFollowCounts,
+  getFollowingIds,
+  getFollowLists,
+  getReactionTotals,
+  getSchoolDirectory
+} from "@/lib/social-data";
 
 export const dynamic = "force-dynamic";
 
@@ -90,7 +101,17 @@ export default async function StudentProfilePage({
 
   // Các truy vấn dưới đây độc lập với nhau, chỉ phụ thuộc student.id đã có ở
   // trên — gộp Promise.all để chạy song song thay vì nối đuôi tuần tự.
-  const [attempts, vocabWordCount, lifetimeXp, ownedItems] = await Promise.all([
+  const [
+    attempts,
+    vocabWordCount,
+    lifetimeXp,
+    ownedItems,
+    followCounts,
+    reactionTotals,
+    followLists,
+    followingIds,
+    directory
+  ] = await Promise.all([
     prisma.attempt.findMany({
       where: { studentId: student.id, submittedAt: { not: null }, ...countsForStats },
       select: {
@@ -110,8 +131,15 @@ export default async function StudentProfilePage({
     prisma.studentItem.findMany({
       where: { studentId: student.id },
       select: { itemKey: true }
-    })
+    }),
+    // Mạng xã hội Đợt 2: số theo dõi, cảm xúc đã nhận, thẻ Bạn bè.
+    getFollowCounts(student.id),
+    getReactionTotals(student.id),
+    getFollowLists(student.id),
+    getFollowingIds(student.id),
+    getSchoolDirectory(student.id)
   ]);
+  const suggestions = await getClassmateSuggestions(student.id, followingIds);
 
   // Band trung bình theo từng kỹ năng — quy đổi RIÊNG cho mỗi lần làm rồi mới lấy
   // trung bình, không gộp câu trả lời của nhiều lần làm lại (xem lib/band-score.ts).
@@ -212,6 +240,12 @@ export default async function StudentProfilePage({
                 </>
               ) : null}
             </div>
+            <div className="mt-3 flex justify-center">
+              <FollowStats following={followCounts.following} followers={followCounts.followers} />
+            </div>
+            <div className="mt-3">
+              <ReactionBar targetId={null} totals={reactionTotals} sentToday={[]} />
+            </div>
           </div>
         </section>
 
@@ -229,6 +263,14 @@ export default async function StudentProfilePage({
             { label: "Chuỗi ngày", value: `${streak.days} ngày` },
             { label: "Band trung bình", value: bandText }
           ]}
+        />
+        <FriendsCard
+          meId={student.id}
+          directory={directory}
+          suggestions={suggestions}
+          followingIds={followingIds}
+          following={followLists.following}
+          followers={followLists.followers}
         />
         <MascotCard poseKey={student.equippedMascot} own />
       </aside>

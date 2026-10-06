@@ -4,11 +4,22 @@ import { ProfileHero } from "@/components/profile-hero";
 import { ProfileMonthActivity } from "@/components/profile-month-activity";
 import { MascotCard, RankCard } from "@/components/profile-side-cards";
 import { RankTierBadge } from "@/components/rank-tier-badge";
+import { FollowButton } from "@/components/social/follow-button";
+import { FollowListsCard } from "@/components/social/follow-lists";
+import { FollowStats } from "@/components/social/follow-stats";
+import { ReactionBar } from "@/components/social/reaction-bar";
 import { auth } from "@/lib/auth";
 import { getDayStreak, loadActivityDays } from "@/lib/day-streak-data";
 import { monthKeyOf, shiftMonthKey } from "@/lib/monthly-recap";
 import { prisma } from "@/lib/prisma";
 import { resolveProfileMonth, summarizeMonthActivity } from "@/lib/profile-activity";
+import {
+  getFollowCounts,
+  getFollowLists,
+  getMyReactionsToday,
+  getReactionTotals,
+  isFollowing
+} from "@/lib/social-data";
 import { vietnamDateKey } from "@/lib/vocab-day";
 import { getLifetimeXp } from "@/lib/xp-rank-data";
 
@@ -18,6 +29,8 @@ export const dynamic = "force-dynamic";
 // 2026-10-05-xa-hoi-dot-1): trang trí, lớp, XP + hạng đấu, chuỗi 🔥, lịch chăm học.
 // Band từng kỹ năng, mục tiêu band, bài làm và số dư ví vẫn là chuyện riêng, KHÔNG bao
 // giờ hiện ở đây — xem tests/profile-visibility.test.ts.
+// Đợt 2 (spec 2026-10-06-xa-hoi-dot-2) thêm nút Theo dõi, số theo dõi, 3 nút cảm xúc
+// và thẻ danh sách bạn bè ở cột phải.
 export default async function StudentPublicProfilePage({
   params,
   searchParams
@@ -72,11 +85,17 @@ export default async function StudentPublicProfilePage({
   const monthKey = resolveProfileMonth(searchParams?.month, latestMonth);
 
   // XP / chuỗi / ngày có học qua đúng các nguồn dùng chung với hồ sơ của mình.
-  const [lifetimeXp, dayStreak, activityDays] = await Promise.all([
-    getLifetimeXp(profile.id),
-    getDayStreak(profile.id, now),
-    loadActivityDays(profile.id, `${monthKey}-01`)
-  ]);
+  const [lifetimeXp, dayStreak, activityDays, followCounts, followed, reactionTotals, sentToday, followLists] =
+    await Promise.all([
+      getLifetimeXp(profile.id),
+      getDayStreak(profile.id, now),
+      loadActivityDays(profile.id, `${monthKey}-01`),
+      getFollowCounts(profile.id),
+      isFollowing(me.id, profile.id),
+      getReactionTotals(profile.id),
+      getMyReactionsToday(me.id, profile.id, now),
+      getFollowLists(profile.id)
+    ]);
   const streakDays = dayStreak.streak.days;
   const summary = summarizeMonthActivity(activityDays, monthKey, vietnamDateKey(now));
 
@@ -131,6 +150,13 @@ export default async function StudentPublicProfilePage({
                 Lớp: <span className="font-medium text-foreground">{classNames.join(" · ")}</span>
               </p>
             ) : null}
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+              <FollowStats following={followCounts.following} followers={followCounts.followers} />
+              <FollowButton targetId={profile.id} initialFollowing={followed} />
+            </div>
+            <div className="mt-3">
+              <ReactionBar targetId={profile.id} totals={reactionTotals} sentToday={sentToday} />
+            </div>
           </div>
         </section>
 
@@ -142,6 +168,12 @@ export default async function StudentPublicProfilePage({
       <aside className="order-2 flex flex-col gap-4">
         <RankCard xp={lifetimeXp} showXp />
         <MascotCard poseKey={profile.equippedMascot} own={false} />
+        <FollowListsCard
+          ownerName={profile.displayName}
+          following={followLists.following}
+          followers={followLists.followers}
+          meId={me.id}
+        />
       </aside>
     </div>
   );

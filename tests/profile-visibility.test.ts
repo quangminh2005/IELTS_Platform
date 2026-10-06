@@ -49,4 +49,13 @@ describe("hồ sơ học viên khác (mở toàn trường)", () => {
     expect(source).toMatch(/summarizeMonthActivity\(/);
     expect(source).toMatch(/<RankCard[^>]*showXp/);
   });
+
+  it("Đợt 2: có nút Theo dõi, số theo dõi, cảm xúc và danh sách bạn bè", () => {
+    expect(source).toMatch(/getFollowCounts\(/);
+    expect(source).toMatch(/isFollowing\(me\.id, profile\.id\)/);
+    expect(source).toMatch(/getMyReactionsToday\(me\.id, profile\.id/);
+    expect(source).toContain("<FollowButton");
+    expect(source).toContain("<ReactionBar");
+    expect(source).toContain("<FollowListsCard");
+  });
 });

@@ -21,7 +21,7 @@ datasource db {
 // enum SessionMode (ClassSession.mode): offline | online
 // enum SessionKind (ClassSession.kind): regular | makeup | extra
 // enum SessionChangeKind (ClassSession.changeKind): cancelled | restored | moved | online | offline | added
-// enum DeckCardSource (VocabDeckCard.source): bank | student
+// enum DeckCardSource (VocabDeckCard.source): bank | student | teacher
 // enum SpeakingPrepScope (Assignment.speakingPrepScope, null = per_question): per_question | shared
 // enum MaterialCategory (Material.category): book | homework
 // enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund | monthly_prize
@@ -650,7 +650,8 @@ model VocabQuizDay {
 // wordId → từ học viên tự thêm, nội dung nằm ở các cột display…exampleEn.
 // source chỉ nói nguồn gốc: "bank" = hệ thống phát từ kho (tính vào hạn mức thẻ
 // mới mỗi ngày), "student" = học viên bôi đen ở trang Kết quả (kể cả khi từ đó có
-// sẵn trong kho).
+// sẵn trong kho), "teacher" = thầy phát thẳng cho cả lớp (tmp/_vocab-class-push.mjs —
+// không tính vào hạn mức thẻ mới, học viên không xoá được).
 model VocabDeckCard {
   id              String    @id @default(cuid())
   studentId       String

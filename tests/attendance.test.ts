@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildAttendanceMonth, vnDateKey } from "../lib/attendance";
+import { buildAttendanceMonth, buildAttendanceMonthFromKeys, vnDateKey } from "../lib/attendance";
 
 describe("vnDateKey", () => {
   it("bài nộp 23h30 giờ VN vẫn thuộc ngày hôm đó", () => {
@@ -115,5 +115,27 @@ describe("buildAttendanceMonth", () => {
       month: new Date("2026-03-10T10:00:00+07:00")
     });
     expect(result.leadingBlanks).toBe(6);
+  });
+});
+
+describe("buildAttendanceMonthFromKeys", () => {
+  it("nhận thẳng khoá ngày, lưới bắt đầu Thứ 2", () => {
+    const result = buildAttendanceMonthFromKeys({ activeKeys: ["2026-10-02", "2026-09-30"], monthKey: "2026-10" });
+    expect(result.year).toBe(2026);
+    expect(result.month).toBe(10);
+    expect(result.days).toHaveLength(31);
+    // 1/10/2026 là Thứ 5 → 3 ô trống (T2, T3, T4).
+    expect(result.leadingBlanks).toBe(3);
+    expect(result.days[1]).toEqual({ day: 2, active: true });
+    expect(result.days.filter((day) => day.active)).toHaveLength(1);
+  });
+
+  it("buildAttendanceMonth cũ vẫn ra cùng kết quả", () => {
+    const viaDates = buildAttendanceMonth({
+      submittedAt: [new Date("2026-10-02T09:00:00+07:00")],
+      vocabDays: [],
+      month: new Date("2026-10-15T12:00:00Z")
+    });
+    expect(viaDates).toEqual(buildAttendanceMonthFromKeys({ activeKeys: ["2026-10-02"], monthKey: "2026-10" }));
   });
 });

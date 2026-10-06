@@ -5,14 +5,15 @@ import { MascotCard, RankCard, StatGrid } from "@/components/profile-side-cards"
 import { RankTierBadge } from "@/components/rank-tier-badge";
 import { updateMyProfile } from "@/lib/actions/profile";
 import { auth } from "@/lib/auth";
-import { buildAttendanceMonth } from "@/lib/attendance";
+import { activeDayKeys } from "@/lib/activity-heatmap";
+import { buildAttendanceMonthFromKeys } from "@/lib/attendance";
 import { averageBandsBySkillAcrossAttempts, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
 import { countsForStats } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 import { resolveItem } from "@/lib/shop-catalog";
 import { DEFAULT_COVER_KEY } from "@/lib/student-avatar";
 import { VN_OFFSET_MS } from "@/lib/streak";
-import { getDayStreak } from "@/lib/day-streak-data";
+import { getDayStreak, loadActivityDays } from "@/lib/day-streak-data";
 import { getLifetimeXp } from "@/lib/xp-rank-data";
 
 export const dynamic = "force-dynamic";
@@ -89,21 +90,16 @@ export default async function StudentProfilePage({
 
   // Các truy vấn dưới đây độc lập với nhau, chỉ phụ thuộc student.id đã có ở
   // trên — gộp Promise.all để chạy song song thay vì nối đuôi tuần tự.
-  const [attempts, vocabDays, vocabWordCount, lifetimeXp, ownedItems] = await Promise.all([
+  const [attempts, vocabWordCount, lifetimeXp, ownedItems] = await Promise.all([
     prisma.attempt.findMany({
       where: { studentId: student.id, submittedAt: { not: null }, ...countsForStats },
       select: {
-        submittedAt: true,
         // Answer KHÔNG có cột skill — kỹ năng nằm ở phần bài (assignableUnit).
         // Mọi nơi gọi bandsBySkill đều phải tự ánh xạ như dưới đây.
         answers: {
           select: { isCorrect: true, assignableUnit: { select: { skill: true } } }
         }
       }
-    }),
-    prisma.vocabQuizDay.findMany({
-      where: { studentId: student.id },
-      select: { date: true }
     }),
     prisma.vocabProgress.count({
       where: { studentId: student.id }
@@ -116,10 +112,6 @@ export default async function StudentProfilePage({
       select: { itemKey: true }
     })
   ]);
-
-  const submittedAt = attempts
-    .map((attempt) => attempt.submittedAt)
-    .filter((date): date is Date => date !== null);
 
   // Band trung bình theo từng kỹ năng — quy đổi RIÊNG cho mỗi lần làm rồi mới lấy
   // trung bình, không gộp câu trả lời của nhiều lần làm lại (xem lib/band-score.ts).
@@ -144,14 +136,13 @@ export default async function StudentProfilePage({
   const isCurrentMonth =
     requestedMonth.year === currentYear && requestedMonth.month === currentMonth;
 
-  const attendance = buildAttendanceMonth({
-    submittedAt,
-    vocabDays: vocabDays.map((row) => row.date),
-    // Neo giữa tháng, giữa trưa: đủ xa hai đầu tháng để cộng VN_OFFSET_MS bên
-    // trong buildAttendanceMonth không lỡ tay đẩy sang tháng kế cận.
-    month: new Date(
-      Date.UTC(requestedMonth.year, requestedMonth.month - 1, 15, 12, 0, 0)
-    )
+  const monthKey = formatMonthParam(requestedMonth.year, requestedMonth.month);
+  // Cùng nguồn với chuỗi 🔥 (mọi lượt nộp + ôn Sổ từ). Trước 5/10/2026 lịch chỉ đếm
+  // lượt countsForStats nên có ngày chuỗi vẫn tính mà ô lịch lại tắt.
+  const monthActivity = await loadActivityDays(student.id, `${monthKey}-01`);
+  const attendance = buildAttendanceMonthFromKeys({
+    activeKeys: activeDayKeys(monthActivity).filter((key) => key.startsWith(`${monthKey}-`)),
+    monthKey
   });
 
   const prevMonth = shiftMonth(requestedMonth.year, requestedMonth.month, -1);
@@ -233,7 +224,7 @@ export default async function StudentProfilePage({
         <RankCard xp={lifetimeXp} showXp />
         <StatGrid
           stats={[
-            { label: "Bài đã nộp", value: String(submittedAt.length) },
+            { label: "Bài đã nộp", value: String(attempts.length) },
             { label: "Từ vựng đã học", value: String(vocabWordCount) },
             { label: "Chuỗi ngày", value: `${streak.days} ngày` },
             { label: "Band trung bình", value: bandText }

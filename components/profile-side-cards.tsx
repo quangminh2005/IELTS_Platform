@@ -8,8 +8,8 @@ import { getXpProgress, levelName } from "@/lib/xp-rank";
 
 const xpFormat = new Intl.NumberFormat("vi-VN");
 
-// Thẻ Hạng đấu (XP tích luỹ, lib/xp-rank.ts). `showXp` chỉ bật ở hồ sơ CỦA MÌNH —
-// hồ sơ bạn cùng lớp chỉ hiện huy hiệu + tên cấp, không con số nào.
+// Thẻ Hạng đấu (XP tích luỹ, lib/xp-rank.ts). Từ Mạng xã hội Đợt 1 (5/10/2026) cả hồ
+// sơ của mình lẫn hồ sơ người khác đều bật `showXp` (giống chin); tắt = chỉ huy hiệu + tên cấp.
 export function RankCard({ xp, showXp }: { xp: number; showXp: boolean }) {
   const { current, next, xpToNext, percent } = getXpProgress(xp);
 

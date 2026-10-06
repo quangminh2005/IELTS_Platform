@@ -32,15 +32,7 @@ export function buildAttendanceMonth(input: {
   month: Date;
 }): AttendanceMonth {
   const shifted = new Date(input.month.getTime() + VN_OFFSET_MS);
-  const year = shifted.getUTCFullYear();
-  const month = shifted.getUTCMonth() + 1; // 1–12
-
-  // Ngày 0 của tháng sau = ngày cuối của tháng này.
-  const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
-
-  // getUTCDay: 0=CN, 1=T2... Lưới bắt đầu Thứ 2 nên CN phải là cột thứ 7.
-  const firstWeekday = new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
-  const leadingBlanks = (firstWeekday + 6) % 7;
+  const monthKey = `${shifted.getUTCFullYear()}-${String(shifted.getUTCMonth() + 1).padStart(2, "0")}`;
 
   const activeKeys = new Set<string>();
   for (const date of input.submittedAt) {
@@ -50,10 +42,26 @@ export function buildAttendanceMonth(input: {
     activeKeys.add(vnDateKey(date));
   }
 
+  return buildAttendanceMonthFromKeys({ activeKeys, monthKey });
+}
+
+// Cùng lưới tháng, nhận thẳng khoá ngày "YYYY-MM-DD" đã có học — dùng với
+// loadActivityDays (cùng nguồn với chuỗi 🔥). monthKey dạng "YYYY-MM".
+export function buildAttendanceMonthFromKeys(input: {
+  activeKeys: Iterable<string>;
+  monthKey: string;
+}): AttendanceMonth {
+  const [year, month] = input.monthKey.split("-").map(Number);
+  // Ngày 0 của tháng sau = ngày cuối của tháng này.
+  const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  // getUTCDay: 0=CN, 1=T2... Lưới bắt đầu Thứ 2 nên CN phải là cột thứ 7.
+  const firstWeekday = new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
+  const leadingBlanks = (firstWeekday + 6) % 7;
+  const active = new Set(input.activeKeys);
+
   const days = Array.from({ length: daysInMonth }, (_, index) => {
     const day = index + 1;
-    const key = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    return { day, active: activeKeys.has(key) };
+    return { day, active: active.has(`${input.monthKey}-${String(day).padStart(2, "0")}`) };
   });
 
   return { year, month, leadingBlanks, days };

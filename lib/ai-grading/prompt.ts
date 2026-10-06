@@ -42,7 +42,7 @@ function renderDescriptors(descriptors: Descriptors, keys: string[]): string {
 // Mức tham khảo tốc độ nói ↔ band Fluency — gần đúng, chỉnh dần khi đối chiếu với điểm
 // thầy chấm (spec 2026-10-06-speaking-fluency-timing-design.md).
 const FLUENCY_REFERENCE =
-  "Rough reference only, not a rule: under about 100 words/min with frequent mid-phrase pauses usually fits Fluency band 5-5.5; about 100-120 words/min fits 5.5-6; about 120-140 words/min with few mid-phrase pauses can reach 6.5-7. A fast rate with many mid-phrase pauses should still not be graded high.";
+  "Rough reference only, not a rule (pauses counted from 0.5s): a mean length of run under about 6 words, or more than about 4 mid-phrase pauses per minute, usually fits Fluency band 5-5.5; about 6-9 words per run with some mid-phrase pauses fits 5.5-6; 10 or more words per run, under about 2 mid-phrase pauses per minute and around 120 words/min or more can reach 6.5-7. Speed alone is not fluency: a fast rate with frequent mid-phrase pauses should still not be graded high. Pauses of about 0.5-1s between sentences are normal for any speaker and should not be penalised.";
 
 // Phần CỐ ĐỊNH theo (kỹ năng, loại task) — đặt đầu để OpenAI tự cache tiền tố.
 // Không được chèn gì thay đổi theo bài (tên, ngày giờ…) vào đây.
@@ -80,7 +80,7 @@ export function buildSystemPrompt(skill: AiSkill, taskNumber: 1 | 2): string {
     rules.push(
       "You only have an automatic speech-recognition transcript of the recording, not the audio. Do NOT grade Pronunciation.",
       "Speech recognition removes hesitations, fillers (um, uh) and false starts, so a clean transcript does NOT prove the speech was fluent.",
-      'Most responses come with timing measured from the real audio: a "Timing" line (speaking rate in words per minute, silent pauses of 1 second or more, the longest pause) and markers such as (pause 2.1s) inside the transcript where the student was silent. A pause may also hide a filler the recogniser dropped.',
+      'Most responses come with timing measured from the real audio: a "Timing" line (speaking rate in words per minute, mean length of run = average number of words spoken between pauses of 0.5s or more, mid-phrase pauses of 0.5s or more and their rate per minute, pauses of 1s and 2s or more, the longest pause) and markers such as (pause 0.7s) inside the transcript wherever the student was silent for 0.5s or more. A pause may also hide a filler the recogniser dropped.',
       "Use the timing as the main evidence for Fluency and Coherence. Pauses in the middle of a phrase or clause (mid-phrase) usually mean searching for words or grammar and should lower the band; pauses between sentences or ideas are less serious (content-related hesitation).",
       FLUENCY_REFERENCE,
       "Without timing data, be conservative with Fluency and Coherence: base it mainly on coherence, linking and how fully answers are developed, and do not award a band above the other criteria just because the transcript reads smoothly.",

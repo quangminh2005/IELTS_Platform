@@ -77,3 +77,16 @@ giây âm thanh nên kiểu kết quả không tốn thêm.
 
 ## Không làm lần này
 Chấm Pronunciation; đo độ trễ trước khi trả lời; code tự ép trần điểm; hiện số đo cho học viên.
+
+## Bổ sung 6/10/2026 (chiều): ngừng ngắn + độ dài mạch nói
+
+Kiểm prod bài Đỗ Hoàng Anh Minh: 118 từ/phút, 0 lần ngừng ≥1 s giữa cụm từ → AI vẫn F 6.0
+(thầy 5.5). Ngưỡng 1 s bỏ sót các lần ngập ngừng ngắn. Thầy duyệt thêm:
+- Đếm ngừng ≥ 0,5 s (`SHORT_PAUSE_SECONDS`), tách giữa cụm từ, quy ra **số lần/phút nói**.
+- **Độ dài mạch nói** (mean length of run) = số từ / số mạch (mỗi lần ngừng ≥ 0,5 s mở mạch mới,
+  mỗi câu trả lời cũng là một mạch mới) — chỉ số trôi chảy hay dùng nhất trong nghiên cứu.
+- `annotatePauses` chèn dấu từ 0,5 s. Mức tham khảo (`FLUENCY_REFERENCE`) viết lại theo mạch nói +
+  ngừng giữa cụm/phút; ngừng 0,5–1 s giữa hai câu là bình thường, không trừ.
+- Dòng của thầy: "Tốc độ ~118 từ/phút · trung bình ~7 từ mỗi mạch nói · ngừng giữa cụm từ ≥0,5 giây:
+  6 lần · ngừng ≥1 giây: 3 lần (≥2 giây: 0) · lâu nhất 1,5 giây".
+- Không đổi cột DB: mốc từng từ đã lưu sẵn, số đo tính lại từ đó.

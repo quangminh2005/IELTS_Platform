@@ -164,15 +164,18 @@ describe("Speaking có mốc thời gian", () => {
       .join("\n");
     expect(text).toContain("Overall timing (answers with timing data):");
     // 5 từ trong 3,3 giây → 91 từ/phút.
-    expect(text).toContain("Timing: 91 words/min · pauses ≥1s: 1 (1 mid-phrase)");
+    expect(text).toContain(
+      "Timing: 91 words/min · mean length of run 2.5 words · mid-phrase pauses ≥0.5s: 1 (18.2/min) · pauses ≥1s: 1 (1 mid-phrase)"
+    );
     expect(text).toContain("I live in (pause 1.6s) Hanoi city.");
     expect(text).toContain("Timing: not available");
   });
 
   it("system prompt Speaking giải thích dấu ngừng, cấm trích số", () => {
     const system = buildSystemPrompt("speaking", 2);
-    expect(system).toContain("(pause 2.1s)");
+    expect(system).toContain("(pause 0.7s)");
     expect(system).toContain("mid-phrase");
+    expect(system).toContain("mean length of run");
     expect(system).toContain("never quote the numbers");
     expect(system).toContain("removes hesitations");
   });

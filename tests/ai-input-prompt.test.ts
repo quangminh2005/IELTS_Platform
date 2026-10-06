@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { buildGradingInput, countWords, type AnswerRow } from "@/lib/ai-grading/input";
 import { buildGradingMessages, buildSystemPrompt, descriptorTaskNumber } from "@/lib/ai-grading/prompt";
+import { serializeSpeechTiming } from "@/lib/speech-fluency";
 
 function unit(overrides: Partial<AnswerRow["assignableUnit"]>): AnswerRow["assignableUnit"] {
   return {
@@ -130,5 +131,49 @@ describe("prompt", () => {
     expect(texts.match(/<\/response>/g)).toHaveLength(1);
     expect(messages.userParts.some((p) => p.type === "image")).toBe(true);
     expect(messages.system).toBe(buildSystemPrompt("writing", 1));
+  });
+});
+
+describe("Speaking có mốc thời gian", () => {
+  const speakingUnit = unit({ id: "s1", title: "Part 1", skill: "speaking", unitNumber: 1 });
+  const timing = serializeSpeechTiming([
+    { w: "I", s: 0.1, e: 0.3 },
+    { w: "live", s: 0.3, e: 0.6 },
+    { w: "in", s: 0.6, e: 0.8 },
+    { w: "Hanoi", s: 2.4, e: 2.9 },
+    { w: "city.", s: 2.9, e: 3.4 }
+  ]);
+  const rows: AnswerRow[] = [
+    { id: "s-a", value: "https://x.public.blob.vercel-storage.com/a.webm", transcript: "I live in Hanoi city.", speechTimingJson: timing, isCorrect: null, question: { order: 1, prompt: "Where do you live?" }, assignableUnit: speakingUnit },
+    { id: "s-b", value: "https://x.public.blob.vercel-storage.com/b.webm", transcript: "Yes I do.", speechTimingJson: null, isCorrect: null, question: { order: 2, prompt: "Do you work?" }, assignableUnit: speakingUnit }
+  ];
+
+  it("text vẫn là bản phiên âm sạch; promptText có dấu ngừng", () => {
+    const answers = buildGradingInput(rows)!.tasks[0].answers;
+    expect(answers[0].text).toBe("I live in Hanoi city.");
+    expect(answers[0].promptText).toBe("I live in (pause 1.6s) Hanoi city.");
+    expect(answers[0].fluency?.midPhrasePausesOver1s).toBe(1);
+    expect(answers[1].promptText).toBeUndefined();
+    expect(answers[1].fluency).toBeUndefined();
+  });
+
+  it("prompt có dòng Timing từng câu + tổng, gửi bản có dấu ngừng", () => {
+    const input = buildGradingInput(rows)!;
+    const text = buildGradingMessages(input, input.tasks[0]).userParts
+      .map((part) => (part.type === "text" ? part.text : ""))
+      .join("\n");
+    expect(text).toContain("Overall timing (answers with timing data):");
+    // 5 từ trong 3,3 giây → 91 từ/phút.
+    expect(text).toContain("Timing: 91 words/min · pauses ≥1s: 1 (1 mid-phrase)");
+    expect(text).toContain("I live in (pause 1.6s) Hanoi city.");
+    expect(text).toContain("Timing: not available");
+  });
+
+  it("system prompt Speaking giải thích dấu ngừng, cấm trích số", () => {
+    const system = buildSystemPrompt("speaking", 2);
+    expect(system).toContain("(pause 2.1s)");
+    expect(system).toContain("mid-phrase");
+    expect(system).toContain("never quote the numbers");
+    expect(system).toContain("removes hesitations");
   });
 });

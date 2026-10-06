@@ -1,5 +1,6 @@
 import { aiCriteriaKeys } from "@/lib/ai-grading/criteria";
 import { locateQuote } from "@/lib/ai-grading/locate";
+import { stripPauseMarkers } from "@/lib/speech-fluency";
 import {
   AI_ERROR_CATEGORIES,
   type AiCriterionScore,
@@ -93,7 +94,7 @@ export function validateTaskOutput(
     const answer =
       answersByRef.get(String(item?.answer_ref ?? "")) ??
       (task.answers.length === 1 ? task.answers[0] : undefined);
-    const quote = String(item?.quote ?? "").trim();
+    const quote = stripPauseMarkers(String(item?.quote ?? ""));
 
     // Đoạn trích không có trong bài = model bịa → bỏ lỗi đó, không hỏng cả lượt.
     if (!answer || !quote || !locateQuote(answer.text, quote)) continue;

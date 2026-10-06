@@ -1,5 +1,6 @@
 // Kiểu dữ liệu của tính năng AI chấm Writing/Speaking
 // (spec docs/superpowers/specs/2026-10-05-ai-cham-writing-speaking-design.md).
+import type { FluencyStats } from "@/lib/speech-fluency";
 
 export type AiRequester = "teacher" | "student";
 export type AiReviewStatus = "pending" | "done" | "failed";
@@ -65,6 +66,11 @@ export type GradingAnswer = {
   questionPrompt: string | null;
   // Writing: bài viết; Speaking: bản phiên âm.
   text: string;
+  // Speaking có mốc thời gian (lib/speech-fluency.ts): số đo độ trôi chảy và bản
+  // phiên âm chèn "(pause Ns)" — CHỈ dùng trong prompt; "text" vẫn là chữ sạch để
+  // đối chiếu đoạn trích lỗi.
+  fluency?: FluencyStats;
+  promptText?: string;
 };
 
 export type GradingTaskInput = {

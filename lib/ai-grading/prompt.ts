@@ -4,6 +4,7 @@ import writingTask2 from "@/lib/ai-grading/descriptors/writing-task2.json";
 import { aiCriteriaKeys } from "@/lib/ai-grading/criteria";
 import { countWords } from "@/lib/ai-grading/input";
 import type { AiSkill, GradingInput, GradingTaskInput } from "@/lib/ai-grading/types";
+import { combineFluencyStats, formatFluencyForModel } from "@/lib/speech-fluency";
 
 export type Descriptors = {
   source: string;
@@ -37,6 +38,11 @@ function renderDescriptors(descriptors: Descriptors, keys: string[]): string {
 
   return blocks.join("\n\n");
 }
+
+// Mức tham khảo tốc độ nói ↔ band Fluency — gần đúng, chỉnh dần khi đối chiếu với điểm
+// thầy chấm (spec 2026-10-06-speaking-fluency-timing-design.md).
+const FLUENCY_REFERENCE =
+  "Rough reference only, not a rule: under about 100 words/min with frequent mid-phrase pauses usually fits Fluency band 5-5.5; about 100-120 words/min fits 5.5-6; about 120-140 words/min with few mid-phrase pauses can reach 6.5-7. A fast rate with many mid-phrase pauses should still not be graded high.";
 
 // Phần CỐ ĐỊNH theo (kỹ năng, loại task) — đặt đầu để OpenAI tự cache tiền tố.
 // Không được chèn gì thay đổi theo bài (tên, ngày giờ…) vào đây.
@@ -73,8 +79,13 @@ export function buildSystemPrompt(skill: AiSkill, taskNumber: 1 | 2): string {
   } else {
     rules.push(
       "You only have an automatic speech-recognition transcript of the recording, not the audio. Do NOT grade Pronunciation.",
-      "Judge Fluency and Coherence only from what the transcript shows (hesitation markers, repetition, self-correction, length and development of answers). Do not penalise punctuation or capitalisation of the transcript.",
-      "Speech recognition often removes hesitations, fillers, long pauses and false starts, so a clean transcript does NOT prove the speech was fluent. Be conservative with Fluency and Coherence: base it mainly on coherence, linking and how fully answers are developed, and do not award a band above the other criteria just because the transcript reads smoothly.",
+      "Speech recognition removes hesitations, fillers (um, uh) and false starts, so a clean transcript does NOT prove the speech was fluent.",
+      'Most responses come with timing measured from the real audio: a "Timing" line (speaking rate in words per minute, silent pauses of 1 second or more, the longest pause) and markers such as (pause 2.1s) inside the transcript where the student was silent. A pause may also hide a filler the recogniser dropped.',
+      "Use the timing as the main evidence for Fluency and Coherence. Pauses in the middle of a phrase or clause (mid-phrase) usually mean searching for words or grammar and should lower the band; pauses between sentences or ideas are less serious (content-related hesitation).",
+      FLUENCY_REFERENCE,
+      "Without timing data, be conservative with Fluency and Coherence: base it mainly on coherence, linking and how fully answers are developed, and do not award a band above the other criteria just because the transcript reads smoothly.",
+      'In "reason" and "summary" you may describe the speed and pausing in words (for example: hesitates often in the middle of sentences), but never quote the numbers (words per minute, seconds or counts): the student does not see them.',
+      "Never copy (pause …) markers into an error quote. Do not penalise punctuation or capitalisation of the transcript.",
       "The transcript may contain recognition mistakes: only list an error when you are confident it was really said.",
       ""
     );
@@ -122,12 +133,19 @@ export function buildGradingMessages(input: GradingInput, task: GradingTaskInput
     const blocks = task.answers.map((answer) =>
       [
         `Question (${answer.ref}): ${answer.questionPrompt ?? "(no question text)"}`,
+        `Timing: ${answer.fluency ? formatFluencyForModel(answer.fluency) : "not available"}`,
         `<response ref="${answer.ref}">`,
-        fence(answer.text),
+        fence(answer.promptText ?? answer.text),
         "</response>"
       ].join("\n")
     );
-    parts.push({ type: "text", text: `SPEAKING TEST TRANSCRIPT\n\n${blocks.join("\n\n")}` });
+    const overall = combineFluencyStats(
+      task.answers.flatMap((answer) => (answer.fluency ? [answer.fluency] : []))
+    );
+    const header = overall
+      ? `SPEAKING TEST TRANSCRIPT\nOverall timing (answers with timing data): ${formatFluencyForModel(overall)}`
+      : "SPEAKING TEST TRANSCRIPT";
+    parts.push({ type: "text", text: `${header}\n\n${blocks.join("\n\n")}` });
   }
 
   return { system, userParts: parts };

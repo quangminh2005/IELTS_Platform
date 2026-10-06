@@ -51,6 +51,29 @@ describe("validateTaskOutput", () => {
     expect(result.errors[1].category).toBe("grammar");
   });
 
+  it("đoạn trích lỡ chép dấu (pause …) vẫn khớp bản phiên âm sạch", () => {
+    const speakingTask: GradingTaskInput = {
+      ...task,
+      unitId: "",
+      label: "Speaking",
+      taskNumber: null,
+      answers: [{ answerId: "s1", ref: "A1", questionPrompt: null, text: "I live in Hanoi city." }]
+    };
+    const output = {
+      criteria: [
+        { key: "fluency", band: 5.5, reason: "Ngập ngừng." },
+        { key: "lexicalResource", band: 6, reason: "Đủ dùng." },
+        { key: "grammar", band: 6, reason: "Ổn." }
+      ],
+      summary: "Ổn.",
+      errors: [
+        { answer_ref: "A1", quote: "live in (pause 1.6s) Hanoi", correction: "live in Hanoi", explanation: "x", category: "grammar" }
+      ]
+    };
+    const result = validateTaskOutput(output, speakingTask, "speaking", 0);
+    expect(result.errors.map((e) => e.quote)).toEqual(["live in Hanoi"]);
+  });
+
   it("đổi mã nội bộ A1, A2… trong nhận xét thành chữ học viên hiểu được", () => {
     const raw = good();
     raw.criteria[0].reason = "Ở A1 và A12 bài mở rộng ý tốt.";

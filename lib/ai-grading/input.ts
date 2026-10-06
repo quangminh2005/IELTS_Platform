@@ -2,6 +2,7 @@ import type { Prisma } from "@prisma/client";
 import { parseUnitImages, parseWritingBrief } from "@/lib/question-interactions";
 import { resolveWritingTaskNumber } from "@/lib/writing-review";
 import type { GradingAnswer, GradingInput, GradingTaskInput } from "@/lib/ai-grading/types";
+import { annotatePauses, computeFluencyStats, parseSpeechTiming } from "@/lib/speech-fluency";
 
 // Các cột Answer cần để dựng đầu vào chấm (dùng chung ở grade-attempt.ts).
 export const ANSWER_ROW_SELECT = {
@@ -79,14 +80,19 @@ export function buildGradingInput(rows: AnswerRow[]): GradingInput | null {
     );
     const answers: GradingAnswer[] = ordered
       .filter((row) => (row.transcript ?? "").trim().length > 0)
-      .map((row) => ({
-        answerId: row.id,
-        ref: nextRef(),
-        questionPrompt: row.question
-          ? `${row.assignableUnit.title} · ${row.question.prompt}`
-          : row.assignableUnit.title,
-        text: (row.transcript ?? "").trim()
-      }));
+      .map((row) => {
+        const words = parseSpeechTiming(row.speechTimingJson);
+        const fluency = words ? computeFluencyStats(words) : null;
+        return {
+          answerId: row.id,
+          ref: nextRef(),
+          questionPrompt: row.question
+            ? `${row.assignableUnit.title} · ${row.question.prompt}`
+            : row.assignableUnit.title,
+          text: (row.transcript ?? "").trim(),
+          ...(words && fluency ? { fluency, promptText: annotatePauses(words) } : {})
+        };
+      });
 
     if (answers.length === 0) return null;
 

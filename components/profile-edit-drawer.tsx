@@ -272,6 +272,7 @@ export function ProfileEditDrawer({
                 coverColor={draft.coverColor}
                 coverImageUrl={draft.coverImageUrl}
                 className="h-36 rounded-lg"
+                fit="contain"
               />
 
               <div className="mt-3 flex flex-wrap gap-2.5">

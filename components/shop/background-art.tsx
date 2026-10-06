@@ -8,6 +8,9 @@ import type { CSSProperties, ReactNode } from "react";
 // Vì vậy mỗi tranh có position riêng (object-position) neo dải ngang vào chi tiết đẹp nhất
 // (trăng, mặt trời, con sóng…). sky là màu nền lúc ảnh chưa tải xong.
 //
+// fit="contain" (bìa trang hồ sơ, kiểu chin.edu.vn): hiện TRỌN tranh, không cắt; phần thừa
+// hai bên lấp bằng chính bức tranh phóng to + làm mờ. position chỉ áp dụng cho fit="cover".
+//
 // Nền thành tích (bg:diligent) vẫn vẽ SVG viewBox 800×140 phủ kín (slice): chi tiết chính
 // đặt ở GIỮA, trong y 20–120. LUẬT: không thẻ defs, không id, không gradient SVG
 // (xem components/shop/frame-art.tsx).
@@ -59,7 +62,15 @@ const ART: Record<string, Scene> = {
   }
 };
 
-export function BackgroundArt({ artKey, className = "" }: { artKey: string; className?: string }) {
+export function BackgroundArt({
+  artKey,
+  className = "",
+  fit = "cover"
+}: {
+  artKey: string;
+  className?: string;
+  fit?: "cover" | "contain";
+}) {
   const scene = ART[artKey];
 
   if (!scene) {
@@ -72,7 +83,9 @@ export function BackgroundArt({ artKey, className = "" }: { artKey: string; clas
       style={{ backgroundImage: scene.sky }}
       aria-hidden="true"
     >
-      {"image" in scene ? (
+      {"image" in scene && fit === "contain" ? (
+        <WholeImage src={scene.image.src} />
+      ) : "image" in scene ? (
         // Ảnh tĩnh nhỏ (≤ ~380KB), không qua trình tối ưu ảnh của Next để khỏi tốn hạn mức.
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -94,5 +107,32 @@ export function BackgroundArt({ artKey, className = "" }: { artKey: string; clas
         </svg>
       )}
     </div>
+  );
+}
+
+// Ảnh hiện trọn trong khung: lớp dưới là chính ảnh phủ kín + làm mờ để lấp hai bên,
+// lớp trên là ảnh object-contain. Dùng chung cho tranh Cửa hàng và ảnh nền tự tải.
+export function WholeImage({ src, lazy = true }: { src: string; lazy?: boolean }) {
+  const loading = lazy ? "lazy" : undefined;
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt=""
+        loading={loading}
+        decoding="async"
+        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-80 blur-xl"
+      />
+      <div className="absolute inset-0 bg-black/25" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt=""
+        loading={loading}
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-contain"
+      />
+    </>
   );
 }

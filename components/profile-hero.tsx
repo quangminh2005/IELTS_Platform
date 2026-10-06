@@ -7,9 +7,9 @@ import { StudentAvatar } from "@/components/student-avatar";
 // tải hoặc màu bìa), avatar có khung nằm GIỮA bìa, tên đặt trong nhãn tối để đọc
 // được trên mọi nền. Dùng chung cho hồ sơ của mình và hồ sơ bạn cùng lớp.
 //
-// Cao 224px (điện thoại) / 288px: avatar 96px + khung tràn 18% ≈ 131px, cộng nhãn
-// tên vẫn còn chỗ thở. Nền vẽ 800×140 phủ kín (slice) nên bìa cao chỉ lấy khúc giữa —
-// chi tiết chính của mọi cảnh đã đặt sẵn ở giữa.
+// Cao 224px (điện thoại) / 384px (≈ 2:1 như chin): avatar 96px + khung tràn 18% ≈ 131px,
+// cộng nhãn tên vẫn còn chỗ thở. Tranh/ảnh nền hiện TRỌN (fit="contain"), không cắt —
+// hai bên lấp bằng chính ảnh làm mờ.
 // Linh vật: hai trang hồ sơ đặt nó ở thẻ riêng cột phải (bố cục 2 cột 5/10/2026),
 // nên mascotKey giờ là tuỳ chọn; có linh vật thì nhãn tên hẹp lại để không đè lên nó.
 // `action` = nút góc phải trên (bút chì mở bảng chỉnh sửa ở hồ sơ của mình).
@@ -42,7 +42,8 @@ export function ProfileHero({
         backgroundKey={backgroundKey}
         coverColor={coverColor}
         coverImageUrl={coverImageUrl}
-        className="h-56 sm:h-72"
+        className="h-56 sm:h-96"
+        fit="contain"
       />
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-4">
         <StudentAvatar

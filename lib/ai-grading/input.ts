@@ -8,6 +8,7 @@ export const ANSWER_ROW_SELECT = {
   id: true,
   value: true,
   transcript: true,
+  speechTimingJson: true,
   isCorrect: true,
   question: { select: { order: true, prompt: true } },
   assignableUnit: {
@@ -27,6 +28,8 @@ export type AnswerRow = {
   id: string;
   value: string;
   transcript: string | null;
+  // Tuỳ chọn để các fixture test cũ (chỉ có transcript) vẫn hợp lệ.
+  speechTimingJson?: string | null;
   isCorrect: boolean | null;
   question: { order: number; prompt: string } | null;
   assignableUnit: {

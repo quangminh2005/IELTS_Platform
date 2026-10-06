@@ -2,14 +2,18 @@
 
 import { useState, useTransition } from "react";
 import { transcribeAnswer } from "@/lib/actions/transcribe";
+import { formatFluencyLine, type FluencyStats } from "@/lib/speech-fluency";
 
 type TranscribeButtonProps = {
   answerId: string;
   initialTranscript: string | null;
+  // Số đo độ trôi chảy đo từ audio (chỉ trang chấm của thầy dùng nút này).
+  initialFluency: FluencyStats | null;
 };
 
-export function TranscribeButton({ answerId, initialTranscript }: TranscribeButtonProps) {
+export function TranscribeButton({ answerId, initialTranscript, initialFluency }: TranscribeButtonProps) {
   const [transcript, setTranscript] = useState(initialTranscript ?? "");
+  const [fluency, setFluency] = useState(initialFluency);
   const [error, setError] = useState("");
   const [pending, startTransition] = useTransition();
 
@@ -19,6 +23,7 @@ export function TranscribeButton({ answerId, initialTranscript }: TranscribeButt
       const result = await transcribeAnswer(answerId);
       if (result.ok) {
         setTranscript(result.transcript);
+        setFluency(result.fluency);
       } else {
         setError(result.error);
       }
@@ -44,6 +49,9 @@ export function TranscribeButton({ answerId, initialTranscript }: TranscribeButt
             Bản phiên âm (tự động — có thể có lỗi)
           </p>
           <p className="mt-1 whitespace-pre-wrap text-sm leading-6">{transcript}</p>
+          {fluency ? (
+            <p className="mt-2 text-xs text-muted-foreground">{formatFluencyLine(fluency)}</p>
+          ) : null}
         </div>
       ) : null}
     </div>

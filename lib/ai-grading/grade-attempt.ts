@@ -10,9 +10,21 @@ import type { AiGradingResult, AiRequester } from "@/lib/ai-grading/types";
 import { AiOutputError, validateTaskOutput } from "@/lib/ai-grading/validate";
 import { transcribeAudioUrl } from "@/lib/groq-transcribe";
 import { prisma } from "@/lib/prisma";
+import { parseSpeechTiming, serializeSpeechTiming, type TimedWord } from "@/lib/speech-fluency";
 import { isAudioUrl } from "@/lib/question-interactions";
 
 const FAKE_TRANSCRIPT = "Well, I think I goes to school by bus every day because it is more cheaper.";
+
+// Mốc giả cho FAKE_TRANSCRIPT: có một chỗ ngừng 1,6 giây giữa cụm từ để kiểm luồng.
+function fakeWords(): TimedWord[] {
+  let at = 0.3;
+  return FAKE_TRANSCRIPT.split(" ").map((w, index) => {
+    if (index === 4) at += 1.6;
+    const word = { w, s: Math.round(at * 100) / 100, e: Math.round((at + 0.3) * 100) / 100 };
+    at += 0.35;
+    return word;
+  });
+}
 
 export type RunAiGradingResult = { ok: true; reviewId: string } | { ok: false; message: string };
 
@@ -107,24 +119,32 @@ export async function runAiGrading(params: {
   }
 }
 
-// Speaking: câu nào chưa có bản phiên âm thì phiên âm bằng Groq rồi lưu luôn vào
-// Answer.transcript (thầy cũng thấy ở trang chấm). Bản ghi RỖNG (file 0 byte do tải
-// lên hỏng) thì bỏ qua câu đó và chấm các câu còn lại; lỗi khác → lỗi cả lượt.
+// Speaking: câu nào chưa có bản phiên âm KÈM mốc thời gian thì phiên âm bằng Groq rồi
+// lưu cả hai cột (thầy cũng thấy ở trang chấm). Bài cũ có chữ mà chưa có mốc → phiên âm
+// lại một lần để đo độ trôi chảy; lần đó lỗi thì vẫn chấm bằng chữ cũ. Bản ghi RỖNG
+// (file 0 byte do tải lên hỏng) thì bỏ qua câu đó; lỗi khác khi chưa có chữ → lỗi cả lượt.
 async function ensureSpeakingTranscripts(rows: AnswerRow[]): Promise<void> {
   for (const row of rows) {
     if (row.assignableUnit.skill !== "speaking") continue;
-    if (row.transcript?.trim() || !row.value || !isAudioUrl(row.value)) continue;
+    if (!row.value || !isAudioUrl(row.value)) continue;
+    const hasText = Boolean(row.transcript?.trim());
+    if (hasText && parseSpeechTiming(row.speechTimingJson)) continue;
 
     const result = isFakeGrading()
-      ? { ok: true as const, transcript: FAKE_TRANSCRIPT }
+      ? { ok: true as const, transcript: FAKE_TRANSCRIPT, words: fakeWords() }
       : await transcribeAudioUrl(row.value);
 
     if (!result.ok) {
-      if (result.reason === "empty") continue;
+      if (result.reason === "empty" || hasText) continue;
       throw new AiCallError(`Không phiên âm được bản ghi: ${result.error}`);
     }
 
+    const timing = result.words.length > 0 ? serializeSpeechTiming(result.words) : null;
     row.transcript = result.transcript;
-    await prisma.answer.update({ where: { id: row.id }, data: { transcript: result.transcript } });
+    row.speechTimingJson = timing;
+    await prisma.answer.update({
+      where: { id: row.id },
+      data: { transcript: result.transcript, speechTimingJson: timing }
+    });
   }
 }

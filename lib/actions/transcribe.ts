@@ -4,11 +4,15 @@ import { revalidatePath } from "next/cache";
 import { requireTeacher } from "@/lib/actions/classes";
 import { transcribeAudioUrl } from "@/lib/groq-transcribe";
 import { prisma } from "@/lib/prisma";
+import { computeFluencyStats, serializeSpeechTiming, type FluencyStats } from "@/lib/speech-fluency";
 
-type TranscribeResult = { ok: true; transcript: string } | { ok: false; error: string };
+type TranscribeResult =
+  | { ok: true; transcript: string; fluency: FluencyStats | null }
+  | { ok: false; error: string };
 
 // Phiên âm bản ghi Speaking của học sinh bằng Groq (Whisper-large-v3-turbo).
-// Chỉ giáo viên sở hữu bài tập mới gọi được. Lưu vào Answer.transcript.
+// Chỉ giáo viên sở hữu bài tập mới gọi được. Lưu vào Answer.transcript, kèm mốc
+// thời gian từng từ (Answer.speechTimingJson) để đo tốc độ nói/chỗ ngừng.
 // Phần tải audio + gọi Groq (kèm kiểm URL chống SSRF) nằm ở lib/groq-transcribe.ts.
 export async function transcribeAnswer(answerId: string): Promise<TranscribeResult> {
   const teacher = await requireTeacher();
@@ -36,7 +40,10 @@ export async function transcribeAnswer(answerId: string): Promise<TranscribeResu
   try {
     await prisma.answer.update({
       where: { id: answer.id },
-      data: { transcript: result.transcript }
+      data: {
+        transcript: result.transcript,
+        speechTimingJson: result.words.length > 0 ? serializeSpeechTiming(result.words) : null
+      }
     });
   } catch (error) {
     // Cột transcript có thể chưa tồn tại (ensure-db chưa chạy). Vẫn trả kết quả
@@ -45,5 +52,5 @@ export async function transcribeAnswer(answerId: string): Promise<TranscribeResu
   }
 
   revalidatePath(`/teacher/review/${answer.attemptId}`);
-  return { ok: true, transcript: result.transcript };
+  return { ok: true, transcript: result.transcript, fluency: computeFluencyStats(result.words) };
 }

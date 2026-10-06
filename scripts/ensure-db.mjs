@@ -6,6 +6,8 @@ import { PrismaClient } from "@prisma/client";
 
 const statements = [
   'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "transcript" TEXT;',
+  // Mốc thời gian từng từ của bản phiên âm Speaking (đo độ trôi chảy, 6/10/2026)
+  'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "speechTimingJson" TEXT;',
   // Giải thích/dẫn chứng đáp án cho Listening & Reading
   'ALTER TABLE "Question" ADD COLUMN IF NOT EXISTS "answerEvidence" TEXT;',
   'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "evidenceSnapshot" TEXT;',

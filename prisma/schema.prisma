@@ -467,6 +467,9 @@ model Answer {
   explanationSnapshot   String?
   evidenceSnapshot      String?
   transcript            String?
+  // Mốc thời gian từng từ của bản phiên âm Speaking (Groq), JSON {v,words} — xem
+  // lib/speech-fluency.ts. Dùng đo tốc độ nói/chỗ ngừng cho AI chấm và cho thầy.
+  speechTimingJson      String?
   createdAt             DateTime           @default(now())
   updatedAt             DateTime           @updatedAt
   attempt               Attempt            @relation(fields: [attemptId], references: [id], onDelete: Cascade)

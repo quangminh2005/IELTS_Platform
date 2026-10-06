@@ -528,6 +528,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                               <TranscribeButton
                                 answerId={answer.id}
                                 initialTranscript={answer.transcript}
+                                initialFluency={null}
                               />
                             </div>
                           ) : (

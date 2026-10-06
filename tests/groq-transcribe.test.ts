@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { groqErrorMessage, isWebmAudio, prepareAudioBytes } from "@/lib/groq-transcribe";
+import { groqErrorMessage, isWebmAudio, parseGroqVerbose, prepareAudioBytes } from "@/lib/groq-transcribe";
 
 // Sự cố 5/10/2026: bản ghi WebM cũ (trước khi có bước sửa mốc lúc tải lên) mang mốc
 // thời gian 7 tiếng → Groq coi là 7 tiếng âm thanh, từ chối (413) và làm nghẽn hạn
@@ -44,5 +44,29 @@ describe("thông báo lỗi Groq", () => {
     const result = groqErrorMessage(500, "internal");
     expect(result.reason).toBe("other");
     expect(result.error).toBe("Lỗi Groq (500): internal");
+  });
+});
+
+describe("đọc phản hồi verbose_json của Groq", () => {
+  it("lấy chữ + mốc từng từ, làm tròn 2 chữ số", () => {
+    const result = parseGroqVerbose({
+      text: "  Well, I think. ",
+      words: [
+        { word: "Well,", start: 0.12, end: 0.6234 },
+        { word: " I", start: 0.62, end: 0.98 },
+        { word: "", start: 1, end: 1.1 },
+        { word: "think.", start: "x", end: 1.2 }
+      ]
+    });
+    expect(result.transcript).toBe("Well, I think.");
+    expect(result.words).toEqual([
+      { w: "Well,", s: 0.12, e: 0.62 },
+      { w: "I", s: 0.62, e: 0.98 }
+    ]);
+  });
+
+  it("không có words → mảng rỗng, không ném lỗi", () => {
+    expect(parseGroqVerbose({ text: "Hi" })).toEqual({ transcript: "Hi", words: [] });
+    expect(parseGroqVerbose(null)).toEqual({ transcript: "", words: [] });
   });
 });

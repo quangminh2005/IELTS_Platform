@@ -1,10 +1,11 @@
 import { isAllowedAudioUrl } from "@/lib/audio-source";
+import type { TimedWord } from "@/lib/speech-fluency";
 import { repairWebmTimestamps } from "@/lib/webm-timestamps";
 
 // reason giúp nơi gọi xử lý riêng: "empty" = bản ghi rỗng (AI chấm bỏ qua câu đó
 // thay vì hỏng cả bài), "rate_limit" = Groq hết hạn mức tạm thời.
 export type TranscribeAudioResult =
-  | { ok: true; transcript: string }
+  | { ok: true; transcript: string; words: TimedWord[] }
   | { ok: false; error: string; reason: "empty" | "rate_limit" | "other" };
 
 export function isWebmAudio(contentType: string, url: string): boolean {
@@ -42,6 +43,28 @@ export function groqErrorMessage(
     };
   }
   return { error: `Lỗi Groq (${status}): ${body.slice(0, 200)}`, reason: "other" };
+}
+
+function round2(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
+// Phản hồi verbose_json: "text" là bản phiên âm, "words" là mốc từng từ (giây). Mốc
+// theo đoạn (segments) KHÔNG dùng được: thử 6/10/2026 nó nuốt mất chỗ ngừng 2 giây
+// giữa câu. Dòng từ hỏng thì bỏ qua, không làm hỏng cả bản phiên âm.
+export function parseGroqVerbose(body: unknown): { transcript: string; words: TimedWord[] } {
+  const data = (body ?? {}) as { text?: unknown; words?: unknown };
+  const transcript = typeof data.text === "string" ? data.text.trim() : "";
+  const words: TimedWord[] = [];
+  if (Array.isArray(data.words)) {
+    for (const item of data.words as { word?: unknown; start?: unknown; end?: unknown }[]) {
+      const w = typeof item?.word === "string" ? item.word.trim() : "";
+      if (!w || typeof item?.start !== "number" || typeof item?.end !== "number") continue;
+      if (!Number.isFinite(item.start) || !Number.isFinite(item.end)) continue;
+      words.push({ w, s: round2(item.start), e: round2(item.end) });
+    }
+  }
+  return { transcript, words };
 }
 
 // Phiên âm một bản ghi Speaking bằng Groq (Whisper-large-v3-turbo). KHÔNG kiểm quyền —
@@ -104,9 +127,12 @@ export async function transcribeAudioUrl(audioUrl: string): Promise<TranscribeAu
   form.append("file", file);
   form.append("model", "whisper-large-v3-turbo");
   form.append("language", "en"); // Bài IELTS Speaking là tiếng Anh.
-  form.append("response_format", "text");
+  // verbose_json + mốc từng từ để đo tốc độ nói/chỗ ngừng (lib/speech-fluency.ts).
+  // Hạn mức Groq tính theo giây âm thanh nên không tốn thêm.
+  form.append("response_format", "verbose_json");
+  form.append("timestamp_granularities[]", "word");
 
-  let transcript = "";
+  let parsed: { transcript: string; words: TimedWord[] };
   try {
     const res = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
       method: "POST",
@@ -118,14 +144,14 @@ export async function transcribeAudioUrl(audioUrl: string): Promise<TranscribeAu
       return { ok: false, ...groqErrorMessage(res.status, await res.text()) };
     }
 
-    transcript = (await res.text()).trim();
+    parsed = parseGroqVerbose(await res.json());
   } catch (error) {
     return { ok: false, error: `Lỗi gọi Groq: ${(error as Error).message}`, reason: "other" };
   }
 
-  if (!transcript) {
+  if (!parsed.transcript) {
     return { ok: false, error: "Không nhận được nội dung phiên âm (bản ghi có thể trống).", reason: "empty" };
   }
 
-  return { ok: true, transcript };
+  return { ok: true, transcript: parsed.transcript, words: parsed.words };
 }

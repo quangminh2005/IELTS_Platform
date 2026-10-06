@@ -1,5 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { LEADERBOARD_CACHE_TAG } from "@/lib/leaderboard";
 import { MANUAL_QUESTION_TYPES } from "@/lib/manual-grading";
 import { dateKeyToUtcDate } from "@/lib/vocab-daily";
 import {
@@ -208,8 +209,16 @@ const loadClosedMonthRecap = unstable_cache(loadMonthlyRecap, ["monthly-recap-v2
   revalidate: 86400
 });
 
+// Tháng đang diễn ra: cache 5 phút cho bảng Học Bá (trang chủ + trang Xếp hạng), xoá
+// ngay khi có bài nộp (submitSkill gọi revalidateTag). Trang Tổng kết xem tháng hiện
+// tại cũng đi qua đây nên có thể trễ tối đa 5 phút — chấp nhận được.
+const loadCurrentMonthRecap = unstable_cache(loadMonthlyRecap, ["monthly-recap-live-v1"], {
+  revalidate: 300,
+  tags: [LEADERBOARD_CACHE_TAG]
+});
+
 export async function getMonthlyRecap(monthKey: string, now = new Date()): Promise<MonthlyRecap> {
-  return monthKey < monthKeyOf(now) ? loadClosedMonthRecap(monthKey) : loadMonthlyRecap(monthKey);
+  return monthKey < monthKeyOf(now) ? loadClosedMonthRecap(monthKey) : loadCurrentMonthRecap(monthKey);
 }
 
 export async function getStudentRecap(

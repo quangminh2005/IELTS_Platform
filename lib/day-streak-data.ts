@@ -8,6 +8,7 @@ import {
   type DayRestoreOffer,
   type DayStreak
 } from "@/lib/day-streak";
+import type { SchoolStreakInput } from "@/lib/leaderboard";
 import { monthKeyOf, monthRange } from "@/lib/monthly-recap";
 import { prisma } from "@/lib/prisma";
 import { vietnamDateKey } from "@/lib/vocab-day";
@@ -67,6 +68,52 @@ export async function loadActivityDays(
       total: row.total
     }))
   });
+}
+
+// Dữ liệu chuỗi ngày của CẢ TRƯỜNG (bảng Chuỗi 🔥) — cùng nguồn, cùng cửa sổ với
+// loadActivityDays/getDayStreak, nhưng 4 truy vấn cho mọi học viên thay vì từng em.
+export async function loadSchoolStreakInput(today: string): Promise<SchoolStreakInput> {
+  const sinceKey = shiftDateKey(today, -STREAK_LOOKBACK_DAYS);
+  // Lùi thêm 1 ngày cho chắc qua ranh giới giờ VN (như loadActivityDays).
+  const since = new Date(dateKeyToUtcDate(sinceKey).getTime() - DAY_MS);
+
+  const [skillSubmits, legacyAttempts, vocabDays, restores] = await Promise.all([
+    prisma.attemptSkill.findMany({
+      where: { submittedAt: { gte: since } },
+      select: { submittedAt: true, attempt: { select: { studentId: true } } }
+    }),
+    prisma.attempt.findMany({
+      where: { submittedAt: { gte: since }, skills: { none: { submittedAt: { not: null } } } },
+      select: { studentId: true, submittedAt: true }
+    }),
+    prisma.vocabQuizDay.findMany({
+      where: { date: { gte: dateKeyToUtcDate(sinceKey) } },
+      select: { studentId: true, date: true, total: true }
+    }),
+    prisma.coinTransaction.findMany({
+      where: { kind: "streak_restore" },
+      select: { studentId: true, key: true }
+    })
+  ]);
+
+  const submits: SchoolStreakInput["submits"] = [];
+  for (const row of skillSubmits) {
+    if (row.submittedAt) submits.push({ studentId: row.attempt.studentId, submittedAt: row.submittedAt });
+  }
+  for (const row of legacyAttempts) {
+    if (row.submittedAt) submits.push({ studentId: row.studentId, submittedAt: row.submittedAt });
+  }
+
+  return {
+    submits,
+    // VocabQuizDay.date lưu nửa đêm UTC của ngày VN → cắt chuỗi là ra khoá ngày.
+    vocabDays: vocabDays.map((row) => ({
+      studentId: row.studentId,
+      date: row.date.toISOString().slice(0, 10),
+      total: row.total
+    })),
+    restoreKeys: restores
+  };
 }
 
 // Mọi dòng khôi phục chuỗi trong sổ Xu (cả khoá tuần cũ — vẫn tính vào giá trong tháng).

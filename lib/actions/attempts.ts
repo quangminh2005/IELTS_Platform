@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
@@ -15,6 +15,7 @@ import { AUTO_SUBMIT_SKILLS, isSkillTimeUp, resolveSkillBudgetSeconds } from "@/
 import { mergeCount } from "@/lib/proctor-signals";
 import { planDraftWrite } from "@/lib/draft-answers";
 import { prisma } from "@/lib/prisma";
+import { LEADERBOARD_CACHE_TAG } from "@/lib/leaderboard";
 import { syncWallet } from "@/lib/wallet";
 
 const highlightSchema = z.object({
@@ -481,6 +482,13 @@ export async function submitSkill(formData: FormData) {
     await syncWallet(student.id, { attemptId: attempt.id });
   } catch (error) {
     console.error("[wallet] không cộng được Xu sau khi nộp", error);
+  }
+
+  // Bảng xếp hạng (Học Bá tháng + Chuỗi) cache 5 phút — nộp bài thì làm mới ngay.
+  try {
+    revalidateTag(LEADERBOARD_CACHE_TAG);
+  } catch (error) {
+    console.error("[bang-xep-hang] không xoá được cache", error);
   }
 
   revalidatePath("/student");

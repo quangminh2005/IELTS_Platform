@@ -1,3 +1,5 @@
+import { activeDayKeys, buildActivityDays } from "@/lib/activity-heatmap";
+import { calculateDayStreak, restoredDayOf, type DayStreak } from "@/lib/day-streak";
 import {
   monthKeyOf,
   monthRange,
@@ -270,4 +272,53 @@ export function rankingMonthNav(
     prev: options.includes(prev) ? prev : null,
     next: monthKey < latestMonth ? shiftMonthKey(monthKey, 1) : null
   };
+}
+
+// ---- Chuỗi ngày của CẢ TRƯỜNG (bảng Chuỗi 🔥) ----
+// Cùng định nghĩa với getDayStreak (lib/day-streak-data.ts) nhưng gộp một lượt:
+// ngày có học = nộp ≥ 1 phần kỹ năng hoặc ôn ≥ 1 thẻ; ngày cứu bằng Xu coi như có học.
+
+export type SchoolStreakInput = {
+  submits: { studentId: string; submittedAt: Date }[];
+  vocabDays: { studentId: string; date: string; total: number }[];
+  restoreKeys: { studentId: string; key: string }[];
+};
+
+function pushTo<V>(map: Map<string, V[]>, id: string, value: V) {
+  const list = map.get(id);
+  if (list) {
+    list.push(value);
+  } else {
+    map.set(id, [value]);
+  }
+}
+
+export function schoolDayStreaks(input: SchoolStreakInput, today: string): Map<string, DayStreak> {
+  const submits = new Map<string, Date[]>();
+  const vocab = new Map<string, { date: string; total: number }[]>();
+  const restored = new Map<string, string[]>();
+
+  for (const row of input.submits) pushTo(submits, row.studentId, row.submittedAt);
+  for (const row of input.vocabDays) pushTo(vocab, row.studentId, { date: row.date, total: row.total });
+  for (const row of input.restoreKeys) {
+    const day = restoredDayOf(row.key);
+    if (day) pushTo(restored, row.studentId, day);
+  }
+
+  const ids = new Set([
+    ...Array.from(submits.keys()),
+    ...Array.from(vocab.keys()),
+    ...Array.from(restored.keys())
+  ]);
+  const result = new Map<string, DayStreak>();
+
+  ids.forEach((id) => {
+    const days = buildActivityDays({ submits: submits.get(id) ?? [], vocabDays: vocab.get(id) ?? [] });
+    result.set(
+      id,
+      calculateDayStreak({ activeDays: activeDayKeys(days), restoredDays: restored.get(id) ?? [], today })
+    );
+  });
+
+  return result;
 }

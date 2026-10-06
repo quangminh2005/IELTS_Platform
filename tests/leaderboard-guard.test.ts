@@ -60,3 +60,17 @@ describe("khối bảng xếp hạng ở trang chủ", () => {
     expect(card).toBeLessThan(page.indexOf("<VocabCard"));
   });
 });
+
+describe("tab Chuỗi của giáo viên", () => {
+  const page = read("app/teacher/ranking/page.tsx");
+
+  it("có tab view=streak, link tên sang trang học viên của thầy", () => {
+    expect(page).toContain('href="/teacher/ranking?view=streak"');
+    expect(page).toMatch(/<LeaderboardBoard[^>]*linkTarget="teacher"/);
+    expect(page).not.toContain('linkTarget="student"');
+  });
+
+  it("chọn lớp chỉ trong lớp của thầy (lọc teacherId)", () => {
+    expect(page).toMatch(/async function StreakView[\s\S]*?where: \{ teacherId \}/);
+  });
+});

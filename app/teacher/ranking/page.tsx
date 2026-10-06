@@ -5,6 +5,10 @@ import { getClassRanking } from "@/lib/class-ranking";
 import { ClassRankingBoard } from "@/components/class-ranking-board";
 import { MonthlyRecapBoard, formatXp } from "@/components/monthly-recap-board";
 import { getMonthlyRecap } from "@/lib/monthly-recap-data";
+import { LeaderboardBoard } from "@/components/leaderboard/leaderboard-board";
+import { StreakBoardHeader } from "@/components/leaderboard/streak-board-header";
+import { streakBoardEntries } from "@/lib/leaderboard";
+import { classMemberIds, getStreakBoard } from "@/lib/leaderboard-data";
 import {
   monthKeyOf,
   monthName,
@@ -24,19 +28,22 @@ type TeacherRankingPageProps = {
 // Tháng hiện tại + 6 tháng trước.
 const RECAP_MONTH_OPTIONS = 7;
 
-function RankingTabs({ active }: { active: "class" | "month" }) {
+function RankingTabs({ active }: { active: "class" | "month" | "streak" }) {
   const tabClass = (isActive: boolean) =>
     `rounded-lg px-4 py-2 text-sm font-semibold transition ${
       isActive ? "bg-card text-foreground shadow-card" : "text-muted-foreground hover:text-foreground"
     }`;
 
   return (
-    <nav className="inline-flex rounded-xl border border-border bg-border/30 p-1 dark:bg-border/20">
+    <nav className="inline-flex flex-wrap rounded-xl border border-border bg-border/30 p-1 dark:bg-border/20">
       <Link href="/teacher/ranking" className={tabClass(active === "class")}>
         Theo lớp
       </Link>
       <Link href="/teacher/ranking?view=month" className={tabClass(active === "month")}>
         Tổng kết tháng
+      </Link>
+      <Link href="/teacher/ranking?view=streak" className={tabClass(active === "streak")}>
+        Chuỗi 🔥
       </Link>
     </nav>
   );
@@ -128,11 +135,83 @@ async function MonthlyRecapView({ month }: { month?: string }) {
   );
 }
 
+// Bảng Chuỗi 🔥 — cùng dữ liệu học viên thấy ở /student/ranking?board=streak. Mặc định
+// toàn trường; chọn lớp chỉ trong các lớp của thầy (id lạ → toàn trường).
+async function StreakView({ teacherId, classId }: { teacherId: string; classId?: string }) {
+  const [classes, rows] = await Promise.all([
+    prisma.class.findMany({
+      where: { teacherId },
+      orderBy: { createdAt: "desc" },
+      select: { id: true, name: true }
+    }),
+    getStreakBoard()
+  ]);
+  const selected = classes.find((classItem) => classItem.id === classId) ?? null;
+  const members = selected ? await classMemberIds(selected.id) : null;
+  const entries = streakBoardEntries(rows, members);
+
+  return (
+    <div className="space-y-8">
+      <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p className="text-sm font-semibold text-primary">Bảng xếp hạng</p>
+          <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Chuỗi ngày học</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+            Số ngày học liên tiếp của từng em (nộp một phần bài hoặc ôn một thẻ là tính). Học viên thấy
+            đúng bảng này ở trang Xếp hạng.
+          </p>
+          <div className="mt-4">
+            <RankingTabs active="streak" />
+          </div>
+        </div>
+
+        <form method="get" className="flex shrink-0 items-end gap-2">
+          <input type="hidden" name="view" value="streak" />
+          <label className="block text-sm font-medium">
+            <span className="mb-2 block">Phạm vi</span>
+            <select
+              name="classId"
+              defaultValue={selected?.id ?? ""}
+              className="w-56 rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none ring-primary/40 focus:border-primary focus:ring-2"
+            >
+              <option value="">Toàn trường</option>
+              {classes.map((classItem) => (
+                <option key={classItem.id} value={classItem.id}>
+                  {classItem.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="submit"
+            className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+          >
+            Xem
+          </button>
+        </form>
+      </header>
+
+      <div className="mx-auto max-w-3xl space-y-4">
+        <StreakBoardHeader myDays={null} />
+        <LeaderboardBoard
+          entries={entries}
+          linkTarget="teacher"
+          emptyText={selected ? `Lớp ${selected.name} chưa ai giữ được chuỗi.` : "Chưa học viên nào giữ được chuỗi."}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default async function TeacherRankingPage({ searchParams }: TeacherRankingPageProps) {
   const teacher = await requireTeacherPage();
 
   if (searchParams?.view === "month") {
     return <MonthlyRecapView month={searchParams.month} />;
+  }
+
+  if (searchParams?.view === "streak") {
+    return <StreakView teacherId={teacher.id} classId={searchParams.classId} />;
   }
 
   const classes = await prisma.class.findMany({

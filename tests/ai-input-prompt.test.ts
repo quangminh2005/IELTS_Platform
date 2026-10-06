@@ -176,6 +176,9 @@ describe("Speaking có mốc thời gian", () => {
     expect(system).toContain("(pause 0.7s)");
     expect(system).toContain("mid-phrase");
     expect(system).toContain("mean length of run");
+    // 6/10: số đo "trôi chảy" từng đẩy Fluency lên 7.0 (thầy 5.5) — chỉ được kéo xuống.
+    expect(system).toContain("Timing can only LOWER Fluency");
+    expect(system).not.toContain("can reach 6.5-7");
     expect(system).toContain("never quote the numbers");
     expect(system).toContain("removes hesitations");
   });

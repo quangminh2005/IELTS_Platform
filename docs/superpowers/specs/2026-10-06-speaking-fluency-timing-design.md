@@ -90,3 +90,11 @@ Kiểm prod bài Đỗ Hoàng Anh Minh: 118 từ/phút, 0 lần ngừng ≥1 s g
 - Dòng của thầy: "Tốc độ ~118 từ/phút · trung bình ~7 từ mỗi mạch nói · ngừng giữa cụm từ ≥0,5 giây:
   6 lần · ngừng ≥1 giây: 3 lần (≥2 giây: 0) · lâu nhất 1,5 giây".
 - Không đổi cột DB: mốc từng từ đã lưu sẵn, số đo tính lại từ đó.
+
+## Sửa 6/10/2026 (tối): số đo chỉ được kéo Fluency XUỐNG
+
+Bài Anh Minh sau bản bổ sung: ~16 từ/mạch, 0 ngừng ≥0,5 s giữa cụm từ, có câu chỉ 95 từ/phút →
+AI đẩy F lên **7.0** (thầy 5.5). Nói chậm mà không có khoảng hở = Whisper gộp "ừm/à" và từ kéo
+dài vào thời lượng từ → số đo "trôi chảy" KHÔNG đáng tin. Đổi prompt: timing chỉ hạ điểm; khi
+timing trông trôi chảy thì chấm thận trọng như cũ và không cho F cao hơn band cao nhất của
+Lexical/Grammar; bỏ mốc tham khảo "≥10 từ/mạch → 6.5–7".

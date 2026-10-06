@@ -11,7 +11,8 @@ export type DayRestoreOffer = {
   lostDays: number; // độ dài chuỗi kết thúc ở hôm kia — số ngày sẽ giữ được
 };
 
-function runEndingAt(done: Set<string>, start: string): number {
+// Độ dài chuỗi kết thúc ở ngày `start` (đếm lùi). Bảng tin (lib/feed.ts) dùng để tìm mốc chuỗi.
+export function runEndingAt(done: Set<string>, start: string): number {
   let cursor = start;
   let count = 0;
   while (done.has(cursor)) {

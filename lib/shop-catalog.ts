@@ -28,17 +28,19 @@ export const RARITY_LABELS: Record<ItemRarity, string> = {
 };
 
 export const SHOP_ITEMS: CatalogItem[] = [
-  { key: "bg:starry-night", name: "Trời sao", category: "background", rarity: "common", price: 150 },
-  { key: "bg:meadow", name: "Đồng cỏ", category: "background", rarity: "common", price: 150 },
-  { key: "bg:ocean", name: "Sóng biển", category: "background", rarity: "common", price: 150 },
-  { key: "bg:pink-clouds", name: "Mây hồng", category: "background", rarity: "common", price: 150 },
-  { key: "bg:sunset", name: "Hoàng hôn", category: "background", rarity: "rare", price: 500 },
-  { key: "bg:bamboo", name: "Rừng tre", category: "background", rarity: "rare", price: 500 },
-  { key: "bg:city-night", name: "Thành phố đêm", category: "background", rarity: "rare", price: 500 },
-  { key: "bg:aurora", name: "Cực quang", category: "background", rarity: "epic", price: 1200 },
-  { key: "bg:snow-peaks", name: "Núi tuyết", category: "background", rarity: "epic", price: 1200 },
-  { key: "bg:old-library", name: "Thư viện cổ", category: "background", rarity: "epic", price: 1200 },
-  { key: "bg:galaxy", name: "Thiên hà", category: "background", rarity: "legendary", price: 3000 },
+  // Nền là tranh danh hoạ hết bản quyền. Mã giữ từ bản vẽ SVG cũ (học viên đã mua vẫn
+  // giữ món) nên mã không còn khớp tên tranh — đừng đổi mã.
+  { key: "bg:starry-night", name: "Trăng trên sông Dnieper", category: "background", rarity: "common", price: 150, description: "Tranh của Arkhip Kuindzhi, khoảng 1880" },
+  { key: "bg:meadow", name: "Cánh đồng anh túc", category: "background", rarity: "common", price: 150, description: "Tranh của Claude Monet, 1873" },
+  { key: "bg:ocean", name: "Vách đá Pourville", category: "background", rarity: "common", price: 150, description: "Tranh của Claude Monet, 1882" },
+  { key: "bg:pink-clouds", name: "Hoa hạnh nhân", category: "background", rarity: "common", price: 150, description: "Tranh của Van Gogh, 1890" },
+  { key: "bg:sunset", name: "Ấn tượng, mặt trời mọc", category: "background", rarity: "rare", price: 500, description: "Tranh của Claude Monet, 1872" },
+  { key: "bg:bamboo", name: "Hồ súng và cầu Nhật", category: "background", rarity: "rare", price: 500, description: "Tranh của Claude Monet, 1899" },
+  { key: "bg:city-night", name: "Đêm sao trên sông Rhône", category: "background", rarity: "rare", price: 500, description: "Tranh của Van Gogh, 1888" },
+  { key: "bg:aurora", name: "Cực quang", category: "background", rarity: "epic", price: 1200, description: "Tranh của Frederic Church, 1865" },
+  { key: "bg:snow-peaks", name: "Núi Phú Sĩ đỏ", category: "background", rarity: "epic", price: 1200, description: "Tranh khắc gỗ của Hokusai, khoảng 1831" },
+  { key: "bg:old-library", name: "Quang cảnh Delft", category: "background", rarity: "epic", price: 1200, description: "Tranh của Johannes Vermeer, khoảng 1660" },
+  { key: "bg:galaxy", name: "Sóng lừng Kanagawa", category: "background", rarity: "legendary", price: 3000, description: "Tranh khắc gỗ của Hokusai, khoảng 1831" },
   {
     key: "bg:starry-van-gogh",
     name: "Đêm đầy sao",

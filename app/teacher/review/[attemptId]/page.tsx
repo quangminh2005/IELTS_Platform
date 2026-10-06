@@ -22,6 +22,13 @@ import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { formatBand } from "@/lib/band-score";
 import { resolveWritingTaskNumber } from "@/lib/writing-review";
 import { prisma } from "@/lib/prisma";
+import {
+  combineFluencyStats,
+  computeFluencyStats,
+  formatFluencyLine,
+  parseSpeechTiming,
+  type FluencyStats
+} from "@/lib/speech-fluency";
 
 type DetailPageProps = {
   params: {
@@ -250,6 +257,15 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
     essayUnits
       .flatMap((entry) => entry.answers)
       .find((answer) => answer.assignableUnit.skill === "speaking")?.id ?? null;
+  // Số đo độ trôi chảy từng câu Nói (chỉ thầy thấy) — câu chưa có mốc thời gian thì bỏ.
+  const fluencyByAnswer = new Map<string, FluencyStats>();
+  for (const answer of essayUnits.flatMap((entry) => entry.answers)) {
+    if (answer.assignableUnit.skill !== "speaking") continue;
+    const timedWords = parseSpeechTiming(answer.speechTimingJson);
+    const stats = timedWords ? computeFluencyStats(timedWords) : null;
+    if (stats) fluencyByAnswer.set(answer.id, stats);
+  }
+  const overallFluency = combineFluencyStats(Array.from(fluencyByAnswer.values()));
 
   const gapFillUnits = unitOrder
     .filter((unitId) => (autoByUnit.get(unitId)?.length ?? 0) > 0)
@@ -448,6 +464,13 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                 Bài làm của học viên
               </h3>
 
+              {overallFluency ? (
+                <p className="rounded-md border border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
+                  <span className="font-semibold text-foreground">Độ trôi chảy cả bài (đo từ audio): </span>
+                  {formatFluencyLine(overallFluency)}
+                </p>
+              ) : null}
+
               {essayUnits.length === 0 && gapFillUnits.length === 0 ? (
                 <p className="rounded-lg border border-dashed border-border bg-muted/40 p-4 text-sm text-muted-foreground">
                   Không tìm thấy bài làm Writing/Speaking cho lần nộp này.
@@ -528,7 +551,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                               <TranscribeButton
                                 answerId={answer.id}
                                 initialTranscript={answer.transcript}
-                                initialFluency={null}
+                                initialFluency={fluencyByAnswer.get(answer.id) ?? null}
                               />
                             </div>
                           ) : (

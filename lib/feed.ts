@@ -108,6 +108,10 @@ function dayFallbackTime(day: string): Date {
   return new Date(`${day}T${String(NOON_VN_UTC_HOUR).padStart(2, "0")}:00:00Z`);
 }
 
+// Cấp lửa đầu (Nhen, 1 ngày) không lên bảng tin: em nào học lại sau khi đứt chuỗi cũng
+// "đạt" — chỉ gây nhiễu, không phải thành tích.
+export const STREAK_FEED_MIN_DAYS = 3;
+
 // Ngày D có học mà chuỗi kết thúc ở D dài đúng minDays của một cấp lửa → một mốc.
 // Ngày cứu bằng Xu tính vào độ dài chuỗi nhưng KHÔNG tự sinh mốc (không có học thật).
 export function streakMilestoneEvents(
@@ -141,7 +145,9 @@ export function streakMilestoneEvents(
     for (const day of activeDays) {
       if (day < opts.fromDay || day > opts.toDay) continue;
       const run = runEndingAt(done, day);
-      const tier = STREAK_TIERS.find((candidate) => candidate.minDays === run);
+      const tier = STREAK_TIERS.find(
+        (candidate) => candidate.minDays === run && candidate.minDays >= STREAK_FEED_MIN_DAYS
+      );
       if (!tier) continue;
 
       // Thời điểm: lần nộp đầu tiên trong ngày; ngày chỉ ôn thẻ → giờ ôn; không có → trưa.

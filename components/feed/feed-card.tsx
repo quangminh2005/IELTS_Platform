@@ -223,6 +223,7 @@ export function FeedCard({
           onClick={handleHeart}
           disabled={isOwn}
           aria-pressed={hearted}
+          aria-label={`${isOwn ? "Lượt tim" : hearted ? "Bỏ tim" : "Thả tim"} (${hearts})`}
           title={isOwn ? "Hoạt động của bạn" : hearted ? "Bỏ tim" : "Thả tim"}
           className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm transition ${
             hearted ? "text-rose-600 dark:text-rose-400" : "text-muted-foreground hover:bg-border/40"
@@ -235,11 +236,11 @@ export function FeedCard({
           type="button"
           onClick={toggleComments}
           aria-expanded={open}
+          aria-label={`Bình luận (${commentCount})`}
           className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm text-muted-foreground transition hover:bg-border/40"
         >
           <span aria-hidden="true">💬</span>
           <span className="tabular-nums">{commentCount}</span>
-          <span className="sr-only">bình luận</span>
         </button>
       </div>
 

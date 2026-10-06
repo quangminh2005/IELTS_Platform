@@ -77,12 +77,11 @@ describe("streakMilestoneEvents", () => {
     restoreKeys: [{ studentId: "s1", key: "restore-day:2026-10-06" }]
   };
 
-  it("mốc rơi đúng ngày chạm 1 / 3 / 7, ngày cứu không tự sinh mốc", () => {
+  it("mốc rơi đúng ngày chạm 3 / 7; bỏ mốc 1 ngày (Nhen); ngày cứu không tự sinh mốc", () => {
     const events = streakMilestoneEvents(input, { fromDay: "2026-10-01", toDay: "2026-10-10" });
     expect(events.map((event) => [event.key, event.text])).toEqual([
       ["streak:s1:2026-10-09", "đạt chuỗi 7 ngày — cấp Cháy 🔥"],
-      ["streak:s1:2026-10-05", "đạt chuỗi 3 ngày — cấp Bén 🔥"],
-      ["streak:s1:2026-10-03", "đạt chuỗi 1 ngày — cấp Nhen 🔥"]
+      ["streak:s1:2026-10-05", "đạt chuỗi 3 ngày — cấp Bén 🔥"]
     ]);
   });
 
@@ -94,7 +93,11 @@ describe("streakMilestoneEvents", () => {
 
   it("ngày chỉ ôn thẻ: thời điểm lấy từ vocabTimes", () => {
     const events = streakMilestoneEvents(
-      { submits: [], vocabDays: [{ studentId: "s3", date: "2026-10-06", total: 4 }], restoreKeys: [] },
+      {
+        submits: [],
+        vocabDays: ["04", "05", "06"].map((day) => ({ studentId: "s3", date: `2026-10-${day}`, total: 4 })),
+        restoreKeys: []
+      },
       {
         fromDay: "2026-10-01",
         toDay: "2026-10-10",

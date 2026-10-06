@@ -48,7 +48,7 @@ gắn vào `eventKey`.
 | Loại | `eventKey` | Nguồn | Câu hiển thị | Thời điểm |
 |---|---|---|---|---|
 | Hoàn thành bài | `work:<sid>:<attemptId>:<dayKey>` | `AttemptSkill.submittedAt` (lượt cũ không có AttemptSkill thì lấy `Attempt.submittedAt`) | "hoàn thành Listening + Reading · <tên bài>"; bài tự luyện thêm "(tự luyện)" | lần nộp mới nhất trong ngày |
-| Mốc chuỗi | `streak:<sid>:<dayKey>` | ngày có học mà chuỗi kết thúc ở ngày đó đúng bằng `minDays` của một cấp lửa | "đạt chuỗi 7 ngày — cấp Cháy 🔥" | lần nộp hoặc ôn thẻ đầu tiên của ngày đó; ngày chỉ có ôn thẻ thì lấy `updatedAt` |
+| Mốc chuỗi | `streak:<sid>:<dayKey>` | ngày có học mà chuỗi kết thúc ở ngày đó đúng bằng `minDays` của một cấp lửa, **từ cấp Bén (3 ngày) trở lên** (bỏ Nhen 1 ngày cho đỡ nhiễu, sửa lúc làm) | "đạt chuỗi 7 ngày — cấp Cháy 🔥" | lần nộp hoặc ôn thẻ đầu tiên của ngày đó; ngày chỉ có ôn thẻ thì lấy `updatedAt` |
 | Lên hạng XP | `rank:<sid>:<levelIndex>` | dòng `CoinTransaction` kind ∈ `XP_EARN_KINDS`, cộng dồn theo `createdAt`, lấy dòng làm tổng vượt mốc `min` của một cấp (`ALL_LEVELS`) | "lên hạng Bạc II" | `createdAt` của dòng đó |
 | Ôn Sổ từ | `vocab:<sid>:<dayKey>` | `VocabQuizDay` có `total ≥ 10` | "ôn 40 thẻ Sổ từ" | `updatedAt` |
 | Thành tích | `item:<sid>:<studentItemId>` | `StudentItem` có `source` ∈ `achievement`, `streak` | "nhận khung Quán quân tháng 9" hoặc "mở tư thế Vẫy tay của Cú" | `createdAt` |
@@ -206,7 +206,7 @@ Không action nào cộng Xu hay XP.
 
 - **`tests/feed.test.ts`** (thuần), các trường hợp:
   - gộp kỹ năng theo lượt và ngày, có nhãn tự luyện;
-  - mốc chuỗi đúng ngày chạm 1/3/7, không sinh mốc ở ngày được cứu bằng Xu;
+  - mốc chuỗi đúng ngày chạm 3/7 (không có mốc 1 ngày), không sinh mốc ở ngày được cứu bằng Xu;
   - lên hạng nhảy hai cấp thì chỉ lấy cấp cao; Đồng I không phải sự kiện;
   - ngưỡng 10 thẻ;
   - lọc 14 ngày và lọc tài khoản ẩn;

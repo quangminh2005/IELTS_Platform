@@ -165,6 +165,12 @@ const config: Config = {
         "mascot-tail": {
           "0%, 100%": { transform: "rotate(0deg)" },
           "50%": { transform: "rotate(-7deg)" }
+        },
+        // Nút cảm xúc trên hồ sơ (Mạng xã hội Đợt 2) nảy một nhịp khi bấm.
+        "reaction-pop": {
+          "0%": { transform: "scale(1)" },
+          "40%": { transform: "scale(1.35)" },
+          "100%": { transform: "scale(1)" }
         }
       },
       animation: {
@@ -194,7 +200,8 @@ const config: Config = {
         "mascot-scan": "mascot-scan 2.6s ease-in-out infinite",
         "mascot-flame": "mascot-flame 0.6s ease-in-out infinite",
         "mascot-flap": "mascot-flap 1.8s ease-in-out infinite",
-        "mascot-tail": "mascot-tail 2.4s ease-in-out infinite"
+        "mascot-tail": "mascot-tail 2.4s ease-in-out infinite",
+        "reaction-pop": "reaction-pop 0.45s ease-out both"
       }
     }
   },

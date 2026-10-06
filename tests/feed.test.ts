@@ -5,6 +5,7 @@ import {
   parseEventKey,
   prizeEvents,
   rankUpEvents,
+  resolveFeedLimit,
   streakMilestoneEvents,
   vocabEvents,
   workEvents,
@@ -176,5 +177,16 @@ describe("mergeFeed", () => {
     expect(
       mergeFeed(events, { since: at("2026-09-22T00:00:00Z"), hiddenIds: new Set(["hide"]) }).map((event) => event.key)
     ).toEqual(["vocab:s1:b", "vocab:s1:a"]);
+  });
+});
+
+describe("resolveFeedLimit", () => {
+  it("kẹp về bội số 20 trong [20, 200]", () => {
+    expect(resolveFeedLimit(undefined)).toBe(20);
+    expect(resolveFeedLimit("abc")).toBe(20);
+    expect(resolveFeedLimit("-5")).toBe(20);
+    expect(resolveFeedLimit("40")).toBe(40);
+    expect(resolveFeedLimit("45")).toBe(60);
+    expect(resolveFeedLimit("9999")).toBe(200);
   });
 });

@@ -298,3 +298,15 @@ export function mergeFeed(events: FeedEvent[], opts: { since: Date; hiddenIds: R
     })
   );
 }
+
+// ---- Tham số trang ----
+
+export const FEED_PAGE_SIZE = 20;
+export const FEED_MAX_LIMIT = 200;
+
+// "?limit=" gõ tay bừa → kẹp về bội số 20 trong [20, 200].
+export function resolveFeedLimit(raw: string | undefined): number {
+  const value = Number(raw);
+  if (!Number.isFinite(value) || value <= FEED_PAGE_SIZE) return FEED_PAGE_SIZE;
+  return Math.min(FEED_MAX_LIMIT, Math.ceil(value / FEED_PAGE_SIZE) * FEED_PAGE_SIZE);
+}

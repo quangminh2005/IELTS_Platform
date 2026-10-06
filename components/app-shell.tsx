@@ -32,6 +32,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
     { href: "/teacher/classes", label: "Lớp học", hint: "Quản lý học viên", icon: "users" },
     { href: "/teacher/schedule", label: "Lịch học", hint: "Buổi học từng lớp", icon: "schedule" },
     { href: "/teacher/ranking", label: "Xếp hạng", hint: "Bảng xếp hạng lớp", icon: "trophy" },
+    { href: "/teacher/feed", label: "Bảng tin", hint: "Hoạt động & bình luận", icon: "feed" },
     { href: "/teacher/materials", label: "Tài liệu", hint: "Kho đề & bài", icon: "book" },
     { href: "/teacher/vocab", label: "Từ vựng", hint: "Kho từ mỗi ngày", icon: "vocab" },
     { href: "/teacher/assignments", label: "Giao bài", hint: "Bài tập về nhà", icon: "clipboard" },
@@ -49,6 +50,7 @@ const navByRole: Record<AppShellRole, NavItem[]> = {
     { href: "/student/history", label: "Lịch sử", hint: "Kết quả & bài đã làm", icon: "clock" },
     { href: "/student/stats", label: "Tiến bộ", hint: "Biểu đồ & điểm yếu", icon: "chart" },
     { href: "/student/ranking", label: "Xếp hạng", hint: "Lớp & toàn trường", icon: "trophy" },
+    { href: "/student/feed", label: "Bảng tin", hint: "Hoạt động bạn bè", icon: "feed" },
     { href: "/student/shop", label: "Cửa hàng", hint: "Đổi Xu lấy đồ trang trí", icon: "shop" }
   ]
 };
@@ -70,7 +72,8 @@ type IconName =
   | "chart"
   | "shop"
   | "gift"
-  | "bug";
+  | "bug"
+  | "feed";
 
 function Icon({ name }: { name: IconName }) {
   const common = {
@@ -209,6 +212,14 @@ function Icon({ name }: { name: IconName }) {
       );
     case "bug":
       return <BugIcon className="h-5 w-5 shrink-0" />;
+    case "feed":
+      // Bảng tin (Mạng xã hội Đợt 3): khung tin + các dòng.
+      return (
+        <svg {...common} aria-hidden="true">
+          <rect x="3.5" y="4" width="17" height="16" rx="2.5" />
+          <path d="M7.5 8.5h9M7.5 12h9M7.5 15.5h5" />
+        </svg>
+      );
   }
 }
 

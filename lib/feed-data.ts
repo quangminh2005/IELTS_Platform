@@ -9,6 +9,7 @@ import {
   streakMilestoneEvents,
   vocabEvents,
   workEvents,
+  FEED_MAX_LIMIT,
   type FeedEvent,
   type FeedKind,
   type WorkSource
@@ -26,9 +27,6 @@ import { XP_EARN_KINDS } from "@/lib/xp-rank";
 // Danh sách hoạt động cả trường được cache 5 phút theo NGÀY VN, gắn tag bảng xếp hạng
 // (submitSkill đã xoá tag này sau mỗi lần nộp). Tim + bình luận thì đọc thẳng, không
 // cache — bấm xong phải thấy ngay.
-
-export const FEED_PAGE_SIZE = 20;
-export const FEED_MAX_LIMIT = 200;
 
 async function loadSchoolFeed(today: string): Promise<FeedEvent[]> {
   const now = new Date();

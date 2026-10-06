@@ -548,7 +548,10 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                               >
                                 Mở/tải file trong tab mới
                               </a>
+                              {/* key đổi khi AI chấm vừa phiên âm hộ → nút dựng lại với
+                                  chữ + số đo mới thay vì giữ state cũ. */}
                               <TranscribeButton
+                                key={`${answer.id}-${answer.speechTimingJson?.length ?? 0}`}
                                 answerId={answer.id}
                                 initialTranscript={answer.transcript}
                                 initialFluency={fluencyByAnswer.get(answer.id) ?? null}

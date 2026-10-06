@@ -512,6 +512,44 @@ const statements = [
       FOREIGN KEY ("toId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
   END $$;`,
+  // Mạng xã hội Đợt 3: tim + bình luận bảng tin.
+  `CREATE TABLE IF NOT EXISTS "FeedHeart" (
+    "eventKey" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "FeedHeart_pkey" PRIMARY KEY ("eventKey", "userId")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "FeedHeart_eventKey_idx" ON "FeedHeart"("eventKey");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FeedHeart_userId_fkey') THEN
+      ALTER TABLE "FeedHeart" ADD CONSTRAINT "FeedHeart_userId_fkey"
+      FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `CREATE TABLE IF NOT EXISTS "FeedComment" (
+    "id" TEXT NOT NULL,
+    "eventKey" TEXT NOT NULL,
+    "ownerStudentId" TEXT NOT NULL,
+    "authorUserId" TEXT NOT NULL,
+    "body" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "FeedComment_pkey" PRIMARY KEY ("id")
+  );`,
+  'CREATE INDEX IF NOT EXISTS "FeedComment_eventKey_createdAt_idx" ON "FeedComment"("eventKey", "createdAt");',
+  'CREATE INDEX IF NOT EXISTS "FeedComment_ownerStudentId_createdAt_idx" ON "FeedComment"("ownerStudentId", "createdAt");',
+  'CREATE INDEX IF NOT EXISTS "FeedComment_createdAt_idx" ON "FeedComment"("createdAt");',
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FeedComment_ownerStudentId_fkey') THEN
+      ALTER TABLE "FeedComment" ADD CONSTRAINT "FeedComment_ownerStudentId_fkey"
+      FOREIGN KEY ("ownerStudentId") REFERENCES "StudentProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
+  `DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FeedComment_authorUserId_fkey') THEN
+      ALTER TABLE "FeedComment" ADD CONSTRAINT "FeedComment_authorUserId_fkey"
+      FOREIGN KEY ("authorUserId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+  END $$;`,
 ];
 
 const prisma = new PrismaClient();

@@ -44,6 +44,9 @@ model User {
   updatedAt      DateTime        @updatedAt
   teacherProfile TeacherProfile?
   studentProfile StudentProfile?
+  // Mạng xã hội Đợt 3: tim + bình luận bảng tin (cả thầy lẫn học viên).
+  feedHearts     FeedHeart[]
+  feedComments   FeedComment[]   @relation("FeedCommentAuthor")
 }
 
 // Một lần đăng nhập SAI bằng mật khẩu. Chỉ dùng để khoá tạm khi có người dò mật
@@ -142,6 +145,9 @@ model StudentProfile {
   followers     Follow[]          @relation("FollowFollowing")
   reactionsSent ProfileReaction[] @relation("ReactionFrom")
   reactionsGot  ProfileReaction[] @relation("ReactionTo")
+
+  // Mạng xã hội Đợt 3: bình luận vào hoạt động của mình (phục vụ chuông).
+  feedCommentsGot FeedComment[] @relation("FeedCommentOwner")
 }
 
 // LƯU Ý VỀ INDEX: Postgres (và Prisma) KHÔNG tự tạo index cho cột khoá ngoại —
@@ -826,4 +832,34 @@ model ProfileReaction {
 
   @@unique([fromId, toId, kind, dayKey])
   @@index([toId, createdAt])
+}
+
+// Mạng xã hội Đợt 3 (spec 2026-10-06-xa-hoi-dot-3): hoạt động bảng tin KHÔNG có bảng
+// riêng — dựng lúc đọc (lib/feed.ts). eventKey dạng "<loại>:<studentId>:…".
+// Tim: mỗi người (thầy hoặc học viên) tim một hoạt động một lần, bấm lại = bỏ tim.
+model FeedHeart {
+  eventKey  String
+  userId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([eventKey, userId])
+  @@index([eventKey])
+}
+
+// Bình luận ≤ 200 ký tự, văn bản thuần. Gỡ/xoá = xoá hẳn dòng.
+model FeedComment {
+  id             String         @id @default(cuid())
+  eventKey       String
+  // Chủ hoạt động — lấy từ eventKey, để chuông đọc nhanh.
+  ownerStudentId String
+  authorUserId   String
+  body           String
+  createdAt      DateTime       @default(now())
+  owner          StudentProfile @relation("FeedCommentOwner", fields: [ownerStudentId], references: [id], onDelete: Cascade)
+  author         User           @relation("FeedCommentAuthor", fields: [authorUserId], references: [id], onDelete: Cascade)
+
+  @@index([eventKey, createdAt])
+  @@index([ownerStudentId, createdAt])
+  @@index([createdAt])
 }

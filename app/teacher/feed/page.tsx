@@ -31,7 +31,11 @@ export default async function TeacherFeedPage({
   if (tab === "comments") {
     body = <TeacherCommentList comments={await getRecentComments(RECENT_COMMENT_LIMIT)} />;
   } else {
-    const page = await getFeedPage({ viewerUserId: teacher.userId, studentIds: null, limit });
+    const page = await getFeedPage({
+      viewer: { userId: teacher.userId, role: "teacher", studentId: null },
+      studentIds: null,
+      limit
+    });
     body = (
       <>
         {page.items.length === 0 ? (

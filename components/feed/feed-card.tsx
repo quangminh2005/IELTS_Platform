@@ -94,24 +94,32 @@ export function FeedCard({
   const [hearted, setHearted] = useState(item.hearted);
   const [hearts, setHearts] = useState(item.hearts);
   const [commentCount, setCommentCount] = useState(item.comments);
+  // open = đang mở ô viết bình luận. Bình luận đã có thì luôn hiện (bản xem trước từ server).
   const [open, setOpen] = useState(false);
-  const [comments, setComments] = useState<FeedCommentView[] | null>(null);
+  const [comments, setComments] = useState<FeedCommentView[]>(item.previewComments);
+  // complete = đã có đủ mọi bình luận (không còn cái cũ nào chưa tải)
+  const [complete, setComplete] = useState(item.previewComments.length >= item.comments);
+  const [loadingComments, setLoadingComments] = useState(false);
   const [draft, setDraft] = useState("");
   const [busy, startTransition] = useTransition();
   const isOwn = viewer.studentId === item.owner.studentId;
 
   function loadComments() {
+    setLoadingComments(true);
     startTransition(async () => {
       try {
         const result = await listComments(item.key);
         if (result.ok && result.comments) {
           setComments(result.comments);
           setCommentCount(result.comments.length);
+          setComplete(true);
         } else {
           notify(result);
         }
       } catch {
         notify(NETWORK_FAIL);
+      } finally {
+        setLoadingComments(false);
       }
     });
   }
@@ -152,7 +160,7 @@ export function FeedCard({
   function toggleComments() {
     const next = !open;
     setOpen(next);
-    if (next && comments === null) loadComments();
+    if (next && !complete) loadComments();
   }
 
   function handleSubmit(event: FormEvent) {
@@ -165,7 +173,7 @@ export function FeedCard({
         const result = await addComment(item.key, body);
         if (result.ok && result.comment) {
           const added = result.comment;
-          setComments((list) => [...(list ?? []), added]);
+          setComments((list) => [...list, added]);
           setCommentCount((value) => value + 1);
           setDraft("");
         } else {
@@ -182,7 +190,7 @@ export function FeedCard({
       try {
         const result = await deleteComment(id);
         if (result.ok) {
-          setComments((list) => (list ?? []).filter((comment) => comment.id !== id));
+          setComments((list) => list.filter((comment) => comment.id !== id));
           setCommentCount((value) => Math.max(0, value - 1));
         }
         notify(result);
@@ -244,44 +252,55 @@ export function FeedCard({
         </button>
       </div>
 
-      {open ? (
+      {open || comments.length > 0 ? (
         <div className="mt-2 space-y-3">
-          {comments === null ? (
-            <p className="text-sm text-muted-foreground">Đang tải bình luận…</p>
-          ) : comments.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Chưa có bình luận — mở lời đầu tiên nhé!</p>
-          ) : (
+          {!complete && commentCount > comments.length ? (
+            <button
+              type="button"
+              onClick={loadComments}
+              disabled={loadingComments}
+              className="text-xs font-semibold text-muted-foreground transition hover:text-primary disabled:opacity-50"
+            >
+              {loadingComments ? "Đang tải…" : `Xem ${commentCount - comments.length} bình luận trước`}
+            </button>
+          ) : null}
+
+          {comments.length > 0 ? (
             <ul className="space-y-2">
               {comments.map((comment) => (
                 <CommentRow key={comment.id} comment={comment} onDelete={handleDelete} deleting={busy} />
               ))}
             </ul>
-          )}
+          ) : complete ? (
+            <p className="text-sm text-muted-foreground">Chưa có bình luận — mở lời đầu tiên nhé!</p>
+          ) : null}
 
-          <form onSubmit={handleSubmit} className="flex items-end gap-2">
-            <label className="min-w-0 flex-1">
-              <span className="sr-only">Viết bình luận</span>
-              <textarea
-                value={draft}
-                onChange={(event) => setDraft(event.target.value.slice(0, COMMENT_MAX))}
-                maxLength={COMMENT_MAX}
-                rows={1}
-                placeholder="Viết bình luận…"
-                // 16px trên điện thoại để iOS không tự phóng to khi chạm vào ô.
-                className="block w-full resize-none rounded-lg border border-border bg-background px-3 py-2 text-base outline-none transition focus:border-primary sm:text-sm"
-              />
-              <span className="mt-0.5 block text-right text-[11px] tabular-nums text-muted-foreground">
-                {draft.length}/{COMMENT_MAX}
-              </span>
-            </label>
-            <button
-              type="submit"
-              disabled={busy || draft.trim().length === 0}
-              className="mb-5 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Gửi
-            </button>
-          </form>
+          {open ? (
+            <form onSubmit={handleSubmit} className="flex items-end gap-2">
+              <label className="min-w-0 flex-1">
+                <span className="sr-only">Viết bình luận</span>
+                <textarea
+                  value={draft}
+                  onChange={(event) => setDraft(event.target.value.slice(0, COMMENT_MAX))}
+                  maxLength={COMMENT_MAX}
+                  rows={1}
+                  placeholder="Viết bình luận…"
+                  // 16px trên điện thoại để iOS không tự phóng to khi chạm vào ô.
+                  className="block w-full resize-none rounded-lg border border-border bg-background px-3 py-2 text-base outline-none transition focus:border-primary sm:text-sm"
+                />
+                <span className="mt-0.5 block text-right text-[11px] tabular-nums text-muted-foreground">
+                  {draft.length}/{COMMENT_MAX}
+                </span>
+              </label>
+              <button
+                type="submit"
+                disabled={busy || draft.trim().length === 0}
+                className="mb-5 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Gửi
+              </button>
+            </form>
+          ) : null}
         </div>
       ) : null}
     </article>

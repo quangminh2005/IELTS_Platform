@@ -165,10 +165,15 @@ export type FeedItemView = {
   hearts: number;
   hearted: boolean;
   comments: number;
+  // Vài bình luận mới nhất (cũ → mới) hiện sẵn dưới thẻ, khỏi phải bấm 💬 mới thấy.
+  previewComments: FeedCommentView[];
 };
 
+// Số bình luận hiện sẵn mỗi thẻ; nhiều hơn thì có nút "Xem … bình luận trước".
+export const FEED_COMMENT_PREVIEW = 3;
+
 export async function getFeedPage(opts: {
-  viewerUserId: string;
+  viewer: FeedUser;
   // null = cả trường; Set = chỉ những học viên này (tab Bạn bè)
   studentIds: ReadonlySet<string> | null;
   limit: number;
@@ -189,7 +194,7 @@ export async function getFeedPage(opts: {
     keys.length === 0
       ? []
       : prisma.feedHeart.findMany({
-          where: { eventKey: { in: keys }, userId: opts.viewerUserId },
+          where: { eventKey: { in: keys }, userId: opts.viewer.userId },
           select: { eventKey: true }
         }),
     keys.length === 0
@@ -200,6 +205,7 @@ export async function getFeedPage(opts: {
   const hearts = new Map(heartCounts.map((row) => [row.eventKey, row._count._all]));
   const mine = new Set(myHearts.map((row) => row.eventKey));
   const comments = new Map(commentCounts.map((row) => [row.eventKey, row._count._all]));
+  const previews = await loadCommentPreviews(Array.from(comments.keys()), opts.viewer);
 
   const items = page.flatMap((event) => {
     const owner = people.get(event.studentId);
@@ -214,7 +220,8 @@ export async function getFeedPage(opts: {
             owner,
             hearts: hearts.get(event.key) ?? 0,
             hearted: mine.has(event.key),
-            comments: comments.get(event.key) ?? 0
+            comments: comments.get(event.key) ?? 0,
+            previewComments: previews.get(event.key) ?? []
           }
         ]
       : [];
@@ -292,33 +299,59 @@ export function canDeleteComment(
   );
 }
 
+const commentSelect = {
+  id: true,
+  eventKey: true,
+  body: true,
+  createdAt: true,
+  authorUserId: true,
+  ownerStudentId: true,
+  author: { select: authorSelect }
+} as const;
+
+function toCommentView(
+  row: { id: string; body: string; createdAt: Date; authorUserId: string; ownerStudentId: string; author: AuthorRow },
+  viewer: FeedUser
+): FeedCommentView {
+  const author = authorView(row.author);
+  return {
+    id: row.id,
+    body: row.body,
+    at: row.createdAt.toISOString(),
+    authorName: author.name,
+    authorIsTeacher: author.isTeacher,
+    authorPerson: author.person,
+    canDelete: canDeleteComment(viewer, row)
+  };
+}
+
 export async function getComments(eventKey: string, viewer: FeedUser): Promise<FeedCommentView[]> {
   const rows = await prisma.feedComment.findMany({
     where: { eventKey },
     orderBy: { createdAt: "asc" },
     take: FEED_MAX_LIMIT,
-    select: {
-      id: true,
-      body: true,
-      createdAt: true,
-      authorUserId: true,
-      ownerStudentId: true,
-      author: { select: authorSelect }
-    }
+    select: commentSelect
   });
+  return rows.map((row) => toCommentView(row, viewer));
+}
 
-  return rows.map((row) => {
-    const author = authorView(row.author);
-    return {
-      id: row.id,
-      body: row.body,
-      at: row.createdAt.toISOString(),
-      authorName: author.name,
-      authorIsTeacher: author.isTeacher,
-      authorPerson: author.person,
-      canDelete: canDeleteComment(viewer, row)
-    };
+// Bình luận hiện sẵn trên bảng tin: một truy vấn cho cả trang, mỗi thẻ giữ vài cái mới nhất.
+async function loadCommentPreviews(eventKeys: string[], viewer: FeedUser): Promise<Map<string, FeedCommentView[]>> {
+  const result = new Map<string, FeedCommentView[]>();
+  if (eventKeys.length === 0) return result;
+
+  const rows = await prisma.feedComment.findMany({
+    where: { eventKey: { in: eventKeys } },
+    orderBy: { createdAt: "asc" },
+    select: commentSelect
   });
+  for (const row of rows) {
+    const list = result.get(row.eventKey) ?? [];
+    list.push(toCommentView(row, viewer));
+    if (list.length > FEED_COMMENT_PREVIEW) list.shift();
+    result.set(row.eventKey, list);
+  }
+  return result;
 }
 
 // Tab "Bình luận mới" của thầy.

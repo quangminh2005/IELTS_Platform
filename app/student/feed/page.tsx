@@ -49,7 +49,7 @@ export default async function StudentFeedPage({
   const noFriends = scope === "friends" && followingIds.length === 0;
 
   const page = await getFeedPage({
-    viewerUserId: session.user.id,
+    viewer: { userId: session.user.id, role: "student", studentId: student.id },
     studentIds: scope === "friends" ? friendScope(student.id, followingIds) : null,
     limit,
     focusKey

@@ -4,6 +4,7 @@ import { planUnitEntries, planVocabEntries, vocabKey, type CoinEntryDraft, type 
 import { MANUAL_QUESTION_TYPES } from "@/lib/manual-grading";
 import type { MonthlyRecap } from "@/lib/monthly-recap";
 import { getMonthlyRecap } from "@/lib/monthly-recap-data";
+import { monthlyPrizeEntries, prizeMonthKeys, type PrizeEntry } from "@/lib/leaderboard";
 import { PRACTICE_MODE } from "@/lib/practice";
 import { achievementItemsFor, closedMonthKeys, type AchievementItem } from "@/lib/shop-catalog";
 import { vietnamDateKey } from "@/lib/vocab-day";
@@ -143,6 +144,16 @@ export async function loadAchievementItems(loadRecap: RecapLoader, now = new Dat
   return recaps.flatMap(achievementItemsFor);
 }
 
+// Thưởng Xu Học Bá (Top 10 toàn trường) của mọi tháng đã khép từ PRIZE_START_MONTH.
+// Recap tháng đã khép dùng chung cache 1 ngày với đồ thành tích — không tốn thêm truy vấn.
+export async function loadMonthlyPrizeEntries(
+  loadRecap: RecapLoader,
+  now = new Date()
+): Promise<PrizeEntry[]> {
+  const recaps = await Promise.all(prizeMonthKeys(now).map((monthKey) => loadRecap(monthKey)));
+  return recaps.flatMap((recap) => monthlyPrizeEntries(recap, now));
+}
+
 async function applyWalletChanges(
   studentId: string,
   create: CoinEntryDraft[],
@@ -177,11 +188,42 @@ async function applyWalletChanges(
   });
 }
 
+// Cron gọi mỗi trưa: cộng thưởng còn thiếu cho cả trường. Idempotent nhờ
+// @@unique([studentId, key]) + skipDuplicates — chạy lại không cộng trùng.
+export async function grantMonthlyPrizes(loadRecap: RecapLoader, now = new Date()): Promise<number> {
+  const entries = await loadMonthlyPrizeEntries(loadRecap, now);
+  if (entries.length === 0) return 0;
+
+  const existing = await prisma.coinTransaction.findMany({
+    where: {
+      kind: "monthly_prize",
+      studentId: { in: Array.from(new Set(entries.map((entry) => entry.studentId))) }
+    },
+    select: { studentId: true, key: true }
+  });
+  const granted = new Set(existing.map((row) => `${row.studentId}|${row.key}`));
+
+  const byStudent = new Map<string, CoinEntryDraft[]>();
+  for (const entry of entries) {
+    if (granted.has(`${entry.studentId}|${entry.draft.key}`)) continue;
+    const list = byStudent.get(entry.studentId) ?? [];
+    list.push(entry.draft);
+    byStudent.set(entry.studentId, list);
+  }
+
+  let created = 0;
+  for (const [studentId, drafts] of Array.from(byStudent.entries())) {
+    await applyWalletChanges(studentId, drafts, [], []);
+    created += drafts.length;
+  }
+  return created;
+}
+
 // attemptId: chỉ quét một lượt (ngay sau khi nộp — nhanh). Không truyền: đồng bộ
 // đầy đủ (bài, Sổ từ, đồ thành tích) — dùng ở trang Cửa hàng và script hồi tố.
 export async function syncWallet(
   studentId: string,
-  options: { attemptId?: string; achievements?: AchievementItem[]; now?: Date } = {}
+  options: { attemptId?: string; achievements?: AchievementItem[]; prizes?: PrizeEntry[]; now?: Date } = {}
 ): Promise<{ created: number; raised: number; items: number }> {
   const full = !options.attemptId;
   const now = options.now ?? new Date();
@@ -214,6 +256,14 @@ export async function syncWallet(
     items = achievements
       .filter((item) => item.studentId === studentId && !owned.has(item.itemKey))
       .map((item) => item.itemKey);
+
+    // Thưởng Học Bá tháng — dự phòng khi cron trượt; chỉ phần của em này, chưa có trong sổ.
+    const prizes = options.prizes ?? (await loadMonthlyPrizeEntries(getMonthlyRecap, now));
+    create.push(
+      ...prizes
+        .filter((entry) => entry.studentId === studentId && !existingKeys.has(entry.draft.key))
+        .map((entry) => entry.draft)
+    );
   }
 
   if (create.length === 0 && vocabPlan.raise.length === 0 && items.length === 0) {

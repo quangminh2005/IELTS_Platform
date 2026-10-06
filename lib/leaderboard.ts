@@ -1,11 +1,14 @@
 import { activeDayKeys, buildActivityDays } from "@/lib/activity-heatmap";
+import type { CoinEntryDraft } from "@/lib/coins";
 import { calculateDayStreak, restoredDayOf, type DayStreak } from "@/lib/day-streak";
 import {
   monthKeyOf,
+  monthNumberLabel,
   monthRange,
   recentMonthKeys,
   resolveMonthKey,
-  shiftMonthKey
+  shiftMonthKey,
+  type MonthlyRecap
 } from "@/lib/monthly-recap";
 
 // Bảng xếp hạng kiểu chin.edu.vn (Mạng xã hội Đợt 1, spec
@@ -321,4 +324,63 @@ export function schoolDayStreaks(input: SchoolStreakInput, today: string): Map<s
   });
 
   return result;
+}
+
+// ---- Thưởng Xu Học Bá tháng (Top 10 TOÀN TRƯỜNG) ----
+// Không hồi tố: lúc các tháng trước diễn ra, các em chưa biết có giải.
+
+export const PRIZE_START_MONTH = "2026-10";
+export const PRIZE_TOP_THREE = [300, 200, 150] as const;
+export const PRIZE_TOP_TEN = 50;
+export const PRIZE_LAST_RANK = 10;
+
+export const PRIZE_CHIPS: { label: string; text: string }[] = [
+  { label: "#1", text: `${PRIZE_TOP_THREE[0]} Xu + khung Quán quân` },
+  { label: "#2", text: `${PRIZE_TOP_THREE[1]} Xu` },
+  { label: "#3", text: `${PRIZE_TOP_THREE[2]} Xu` },
+  { label: `#4–${PRIZE_LAST_RANK}`, text: `${PRIZE_TOP_TEN} Xu` }
+];
+
+export function monthlyPrizeFor(rank: number | null): number {
+  if (!rank || rank < 1 || rank > PRIZE_LAST_RANK) return 0;
+  return rank <= PRIZE_TOP_THREE.length ? PRIZE_TOP_THREE[rank - 1] : PRIZE_TOP_TEN;
+}
+
+export function monthlyPrizeKey(monthKey: string): string {
+  return `prize:xp:${monthKey}`;
+}
+
+// Các tháng ĐÃ KHÉP có thưởng: từ PRIZE_START_MONTH tới trước tháng hiện tại (giờ VN).
+export function prizeMonthKeys(now: Date): string[] {
+  const current = monthKeyOf(now);
+  const keys: string[] = [];
+  for (let key = PRIZE_START_MONTH; key < current; key = shiftMonthKey(key, 1)) {
+    keys.push(key);
+  }
+  return keys;
+}
+
+export type PrizeEntry = { studentId: string; draft: CoinEntryDraft };
+
+// Đồng hạng (đồng XP) nhận cùng mức thưởng của hạng đó — có thể hơn 10 em.
+export function monthlyPrizeEntries(recap: MonthlyRecap, now: Date): PrizeEntry[] {
+  if (recap.monthKey < PRIZE_START_MONTH) return [];
+
+  return recap.xpBoard.flatMap((entry) => {
+    const amount = monthlyPrizeFor(entry.xpRank);
+    if (amount <= 0) return [];
+    return [
+      {
+        studentId: entry.studentId,
+        draft: {
+          kind: "monthly_prize" as const,
+          key: monthlyPrizeKey(recap.monthKey),
+          amount,
+          note: `Hạng #${entry.xpRank} Học Bá tháng ${monthNumberLabel(recap.monthKey)}`,
+          attemptId: null,
+          createdAt: now
+        }
+      }
+    ];
+  });
 }

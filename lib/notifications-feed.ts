@@ -3,6 +3,7 @@ import {
   countUnread,
   NOTIFICATION_LIMIT,
   type BugResolvedNotificationSource,
+  type PrizeNotificationSource,
   type RewardNotificationSource,
   type StudentNotification
 } from "@/lib/notifications";
@@ -141,6 +142,19 @@ export async function getStudentNotifications(
     console.error("[thong-bao] Không đọc được phiếu đổi quà:", error);
   }
 
+  // Thưởng Học Bá tháng (sổ Xu) — bọc try/catch như các nguồn trên.
+  let prizeSources: PrizeNotificationSource[] = [];
+  try {
+    prizeSources = await prisma.coinTransaction.findMany({
+      where: { studentId, kind: "monthly_prize" },
+      orderBy: { createdAt: "desc" },
+      take: NOTIFICATION_LIMIT,
+      select: { key: true, amount: true, note: true, createdAt: true }
+    });
+  } catch (error) {
+    console.error("[thong-bao] Không đọc được thưởng Học Bá:", error);
+  }
+
   const items = buildStudentNotifications(
     reviews.map((review) => ({
       attemptId: review.attemptId,
@@ -156,7 +170,8 @@ export async function getStudentNotifications(
     student?.notificationsReadAt ?? null,
     bugs,
     scheduleSources,
-    rewardSources
+    rewardSources,
+    prizeSources
   );
 
   return { items, unreadCount: countUnread(items) };

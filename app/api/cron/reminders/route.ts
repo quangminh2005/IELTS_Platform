@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { topUpClassSessions } from "@/lib/class-schedule-sync";
 import { warmUpDatabase } from "@/lib/db-warmup";
 import { isEmailConfigured, sendEmail } from "@/lib/email";
+import { getMonthlyRecap } from "@/lib/monthly-recap-data";
 import { prisma } from "@/lib/prisma";
 import {
   buildReminderEmail,
@@ -9,6 +10,7 @@ import {
   groupRemindersByStudent,
   type ReminderCandidate,
 } from "@/lib/reminders";
+import { grantMonthlyPrizes } from "@/lib/wallet";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -65,9 +67,18 @@ export async function GET(request: Request): Promise<NextResponse> {
     console.error("[cron/reminders] Không nối được buổi học:", error);
   }
 
+  // Thưởng Xu Học Bá tháng đã khép (lần đầu: trưa 1/11/2026). Idempotent — trượt hôm nay
+  // thì mai cộng bù; lỗi ở đây không chặn nhắc bài.
+  let prizesGranted = 0;
+  try {
+    prizesGranted = await grantMonthlyPrizes(getMonthlyRecap);
+  } catch (error) {
+    console.error("[cron/reminders] Không cộng được thưởng Học Bá:", error);
+  }
+
   if (!isEmailConfigured()) {
     console.warn("[cron/reminders] Bỏ qua: chưa cấu hình GMAIL_USER / GMAIL_APP_PASSWORD.");
-    return NextResponse.json({ skipped: "email_not_configured", sessionsCreated });
+    return NextResponse.json({ skipped: "email_not_configured", sessionsCreated, prizesGranted });
   }
 
   const now = new Date();
@@ -139,5 +150,6 @@ export async function GET(request: Request): Promise<NextResponse> {
     sent,
     failed: results.length - sent,
     sessionsCreated,
+    prizesGranted,
   });
 }

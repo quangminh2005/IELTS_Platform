@@ -10,7 +10,8 @@ export type CoinKind =
   | "purchase"
   | "streak_restore"
   | "reward_redeem"
-  | "reward_refund";
+  | "reward_refund"
+  | "monthly_prize";
 
 // Một phần (AssignableUnit) trong một lượt làm LƯỢT ĐẦU (attemptRound = 1).
 export type CoinUnitRow = {

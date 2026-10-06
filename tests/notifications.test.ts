@@ -224,3 +224,24 @@ describe("thông báo lịch học", () => {
     expect(feed).toMatch(/try\s*\{[\s\S]*prisma\.classSession\.findMany[\s\S]*\}\s*catch/);
   });
 });
+
+describe("thưởng Học Bá tháng trong chuông", () => {
+  it("hiện tiêu đề + số Xu, link về bảng tháng đó", () => {
+    const items = buildStudentNotifications([], [], new Date("2026-10-31T00:00:00Z"), [], {}, [], [
+      {
+        key: "prize:xp:2026-10",
+        amount: 150,
+        note: "Hạng #3 Học Bá tháng 10/2026",
+        createdAt: new Date("2026-11-01T05:00:00Z")
+      }
+    ]);
+
+    expect(items[0]).toMatchObject({
+      id: "prize:xp:2026-10",
+      type: "monthly_prize",
+      title: "🏆 Hạng #3 Học Bá tháng 10/2026 — +150 Xu",
+      href: "/student/ranking?month=2026-10",
+      unread: true
+    });
+  });
+});

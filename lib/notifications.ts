@@ -17,7 +17,8 @@ export type StudentNotificationType =
   | "session_change"
   | "schedule_update"
   | "reward_delivered"
-  | "reward_rejected";
+  | "reward_rejected"
+  | "monthly_prize";
 
 export type StudentNotification = {
   // "review:<attemptId>" | "assignment:<recipientId>" — đủ để làm key React và để
@@ -75,6 +76,14 @@ export type RewardNotificationSource = {
   resolvedAt: Date;
 };
 
+// Thưởng Xu Học Bá tháng (Mạng xã hội Đợt 1) — dòng sổ Xu kind monthly_prize.
+export type PrizeNotificationSource = {
+  key: string; // "prize:xp:YYYY-MM"
+  amount: number;
+  note: string | null;
+  createdAt: Date;
+};
+
 // readAt null = chưa từng có mốc. Coi như đã đọc hết thay vì chưa đọc hết, để học
 // viên mới (hoặc DB chưa kịp có cột) không bị dội cả chục thông báo cũ.
 function isUnread(createdAt: Date, readAt: Date | null): boolean {
@@ -97,7 +106,9 @@ export function buildStudentNotifications(
     schedules?: ScheduleUpdateNotificationSource[];
   } = {},
   // Tham số thứ 6 tuỳ chọn: phiếu đổi quà đã xử lý.
-  rewards: RewardNotificationSource[] = []
+  rewards: RewardNotificationSource[] = [],
+  // Tham số thứ 7 tuỳ chọn: thưởng Xu Học Bá tháng.
+  prizes: PrizeNotificationSource[] = []
 ): StudentNotification[] {
   const items: StudentNotification[] = [
     ...reviews.map((item) => ({
@@ -156,6 +167,15 @@ export function buildStudentNotifications(
       href: "/student/shop?tab=reward",
       createdAt: item.resolvedAt,
       unread: isUnread(item.resolvedAt, readAt)
+    })),
+    ...prizes.map((item) => ({
+      id: item.key,
+      type: "monthly_prize" as const,
+      title: `🏆 ${item.note ?? "Thưởng Học Bá tháng"} — +${item.amount} Xu`,
+      detail: null,
+      href: `/student/ranking?month=${item.key.slice("prize:xp:".length)}`,
+      createdAt: item.createdAt,
+      unread: isUnread(item.createdAt, readAt)
     }))
   ];
 

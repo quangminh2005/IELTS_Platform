@@ -21,7 +21,8 @@ const LABELS: Record<StudentNotificationType, string> = {
   session_change: "Đổi lịch học",
   schedule_update: "Lịch học",
   reward_delivered: "Đã nhận quà",
-  reward_rejected: "Đổi quà"
+  reward_rejected: "Đổi quà",
+  monthly_prize: "Thưởng Học Bá"
 };
 
 export function NotificationRow({

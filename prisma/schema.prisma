@@ -24,7 +24,7 @@ datasource db {
 // enum DeckCardSource (VocabDeckCard.source): bank | student
 // enum SpeakingPrepScope (Assignment.speakingPrepScope, null = per_question): per_question | shared
 // enum MaterialCategory (Material.category): book | homework
-// enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund
+// enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund | monthly_prize
 // enum RewardLimitPeriod (Reward.limitPeriod): month | ever
 // enum RedemptionStatus (RewardRedemption.status): pending | delivered | rejected | cancelled
 // enum ItemSource (StudentItem.source): purchase | achievement | streak (tư thế linh vật mở bằng chuỗi ngày)
@@ -707,7 +707,7 @@ model BugReport {
 model CoinTransaction {
   id        String   @id @default(cuid())
   studentId String
-  // earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund — xem comment đầu schema
+  // earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund | monthly_prize — xem comment đầu schema
   kind      String
   key       String
   amount    Int

@@ -5,13 +5,15 @@
 // Chạy trên prod: đặt DATABASE_URL = chuỗi kết nối prod cho riêng lệnh này.
 import { prisma } from "@/lib/prisma";
 import { loadMonthlyRecap } from "@/lib/monthly-recap-data";
-import { loadAchievementItems, syncWallet } from "@/lib/wallet";
+import { loadAchievementItems, loadMonthlyPrizeEntries, syncWallet } from "@/lib/wallet";
 
 async function main() {
   const apply = process.argv.includes("--apply");
 
   // Ngoài Next không có unstable_cache → gọi thẳng loader, tính MỘT lần cho cả trường.
   const achievements = await loadAchievementItems(loadMonthlyRecap);
+  const prizes = await loadMonthlyPrizeEntries(loadMonthlyRecap);
+  console.log(`Thưởng Học Bá tháng: ${prizes.length} dòng`);
   const students = await prisma.studentProfile.findMany({
     select: { id: true, displayName: true, coins: true },
     orderBy: { displayName: "asc" }
@@ -31,7 +33,7 @@ async function main() {
 
   let total = 0;
   for (const student of students) {
-    const result = await syncWallet(student.id, { achievements });
+    const result = await syncWallet(student.id, { achievements, prizes });
     const profile = await prisma.studentProfile.findUniqueOrThrow({
       where: { id: student.id },
       select: { coins: true }

@@ -187,6 +187,16 @@ describe("tham số trang Xếp hạng", () => {
     ).toEqual({ board: "streak", scope: "class", classId: "c2", monthKey: "2026-08" });
   });
 
+  it("phạm vi Bạn bè (Đợt 2) đi được qua URL", () => {
+    expect(resolveRankingParams({ scope: "friends" }, context).scope).toBe("friends");
+    expect(
+      rankingHref(
+        { board: "streak", scope: "friends", classId: "c1", monthKey: "2026-10" },
+        { latestMonth: "2026-10", defaultClassId: "c1" }
+      )
+    ).toBe("/student/ranking?board=streak&scope=friends");
+  });
+
   it("chưa có lớp → classId null", () => {
     expect(resolveRankingParams(undefined, { classIds: [], latestMonth: "2026-10" }).classId).toBeNull();
   });

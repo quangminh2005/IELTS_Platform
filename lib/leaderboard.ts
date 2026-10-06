@@ -231,7 +231,8 @@ export function formatCountdown(left: { days: number; hours: number; minutes: nu
 // ---- Tham số URL của /student/ranking ----
 
 export type RankingBoard = "xp" | "streak" | "class";
-export type RankingScope = "school" | "class";
+// "friends" (Đợt 2) = mình + người mình theo dõi.
+export type RankingScope = "school" | "class" | "friends";
 export type RankingParams = {
   board: RankingBoard;
   scope: RankingScope;
@@ -240,6 +241,7 @@ export type RankingParams = {
 };
 
 const BOARDS: readonly RankingBoard[] = ["xp", "streak", "class"];
+const SCOPES: readonly RankingScope[] = ["school", "class", "friends"];
 
 function isRankingBoard(value: unknown): value is RankingBoard {
   return typeof value === "string" && (BOARDS as readonly string[]).includes(value);
@@ -256,7 +258,7 @@ export function resolveRankingParams(
 
   return {
     board: isRankingBoard(board) ? board : "xp",
-    scope: raw?.scope === "class" ? "class" : "school",
+    scope: SCOPES.find((scope) => scope === raw?.scope) ?? "school",
     classId,
     monthKey: resolveMonthKey(raw?.month, context.latestMonth, RANKING_MONTH_OPTIONS)
   };

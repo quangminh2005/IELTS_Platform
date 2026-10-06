@@ -32,6 +32,8 @@ import { pendingBeforeSession } from "@/lib/student-calendar";
 import { getStudentRecapPopup } from "@/lib/monthly-recap-data";
 import { MonthlyRecapDialog } from "@/components/monthly-recap-dialog";
 import { MonthlyRecapPanel } from "@/components/monthly-recap-panel";
+import { HomeLeaderboardCard } from "@/components/leaderboard/home-leaderboard-card";
+import { getHomeLeaderboard } from "@/lib/leaderboard-data";
 
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
@@ -76,7 +78,7 @@ export default async function StudentDashboardPage() {
 
   // Các truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
   // một lượt đi/về database thay vì nhiều lượt nối tiếp.
-  const [recipients, lifetimeXp, dayStreak, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup] =
+  const [recipients, lifetimeXp, dayStreak, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup, homeBoard] =
     await Promise.all([
     prisma.assignmentRecipient.findMany({
       // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
@@ -115,7 +117,9 @@ export default async function StudentDashboardPage() {
     getStudentSchedule(student.id),
     countTodayCards(student.id),
     // Tổng kết tháng trước — chỉ có trong 7 ngày đầu tháng, lỗi thì trả null.
-    getStudentRecapPopup(student.id)
+    getStudentRecapPopup(student.id),
+    // Bảng xếp hạng thu nhỏ — lỗi thì trả null, không làm hỏng trang chủ.
+    getHomeLeaderboard(student.id)
   ]);
 
   const pendingCount = recipients.filter(
@@ -338,6 +342,8 @@ export default async function StudentDashboardPage() {
         </Link>
         <ProgressRing completed={completedCount} total={recipients.length} />
       </div>
+
+      {homeBoard ? <HomeLeaderboardCard data={homeBoard} studentId={student.id} /> : null}
 
       <VocabCard
         word={wordOfDay}

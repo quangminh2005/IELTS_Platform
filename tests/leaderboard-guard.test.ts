@@ -45,3 +45,18 @@ describe("trang Xếp hạng học viên", () => {
     expect(read("components/monthly-recap-panel.tsx")).toContain('profileLinkTarget="student"');
   });
 });
+
+describe("khối bảng xếp hạng ở trang chủ", () => {
+  it("getHomeLeaderboard tự nuốt lỗi — trang chủ không bao giờ sập vì bảng", () => {
+    const source = read("lib/leaderboard-data.ts");
+    expect(source).toMatch(/export async function getHomeLeaderboard[\s\S]*?try \{[\s\S]*?catch \(error\)/);
+  });
+
+  it("trang chủ hiện khối sau hàng thẻ chuỗi/hạng, trước thẻ Từ vựng", () => {
+    const page = read("app/student/page.tsx");
+    expect(page).toContain("getHomeLeaderboard(student.id)");
+    const card = page.indexOf("<HomeLeaderboardCard");
+    expect(card).toBeGreaterThan(page.indexOf("<ProgressRing"));
+    expect(card).toBeLessThan(page.indexOf("<VocabCard"));
+  });
+});

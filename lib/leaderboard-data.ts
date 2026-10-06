@@ -2,12 +2,21 @@ import { unstable_cache } from "next/cache";
 import { loadSchoolStreakInput } from "@/lib/day-streak-data";
 import {
   LEADERBOARD_CACHE_TAG,
+  boardWindow,
   schoolDayStreaks,
+  streakBoardEntries,
+  xpBoardEntries,
   type BoardPerson,
+  type HomeBoardView,
+  type HomeLeaderboardData,
+  type LeaderboardEntry,
   type StreakBoardSource
 } from "@/lib/leaderboard";
+import { monthKeyOf } from "@/lib/monthly-recap";
+import { getMonthlyRecap } from "@/lib/monthly-recap-data";
 import { prisma } from "@/lib/prisma";
 import { vietnamDateKey } from "@/lib/vocab-day";
+import { getLifetimeXpMap } from "@/lib/xp-rank-data";
 
 // Đọc DB cho bảng xếp hạng (Mạng xã hội Đợt 1). Logic thuần ở lib/leaderboard.ts.
 
@@ -71,4 +80,41 @@ export async function getStreakBoard(now: Date = new Date()): Promise<StreakBoar
 export async function classMemberIds(classId: string): Promise<Set<string>> {
   const rows = await prisma.classStudent.findMany({ where: { classId }, select: { studentId: true } });
   return new Set(rows.map((row) => row.studentId));
+}
+
+const HOME_TOP = 5;
+
+function homeView(entries: LeaderboardEntry[], studentId: string, href: string): HomeBoardView {
+  return {
+    ...boardWindow(entries, studentId, HOME_TOP),
+    inBoard: entries.some((entry) => entry.studentId === studentId),
+    href
+  };
+}
+
+// Khối Top 5 + mình ở trang chủ (toàn trường). Lỗi → null, trang chủ vẫn chạy.
+export async function getHomeLeaderboard(
+  studentId: string,
+  now: Date = new Date()
+): Promise<HomeLeaderboardData | null> {
+  try {
+    const monthKey = monthKeyOf(now);
+    const [recap, streakRows] = await Promise.all([getMonthlyRecap(monthKey, now), getStreakBoard(now)]);
+    // Chip hạng đấu chỉ cần cho những dòng sẽ hiện: top 5 + chính mình.
+    const lifetimeXp = await getLifetimeXpMap(
+      recap.xpBoard
+        .slice(0, HOME_TOP)
+        .map((entry) => entry.studentId)
+        .concat(studentId)
+    );
+
+    return {
+      monthKey,
+      xp: homeView(xpBoardEntries(recap.xpBoard, null, lifetimeXp), studentId, "/student/ranking"),
+      streak: homeView(streakBoardEntries(streakRows, null), studentId, "/student/ranking?board=streak")
+    };
+  } catch (error) {
+    console.error("[bang-xep-hang] không tính được khối trang chủ", error);
+    return null;
+  }
 }

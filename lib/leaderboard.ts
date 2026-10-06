@@ -199,6 +199,16 @@ export function boardWindow(
   return { top, me: entries.find((entry) => entry.studentId === myId) ?? null };
 }
 
+// Dữ liệu khối trang chủ (đi qua JSON tới client component).
+export type HomeBoardView = {
+  top: LeaderboardEntry[];
+  me: LeaderboardEntry | null; // dòng của mình khi đứng ngoài top
+  inBoard: boolean; // false = mình chưa có XP / chưa có chuỗi
+  href: string;
+};
+
+export type HomeLeaderboardData = { monthKey: string; xp: HomeBoardView; streak: HomeBoardView };
+
 // ---- Đếm ngược hết tháng (giờ VN) ----
 
 export function monthEndsIn(now: Date): { days: number; hours: number; minutes: number } {

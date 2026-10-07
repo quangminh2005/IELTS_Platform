@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {
   type DragEvent,
+  type InputHTMLAttributes,
   Fragment,
   useCallback,
   useEffect,
@@ -491,6 +492,30 @@ function WritingEditorPane({
   );
 }
 
+/*
+  Ô gõ đáp án (không kiểm soát). Giá trị ban đầu CHỈ đọc một lần lúc ô hiện ra.
+
+  Trang truyền `answers` (đổi theo từng phím) làm giá trị ban đầu, để ô dựng lại
+  khi đổi part vẫn còn chữ. Nhưng nếu đưa thẳng vào `defaultValue` thì mỗi phím
+  React lại ghi đè thuộc tính `value` của CHÍNH ô đang gõ. 6/10/2026 một học
+  viên gõ trên điện thoại Android (Zalo) bị con trỏ nhảy về đầu ô sau mỗi chữ →
+  "Children" thành "nerdlihC". Đóng băng giá trị ban đầu thì ô đang gõ không bị
+  đụng tới nữa.
+
+  Không dùng `inline-flex` cho <input>: display flex trên ô nhập không có tác dụng
+  gì mà là nghi phạm thứ hai của lỗi con trỏ trên bàn phím Android.
+*/
+function AnswerTextInput({
+  initialValue,
+  ...props
+}: Omit<InputHTMLAttributes<HTMLInputElement>, "defaultValue" | "value"> & {
+  initialValue: string;
+}) {
+  const [frozenInitial] = useState(initialValue);
+
+  return <input {...props} defaultValue={frozenInitial} />;
+}
+
 function QuestionInput({
   question,
   initialValue,
@@ -537,9 +562,9 @@ function QuestionInput({
   }
 
   return (
-    <input
+    <AnswerTextInput
       name={fieldName}
-      defaultValue={initialValue}
+      initialValue={initialValue}
       onChange={(event) => onAnswerChange(question.id, event.target.value)}
       className="mt-3 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm outline-none focus:border-primary"
       autoComplete="off"
@@ -572,13 +597,13 @@ function InlineGapQuestion({
           inputPlaced = true;
 
           return (
-            <input
+            <AnswerTextInput
               key={`blank-${index}`}
               name={fieldName}
-              defaultValue={initialValue}
+              initialValue={initialValue}
               onChange={(event) => onAnswerChange(question.id, event.target.value)}
               autoComplete="off"
-              className="mx-1 inline-flex h-8 w-40 rounded-md border border-primary/50 bg-background/80 px-2 text-center align-middle text-sm font-medium outline-none ring-primary/40 focus:ring-2"
+              className="mx-1 inline-block h-8 w-40 rounded-md border border-primary/50 bg-background/80 px-2 text-center align-middle text-sm font-medium outline-none ring-primary/40 focus:ring-2"
             />
           );
         }
@@ -708,7 +733,7 @@ function TableCompletionCell({
   // Mỗi mục "• ..." của đề gốc nằm trên MỘT dòng riêng trong ô (xem splitCellLines).
   const lines = splitCellLines(value);
   const inputClass =
-    "mx-1 inline-flex h-8 w-24 rounded-md border border-primary/50 bg-background/80 px-2 text-center text-sm font-medium outline-none ring-primary/40 focus:ring-2";
+    "mx-1 inline-block h-8 w-24 rounded-md border border-primary/50 bg-background/80 px-2 text-center text-sm font-medium outline-none ring-primary/40 focus:ring-2";
 
   const renderSegment = (
     segment: { type: "text" | "blank"; value: string },
@@ -731,11 +756,11 @@ function TableCompletionCell({
     // Ô đơn (một chỗ trống cho một câu) — như cũ.
     if (count <= 1) {
       return (
-        <input
+        <AnswerTextInput
           key={key}
           name={`q_${question.id}`}
           placeholder={segment.value}
-          defaultValue={savedAnswers[question.id] ?? ""}
+          initialValue={savedAnswers[question.id] ?? ""}
           onChange={(event) => onAnswerChange(question.id, event.target.value)}
           autoComplete="off"
           className={inputClass}
@@ -1021,7 +1046,7 @@ function NoteCompletionQuestionSet({
   // Đếm lần xuất hiện của mỗi order trong MỘT lượt render để biết đây là phần thứ mấy.
   const seen: Record<number, number> = {};
   const blankClass =
-    "mx-1 inline-flex h-8 w-28 items-center rounded-md border border-primary/60 bg-background px-2 text-center align-middle text-sm font-semibold outline-none ring-primary/40 focus:ring-2";
+    "mx-1 inline-block h-8 w-28 rounded-md border border-primary/60 bg-background px-2 text-center align-middle text-sm font-semibold outline-none ring-primary/40 focus:ring-2";
 
   // Ô trống inline (dùng chung cho từng dòng ghi chú).
   const renderBlank = (order: string, key: string) => {
@@ -1036,11 +1061,11 @@ function NoteCompletionQuestionSet({
     // Ô đơn (một chỗ trống cho một câu) — như cũ.
     if (count <= 1) {
       return (
-        <input
+        <AnswerTextInput
           key={key}
           name={`q_${question.id}`}
           placeholder={order}
-          defaultValue={savedAnswers[question.id] ?? ""}
+          initialValue={savedAnswers[question.id] ?? ""}
           onChange={(event) => onAnswerChange(question.id, event.target.value)}
           autoComplete="off"
           className={blankClass}

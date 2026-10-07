@@ -1,9 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 import { requireStudent } from "@/lib/actions/attempts";
 import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
+import { LEADERBOARD_CACHE_TAG } from "@/lib/leaderboard";
 import { prisma } from "@/lib/prisma";
 import { vietnamDateKey } from "@/lib/vocab-day";
 import { dateKeyToUtcDate } from "@/lib/vocab-daily";
@@ -154,7 +155,7 @@ export async function answerVocabCard(input: {
       });
     }
 
-    await prisma.vocabQuizDay.upsert({
+    const quizDay = await prisma.vocabQuizDay.upsert({
       where: { studentId_date: { studentId: student.id, date: dateKeyToUtcDate(today) } },
       update: { correct: { increment: correct ? 1 : 0 }, total: { increment: 1 } },
       create: {
@@ -164,6 +165,17 @@ export async function answerVocabCard(input: {
         total: 1
       }
     });
+
+    // Thẻ đầu tiên trong ngày = hôm nay thành ngày có học → bảng Chuỗi (cache 5 phút)
+    // phải làm mới ngay, không thì thẻ Chuỗi ở trang chủ và bảng xếp hạng lệch nhau.
+    // Chỉ xoá ở thẻ đầu: các thẻ sau không đổi chuỗi, khỏi tính lại bảng cả trường.
+    if (quizDay.total === 1) {
+      try {
+        revalidateTag(LEADERBOARD_CACHE_TAG);
+      } catch (error) {
+        console.error("[bang-xep-hang] không xoá được cache", error);
+      }
+    }
 
     // Xu ôn từ hôm nay (2 thẻ = 1 Xu, trần 15). Lỗi ví không làm mất câu đã ôn.
     try {

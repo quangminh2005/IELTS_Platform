@@ -1,10 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { requireStudent } from "@/lib/actions/attempts";
 import { actionFail, actionOk, type ActionResult } from "@/lib/action-result";
 import { dayRestoreKey, formatDayShort } from "@/lib/day-streak";
 import { getDayStreak } from "@/lib/day-streak-data";
+import { LEADERBOARD_CACHE_TAG } from "@/lib/leaderboard";
 import { prisma } from "@/lib/prisma";
 import { lockStudent, recomputeCoins } from "@/lib/wallet";
 
@@ -39,6 +40,13 @@ export async function restoreStreak(): Promise<ActionResult> {
       await recomputeCoins(tx, student.id);
       return label;
     });
+
+    // Ngày cứu được tính vào chuỗi → bảng Chuỗi (cache 5 phút) làm mới ngay.
+    try {
+      revalidateTag(LEADERBOARD_CACHE_TAG);
+    } catch (error) {
+      console.error("[bang-xep-hang] không xoá được cache", error);
+    }
 
     revalidatePath("/student");
     revalidatePath("/student/profile");

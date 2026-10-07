@@ -67,8 +67,9 @@ async function loadStreakBoard(today: string): Promise<StreakBoardSource[]> {
   });
 }
 
-// Khoá theo NGÀY VN (chuỗi) để cache trúng cả ngày; làm mới sau 5 phút hoặc khi có
-// bài nộp (submitSkill gọi revalidateTag). Ôn thẻ không xoá cache → trễ tối đa 5 phút.
+// Khoá theo NGÀY VN (chuỗi) để cache trúng cả ngày; làm mới sau 5 phút hoặc khi chuỗi
+// có thể đổi: nộp bài (submitSkill), thẻ ôn ĐẦU TIÊN trong ngày (vocab-deck), cứu chuỗi
+// bằng Xu (streak.ts) — các chỗ đó gọi revalidateTag.
 const cachedStreakBoard = unstable_cache(loadStreakBoard, ["leaderboard-streak-v1"], {
   revalidate: 300,
   tags: [LEADERBOARD_CACHE_TAG]

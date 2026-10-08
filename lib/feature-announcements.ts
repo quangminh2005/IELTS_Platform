@@ -88,7 +88,7 @@ export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
     audience: "student",
     title: ["Cửa hàng Xu", "Tranh danh hoạ & quà"],
     description:
-      "Dùng Xu kiếm được khi học để đổi nền hồ sơ tranh danh hoạ, khung avatar có hiệu ứng, hoặc đổi quà thật từ thầy.",
+      "Đổi Xu lấy nền hồ sơ tranh danh hoạ, khung avatar có hiệu ứng hoặc quà thật từ thầy.",
     cta: "Vào cửa hàng",
     href: "/student/shop",
     mascot: "owl",
@@ -101,7 +101,7 @@ export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
     audience: "student",
     title: ["Hạng đấu", "Leo hạng bằng XP"],
     description:
-      "Mỗi bài nộp, mỗi lượt ôn từ đều cộng XP. 7 hạng, 27 cấp — xem mình đang ở đâu và còn bao nhiêu XP để lên hạng.",
+      "Mỗi bài nộp, mỗi lượt ôn từ đều cộng XP. Xem mình đang ở hạng nào, còn bao XP để lên.",
     cta: "Xem hạng của tôi",
     href: "/student/ranks",
     mascot: "dragon",

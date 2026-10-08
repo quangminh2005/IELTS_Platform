@@ -97,19 +97,6 @@ export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
     shippedAt: "2026-10-05"
   },
   {
-    id: "student-ai-grading",
-    audience: "student",
-    title: ["Nhờ AI chấm", "Writing & Speaking"],
-    description:
-      "Làm bài tự luyện Viết hoặc Nói xong, bấm “Nhờ AI chấm” ở trang Kết quả để có band từng tiêu chí và lỗi cần sửa.",
-    cta: "Tự luyện ngay",
-    href: "/student/practice",
-    mascot: "owl",
-    pose: "read",
-    theme: "night",
-    shippedAt: "2026-10-05"
-  },
-  {
     id: "student-hide-audio",
     audience: "student",
     title: ["Tự luyện Nghe", "Ẩn audio, +50% XP"],

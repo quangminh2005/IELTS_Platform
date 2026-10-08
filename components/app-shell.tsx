@@ -439,7 +439,9 @@ export function AppShell({
         <HeaderActions role={role} studentAvatar={studentAvatar} />
       </header>
 
-      <div className={`mx-auto flex w-full ${isWidePage ? "max-w-[2200px]" : "max-w-7xl"}`}>
+      {/* Khung ngoài trải hết chiều ngang để sidebar nằm sát mép trái màn hình;
+          phần nội dung tự căn giữa trong khoảng còn lại (max-w-5xl bên dưới). */}
+      <div className="flex w-full">
         {/* Sidebar cố định cho màn hình lớn */}
         <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col border-r border-border bg-card/60 px-4 py-5 backdrop-blur lg:flex">
           {/* Thương hiệu chiếm trọn một dòng: nhét thêm cụm nút (avatar / chuông /
@@ -521,7 +523,7 @@ export function AppShell({
         {/* Nội dung chính */}
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
           <div
-            className={`mx-auto w-full animate-fade-in ${isWidePage ? "" : "max-w-5xl"}`}
+            className={`mx-auto w-full animate-fade-in ${isWidePage ? "max-w-[1900px]" : "max-w-5xl"}`}
           >
             {children}
           </div>

@@ -38,6 +38,11 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(6px)" },
           to: { opacity: "1", transform: "translateY(0)" }
         },
+        // Gạch tiến độ slide đang chạy ở banner "Tính năng mới" (feature-banner.tsx).
+        "banner-progress": {
+          from: { transform: "scaleX(0)" },
+          to: { transform: "scaleX(1)" }
+        },
         // Bảng "Chỉnh sửa hồ sơ" trượt vào từ mép phải.
         "drawer-in": {
           from: { transform: "translateX(100%)" },
@@ -175,6 +180,7 @@ const config: Config = {
       },
       animation: {
         "fade-in": "fade-in 0.35s ease both",
+        "banner-progress": "banner-progress 7s linear both",
         "drawer-in": "drawer-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both",
         "fade-in-soft": "fade-in-soft 0.9s ease both",
         // Vòng lửa khung "Phượng hoàng" ở Cửa hàng (keyframes spin có sẵn của Tailwind).

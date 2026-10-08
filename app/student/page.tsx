@@ -34,6 +34,8 @@ import { MonthlyRecapDialog } from "@/components/monthly-recap-dialog";
 import { MonthlyRecapPanel } from "@/components/monthly-recap-panel";
 import { HomeLeaderboardCard } from "@/components/leaderboard/home-leaderboard-card";
 import { getHomeLeaderboard } from "@/lib/leaderboard-data";
+import { FeatureBanner } from "@/components/feature-banner";
+import { FEATURE_ANNOUNCEMENTS, activeAnnouncements } from "@/lib/feature-announcements";
 
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
@@ -139,6 +141,9 @@ export default async function StudentDashboardPage() {
     : null;
   const nextSessionKey = nextSession ? vnDateKey(nextSession.startsAt) : null;
 
+  // Banner "Tính năng mới" — slide tự ẩn sau 30 ngày, hết slide thì không hiện.
+  const announcements = activeAnnouncements(FEATURE_ANNOUNCEMENTS, "student", now);
+
   const streak = dayStreak.streak;
 
   const rankProgress = getXpProgress(lifetimeXp);
@@ -171,6 +176,8 @@ export default async function StudentDashboardPage() {
             : "Hiện chưa có bài tập nào được giao. Hãy quay lại sau nhé."}
         </p>
       </header>
+
+      {announcements.length > 0 ? <FeatureBanner slides={announcements} /> : null}
 
       {nextSession && nextSessionClass && nextSessionKey ? (
         <NextSessionCard

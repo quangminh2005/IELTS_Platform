@@ -3,6 +3,8 @@ import { requireTeacherPage } from "@/lib/teacher-page";
 import { prisma } from "@/lib/prisma";
 import { manualGradedUnitWhere } from "@/lib/manual-grading";
 import { PRACTICE_MODE, excludePracticeAssignment, onlyPracticeAssignment } from "@/lib/practice";
+import { FeatureBanner } from "@/components/feature-banner";
+import { FEATURE_ANNOUNCEMENTS, activeAnnouncements } from "@/lib/feature-announcements";
 
 function formatDateTime(value: Date | null) {
   if (!value) {
@@ -110,6 +112,9 @@ export default async function TeacherDashboardPage() {
     { label: "Tài liệu", value: materialCount, note: "Nội dung có thể giao", accent: "text-emerald-600 dark:text-emerald-300" }
   ];
 
+  // Banner "Tính năng mới" cho thầy — slide tự ẩn sau 30 ngày.
+  const announcements = activeAnnouncements(FEATURE_ANNOUNCEMENTS, "teacher", new Date());
+
   return (
     <div className="space-y-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -132,6 +137,8 @@ export default async function TeacherDashboardPage() {
           ) : null}
         </Link>
       </header>
+
+      {announcements.length > 0 ? <FeatureBanner slides={announcements} /> : null}
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map((card) => (

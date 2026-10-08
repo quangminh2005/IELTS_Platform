@@ -84,6 +84,19 @@ export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
     shippedAt: "2026-10-06"
   },
   {
+    id: "student-shop",
+    audience: "student",
+    title: ["Cửa hàng Xu", "Tranh danh hoạ & quà"],
+    description:
+      "Dùng Xu kiếm được khi học để đổi nền hồ sơ tranh danh hoạ, khung avatar có hiệu ứng, hoặc đổi quà thật từ thầy.",
+    cta: "Vào cửa hàng",
+    href: "/student/shop",
+    mascot: "owl",
+    pose: "cheer",
+    theme: "dusk",
+    shippedAt: "2026-10-06"
+  },
+  {
     id: "student-xp-ranks",
     audience: "student",
     title: ["Hạng đấu", "Leo hạng bằng XP"],

@@ -32,6 +32,23 @@ describe("bắt vùng chọn trên cảm ứng", () => {
   });
 });
 
+// 8/10/2026 học viên báo không tô màu được đoạn văn: kéo chuột tới cuối dòng bị
+// lố sang khung câu hỏi, vùng chọn có điểm cuối nằm ngoài nên bị bỏ qua.
+describe("bôi đen lố ra ngoài vùng tô màu", () => {
+  it("cả hai vùng tô màu cắt vùng chọn về trong vùng của mình", () => {
+    for (const source of [layer, region]) {
+      expect(source).toContain("selectionRangeWithin(container)");
+      expect(source).not.toContain("!container.contains(range.commonAncestorContainer)");
+    }
+  });
+
+  it("cắt theo mép vùng tô và chỉ nhận cú kéo bắt đầu trong vùng", () => {
+    expect(hook).toContain("Range.START_TO_START");
+    expect(hook).toContain("Range.END_TO_END");
+    expect(hook).toContain("container.contains(selection.anchorNode)");
+  });
+});
+
 describe("đặt popup tô màu trong màn hình", () => {
   const size = { width: 224, height: 88 };
   const screen = { viewportWidth: 375, viewportHeight: 812 };

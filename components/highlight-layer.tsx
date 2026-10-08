@@ -8,7 +8,10 @@ import {
   type HighlightPayload
 } from "@/components/highlight-popup";
 import { useNoTranslateGuard } from "@/components/no-translate-guard";
-import { useSelectionCapture } from "@/components/use-selection-capture";
+import {
+  selectionRangeWithin,
+  useSelectionCapture
+} from "@/components/use-selection-capture";
 
 export type { HighlightPayload };
 
@@ -177,19 +180,9 @@ export function HighlightLayer({
 
   function captureSelection() {
     const container = containerRef.current;
-    const activeSelection = window.getSelection();
+    const range = container ? selectionRangeWithin(container) : null;
 
-    if (!container || !activeSelection || activeSelection.rangeCount === 0) {
-      return;
-    }
-
-    const range = activeSelection.getRangeAt(0);
-
-    if (
-      range.collapsed ||
-      !container.contains(range.commonAncestorContainer) ||
-      !activeSelection.toString().trim()
-    ) {
+    if (!container || !range) {
       return;
     }
 

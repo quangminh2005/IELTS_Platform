@@ -19,6 +19,53 @@ import { useEffect, useRef } from "react";
 // Vùng chọn phải đứng yên chừng này mới coi là chọn xong.
 export const SELECTION_SETTLE_MS = 320;
 
+/*
+  Lấy phần vùng chọn nằm TRONG vùng tô màu.
+
+  Trên máy tính, kéo chuột bôi tới cuối dòng rất hay bị lố sang khung câu hỏi
+  bên cạnh: chữ bôi đen vẫn chỉ ở đoạn văn nhưng điểm cuối của vùng chọn đã nằm
+  ngoài, trước đây vùng chọn như vậy bị bỏ qua nên popup chọn màu không hiện
+  (học viên báo "không tô màu được"). Nay cắt vùng chọn về đúng mép vùng tô.
+
+  Chỉ nhận khi cú kéo BẮT ĐẦU trong vùng này (anchorNode) — kéo từ đoạn văn
+  sang khung câu hỏi thì chỉ đoạn văn mở popup, không bật hai popup cùng lúc.
+*/
+export function selectionRangeWithin(container: HTMLElement): Range | null {
+  const selection = window.getSelection();
+
+  if (!selection || selection.rangeCount === 0) {
+    return null;
+  }
+
+  const range = selection.getRangeAt(0);
+
+  if (range.collapsed) {
+    return null;
+  }
+
+  if (container.contains(range.commonAncestorContainer)) {
+    return range.toString().trim() ? range : null;
+  }
+
+  if (!selection.anchorNode || !container.contains(selection.anchorNode)) {
+    return null;
+  }
+
+  const bounds = document.createRange();
+  bounds.selectNodeContents(container);
+  const clipped = range.cloneRange();
+
+  if (clipped.compareBoundaryPoints(Range.START_TO_START, bounds) < 0) {
+    clipped.setStart(bounds.startContainer, bounds.startOffset);
+  }
+
+  if (clipped.compareBoundaryPoints(Range.END_TO_END, bounds) > 0) {
+    clipped.setEnd(bounds.endContainer, bounds.endOffset);
+  }
+
+  return !clipped.collapsed && clipped.toString().trim() ? clipped : null;
+}
+
 export function useSelectionCapture(onCapture: () => void) {
   const captureRef = useRef(onCapture);
   captureRef.current = onCapture;

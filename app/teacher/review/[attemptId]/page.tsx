@@ -472,7 +472,7 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
 
               {overallFluency ? (
                 <p className="rounded-md border border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
-                  <span className="font-semibold text-foreground">Độ trôi chảy cả bài (đo từ audio): </span>
+                  <span className="font-semibold text-foreground">Cả bài (đo từ audio): </span>
                   {formatFluencyLine(overallFluency)}
                 </p>
               ) : null}

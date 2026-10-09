@@ -177,186 +177,195 @@ export default async function StudentDashboardPage() {
         </p>
       </header>
 
-      {announcements.length > 0 ? <FeatureBanner slides={announcements} /> : null}
+      {/* Màn hình rộng (≥1700px) chia 2 cột kiểu chin.edu.vn thay vì kéo giãn một
+          cột: trái = banner, buổi học, bài được giao, 3 thẻ chỉ số; phải = bảng
+          xếp hạng + từ vựng. Màn hẹp xếp dọc đúng thứ tự cũ (trái rồi phải). */}
+      <div className="grid gap-8 min-[1700px]:grid-cols-[minmax(0,1fr)_400px] min-[1700px]:items-start min-[1700px]:gap-6">
+        <div className="min-w-0 space-y-8 min-[1700px]:space-y-6">
+          {announcements.length > 0 ? <FeatureBanner slides={announcements} /> : null}
 
-      {nextSession && nextSessionClass && nextSessionKey ? (
-        <NextSessionCard
-          label={relativeSessionLabel(nextSession.startsAt, now)}
-          classLabel={nextSessionClass.name}
-          numberText={sessionNumberText(
-            numberSessions(
-              schedule.sessions.filter((item) => item.classId === nextSession.classId)
-            ).get(nextSession.id) ?? null,
-            nextSessionClass.totalSessions
-          )}
-          ongoing={nextSession.startsAt.getTime() <= now.getTime()}
-          pendingCount={pendingBeforeSession(
-            recipients.map((recipient) => ({
-              status: recipient.status,
-              deadline: recipient.assignment.deadline
-            })),
-            nextSession.startsAt,
-            now
-          )}
-          meetingUrl={nextSession.mode === "online" ? nextSession.meetingUrl : null}
-          calendarHref={`/student/calendar?m=${nextSessionKey.slice(0, 7)}&d=${nextSessionKey}`}
-        />
-      ) : null}
+          {nextSession && nextSessionClass && nextSessionKey ? (
+            <NextSessionCard
+              label={relativeSessionLabel(nextSession.startsAt, now)}
+              classLabel={nextSessionClass.name}
+              numberText={sessionNumberText(
+                numberSessions(
+                  schedule.sessions.filter((item) => item.classId === nextSession.classId)
+                ).get(nextSession.id) ?? null,
+                nextSessionClass.totalSessions
+              )}
+              ongoing={nextSession.startsAt.getTime() <= now.getTime()}
+              pendingCount={pendingBeforeSession(
+                recipients.map((recipient) => ({
+                  status: recipient.status,
+                  deadline: recipient.assignment.deadline
+                })),
+                nextSession.startsAt,
+                now
+              )}
+              meetingUrl={nextSession.mode === "online" ? nextSession.meetingUrl : null}
+              calendarHref={`/student/calendar?m=${nextSessionKey.slice(0, 7)}&d=${nextSessionKey}`}
+            />
+          ) : null}
 
-      {/* Việc chính của học viên đứng đầu trang: trước đây khối này nằm sau
-          chuỗi tuần / hạng / từ vựng / vòng tiến độ, trên điện thoại phải cuộn
-          ~3 màn mới thấy bài cần làm. */}
-      <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-        <div className="flex items-center justify-between border-b border-border px-5 py-4">
-          <h3 className="text-base font-semibold">Bài được giao</h3>
-          <span className="text-sm text-muted-foreground">{recipients.length} bài</span>
-        </div>
-        <div className="divide-y divide-border">
-          {recipients.length > 0 ? (
-            orderedRecipients.map((recipient) => {
-              const latestAttempt = recipient.attempts[0];
-              const done =
-                recipient.status === "submitted" || recipient.status === "reviewed";
-              const deadline = recipient.assignment.deadline;
-              // Chưa nộp mà đã qua hạn -> cảnh báo; đã nộp sau hạn -> nhãn nộp trễ.
-              const overdue = !done && deadline !== null && deadline.getTime() < now.getTime();
-              const submittedLate = done && isSubmissionLate(recipient.submittedAt, deadline);
-
-              return (
-                <article
-                  key={recipient.id}
-                  className="flex flex-col gap-3 px-5 py-4 transition hover:bg-muted/60 sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div className="min-w-0">
-                    <p className="font-semibold">{recipient.assignment.title}</p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {recipient.assignment._count.units} phần
-                      {recipient.assignment.totalTimeLimitMinutes
-                        ? ` · ${recipient.assignment.totalTimeLimitMinutes} phút cả bài`
-                        : recipient.assignment.timeLimitMinutes
-                          ? ` · ${recipient.assignment.timeLimitMinutes} phút`
-                          : ""}
-                    </p>
-                    {deadline ? (
-                      <p
-                        className={`mt-1 text-sm ${
-                          overdue ? "font-medium text-red-600 dark:text-red-400" : "text-muted-foreground"
-                        }`}
-                      >
-                        Hạn nộp: {formatDeadline(deadline)}
-                      </p>
-                    ) : null}
-                    {overdue ? (
-                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                        Đã quá hạn — nộp bây giờ sẽ tính là nộp trễ và chỉ được nửa điểm hoàn thành.
-                      </p>
-                    ) : null}
-                    {latestAttempt ? (
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        Lần làm gần nhất: {formatStatus(latestAttempt.status)}
-                        {latestAttempt.scorePercent !== null
-                          ? ` · ${Math.round(latestAttempt.scorePercent)}%`
-                          : ""}
-                      </p>
-                    ) : null}
-                    <div className="mt-2">
-                      <SkillTags
-                        skills={recipient.assignment.units.map(
-                          (unit) => unit.assignableUnit.skill
-                        )}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex shrink-0 flex-wrap items-center gap-3">
-                    {overdue ? (
-                      <OverdueBadge className="px-3 py-1" />
-                    ) : (
-                      <span
-                        className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusBadgeClasses(
-                          recipient.status
-                        )}`}
-                      >
-                        {formatStatus(recipient.status)}
-                      </span>
-                    )}
-                    {submittedLate ? <LateBadge className="px-3 py-1" /> : null}
-                    <Link
-                      href={
-                        done && latestAttempt
-                          ? `/student/results/${latestAttempt.id}`
-                          : `/student/assignments/${recipient.id}`
-                      }
-                      className={
-                        done
-                          ? "rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary"
-                          : "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
-                      }
-                    >
-                      {done ? "Xem lại" : "Làm bài"}
-                    </Link>
-                  </div>
-                </article>
-              );
-            })
-          ) : (
-            <div className="px-5 py-12 text-center">
-              <p className="text-sm font-medium">Chưa có bài tập nào</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Bài tập do giáo viên giao sẽ xuất hiện ở đây.
-              </p>
+          {/* Việc chính của học viên đứng đầu trang: trước đây khối này nằm sau
+              chuỗi tuần / hạng / từ vựng / vòng tiến độ, trên điện thoại phải cuộn
+              ~3 màn mới thấy bài cần làm. */}
+          <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+            <div className="flex items-center justify-between border-b border-border px-5 py-4">
+              <h3 className="text-base font-semibold">Bài được giao</h3>
+              <span className="text-sm text-muted-foreground">{recipients.length} bài</span>
             </div>
-          )}
-        </div>
-      </section>
+            <div className="divide-y divide-border">
+              {recipients.length > 0 ? (
+                orderedRecipients.map((recipient) => {
+                  const latestAttempt = recipient.attempts[0];
+                  const done =
+                    recipient.status === "submitted" || recipient.status === "reviewed";
+                  const deadline = recipient.assignment.deadline;
+                  // Chưa nộp mà đã qua hạn -> cảnh báo; đã nộp sau hạn -> nhãn nộp trễ.
+                  const overdue = !done && deadline !== null && deadline.getTime() < now.getTime();
+                  const submittedLate = done && isSubmissionLate(recipient.submittedAt, deadline);
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <StreakBadge
-          mascot={
-            resolvePose(student.equippedMascot) ? (
-              <EquippedMascot poseKey={student.equippedMascot} className="-my-2 block h-16 w-16" />
-            ) : undefined
-          }
-          days={streak.days}
-          activeToday={streak.activeToday}
-          restore={
-            dayStreak.offer
-              ? {
-                  lostDays: dayStreak.offer.lostDays,
-                  dayLabel: formatDayShort(dayStreak.offer.dayKey),
-                  price: dayStreak.price,
-                  coins: dayStreak.coins
-                }
-              : null
-          }
-        />
-        <Link
-          href="/student/ranks"
-          className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-card transition hover:border-primary/50"
-        >
-          <RankMedal
-            rankKey={rankProgress.current.rank.key}
-            level={rankProgress.current.levelIndex}
-            className="h-12 w-12 shrink-0"
-          />
-          <div className="min-w-0">
-            <p className="text-base font-semibold">Hạng {levelName(rankProgress.current)}</p>
-            <p className="mt-0.5 text-sm text-muted-foreground">
-              {rankProgress.next && rankProgress.xpToNext !== null
-                ? `Còn ${rankProgress.xpToNext} XP nữa lên ${levelName(rankProgress.next)}`
-                : "Bạn đang ở đỉnh cao nhất! 👑"}
-            </p>
+                  return (
+                    <article
+                      key={recipient.id}
+                      className="flex flex-col gap-3 px-5 py-4 transition hover:bg-muted/60 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="min-w-0">
+                        <p className="font-semibold">{recipient.assignment.title}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {recipient.assignment._count.units} phần
+                          {recipient.assignment.totalTimeLimitMinutes
+                            ? ` · ${recipient.assignment.totalTimeLimitMinutes} phút cả bài`
+                            : recipient.assignment.timeLimitMinutes
+                              ? ` · ${recipient.assignment.timeLimitMinutes} phút`
+                              : ""}
+                        </p>
+                        {deadline ? (
+                          <p
+                            className={`mt-1 text-sm ${
+                              overdue ? "font-medium text-red-600 dark:text-red-400" : "text-muted-foreground"
+                            }`}
+                          >
+                            Hạn nộp: {formatDeadline(deadline)}
+                          </p>
+                        ) : null}
+                        {overdue ? (
+                          <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                            Đã quá hạn — nộp bây giờ sẽ tính là nộp trễ và chỉ được nửa điểm hoàn thành.
+                          </p>
+                        ) : null}
+                        {latestAttempt ? (
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            Lần làm gần nhất: {formatStatus(latestAttempt.status)}
+                            {latestAttempt.scorePercent !== null
+                              ? ` · ${Math.round(latestAttempt.scorePercent)}%`
+                              : ""}
+                          </p>
+                        ) : null}
+                        <div className="mt-2">
+                          <SkillTags
+                            skills={recipient.assignment.units.map(
+                              (unit) => unit.assignableUnit.skill
+                            )}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex shrink-0 flex-wrap items-center gap-3">
+                        {overdue ? (
+                          <OverdueBadge className="px-3 py-1" />
+                        ) : (
+                          <span
+                            className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusBadgeClasses(
+                              recipient.status
+                            )}`}
+                          >
+                            {formatStatus(recipient.status)}
+                          </span>
+                        )}
+                        {submittedLate ? <LateBadge className="px-3 py-1" /> : null}
+                        <Link
+                          href={
+                            done && latestAttempt
+                              ? `/student/results/${latestAttempt.id}`
+                              : `/student/assignments/${recipient.id}`
+                          }
+                          className={
+                            done
+                              ? "rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary"
+                              : "rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90"
+                          }
+                        >
+                          {done ? "Xem lại" : "Làm bài"}
+                        </Link>
+                      </div>
+                    </article>
+                  );
+                })
+              ) : (
+                <div className="px-5 py-12 text-center">
+                  <p className="text-sm font-medium">Chưa có bài tập nào</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Bài tập do giáo viên giao sẽ xuất hiện ở đây.
+                  </p>
+                </div>
+              )}
+            </div>
+          </section>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <StreakBadge
+              mascot={
+                resolvePose(student.equippedMascot) ? (
+                  <EquippedMascot poseKey={student.equippedMascot} className="-my-2 block h-16 w-16" />
+                ) : undefined
+              }
+              days={streak.days}
+              activeToday={streak.activeToday}
+              restore={
+                dayStreak.offer
+                  ? {
+                      lostDays: dayStreak.offer.lostDays,
+                      dayLabel: formatDayShort(dayStreak.offer.dayKey),
+                      price: dayStreak.price,
+                      coins: dayStreak.coins
+                    }
+                  : null
+              }
+            />
+            <Link
+              href="/student/ranks"
+              className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-card transition hover:border-primary/50"
+            >
+              <RankMedal
+                rankKey={rankProgress.current.rank.key}
+                level={rankProgress.current.levelIndex}
+                className="h-12 w-12 shrink-0"
+              />
+              <div className="min-w-0">
+                <p className="text-base font-semibold">Hạng {levelName(rankProgress.current)}</p>
+                <p className="mt-0.5 text-sm text-muted-foreground">
+                  {rankProgress.next && rankProgress.xpToNext !== null
+                    ? `Còn ${rankProgress.xpToNext} XP nữa lên ${levelName(rankProgress.next)}`
+                    : "Bạn đang ở đỉnh cao nhất! 👑"}
+                </p>
+              </div>
+            </Link>
+            <ProgressRing completed={completedCount} total={recipients.length} />
           </div>
-        </Link>
-        <ProgressRing completed={completedCount} total={recipients.length} />
+        </div>
+
+        <aside className="min-w-0 space-y-8 min-[1700px]:space-y-6">
+          {homeBoard ? <HomeLeaderboardCard data={homeBoard} studentId={student.id} /> : null}
+
+          <VocabCard
+            word={wordOfDay}
+            canQuiz={vocabSidebar.canQuiz}
+            todayCount={vocabToday}
+          />
+        </aside>
       </div>
-
-      {homeBoard ? <HomeLeaderboardCard data={homeBoard} studentId={student.id} /> : null}
-
-      <VocabCard
-        word={wordOfDay}
-        canQuiz={vocabSidebar.canQuiz}
-        todayCount={vocabToday}
-      />
     </div>
   );
 }

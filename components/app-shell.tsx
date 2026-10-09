@@ -421,6 +421,9 @@ export function AppShell({
     pathname === "/student/shop" ||
     pathname === "/student/profile" ||
     pathname.startsWith("/student/profile/");
+  // Trang chủ học viên chia 2 cột từ 1700px (bảng xếp hạng + từ vựng bên phải,
+  // kiểu chin.edu.vn) nên cần rộng hơn các trang thường.
+  const isDashboard = pathname === "/student";
 
   return withBugReport(
     role,
@@ -526,7 +529,11 @@ export function AppShell({
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
           <div
             className={`mx-auto w-full animate-fade-in ${
-              isWidePage ? "max-w-[1900px]" : "max-w-5xl 2xl:max-w-6xl min-[1800px]:max-w-7xl"
+              isWidePage
+                ? "max-w-[1900px]"
+                : isDashboard
+                  ? "max-w-5xl 2xl:max-w-6xl min-[1700px]:max-w-[1500px] min-[1900px]:max-w-[1680px]"
+                  : "max-w-5xl 2xl:max-w-6xl min-[1800px]:max-w-7xl"
             }`}
           >
             {children}

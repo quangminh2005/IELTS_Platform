@@ -8,7 +8,8 @@ import { computeFluencyStats, serializeSpeechTiming, type FluencyStats } from "@
 
 type TranscribeResult =
   | { ok: true; transcript: string; fluency: FluencyStats | null }
-  | { ok: false; error: string };
+  // cleared = bản ghi không có tiếng nói, đã xoá bản phiên âm cũ (nếu có) khỏi DB.
+  | { ok: false; error: string; cleared?: boolean };
 
 // Phiên âm bản ghi Speaking của học sinh bằng Groq (Whisper-large-v3-turbo).
 // Chỉ giáo viên sở hữu bài tập mới gọi được. Lưu vào Answer.transcript, kèm mốc
@@ -34,7 +35,16 @@ export async function transcribeAnswer(answerId: string): Promise<TranscribeResu
 
   const result = await transcribeAudioUrl(answer.value);
   if (!result.ok) {
-    return result;
+    if (result.reason !== "empty") {
+      return { ok: false, error: result.error };
+    }
+    // Bản ghi không có tiếng nói: xoá chữ cũ (có thể là chữ bịa "Thank you.") để thầy và AI
+    // không bị nó đánh lừa.
+    await prisma.answer
+      .update({ where: { id: answer.id }, data: { transcript: null, speechTimingJson: null } })
+      .catch((error) => console.error("Xoá transcript thất bại:", (error as Error).message));
+    revalidatePath(`/teacher/review/${answer.attemptId}`);
+    return { ok: false, error: result.error, cleared: true };
   }
 
   try {

@@ -10,6 +10,7 @@ import type { AiGradingResult, AiRequester } from "@/lib/ai-grading/types";
 import { AiOutputError, validateTaskOutput } from "@/lib/ai-grading/validate";
 import { transcribeAudioUrl } from "@/lib/groq-transcribe";
 import { prisma } from "@/lib/prisma";
+import { isLikelyHallucination } from "@/lib/transcript-hallucination";
 import { parseSpeechTiming, serializeSpeechTiming, type TimedWord } from "@/lib/speech-fluency";
 import { isAudioUrl } from "@/lib/question-interactions";
 
@@ -127,7 +128,9 @@ async function ensureSpeakingTranscripts(rows: AnswerRow[]): Promise<void> {
   for (const row of rows) {
     if (row.assignableUnit.skill !== "speaking") continue;
     if (!row.value || !isAudioUrl(row.value)) continue;
-    const hasText = Boolean(row.transcript?.trim());
+    // Chữ bịa của Whisper (bản ghi im lặng) không tính là đã có bản phiên âm.
+    const hallucinated = Boolean(row.transcript?.trim()) && isLikelyHallucination(row.transcript ?? "");
+    const hasText = Boolean(row.transcript?.trim()) && !hallucinated;
     if (hasText && parseSpeechTiming(row.speechTimingJson)) continue;
 
     const result = isFakeGrading()
@@ -135,7 +138,15 @@ async function ensureSpeakingTranscripts(rows: AnswerRow[]): Promise<void> {
       : await transcribeAudioUrl(row.value);
 
     if (!result.ok) {
-      if (result.reason === "empty" || hasText) continue;
+      if (result.reason === "empty" && hallucinated) {
+        row.transcript = null;
+        row.speechTimingJson = null;
+        await prisma.answer.update({
+          where: { id: row.id },
+          data: { transcript: null, speechTimingJson: null }
+        });
+      }
+      if (result.reason === "empty" || hasText || hallucinated) continue;
       throw new AiCallError(`Không phiên âm được bản ghi: ${result.error}`);
     }
 

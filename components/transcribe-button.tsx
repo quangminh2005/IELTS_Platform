@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { transcribeAnswer } from "@/lib/actions/transcribe";
 import { formatFluencyLine, type FluencyStats } from "@/lib/speech-fluency";
+import { isLikelyHallucination } from "@/lib/transcript-hallucination";
 
 type TranscribeButtonProps = {
   answerId: string;
@@ -26,6 +27,10 @@ export function TranscribeButton({ answerId, initialTranscript, initialFluency }
         setFluency(result.fluency);
       } else {
         setError(result.error);
+        if (result.cleared) {
+          setTranscript("");
+          setFluency(null);
+        }
       }
     });
   }
@@ -49,6 +54,12 @@ export function TranscribeButton({ answerId, initialTranscript, initialFluency }
             Bản phiên âm (tự động — có thể có lỗi)
           </p>
           <p className="mt-1 whitespace-pre-wrap text-sm leading-6">{transcript}</p>
+          {isLikelyHallucination(transcript) ? (
+            <p className="mt-2 rounded-md border border-amber-400/60 bg-amber-400/10 px-2 py-1 text-xs text-amber-700 dark:text-amber-300">
+              Bản phiên âm này có vẻ do máy bịa ra (bản ghi im lặng hoặc quá nhỏ) — thầy nghe lại audio. AI
+              chấm sẽ bỏ qua câu này.
+            </p>
+          ) : null}
           {fluency ? (
             <p className="mt-2 text-xs text-muted-foreground">{formatFluencyLine(fluency)}</p>
           ) : null}

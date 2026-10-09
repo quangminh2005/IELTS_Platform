@@ -3,6 +3,7 @@ import { parseUnitImages, parseWritingBrief } from "@/lib/question-interactions"
 import { resolveWritingTaskNumber } from "@/lib/writing-review";
 import type { GradingAnswer, GradingInput, GradingTaskInput } from "@/lib/ai-grading/types";
 import { annotatePauses, computeFluencyStats, parseSpeechTiming } from "@/lib/speech-fluency";
+import { isLikelyHallucination } from "@/lib/transcript-hallucination";
 
 // Các cột Answer cần để dựng đầu vào chấm (dùng chung ở grade-attempt.ts).
 export const ANSWER_ROW_SELECT = {
@@ -79,7 +80,7 @@ export function buildGradingInput(rows: AnswerRow[]): GradingInput | null {
         (a.question?.order ?? 0) - (b.question?.order ?? 0)
     );
     const answers: GradingAnswer[] = ordered
-      .filter((row) => (row.transcript ?? "").trim().length > 0)
+      .filter((row) => (row.transcript ?? "").trim().length > 0 && !isLikelyHallucination(row.transcript ?? ""))
       .map((row) => {
         const words = parseSpeechTiming(row.speechTimingJson);
         const fluency = words ? computeFluencyStats(words) : null;

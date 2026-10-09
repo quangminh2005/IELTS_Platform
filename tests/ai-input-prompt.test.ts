@@ -182,3 +182,15 @@ describe("Speaking có mốc thời gian", () => {
     expect(system).toContain("removes hesitations");
   });
 });
+
+describe("Speaking: bản phiên âm Whisper bịa", () => {
+  it("câu có chữ bịa (bản ghi im lặng) không được gửi cho AI chấm", () => {
+    const speakingUnit = unit({ id: "s1", title: "Part 1", skill: "speaking", unitNumber: 1 });
+    const rows: AnswerRow[] = [
+      { id: "h", value: "https://x.public.blob.vercel-storage.com/h.webm", transcript: "Thank you. Thank you. Thank you.", isCorrect: null, question: { order: 1, prompt: "Q1" }, assignableUnit: speakingUnit },
+      { id: "r", value: "https://x.public.blob.vercel-storage.com/r.webm", transcript: "I live in Hanoi with my family.", isCorrect: null, question: { order: 2, prompt: "Q2" }, assignableUnit: speakingUnit }
+    ];
+    expect(buildGradingInput(rows)!.tasks[0].answers.map((a) => a.answerId)).toEqual(["r"]);
+    expect(buildGradingInput(rows.slice(0, 1))).toBeNull();
+  });
+});

@@ -1,5 +1,6 @@
 import { isAllowedAudioUrl } from "@/lib/audio-source";
 import type { TimedWord } from "@/lib/speech-fluency";
+import { isLikelyHallucination } from "@/lib/transcript-hallucination";
 import { repairWebmTimestamps } from "@/lib/webm-timestamps";
 
 // reason giúp nơi gọi xử lý riêng: "empty" = bản ghi rỗng (AI chấm bỏ qua câu đó
@@ -151,6 +152,15 @@ export async function transcribeAudioUrl(audioUrl: string): Promise<TranscribeAu
 
   if (!parsed.transcript) {
     return { ok: false, error: "Không nhận được nội dung phiên âm (bản ghi có thể trống).", reason: "empty" };
+  }
+  // Bản ghi im lặng / quá nhỏ: Whisper vẫn bịa ra "Thank you." → không lưu, coi như trống.
+  if (isLikelyHallucination(parsed.transcript)) {
+    return {
+      ok: false,
+      error:
+        "Bản ghi gần như không có tiếng nói — máy phiên âm chỉ ra chữ bịa (kiểu “Thank you.”). Thầy nghe lại file ghi âm.",
+      reason: "empty"
+    };
   }
 
   return { ok: true, transcript: parsed.transcript, words: parsed.words };

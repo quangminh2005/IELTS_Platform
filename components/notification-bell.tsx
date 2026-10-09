@@ -140,11 +140,17 @@ export function NotificationBell() {
       </button>
 
       {open ? (
-        <div className="absolute right-0 z-50 mt-2 w-[min(20rem,calc(100vw-2rem))] rounded-xl border border-border bg-card p-2 shadow-pop">
+        // Điện thoại: bảng trải ngang dưới thanh trên, cách 2 mép 16px (thanh trên
+        // có backdrop-blur nên `fixed` tính theo thanh đó — vẫn bằng bề ngang màn
+        // hình). Neo theo nút chuông thì lẹm ra ngoài mép trái vì chuông không nằm
+        // sát phải. Máy tính: chuông nằm trong sidebar sát mép trái → mở sang phải.
+        <div className="fixed inset-x-4 top-[4.25rem] z-50 rounded-xl border border-border bg-card p-2 shadow-pop lg:absolute lg:inset-x-auto lg:left-0 lg:top-auto lg:mt-2 lg:w-[22rem]">
           <p className="px-3 pb-2 pt-1 text-sm font-semibold">Thông báo</p>
 
           {panelItems.length > 0 ? (
-            <div className="grid max-h-80 gap-1 overflow-y-auto">
+            // grid-cols-1 = minmax(0,1fr): thiếu thì cột giãn theo dòng dài nhất,
+            // `truncate` của tiêu đề mất tác dụng và bảng ra thanh cuộn ngang.
+            <div className="grid max-h-80 grid-cols-1 gap-1 overflow-y-auto">
               {panelItems.map((item) => (
                 <NotificationRow key={item.id} item={item} onNavigate={() => setOpen(false)} />
               ))}

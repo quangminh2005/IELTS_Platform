@@ -443,7 +443,9 @@ export function AppShell({
           phần nội dung tự căn giữa trong khoảng còn lại (max-w-5xl bên dưới). */}
       <div className="flex w-full">
         {/* Sidebar cố định cho màn hình lớn */}
-        <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col border-r border-border bg-card/60 px-4 py-5 backdrop-blur lg:flex">
+        {/* z-20: bảng thông báo mở sang phải đè lên nội dung chính — thiếu z thì
+            các khối relative/transform trong main vẽ đè lên bảng. */}
+        <aside className="sticky top-0 z-20 hidden h-screen w-72 shrink-0 flex-col border-r border-border bg-card/60 px-4 py-5 backdrop-blur lg:flex">
           {/* Thương hiệu chiếm trọn một dòng: nhét thêm cụm nút (avatar / chuông /
               sáng-tối) vào đây thì cột 288px không đủ chỗ, chữ "IELTS Platform" bị
               xuống dòng và các biểu tượng dính sát nhau. */}
@@ -523,7 +525,9 @@ export function AppShell({
         {/* Nội dung chính */}
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
           <div
-            className={`mx-auto w-full animate-fade-in ${isWidePage ? "max-w-[1900px]" : "max-w-5xl"}`}
+            className={`mx-auto w-full animate-fade-in ${
+              isWidePage ? "max-w-[1900px]" : "max-w-5xl 2xl:max-w-6xl min-[1800px]:max-w-7xl"
+            }`}
           >
             {children}
           </div>

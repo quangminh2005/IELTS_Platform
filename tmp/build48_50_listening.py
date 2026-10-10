@@ -140,8 +140,8 @@ IMG = {n: pdf_image(n) for n in (48, 49, 50)}
 
 # ============================================================== TEST 48 ====
 P48_1_NOTE = """## Advice on plumbers and decorators
-- Don't call a plumber during the [[1]]
-- Look at trade website: www.[[2]].com"""
+• Don't call a plumber during the [[1]]
+• Look at trade website: www.[[2]].com"""
 
 P48_1_TABLE = """| Name | Positive points | Negative points |
 | --- | --- | --- |
@@ -275,11 +275,11 @@ Strongly nocturnal
 ## Habitat:
 Mainly lives in [[32]] but can also be seen in urban areas, e.g. parks.
 ## Adaptations:
-- Short wings and [[33]], for navigation
-- Brown and [[34]] feathers, for camouflage
-- Large eyes (more effective than those of [[35]]), for good night vision
-- Very good spatial [[36]] for predicting where prey might be found
-- Excellent [[37]] for locating prey from a perch
+• Short wings and [[33]], for navigation
+• Brown and [[34]] feathers, for camouflage
+• Large eyes (more effective than those of [[35]]), for good night vision
+• Very good spatial [[36]] for predicting where prey might be found
+• Excellent [[37]] for locating prey from a perch
 ## Diet
 Main food is small mammals.
 Owls in urban areas eat more [[38]]
@@ -355,11 +355,11 @@ test48 = {
 
 # ============================================================== TEST 49 ====
 P49_1_NOTE = """## Things to do:
-- [[6]] furniture etc. in Trading Post
-- [[7]] or sell kitchen things
-- Get [[8]] first from second hand shop
-- Give clothes to [[9]] shop
-- [[10]] fridge and microwave to Andrea"""
+• [[6]] furniture etc. in Trading Post
+• [[7]] or sell kitchen things
+• Get [[8]] first from second hand shop
+• Give clothes to [[9]] shop
+• [[10]] fridge and microwave to Andrea"""
 
 t49_p1 = [
     mc(1, "What is Harry's problem?",
@@ -481,11 +481,11 @@ t49_p3 = [
 )
 
 P49_4_NOTE = """# Suggestions for Developing a Portfolio
-- Get some artwork printed in magazines by entering [[36]]
-- Also you can [[37]] and [[37]] mock up book pages.
-- Make an effort to use a variety of artistic [[38]]
-- Aim for recognition by dividing work into distinct [[39]]
-- Possibly use [[40]]"""
+• Get some artwork printed in magazines by entering [[36]]
+• Also you can [[37]] and [[37]] mock up book pages.
+• Make an effort to use a variety of artistic [[38]]
+• Aim for recognition by dividing work into distinct [[39]]
+• Possibly use [[40]]"""
 
 G49_32 = ["A earning enough money", "B moving to a new environment", "C competing with other artists",
           "D having their work criticized"]
@@ -613,12 +613,12 @@ P50_2_NOTE = """3rd Floor: [[11]]
 1st Floor: [[12]]
 Ground floor: small shops and [[13]]
 Basement: car park
-- The beach will be [[14]]
-- This will attract [[15]]
-- The plans will be on display from Monday, 5th March until [[16]], 6th [[17]]
-- Suggestions can be placed in the [[18]]
-- The next meeting will be on April [[19]]
-- It will start at [[20]] pm"""
+• The beach will be [[14]]
+• This will attract [[15]]
+• The plans will be on display from Monday, 5th March until [[16]], 6th [[17]]
+• Suggestions can be placed in the [[18]]
+• The next meeting will be on April [[19]]
+• It will start at [[20]] pm"""
 
 t50_p2 = [
     blank(11, ["cafe and restaurant", "café and restaurant", "a cafe and a restaurant", "a café and a restaurant",
@@ -745,7 +745,9 @@ test50 = {
              {"groupInstructions": {
                  "11": "Complete the information below. Write NO MORE THAN THREE WORDS AND/ OR A NUMBER for each answer."},
               "noteBody": P50_2_NOTE,
-              "images": [IMG[50]]},
+              # noteBody không có :::map thì "images" bị đẩy sang cột đoạn văn (Listening
+              # không có cột này) -> gắn ảnh vào nhóm 11 cho hiện ngay trên khối note.
+              "groupImages": {"11": [IMG[50]]}},
              t50_p2),
         unit(50, 3, "Listening Part 3 - Improving an essay",
              "Maria is a student at university. She has handed the first draft of an essay to her tutor, and now they are discussing ways the essay can be improved. Answer questions 21-30.",

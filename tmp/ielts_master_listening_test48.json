@@ -1,0 +1,617 @@
+{
+  "title": "IELTS Master - Listening Test 48",
+  "skill": "listening",
+  "category": "book",
+  "bookName": "IELTS Master – Listening",
+  "sourceLabel": "IELTS Master - Listening Test 48",
+  "description": "Listening Test 48: 4 phần, 40 câu (tìm thợ sửa ống nước và thợ trát tường / thực tập ở bảo tàng / chọn dự án IT cho công ty / loài cú lông xám).",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 - Advice on plumbers and decorators",
+      "instructions": "You will hear a woman who has just moved into the area talking to a neighbour about problems she is having in her house. Answer questions 1-10.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test48_part1-IzhXvu7GDHrPxvAmdi7uKKfYgA0tbb",
+      "transcript": "Alistair: Oh, hi Ruth. How are you?\nRuth: I'm sorry to bother you Alistair, but I've been having some problems.\nAlistair: Oh, come on in. What's happened?\nRuth: Basically, I had a leak from one of the pipes in the bathroom and water started coming through downstairs, and the kitchen ceiling's badly stained.\nAlistair: Ah.\nRuth: I've got the leak fixed temporarily, but I wasn't happy with the plumber and I wanted to ask your advice.\nAlistair: Of course. Well, the first thing I'd say is make sure you choose a local company. That way, if things go wrong, you're close by and it just makes things easier.\nRuth: Let me write this down.\nAlistair: Mhm.\nRuth: Right. Yes, the plumber who fixed things yesterday was from quite far away, but I chose him because his advert said he did emergency repairs.\nAlistair: Well, fair enough, you needed something in a hurry. But another piece of advice I'd give is try to avoid calling anybody on weekends. That'll really bump up the prices. Leave it till Monday if you can.\nRuth: Well, yes, I think I can do that, because the temporary fix should hold. And obviously I'll need the ceiling plastered and eventually redecorated.\nAlistair: Yeah, sure.\nRuth: So who would you recommend? Is there a directory?\nAlistair: Well, there's quite a good website covering this sort of work. It's www.plasdeco.com.\nRuth: Is that with a K?\nAlistair: A 'c' - p-l-a-s-d-e-c-o.com.\nRuth: Got it. Well, I'll try and have a look at that.\nAlistair: Yes, it gives price and quality comparisons.\nRuth: Oh, that'll be useful. But I find personal recommendations really helpful as well. You know, you can find out whether you can rely on the company.\nAlistair: Well, I know a couple of reasonable plumbers, and also some plasterers.\nRuth: Great.\nAlistair: There's a company called Peake's Plumbing. Now they're a father and son team. They're really friendly and they tell you information you need in a clear way, you know, so they really understand what the problem is.\nRuth: Right, well, that's good to know. Are they reliable?\nAlistair: Well, that's a downside. Every single time I've used them, they arrive late, and friends have said the same thing.\nRuth: But is the work good quality?\nAlistair: Absolutely. Another one is John Damerell Plumbing Services. He's very good.\nRuth: How do you spell the surname?\nAlistair: D-A-M-E-R-O-L.\nRuth: Right, got that. And does he do high-quality work?\nAlistair: Well, it's fine, you know, but I wouldn't say that was his main point. Basically he comes out cheaper, you know, than other people.\nRuth: I sense there's a 'but'. Is he unreliable?\nAlistair: Oh, he comes when he says he's coming, but he's not very courteous, and he has the tendency to be messy, you know, so you have quite a bit of clearing up to do.\nRuth: Mmm, okay.\nAlistair: So it's up to you. They're both good workers and they won't cheat you.\nRuth: Right. And you said you knew some plasterers?\nAlistair: Yes. A company called Simonson Plasterers did our living room last year. We chose them because we wanted some fancy work on the ceiling, around the lights.\nRuth: So they can do a variety of designs.\nAlistair: You've got it. But it comes at a premium because they are more expensive, you know.\nRuth: Than the others.\nAlistair: Yes. Or you could go for a one-man firm called HL Plastering - Harry Lester. He's fine, very reliable if all you want is a simple job.\nRuth: Do either of them do painting for you if you want? After the plastering's dried out, of course.\nAlistair: That's what I was going to say, but I should explain that Harry's quite old now, and so he avoids doing jobs which involve tall ladders, you know.\nRuth: But my kitchen isn't too bad for that. I'd have to ask him if he's prepared to do it.\nAlistair: Yeah, sure.\nRuth: So I'll start by looking at the website.\nAlistair: All those companies are on there, with their phone numbers, etc.\nRuth: Thanks ever so much, you've been such a help...",
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the notes below. Write NO MORE THAN ONE WORD for each answer.",
+          "3": "Complete the table below. Write NO MORE THAN ONE WORD for each answer."
+        },
+        "noteBody": "## Advice on plumbers and decorators\n- Don't call a plumber during the [[1]]\n- Look at trade website: www.[[2]].com",
+        "tableBody": "| Name | Positive points | Negative points |\n| --- | --- | --- |\n| Peake's plumbing | • Pleasant and friendly<br>• Give [[3]] information<br>• Good quality work | • Always [[4]] |\n| John Damerol Plumbing Services | • [[5]] than other companies<br>• Reliable | • Not very polite<br>• Tends to be [[6]] |\n| Simonson Plasterers | • Able to do lots of different [[7]] | • More [[8]] than other companies |\n| H.L. Plastering | • Reliable<br>• Also able to do [[9]] | • Prefers not to use long [[10]] |"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": [
+            "weekend",
+            "weekends"
+          ],
+          "explanation": "Alistair khuyên tránh gọi thợ vào CUỐI TUẦN vì giá sẽ bị đội lên, đợi tới thứ Hai nếu được.",
+          "evidence": "try to avoid calling anybody on weekends"
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": [
+            "plasdeco"
+          ],
+          "explanation": "Trang web là www.plasdeco.com - Alistair còn đánh vần p-l-a-s-d-e-c-o, viết bằng chữ 'c' chứ không phải 'k'.",
+          "evidence": "It's www.plasdeco.com."
+        },
+        {
+          "order": 3,
+          "questionType": "table_completion",
+          "prompt": "Câu 3",
+          "answer": [
+            "clear"
+          ],
+          "explanation": "Peake's Plumbing giải thích thông tin cần thiết một cách RÕ RÀNG (in a clear way).",
+          "evidence": "they tell you information you need in a clear way"
+        },
+        {
+          "order": 4,
+          "questionType": "table_completion",
+          "prompt": "Câu 4",
+          "answer": [
+            "late",
+            "unreliable"
+          ],
+          "explanation": "Điểm trừ của Peake's: lần nào cũng tới MUỘN. Ruth hỏi \"Are they reliable?\" thì Alistair nói đó chính là nhược điểm.",
+          "evidence": "Every single time I've used them, they arrive late"
+        },
+        {
+          "order": 5,
+          "questionType": "table_completion",
+          "prompt": "Câu 5",
+          "answer": [
+            "cheaper"
+          ],
+          "explanation": "Chất lượng của John Damerol chỉ ở mức ổn, ưu điểm chính là RẺ HƠN những người khác.",
+          "evidence": "Basically he comes out cheaper, you know, than other people."
+        },
+        {
+          "order": 6,
+          "questionType": "table_completion",
+          "prompt": "Câu 6",
+          "answer": [
+            "messy"
+          ],
+          "explanation": "Ông ấy đến đúng hẹn (nên không phải unreliable) nhưng hay làm BỪA BỘN, phải dọn dẹp khá nhiều.",
+          "evidence": "he has the tendency to be messy"
+        },
+        {
+          "order": 7,
+          "questionType": "table_completion",
+          "prompt": "Câu 7",
+          "answer": [
+            "designs",
+            "design"
+          ],
+          "explanation": "Simonson làm được nhiều KIỂU TRANG TRÍ khác nhau - Ruth tóm lại và Alistair xác nhận \"You've got it\".",
+          "evidence": "So they can do a variety of designs."
+        },
+        {
+          "order": 8,
+          "questionType": "table_completion",
+          "prompt": "Câu 8",
+          "answer": [
+            "expensive"
+          ],
+          "explanation": "Nhược điểm của Simonson là ĐẮT HƠN các công ty khác.",
+          "evidence": "But it comes at a premium because they are more expensive, you know."
+        },
+        {
+          "order": 9,
+          "questionType": "table_completion",
+          "prompt": "Câu 9",
+          "answer": [
+            "painting"
+          ],
+          "explanation": "Ruth hỏi có ai SƠN tường luôn không, Alistair nói đó đúng là điều ông định kể về Harry (H.L. Plastering).",
+          "evidence": "Do either of them do painting for you if you want? / That's what I was going to say"
+        },
+        {
+          "order": 10,
+          "questionType": "table_completion",
+          "prompt": "Câu 10",
+          "answer": [
+            "ladders",
+            "ladder"
+          ],
+          "explanation": "Harry đã lớn tuổi nên tránh những việc phải dùng THANG cao.",
+          "evidence": "he avoids doing jobs which involve tall ladders"
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 - Museum work placement",
+      "instructions": "You will hear the education officer in a museum giving a talk to school students who are about to start a one-week work placement in the museum. Answer questions 11-20.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test48_part2-IykAad86IbmATjV82ot4nTVSoEu85r",
+      "transcript": "Good morning, and welcome. We're really pleased that you're going to be joining us next week for your work placement. Now, each of you will already have met the member of museum staff assigned to supervise you. In this short talk today, I'll be giving you more general information, which will be relevant to all six of you.\nYour normal working day is 9:00 to 5:00 p.m., but on Monday, because it's your first day, we'd like you to arrive at quarter to nine. Please note, though, that you'll finish at the usual time.\nA lot of you have been asking what you should wear for work. Well, you may have noticed that we're not exactly a formal institution, so you'd really be out of place if you wear smart attire like a suit. If you go out on a trip with us, then we'd like you to wear a museum cap. It has our logo on, and we feel it helps people recognise you. But on a day-to-day basis in the museum itself, we say put on your own casual clothing, because you'll be doing lots of dusty, messy work.\nNow, we don't have an enormous number of rules, but work placement is an excellent preparation for the real world of work, and we expect you to be very punctual and reliable. If you're not well, or there's been a hold up, then what we ask you to do is ring the museum receptionist. He will be in the museum well ahead of opening time, and he'll inform your own personal supervisor in the museum. If you're away for more than one day, we'll inform your school tutor. They'll obviously need to make a note of your absence and follow up if necessary.\nBut most of all, we hope you really enjoy yourselves during the placement. Students say they have a lot of fun, whether it's working with kids in our art workshops held every Monday, or, the most popular, when they go out on our outreach work to residential homes, recording elderly people's memories of school days for our oral history project.\nSo, we hope you feel excited by the prospect of starting next week and well prepared. Your personal supervisor will be there to help you with our health and safety requirements when you start next week, and your supervisors will also brief you about the background to the museum, summarising all the huge amount of information on our website. In the next couple of days, it might be worthwhile if you get hold of evaluations and other notes made by students who've worked with us before. You can get a lot of pointers from them.\nNow, before I finish today, I wanted to help you find your way around the museum. When you start next Monday, the first thing you'll need to do is sign in. Come through the main entrance, and you'll see the main staircase straight ahead. To the right of this is the statue of the horse, and just behind that is a door. Go through that, and that's the sign-in office.\nNow, on the first day, you'll be working in Gallery 1. You'll find this as follows: In the central courtyard area close to the entrance, there's a large chest where visitors put donations for the museum. The door just behind that leads to Gallery 1.\nThe workshop you'll be taking part in starts at 11:00, but if you want to go in earlier, you can get the key and let yourself in. The key box is quite hard to find: walk behind reception, and it's between the large gallery and the bookshop.\nI haven't mentioned breaks and lunch, etc. Unfortunately, our café is closed at the moment, so your best bet is to bring a packed lunch. We tend to have our sandwiches in the kitchen area: go round the reception desk and you'll see a small circular cabinet. The door to the kitchen area is just behind that.\nNow, every day, we put up notices about what's happening in the museum. Your supervisor will brief you, but if you want to check up on details, look on our staff noticeboard. This is in the corner of the play area, at the back, on the wall of Gallery 3. If you have any questions, I'd be happy to help...",
+      "metadata": {
+        "groupInstructions": {
+          "11": "Choose the correct letter A, B or C.",
+          "16": "Label the plan below. Write the correct letter A-I next to questions 16-20.\nWhere in the museum are the following places?"
+        },
+        "noteBody": ":::map\nSign-in office [[16]]\nGallery 1 [[17]]\nKey box [[18]]\nKitchen area [[19]]\nStaff noticeboard [[20]]\n:::",
+        "images": [
+          "data:image/jpeg;base64,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"
+        ]
+      },
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "On Monday what will be the students' working day?",
+          "options": [
+            "A 9 am - 5 pm",
+            "B 8.45 am - 5 pm",
+            "C 9 am - 4.45 pm"
+          ],
+          "answer": [
+            "B 8.45 am - 5 pm"
+          ],
+          "explanation": "Bình thường làm 9h-17h, nhưng thứ Hai là ngày đầu nên phải tới lúc 8h45 (quarter to nine) và vẫn về đúng giờ thường lệ (5 pm). Bẫy C: 4.45 không hề được nhắc.",
+          "evidence": "but on Monday, because it's your first day, we'd like you to arrive at quarter to nine. Please note, though, that you'll finish at the usual time."
+        },
+        {
+          "order": 12,
+          "questionType": "multiple_choice",
+          "prompt": "While working in the museum students are encouraged to wear",
+          "options": [
+            "A formal clothing such as a suit",
+            "B cap with the museum logo",
+            "C their own casual clothes"
+          ],
+          "answer": [
+            "C their own casual clothes"
+          ],
+          "explanation": "Trong bảo tàng thì mặc ĐỒ THƯỜNG NGÀY của mình vì việc rất bụi bặm. Bẫy B: mũ có logo chỉ đội khi đi chuyến tham quan bên ngoài; vest (A) thì lạc lõng.",
+          "evidence": "But on a day-to-day basis in the museum itself, we say put on your own casual clothing"
+        },
+        {
+          "order": 13,
+          "questionType": "multiple_choice",
+          "prompt": "If students are ill or going to be late they must inform",
+          "options": [
+            "A the museum receptionist",
+            "B their museum supervisor",
+            "C their school placement tutor"
+          ],
+          "answer": [
+            "A the museum receptionist"
+          ],
+          "explanation": "Phải gọi cho LỄ TÂN bảo tàng; lễ tân sẽ tự báo người hướng dẫn (B). Thầy ở trường (C) chỉ được báo khi nghỉ quá một ngày.",
+          "evidence": "then what we ask you to do is ring the museum receptionist"
+        },
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "The most popular task while on work placement is usually",
+          "options": [
+            "A making presentations in local primary schools",
+            "B talking to elderly people in care homes",
+            "C conducting workshops in the museum"
+          ],
+          "answer": [
+            "B talking to elderly people in care homes"
+          ],
+          "explanation": "Việc được yêu thích nhất (the most popular) là đến các viện dưỡng lão ghi lại ký ức của NGƯỜI CAO TUỔI. Bẫy C: xưởng nghệ thuật với trẻ em được nhắc trước nhưng không phải phổ biến nhất.",
+          "evidence": "or, the most popular, when they go out on our outreach work to residential homes, recording elderly people's memories"
+        },
+        {
+          "order": 15,
+          "questionType": "multiple_choice",
+          "prompt": "The best form of preparation before starting their work placement is to read",
+          "options": [
+            "A the history of the museum on the website",
+            "B the museum regulations and safety guidance",
+            "C notes made by previous work placement students"
+          ],
+          "answer": [
+            "C notes made by previous work placement students"
+          ],
+          "explanation": "Nên tìm đọc các bản đánh giá và GHI CHÚ CỦA HỌC SINH KHOÁ TRƯỚC. Bẫy A và B: lịch sử bảo tàng và quy định an toàn đều do người hướng dẫn phổ biến khi bắt đầu.",
+          "evidence": "it might be worthwhile if you get hold of evaluations and other notes made by students who've worked with us before"
+        },
+        {
+          "order": 16,
+          "questionType": "note_completion",
+          "prompt": "Câu 16",
+          "answer": [
+            "C"
+          ],
+          "explanation": "Vào cửa chính, cầu thang ở ngay trước mặt; bên phải là bức tượng ngựa (Statue), cửa ngay sau tượng là phòng ký tên -> ô C.",
+          "evidence": "To the right of this is the statue of the horse, and just behind that is a door. Go through that, and that's the sign-in office."
+        },
+        {
+          "order": 17,
+          "questionType": "note_completion",
+          "prompt": "Câu 17",
+          "answer": [
+            "I"
+          ],
+          "explanation": "Ở sân trung tâm gần lối vào có hòm quyên góp (Donations); cánh cửa ngay sau đó dẫn vào Gallery 1 -> ô I.",
+          "evidence": "there's a large chest where visitors put donations for the museum. The door just behind that leads to Gallery 1."
+        },
+        {
+          "order": 18,
+          "questionType": "note_completion",
+          "prompt": "Câu 18",
+          "answer": [
+            "H"
+          ],
+          "explanation": "Đi vòng ra sau quầy lễ tân, hộp chìa khoá nằm GIỮA phòng trưng bày lớn (Gallery 2) và hiệu sách -> ô H.",
+          "evidence": "walk behind reception, and it's between the large gallery and the bookshop"
+        },
+        {
+          "order": 19,
+          "questionType": "note_completion",
+          "prompt": "Câu 19",
+          "answer": [
+            "D"
+          ],
+          "explanation": "Đi vòng qua quầy lễ tân sẽ thấy tủ tròn nhỏ (ô E - chính là tủ trưng bày gốm); cửa vào bếp nằm ngay sau tủ đó -> ô D.",
+          "evidence": "go round the reception desk and you'll see a small circular cabinet. The door to the kitchen area is just behind that."
+        },
+        {
+          "order": 20,
+          "questionType": "note_completion",
+          "prompt": "Câu 20",
+          "answer": [
+            "G"
+          ],
+          "explanation": "Bảng tin nằm ở GÓC khu vui chơi, phía trong cùng, trên tường của Gallery 3 -> ô G (F cũng trên tường Gallery 3 nhưng không ở góc).",
+          "evidence": "This is in the corner of the play area, at the back, on the wall of Gallery 3."
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 - Company-based IT project",
+      "instructions": "You will hear a business studies student called Sam talking to his tutor about an IT project he is going to do for a local company called Turner's. Answer questions 21-30.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test48_part3-oGMwmaNZsp0t4suxUnlHGdEzJZG7n1",
+      "transcript": "Tutor: Hello Sam, come in and sit down.\nSam: Thanks.\nTutor: You're here to discuss your company-based IT project, aren't you?\nSam: Yes. I've been to see the manager, and he's given me a lot of ideas about projects that the company would find useful, but I wanted to ask your opinion about them before I choose one.\nTutor: Yes, that's fine. Now this company's called Turner's, isn't it?\nSam: That's right. It's a small engineering company. They make machine components for trade use. They're well established - they started in 1976 - but they're a bit old-fashioned.\nTutor: Okay. And what kind of projects did Turner's suggest you could do for the company?\nSam: Well, they want some improvements made to their customer database. The one that they've got at the moment isn't very useful in some ways. I had a quick look at it.\nTutor: Mm. That would be a very straightforward project and it'd be simple enough to evaluate, but I don't think you'd get enough out of a project like that. You wouldn't learn anything new.\nSam: Well, another project they suggested is to do with their online sales catalogue. At the moment, customers can look at their products, but they can't actually order them online, which must affect their competitiveness. But I said I thought it would take too long; it's quite a big task.\nTutor: You're right, it's too much for the time you've got. It's a pity, though.\nSam: Then they want some help with their payroll system. At the moment, the way they calculate pay involves a lot of manual accounting. I suggested they could have a system where employees register electronically when they arrive and leave work, so the hours they do could be transferred automatically.\nTutor: Mm, I think you'd get a lot out of a project like that. It would extend your skills, but it wouldn't be too much to take on. A student did something similar a couple of years ago, but this is slightly different.\nSam: Hm. Well, then they need help with their stock inventory. They do everything manually.\nTutor: Really?\nSam: Yes, and it takes so much time.\nTutor: Ugh, it's probably very inaccurate too. An electronic inventory would probably be the biggest single benefit for the company. I'm surprised they haven't had it done before.\nSam: I know. Then they wanted to improve their internal security. The manager had visited other companies where the staff use swipe cards to access various areas of the building. It sounded useful, but the trouble is I'm not really sure how to do it.\nTutor: Well, I think you're right in that assessment. At the moment, it's probably a bit beyond your level of knowledge. Is that all?\nSam: Just one more: customer service. They want to be able to collect feedback from their customers in a more systematic way. At the moment, it's a bit of a mess, and they probably lose business as a result.\nTutor: Would that involve you going to see customers at their own premises? Because in that case, you might have to do a fair amount of travelling and that would incur expenses that haven't been agreed with these companies.\nSam: I never thought of that.\nTutor: Well, it might not be a problem, but it's something that needs clarifying. Well, I hope that's been helpful in narrowing down the options?\nSam: Yes, it has, thanks. I'll be able to make a decision now. But while I'm here, can I talk to you about coursework?\nTutor: Sure.\nSam: I'm not very happy about the way our group assignment is working. There are some problems.\nTutor: Oh dear. Are people just not getting on with each other? That's the worst thing.\nSam: Actually we're all friends. It's not that, but when we're having a discussion about the assignment, one or two people end up doing all the talking, and the rest don't say anything. It's a bit frustrating because we need plenty of debate.\nTutor: Well, that's a common observation. You're studying in a group with people from all over the world, and you all have your own ways of participating. In some places, students are more used to listening than talking, and vice versa.\nSam: Mm, I suppose you're right. I'll try to remember that.\nTutor: Does everyone pull their weight as far as sharing the workload is concerned?\nSam: I'd say they do, yes. And our group elected a leader. She's very good at making sure no one's overloaded. But personally, I feel that there are just too many of us in the group. Whenever we try to arrange a meeting, there's always at least one person who can't make it. It's not anyone's fault, it's just that we've all got slightly different timetables.\nTutor: Well, I'm glad you've talked to me about it. Feedback is always useful. Is there anything else you're concerned about?\nSam: There are a couple of problems with lecturers that all the students are talking about.\nTutor: Mm. Last semester, we had negative feedback about the way lectures were organised. There were several occasions when the wrong room had been booked or the same room had been booked twice, that sort of thing. Is that still a problem?\nSam: That hasn't happened at all, as far as I know.\nTutor: Oh, good. It's sorted out then.\nSam: But I don't know the reason, but some of the staff often turn up late, so we miss 10 or 15 minutes of our lecture time. It might be because they've been copying handouts for students. I think there's a queue for the machine sometimes.\nTutor: Well, I'll look into that. Thank you for telling me. Anything else?\nSam: The other thing is that it can be very difficult to get to see a lecturer individually. They're all very supportive and friendly when you do manage to find them, but often they're not in their office, even at times when they're meant to be available for consultation.\nTutor: Okay. That's helpful. Now, before you leave, let me...",
+      "metadata": {
+        "groupTitles": {
+          "21": "Company projects"
+        },
+        "groupInstructions": {
+          "21": "What is the tutor's opinion of the following company projects?\nChoose SIX answers from the box, and write the correct letter, A-H, next to questions 21-26.\nTutor's opinion\n:::box\nA It would be very rewarding for the student.\nB It is too ambitious.\nC It would be difficult to evaluate.\nD It wouldn't be sufficiently challenging.\nE It would involve extra costs.\nF It is beyond the student's current ability.\nG It is already being done by another student.\nH It would probably have the greatest impact on the company.\n:::",
+          "27": "Choose TWO letters, A-E.\nWhich TWO problems do Sam and the tutor identify concerning group assignments?",
+          "29": "Choose TWO letters, A-E.\nWhich TWO problems does Sam identify concerning the lecturers?"
+        }
+      },
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "matching",
+          "prompt": "Customer database",
+          "options": [
+            "A It would be very rewarding for the student.",
+            "B It is too ambitious.",
+            "C It would be difficult to evaluate.",
+            "D It wouldn't be sufficiently challenging.",
+            "E It would involve extra costs.",
+            "F It is beyond the student's current ability.",
+            "G It is already being done by another student.",
+            "H It would probably have the greatest impact on the company."
+          ],
+          "answer": [
+            "D It wouldn't be sufficiently challenging."
+          ],
+          "explanation": "Dự án này rất đơn giản, Sam sẽ không học được gì mới -> KHÔNG ĐỦ THỬ THÁCH. Bẫy C: thầy nói nó DỄ đánh giá (simple enough to evaluate), ngược với C.",
+          "evidence": "but I don't think you'd get enough out of a project like that. You wouldn't learn anything new."
+        },
+        {
+          "order": 22,
+          "questionType": "matching",
+          "prompt": "Online sales catalogue",
+          "options": [
+            "A It would be very rewarding for the student.",
+            "B It is too ambitious.",
+            "C It would be difficult to evaluate.",
+            "D It wouldn't be sufficiently challenging.",
+            "E It would involve extra costs.",
+            "F It is beyond the student's current ability.",
+            "G It is already being done by another student.",
+            "H It would probably have the greatest impact on the company."
+          ],
+          "answer": [
+            "B It is too ambitious."
+          ],
+          "explanation": "Thầy đồng ý với Sam: việc này quá lớn so với thời gian có được -> QUÁ THAM VỌNG.",
+          "evidence": "You're right, it's too much for the time you've got."
+        },
+        {
+          "order": 23,
+          "questionType": "matching",
+          "prompt": "Payroll",
+          "options": [
+            "A It would be very rewarding for the student.",
+            "B It is too ambitious.",
+            "C It would be difficult to evaluate.",
+            "D It wouldn't be sufficiently challenging.",
+            "E It would involve extra costs.",
+            "F It is beyond the student's current ability.",
+            "G It is already being done by another student.",
+            "H It would probably have the greatest impact on the company."
+          ],
+          "answer": [
+            "A It would be very rewarding for the student."
+          ],
+          "explanation": "Thầy cho rằng Sam sẽ học được nhiều, mở rộng kỹ năng -> RẤT BỔ ÍCH cho bản thân. Bẫy G: có sinh viên làm việc tương tự từ hai năm trước, nhưng lần này khác và không còn ai đang làm.",
+          "evidence": "Mm, I think you'd get a lot out of a project like that."
+        },
+        {
+          "order": 24,
+          "questionType": "matching",
+          "prompt": "Stock inventory",
+          "options": [
+            "A It would be very rewarding for the student.",
+            "B It is too ambitious.",
+            "C It would be difficult to evaluate.",
+            "D It wouldn't be sufficiently challenging.",
+            "E It would involve extra costs.",
+            "F It is beyond the student's current ability.",
+            "G It is already being done by another student.",
+            "H It would probably have the greatest impact on the company."
+          ],
+          "answer": [
+            "H It would probably have the greatest impact on the company."
+          ],
+          "explanation": "Hệ thống kiểm kho điện tử có lẽ là LỢI ÍCH LỚN NHẤT cho công ty.",
+          "evidence": "An electronic inventory would probably be the biggest single benefit for the company."
+        },
+        {
+          "order": 25,
+          "questionType": "matching",
+          "prompt": "Internal security",
+          "options": [
+            "A It would be very rewarding for the student.",
+            "B It is too ambitious.",
+            "C It would be difficult to evaluate.",
+            "D It wouldn't be sufficiently challenging.",
+            "E It would involve extra costs.",
+            "F It is beyond the student's current ability.",
+            "G It is already being done by another student.",
+            "H It would probably have the greatest impact on the company."
+          ],
+          "answer": [
+            "F It is beyond the student's current ability."
+          ],
+          "explanation": "Sam không biết làm hệ thống thẻ từ, thầy xác nhận việc này VƯỢT QUÁ TRÌNH ĐỘ hiện tại của Sam.",
+          "evidence": "At the moment, it's probably a bit beyond your level of knowledge."
+        },
+        {
+          "order": 26,
+          "questionType": "matching",
+          "prompt": "Customer services",
+          "options": [
+            "A It would be very rewarding for the student.",
+            "B It is too ambitious.",
+            "C It would be difficult to evaluate.",
+            "D It wouldn't be sufficiently challenging.",
+            "E It would involve extra costs.",
+            "F It is beyond the student's current ability.",
+            "G It is already being done by another student.",
+            "H It would probably have the greatest impact on the company."
+          ],
+          "answer": [
+            "E It would involve extra costs."
+          ],
+          "explanation": "Nếu phải tới tận nơi gặp khách hàng thì sẽ tốn tiền đi lại - PHÁT SINH CHI PHÍ chưa được thoả thuận.",
+          "evidence": "that would incur expenses that haven't been agreed with these companies"
+        },
+        {
+          "order": 27,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO problems do Sam and the tutor identify concerning group assignments?",
+          "options": [
+            "A Personal relationships.",
+            "B Cultural differences.",
+            "C Division of labour.",
+            "D Group leadership.",
+            "E Group size."
+          ],
+          "answer": [
+            "B Cultural differences.",
+            "E Group size."
+          ],
+          "explanation": "Hai đáp án đúng của cụm 27-28 là B và E. B: chỉ vài người nói còn số khác im lặng - thầy giải thích là do KHÁC BIỆT VĂN HOÁ, mỗi nơi có thói quen tham gia khác nhau. Bẫy A: cả nhóm là bạn bè, không có mâu thuẫn.",
+          "evidence": "In some places, students are more used to listening than talking, and vice versa."
+        },
+        {
+          "order": 28,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO problems do Sam and the tutor identify concerning group assignments?",
+          "options": [
+            "A Personal relationships.",
+            "B Cultural differences.",
+            "C Division of labour.",
+            "D Group leadership.",
+            "E Group size."
+          ],
+          "answer": [
+            "B Cultural differences.",
+            "E Group size."
+          ],
+          "explanation": "Hai đáp án đúng của cụm 27-28 là B và E. E: Sam thấy nhóm QUÁ ĐÔNG, lần họp nào cũng có người vắng. Bẫy C, D: mọi người chia việc đều và trưởng nhóm làm rất tốt.",
+          "evidence": "But personally, I feel that there are just too many of us in the group."
+        },
+        {
+          "order": 29,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO problems does Sam identify concerning the lecturers?",
+          "options": [
+            "A Punctuality.",
+            "B Organisation.",
+            "C Accessibility.",
+            "D Helpfulness.",
+            "E Teaching materials."
+          ],
+          "answer": [
+            "A Punctuality.",
+            "C Accessibility."
+          ],
+          "explanation": "Hai đáp án đúng của cụm 29-30 là A và C. A: một số giảng viên hay ĐẾN MUỘN 10-15 phút. Bẫy B: chuyện xếp nhầm phòng (organisation) là của học kỳ trước, nay không còn.",
+          "evidence": "some of the staff often turn up late"
+        },
+        {
+          "order": 30,
+          "questionType": "multiple_choice",
+          "prompt": "Which TWO problems does Sam identify concerning the lecturers?",
+          "options": [
+            "A Punctuality.",
+            "B Organisation.",
+            "C Accessibility.",
+            "D Helpfulness.",
+            "E Teaching materials."
+          ],
+          "answer": [
+            "A Punctuality.",
+            "C Accessibility."
+          ],
+          "explanation": "Hai đáp án đúng của cụm 29-30 là A và C. C: rất KHÓ GẶP RIÊNG giảng viên, giờ tiếp sinh viên họ cũng hay vắng. Bẫy D: khi gặp được thì họ rất nhiệt tình (supportive and friendly).",
+          "evidence": "it can be very difficult to get to see a lecturer individually"
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 - The Tawny Owl",
+      "instructions": "You will hear a wildlife expert giving a talk to a group of bird lovers in the UK about a species called the tawny owl. Answer questions 31-40.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test48_part4-oqKtvJDmmL5t2vQEKe5tojq1eNKHxR",
+      "transcript": "Good evening, everyone. You're all likely to be familiar with pictures of the tawny owl, because of all the owl species in the UK, it's actually the most common one. But the chances are that you're more likely to have heard one than actually seen one, as it's also strongly nocturnal. This means that it normally ventures out at night.\nSo, what kind of habitats does the tawny owl prefer? Well, a survey carried out in the 1980s confirmed that this owl is most likely to be found in woodland. If you look at a map of tawny owl distribution across Britain, you'll only see gaps in the treeless marshy areas of eastern England and in some of the more upland parts of northwest Scotland. However, you can sometimes find populations of tawny owls in urban areas too, either in parks or in large gardens.\nThe tawny owl shows some obvious adaptations to its natural habitat. For example, both its wings and its tail are short, which helps it to manoeuvre through the trees. Also, the bird's plumage is a mixture of brown and grey, and this provides suitable camouflage for when the owl perches up against a tree trunk.\nThen there are its large eyes. The tawny owl's visual capacities are considerably better than those of humans. And although it can't see in complete darkness, it's sufficiently well equipped to be able to navigate its way around woodland on all but the most overcast nights.\nAnother factor that contributes to the tawny owl's success as a hunter is its excellent memory of the layout of different areas. If you combine this ability with the owl's strongly territorial and sedentary nature - most populations of tawny owl are sit-and-wait predators - you realise that it has a good opportunity to predict where prey might be found.\nFinally, as well as having large eyes, the owl's sense of hearing is excellent, and this helps it to locate potential prey as it sits on its perch.\nTurning now to the tawny owl's diet. Woodland tawny owls feed mainly on mammals, especially small ones, such as wood mice and bank voles, but they'll also take things like frogs, or bats, or even fish, if they happen to be available. In urbanised landscapes, the owls seem to prey more on birds, so there are some differences there.\nLet's just look briefly now at survival rates in the tawny owl. Young tawny owls face a difficult time once they leave home, and two out of every three are likely to die within their first year. So with such high mortality levels, it's a good job that established breeding pairs can produce young over a number of seasons, and maximise their chances of passing their genes on to the next generation of owls.\nI've already mentioned the sedentary nature of the tawny owl. But it's not just adult tawny owls that are sedentary in their habits. Young birds, dispersing away from where they were born, rarely move far. The average distance is just 4 kilometres. There also appears to be some reluctance to cross large bodies of water. The owl is absent from many of the islands around our shores, with only occasional sightings in Ireland and the Isle of Wight off the south coast of England.\nRight, well, now I'll show you some photographs that have been taken in one or two of the...",
+      "metadata": {
+        "groupInstructions": {
+          "31": "Complete the notes below. Write ONE WORD ONLY for each answer."
+        },
+        "noteBody": "# The Tawny Owl\nMost [[31]] owl species in UK\nStrongly nocturnal\n## Habitat:\nMainly lives in [[32]] but can also be seen in urban areas, e.g. parks.\n## Adaptations:\n- Short wings and [[33]], for navigation\n- Brown and [[34]] feathers, for camouflage\n- Large eyes (more effective than those of [[35]]), for good night vision\n- Very good spatial [[36]] for predicting where prey might be found\n- Excellent [[37]] for locating prey from a perch\n## Diet\nMain food is small mammals.\nOwls in urban areas eat more [[38]]\n## Survival\nTwo thirds of young owls die within a [[39]]\nOwls don't disperse over long distances.\nOwls seem to dislike flying over large areas of [[40]]"
+      },
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Câu 31",
+          "answer": [
+            "common"
+          ],
+          "explanation": "Trong các loài cú ở Anh, cú lông xám là loài PHỔ BIẾN nhất.",
+          "evidence": "of all the owl species in the UK, it's actually the most common one"
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "prompt": "Câu 32",
+          "answer": [
+            "woodland",
+            "woodlands",
+            "woods"
+          ],
+          "explanation": "Khảo sát những năm 1980 cho thấy loài cú này chủ yếu sống ở RỪNG.",
+          "evidence": "this owl is most likely to be found in woodland"
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Câu 33",
+          "answer": [
+            "tail"
+          ],
+          "explanation": "Cả cánh và ĐUÔI đều ngắn, giúp nó luồn lách giữa các thân cây.",
+          "evidence": "both its wings and its tail are short, which helps it to manoeuvre through the trees"
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": [
+            "grey",
+            "gray"
+          ],
+          "explanation": "Bộ lông pha giữa nâu và XÁM, giúp ngụy trang khi đậu sát thân cây.",
+          "evidence": "the bird's plumage is a mixture of brown and grey"
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": [
+            "humans",
+            "people"
+          ],
+          "explanation": "Thị lực của cú tốt hơn hẳn thị lực của CON NGƯỜI.",
+          "evidence": "The tawny owl's visual capacities are considerably better than those of humans."
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": [
+            "memory"
+          ],
+          "explanation": "Cú có TRÍ NHỚ rất tốt về địa hình từng khu vực, nhờ vậy đoán được con mồi ở đâu.",
+          "evidence": "its excellent memory of the layout of different areas"
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Câu 37",
+          "answer": [
+            "hearing"
+          ],
+          "explanation": "Ngoài mắt to, cú còn có THÍNH GIÁC rất tốt để định vị con mồi khi đậu trên cành.",
+          "evidence": "the owl's sense of hearing is excellent, and this helps it to locate potential prey as it sits on its perch"
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Câu 38",
+          "answer": [
+            "birds"
+          ],
+          "explanation": "Ở đô thị, cú có vẻ săn CHIM nhiều hơn. Bẫy: ếch, dơi, cá là món phụ của cú sống trong rừng.",
+          "evidence": "In urbanised landscapes, the owls seem to prey more on birds"
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Câu 39",
+          "answer": [
+            "year"
+          ],
+          "explanation": "Cứ ba con non thì hai con chết trong NĂM đầu tiên.",
+          "evidence": "two out of every three are likely to die within their first year"
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Câu 40",
+          "answer": [
+            "water"
+          ],
+          "explanation": "Cú có vẻ ngại bay qua những vùng NƯỚC rộng, nên vắng mặt ở nhiều hòn đảo.",
+          "evidence": "There also appears to be some reluctance to cross large bodies of water."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,608 @@
+{
+  "title": "IELTS Master - Listening Test 50",
+  "skill": "listening",
+  "category": "book",
+  "bookName": "IELTS Master – Listening",
+  "sourceLabel": "IELTS Master - Listening Test 50",
+  "description": "Listening Test 50: 4 phần, 40 câu (thuê căn hộ / kế hoạch cải tạo khu bờ biển / góp ý bài luận / chương trình cứu trợ mèo hoang).",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 - Renting an apartment",
+      "instructions": "You will hear a man called Kevin Brown talking to a letting agent about renting an apartment. Answer questions 1-10.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test50_part1-87SGmwlA7JDjOn4LWIuIreZkQsry4Z",
+      "transcript": "Narrator: First, you have some time to look at questions 1 to 5.\nNow the test will begin. You should answer the questions as you listen, as you will not hear the recording a second time. Listen carefully to the first part of the conversation and answer questions 1 to 5.\nAgent: Good afternoon. How can I help you?\nKevin: Hello. My name's Kevin Brown. I saw your advertisement in today's local paper: apartments to let in all areas of the city.\nAgent: Yes, Mr. Brown. We currently have several properties available. What part of the city were you thinking of?\nKevin: Well, city centre ideally.\nAgent: Okay. And what price range are you interested in?\nKevin: Um, I don't really know. What have you got?\nAgent: Well, prices start at £400 a month, going up to £1,000 a month.\nKevin: Okay. And what's the difference? What does the price depend on?\nAgent: Well, the number of bedrooms, mainly. The cheaper apartments have one bedroom, while the most expensive have three or four bedrooms.\nKevin: Okay. Two bedrooms would be nice. So, I'll say two bedrooms up to £600 a month. Do you have anything like that?\nAgent: Right, sir. We have... just give me a moment, please. Um, we have two properties that might interest you. One is in North Street. It's... well, it's a very nice apartment, but it's £750 a month. But that includes a private parking space.\nKevin: Hmm, 750. That's a bit higher than I'd like to go really. Do you have anything less expensive?\nAgent: Yes, we have another one at £625 a month.\nKevin: 625? All right, that sounds interesting. Where is it?\nAgent: It's in Cornell Road, at number 12B.\nKevin: I don't know that. How do you spell it?\nAgent: It's C-O-R-N-E-L-L. It's near the park.\nKevin: I've never heard of it, but I'm sure I'll be able to find it on a map.\nNarrator: Before you hear the rest of the conversation, you have some time to look at questions 6 to 10.\nNow listen and answer questions 6 to 10.\nAgent: So, would you like to see the apartment, sir?\nKevin: Yes, I would. I'd like to rent somewhere fairly soon. Would tomorrow be possible?\nAgent: Sorry, I'm afraid nobody is available all day tomorrow. It's quite a busy time of year for us.\nKevin: I see.\nAgent: But if you're free later today, you could see it at 5:15?\nKevin: Sure, no problem. I could manage that.\nAgent: Okay. So that'll be 5:15 with my colleague, Jason. He'll meet you at the apartment.\nKevin: That's fine. And one more thing: what do I need to provide to rent an apartment with you? What documents, that kind of thing?\nAgent: Yes, of course. Um, do you have a job?\nKevin: Yes, I work in a travel agency.\nAgent: Well, a reference letter from your employer, you know, saying you work for them, and a deposit, which is one month's rent plus a fee of £60.\nKevin: What's that for?\nAgent: It's an administration fee to cover the cost of preparing the contract.\nKevin: Okay. And one last thing: when would this apartment be available?\nAgent: It's empty now. So you could move in as soon as the contract was signed.\nKevin: That's great. Thanks very much indeed. Bye.\nAgent: Goodbye, Mr. Brown.\nNarrator: That is the end of Section 1. You now have half a minute to check your answers.",
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the form below, using NO MORE THAN THREE WORDS AND/OR A NUMBER for each answer."
+        },
+        "noteBody": "Area of interest: city centre\nRents: from £[[1]] to £1000 per month\nNumber of bedrooms required: [[2]]\nApartment 1: North Street\nRent: £[[3]] per month\nIncluding [[4]]\nApartment 2: [[5]] Road\nRent: £625 per month\nViewing arrangements: meet [[6]] at\nPlace: [[7]]\nTime: [[8]] pm\nAlso required: reference letter from [[9]]\nOne month's rent deposit\n£[[10]] contract fee"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Câu 1",
+          "answer": [
+            "400",
+            "£400"
+          ],
+          "explanation": "Giá thuê bắt đầu từ 400 bảng một tháng, cao nhất 1.000 bảng.",
+          "evidence": "Well, prices start at £400 a month, going up to £1,000 a month."
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Câu 2",
+          "answer": [
+            "2",
+            "two"
+          ],
+          "explanation": "Kevin muốn căn HAI phòng ngủ.",
+          "evidence": "Two bedrooms would be nice."
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Câu 3",
+          "answer": [
+            "750",
+            "£750"
+          ],
+          "explanation": "Căn ở North Street giá 750 bảng một tháng. Bẫy: 600 là mức Kevin muốn, 625 là giá căn thứ hai.",
+          "evidence": "it's a very nice apartment, but it's £750 a month"
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Câu 4",
+          "answer": [
+            "parking space",
+            "a parking space",
+            "private parking space",
+            "a private parking space"
+          ],
+          "explanation": "Giá đó đã gồm một CHỖ ĐỖ XE riêng.",
+          "evidence": "But that includes a private parking space."
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Câu 5",
+          "answer": [
+            "Cornell"
+          ],
+          "explanation": "Căn thứ hai ở đường Cornell, người môi giới đánh vần C-O-R-N-E-L-L.",
+          "evidence": "It's in Cornell Road, at number 12B."
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Câu 6",
+          "answer": [
+            "Jason",
+            "Jayson",
+            "colleague",
+            "agent",
+            "agent's colleague",
+            "the agent's colleague",
+            "his colleague"
+          ],
+          "explanation": "Kevin sẽ gặp Jason - ĐỒNG NGHIỆP của người môi giới. Đáp án gốc chấp nhận cả Jayson/agent/colleague.",
+          "evidence": "So that'll be 5:15 with my colleague, Jason."
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Câu 7",
+          "answer": [
+            "apartment",
+            "the apartment"
+          ],
+          "explanation": "Jason sẽ đợi Kevin ngay TẠI CĂN HỘ.",
+          "evidence": "He'll meet you at the apartment."
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Câu 8",
+          "answer": [
+            "5.15",
+            "5:15",
+            "5.15 pm",
+            "5:15 pm"
+          ],
+          "explanation": "Ngày mai không ai rảnh, nên hẹn xem nhà lúc 5:15 chiều nay.",
+          "evidence": "But if you're free later today, you could see it at 5:15?"
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Câu 9",
+          "answer": [
+            "employer",
+            "your employer",
+            "my employer"
+          ],
+          "explanation": "Cần thư giới thiệu của NGƯỜI SỬ DỤNG LAO ĐỘNG xác nhận Kevin đang làm việc ở đó.",
+          "evidence": "a reference letter from your employer"
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Câu 10",
+          "answer": [
+            "60",
+            "£60"
+          ],
+          "explanation": "Ngoài tiền đặt cọc một tháng còn có phí 60 bảng để làm hợp đồng.",
+          "evidence": "and a deposit, which is one month's rent plus a fee of £60"
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 - Seafront redevelopment",
+      "instructions": "You will hear a member of the local council describing plans to redevelop part of the seafront of a coastal town. Answer questions 11-20.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test50_part2-iNvnJvQR56Gn2MiRJNpPnMQzWjbn6Y",
+      "transcript": "Narrator: Test 2, Section 2. You will hear a member of the local council describing plans to redevelop part of the seafront of a coastal town. First, you have some time to look at questions 11 to 15.\nListen carefully to the first part of the talk and answer questions 11 to 15.\nCouncil Member: Good evening, everybody. I wasn't expecting to see so many people. Clearly, this is an issue of great local interest. Thank you all for coming.\nWell, as you all know, I've come to talk about the council's plans for redeveloping the western part of the seafront. Firstly, of course, the Queen's Parade shopping centre is to be demolished. It was built on the cheap and in a hurry in 1953, and recently came third in a national newspaper's \"ugliest buildings in the country\" list, so I don't think anybody is going to miss it. The question was: what do we replace it with?\nWell, after consultations with the local community, we decided, as I'm sure most of you are aware, to replace it with a complex of small shops and workshops, plus a three-screen cinema. We particularly didn't want another bland glass-and-steel shopping centre full of the same old chain stores as every other town centre. No, this is our chance to do something just a little bit different.\nI'll start at the top. On the third floor will be a cafe and a restaurant. Part of this will be open air, so people can enjoy a meal or a cup of coffee in the fresh air-weather permitting, of course. Below this will be the cinema. And below that, on the first floor, will be some much-needed council offices. We're getting very cramped in the town hall, I can assure you. On the ground floor will be 20 small shop units, ranging in size from 20 to 50 square metres. Also on the ground floor will be five workshop spaces, which we hope will attract small manufacturing businesses back to the town centre, providing some additional local employment.\nUnderneath the centre will be an underground car park. Not a great big car park like in the present centre. Our aim is that most visitors to the centre will come on foot or by bus. In fact, the car park will be restricted to people working in the centre and disabled visitors.\nThen, and perhaps this is the most exciting part of the project, the beach in front of the new complex is going to be completely transformed. We're going to extend the beach. Yes, extend it! 10,000 tonnes of sand is going to be brought in to make it into a proper beach, instead of the dirty little strip of sand it is now. As well as being for the enjoyment of local people, we're hoping that a decent beach will attract more visitors to the town, and that has to be good for local businesses.\nNarrator: Before you hear the rest of the talk, you have some time to look at questions 16 to 20.\nNow listen and answer questions 16 to 20.\nCouncil Member: Now, I must emphasise that these plans have not yet been finalised. That's what this meeting is about. Of course, it's vital with a project like this that we have the support of local people. After all, we work for you, and it's your money that's paying for it.\nSo, first of all, the plans for the new centre are going to go on display in the town hall. They'll be there from Monday the 5th of March until Friday the 6th of April-plenty of time for anybody who's interested to get over there and have a look at them, I think. There'll be a suggestions box in the same room as the plans. Anybody who has anything to say is welcome to fill in a suggestions form. These forms will be looked at and taken seriously, you can be sure of that.\nThen on Tuesday, April the 10th, there'll be another public meeting much like this one, and in this same place. It'll start at 7 o'clock, and there'll be a chance for local residents to address the council. We'll also report back to you on the results gathered in the suggestions box. Anyway, I'd now like to hand you over to my colleague, my fellow councillor...\nNarrator: That is the end of Section 2. You now have half a minute to check your answers.",
+      "metadata": {
+        "groupInstructions": {
+          "11": "Complete the information below. Write NO MORE THAN THREE WORDS AND/ OR A NUMBER for each answer."
+        },
+        "noteBody": "3rd Floor: [[11]]\n2nd Floor: cinema\n1st Floor: [[12]]\nGround floor: small shops and [[13]]\nBasement: car park\n- The beach will be [[14]]\n- This will attract [[15]]\n- The plans will be on display from Monday, 5th March until [[16]], 6th [[17]]\n- Suggestions can be placed in the [[18]]\n- The next meeting will be on April [[19]]\n- It will start at [[20]] pm",
+        "images": [
+          "data:image/jpeg;base64,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"
+        ]
+      },
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "note_completion",
+          "prompt": "Câu 11",
+          "answer": [
+            "cafe and restaurant",
+            "café and restaurant",
+            "a cafe and a restaurant",
+            "a café and a restaurant",
+            "cafe and a restaurant",
+            "café and a restaurant"
+          ],
+          "explanation": "Tầng 3 sẽ là một QUÁN CÀ PHÊ VÀ NHÀ HÀNG, một phần ở ngoài trời.",
+          "evidence": "On the third floor will be a cafe and a restaurant."
+        },
+        {
+          "order": 12,
+          "questionType": "note_completion",
+          "prompt": "Câu 12",
+          "answer": [
+            "council offices"
+          ],
+          "explanation": "Tầng 1 là các VĂN PHÒNG CỦA HỘI ĐỒNG vì toà thị chính đã quá chật.",
+          "evidence": "And below that, on the first floor, will be some much-needed council offices."
+        },
+        {
+          "order": 13,
+          "questionType": "note_completion",
+          "prompt": "Câu 13",
+          "answer": [
+            "workshops",
+            "workshop spaces",
+            "five workshop spaces",
+            "5 workshop spaces"
+          ],
+          "explanation": "Tầng trệt ngoài 20 gian hàng nhỏ còn có năm XƯỞNG LÀM VIỆC cho các cơ sở sản xuất nhỏ.",
+          "evidence": "Also on the ground floor will be five workshop spaces"
+        },
+        {
+          "order": 14,
+          "questionType": "note_completion",
+          "prompt": "Câu 14",
+          "answer": [
+            "expanded",
+            "extended"
+          ],
+          "explanation": "Bãi biển sẽ được MỞ RỘNG thêm bằng 10.000 tấn cát.",
+          "evidence": "We're going to extend the beach."
+        },
+        {
+          "order": 15,
+          "questionType": "note_completion",
+          "prompt": "Câu 15",
+          "answer": [
+            "visitors",
+            "tourists",
+            "more visitors",
+            "more tourists"
+          ],
+          "explanation": "Bãi biển đẹp sẽ thu hút thêm KHÁCH DU LỊCH tới thị trấn.",
+          "evidence": "we're hoping that a decent beach will attract more visitors to the town"
+        },
+        {
+          "order": 16,
+          "questionType": "note_completion",
+          "prompt": "Câu 16",
+          "answer": [
+            "Friday"
+          ],
+          "explanation": "Bản thiết kế được trưng bày tới THỨ SÁU, ngày 6 tháng 4.",
+          "evidence": "They'll be there from Monday the 5th of March until Friday the 6th of April"
+        },
+        {
+          "order": 17,
+          "questionType": "note_completion",
+          "prompt": "Câu 17",
+          "answer": [
+            "April"
+          ],
+          "explanation": "Ngày kết thúc trưng bày là thứ Sáu ngày 6 THÁNG TƯ (tháng 3 là ngày bắt đầu).",
+          "evidence": "They'll be there from Monday the 5th of March until Friday the 6th of April"
+        },
+        {
+          "order": 18,
+          "questionType": "note_completion",
+          "prompt": "Câu 18",
+          "answer": [
+            "suggestion box",
+            "suggestions box",
+            "box"
+          ],
+          "explanation": "Góp ý bỏ vào HÒM GÓP Ý đặt cùng phòng với bản thiết kế.",
+          "evidence": "There'll be a suggestions box in the same room as the plans."
+        },
+        {
+          "order": 19,
+          "questionType": "note_completion",
+          "prompt": "Câu 19",
+          "answer": [
+            "10",
+            "10th",
+            "the 10th"
+          ],
+          "explanation": "Buổi họp tiếp theo vào thứ Ba, ngày 10 tháng 4.",
+          "evidence": "Then on Tuesday, April the 10th, there'll be another public meeting"
+        },
+        {
+          "order": 20,
+          "questionType": "note_completion",
+          "prompt": "Câu 20",
+          "answer": [
+            "7",
+            "seven",
+            "7 o'clock"
+          ],
+          "explanation": "Buổi họp bắt đầu lúc 7 giờ.",
+          "evidence": "It'll start at 7 o'clock"
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 - Improving an essay",
+      "instructions": "Maria is a student at university. She has handed the first draft of an essay to her tutor, and now they are discussing ways the essay can be improved. Answer questions 21-30.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test50_part3-F7xwWPUMan7DM6mU5OaG0P5MgydN7Y",
+      "transcript": "Narrator: Test 2, Section 3. Maria is a student at university. She has handed the first draft of an essay to her tutor. The tutor has read it, and now they are discussing ways the essay can be improved. First, you have some time to look at questions 21 to 25.\nListen carefully to the first part of the conversation and answer questions 21 to 25.\nTutor: Well, Maria, I have to say I was quite impressed by your essay. It's a big improvement on the last one.\nMaria: Really? I'm glad. I put a lot more work into this one. I really spent ages on it.\nTutor: And it shows. You've addressed most of the problems I pointed out last time. In particular, the style and language are much more appropriate for an academic essay.\nMaria: So, that aspect is okay?\nTutor: Absolutely. If you carry on like this, you shouldn't have any significant problems in that department.\nMaria: That's a relief. I've been quite worried about that, although I've been reading a lot of other essays to try to get the right style.\nTutor: Well, I'd say you've been successful. There are just one or two minor things you could look at. Your punctuation's quite basic. It's really just full stops and commas, and parentheses.\nMaria: Brackets?\nTutor: Yes, brackets if you prefer. In academic writing, these are best used only occasionally, if at all. You use them rather too often.\nMaria: Okay, I see.\nTutor: And, I'm sorry to mention it, but your spelling...\nMaria: I know, I know. But I'm working on a foreign computer. The spellchecker doesn't work for English.\nTutor: Are you sure? Have you tried changing the setting to English?\nMaria: No, I haven't.\nTutor: Well, I should see if that's possible. I haven't marked you down this time, but, well, some of my colleagues are a bit old-fashioned about spelling. I'd try to get that sorted out if I were you.\nMaria: Okay, I understand. I'll try to change the setting.\nNarrator: Before you hear the rest of the conversation, you have some time to look at questions 26 to 30.\nNow listen and answer questions 26 to 30.\nTutor: The only major problem I have with the content of your essay is the introduction. The introduction should, well, introduce the theme of the essay. You've put some of the most important points there. For example, this bit: here, the statistics about the growth of railways in the 1850s. That really should go in the main body of the essay. And so should this paragraph about changes in patterns of employment. In general, I'd say your introductory section should be no more than half as long as it is at the moment.\nMaria: Hmm. Okay. And I should move those points forward?\nTutor: Precisely. And going back to the railways, they're one of the most significant factors for change in this period. But apart from those statistics in the introduction, you only briefly mention them. I'd like to see a lot more on that, and the influence the expansion of the railways had on patterns of social and economic behaviour.\nMaria: You mean how with the railways people could travel to find work, and could meet people from other areas?\nTutor: Exactly. Then in the mid-section, well, it's not a big thing, but this quotation from The Times...\nMaria: You think it's too long?\nTutor: Well, you said it!\nMaria: I couldn't think of a way to shorten it.\nTutor: Do you think it's really necessary?\nMaria: You mean I could just get rid of it?\nTutor: Yes. You've already made the point and backed it up with other evidence. The quotation's redundant really.\nMaria: Okay. Well, that'll be easy.\nTutor: There were various other minor points which I've noted in the margins. You can look at those later. But moving forward to the end here, I wasn't quite sure what this meant.\nMaria: The final paragraph?\nTutor: Yes. Are you saying that on the whole the changes of the mid-nineteenth century tended to improve the lives of ordinary people or not? It's not very clear.\nMaria: It's not?\nTutor: No, it isn't. I'd add a few lines clarifying your position.\nMaria: Okay. When do you want the final draft?\nTutor: Oh, the end of term will be fine. But there was just one other thing: the bibliography. Did you really read all these books?\nMaria: Um, no.\nTutor: Just the books you actually consulted will be fine. You don't need to include everything ever published on the subject.\nMaria: Right. Okay. Thanks. Bye.\nTutor: Goodbye.\nNarrator: That is the end of Section 3. You now have half a minute to check your answers.",
+      "metadata": {
+        "groupInstructions": {
+          "21": "Choose the correct letter A, B or C.",
+          "26": "What suggestions does the tutor make?\nComplete the list below with the correct letters A, B or C.\n:::box\nA Expand it\nB Reduce it\nC Delete it\n:::"
+        }
+      },
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "Maria's essay is",
+          "options": [
+            "A better than her previous one",
+            "B not quite as good as her previous one",
+            "C similar to her previous one"
+          ],
+          "answer": [
+            "A better than her previous one"
+          ],
+          "explanation": "Thầy nói bài này TIẾN BỘ RẤT NHIỀU so với bài trước.",
+          "evidence": "It's a big improvement on the last one."
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "The tutor is impressed by",
+          "options": [
+            "A the punctuation",
+            "B the spelling",
+            "C the style and choice of language"
+          ],
+          "answer": [
+            "C the style and choice of language"
+          ],
+          "explanation": "Điểm thầy khen là VĂN PHONG VÀ CÁCH DÙNG TỪ đã hợp với bài học thuật. Bẫy A, B: dấu câu còn sơ sài, chính tả còn lỗi.",
+          "evidence": "In particular, the style and language are much more appropriate for an academic essay."
+        },
+        {
+          "order": 23,
+          "questionType": "multiple_choice",
+          "prompt": "The tutor feels that Maria's use of English is",
+          "options": [
+            "A generally acceptable",
+            "B very poor",
+            "C perfect"
+          ],
+          "answer": [
+            "C perfect"
+          ],
+          "explanation": "Đáp án gốc của đề là C. Maria hỏi phần ngôn ngữ đã ổn chưa, thầy khẳng định \"Absolutely\" và nói cứ giữ như vậy thì không có vấn đề gì đáng kể.",
+          "evidence": "Absolutely. If you carry on like this, you shouldn't have any significant problems in that department."
+        },
+        {
+          "order": 24,
+          "questionType": "multiple_choice",
+          "prompt": "How does Maria feel about this?",
+          "options": [
+            "A she is very sad",
+            "B she is relieved",
+            "C she is delighted"
+          ],
+          "answer": [
+            "B she is relieved"
+          ],
+          "explanation": "Maria vốn lo về văn phong nên nghe vậy thì NHẸ NHÕM (\"That's a relief\").",
+          "evidence": "That's a relief."
+        },
+        {
+          "order": 25,
+          "questionType": "multiple_choice",
+          "prompt": "How does the tutor suggest Maria can improve her spelling?",
+          "options": [
+            "A use a dictionary",
+            "B use a computer spell checker",
+            "C avoid difficult to spell words"
+          ],
+          "answer": [
+            "B use a computer spell checker"
+          ],
+          "explanation": "Maria dùng máy tính nước ngoài nên trình kiểm tra chính tả không chạy tiếng Anh; thầy gợi ý ĐỔI CÀI ĐẶT sang tiếng Anh để dùng được trình kiểm tra chính tả.",
+          "evidence": "Have you tried changing the setting to English?"
+        },
+        {
+          "order": 26,
+          "questionType": "matching",
+          "prompt": "the introduction",
+          "options": [
+            "A Expand it",
+            "B Reduce it",
+            "C Delete it"
+          ],
+          "answer": [
+            "B Reduce it"
+          ],
+          "explanation": "Phần mở bài nên ngắn lại, tối đa bằng một nửa hiện tại -> RÚT GỌN. Các ý quan trọng chuyển xuống thân bài.",
+          "evidence": "In general, I'd say your introductory section should be no more than half as long as it is at the moment."
+        },
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "information on the railways",
+          "options": [
+            "A Expand it",
+            "B Reduce it",
+            "C Delete it"
+          ],
+          "answer": [
+            "A Expand it"
+          ],
+          "explanation": "Đường sắt là yếu tố quan trọng nhưng Maria chỉ nhắc qua; thầy muốn viết NHIỀU HƠN -> MỞ RỘNG.",
+          "evidence": "I'd like to see a lot more on that"
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "the quotation from The Times",
+          "options": [
+            "A Expand it",
+            "B Reduce it",
+            "C Delete it"
+          ],
+          "answer": [
+            "C Delete it"
+          ],
+          "explanation": "Đoạn trích dẫn là thừa vì ý đã có dẫn chứng khác, nên BỎ HẲN đi. Bẫy B: Maria tưởng chỉ cần rút ngắn.",
+          "evidence": "You mean I could just get rid of it? / The quotation's redundant really."
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "the conclusion",
+          "options": [
+            "A Expand it",
+            "B Reduce it",
+            "C Delete it"
+          ],
+          "answer": [
+            "A Expand it"
+          ],
+          "explanation": "Kết bài chưa rõ quan điểm, thầy bảo THÊM vài dòng làm rõ -> MỞ RỘNG.",
+          "evidence": "I'd add a few lines clarifying your position."
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "the bibliography",
+          "options": [
+            "A Expand it",
+            "B Reduce it",
+            "C Delete it"
+          ],
+          "answer": [
+            "B Reduce it"
+          ],
+          "explanation": "Chỉ cần liệt kê những sách thực sự đã đọc -> RÚT GỌN danh mục tài liệu.",
+          "evidence": "Just the books you actually consulted will be fine."
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 - Feral cats",
+      "instructions": "You will hear a talk about stray cats. Answer questions 31-40.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/test50_part4-UvBW93XiKbnADxgFpFsdXYMGdCKyIK",
+      "transcript": "Narrator: Test 2, Section 4. You will hear a talk about stray cats. First, you have some time to look at questions 31 to 40.\nListen carefully to the talk and answer questions 31 to 40.\nHost: Good evening. I'd like to introduce Laura Dongswell of the Feral Cat Association. Laura has just returned from spending three months in Italy, where she has been working with local organisations to improve conditions for some of the estimated 1.5 million ownerless cats currently thought to be at large there.\nLaura: Thank you very much. The principal problem regarding this issue is much the same in Italy as it is in other countries: public awareness. The general public have become so used to the sight of ownerless cats in poor condition wandering their streets that they simply don't recognise it as a problem. While some will put out scraps of food, the majority see feral cats in much the same light as, say, seagulls-a form of local wildlife which is of no particular concern to, or responsibility of, the human population.\nOf course, there are plenty of individuals who do take responsibility for cats in their areas, providing appropriate food, emergency veterinary treatment, and perhaps indoor shelter. But these people can only provide support for a fraction of the vast numbers of feral cats that exist.\nSo, what's to be done? Find loving family homes for all feral cats? Well, that would be wonderful, of course, but unlikely to happen anytime soon. The two main focuses of our work are sterilisation and education.\nSterilisation is usually only performed on female animals. It may seem a drastic intervention, but it benefits both the sterilised cats, who will not have to suffer the health consequences of endless pregnancies, and also the feral cat population as a whole, as controlling numbers reduces competition for whatever slender resources of food may exist.\nAnimals to be neutered are captured and sedated at the point of capture to minimise their stress and discomfort. They are then taken to a temporary centre set up by a local organisation, and the operations are carried out under anaesthetic by trained veterinary surgeons, all of whom kindly donate their time. Now, while domestic cats can recuperate in the comfort of their owners' homes, feral cats have no such luxury. They are kept at the centre for around 24 hours, then returned to the locality from which they came. Dissolving stitches are used, and each cat that has been operated on has the tip of one ear clipped-a sign that the animal has already been neutered.\nA few animals have been electronically tagged and their progress monitored. In general, it has been found that neutering does not diminish an animal's chances of survival. On the contrary, the evidence suggests that sterilised females have a significantly improved chance of remaining in adequate health.\nThe other focus of our work is, as I said, education: publicising the issue and raising awareness. Our current poster campaign is a translation of the widely used slogan \"A kitten is not just for Christmas\". At present, resources are rather limited, but funds permitting, a campaign of radio advertisements is planned, perhaps in the run-up to next Christmas, reminding people that families may quickly become bored with the responsibility of owning a domestic animal. Last year, we used newspaper ads featuring pictures of emaciated strays and highlighting the fact that abandoning an animal simply transfers your problem to somebody else.\nWhich leads me on to the final point I'd like to make: organisations such as ours are sometimes depicted as being mainly for sentimental animal lovers. Well, I make no apology for that! But our work has a wider importance than the welfare of cats. Ownerless cats tend to quickly fall into ill health, and can become a health hazard in various ways, including the spreading of disease and parasites. Children can be especially vulnerable to this, as they are more likely to handle an infected or infested animal.\nHost: Thank you very much, Laura.\nNarrator: That is the end of Section 4. You now have half a minute to check your answers.",
+      "metadata": {
+        "groupInstructions": {
+          "31": "Choose the correct letter A, B or C.",
+          "33": "Complete the sentences below. Write NO MORE THAN THREE WORDS for each answer.",
+          "37": "Complete the table below. Write NO MORE THAN THREE WORDS for each answer.",
+          "40": "Choose the correct letter A, B or C."
+        },
+        "noteBody": "Sterilisation is usually performed only on [[33]].\nSterilisation is carried out in [[34]].\nCats remain there for [[35]].\nTo show that an animal has been sterilized, one [[36]].",
+        "tableBody": "# Ways of publicizing the issue\n| Method | Message | When |\n| --- | --- | --- |\n| Poster campaign | A kitten is not [[37]] | Now |\n| [[38]] | Families may get bored with the responsibility of owning a pet | Perhaps before next Christmas |\n| Newspaper advertisements | Abandoned animals cause problems for other people | [[39]] |"
+      },
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "multiple_choice",
+          "prompt": "The main problem is",
+          "options": [
+            "A cats in towns",
+            "B the poor condition of feral cats",
+            "C public awareness"
+          ],
+          "answer": [
+            "C public awareness"
+          ],
+          "explanation": "Vấn đề chính là NHẬN THỨC CỦA CÔNG CHÚNG - mọi người quen nhìn mèo hoang ốm yếu đến mức không coi đó là vấn đề. Bẫy B: tình trạng tồi tệ của mèo chỉ là hệ quả.",
+          "evidence": "The principal problem regarding this issue is much the same in Italy as it is in other countries: public awareness."
+        },
+        {
+          "order": 32,
+          "questionType": "multiple_choice",
+          "prompt": "Emergency veterinary treatment is provided by",
+          "options": [
+            "A the government",
+            "B a small number of people",
+            "C nobody"
+          ],
+          "answer": [
+            "B a small number of people"
+          ],
+          "explanation": "Có những cá nhân tự lo thức ăn, chữa trị khẩn cấp cho mèo, nhưng họ chỉ giúp được một PHẦN NHỎ - tức chỉ một số ít người làm việc này.",
+          "evidence": "But these people can only provide support for a fraction of the vast numbers of feral cats that exist."
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Câu 33",
+          "answer": [
+            "females",
+            "female cats",
+            "female animals",
+            "female"
+          ],
+          "explanation": "Triệt sản thường chỉ làm với mèo CÁI.",
+          "evidence": "Sterilisation is usually only performed on female animals."
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Câu 34",
+          "answer": [
+            "temporary centres",
+            "temporary centre",
+            "a temporary centre",
+            "temporary centers",
+            "temporary center"
+          ],
+          "explanation": "Mèo được đưa tới một TRUNG TÂM TẠM THỜI do tổ chức địa phương lập ra để phẫu thuật.",
+          "evidence": "They are then taken to a temporary centre set up by a local organisation"
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Câu 35",
+          "answer": [
+            "about 24 hours",
+            "around 24 hours",
+            "24 hours"
+          ],
+          "explanation": "Mèo được giữ lại trung tâm khoảng 24 GIỜ rồi thả về chỗ cũ.",
+          "evidence": "They are kept at the centre for around 24 hours"
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Câu 36",
+          "answer": [
+            "ear is clipped",
+            "ear clipped",
+            "ear tip is clipped",
+            "ear tip clipped"
+          ],
+          "explanation": "Mèo đã triệt sản được CẮT CHÓP MỘT BÊN TAI làm dấu.",
+          "evidence": "each cat that has been operated on has the tip of one ear clipped"
+        },
+        {
+          "order": 37,
+          "questionType": "table_completion",
+          "prompt": "Câu 37",
+          "answer": [
+            "just for Christmas"
+          ],
+          "explanation": "Khẩu hiệu áp phích: \"A kitten is not just for Christmas\" - mèo con không chỉ là quà Giáng sinh.",
+          "evidence": "A kitten is not just for Christmas"
+        },
+        {
+          "order": 38,
+          "questionType": "table_completion",
+          "prompt": "Câu 38",
+          "answer": [
+            "radio ads",
+            "radio advertisements",
+            "radio adverts",
+            "radio advertising"
+          ],
+          "explanation": "Chiến dịch QUẢNG CÁO TRÊN RADIO đang được lên kế hoạch, có thể trước Giáng sinh tới.",
+          "evidence": "a campaign of radio advertisements is planned, perhaps in the run-up to next Christmas"
+        },
+        {
+          "order": 39,
+          "questionType": "table_completion",
+          "prompt": "Câu 39",
+          "answer": [
+            "last year",
+            "previous year",
+            "the previous year"
+          ],
+          "explanation": "Quảng cáo trên báo được dùng vào NĂM NGOÁI.",
+          "evidence": "Last year, we used newspaper ads featuring pictures of emaciated strays"
+        },
+        {
+          "order": 40,
+          "questionType": "multiple_choice",
+          "prompt": "A wider problem of feral cats is that they can",
+          "options": [
+            "A injure children",
+            "B damage human health",
+            "C become infested with parasites"
+          ],
+          "answer": [
+            "B damage human health"
+          ],
+          "explanation": "Mèo hoang có thể thành MỐI NGUY CHO SỨC KHOẺ CON NGƯỜI (lây bệnh, ký sinh trùng). Bẫy A: trẻ em dễ bị ảnh hưởng vì hay sờ vào mèo, chứ mèo không làm trẻ bị thương; C: nhiễm ký sinh trùng là chuyện của mèo, còn ý rộng hơn là nguy hại cho người.",
+          "evidence": "can become a health hazard in various ways, including the spreading of disease and parasites"
+        }
+      ]
+    }
+  ]
+}

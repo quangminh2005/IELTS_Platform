@@ -13,6 +13,7 @@ export type FlashcardWord = {
   meaningVi: string;
   definitionEn: string | null;
   exampleEn: string;
+  exampleVi: string | null;
 };
 
 // Vuốt ngang ít nhất chừng này (px) mới tính là chuyển thẻ.
@@ -47,6 +48,11 @@ function Example({ word }: { word: FlashcardWord }) {
       ) : (
         <>“{word.exampleEn}”</>
       )}
+      {word.exampleVi ? (
+        <span className="mt-1 block text-[13px] not-italic leading-5 text-muted-foreground/90">
+          {word.exampleVi}
+        </span>
+      ) : null}
     </p>
   );
 }

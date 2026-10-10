@@ -21,8 +21,16 @@ type QueueEntry = {
 
 type Phase = "intro" | "ask" | "checked";
 
-// Câu ví dụ với từ cần học in đậm.
-function ExampleSentence({ example, fallback }: { example: MaskedSentence | null; fallback: string }) {
+// Câu ví dụ với từ cần học in đậm, bản dịch (nếu có) ở dòng dưới.
+function ExampleSentence({
+  example,
+  fallback,
+  translation
+}: {
+  example: MaskedSentence | null;
+  fallback: string;
+  translation: string | null;
+}) {
   if (!fallback) {
     return null;
   }
@@ -38,6 +46,11 @@ function ExampleSentence({ example, fallback }: { example: MaskedSentence | null
       ) : (
         <>“{fallback}”</>
       )}
+      {translation ? (
+        <span className="mt-1 block text-[13px] not-italic leading-5 text-muted-foreground/90">
+          {translation}
+        </span>
+      ) : null}
     </p>
   );
 }
@@ -214,7 +227,11 @@ export function VocabReviewSession({
       {phase === "intro" ? (
         <div className="mt-5">
           <WordHeader item={item} />
-          <ExampleSentence example={question.example} fallback={question.exampleEn} />
+          <ExampleSentence
+            example={question.example}
+            fallback={question.exampleEn}
+            translation={question.exampleVi}
+          />
           <button
             type="button"
             onClick={() => setPhase("ask")}
@@ -326,7 +343,11 @@ export function VocabReviewSession({
               <div className="mt-2">
                 <WordHeader item={item} />
               </div>
-              <ExampleSentence example={question.example} fallback={question.exampleEn} />
+              <ExampleSentence
+            example={question.example}
+            fallback={question.exampleEn}
+            translation={question.exampleVi}
+          />
               <button
                 ref={nextRef}
                 type="button"

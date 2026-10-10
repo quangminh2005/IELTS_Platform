@@ -71,6 +71,19 @@ export type FeatureAnnouncement = {
 export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
   // ---- Học viên ----
   {
+    id: "student-vocab-example-vi",
+    audience: "student",
+    title: ["Câu ví dụ", "Có dịch tiếng Việt"],
+    description:
+      "Mỗi từ trong Sổ từ và lúc ôn thẻ giờ có bản dịch câu ví dụ ngay bên dưới, đọc là hiểu liền.",
+    cta: "Mở Sổ từ",
+    href: "/student/vocab/words",
+    mascot: "owl",
+    pose: "read",
+    theme: "ocean",
+    shippedAt: "2026-10-10"
+  },
+  {
     id: "student-feed",
     audience: "student",
     title: ["Bảng tin", "Học cùng bạn bè"],

@@ -45,7 +45,8 @@ export default async function StudentVocabFlashcardsPage({
     partOfSpeech: word.partOfSpeech,
     meaningVi: word.meaningVi,
     definitionEn: word.definitionEn,
-    exampleEn: word.exampleEn
+    exampleEn: word.exampleEn,
+    exampleVi: word.exampleVi ?? null
   }));
 
   return (

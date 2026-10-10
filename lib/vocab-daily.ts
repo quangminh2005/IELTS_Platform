@@ -10,6 +10,7 @@ export type DailyWord = {
   meaningVi: string;
   definitionEn: string | null;
   exampleEn: string;
+  exampleVi: string | null;
   sourceUnitId: string | null;
   // Tên đề gốc, vd "Cambridge 20 · Reading Test 1 — Passage 1". Null với từ nhập
   // tay không gắn phần đề nào.
@@ -35,6 +36,7 @@ const WORD_FIELDS = {
   meaningVi: true,
   definitionEn: true,
   exampleEn: true,
+  exampleVi: true,
   sourceUnitId: true,
   // select tường minh, không include: content/transcript của phần đề rất nặng.
   sourceUnit: {
@@ -50,6 +52,7 @@ type WordRow = {
   meaningVi: string;
   definitionEn: string | null;
   exampleEn: string;
+  exampleVi: string | null;
   sourceUnitId: string | null;
   sourceUnit: { title: string; material: { title: string } } | null;
 };

@@ -598,6 +598,7 @@ model VocabWord {
   meaningVi    String // nghĩa tiếng Việt
   definitionEn String?
   exampleEn    String // câu ví dụ NGUYÊN VĂN từ đề
+  exampleVi    String? // bản dịch tiếng Việt của câu ví dụ
   sourceUnitId String?
   sourceSkill  String?
   hidden       Boolean  @default(false)

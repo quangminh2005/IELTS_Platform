@@ -552,6 +552,8 @@ const statements = [
       FOREIGN KEY ("authorUserId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
   END $$;`,
+  // Bản dịch câu ví dụ trong kho từ vựng (10/10/2026).
+  'ALTER TABLE "VocabWord" ADD COLUMN IF NOT EXISTS "exampleVi" TEXT;',
 ];
 
 const prisma = new PrismaClient();

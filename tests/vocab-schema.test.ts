@@ -30,6 +30,18 @@ describe("schema từ vựng", () => {
     }
   });
 
+  it("bản dịch câu ví dụ có cột riêng và ensure-db tự thêm lên prod", () => {
+    const block = schema.split("model VocabWord {")[1].split("}")[0];
+    expect(block).toMatch(/exampleVi\s+String\?/);
+    expect(ensureDb).toContain('ALTER TABLE "VocabWord" ADD COLUMN IF NOT EXISTS "exampleVi" TEXT;');
+  });
+
+  it("thầy thêm từ tay phải kèm bản dịch câu ví dụ", () => {
+    const actions = readFileSync(join(process.cwd(), "lib", "actions", "vocab.ts"), "utf8");
+    const createBlock = actions.split("const createSchema")[1].split("});")[0];
+    expect(createBlock).toMatch(/exampleVi: z\.string\(\)\.trim\(\)\.min\(1/);
+  });
+
   it("VocabDaily khoá unique theo ngày để chống tạo trùng", () => {
     const block = schema.split("model VocabDaily {")[1].split("}")[0];
     expect(block).toMatch(/date\s+DateTime\s+@unique/);

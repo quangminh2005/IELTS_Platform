@@ -49,6 +49,8 @@ type Filled = {
   partOfSpeech: string;
   meaningVi: string;
   definitionEn: string;
+  // Bản dịch tiếng Việt của câu ví dụ — bắt buộc với mọi từ mới.
+  exampleVi: string;
 };
 
 // Structured output: bắt Claude trả đúng khuôn này, khỏi phải vá lỗi parse.
@@ -67,9 +69,10 @@ const RESPONSE_SCHEMA = {
             enum: ["noun", "verb", "adjective", "adverb"]
           },
           meaningVi: { type: "string" },
-          definitionEn: { type: "string" }
+          definitionEn: { type: "string" },
+          exampleVi: { type: "string" }
         },
-        required: ["word", "phonetic", "partOfSpeech", "meaningVi", "definitionEn"],
+        required: ["word", "phonetic", "partOfSpeech", "meaningVi", "definitionEn", "exampleVi"],
         additionalProperties: false
       }
     }
@@ -97,7 +100,8 @@ async function fillMeanings(
       "Bạn giúp một giáo viên IELTS người Việt soạn từ điển cho học viên. " +
       "Với mỗi từ, đưa nghĩa tiếng Việt ngắn gọn ĐÚNG VỚI NGỮ CẢNH của câu ví dụ " +
       "được cung cấp, phiên âm IPA (kèm hai dấu gạch chéo), loại từ, và một định " +
-      "nghĩa tiếng Anh ngắn. Giữ nguyên chính tả của từ trong trường word.",
+      "nghĩa tiếng Anh ngắn, kèm bản dịch tiếng Việt tự nhiên của cả câu ví dụ " +
+      "(exampleVi). Giữ nguyên chính tả của từ trong trường word.",
     messages: [
       {
         role: "user",
@@ -129,6 +133,7 @@ async function saveWord(item: Filled, source: VocabCandidate) {
       meaningVi: item.meaningVi,
       definitionEn: item.definitionEn,
       exampleEn: source.sentence,
+      exampleVi: item.exampleVi.trim() || null,
       // Chuỗi rỗng sẽ làm hỏng khoá ngoại — quy về null.
       sourceUnitId: source.unitId || null,
       sourceSkill: source.skill || null
@@ -150,6 +155,12 @@ async function importFilled(path: string) {
   const rows = JSON.parse(readFileSync(path, "utf8")) as FilledWithSource[];
 
   console.log(`Đọc ${rows.length} từ từ ${path}.`);
+
+  const untranslated = rows.filter((row) => !row.exampleVi?.trim()).map((row) => row.word);
+
+  if (untranslated.length > 0) {
+    throw new Error(`Còn ${untranslated.length} từ chưa dịch câu ví dụ: ${untranslated.join(", ")}`);
+  }
 
   let saved = 0;
 
@@ -237,6 +248,7 @@ async function main() {
         partOfSpeech: "",
         meaningVi: "",
         definitionEn: "",
+        exampleVi: "",
         sentence: item.sentence,
         unitId: item.unitId,
         skill: item.skill

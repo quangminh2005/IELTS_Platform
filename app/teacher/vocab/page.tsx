@@ -65,6 +65,7 @@ export default async function TeacherVocabPage({
         phonetic: true,
         meaningVi: true,
         exampleEn: true,
+        exampleVi: true,
         sourceSkill: true,
         hidden: true,
         // Lần phát gần nhất TÍNH ĐẾN HÔM NAY — dòng ghim cho ngày mai xem riêng.
@@ -141,6 +142,14 @@ export default async function TeacherVocabPage({
             rows={2}
             className={inputClass}
             aria-label="Câu ví dụ"
+          />
+          <textarea
+            name="exampleVi"
+            placeholder="Dịch câu ví dụ sang tiếng Việt *"
+            required
+            rows={2}
+            className={inputClass}
+            aria-label="Dịch câu ví dụ"
           />
           <div>
             <button
@@ -229,6 +238,14 @@ export default async function TeacherVocabPage({
                   rows={2}
                   className={inputClass}
                   aria-label="Câu ví dụ"
+                />
+                <textarea
+                  name="exampleVi"
+                  defaultValue={word.exampleVi ?? ""}
+                  placeholder="Dịch câu ví dụ sang tiếng Việt"
+                  rows={2}
+                  className={inputClass}
+                  aria-label="Dịch câu ví dụ"
                 />
                 <div className="flex gap-2">
                   <button

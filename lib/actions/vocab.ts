@@ -42,7 +42,8 @@ const updateSchema = z.object({
   wordId: z.string().min(1),
   meaningVi: z.string().trim().min(1, "Nghĩa tiếng Việt không được để trống."),
   phonetic: z.string().trim(),
-  exampleEn: z.string().trim().min(1, "Câu ví dụ không được để trống.")
+  exampleEn: z.string().trim().min(1, "Câu ví dụ không được để trống."),
+  exampleVi: z.string().trim().optional().default("")
 });
 
 export async function updateVocabWord(formData: FormData): Promise<ActionResult> {
@@ -53,7 +54,8 @@ export async function updateVocabWord(formData: FormData): Promise<ActionResult>
       wordId: formData.get("wordId"),
       meaningVi: formData.get("meaningVi"),
       phonetic: formData.get("phonetic"),
-      exampleEn: formData.get("exampleEn")
+      exampleEn: formData.get("exampleEn"),
+      exampleVi: formData.get("exampleVi") ?? undefined
     });
 
     await prisma.vocabWord.update({
@@ -61,7 +63,8 @@ export async function updateVocabWord(formData: FormData): Promise<ActionResult>
       data: {
         meaningVi: parsed.meaningVi,
         phonetic: parsed.phonetic.length > 0 ? parsed.phonetic : null,
-        exampleEn: parsed.exampleEn
+        exampleEn: parsed.exampleEn,
+        exampleVi: parsed.exampleVi || null
       }
     });
 
@@ -87,7 +90,9 @@ const createSchema = z.object({
   partOfSpeech: optionalText,
   meaningVi: z.string().trim().min(1, "Nghĩa tiếng Việt không được để trống."),
   definitionEn: optionalText,
-  exampleEn: z.string().trim().min(1, "Câu ví dụ không được để trống.")
+  exampleEn: z.string().trim().min(1, "Câu ví dụ không được để trống."),
+  // Từ mới bắt buộc kèm bản dịch câu ví dụ (thầy yêu cầu 10/10/2026).
+  exampleVi: z.string().trim().min(1, "Chưa dịch câu ví dụ sang tiếng Việt.")
 });
 
 // Thầy thêm từ tay — không gắn phần đề nào, sourceSkill = "manual" để phân biệt với
@@ -102,7 +107,8 @@ export async function createVocabWord(formData: FormData): Promise<ActionResult>
       partOfSpeech: formData.get("partOfSpeech"),
       meaningVi: formData.get("meaningVi"),
       definitionEn: formData.get("definitionEn"),
-      exampleEn: formData.get("exampleEn")
+      exampleEn: formData.get("exampleEn"),
+      exampleVi: formData.get("exampleVi")
     });
 
     const word = parsed.display.toLowerCase();
@@ -129,6 +135,7 @@ export async function createVocabWord(formData: FormData): Promise<ActionResult>
         meaningVi: parsed.meaningVi,
         definitionEn: parsed.definitionEn || null,
         exampleEn: parsed.exampleEn,
+        exampleVi: parsed.exampleVi,
         sourceSkill: "manual"
       }
     });

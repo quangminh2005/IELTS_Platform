@@ -14,6 +14,7 @@ export type VocabWordEntry = {
   meaningVi: string;
   definitionEn: string | null;
   exampleEn: string;
+  exampleVi?: string | null;
   sourceLabel: string | null;
   // Ngày gom nhóm (yyyy-mm-dd giờ VN): ngày thêm thẻ, hoặc ngày phát với từ chưa học.
   dateKey: string;
@@ -40,6 +41,7 @@ export type DeckCardInput = {
     meaningVi: string;
     definitionEn: string | null;
     exampleEn: string;
+    exampleVi?: string | null;
   };
   sourceLabel: string | null;
 };
@@ -52,6 +54,7 @@ export type ReleasedWordInput = {
   meaningVi: string;
   definitionEn: string | null;
   exampleEn: string;
+  exampleVi?: string | null;
   sourceLabel: string | null;
   releasedOn: string;
 };

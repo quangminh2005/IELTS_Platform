@@ -172,6 +172,11 @@ export default async function StudentVocabWordsPage({
                   {word.exampleEn ? (
                     <p className="mt-2 border-l-2 border-border pl-3 text-sm italic leading-6 text-muted-foreground">
                       <ExampleSentence display={word.display} sentence={word.exampleEn} />
+                      {word.exampleVi ? (
+                        <span className="mt-1 block text-[13px] not-italic leading-5 text-muted-foreground/90">
+                          {word.exampleVi}
+                        </span>
+                      ) : null}
                     </p>
                   ) : null}
                   {word.sourceLabel ? (

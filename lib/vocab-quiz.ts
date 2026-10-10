@@ -6,6 +6,8 @@ export type QuizWord = {
   meaningVi: string;
   phonetic: string | null;
   exampleEn: string;
+  // Bản dịch câu ví dụ — chỉ hiện ở lúc giới thiệu từ và lúc chữa bài (lộ nghĩa).
+  exampleVi?: string | null;
 };
 
 // meaning: nhìn từ → chọn nghĩa Việt · reverse: nghĩa Việt → chọn từ Anh ·
@@ -29,6 +31,7 @@ export type QuizQuestion = {
   phonetic: string | null;
   meaningVi: string;
   exampleEn: string;
+  exampleVi: string | null;
   // Đề bài hiển thị: từ (meaning), nghĩa Việt (reverse) hoặc câu đục lỗ (cloze).
   prompt: string;
   // Trắc nghiệm: 4 lựa chọn + vị trí đáp án. Cloze: [] và -1.
@@ -179,6 +182,7 @@ function buildChoiceQuestion(input: {
     phonetic: input.word.phonetic,
     meaningVi: input.word.meaningVi,
     exampleEn: input.word.exampleEn,
+    exampleVi: input.word.exampleVi ?? null,
     prompt: input.kind === "meaning" ? input.word.display : input.word.meaningVi,
     options,
     correctIndex,
@@ -208,6 +212,7 @@ export function buildQuestion(input: {
       phonetic: word.phonetic,
       meaningVi: word.meaningVi,
       exampleEn: word.exampleEn,
+      exampleVi: word.exampleVi ?? null,
       prompt: `${example.before}${CLOZE_BLANK}${example.after}`,
       options: [],
       correctIndex: -1,

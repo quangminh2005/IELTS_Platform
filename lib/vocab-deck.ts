@@ -48,6 +48,7 @@ export const CARD_SELECT = {
       meaningVi: true,
       definitionEn: true,
       exampleEn: true,
+      exampleVi: true,
       hidden: true
     }
   }
@@ -73,6 +74,7 @@ type CardRow = {
     meaningVi: string;
     definitionEn: string | null;
     exampleEn: string;
+    exampleVi: string | null;
     hidden: boolean;
   } | null;
 };
@@ -84,6 +86,8 @@ export type CardContent = {
   meaningVi: string;
   definitionEn: string | null;
   exampleEn: string;
+  // Chỉ từ trong kho mới có bản dịch; từ học viên tự thêm để null.
+  exampleVi: string | null;
 };
 
 export type ResolvedCard = {
@@ -112,7 +116,8 @@ export function resolveCard(row: CardRow): ResolvedCard | null {
       partOfSpeech: row.word.partOfSpeech,
       meaningVi: row.word.meaningVi,
       definitionEn: row.word.definitionEn,
-      exampleEn: row.word.exampleEn
+      exampleEn: row.word.exampleEn,
+      exampleVi: row.word.exampleVi
     };
   } else {
     if (!row.display || !row.meaningVi) {
@@ -125,7 +130,8 @@ export function resolveCard(row: CardRow): ResolvedCard | null {
       partOfSpeech: row.partOfSpeech,
       meaningVi: row.meaningVi,
       definitionEn: row.definitionEn,
-      exampleEn: row.exampleEn ?? ""
+      exampleEn: row.exampleEn ?? "",
+      exampleVi: null
     };
   }
 
@@ -190,6 +196,7 @@ async function loadBank(todayKey: string): Promise<BankWord[]> {
       phonetic: true,
       meaningVi: true,
       exampleEn: true,
+      exampleVi: true,
       dailies: { select: { date: true } }
     }
   });
@@ -211,6 +218,7 @@ async function loadBank(todayKey: string): Promise<BankWord[]> {
       phonetic: row.phonetic,
       meaningVi: row.meaningVi,
       exampleEn: row.exampleEn,
+      exampleVi: row.exampleVi,
       releasedOn: released[0] ?? null
     });
   }
@@ -272,7 +280,8 @@ export async function getReviewSession(
         display: card.content.display,
         phonetic: card.content.phonetic,
         meaningVi: card.content.meaningVi,
-        exampleEn: card.content.exampleEn
+        exampleEn: card.content.exampleEn,
+        exampleVi: card.content.exampleVi
       }
     });
   }
@@ -367,6 +376,7 @@ export async function getWordBook(studentId: string): Promise<VocabWordEntry[]> 
             meaningVi: true,
             definitionEn: true,
             exampleEn: true,
+            exampleVi: true,
             sourceUnit
           }
         }

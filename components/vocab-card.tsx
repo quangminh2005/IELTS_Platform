@@ -37,6 +37,11 @@ export function VocabCard({
           ) : null}
           <p className="mt-3 border-l-2 border-border pl-3 text-sm italic leading-6 text-muted-foreground">
             “{word.exampleEn}”
+            {word.exampleVi ? (
+              <span className="mt-1 block text-[13px] not-italic leading-5 text-muted-foreground/90">
+                {word.exampleVi}
+              </span>
+            ) : null}
           </p>
           {word.sourceLabel ? (
             <p className="mt-1 pl-3 text-xs text-muted-foreground">

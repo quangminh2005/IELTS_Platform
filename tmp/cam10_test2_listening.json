@@ -1,0 +1,681 @@
+{
+  "title": "Cambridge IELTS 10 – Test 2 (Listening)",
+  "skill": "listening",
+  "category": "book",
+  "bookName": "Cambridge IELTS 10",
+  "sourceLabel": "Cambridge IELTS 10 (Academic) – Test 2",
+  "description": "Listening Test 2: 4 phần, 40 câu (khảo sát giao thông / hai công trình mới của thành phố / cuộc đời Thor Heyerdahl / tương lai của quản trị doanh nghiệp). Có audio, transcript và giải thích từng câu.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 – Transport survey",
+      "instructions": "You will hear a woman being interviewed for a survey about transport in her town. Answer questions 1-10.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test2_part1-0pXkEagybugVYNVcXLI053Qx61XKHb",
+      "transcript": "Narrator: Test 2. You will hear a number of different recordings and you will have to answer questions on what you hear. There will be time for you to read the instructions and questions and you will have a chance to check your work. All the recordings will be played once only. The test is in four sections. At the end of the test you will be given ten minutes to transfer your answers to an answer sheet. Now turn to section one. Section one. You will hear a man interviewing a woman in the street about her use of transport. First you have some time to look at questions one to five. You will see that there is an example that has been done for you. On this occasion only, the conversation relating to this will be played first.\nNarrator: The woman travelled to town by bus, so bus has been written in the space. Now we shall begin. You should answer the questions as you listen because you will not hear the recording a second time. Listen carefully and answer questions one to five.\nInterviewer: Excuse me.\nLuisa: Yes?\nInterviewer: I wonder if you could spare a few minutes to do a survey on transport. It won't take long.\nLuisa: No, that's fine.\nInterviewer: Lovely. The survey is on behalf of the local council. They'd like to know about what transport you use and any suggestions for improvement. Can I start by asking you how you travelled to town today?\nLuisa: Sure. I came on the bus.\nInterviewer: Great. Now can I get a few details about yourself?\nLuisa: OK.\nInterviewer: What's your name?\nLuisa: It's Luisa ....\nInterviewer: Yes.\nLuisa: Hardie.\nInterviewer: Can you spell that, please?\nLuisa: Yes, it's H-A-R-D-I-E.\nInterviewer: Great. Thanks. And can I have your address?\nLuisa: It's 19, White Stone Road.\nInterviewer: Oh, right. I know that area. It's Bradfield, isn't it?\nLuisa: That's right.\nInterviewer: Is the postcode GT7?\nLuisa: It's actually G-T-8. 2-L-C\nInterviewer: Great. And could I ask what your job is? Are you a student?\nLuisa: I've actually just finished my training. I'm a hairdresser.\nInterviewer: Oh, right. And one more question in this section. What is the reason for you coming into town today?\nLuisa: Actually it's not for shopping today, which would be my normal reason, but to see the dentist.\nInterviewer: Right. Thanks.\nNarrator: Now listen and answer questions 6 to 10.\nInterviewer: Now in this last section I'd like you to give us some ideas about the facilities and arrangements in the city for getting to and from work, er, any suggestions you have for improvements.\nLuisa: Well, something I've thought about for some time is that when I do walk and I'm doing a later shift, I think the lighting should be better.\nInterviewer: Yes, good point.\nLuisa: And of course, I think it's a real shame they've been cutting down on the number of footpaths. They should have more of those. Then people would walk more.\nInterviewer: Yes, right.\nLuisa: And, I don't think there are enough trains. That's why I don't use them - you have to wait so long.\nInterviewer: Thanks. And finally I'd like to ask your opinion on cycling. As you may know, there's a drive in the city to get more people to cycle to work.\nLuisa: Right.\nInterviewer: But we realise that there are things which the council, but also employers, might do to help encourage workers to cycle to work.\nLuisa: Yep. Well, I have thought about it and where I work there are no safe places to leave your bikes.\nInterviewer: OK.\nLuisa: And also, I'd have to cycle uphill and on a hot day I'd arrive at work pretty sweaty so I think I'd need a shower somewhere at work.\nInterviewer: Right.\nLuisa: And I suppose the last thing is that I wouldn't be all that confident about cycling on such busy roads. I think I'd like to see you offering training for that, you know, I'd feel a lot better about starting if that was the case.\nInterviewer: Well, that's very helpful. Thank you very much for your time.\nLuisa: No problem. Bye.\nNarrator: That is the end of section one. You now have half a minute to check your answers. Now turn to Section 2.",
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer."
+        },
+        "noteBody": "# Transport Survey\nExample – Travelled to town today: by bus\nName: Luisa [[1]]\nAddress: [[2]] White Stone Rd\nArea: Bradfield\nPostcode: [[3]]\nOccupation: [[4]]\nReason for visit to town: to go to the [[5]]\n## Suggestions for improvement:\n• better [[6]]\n• have more footpaths\n• more frequent [[7]]\n## Things that would encourage cycling to work:\n• having [[8]] parking places for bicycles\n• being able to use a [[9]] at work\n• the opportunity to have cycling [[10]] on busy roads"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Question 1",
+          "answer": [
+            "Hardie"
+          ],
+          "explanation": "Họ của Luisa là Hardie, chị đánh vần H-A-R-D-I-E.",
+          "evidence": "Hardie. / Yes, it's H-A-R-D-I-E.",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Question 2",
+          "answer": [
+            "19"
+          ],
+          "explanation": "Địa chỉ: số 19 White Stone Road.",
+          "evidence": "It's 19, White Stone Road.",
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Question 3",
+          "answer": [
+            "GT8 2LC",
+            "GT82LC"
+          ],
+          "explanation": "Mã bưu chính không phải GT7 mà là G-T-8, 2-L-C → GT8 2LC.",
+          "evidence": "It's actually G-T-8. 2-L-C",
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Question 4",
+          "answer": [
+            "hairdresser"
+          ],
+          "explanation": "Chị vừa học xong và làm THỢ LÀM TÓC (hairdresser). Bẫy: người phỏng vấn đoán \"student\".",
+          "evidence": "I'm a hairdresser.",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Question 5",
+          "answer": [
+            "dentist",
+            "dentist's",
+            "dentists"
+          ],
+          "explanation": "Hôm nay không phải đi mua sắm như mọi khi mà đi gặp NHA SĨ (dentist).",
+          "evidence": "Actually it's not for shopping today, which would be my normal reason, but to see the dentist.",
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Question 6",
+          "answer": [
+            "lighting"
+          ],
+          "explanation": "Khi đi bộ về muộn, chị thấy cần ÁNH SÁNG đèn đường tốt hơn (lighting).",
+          "evidence": "Well, something I've thought about for some time is that when I do walk and I'm doing a later shift, I think the lighting should be better.",
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Question 7",
+          "answer": [
+            "trains"
+          ],
+          "explanation": "Không đủ TÀU HOẢ (trains) nên phải chờ lâu. Bẫy: footpaths đã có sẵn trong đề.",
+          "evidence": "And, I don't think there are enough trains.",
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Question 8",
+          "answer": [
+            "safe"
+          ],
+          "explanation": "Ở chỗ làm không có chỗ để xe đạp AN TOÀN (safe).",
+          "evidence": "Well, I have thought about it and where I work there are no safe places to leave your bikes.",
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Question 9",
+          "answer": [
+            "shower"
+          ],
+          "explanation": "Đạp xe lên dốc trời nóng sẽ ướt mồ hôi nên cần chỗ TẮM (shower) ở nơi làm việc.",
+          "evidence": "And also, I'd have to cycle uphill and on a hot day I'd arrive at work pretty sweaty so I think I'd need a shower somewhere at work.",
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Question 10",
+          "answer": [
+            "training"
+          ],
+          "explanation": "Chị muốn có các khoá HUẤN LUYỆN (training) đạp xe trên đường đông.",
+          "evidence": "I think I'd like to see you offering training for that, you know, I'd feel a lot better about starting if that was the case.",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 – New city developments",
+      "instructions": "You will hear a radio presenter talking about two new developments in the city. Answer questions 11-20.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test2_part2-5xJ6PIQvvER60hzNKHrssIGbfqfkbE",
+      "transcript": "Narrator: Section 2. You will hear a representative of a City Council giving information about two new facilities which are opening soon in the City. First, you have some time to look at questions 11 to 14. Now listen carefully and answer questions 11 to 14.\nGood morning. I'm very pleased to have this opportunity to say a little about two exciting new developments in the city: the Brackenside Open-Air Swimming Pool and the children's Adventure Playground in Central Park. As many of you may know, the idea for these initiatives came from you, the public, in the extensive consultation exercise which the City Council conducted last year. And they have been realised using money from the SWRDC - the South West Regional Development Commission.\nFirst of all, Brackenside Pool. As many of the older members of the audience will remember, there used to be a wonderful open-air pool on the sea front 30 years ago but it had to close when it was judged to be unsafe. For the design of this new heated pool, we were very happy to secure the talents of internationally renowned architect Ellen Wendon, who has managed to combine a charming 1930s design, which fits in so well with many of the other buildings in the area, with up-to-the-minute features such as a recycling system - the only one of its kind in the world - which enables seawater to be used in the pool.\nNow, there has been quite a bit of discussion in the local press about whether there would be enough room for the number of visitors we're hoping to attract, but the design is deceptive and there have been rigorous checks about capacity. Also, just in case you were wondering, we're on schedule for a June 15th opening date and well within budget: a testimony to the excellent work of local contractors Hickman's.\nWe hope that as many people as possible will be there on June 15th. We have engaged award-winning actress Coral White to declare the pool open and there'll be drinks and snacks available at the pool side. There'll also be a competition for the public to decide on the sculpture we plan to have at the entrance: you will decide which famous historical figure from the city we should have.\nNarrator: Before you hear the rest of the talk, you have some time to look at questions 15-20.\nAnd now, moving on to the Central Park Playground, which we're pleased to announce has just won the Douglas Award for safety: the news came through only last week. The unique design is based on the concept of the Global Village, with the playground being divided into six areas showing different parts of the world - each with a representative feature. For example, there is a section on Asia, and this is represented by rides and equipment in the shape of snakes, orang-utans, tigers and so on - fauna native to the forests of the region. Moving south to the Antarctic - we couldn't run to an ice rink I'm afraid but opted instead for climbing blocks in the shape of mountains - I thought they could have had slides for the glaciers but the designers did want to avoid being too literal! Then on to South America - and here the theme is El Dorado - games replicating the search for mines full of precious stones. And then moving up to North America, here there was considerable debate - I know the contribution of cinema and jazz was considered but the designers finally opted for rockets and the International Space Station. Eastwards to Europe then, and perhaps the most traditional choice of all the areas: medieval castles and other fortifications. Then last, but not least, moving south to Africa and a whole set of wonderful mosaics and trails to represent the great rivers of this fascinating and varied continent.\nNow, the opening date for our Global Playground is 10th July. And again we'd love to see you there - so make a date and come and see this magnificent, original new amenity right in the heart of the city.\nNarrator: That is the end of section two. You now have half a minute to check your answers. Now turn to section 3.",
+      "metadata": {
+        "groupInstructions": {
+          "11": "Choose the correct letter, A, B or C.",
+          "15": "Which feature is related to each of the following areas of the world represented in the playground?\nChoose SIX answers from the box and write the correct letter, A-I, next to questions 15-20.\n:::box\nA ancient forts\nB waterways\nC ice and snow\nD jewels\nE local animals\nF mountains\nG music and film\nH space travel\nI volcanoes\n:::"
+        },
+        "groupTitles": {
+          "11": "New city developments",
+          "15": "Areas of the world"
+        }
+      },
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "The idea for the two new developments in the city came from",
+          "options": [
+            "A local people.",
+            "B the City Council.",
+            "C the SWRDC."
+          ],
+          "answer": [
+            "A local people."
+          ],
+          "explanation": "Ý tưởng đến từ CÔNG CHÚNG trong đợt lấy ý kiến của Hội đồng thành phố. Bẫy B: Hội đồng chỉ tổ chức lấy ý kiến; C: SWRDC chỉ cấp tiền.",
+          "evidence": "As many of you may know, the idea for these initiatives came from you, the public, in the extensive consultation exercise which the City Council conducted last year.",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "multiple_choice",
+          "prompt": "What is unusual about Brackenside pool?",
+          "options": [
+            "A its architectural style",
+            "B its heating system",
+            "C its method of water treatment"
+          ],
+          "answer": [
+            "C its method of water treatment"
+          ],
+          "explanation": "Điểm độc đáo là hệ thống tái chế duy nhất trên thế giới cho phép dùng NƯỚC BIỂN cho hồ bơi → cách xử lý nước. Bẫy A: kiểu kiến trúc những năm 1930 hợp với các toà nhà xung quanh, không có gì lạ.",
+          "evidence": "For the design of this new heated pool, we were very happy to secure the talents of internationally renowned architect Ellen Wendon, who has managed to combine a charming 1930s design, which fits in so well with many of the other buildings in the area, with up-to-the-minute features such as a recycling system - the only one of its kind in the world - which enables seawater to be used in the pool.",
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "multiple_choice",
+          "prompt": "Local newspapers have raised worries about",
+          "options": [
+            "A the late opening date.",
+            "B the cost of the project.",
+            "C the size of the facilities."
+          ],
+          "answer": [
+            "C the size of the facilities."
+          ],
+          "explanation": "Báo địa phương bàn về việc có đủ CHỖ cho lượng khách hay không → kích thước. Bẫy A, B: đúng tiến độ và trong ngân sách.",
+          "evidence": "whether there would be enough room for the number of visitors we're hoping to attract",
+          "points": 1
+        },
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "What decision has not yet been made about the pool?",
+          "options": [
+            "A whose statue will be at the door",
+            "B the exact opening times",
+            "C who will open it"
+          ],
+          "answer": [
+            "A whose statue will be at the door"
+          ],
+          "explanation": "Công chúng sẽ thi bình chọn TƯỢNG nhân vật lịch sử đặt ở lối vào → chưa quyết định. Bẫy C: đã mời Coral White khai trương.",
+          "evidence": "There'll also be a competition for the public to decide on the sculpture we plan to have at the entrance",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "matching",
+          "prompt": "Asia",
+          "options": [
+            "A ancient forts",
+            "B waterways",
+            "C ice and snow",
+            "D jewels",
+            "E local animals",
+            "F mountains",
+            "G music and film",
+            "H space travel",
+            "I volcanoes"
+          ],
+          "answer": [
+            "E local animals"
+          ],
+          "explanation": "Khu châu Á có trò chơi hình rắn, đười ươi, hổ - ĐỘNG VẬT bản địa. → E.",
+          "evidence": "For example, there is a section on Asia, and this is represented by rides and equipment in the shape of snakes, orang-utans, tigers and so on - fauna native to the forests of the region.",
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "Antarctica",
+          "options": [
+            "A ancient forts",
+            "B waterways",
+            "C ice and snow",
+            "D jewels",
+            "E local animals",
+            "F mountains",
+            "G music and film",
+            "H space travel",
+            "I volcanoes"
+          ],
+          "answer": [
+            "F mountains"
+          ],
+          "explanation": "Khu Nam Cực không có sân băng mà là các khối leo hình NÚI. Bẫy C: ice rink đã bị loại. → F.",
+          "evidence": "Moving south to the Antarctic - we couldn't run to an ice rink I'm afraid but opted instead for climbing blocks in the shape of mountains - I thought they could have had slides for the glaciers but the designers did want to avoid being too literal!",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "South America",
+          "options": [
+            "A ancient forts",
+            "B waterways",
+            "C ice and snow",
+            "D jewels",
+            "E local animals",
+            "F mountains",
+            "G music and film",
+            "H space travel",
+            "I volcanoes"
+          ],
+          "answer": [
+            "D jewels"
+          ],
+          "explanation": "Khu Nam Mỹ theo chủ đề El Dorado - đi tìm mỏ đầy ĐÁ QUÝ (jewels). → D.",
+          "evidence": "Then on to South America - and here the theme is El Dorado - games replicating the search for mines full of precious stones.",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "matching",
+          "prompt": "North America",
+          "options": [
+            "A ancient forts",
+            "B waterways",
+            "C ice and snow",
+            "D jewels",
+            "E local animals",
+            "F mountains",
+            "G music and film",
+            "H space travel",
+            "I volcanoes"
+          ],
+          "answer": [
+            "H space travel"
+          ],
+          "explanation": "Khu Bắc Mỹ: điện ảnh và jazz bị loại, chọn tên lửa và Trạm Vũ trụ Quốc tế → DU HÀNH VŨ TRỤ. Bẫy G. → H.",
+          "evidence": "the designers finally opted for rockets and the International Space Station",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "matching",
+          "prompt": "Europe",
+          "options": [
+            "A ancient forts",
+            "B waterways",
+            "C ice and snow",
+            "D jewels",
+            "E local animals",
+            "F mountains",
+            "G music and film",
+            "H space travel",
+            "I volcanoes"
+          ],
+          "answer": [
+            "A ancient forts"
+          ],
+          "explanation": "Khu châu Âu: lâu đài trung cổ và các công trình phòng thủ → PHÁO ĐÀI CỔ. → A.",
+          "evidence": "Eastwards to Europe then, and perhaps the most traditional choice of all the areas: medieval castles and other fortifications.",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "matching",
+          "prompt": "Africa",
+          "options": [
+            "A ancient forts",
+            "B waterways",
+            "C ice and snow",
+            "D jewels",
+            "E local animals",
+            "F mountains",
+            "G music and film",
+            "H space travel",
+            "I volcanoes"
+          ],
+          "answer": [
+            "B waterways"
+          ],
+          "explanation": "Khu châu Phi: tranh khảm và đường mòn tượng trưng cho các con SÔNG lớn → waterways. → B.",
+          "evidence": "to represent the great rivers of this fascinating and varied continent",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 – Thor Heyerdahl",
+      "instructions": "You will hear two students, Victor and Olivia, discussing the life and work of the explorer Thor Heyerdahl. Answer questions 21-30.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test2_part3-xo2SewibLmakXopRtHC70qshgUM8c4",
+      "transcript": "Narrator: Section 3. You will hear two anthropology students, called Victor and Olivia, discussing their joint presentation about a Norwegian explorer called Tor Heyerdahl. First, you have some time to look at questions 21 to 24. Now listen carefully and answer questions 21 to 24.\nVictor: Right, well, for our presentation shall I start with the early life of Thor Heyerdahl?\nOlivia: Sure. Why don't you begin with describing the type of boy he was, especially his passion for collecting things.\nVictor: That's right, he had his own little museum. And I think it's unusual for children to develop their own values and not join in their parents' hobbies; I'm thinking of how Heyerdahl wouldn't go hunting with his dad, for example.\nOlivia: Yeah, he preferred to learn about nature by listening to his mother read to him. And quite early on he knew he wanted to become an explorer when he grew up. That came from his camping trips he went on in Norway I think ...\nVictor: No, it was climbing that he spent his time on as a young man.\nOlivia: Oh, right ... After university he married a classmate and together, they decided to experience living on a small island, to find out how harsh weather conditions shaped people's lifestyles.\nVictor: As part of their preparation before they left home, they learnt basic survival skills like building a shelter. I guess they needed that knowledge in order to live wild in a remote location with few inhabitants, cut off by the sea, which is what they were aiming to do.\nOlivia: An important part of your talk should be the radical theory Heyerdahl formed from examining mysterious ancient carvings that he happened to find on the island. I think you should finish with that.\nVictor: OK.\nNarrator: Before you hear the rest of the discussion, you have some time to look at questions 25-30. Now listen and answer questions 25 to 30.\nOlivia: All right, Victor, so after your part I'll talk about Thor Heyerdahl's adult life, continuing from the theory he had about Polynesian migration. Up until that time of course, academics had believed that humans first migrated to the islands in Polynesia from Asia, in the west.\nVictor: Yes, they thought that travel from the east was impossible, because of the huge, empty stretch of ocean that lies between the islands and the nearest inhabited land.\nOlivia: Yes, but Heyerdahl spent ages studying the cloud movements, ocean currents and wind patterns to find if it was actually possible. And another argument was that there was no tradition of large ship-building in the communities lying to the east of Polynesia. But Heyerdahl knew they made lots of coastal voyages in locally built canoes.\nVictor: Yes, or sailing on rafts, as was shown by the long voyage that Heyerdahl did next. It was an incredibly risky journey to undertake - sometimes I wonder if he did that trip for private reasons, you know? To show others that he could have spectacular adventures. What do you think, Olivia?\nOlivia: Well, I think it was more a matter of simply trying out his idea, to see if migration from the east was possible.\nVictor: Yes, that's probably it. And the poor guy suffered a bit at that time because the war forced him to stop his work for some years ...\nOlivia: Yes. When he got started again and planned his epic voyage, do you think it was important to him that he achieve it before anyone else did?\nVictor: Um, I haven't read anywhere that that was his motivation. The most important factor seems to have been that he use only ancient techniques, and local materials to build his raft.\nOlivia: Yes. I wonder how fast it went.\nVictor: Well, it took them 97 days from South America to the Pacific Islands.\nOlivia: Mm. And after that, Heyerdahl went to Easter Island, didn't he? We should mention the purpose of that trip. I think he sailed there in a boat made out of reeds.\nVictor: No, that was later on in Egypt, Olivia.\nOlivia: Oh, yes, that's right.\nVictor: But what he wanted to do was talk to the local people about their old stone carvings and then make one himself to learn more about the process.\nOlivia: I see. Well, what a great life. Even though many of his theories have been disproven, he certainly left a lasting impression on many disciplines, didn't he? To my mind, he was the first person to establish what modern academics call practical archaeology. I mean, that they try to recreate something from the past today, like he did with his raft trip. It's unfortunate that his ideas about where Polynesians originated from have been completely discredited.\nVictor: Yes. Right, well, I'll prepare a PowerPoint slide at the end that acknowledges our sources. I mainly used The Life and Work of Thor Heyerdahl by William Oliver. I thought the research methods he used were very sound, although I must say I found the overall tone somewhat old-fashioned. I think they need to do a new, revised edition.\nOlivia: Yeah, I agree. What about the subject matter - I found it really challenging!\nVictor: Well, it's a complex issue ...\nOlivia: I thought the book had lots of good points. What did you think of ...\nNarrator: That is the end of section three. You now have half a minute to check your answers. Now turn to section 4.",
+      "metadata": {
+        "groupInstructions": {
+          "21": "Choose TWO letters, A-E.\nWhich TWO hobbies was Thor Heyerdahl very interested in as a youth?",
+          "23": "Choose TWO letters, A-E.\nWhich do the speakers say are the TWO reasons why Heyerdahl went to live on an island?",
+          "25": "Choose the correct letter, A, B or C."
+        },
+        "groupTitles": {
+          "25": "The later life of Thor Heyerdahl"
+        }
+      },
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A camping",
+            "B climbing",
+            "C collecting",
+            "D hunting",
+            "E reading"
+          ],
+          "answer": [
+            "B climbing",
+            "C collecting"
+          ],
+          "explanation": "Hai đáp án đúng của cụm 21-22 là B và C. C: hồi nhỏ ông rất mê SƯU TẦM, có cả bảo tàng nhỏ riêng. Bẫy D: ông không đi săn với bố; E: chỉ nghe mẹ đọc sách.",
+          "evidence": "Why don't you begin with describing the type of boy he was, especially his passion for collecting things.",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A camping",
+            "B climbing",
+            "C collecting",
+            "D hunting",
+            "E reading"
+          ],
+          "answer": [
+            "B climbing",
+            "C collecting"
+          ],
+          "explanation": "Hai đáp án đúng của cụm 21-22 là B và C. B: Victor sửa lại - không phải cắm trại (camping) mà LEO NÚI mới là thứ ông dành thời gian khi còn trẻ.",
+          "evidence": "No, it was climbing that he spent his time on as a young man.",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A to examine ancient carvings",
+            "B to experience an isolated place",
+            "C to formulate a new theory",
+            "D to learn survival skills",
+            "E to study the impact of an extreme environment"
+          ],
+          "answer": [
+            "B to experience an isolated place",
+            "E to study the impact of an extreme environment"
+          ],
+          "explanation": "Hai đáp án đúng của cụm 23-24 là B và E. E: họ muốn tìm hiểu thời tiết khắc nghiệt ảnh hưởng thế nào tới lối sống con người → tác động của môi trường khắc nghiệt.",
+          "evidence": "After university he married a classmate and together, they decided to experience living on a small island, to find out how harsh weather conditions shaped people's lifestyles.",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A to examine ancient carvings",
+            "B to experience an isolated place",
+            "C to formulate a new theory",
+            "D to learn survival skills",
+            "E to study the impact of an extreme environment"
+          ],
+          "answer": [
+            "B to experience an isolated place",
+            "E to study the impact of an extreme environment"
+          ],
+          "explanation": "Hai đáp án đúng của cụm 23-24 là B và E. B: họ muốn sống hoang dã ở một nơi XA XÔI, ít người, bị biển ngăn cách. Bẫy D: kỹ năng sinh tồn học TRƯỚC khi đi; A: hình khắc là tình cờ tìm thấy.",
+          "evidence": "live wild in a remote location with few inhabitants, cut off by the sea",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "multiple_choice",
+          "prompt": "According to Victor and Olivia, academics thought that Polynesian migration from the east was impossible due to",
+          "options": [
+            "A the fact that Eastern countries were far away.",
+            "B the lack of materials for boat building.",
+            "C the direction of the winds and currents."
+          ],
+          "answer": [
+            "A the fact that Eastern countries were far away."
+          ],
+          "explanation": "Giới học thuật cho rằng không thể di cư từ phía đông vì vùng đại dương MÊNH MÔNG giữa các đảo và vùng đất có người gần nhất → quá xa. Bẫy C: gió và hải lưu là thứ Heyerdahl nghiên cứu.",
+          "evidence": "because of the huge, empty stretch of ocean that lies between the islands and the nearest inhabited land",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "multiple_choice",
+          "prompt": "Which do the speakers agree was the main reason for Heyerdahl's raft journey?",
+          "options": [
+            "A to overcome a research setback",
+            "B to demonstrate a personal quality",
+            "C to test a new theory"
+          ],
+          "answer": [
+            "C to test a new theory"
+          ],
+          "explanation": "Victor đoán ông muốn thể hiện bản thân nhưng Olivia cho rằng ông chỉ muốn KIỂM CHỨNG ý tưởng, và Victor đồng ý → thử nghiệm lý thuyết mới.",
+          "evidence": "Well, I think it was more a matter of simply trying out his idea, to see if migration from the east was possible.",
+          "points": 1
+        },
+        {
+          "order": 27,
+          "questionType": "multiple_choice",
+          "prompt": "What was most important to Heyerdahl about his raft journey?",
+          "options": [
+            "A the fact that he was the first person to do it",
+            "B the speed of crossing the Pacific",
+            "C the use of authentic construction methods"
+          ],
+          "answer": [
+            "C the use of authentic construction methods"
+          ],
+          "explanation": "Điều quan trọng nhất là chỉ dùng KỸ THUẬT CỔ và vật liệu địa phương để đóng bè. Bẫy A: không có tài liệu nói ông muốn làm đầu tiên; B: 97 ngày chỉ là thông tin thêm.",
+          "evidence": "The most important factor seems to have been that he use only ancient techniques",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "multiple_choice",
+          "prompt": "Why did Heyerdahl go to Easter Island?",
+          "options": [
+            "A to build a stone statue",
+            "B to sail a reed boat",
+            "C to learn the local language"
+          ],
+          "answer": [
+            "A to build a stone statue"
+          ],
+          "explanation": "Ở đảo Phục Sinh ông muốn hỏi người dân về các tượng đá cổ rồi TỰ LÀM MỘT TƯỢNG. Bẫy B: thuyền lau sậy là ở Ai Cập.",
+          "evidence": "But what he wanted to do was talk to the local people about their old stone carvings and then make one himself to learn more about the process.",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "multiple_choice",
+          "prompt": "In Olivia's opinion, Heyerdahl's greatest influence was on",
+          "options": [
+            "A theories about Polynesian origins.",
+            "B the development of archaeological methodology.",
+            "C establishing archaeology as an academic subject."
+          ],
+          "answer": [
+            "B the development of archaeological methodology."
+          ],
+          "explanation": "Theo Olivia, ông là người đầu tiên đặt nền móng cho \"khảo cổ học thực nghiệm\" → ảnh hưởng tới PHƯƠNG PHÁP khảo cổ. Bẫy A: giả thuyết về nguồn gốc người Polynesia đã bị bác bỏ.",
+          "evidence": "he was the first person to establish what modern academics call practical archaeology",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "multiple_choice",
+          "prompt": "Which criticism do the speakers make of William Oliver's textbook?",
+          "options": [
+            "A Its style is out of date.",
+            "B Its content is over-simplified.",
+            "C Its methodology is flawed."
+          ],
+          "answer": [
+            "A Its style is out of date."
+          ],
+          "explanation": "Phương pháp nghiên cứu rất chắc chắn nhưng GIỌNG VĂN hơi lỗi thời (old-fashioned) → văn phong lạc hậu. Bẫy B: nội dung thì Olivia thấy khó, không phải quá đơn giản.",
+          "evidence": "I thought the research methods he used were very sound, although I must say I found the overall tone somewhat old-fashioned.",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 – The future of management",
+      "instructions": "You will hear a lecture about how business management is likely to change in the future. Answer questions 31-40.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test2_part4-TVbZ7WpfXljDl1TIDmswszojVlUJsS",
+      "transcript": "Narrator: Section 4. You will hear a business student predicting how management might change in the next few years. First you have some time to look at questions 31 to 40.\nWell, I've been talking to managers in a number of businesses, and reading surveys about the future of management. And what I'm going to present in this seminar is a few ideas about how the activity is likely to change in the next ten years. It isn't a scientific, statistical analysis - just some ideas for us to discuss. One area I want to mention is business markets, and I'm sure a really significant development will be a major increase in competition, with companies from all round the world trying to sell similar products. Consumers will have much more choice - for instance, food products sold in Australia might be manufactured in the USA, China, Finland and dozens of other countries. At the same time, mergers and takeovers mean that governments are actually losing power to major global corporations. We can probably all think of companies that exert a great deal of influence, which may be good for consumers. A third point I want to make about markets is that in the rapidly expanding economies, such as India, China, Brazil and Russia, demand is growing very fast. This is putting pressure on resources all over the world.\nI think businesses are becoming more open to external influences. In particular, companies are consulting customers more and more before making their business decisions. Companies are finding out what they want and providing it, instead of making products and then trying to sell them, which is the model of years ago.\nAnother influence is that concerns about the environment will force manufacturers to extend product lifecycles, to reduce the amount of pollution and waste. And in some cases, regulation will need to be strengthened.\nMany societies are much more fluid and democratic, and the structure of companies is changing to reflect that. I think we're going to see a greater emphasis within companies on teams created with a specific project in mind. And when they're completed, the teams will be disbanded and new ones formed.\nMore and more people see work as simply one part of their lifestyle, and not the most important one, and as the workforce is shrinking in some countries, businesses are having to compete for staff instead of being able to choose among a lot of applicants. Typical examples that will attract and retain staff are traditional ones like flexible hours and - something that has been made possible by advances in technology - remote working, with people based at their home, abroad, or almost anywhere they choose.\nManagement styles will almost certainly continue to change. Senior managers will require a lot more than the efficiency that they've always needed. Above all they'll need great skills in leadership, so that their organisation can initiate and respond to change in a fast-moving world, where they face lots of competing requirements and potential conflicts.\nIn most of the world, the senior managers of large businesses are mainly men in their fifties and sixties. The predominant style of management will almost certainly become more consultative and collaborative, caused above all, by more women moving into senior management positions.\nMany of the changes are influenced by developments in the wider economy. The traditional emphasis of business was manufacturing, and of course the service sector is very important. But we shouldn't overlook the growing financial contribution of IP, that is, intellectual property. Some books and films generate enormous sums from the sale of related DVDs, music, games, clothes, and so on.\nAnother point I'd like to make is that although I've been talking about companies, one trend that they have to face is the move away from people working for the same employer for years. Instead, more and more people are becoming self-employed, to gain the freedom and control over their lives that they're unlikely to get from being employed.\nOK, well that's all I want to say, so let's open it up for discussion.\nNarrator: That is the end of section four. You now have half a minute to check your answers. That is the end of the listening test. In the IELTS test you would now have 10 minutes to transfer your answers to the answer sheet.",
+      "metadata": {
+        "groupInstructions": {
+          "31": "Complete the notes below. Write ONE WORD ONLY for each answer."
+        },
+        "noteBody": "# THE FUTURE OF MANAGEMENT\n## Business markets\n• greater [[31]] among companies\n• increase in power of large [[32]] companies\n• rising [[33]] in certain countries\n## External influences on businesses\n• more discussion with [[34]] before making business decisions\n• environmental concerns which may lead to more [[35]]\n## Business structures\n• more teams will be formed to work on a particular [[36]]\n• businesses may need to offer hours that are [[37]], or the chance to work remotely\n## Management styles\n• increasing need for managers to provide good [[38]]\n• changes influenced by [[39]] taking senior roles\n## Changes in the economy\n• service sector continues to be important\n• increasing value of intellectual property\n• more and more [[40]] workers"
+      },
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Question 31",
+          "answer": [
+            "competition"
+          ],
+          "explanation": "Sẽ có sự gia tăng lớn về CẠNH TRANH (competition) giữa các công ty khắp thế giới.",
+          "evidence": "a really significant development will be a major increase in competition",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "prompt": "Question 32",
+          "answer": [
+            "global"
+          ],
+          "explanation": "Chính phủ đang mất quyền lực vào tay các tập đoàn TOÀN CẦU lớn (major global corporations).",
+          "evidence": "At the same time, mergers and takeovers mean that governments are actually losing power to major global corporations.",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Question 33",
+          "answer": [
+            "demand"
+          ],
+          "explanation": "Ở các nền kinh tế đang lớn nhanh như Ấn Độ, Trung Quốc..., NHU CẦU (demand) tăng rất nhanh.",
+          "evidence": "A third point I want to make about markets is that in the rapidly expanding economies, such as India, China, Brazil and Russia, demand is growing very fast.",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Question 34",
+          "answer": [
+            "customers"
+          ],
+          "explanation": "Các công ty ngày càng tham khảo KHÁCH HÀNG (customers) trước khi ra quyết định.",
+          "evidence": "companies are consulting customers more and more before making their business decisions",
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Question 35",
+          "answer": [
+            "regulation"
+          ],
+          "explanation": "Mối lo về môi trường có thể khiến các QUY ĐỊNH (regulation) phải siết chặt hơn.",
+          "evidence": "And in some cases, regulation will need to be strengthened.",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Question 36",
+          "answer": [
+            "project"
+          ],
+          "explanation": "Sẽ có nhiều nhóm được lập cho một DỰ ÁN cụ thể (a specific project).",
+          "evidence": "I think we're going to see a greater emphasis within companies on teams created with a specific project in mind.",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Question 37",
+          "answer": [
+            "flexible"
+          ],
+          "explanation": "Để giữ nhân viên: giờ làm LINH HOẠT (flexible hours) và làm việc từ xa.",
+          "evidence": "Typical examples that will attract and retain staff are traditional ones like flexible hours and - something that has been made possible by advances in technology - remote working, with people based at their home, abroad, or almost anywhere they choose.",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Question 38",
+          "answer": [
+            "leadership"
+          ],
+          "explanation": "Lãnh đạo cấp cao cần kỹ năng LÃNH ĐẠO (leadership) tuyệt vời.",
+          "evidence": "Above all they'll need great skills in leadership, so that their organisation can initiate and respond to change in a fast-moving world, where they face lots of competing requirements and potential conflicts.",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Question 39",
+          "answer": [
+            "women"
+          ],
+          "explanation": "Phong cách quản lý thay đổi chủ yếu do ngày càng nhiều PHỤ NỮ giữ vị trí quản lý cấp cao.",
+          "evidence": "The predominant style of management will almost certainly become more consultative and collaborative, caused above all, by more women moving into senior management positions.",
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Question 40",
+          "answer": [
+            "self-employed"
+          ],
+          "explanation": "Ngày càng nhiều người TỰ LÀM CHỦ (self-employed) để có tự do.",
+          "evidence": "Instead, more and more people are becoming self-employed, to gain the freedom and control over their lives that they're unlikely to get from being employed.",
+          "points": 1
+        }
+      ]
+    }
+  ]
+}

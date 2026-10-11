@@ -1,0 +1,735 @@
+{
+  "title": "Cambridge IELTS 10 – Test 2 (Reading)",
+  "skill": "reading",
+  "category": "book",
+  "bookName": "Cambridge IELTS 10",
+  "sourceLabel": "Cambridge IELTS 10 (Academic) – Test 2",
+  "description": "Reading Test 2: 3 bài đọc, 40 câu, có giải thích + dẫn chứng từng câu. Đáp án theo sách Cambridge IELTS 10.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 – Tea and the Industrial Revolution",
+      "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.",
+      "content": "A Cambridge professor says that a change in drinking habits was the reason for the Industrial Revolution in Britain. Anjana Ahuja reports\n\nA Alan Macfarlane, professor of anthropological science at King's College, Cambridge, has, like other historians, spent decades wrestling with the enigma of the Industrial Revolution. Why did this particular Big Bang - the world-changing birth of industry - happen in Britain? And why did it strike at the end of the 18th century?\n\nB Macfarlane compares the puzzle to a combination lock. 'There are about 20 different factors and all of them need to be present before the revolution can happen,' he says. For industry to take off, there needs to be the technology and power to drive factories, large urban populations to provide cheap labour, easy transport to move goods around, an affluent middle-class willing to buy mass-produced objects, a market-driven economy and a political system that allows this to happen. While this was the case for England, other nations, such as Japan, the Netherlands and France also met some of these criteria but were not industrialising. 'All these factors must have been necessary but not sufficient to cause the revolution,' says Macfarlane. 'After all, Holland had everything except coal, while China also had many of these factors. Most historians are convinced there are one or two missing factors that you need to open the lock.'\n\nC The missing factors, he proposes, are to be found in almost every kitchen cupboard. Tea and beer, two of the nation's favourite drinks, fuelled the revolution. The antiseptic properties of tannin, the active ingredient in tea, and of hops in beer - plus the fact that both are made with boiled water - allowed urban communities to flourish at close quarters without succumbing to water-borne diseases such as dysentery. The theory sounds eccentric but once he starts to explain the detective work that went into his deduction, the scepticism gives way to wary admiration. Macfarlane's case has been strengthened by support from notable quarters - Roy Porter, the distinguished medical historian, recently wrote a favourable appraisal of his research.\n\nD Macfarlane had wondered for a long time how the Industrial Revolution came about. Historians had alighted on one interesting factor around the mid-18th century that required explanation. Between about 1650 and 1740, the population in Britain was static. But then there was a burst in population growth. Macfarlane says: 'The infant mortality rate halved in the space of 20 years, and this happened in both rural areas and cities, and across all classes. People suggested four possible causes. Was there a sudden change in the viruses and bacteria around? Unlikely. Was there a revolution in medical science? But this was a century before Lister's revolution*. Was there a change in environmental conditions? There were improvements in agriculture that wiped out malaria, but these were small gains. Sanitation did not become widespread until the 19th century. The only option left is food. But the height and weight statistics show a decline. So the food must have got worse. Efforts to explain this sudden reduction in child deaths appeared to draw a blank.'\n\nE This population burst seemed to happen at just the right time to provide labour for the Industrial Revolution. 'When you start moving towards an industrial revolution, it is economically efficient to have people living close together,' says Macfarlane. 'But then you get disease, particularly from human waste.' Some digging around in historical records revealed that there was a change in the incidence of water-borne disease at that time, especially dysentery. Macfarlane deduced that whatever the British were drinking must have been important in regulating disease. He says, 'We drank beer. For a long time, the English were protected by the strong antibacterial agent in hops, which were added to help preserve the beer. But in the late 17th century a tax was introduced on malt, the basic ingredient of beer. The poor turned to water and gin and in the 1720s the mortality rate began to rise again. Then it suddenly dropped again. What caused this?'\n\nF Macfarlane looked to Japan, which was also developing large cities about the same time, and also had no sanitation. Water-borne diseases had a much looser grip on the Japanese population than those in Britain. Could it be the prevalence of tea in their culture? Macfarlane then noted that the history of tea in Britain provided an extraordinary coincidence of dates. Tea was relatively expensive until Britain started a direct clipper trade with China in the early 18th century. By the 1740s, about the time that infant mortality was dipping, the drink was common. Macfarlane guessed that the fact that water had to be boiled, together with the stomach-purifying properties of tea meant that the breast milk provided by mothers was healthier than it had ever been. No other European nation sipped tea like the British, which, by Macfarlane's logic, pushed these other countries out of contention for the revolution.\n\nG But, if tea is a factor in the combination lock, why didn't Japan forge ahead in a tea-soaked industrial revolution of its own? Macfarlane notes that even though 17th-century Japan had large cities, high literacy rates, even a futures market, it had turned its back on the essence of any work-based revolution by giving up labour-saving devices such as animals, afraid that they would put people out of work. So, the nation that we now think of as one of the most technologically advanced entered the 19th century having 'abandoned the wheel'.\n\n* Joseph Lister was the first doctor to use antiseptic techniques during surgical operations to prevent infections.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Reading Passage 1 has seven paragraphs, A-G.\nChoose the correct heading for each paragraph from the list of headings below.\nWrite the correct number, i-ix, in boxes 1-7 on your answer sheet.\n\nList of Headings\n:::box\ni The search for the reasons for an increase in population\nii Industrialisation and the fear of unemployment\niii The development of cities in Japan\niv The time and place of the Industrial Revolution\nv The cases of Holland, France and China\nvi Changes in drinking habits in Britain\nvii Two keys to Britain's industrial revolution\nviii Conditions required for industrialisation\nix Comparisons with Japan lead to the answer\n:::",
+          "8": "Do the following statements agree with the information given in Reading Passage 1?\nIn boxes 8-13 on your answer sheet, write\n:::box\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n:::"
+        }
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "matching",
+          "prompt": "Paragraph A",
+          "options": [
+            "i The search for the reasons for an increase in population",
+            "ii Industrialisation and the fear of unemployment",
+            "iii The development of cities in Japan",
+            "iv The time and place of the Industrial Revolution",
+            "v The cases of Holland, France and China",
+            "vi Changes in drinking habits in Britain",
+            "vii Two keys to Britain's industrial revolution",
+            "viii Conditions required for industrialisation",
+            "ix Comparisons with Japan lead to the answer"
+          ],
+          "answer": [
+            "iv The time and place of the Industrial Revolution"
+          ],
+          "explanation": "Đoạn A nêu câu hỏi: vì sao cuộc Cách mạng Công nghiệp xảy ra ở ANH và vào CUỐI THẾ KỶ 18 → thời gian và địa điểm. → iv.",
+          "evidence": "Why did this particular Big Bang - the world-changing birth of industry - happen in Britain?",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "matching",
+          "prompt": "Paragraph B",
+          "options": [
+            "i The search for the reasons for an increase in population",
+            "ii Industrialisation and the fear of unemployment",
+            "iii The development of cities in Japan",
+            "iv The time and place of the Industrial Revolution",
+            "v The cases of Holland, France and China",
+            "vi Changes in drinking habits in Britain",
+            "vii Two keys to Britain's industrial revolution",
+            "viii Conditions required for industrialisation",
+            "ix Comparisons with Japan lead to the answer"
+          ],
+          "answer": [
+            "viii Conditions required for industrialisation"
+          ],
+          "explanation": "Đoạn B liệt kê khoảng 20 yếu tố phải có đủ thì công nghiệp mới cất cánh: công nghệ, dân đô thị, giao thông, tầng lớp trung lưu... → điều kiện cần cho công nghiệp hoá. Bẫy v: Hà Lan, Trung Quốc chỉ là ví dụ phụ. → viii.",
+          "evidence": "For industry to take off, there needs to be the technology and power to drive factories",
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "matching",
+          "prompt": "Paragraph C",
+          "options": [
+            "i The search for the reasons for an increase in population",
+            "ii Industrialisation and the fear of unemployment",
+            "iii The development of cities in Japan",
+            "iv The time and place of the Industrial Revolution",
+            "v The cases of Holland, France and China",
+            "vi Changes in drinking habits in Britain",
+            "vii Two keys to Britain's industrial revolution",
+            "viii Conditions required for industrialisation",
+            "ix Comparisons with Japan lead to the answer"
+          ],
+          "answer": [
+            "vii Two keys to Britain's industrial revolution"
+          ],
+          "explanation": "Đoạn C: hai yếu tố còn thiếu chính là TRÀ và BIA - hai thứ đồ uống đã \"tiếp nhiên liệu\" cho cuộc cách mạng. → vii.",
+          "evidence": "Tea and beer, two of the nation's favourite drinks, fuelled the revolution.",
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "matching",
+          "prompt": "Paragraph D",
+          "options": [
+            "i The search for the reasons for an increase in population",
+            "ii Industrialisation and the fear of unemployment",
+            "iii The development of cities in Japan",
+            "iv The time and place of the Industrial Revolution",
+            "v The cases of Holland, France and China",
+            "vi Changes in drinking habits in Britain",
+            "vii Two keys to Britain's industrial revolution",
+            "viii Conditions required for industrialisation",
+            "ix Comparisons with Japan lead to the answer"
+          ],
+          "answer": [
+            "i The search for the reasons for an increase in population"
+          ],
+          "explanation": "Đoạn D: dân số Anh đứng yên rồi bùng nổ, người ta đưa ra bốn nguyên nhân có thể (vi khuẩn, y học, môi trường, thức ăn) nhưng đều không giải thích được → đi tìm lý do dân số tăng. → i.",
+          "evidence": "People suggested four possible causes. Was there a sudden change in the viruses and bacteria around?",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "matching",
+          "prompt": "Paragraph E",
+          "options": [
+            "i The search for the reasons for an increase in population",
+            "ii Industrialisation and the fear of unemployment",
+            "iii The development of cities in Japan",
+            "iv The time and place of the Industrial Revolution",
+            "v The cases of Holland, France and China",
+            "vi Changes in drinking habits in Britain",
+            "vii Two keys to Britain's industrial revolution",
+            "viii Conditions required for industrialisation",
+            "ix Comparisons with Japan lead to the answer"
+          ],
+          "answer": [
+            "vi Changes in drinking habits in Britain"
+          ],
+          "explanation": "Đoạn E: người Anh uống bia, rồi thuế mạch nha khiến người nghèo chuyển sang uống nước lã và rượu gin → THAY ĐỔI THÓI QUEN UỐNG ở Anh. → vi.",
+          "evidence": "The poor turned to water and gin and in the 1720s the mortality rate began to rise again.",
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "matching",
+          "prompt": "Paragraph F",
+          "options": [
+            "i The search for the reasons for an increase in population",
+            "ii Industrialisation and the fear of unemployment",
+            "iii The development of cities in Japan",
+            "iv The time and place of the Industrial Revolution",
+            "v The cases of Holland, France and China",
+            "vi Changes in drinking habits in Britain",
+            "vii Two keys to Britain's industrial revolution",
+            "viii Conditions required for industrialisation",
+            "ix Comparisons with Japan lead to the answer"
+          ],
+          "answer": [
+            "ix Comparisons with Japan lead to the answer"
+          ],
+          "explanation": "Đoạn F: Macfarlane nhìn sang NHẬT BẢN, thấy bệnh lây qua nước ít hơn nhờ uống trà, từ đó tìm ra lời giải cho nước Anh. → ix.",
+          "evidence": "F Macfarlane looked to Japan, which was also developing large cities about the same time, and also had no sanitation.",
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "matching",
+          "prompt": "Paragraph G",
+          "options": [
+            "i The search for the reasons for an increase in population",
+            "ii Industrialisation and the fear of unemployment",
+            "iii The development of cities in Japan",
+            "iv The time and place of the Industrial Revolution",
+            "v The cases of Holland, France and China",
+            "vi Changes in drinking habits in Britain",
+            "vii Two keys to Britain's industrial revolution",
+            "viii Conditions required for industrialisation",
+            "ix Comparisons with Japan lead to the answer"
+          ],
+          "answer": [
+            "ii Industrialisation and the fear of unemployment"
+          ],
+          "explanation": "Đoạn G: Nhật từ bỏ các thiết bị tiết kiệm sức lao động vì SỢ chúng khiến người dân MẤT VIỆC. → ii.",
+          "evidence": "Macfarlane notes that even though 17th-century Japan had large cities, high literacy rates, even a futures market, it had turned its back on the essence of any work-based revolution by giving up labour-saving devices such as animals, afraid that they would put people out of work.",
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "true_false_not_given",
+          "prompt": "China's transport system was not suitable for industry in the 18th century.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Bài chỉ nói Trung Quốc cũng có nhiều yếu tố cần thiết, không hề nhắc tới hệ thống giao thông của Trung Quốc. → NOT GIVEN.",
+          "evidence": "After all, Holland had everything except coal, while China also had many of these factors.",
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "true_false_not_given",
+          "prompt": "Tea and beer both helped to prevent dysentery in Britain.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "TRUE"
+          ],
+          "explanation": "Chất sát khuẩn trong trà (tannin) và trong hoa bia, cùng việc đun sôi nước, giúp dân đô thị không mắc các bệnh lây qua nước như KIẾT LỴ. → TRUE.",
+          "evidence": "allowed urban communities to flourish at close quarters without succumbing to water-borne diseases such as dysentery",
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "true_false_not_given",
+          "prompt": "Roy Porter disagrees with Professor Macfarlane's findings.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "FALSE"
+          ],
+          "explanation": "Ngược lại, Roy Porter vừa viết một bài đánh giá TÍCH CỰC (favourable appraisal) về nghiên cứu của Macfarlane. → FALSE.",
+          "evidence": "Macfarlane's case has been strengthened by support from notable quarters - Roy Porter, the distinguished medical historian, recently wrote a favourable appraisal of his research.",
+          "points": 1
+        },
+        {
+          "order": 11,
+          "questionType": "true_false_not_given",
+          "prompt": "After 1740, there was a reduction in population in Britain.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "FALSE"
+          ],
+          "explanation": "Dân số đứng yên từ 1650 đến 1740, SAU ĐÓ BÙNG NỔ chứ không giảm. → FALSE.",
+          "evidence": "But then there was a burst in population growth. Macfarlane says: 'The infant mortality rate halved in the space of 20 years, and this happened in both rural areas and cities, and across all classes.",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "true_false_not_given",
+          "prompt": "People in Britain used to make beer at home.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Bài nói người Anh uống bia và thuế đánh vào mạch nha, nhưng không nói người Anh tự nấu bia ở nhà. → NOT GIVEN.",
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "true_false_not_given",
+          "prompt": "The tax on malt indirectly caused a rise in the death rate.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "TRUE"
+          ],
+          "explanation": "Thuế mạch nha → người nghèo bỏ bia, chuyển sang uống nước và gin → tỉ lệ tử vong tăng trở lại: thuế là nguyên nhân GIÁN TIẾP. → TRUE.",
+          "evidence": "But in the late 17th century a tax was introduced on malt, the basic ingredient of beer. / The poor turned to water and gin and in the 1720s the mortality rate began to rise again.",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 – Gifted children and learning",
+      "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.",
+      "content": "A Internationally, 'giftedness' is most frequently determined by a score on a general intelligence test, known as an IQ test, which is above a chosen cut-off point, usually at around the top 2-5%. Children's educational environment contributes to the IQ score and the way intelligence is used. For example, a very close positive relationship was found when children's IQ scores were compared with their home educational provision (Freeman, 2010). The higher the children's IQ scores, especially over IQ 130, the better the quality of their educational backup, measured in terms of reported verbal interactions with parents, number of books and activities in their home etc. Because IQ tests are decidedly influenced by what the child has learned, they are to some extent measures of current achievement based on age-norms; that is, how well the children have learned to manipulate their knowledge and know-how within the terms of the test. The vocabulary aspect, for example, is dependent on having heard those words. But IQ tests can neither identify the processes of learning and thinking nor predict creativity.\n\nB Excellence does not emerge without appropriate help. To reach an exceptionally high standard in any area very able children need the means to learn, which includes material to work with and focused challenging tuition - and the encouragement to follow their dream. There appears to be a qualitative difference in the way the intellectually highly able think, compared with more average-ability or older pupils, for whom external regulation by the teacher often compensates for lack of internal regulation. To be at their most effective in their self-regulation, all children can be helped to identify their own ways of learning - metacognition - which will include strategies of planning, monitoring, evaluation, and choice of what to learn. Emotional awareness is also part of metacognition, so children should be helped to be aware of their feelings around the area to be learned, feelings of curiosity or confidence, for example.\n\nC High achievers have been found to use self-regulatory learning strategies more often and more effectively than lower achievers, and are better able to transfer these strategies to deal with unfamiliar tasks. This happens to such a high degree in some children that they appear to be demonstrating talent in particular areas. Overviewing research on the thinking process of highly able children, (Shore and Kanevsky, 1993) put the instructor's problem succinctly: 'If they [the gifted] merely think more quickly, then we need only teach more quickly. If they merely make fewer errors, then we can shorten the practice'. But of course, this is not entirely the case; adjustments have to be made in methods of learning and teaching, to take account of the many ways individuals think.\n\nD Yet in order to learn by themselves, the gifted do need some support from their teachers. Conversely, teachers who have a tendency to 'overdirect' can diminish their gifted pupils' learning autonomy. Although 'spoon-feeding' can produce extremely high examination results, these are not always followed by equally impressive life successes. Too much dependence on the teacher risks loss of autonomy and motivation to discover. However, when teachers help pupils to reflect on their own learning and thinking activities, they increase their pupils' self-regulation. For a young child, it may be just the simple question 'What have you learned today?' which helps them to recognise what they are doing. Given that a fundamental goal of education is to transfer the control of learning from teachers to pupils, improving pupils' learning to learn techniques should be a major outcome of the school experience, especially for the highly competent. There are quite a number of new methods which can help, such as child-initiated learning, ability-peer tutoring, etc. Such practices have been found to be particularly useful for bright children from deprived areas.\n\nE But scientific progress is not all theoretical, knowledge is also vital to outstanding performance: individuals who know a great deal about a specific domain will achieve at a higher level than those who do not (Elshout, 1995). Research with creative scientists by Simonton (1988) brought him to the conclusion that above a certain high level, characteristics such as independence seemed to contribute more to reaching the highest levels of expertise than intellectual skills, due to the great demands of effort and time needed for learning and practice. Creativity in all forms can be seen as expertise mixed with a high level of motivation (Weisberg, 1993).\n\nF To sum up, learning is affected by emotions of both the individual and significant others. Positive emotions facilitate the creative aspects of learning and negative emotions inhibit it. Fear, for example, can limit the development of curiosity, which is a strong force in scientific advance, because it motivates problem-solving behaviour. In Boekaerts' (1991) review of emotion in the learning of very high IQ and highly achieving children, she found emotional forces in harness. They were not only curious, but often had a strong desire to control their environment, improve their learning efficiency, and increase their own learning resources.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Reading Passage 2 has six paragraphs, A-F.\nWhich paragraph contains the following information?\nWrite the correct letter, A-F, in boxes 14-17 on your answer sheet.\nNB You may use any letter more than once.",
+          "18": "Look at the following statements (Questions 18-22) and the list of people below.\nMatch each statement with the correct person or people, A-E.\nWrite the correct letter, A-E, in boxes 18-22 on your answer sheet.\n\nList of People\n:::box\nA Freeman\nB Shore and Kanevsky\nC Elshout\nD Simonton\nE Boekaerts\n:::",
+          "23": "Complete the sentences below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 23-26 on your answer sheet."
+        },
+        "noteBody": "• One study found a strong connection between children's IQ and the availability of [[23]] and [[23]] at home.\n• Children of average ability seem to need more direction from teachers because they do not have [[24]].\n• Metacognition involves children understanding their own learning strategies, as well as developing [[25]].\n• Teachers who rely on what is known as [[26]] often produce sets of impressive grades in class tests."
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "matching",
+          "prompt": "a reference to the influence of the domestic background on the gifted child",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "answer": [
+            "A"
+          ],
+          "explanation": "Đoạn A: IQ của trẻ liên hệ chặt với điều kiện giáo dục ở NHÀ (sách, hoạt động, trò chuyện với cha mẹ). → A.",
+          "evidence": "a very close positive relationship was found when children's IQ scores were compared with their home educational provision",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "matching",
+          "prompt": "reference to what can be lost if learners are given too much guidance",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "answer": [
+            "D"
+          ],
+          "explanation": "Đoạn D: giáo viên chỉ dẫn quá mức (overdirect, spoon-feeding) có thể làm mất tính tự chủ và động lực khám phá của học sinh. → D.",
+          "evidence": "Too much dependence on the teacher risks loss of autonomy and motivation to discover.",
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "a reference to the damaging effects of anxiety",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "answer": [
+            "F"
+          ],
+          "explanation": "Đoạn F: nỗi SỢ (fear) có thể kìm hãm sự tò mò - tác hại của lo âu. → F.",
+          "evidence": "Fear, for example, can limit the development of curiosity, which is a strong force in scientific advance, because it motivates problem-solving behaviour.",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "examples of classroom techniques which favour socially-disadvantaged children",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "answer": [
+            "D"
+          ],
+          "explanation": "Đoạn D cuối: các phương pháp như học do trẻ chủ động, kèm cặp giữa các bạn cùng trình độ đặc biệt hữu ích cho trẻ giỏi ở VÙNG KHÓ KHĂN. → D.",
+          "evidence": "Such practices have been found to be particularly useful for bright children from deprived areas.",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "matching",
+          "prompt": "Less time can be spent on exercises with gifted pupils who produce accurate work.",
+          "options": [
+            "A Freeman",
+            "B Shore and Kanevsky",
+            "C Elshout",
+            "D Simonton",
+            "E Boekaerts"
+          ],
+          "answer": [
+            "B Shore and Kanevsky"
+          ],
+          "explanation": "Shore và Kanevsky: nếu trẻ có năng khiếu mắc ít lỗi hơn thì có thể rút ngắn thời gian luyện tập. → B.",
+          "evidence": "If they merely make fewer errors, then we can shorten the practice",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "matching",
+          "prompt": "Self-reliance is a valuable tool that helps gifted students reach their goals.",
+          "options": [
+            "A Freeman",
+            "B Shore and Kanevsky",
+            "C Elshout",
+            "D Simonton",
+            "E Boekaerts"
+          ],
+          "answer": [
+            "D Simonton"
+          ],
+          "explanation": "Simonton: trên một mức nhất định, những phẩm chất như TÍNH ĐỘC LẬP (independence = self-reliance) góp phần lớn hơn vào việc đạt trình độ cao nhất. → D.",
+          "evidence": "characteristics such as independence seemed to contribute more to reaching the highest levels of expertise than intellectual skills",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "matching",
+          "prompt": "Gifted children know how to channel their feelings to assist their learning.",
+          "options": [
+            "A Freeman",
+            "B Shore and Kanevsky",
+            "C Elshout",
+            "D Simonton",
+            "E Boekaerts"
+          ],
+          "answer": [
+            "E Boekaerts"
+          ],
+          "explanation": "Boekaerts thấy trẻ IQ cao biết \"khai thác\" cảm xúc (emotional forces in harness) để học tốt hơn. → E.",
+          "evidence": "In Boekaerts' (1991) review of emotion in the learning of very high IQ and highly achieving children, she found emotional forces in harness.",
+          "points": 1
+        },
+        {
+          "order": 21,
+          "questionType": "matching",
+          "prompt": "The very gifted child benefits from appropriate support from close relatives.",
+          "options": [
+            "A Freeman",
+            "B Shore and Kanevsky",
+            "C Elshout",
+            "D Simonton",
+            "E Boekaerts"
+          ],
+          "answer": [
+            "A Freeman"
+          ],
+          "explanation": "Freeman (2010): IQ càng cao thì chất lượng hỗ trợ giáo dục ở nhà (trò chuyện với cha mẹ, sách vở) càng tốt. → A.",
+          "evidence": "The higher the children's IQ scores, especially over IQ 130, the better the quality of their educational backup",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "matching",
+          "prompt": "Really successful students have learnt a considerable amount about their subject.",
+          "options": [
+            "A Freeman",
+            "B Shore and Kanevsky",
+            "C Elshout",
+            "D Simonton",
+            "E Boekaerts"
+          ],
+          "answer": [
+            "C Elshout"
+          ],
+          "explanation": "Elshout (1995): người hiểu biết nhiều về một lĩnh vực sẽ đạt thành tích cao hơn người không biết. → C.",
+          "evidence": "individuals who know a great deal about a specific domain will achieve at a higher level than those who do not",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "note_completion",
+          "prompt": "Question 23",
+          "answer": [
+            "books and activities",
+            "activities and books"
+          ],
+          "explanation": "Nghiên cứu của Freeman đo điều kiện giáo dục ở nhà bằng số SÁCH và HOẠT ĐỘNG trong nhà. Hai ô, đúng cả hai mới được điểm (thứ tự tuỳ ý). → books and activities.",
+          "evidence": "The higher the children's IQ scores, especially over IQ 130, the better the quality of their educational backup, measured in terms of reported verbal interactions with parents, number of books and activities in their home etc.",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "note_completion",
+          "prompt": "Question 24",
+          "answer": [
+            "internal regulation",
+            "self-regulation",
+            "self regulation"
+          ],
+          "explanation": "Với học sinh trung bình, sự điều chỉnh từ bên ngoài của giáo viên bù cho việc các em THIẾU KHẢ NĂNG TỰ ĐIỀU CHỈNH (internal regulation). → internal regulation / self-regulation.",
+          "evidence": "for whom external regulation by the teacher often compensates for lack of internal regulation",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "note_completion",
+          "prompt": "Question 25",
+          "answer": [
+            "emotional awareness"
+          ],
+          "explanation": "Nhận thức về cảm xúc (EMOTIONAL AWARENESS) cũng là một phần của siêu nhận thức. → emotional awareness.",
+          "evidence": "Emotional awareness is also part of metacognition, so children should be helped to be aware of their feelings around the area to be learned, feelings of curiosity or confidence, for example.",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "note_completion",
+          "prompt": "Question 26",
+          "answer": [
+            "spoon-feeding"
+          ],
+          "explanation": "Cách \"mớm sẵn\" (SPOON-FEEDING) có thể mang lại điểm thi cực cao. → spoon-feeding.",
+          "evidence": "Although 'spoon-feeding' can produce extremely high examination results",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 – Museums of fine art and their public",
+      "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.",
+      "content": "The fact that people go to the Louvre museum in Paris to see the original painting Mona Lisa when they can see a reproduction anywhere leads us to question some assumptions about the role of museums of fine art in today's world\n\nOne of the most famous works of art in the world is Leonardo da Vinci's Mona Lisa. Nearly everyone who goes to see the original will already be familiar with it from reproductions, but they accept that fine art is more rewardingly viewed in its original form.\n\nHowever, if Mona Lisa was a famous novel, few people would bother to go to a museum to read the writer's actual manuscript rather than a printed reproduction. This might be explained by the fact that the novel has evolved precisely because of technological developments that made it possible to print out huge numbers of texts, whereas oil paintings have always been produced as unique objects. In addition, it could be argued that the practice of interpreting or 'reading' each medium follows different conventions. With novels, the reader attends mainly to the meaning of words rather than the way they are printed on the page, whereas the 'reader' of a painting must attend just as closely to the material form of marks and shapes in the picture as to any ideas they may signify.\n\nYet it has always been possible to make very accurate facsimiles of pretty well any fine art work. The seven surviving versions of Mona Lisa bear witness to the fact that in the 16th century, artists seemed perfectly content to assign the reproduction of their creations to their workshop apprentices as regular 'bread and butter' work. And today the task of reproducing pictures is incomparably more simple and reliable, with reprographic techniques that allow the production of high-quality prints made exactly to the original scale, with faithful colour values, and even with duplication of the surface relief of the painting.\n\nBut despite an implicit recognition that the spread of good reproductions can be culturally valuable, museums continue to promote the special status of original work.\n\nUnfortunately, this seems to place severe limitations on the kind of experience offered to visitors.\n\nOne limitation is related to the way the museum presents its exhibits. As repositories of unique historical objects, art museums are often called 'treasure houses'. We are reminded of this even before we view a collection by the presence of security guards, attendants, ropes and display cases to keep us away from the exhibits. In many cases, the architectural style of the building further reinforces that notion. In addition, a major collection like that of London's National Gallery is housed in numerous rooms, each with dozens of works, any one of which is likely to be worth more than all the average visitor possesses. In a society that judges the personal status of the individual so much by their material worth, it is therefore difficult not to be impressed by one's own relative 'worthlessness' in such an environment.\n\nFurthermore, consideration of the 'value' of the original work in its treasure house setting impresses upon the viewer that, since these works were originally produced, they have been assigned a huge monetary value by some person or institution more powerful than themselves. Evidently, nothing the viewer thinks about the work is going to alter that value, and so today's viewer is deterred from trying to extend that spontaneous, immediate, self-reliant kind of reading which would originally have met the work.\n\nThe visitor may then be struck by the strangeness of seeing such diverse paintings, drawings and sculptures brought together in an environment for which they were not originally created. This 'displacement effect' is further heightened by the sheer volume of exhibits. In the case of a major collection, there are probably more works on display than we could realistically view in weeks or even months.\n\nThis is particularly distressing because time seems to be a vital factor in the appreciation of all art forms. A fundamental difference between paintings and other art forms is that there is no prescribed time over which a painting is viewed. By contrast, the audience encounters an opera or a play over a specific time, which is the duration of the performance. Similarly, novels and poems are read in a prescribed temporal sequence, whereas a picture has no clear place at which to start viewing, or at which to finish. Thus art works themselves encourage us to view them superficially, without appreciating the richness of detail and labour that is involved.\n\nConsequently, the dominant critical approach becomes that of the art historian, a specialised academic approach devoted to 'discovering the meaning' of art within the cultural context of its time. This is in perfect harmony with the museum's function, since the approach is dedicated to seeking out and conserving 'authentic', 'original' readings of the exhibits. Again, this seems to put paid to that spontaneous, participatory criticism which can be found in abundance in criticism of classic works of literature, but is absent from most art history.\n\nThe displays of art museums serve as a warning of what critical practices can emerge when spontaneous criticism is suppressed. The museum public, like any other audience, experience art more rewardingly when given the confidence to express their views. If appropriate works of fine art could be rendered permanently accessible to the public by means of high-fidelity reproductions, as literature and music already are, the public may feel somewhat less in awe of them. Unfortunately, that may be too much to ask from those who seek to maintain and control the art establishment.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "27": "Complete the summary using the list of words, A-L, below.\nWrite the correct letter, A-L, in boxes 27-31 on your answer sheet.\n:::box\nA institution | B mass production | C mechanical processes\nD public | E paints | F artist\nG size | H underlying ideas | I basic technology\nJ readers | K picture frames | L assistants\n:::",
+          "32": "Choose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 32-35 on your answer sheet.",
+          "36": "Do the following statements agree with the views of the writer in Reading Passage 3?\nIn boxes 36-40 on your answer sheet, write\n:::box\nYES if the statement agrees with the views of the writer\nNO if the statement contradicts the views of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this\n:::"
+        },
+        "noteBody": "# The value attached to original works of art\nPeople go to art museums because they accept the value of seeing an original work of art. But they do not go to museums to read original manuscripts of novels, perhaps because the availability of novels has depended on [[27]] for so long, and also because with novels, the [[28]] are the most important thing.\n\nHowever, in historical times artists such as Leonardo were happy to instruct [[29]] to produce copies of their work and these days new methods of reproduction allow excellent replication of surface relief features as well as colour and [[30]].\n\nIt is regrettable that museums still promote the superiority of original works of art, since this may not be in the interests of the [[31]]."
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "note_completion",
+          "prompt": "Question 27",
+          "answer": [
+            "B",
+            "B mass production",
+            "mass production"
+          ],
+          "explanation": "Tiểu thuyết phát triển nhờ công nghệ in được số lượng rất lớn bản sách → phụ thuộc vào SẢN XUẤT HÀNG LOẠT. → B.",
+          "evidence": "This might be explained by the fact that the novel has evolved precisely because of technological developments that made it possible to print out huge numbers of texts, whereas oil paintings have always been produced as unique objects.",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "note_completion",
+          "prompt": "Question 28",
+          "answer": [
+            "H",
+            "H underlying ideas",
+            "underlying ideas"
+          ],
+          "explanation": "Với tiểu thuyết, người đọc chú ý chủ yếu tới Ý NGHĨA của câu chữ chứ không phải hình thức in → underlying ideas. → H.",
+          "evidence": "the reader attends mainly to the meaning of words rather than the way they are printed on the page",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "note_completion",
+          "prompt": "Question 29",
+          "answer": [
+            "L",
+            "L assistants",
+            "assistants"
+          ],
+          "explanation": "Thế kỷ 16, hoạ sĩ giao việc sao chép tranh cho những NGƯỜI HỌC VIỆC trong xưởng (apprentices = assistants). → L.",
+          "evidence": "artists seemed perfectly content to assign the reproduction of their creations to their workshop apprentices",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "note_completion",
+          "prompt": "Question 30",
+          "answer": [
+            "G",
+            "G size",
+            "size"
+          ],
+          "explanation": "Kỹ thuật in hiện đại tái tạo đúng KÍCH THƯỚC gốc (original scale), đúng màu và cả độ nổi bề mặt. → G.",
+          "evidence": "the production of high-quality prints made exactly to the original scale",
+          "points": 1
+        },
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Question 31",
+          "answer": [
+            "D",
+            "D public",
+            "public"
+          ],
+          "explanation": "Việc bảo tàng đề cao bản gốc làm hạn chế trải nghiệm của KHÁCH THAM QUAN - tức không có lợi cho công chúng. → D.",
+          "evidence": "Unfortunately, this seems to place severe limitations on the kind of experience offered to visitors.",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "multiple_choice",
+          "prompt": "The writer mentions London's National Gallery to illustrate",
+          "options": [
+            "A the undesirable cost to a nation of maintaining a huge collection of art.",
+            "B the conflict that may arise in society between financial and artistic values.",
+            "C the negative effect a museum can have on visitors' opinions of themselves.",
+            "D the need to put individual well-being above large-scale artistic schemes."
+          ],
+          "answer": [
+            "C the negative effect a museum can have on visitors' opinions of themselves."
+          ],
+          "explanation": "Bộ sưu tập của National Gallery có tác phẩm nào cũng đắt hơn toàn bộ tài sản của một khách bình thường → khách cảm thấy mình \"vô giá trị\". Đó là tác động tiêu cực tới cách khách nhìn nhận bản thân. → C.",
+          "evidence": "it is therefore difficult not to be impressed by one's own relative 'worthlessness' in such an environment",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "multiple_choice",
+          "prompt": "The writer says that today, viewers may be unwilling to criticise a work because",
+          "options": [
+            "A they lack the knowledge needed to support an opinion.",
+            "B they fear it may have financial implications.",
+            "C they have no real concept of the work's value.",
+            "D they feel their personal reaction is of no significance."
+          ],
+          "answer": [
+            "D they feel their personal reaction is of no significance."
+          ],
+          "explanation": "Người xem nghĩ gì cũng không thay đổi được giá trị tác phẩm → họ thấy phản ứng cá nhân của mình không có ý nghĩa nên ngại đưa ra nhận xét. → D.",
+          "evidence": "nothing the viewer thinks about the work is going to alter that value",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "multiple_choice",
+          "prompt": "According to the writer, the 'displacement effect' on the visitor is caused by",
+          "options": [
+            "A the variety of works on display and the way they are arranged.",
+            "B the impossibility of viewing particular works of art over a long period.",
+            "C the similar nature of the paintings and the lack of great works.",
+            "D the inappropriate nature of the individual works selected for exhibition."
+          ],
+          "answer": [
+            "A the variety of works on display and the way they are arranged."
+          ],
+          "explanation": "\"Hiệu ứng lạc chỗ\" do nhìn thấy đủ loại tranh, tượng KHÁC NHAU bị gom chung vào một nơi vốn không dành cho chúng, lại thêm số lượng quá lớn. → A.",
+          "evidence": "The visitor may then be struck by the strangeness of seeing such diverse paintings, drawings and sculptures brought together in an environment for which they were not originally created.",
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "multiple_choice",
+          "prompt": "The writer says that unlike other forms of art, a painting does not",
+          "options": [
+            "A involve direct contact with an audience.",
+            "B require a specific location for a performance.",
+            "C need the involvement of other professionals.",
+            "D have a specific beginning or end."
+          ],
+          "answer": [
+            "D have a specific beginning or end."
+          ],
+          "explanation": "Khác với kịch hay sách, một bức tranh không có chỗ rõ ràng để BẮT ĐẦU xem hay để KẾT THÚC. → D.",
+          "evidence": "whereas a picture has no clear place at which to start viewing, or at which to finish",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "true_false_not_given",
+          "prompt": "Art history should focus on discovering the meaning of art using a range of media.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Bài nói nhà sử học nghệ thuật tìm \"ý nghĩa\" của tác phẩm trong bối cảnh văn hoá, nhưng không nói gì về việc dùng nhiều loại phương tiện (media). → NOT GIVEN.",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "true_false_not_given",
+          "prompt": "The approach of art historians conflicts with that of art museums.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NO"
+          ],
+          "explanation": "Ngược lại: cách tiếp cận của sử gia nghệ thuật HOÀN TOÀN HÀI HOÀ với chức năng của bảo tàng. → NO.",
+          "evidence": "This is in perfect harmony with the museum's function, since the approach is dedicated to seeking out and conserving 'authentic', 'original' readings of the exhibits.",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "true_false_not_given",
+          "prompt": "People should be encouraged to give their opinions openly on works of art.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "YES"
+          ],
+          "explanation": "Tác giả cho rằng công chúng thưởng thức nghệ thuật tốt hơn khi được tự tin BÀY TỎ QUAN ĐIỂM. → YES.",
+          "evidence": "experience art more rewardingly when given the confidence to express their views",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "true_false_not_given",
+          "prompt": "Reproductions of fine art should only be sold to the public if they are of high quality.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Tác giả ủng hộ bản sao chất lượng cao để công chúng tiếp cận, nhưng không nói chỉ nên BÁN bản sao chất lượng cao. → NOT GIVEN.",
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "true_false_not_given",
+          "prompt": "In the future, those with power are likely to encourage more people to enjoy art.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NO"
+          ],
+          "explanation": "Tác giả bi quan: điều đó có lẽ là đòi hỏi quá nhiều với những người nắm quyền kiểm soát giới nghệ thuật. → NO.",
+          "evidence": "Unfortunately, that may be too much to ask from those who seek to maintain and control the art establishment.",
+          "points": 1
+        }
+      ]
+    }
+  ]
+}

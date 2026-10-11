@@ -1,0 +1,112 @@
+{
+  "title": "Cambridge IELTS 10 – Test 2 (Speaking)",
+  "skill": "speaking",
+  "category": "book",
+  "bookName": "Cambridge IELTS 10",
+  "sourceLabel": "Cambridge IELTS 10 (Academic) – Test 2",
+  "description": "Speaking Test 2: Part 1 (Music, 4 câu), Part 2 (cue card: a shop near where you live), Part 3 (Local business / People and business, 6 câu). Mỗi câu ghi âm riêng. Giáo viên nghe và chấm tay theo tiêu chí IELTS Speaking.",
+  "units": [
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 1,
+      "title": "Speaking Part 1 – Music",
+      "instructions": "Part 1 — Introduction and interview. Answer the questions below. Record a separate answer for each question, speaking for about 20–30 seconds on each. Give reasons and examples.",
+      "content": "Music\n\nThe examiner asks you about yourself and familiar topics.\n\n1. What types of music do you like to listen to? [Why?]\n2. At what times of day do you like to listen to music? [Why?]\n3. Did you learn to play a musical instrument when you were a child? [Why/Why not?]\n4. Do you think all children should learn to play a musical instrument? [Why/Why not?]",
+      "metadata": {
+        "taskTag": "PART 1"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "speaking_task",
+          "prompt": "What types of music do you like to listen to? [Why?]",
+          "points": 9
+        },
+        {
+          "order": 2,
+          "questionType": "speaking_task",
+          "prompt": "At what times of day do you like to listen to music? [Why?]",
+          "points": 9
+        },
+        {
+          "order": 3,
+          "questionType": "speaking_task",
+          "prompt": "Did you learn to play a musical instrument when you were a child? [Why/Why not?]",
+          "points": 9
+        },
+        {
+          "order": 4,
+          "questionType": "speaking_task",
+          "prompt": "Do you think all children should learn to play a musical instrument? [Why/Why not?]",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 2,
+      "title": "Speaking Part 2 – Describe a shop near where you live",
+      "instructions": "Individual long turn. You have one minute to prepare and make notes, then talk about the topic for one to two minutes.",
+      "content": "Part 2 — Individual long turn (3–4 minutes)\n\nDescribe a shop near where you live that you sometimes use.\n\nYou should say:\n· what sorts of product or service it sells\n· what the shop looks like\n· where it is located\n\nand explain why you use this shop.\n\nYou will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.",
+      "metadata": {
+        "taskTag": "PART 2"
+      },
+      "questions": [
+        {
+          "order": 5,
+          "questionType": "speaking_task",
+          "prompt": "Record your answer: talk about the topic on the card for one to two minutes.",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 3,
+      "title": "Speaking Part 3 – Local business & People and business",
+      "instructions": "Part 3 — Two-way discussion. Answer the questions below. Record a separate answer for each question, speaking for about 30–60 seconds on each. Give reasons and examples.",
+      "content": "Part 3 — Two-way discussion (4–5 minutes)\n\nLocal business\n1. What types of local business are there in your neighbourhood? Are there any restaurants, shops or dentists for example?\n2. Do you think local businesses are important for a neighbourhood? In what way?\n3. How do large shopping malls and commercial centres affect small local businesses? Why do you think that is?\n\nPeople and business\n4. Why do some people want to start their own business?\n5. Are there any disadvantages to running a business? Which is the most serious?\n6. What are the most important qualities that a good business person needs? Why is that?",
+      "metadata": {
+        "taskTag": "PART 3"
+      },
+      "questions": [
+        {
+          "order": 6,
+          "questionType": "speaking_task",
+          "prompt": "What types of local business are there in your neighbourhood? Are there any restaurants, shops or dentists for example?",
+          "points": 9
+        },
+        {
+          "order": 7,
+          "questionType": "speaking_task",
+          "prompt": "Do you think local businesses are important for a neighbourhood? In what way?",
+          "points": 9
+        },
+        {
+          "order": 8,
+          "questionType": "speaking_task",
+          "prompt": "How do large shopping malls and commercial centres affect small local businesses? Why do you think that is?",
+          "points": 9
+        },
+        {
+          "order": 9,
+          "questionType": "speaking_task",
+          "prompt": "Why do some people want to start their own business?",
+          "points": 9
+        },
+        {
+          "order": 10,
+          "questionType": "speaking_task",
+          "prompt": "Are there any disadvantages to running a business? Which is the most serious?",
+          "points": 9
+        },
+        {
+          "order": 11,
+          "questionType": "speaking_task",
+          "prompt": "What are the most important qualities that a good business person needs? Why is that?",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

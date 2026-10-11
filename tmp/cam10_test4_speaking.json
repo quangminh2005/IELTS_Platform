@@ -1,0 +1,112 @@
+{
+  "title": "Cambridge IELTS 10 – Test 4 (Speaking)",
+  "skill": "speaking",
+  "category": "book",
+  "bookName": "Cambridge IELTS 10",
+  "sourceLabel": "Cambridge IELTS 10 (Academic) – Test 4",
+  "description": "Speaking Test 4: Part 1 (School, 4 câu), Part 2 (cue card: something you would like to own in the future), Part 3 (Owning things / Possessions, 6 câu). Mỗi câu ghi âm riêng. Giáo viên nghe và chấm tay theo tiêu chí IELTS Speaking.",
+  "units": [
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 1,
+      "title": "Speaking Part 1 – School",
+      "instructions": "Part 1 — Introduction and interview. Answer the questions below. Record a separate answer for each question, speaking for about 20–30 seconds on each. Give reasons and examples.",
+      "content": "School\n\nThe examiner asks you about yourself and familiar topics.\n\n1. Did you go to secondary/high school near to where you lived? [Why/Why not?]\n2. What did you like about your secondary/high school? [Why?]\n3. Tell me about anything you didn't like at your school.\n4. How do you think your school could be improved? [Why/Why not?]",
+      "metadata": {
+        "taskTag": "PART 1"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "speaking_task",
+          "prompt": "Did you go to secondary/high school near to where you lived? [Why/Why not?]",
+          "points": 9
+        },
+        {
+          "order": 2,
+          "questionType": "speaking_task",
+          "prompt": "What did you like about your secondary/high school? [Why?]",
+          "points": 9
+        },
+        {
+          "order": 3,
+          "questionType": "speaking_task",
+          "prompt": "Tell me about anything you didn't like at your school.",
+          "points": 9
+        },
+        {
+          "order": 4,
+          "questionType": "speaking_task",
+          "prompt": "How do you think your school could be improved? [Why/Why not?]",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 2,
+      "title": "Speaking Part 2 – Describe something you would like to own in the future",
+      "instructions": "Individual long turn. You have one minute to prepare and make notes, then talk about the topic for one to two minutes.",
+      "content": "Part 2 — Individual long turn (3–4 minutes)\n\nDescribe something you don't have now but would really like to own in the future.\n\nYou should say:\n· what this thing is\n· how long you have wanted to own it\n· where you first saw it\n\nand explain why you would like to own it.\n\nYou will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.",
+      "metadata": {
+        "taskTag": "PART 2"
+      },
+      "questions": [
+        {
+          "order": 5,
+          "questionType": "speaking_task",
+          "prompt": "Record your answer: talk about the topic on the card for one to two minutes.",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 3,
+      "title": "Speaking Part 3 – Owning things & Possessions",
+      "instructions": "Part 3 — Two-way discussion. Answer the questions below. Record a separate answer for each question, speaking for about 30–60 seconds on each. Give reasons and examples.",
+      "content": "Part 3 — Two-way discussion (4–5 minutes)\n\nOwning things\n1. What types of things do young people in your country most want to own today? Why is this?\n2. Why do some people feel they need to own things?\n3. Do you think that owning lots of things makes people happy? Why?\n\nPossessions\n4. Do you think television and films can make people want to get new possessions? Why do they have this effect?\n5. Are there any benefits to society of people wanting to get new possessions? Why do you think this is?\n6. Do you think people will consider that having lots of possessions is a sign of success in the future? Why?",
+      "metadata": {
+        "taskTag": "PART 3"
+      },
+      "questions": [
+        {
+          "order": 6,
+          "questionType": "speaking_task",
+          "prompt": "What types of things do young people in your country most want to own today? Why is this?",
+          "points": 9
+        },
+        {
+          "order": 7,
+          "questionType": "speaking_task",
+          "prompt": "Why do some people feel they need to own things?",
+          "points": 9
+        },
+        {
+          "order": 8,
+          "questionType": "speaking_task",
+          "prompt": "Do you think that owning lots of things makes people happy? Why?",
+          "points": 9
+        },
+        {
+          "order": 9,
+          "questionType": "speaking_task",
+          "prompt": "Do you think television and films can make people want to get new possessions? Why do they have this effect?",
+          "points": 9
+        },
+        {
+          "order": 10,
+          "questionType": "speaking_task",
+          "prompt": "Are there any benefits to society of people wanting to get new possessions? Why do you think this is?",
+          "points": 9
+        },
+        {
+          "order": 11,
+          "questionType": "speaking_task",
+          "prompt": "Do you think people will consider that having lots of possessions is a sign of success in the future? Why?",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

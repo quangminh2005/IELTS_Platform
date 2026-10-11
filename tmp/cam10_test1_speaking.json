@@ -1,0 +1,112 @@
+{
+  "title": "Cambridge IELTS 10 – Test 1 (Speaking)",
+  "skill": "speaking",
+  "category": "book",
+  "bookName": "Cambridge IELTS 10",
+  "sourceLabel": "Cambridge IELTS 10 (Academic) – Test 1",
+  "description": "Speaking Test 1: Part 1 (Weekends, 4 câu), Part 2 (cue card: someone you know who does something well), Part 3 (Skills and abilities / Salaries for skilled people, 6 câu). Mỗi câu ghi âm riêng. Giáo viên nghe và chấm tay theo tiêu chí IELTS Speaking.",
+  "units": [
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 1,
+      "title": "Speaking Part 1 – Weekends",
+      "instructions": "Part 1 — Introduction and interview. Answer the questions below. Record a separate answer for each question, speaking for about 20–30 seconds on each. Give reasons and examples.",
+      "content": "Weekends\n\nThe examiner asks you about yourself and familiar topics.\n\n1. How do you usually spend your weekends? [Why?]\n2. Which is your favourite part of the weekend? [Why?]\n3. Do you think your weekends are long enough? [Why/Why not?]\n4. How important do you think it is to have free time at the weekends? [Why?]",
+      "metadata": {
+        "taskTag": "PART 1"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "speaking_task",
+          "prompt": "How do you usually spend your weekends? [Why?]",
+          "points": 9
+        },
+        {
+          "order": 2,
+          "questionType": "speaking_task",
+          "prompt": "Which is your favourite part of the weekend? [Why?]",
+          "points": 9
+        },
+        {
+          "order": 3,
+          "questionType": "speaking_task",
+          "prompt": "Do you think your weekends are long enough? [Why/Why not?]",
+          "points": 9
+        },
+        {
+          "order": 4,
+          "questionType": "speaking_task",
+          "prompt": "How important do you think it is to have free time at the weekends? [Why?]",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 2,
+      "title": "Speaking Part 2 – Describe someone you know who does something well",
+      "instructions": "Individual long turn. You have one minute to prepare and make notes, then talk about the topic for one to two minutes.",
+      "content": "Part 2 — Individual long turn (3–4 minutes)\n\nDescribe someone you know who does something well.\n\nYou should say:\n· who this person is\n· how you know this person\n· what they do well\n\nand explain why you think this person is so good at doing this.\n\nYou will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.",
+      "metadata": {
+        "taskTag": "PART 2"
+      },
+      "questions": [
+        {
+          "order": 5,
+          "questionType": "speaking_task",
+          "prompt": "Record your answer: talk about the topic on the card for one to two minutes.",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 3,
+      "title": "Speaking Part 3 – Skills and abilities & Salaries for skilled people",
+      "instructions": "Part 3 — Two-way discussion. Answer the questions below. Record a separate answer for each question, speaking for about 30–60 seconds on each. Give reasons and examples.",
+      "content": "Part 3 — Two-way discussion (4–5 minutes)\n\nSkills and abilities\n1. What skills and abilities do people most want to have today? Why?\n2. Which skills should children learn at school? Are there any skills which they should learn at home? What are they?\n3. Which skills do you think will be important in the future? Why?\n\nSalaries for skilled people\n4. Which kinds of jobs have the highest salaries in your country? Why is this?\n5. Are there any other jobs that you think should have high salaries? Why do you think that?\n6. Some people say it would be better for society if everyone got the same salary. What do you think about that? Why?",
+      "metadata": {
+        "taskTag": "PART 3"
+      },
+      "questions": [
+        {
+          "order": 6,
+          "questionType": "speaking_task",
+          "prompt": "What skills and abilities do people most want to have today? Why?",
+          "points": 9
+        },
+        {
+          "order": 7,
+          "questionType": "speaking_task",
+          "prompt": "Which skills should children learn at school? Are there any skills which they should learn at home? What are they?",
+          "points": 9
+        },
+        {
+          "order": 8,
+          "questionType": "speaking_task",
+          "prompt": "Which skills do you think will be important in the future? Why?",
+          "points": 9
+        },
+        {
+          "order": 9,
+          "questionType": "speaking_task",
+          "prompt": "Which kinds of jobs have the highest salaries in your country? Why is this?",
+          "points": 9
+        },
+        {
+          "order": 10,
+          "questionType": "speaking_task",
+          "prompt": "Are there any other jobs that you think should have high salaries? Why do you think that?",
+          "points": 9
+        },
+        {
+          "order": 11,
+          "questionType": "speaking_task",
+          "prompt": "Some people say it would be better for society if everyone got the same salary. What do you think about that? Why?",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

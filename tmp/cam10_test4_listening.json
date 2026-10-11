@@ -1,0 +1,666 @@
+{
+  "title": "Cambridge IELTS 10 – Test 4 (Listening)",
+  "skill": "listening",
+  "category": "book",
+  "bookName": "Cambridge IELTS 10",
+  "sourceLabel": "Cambridge IELTS 10 (Academic) – Test 4",
+  "description": "Listening Test 4: 4 phần, 40 câu (gọi thợ sửa nhà / cảng Manham / thực tập ở công ty / công nghệ nano). Có audio, transcript và giải thích từng câu.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 – Thorndyke's Builders",
+      "instructions": "You will hear a woman telephoning a building company to arrange some work on her flat. Answer questions 1-10.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test4_part1-Wd5groSOsYQCIkSiXp9fvyFny30NyY",
+      "transcript": "Narrator: Test 4. You will hear a number of different recordings and you will have to answer questions on what you hear. There will be time for you to read the instructions and questions and you will have a chance to check your work. All the recordings will be played once only. The test is in four sections. At the end of the test you will be given 10 minutes to transfer your answers to an answer sheet. Now turn to section 1. Section 1. You will hear a customer phoning a builder to discuss some work she would like him to do on her home. First you have some time to look at questions 1 to 6. You will see that there is an example that has been done for you. On this occasion only, the conversation relating to this will be played first.\nNarrator: The customer heard of the builder from her friend, so friend has been written in the space. Now we shall begin. You should answer the questions as you listen because you will not hear the recording a second time. Listen carefully and answer questions one to six.\nMr Thorndyke: Thorndyke's.\nEdith: Good morning. Is that Mr Thorndyke?\nMr Thorndyke: Speaking. How can I help?\nEdith: I've got quite a few things which need painting and fixing in the flat and I wonder whether you'd be able to do the work.\nMr Thorndyke: I'm sure I'd be able to help but let me take down a few details.\nEdith: Yes, of course.\nMr Thorndyke: Well, firstly, how did you hear about us?\nEdith: It was my friend May Hampton ... you did some excellent work for her a couple of years ago. Do you remember?\nMr Thorndyke: Oh, yes, that was in West Park Flats, lovely lady.\nEdith: Yes, she is.\nMr Thorndyke: And what's your name, please?\nEdith: It's Edith Pargetter.\nMr Thorndyke: Edith ... can you spell your surname, please?\nEdith: It's P-A-R-G-E-double T-E-R.\nMr Thorndyke: Double T, right. And do you live in West Park Flats as well?\nEdith: No, actually it's East Park, Flat 4.\nMr Thorndyke: Oh, right, that's over the road, I seem to remember - quite difficult to get to.\nEdith: Yes, it's at the back of the library.\nMr Thorndyke: Right, I know. And what's your phone number?\nEdith: 875934 but I'm out a great deal in the afternoons and evenings.\nMr Thorndyke: So would the best time to ring you be in the morning?\nEdith: Yes.\nMr Thorndyke: Fine. I've made a note of that. Can I just ask, I'll be in a van and I know parking's rather difficult round your flats. Where would you recommend?\nEdith: Well, I always tell people in larger vehicles to park by the postbox on the other side of the road from the entrance.\nMr Thorndyke: Good, thanks.\nEdith: And will you be able to give me a full itemised quote?\nMr Thorndyke: Oh, yes, I'll list all the jobs separately with individual prices.\nEdith: That'd be a great help.\nMr Thorndyke: No problem.\nNarrator: Before you hear the rest of the conversation, you have some time to look at questions seven to ten. Now listen and answer questions 7 to 10.\nMr Thorndyke: Now, what would you like me to do?\nEdith: Firstly and most urgently is in the kitchen. With all the weather damage, the glass in the door has cracked and I'd need that fixing ...\nMr Thorndyke: I presume you mean replacing?\nEdith: Oh, yes. And as soon as possible ...\nMr Thorndyke: What I'll do is come round tomorrow morning and do that immediately.\nEdith: Thank you so much. The other things aren't so urgent but ...\nMr Thorndyke: Now, I'll make a note of everything you want doing.\nEdith: Well, in the kitchen I'd like some painting doing.\nMr Thorndyke: All the kitchen walls?\nEdith: Just the area over the cooker. It's very greasy ...\nMr Thorndyke: Right ... it does tend to get that way!\nEdith: Yes!\nMr Thorndyke: Well, if you want a proper job done what I'd need to do is strip the old paint and plaster it about a week before I paint it.\nEdith: Of course. Now, May tells me you also do work in the garden.\nMr Thorndyke: That's right.\nEdith: Well, I'd like you to replace a fence.\nMr Thorndyke: Just One?\nEdith: Yes, at the far end.\nMr Thorndyke: Fine. Shouldn't be a problem.\nEdith: And that's the lot.\nMr Thorndyke: Fine. Yeah, as I say I can come round tomorrow morning to look over things with you.\nEdith: That's great, thank you.\nMr Thorndyke: So, I'll look forward to seeing you tomorrow at ..\nNarrator: That is the end of section one. You now have half a minute to check your answers. Now turn to section 2.",
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+          "7": "Complete the table below. Write ONE WORD ONLY for each answer."
+        },
+        "noteBody": "# THORNDYKE'S BUILDERS\nExample – Customer heard about Thorndyke's from a friend\nName: Edith [[1]]\nAddress: Flat 4, [[2]] Park Flats (Behind the [[3]])\nPhone number: 875934\nBest time to contact customer: during the [[4]]\nWhere to park: opposite entrance next to the [[5]]\nNeeds full quote showing all the jobs and the [[6]]",
+        "tableBody": "| Area | Work to be done | Notes |\n| --- | --- | --- |\n| Kitchen | Replace the [[7]] in the door | Fix tomorrow |\n|  | Paint wall above the [[8]] | Strip paint and plaster approximately one [[9]] in advance |\n| Garden | One [[10]] needs replacing (end of garden) |  |"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Question 1",
+          "answer": [
+            "Pargetter"
+          ],
+          "explanation": "Họ của bà Edith: P-A-R-G-E-double T-E-R → Pargetter.",
+          "evidence": "It's Edith Pargetter. / It's P-A-R-G-E-double T-E-R.",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Question 2",
+          "answer": [
+            "East"
+          ],
+          "explanation": "Không phải West Park (chỗ của May Hampton) mà là EAST Park, Flat 4.",
+          "evidence": "No, actually it's East Park, Flat 4.",
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Question 3",
+          "answer": [
+            "library"
+          ],
+          "explanation": "Căn hộ nằm phía sau THƯ VIỆN (library).",
+          "evidence": "Yes, it's at the back of the library.",
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Question 4",
+          "answer": [
+            "morning",
+            "mornings"
+          ],
+          "explanation": "Buổi chiều và tối bà hay vắng nhà nên gọi vào BUỔI SÁNG là tốt nhất.",
+          "evidence": "So would the best time to ring you be in the morning?",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Question 5",
+          "answer": [
+            "postbox"
+          ],
+          "explanation": "Xe lớn nên đỗ cạnh HỘP THƯ (postbox) phía bên kia đường, đối diện lối vào.",
+          "evidence": "Well, I always tell people in larger vehicles to park by the postbox on the other side of the road from the entrance.",
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Question 6",
+          "answer": [
+            "prices"
+          ],
+          "explanation": "Bà muốn báo giá chi tiết: liệt kê từng việc với GIÁ (prices) riêng.",
+          "evidence": "Oh, yes, I'll list all the jobs separately with individual prices.",
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "table_completion",
+          "prompt": "Question 7",
+          "answer": [
+            "glass"
+          ],
+          "explanation": "Do thời tiết, KÍNH (glass) ở cửa bếp bị nứt, cần thay; ông sẽ sửa ngay sáng mai.",
+          "evidence": "With all the weather damage, the glass in the door has cracked and I'd need that fixing ...",
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "table_completion",
+          "prompt": "Question 8",
+          "answer": [
+            "cooker"
+          ],
+          "explanation": "Chỉ sơn phần tường phía trên BẾP NẤU (cooker) vì bám nhiều dầu mỡ.",
+          "evidence": "Just the area over the cooker.",
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "table_completion",
+          "prompt": "Question 9",
+          "answer": [
+            "week"
+          ],
+          "explanation": "Phải cạo sơn cũ và trát tường khoảng một TUẦN (week) trước khi sơn.",
+          "evidence": "Well, if you want a proper job done what I'd need to do is strip the old paint and plaster it about a week before I paint it.",
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "table_completion",
+          "prompt": "Question 10",
+          "answer": [
+            "fence"
+          ],
+          "explanation": "Ngoài vườn cần thay một cái HÀNG RÀO (fence) ở cuối vườn.",
+          "evidence": "Well, I'd like you to replace a fence.",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 – Manham Port",
+      "instructions": "You will hear a guide talking about the history of Manham Port and its tourist attractions. Answer questions 11-20.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test4_part2-n76G4DymcxAdKsjnMsfSqMgFgXMmxz",
+      "transcript": "Narrator: Section 2. You will hear a recorded talk giving an introduction to the historical theme park of Manham Riverport in England. First, you have some time to look at questions 11 to 15.\nWelcome to Manham Port, where a thousand years of history are brought to life. All the family can enjoy a day out at Manham: visit our copper mine, see models of the machinery it used, have your photo taken in nineteenth-century costume, experience at first hand how people lived at different stages throughout history, and especially how children studied, worked and played.\nThe port of Manham is located in beautiful and peaceful countryside, on a bend in the great River Avon, and developed here because it's the highest navigable point of the Avon - boats can go no higher up this river - and proved a handy place to load and unload cargo to and from the sea, which is over 23 miles away. A small port was already established here when, about 900 years ago, tin was discovered nearby, though it wasn't until the Industrial Revolution, when a tremendous need for metals of all kinds developed, that Manham expanded to become one of the busiest ports in the country. And because it was already so busy, prospectors began to look for other minerals, and by the end of the nineteenth century, lead, copper, manganese and arsenic were added to the cargos leaving Manham.\nIn the early days, the ores had been smelted - or processed - in the same area they were mined. But, as demand grew, the smelting process required huge factory furnaces or fires to melt the metal from the rock and there was not enough coal in the local area, so the rocks containing minerals had to be shipped long distances.\nSadly, in the twentieth century, the great port of Manham declined, and thousands of workers were forced to emigrate out of the area. The building at the port fell into disrepair, and the place became almost forgotten. But then, the Manham Trust was formed to conserve the historical resources of the area. It organised scores of local volunteers to remove undergrowth to find the original outlines of the installations. It then brought in paid professionals to match installations with maps of the original port complex and to set about reconstructing it. Today you can see the results of this ambitious programme of restoration. The intention, and we believe this will be realised before the end of the year, is to return Manham Port to the condition it reached at its peak as 'the greatest copper port in the country'.\nNarrator: Before you hear the rest of the talk, you have some time to look at questions 16 to 20. Now listen and answer questions 16 to 20.\nBut what can you do and see on your visit today? Here are just a few highlights. We suggest you start with the visit to the copper mine. Travel on converted mining trains and journey into the depths of the mountain along seams once worked by hundreds of miners. Watch out especially for the great pumping machines which rid the mine of water. But please be warned that, like all mines, ours is very dark and closed in and we do say that children under five and also dogs should NOT be taken into the mine.\nThe next recommended visit is to the village school. While looking round the classrooms, take a special look at our display of games, which is one of the largest in the world. And it's recommended that you time your visit to coincide with a guided tour. This will give you the opportunity to ask lots of questions. Near the school is the beautiful old sailing ketch called 'The George'. You are welcome to board the boat and look round the cabins. Look out for the ship's wheel which was missing until only five years ago when it was dredged out of the silt by a local fisherman. We have no idea how it got there but it's been polished and proudly restored to its original place on the boat. Please take care going down the ladders if you wish to visit the lower deck - we don't recommend you allow young children to use them.\nSo we hope you have a memorable visit to Manham Port and will tell your friends all about us.\nNarrator: That is the end of section two. You now have half a minute to check your answers. Now turn to section 3.",
+      "metadata": {
+        "groupInstructions": {
+          "11": "Choose the correct letter, A, B or C.",
+          "16": "Complete the table below. Write NO MORE THAN TWO WORDS for each answer."
+        },
+        "groupTitles": {
+          "11": "MANHAM PORT"
+        },
+        "tableBody": "# Tourist attractions in Manham\n| Place | Features and activities | Advice |\n| --- | --- | --- |\n| copper mine | specially adapted miners' [[16]] take visitors into the mountain | the mine is [[17]] and enclosed - unsuitable for children and animals |\n| village school | classrooms and a special exhibition of [[18]] | a [[19]] is recommended |\n| 'The George' (old sailing ship) | the ship's wheel (was lost but has now been restored) | children shouldn't use the [[20]] |"
+      },
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "Why did a port originally develop at Manham?",
+          "options": [
+            "A It was safe from enemy attack.",
+            "B It was convenient for river transport.",
+            "C It had a good position on the sea coast."
+          ],
+          "answer": [
+            "B It was convenient for river transport."
+          ],
+          "explanation": "Cảng hình thành vì đây là điểm cao nhất trên sông Avon tàu thuyền còn đi được → thuận tiện cho vận tải đường SÔNG. Bẫy C: biển cách hơn 23 dặm.",
+          "evidence": "The port of Manham is located in beautiful and peaceful countryside, on a bend in the great River Avon, and developed here because it's the highest navigable point of the Avon - boats can go no higher up this river - and proved a handy place to load and unload cargo to and from the sea, which is over 23 miles away.",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "multiple_choice",
+          "prompt": "What caused Manham's sudden expansion during the Industrial Revolution?",
+          "options": [
+            "A the improvement in mining techniques",
+            "B the increase in demand for metals",
+            "C the discovery of tin in the area"
+          ],
+          "answer": [
+            "B the increase in demand for metals"
+          ],
+          "explanation": "Thời Cách mạng Công nghiệp nhu cầu về KIM LOẠI tăng mạnh nên Manham phát triển. Bẫy C: thiếc đã được tìm thấy từ 900 năm trước.",
+          "evidence": "A small port was already established here when, about 900 years ago, tin was discovered nearby, though it wasn't until the Industrial Revolution, when a tremendous need for metals of all kinds developed, that Manham expanded to become one of the busiest ports in the country.",
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "multiple_choice",
+          "prompt": "Why did rocks have to be sent away from Manham to be processed?",
+          "options": [
+            "A shortage of fuel",
+            "B poor transport systems",
+            "C lack of skills among local people"
+          ],
+          "answer": [
+            "A shortage of fuel"
+          ],
+          "explanation": "Lò nung cần rất nhiều than mà vùng này không đủ THAN → thiếu nhiên liệu.",
+          "evidence": "But, as demand grew, the smelting process required huge factory furnaces or fires to melt the metal from the rock and there was not enough coal in the local area, so the rocks containing minerals had to be shipped long distances.",
+          "points": 1
+        },
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "What happened when the port declined in the twentieth century?",
+          "options": [
+            "A The workers went away.",
+            "B Traditional skills were lost.",
+            "C Buildings were used for new purposes."
+          ],
+          "answer": [
+            "A The workers went away."
+          ],
+          "explanation": "Khi cảng suy tàn, hàng nghìn công nhân phải RỜI ĐI nơi khác. Bẫy C: các toà nhà bị bỏ hoang chứ không được dùng vào việc mới.",
+          "evidence": "Sadly, in the twentieth century, the great port of Manham declined, and thousands of workers were forced to emigrate out of the area.",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "multiple_choice",
+          "prompt": "What did the Manham Trust hope to do?",
+          "options": [
+            "A discover the location of the original port",
+            "B provide jobs for the unemployed",
+            "C rebuild the port complex"
+          ],
+          "answer": [
+            "C rebuild the port complex"
+          ],
+          "explanation": "Quỹ Manham muốn KHÔI PHỤC cảng về thời cực thịnh. Bẫy A: tình nguyện viên dọn cây bụi để tìm đường nét công trình cũ; B: thuê chuyên gia chứ không nhằm tạo việc làm.",
+          "evidence": "The intention, and we believe this will be realised before the end of the year, is to return Manham Port to the condition it reached at its peak as 'the greatest copper port in the country'.",
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "table_completion",
+          "prompt": "Question 16",
+          "answer": [
+            "trains",
+            "mining trains"
+          ],
+          "explanation": "Du khách đi trên những chiếc TÀU mỏ (mining trains) đã được cải tạo vào lòng núi.",
+          "evidence": "Travel on converted mining trains and journey into the depths of the mountain along seams once worked by hundreds of miners.",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "table_completion",
+          "prompt": "Question 17",
+          "answer": [
+            "dark"
+          ],
+          "explanation": "Mỏ rất TỐI và chật (dark and closed in) nên không phù hợp cho trẻ dưới 5 tuổi và chó.",
+          "evidence": "But please be warned that, like all mines, ours is very dark and closed in and we do say that children under five and also dogs should NOT be taken into the mine.",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "table_completion",
+          "prompt": "Question 18",
+          "answer": [
+            "games"
+          ],
+          "explanation": "Trong trường làng có khu trưng bày TRÒ CHƠI (games), một trong những bộ lớn nhất thế giới.",
+          "evidence": "While looking round the classrooms, take a special look at our display of games, which is one of the largest in the world.",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "table_completion",
+          "prompt": "Question 19",
+          "answer": [
+            "guided tour"
+          ],
+          "explanation": "Nên đi cùng một CHUYẾN THAM QUAN CÓ HƯỚNG DẪN (guided tour) để được đặt câu hỏi.",
+          "evidence": "it's recommended that you time your visit to coincide with a guided tour",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "table_completion",
+          "prompt": "Question 20",
+          "answer": [
+            "ladder",
+            "ladders"
+          ],
+          "explanation": "Không nên cho trẻ nhỏ dùng các THANG (ladders) xuống boong dưới.",
+          "evidence": "Please take care going down the ladders if you wish to visit the lower deck - we don't recommend you allow young children to use them.",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 – Work placements",
+      "instructions": "You will hear a student called Laura talking to another student, Tim, about her work placement. Answer questions 21-30.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test4_part3-MjWI61xrg8XtK00OMz0D2SDWX18wQt",
+      "transcript": "Narrator: Section 3. You will hear two psychology students, called Tim and Laura, talking about Laura's work placement. First, you have some time to look at questions 21 to 24. Now listen carefully and answer questions 21 to 24.\nTim: Hi, Laura - could you spare a few minutes to talk about the work placement you did last summer? I'm thinking of doing one myself ...\nLaura: Hi, Tim. Sure.\nTim: Didn't you do yours at an environmental services company?\nLaura: That's right ... It's only a very small company and they needed someone to produce a company brochure, and I wanted to get some business experience because I'm interested in a career in occupational psychology in a business environment. It was good because I had overall responsibility for the project.\nTim: What kind of skills do you think you developed on the placement? I mean, apart from the ones you already had ... Did you have to do all the artwork for the brochure, the layout and everything?\nLaura: We hired the services of a professional photographer for that. I did have to use my IT skills to a certain extent because I cut and pasted text from marketing leaflets, but that didn't involve anything I hadn't done before.\nTim: Do you think you got any better at managing your time and prioritising things? You always used to say you had trouble with that ...\nLaura: Oh, definitely. There was so much pressure to meet the project deadline. And I also got better at explaining things and asserting my opinions, because I had to have weekly consultations with the marketing manager and give him a progress report.\nTim: It sounds as if you got a lot out of it then.\nLaura: Absolutely. It was really worthwhile ... But you know, the company benefited too ...\nTim: Yes, they must have done. After all, if they'd used a professional advertising agency to produce their brochure instead of doing it in-house, presumably they'd have paid a lot more?\nLaura: Oh, yes. I worked it out - it would have been 250 per cent more. And I thought the end result was good, even though we did everything on site. The company has quite a powerful computer and I managed to borrow some scanning software from the university. The new brochure looks really professional; it enhances the image of the company straight away.\nTim: So in the long run it should help them to attract clients, and improve their sales figures?\nLaura: That's the idea. Yeah.\nNarrator: Before you hear the rest of the discussion, you have some time to look at questions 25 to 30.\nTim: Well, all in all it sounds very positive - I think I will go ahead and apply for a placement myself. How do I go about it?\nLaura: It's easy enough to do, because there's a government agency called STEP - S-T-E-P - that organises placements for students. You should start by getting their booklet with all the details - I expect you can download one from their website.\nTim: Actually, they've got copies in the psychology department - I've seen them there. I'll just go to the office and pick one up.\nLaura: Right. And then if I were you, after I'd looked at it I'd go over all the options with someone ...\nTim: I suppose I should ask my tutor's advice. He knows more about me than anyone.\nLaura: One of the career officers would be better, they've got more knowledge about the jobs market than your personal tutor would have.\nTim: OK ...\nLaura: And then when you know what you want you can register with STEP - you'll find their address in the booklet. And once you've registered they assign you to a mentor who looks after your application.\nTim: And then I suppose you just sit back and wait till you hear something?\nLaura: They told me at the careers office that it's best to be proactive, and get updates yourself by checking the website for new placement alerts. Your mentor is supposed to keep you informed, but you can't rely on that.\nTim: I don't suppose it's a good idea to get in touch with companies directly, is it?\nLaura: Not really ... But it is the company who notifies you if they want you to go for an interview. You get a letter of invitation or an email from personnel departments.\nTim: And do I reply directly to them?\nLaura: Yes, you do. STEP only gets involved again once you've been made a job offer.\nTim: Right ... So, once you've had an interview you should let your mentor know what the outcome is? I mean whether you're offered a job, and whether you've decided to accept it?\nLaura: That's right. They'll inform the careers office once a placement has been agreed, so you don't have to do that.\nTim: Is that all then?\nLaura: More or less. Only once you've accepted an offer you'll probably have to supply a reference, because the placement will be conditional on that. And that's something you should ask your own tutor to provide. He knows about your academic ability and also about your qualities, like reliability.\nTim: Well, thanks very much for the information - I'm starting to look forward ...\nNarrator: That is the end of Section 3. You now have half a minute to check your answers. Now turn to section 4.",
+      "metadata": {
+        "groupInstructions": {
+          "21": "Choose TWO letters, A-E.\nWhich TWO skills did Laura improve as a result of her work placement?",
+          "23": "Choose TWO letters, A-E.\nWhich TWO immediate benefits did the company get from Laura's work placement?",
+          "25": "What source of information should Tim use at each of the following stages of the work placement?\nChoose SIX answers from the box and write the correct letter, A-G, next to questions 25-30.\n:::box\nA company manager\nB company's personnel department\nC personal tutor\nD psychology department\nE mentor\nF university careers officer\nG internet\n:::"
+        },
+        "groupTitles": {
+          "25": "Stages of the work placement procedure"
+        }
+      },
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A communication",
+            "B design",
+            "C IT",
+            "D marketing",
+            "E organisation"
+          ],
+          "answer": [
+            "A communication",
+            "E organisation"
+          ],
+          "explanation": "Hai đáp án đúng của cụm 21-22 là A và E. E: Laura tiến bộ trong việc quản lý thời gian, sắp xếp ưu tiên → kỹ năng TỔ CHỨC. Bẫy B: thiết kế do nhiếp ảnh gia làm; C: kỹ năng IT không có gì mới.",
+          "evidence": "Do you think you got any better at managing your time and prioritising things? / Oh, definitely.",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A communication",
+            "B design",
+            "C IT",
+            "D marketing",
+            "E organisation"
+          ],
+          "answer": [
+            "A communication",
+            "E organisation"
+          ],
+          "explanation": "Hai đáp án đúng của cụm 21-22 là A và E. A: Laura giỏi hơn trong việc giải thích và bảo vệ ý kiến khi báo cáo hằng tuần → kỹ năng GIAO TIẾP.",
+          "evidence": "And I also got better at explaining things and asserting my opinions, because I had to have weekly consultations with the marketing manager and give him a progress report.",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A updates for its software",
+            "B cost savings",
+            "C an improved image",
+            "D new clients",
+            "E a growth in sales"
+          ],
+          "answer": [
+            "B cost savings",
+            "C an improved image"
+          ],
+          "explanation": "Hai đáp án đúng của cụm 23-24 là B và C. B: nếu thuê công ty quảng cáo thì sẽ tốn hơn 250% → công ty TIẾT KIỆM chi phí. Bẫy A: phần mềm chỉ mượn của trường.",
+          "evidence": "I worked it out - it would have been 250 per cent more.",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A updates for its software",
+            "B cost savings",
+            "C an improved image",
+            "D new clients",
+            "E a growth in sales"
+          ],
+          "answer": [
+            "B cost savings",
+            "C an improved image"
+          ],
+          "explanation": "Hai đáp án đúng của cụm 23-24 là B và C. C: cuốn brochure mới nâng HÌNH ẢNH công ty ngay lập tức. Bẫy D, E: khách hàng mới và doanh số chỉ là kỳ vọng về lâu dài, không phải lợi ích tức thì.",
+          "evidence": "The new brochure looks really professional; it enhances the image of the company straight away.",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "matching",
+          "prompt": "obtaining booklet",
+          "options": [
+            "A company manager",
+            "B company's personnel department",
+            "C personal tutor",
+            "D psychology department",
+            "E mentor",
+            "F university careers officer",
+            "G internet"
+          ],
+          "answer": [
+            "D psychology department"
+          ],
+          "explanation": "Lấy cuốn hướng dẫn: Tim sẽ tới KHOA TÂM LÝ (psychology department) lấy một cuốn. Bẫy G: Laura gợi ý tải trên web nhưng Tim chọn khoa. → D.",
+          "evidence": "Actually, they've got copies in the psychology department - I've seen them there.",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "matching",
+          "prompt": "discussing options",
+          "options": [
+            "A company manager",
+            "B company's personnel department",
+            "C personal tutor",
+            "D psychology department",
+            "E mentor",
+            "F university careers officer",
+            "G internet"
+          ],
+          "answer": [
+            "F university careers officer"
+          ],
+          "explanation": "Bàn các lựa chọn: nên hỏi CÁN BỘ TƯ VẤN NGHỀ NGHIỆP vì họ hiểu thị trường việc làm hơn gia sư. → F.",
+          "evidence": "One of the career officers would be better, they've got more knowledge about the jobs market than your personal tutor would have.",
+          "points": 1
+        },
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "getting updates",
+          "options": [
+            "A company manager",
+            "B company's personnel department",
+            "C personal tutor",
+            "D psychology department",
+            "E mentor",
+            "F university careers officer",
+            "G internet"
+          ],
+          "answer": [
+            "G internet"
+          ],
+          "explanation": "Cập nhật thông tin: chủ động tự xem trang WEB để có thông báo chỗ thực tập mới. Bẫy E: mentor lẽ ra phải báo nhưng không trông cậy được. → G.",
+          "evidence": "They told me at the careers office that it's best to be proactive, and get updates yourself by checking the website for new placement alerts.",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "responding to invitation for interview",
+          "options": [
+            "A company manager",
+            "B company's personnel department",
+            "C personal tutor",
+            "D psychology department",
+            "E mentor",
+            "F university careers officer",
+            "G internet"
+          ],
+          "answer": [
+            "B company's personnel department"
+          ],
+          "explanation": "Thư mời phỏng vấn do PHÒNG NHÂN SỰ của công ty gửi và trả lời trực tiếp cho họ. → B.",
+          "evidence": "You get a letter of invitation or an email from personnel departments. / Yes, you do.",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "informing about outcome of interview",
+          "options": [
+            "A company manager",
+            "B company's personnel department",
+            "C personal tutor",
+            "D psychology department",
+            "E mentor",
+            "F university careers officer",
+            "G internet"
+          ],
+          "answer": [
+            "E mentor"
+          ],
+          "explanation": "Sau phỏng vấn phải báo kết quả cho MENTOR; họ sẽ báo lại phòng tư vấn nghề. → E.",
+          "evidence": "once you've had an interview you should let your mentor know what the outcome is? / That's right.",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "requesting a reference",
+          "options": [
+            "A company manager",
+            "B company's personnel department",
+            "C personal tutor",
+            "D psychology department",
+            "E mentor",
+            "F university careers officer",
+            "G internet"
+          ],
+          "answer": [
+            "C personal tutor"
+          ],
+          "explanation": "Thư giới thiệu (reference) nên nhờ chính GIA SƯ của mình viết. → C.",
+          "evidence": "And that's something you should ask your own tutor to provide.",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 – Nanotechnology",
+      "instructions": "You will hear a lecture about nanotechnology and its possible uses. Answer questions 31-40.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test4_part4-zEgT6TkjPVMxaqO09qmTMbV19JLS3X",
+      "transcript": "Narrator: Section 4. You will hear a woman talking to a group of first-year science undergraduates about the developing science of nanotechnology. First, you have some time to look at questions 31 to 40. Now listen carefully and answer questions thirty-one Today we're going to look at an important area of science, namely nanotechnology.\nToday we're going to look at an important area of science, namely nanotechnology. So what is it? Nano means tiny, so it's science and engineering on the scale of atoms and molecules. The idea is that by controlling and rearranging atoms, you can literally create anything. However, as we'll see, the science of the small has some big implications affecting us in many ways.\nThere's no doubt that nanotechnology promises so much for civilisation. However, all new technologies have their teething problems. And with nanotechnology, society often gets the wrong idea about its capabilities. Numerous science-fiction books and movies have raised people's fears about nanotechnology - with scenarios such as inserting little nano-robots into your body that monitor everything you do without you realising it, or self-replicating nano-robots that eventually take over the world.\nSo how do we safeguard such a potentially powerful technology? Some scientists recommend that nano-particles be treated as new chemicals with separate safety tests and clear labelling. They believe that greater care should also be taken with nano-particles in laboratories and factories. Others have called for a withdrawal of new nano products such as cosmetics and a temporary halt to many kinds of nanotech research.\nBut as far as I'm concerned there's a need to plough ahead with the discoveries and applications of nanotechnology. I really believe that most scientists would welcome a way to guard against unethical uses of such technology. We can't go around thinking that all innovation is bad, all advancement is bad. As with the debate about any new technology, it is how you use it that's important. So let's look at some of its possible uses. Thanks to nanotechnology, there could be a major breakthrough in the field of transportation with the production of more durable metals. These could be virtually unbreakable, lighter and much more pliable leading to planes that are 50 times lighter than at present. Those same improved capabilities will dramatically reduce the cost of travelling into space making it more accessible to ordinary people and opening up a totally new holiday destination.\nIn terms of technology, the computer industry will be able to shrink computer parts down to minute sizes. We need nanotechnology in order to create a new generation of computers, that will work even faster and will have a million times more memory but will be about the size of a sugar cube. Nanotechnology could also revolutionise the way that we generate power. The cost of solar cells will be drastically reduced so harnessing this energy will be far more economical than at present.\nBut nanotechnology has much wider applications than this and could have an enormous impact on our environment. For instance, tiny airborne nano-robots could be programmed to actually rebuild the ozone layer, which could lessen the impact of global warming on our planet. That's a pretty amazing thought, isn't it? On a more local scale, this new technology could help with the clean-up of environmental disasters as nanotechnology will allow us to remove oil and other contaminants from the water far more effectively. And, if nanotechnology progresses as expected - as a sort of building block set of about 90 atoms - then you could build anything you wanted from the bottom up. In terms of production, this means that you only use what you need and so there wouldn't be any waste.\nThe notion that you could create anything at all has major implications for our health. It means that we'll eventually be able to replicate anything. This would have a phenomenal effect on our society. In time it could even lead to the eradication of famine through the introduction of machines that produce food to feed the hungry.\nBut it's in the area of medicine that nanotechnology may have its biggest impact. How we detect disease will change as tiny biosensors are developed to analyse tests in minutes rather than days. There's even speculation nano-robots could be used to slow the ageing process, lengthening life expectancy.\nAs you can see, I'm very excited by the implications that could be available to us in the next few decades. Just how long it'll take, I honestly don't know.\nNarrator: That is the end of section four. You now have half a minute to check your answers. That is the end of the listening test. In the IELTS test, you would now have 10 minutes to transfer your answers to the answer sheet.",
+      "metadata": {
+        "groupInstructions": {
+          "31": "Choose the correct letter, A, B or C.",
+          "34": "Complete the notes below. Write ONE WORD ONLY for each answer."
+        },
+        "groupTitles": {
+          "31": "Nanotechnology: technology on a small scale"
+        },
+        "noteBody": "# Uses of Nanotechnology\n## Transport\n• Nanotechnology could allow the development of stronger [[34]].\n• Planes would be much lighter in weight.\n• [[35]] travel will be made available to the masses.\n## Technology\n• Computers will be even smaller, faster, and will have a greater [[36]].\n• [[37]] energy will become more affordable.\n## The Environment\n• Nano-robots could rebuild the ozone layer.\n• Pollutants such as [[38]] could be removed from water more easily.\n• There will be no [[39]] from manufacturing.\n## Health and Medicine\n• New methods of food production could eradicate famine.\n• Analysis of medical [[40]] will be speeded up.\n• Life expectancy could be increased."
+      },
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "multiple_choice",
+          "prompt": "The speaker says that one problem with nanotechnology is that",
+          "options": [
+            "A it could threaten our way of life.",
+            "B it could be used to spy on people.",
+            "C it is misunderstood by the public."
+          ],
+          "answer": [
+            "C it is misunderstood by the public."
+          ],
+          "explanation": "Vấn đề của công nghệ nano: xã hội thường HIỂU SAI về khả năng của nó (do sách, phim viễn tưởng). → C.",
+          "evidence": "And with nanotechnology, society often gets the wrong idea about its capabilities.",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "multiple_choice",
+          "prompt": "According to the speaker, some scientists believe that nano-particles",
+          "options": [
+            "A should be restricted to secure environments.",
+            "B should be used with more caution.",
+            "C should only be developed for essential products."
+          ],
+          "answer": [
+            "B should be used with more caution."
+          ],
+          "explanation": "Một số nhà khoa học cho rằng cần THẬN TRỌNG hơn với hạt nano trong phòng thí nghiệm và nhà máy. Bẫy C: tạm dừng nghiên cứu là đề xuất của nhóm khác. → B.",
+          "evidence": "They believe that greater care should also be taken with nano-particles in laboratories and factories.",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "multiple_choice",
+          "prompt": "In the speaker's opinion, research into nanotechnology",
+          "options": [
+            "A has yet to win popular support.",
+            "B could be seen as unethical.",
+            "C ought to be continued."
+          ],
+          "answer": [
+            "C ought to be continued."
+          ],
+          "explanation": "Theo diễn giả, cần TIẾP TỤC đẩy mạnh các khám phá và ứng dụng công nghệ nano. → C.",
+          "evidence": "there's a need to plough ahead with the discoveries and applications of nanotechnology",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Question 34",
+          "answer": [
+            "metal",
+            "metals"
+          ],
+          "explanation": "Công nghệ nano tạo ra KIM LOẠI bền hơn, gần như không thể phá vỡ.",
+          "evidence": "Thanks to nanotechnology, there could be a major breakthrough in the field of transportation with the production of more durable metals.",
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Question 35",
+          "answer": [
+            "space"
+          ],
+          "explanation": "Chi phí du hành VŨ TRỤ giảm mạnh, mở ra điểm du lịch mới cho người thường.",
+          "evidence": "Those same improved capabilities will dramatically reduce the cost of travelling into space making it more accessible to ordinary people and opening up a totally new holiday destination.",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Question 36",
+          "answer": [
+            "memory"
+          ],
+          "explanation": "Máy tính thế hệ mới có BỘ NHỚ (memory) lớn gấp triệu lần.",
+          "evidence": "We need nanotechnology in order to create a new generation of computers, that will work even faster and will have a million times more memory but will be about the size of a sugar cube.",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Question 37",
+          "answer": [
+            "solar"
+          ],
+          "explanation": "Pin MẶT TRỜI (solar cells) rẻ đi nhiều nên năng lượng mặt trời kinh tế hơn.",
+          "evidence": "The cost of solar cells will be drastically reduced so harnessing this energy will be far more economical than at present.",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Question 38",
+          "answer": [
+            "oil"
+          ],
+          "explanation": "Có thể loại bỏ DẦU (oil) và các chất gây ô nhiễm khỏi nước hiệu quả hơn nhiều.",
+          "evidence": "On a more local scale, this new technology could help with the clean-up of environmental disasters as nanotechnology will allow us to remove oil and other contaminants from the water far more effectively.",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Question 39",
+          "answer": [
+            "waste"
+          ],
+          "explanation": "Chỉ dùng đúng thứ cần nên sẽ không có CHẤT THẢI (waste) từ sản xuất.",
+          "evidence": "In terms of production, this means that you only use what you need and so there wouldn't be any waste.",
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Question 40",
+          "answer": [
+            "tests"
+          ],
+          "explanation": "Cảm biến sinh học siêu nhỏ phân tích các XÉT NGHIỆM (tests) chỉ trong vài phút.",
+          "evidence": "tiny biosensors are developed to analyse tests in minutes rather than days",
+          "points": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,670 @@
+{
+  "title": "Cambridge IELTS 10 – Test 3 (Listening)",
+  "skill": "listening",
+  "category": "book",
+  "bookName": "Cambridge IELTS 10",
+  "sourceLabel": "Cambridge IELTS 10 (Academic) – Test 3",
+  "description": "Listening Test 3: 4 phần, 40 câu (đăng ký nhà trẻ / quỹ bảo tồn cá heo / khoá học sân khấu và năm học ở nước ngoài / thuyết tập trung tự điều chỉnh và lãnh đạo). Có audio, transcript và giải thích từng câu.",
+  "units": [
+    {
+      "unitType": "listening_part",
+      "unitNumber": 1,
+      "title": "Listening Part 1 – Childcare centre enrolment",
+      "instructions": "You will hear a woman telephoning a childcare centre to enrol her daughter. Answer questions 1-10.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test3_part1-bOyj39kYb46NBTAH0NYe7W6ca3i1dH",
+      "transcript": "Narrator: Cambridge English IELTS 10 published by Cambridge University Press and Cambridge English Language Assessment 2015. This recording is copyright. CD 2. Test 3. You will hear a number of different recordings and you will have to answer questions on what you hear. There will be time for you to read the instructions and questions and you will have a chance to check your work. All the recordings will be played once only. The test is in four sections. At the end of the test you will be given 10 minutes to transfer your answers answers to an answer sheet. Now turn to section 1. Section 1. You will hear a conversation between the director of a childcare centre and a parent enrolling her child in the centre. First, you have some time to look at questions 1 to 6. You will see that there is an example that has been done for you. On this occasion only, the conversation relating to this will be played first. The parent's name is Carol Smith, so Smith has been written in the space. Now we shall begin. You should answer the questions as you listen because you will not hear the recording a second time. Listen carefully and answer questions 1 to 6.\nDirector: Good morning. Welcome to the Early Learning Childcare Centre. How may I help you?\nCarol: Hi. I spoke to you last week about enrolling my daughter for next year.\nDirector: Oh, yes. I'll just get some details from you. So, you're her mother?\nCarol: That's right.\nDirector: And, can I have your name?\nCarol: It's Carol, Carol Smith.\nDirector: And your daughter's name?\nCarol: It's Kate.\nDirector: Now, we have several groups at the centre and we cater for children from three to five years old. How old is your daughter?\nCarol: She's three now but she turns four next month.\nDirector: I'll put four down because that's how old she'll be when she starts.\nCarol: Fine, she's so excited about her birthday and coming to the centre.\nDirector: That's good to hear. And what's your address?\nCarol: It's 46 Wombat Road, that's W-O-M-B-A-T. Woodside 4032.\nDirector: And what's the phone number?\nCarol: Oh ... it's ... 3345 9865.\nDirector: So, have you decided on the days you'd like to bring your daughter here?\nCarol: I'd prefer Monday and Wednesday if possible.\nDirector: Mmm. I'll check, Monday's fine, but I think the centre is already full for Wednesday. Erm. Yes. Sorry. It seems to be a very popular day. We can offer you a Thursday or a Friday as well.\nCarol: Oh dear. I suppose Thursday would be all right because she has swimming on Friday.\nDirector: OK, got that. Because a lot of parents work, we do offer flexible start and finish times. We are open from 7:30 in the morning until 6 o'clock at night. What time would you like your daughter to start?\nCarol: I need to get to work in the city by 9:00 so I'll drop her off at 8:30. You're pretty close to the city here so that should give me plenty of time to get there.\nDirector: That's fine. Now, we also need to decide which group she'll be in. We have two different groups and they're divided up according to age. There's the green group, which is for three- to four-year-olds. And then there's the red group which is for four- to five-year-olds.\nCarol: She's quite mature for her age and she can already write her name and read a little.\nDirector: Well, I'll put her in the red group and we can always change her to the green one if there are any problems.\nCarol: That sounds fine.\nDirector: OK. Let's move on to meals. We can provide breakfast, lunch and dinner. As she's finishing pretty early, she won't need dinner, will you give her breakfast before she comes?\nCarol: Yes, she'll only need lunch.\nNarrator: Before you hear the rest of the conversation, you have some time to look at questions seven to ten. Now listen and answer questions 7 to 10.\nDirector: Now, does she have any medical conditions we need to know about? Does she have asthma or any hearing problems for example?\nCarol: No. But she does need to wear glasses.\nDirector: Oh, I'll make a note of that.\nCarol: Yes, she's pretty good about wearing them, she can't see much without them.\nDirector: Right. OK. Now, I also need emergency contact details.\nCarol: So what sort of information do you need?\nDirector: Just the name and number of a friend or family member we can contact in case we can't get hold of you at any time.\nCarol: OK. That'd better be my sister ... Jenny Ball. That's B-A-double L. Her phone number is 33467523.\nDirector: Great. So she is the child's aunt?\nCarol: Yes, that's right.\nDirector: I'll make a note of that as well. Now, is there anything you'd like to ask?\nCarol: What about payment? How much are the fees each term?\nDirector: Well, for two days and the hours you've chosen, that will be $450 altogether.\nCarol: OK, and do I have to pay that now?\nDirector: No, we send out invoices once the children start at the centre. You can choose to pay at the end of each term or we do offer a slightly discounted rate if you pay every month.\nCarol: Oh, I'll do that then. I find it easier to budget that way and I'm not used to the term dates just yet.\nDirector: Good, it makes it a lot simpler for us as well. Well, that's everything. Would you like me to show you around ...?\nNarrator: That is the end of Section 1. You now have half a minute to check your answers. Now turn to section 2.",
+      "metadata": {
+        "groupInstructions": {
+          "1": "Complete the form below. Write ONE WORD AND/OR A NUMBER for each answer."
+        },
+        "noteBody": "# Early Learning Childcare Centre Enrolment Form\nExample – Parent or guardian: Carol Smith\n## Personal Details\nChild's name: Kate\nAge: [[1]]\nAddress: [[2]] Road, Woodside, 4032\nPhone: 3345 9865\n## Childcare Information\nDays enrolled for: Monday and [[3]]\nStart time: [[4]] am\nChildcare group: the [[5]] group\nWhich meal/s are required each day? [[6]]\nMedical conditions: needs [[7]]\nEmergency contact: Jenny [[8]]   Phone: 3346 7523\nRelationship to child: [[9]]\n## Fees\nWill pay each [[10]]"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "note_completion",
+          "prompt": "Question 1",
+          "answer": [
+            "4",
+            "four"
+          ],
+          "explanation": "Bé Kate đang ba tuổi nhưng tháng sau tròn bốn; giám đốc ghi BỐN vì đó là tuổi lúc bé bắt đầu đi học. Bẫy: 3.",
+          "evidence": "I'll put four down because that's how old she'll be when she starts.",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "note_completion",
+          "prompt": "Question 2",
+          "answer": [
+            "46 Wombat",
+            "46 Wombat Road"
+          ],
+          "explanation": "Địa chỉ: 46 Wombat Road, đánh vần W-O-M-B-A-T.",
+          "evidence": "It's 46 Wombat Road, that's W-O-M-B-A-T.",
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "note_completion",
+          "prompt": "Question 3",
+          "answer": [
+            "Thursday"
+          ],
+          "explanation": "Muốn thứ Hai và thứ Tư nhưng thứ Tư đã kín chỗ; thứ Sáu bé học bơi nên chọn THỨ NĂM.",
+          "evidence": "I suppose Thursday would be all right because she has swimming on Friday.",
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "note_completion",
+          "prompt": "Question 4",
+          "answer": [
+            "8.30",
+            "8:30"
+          ],
+          "explanation": "Chị phải có mặt ở thành phố lúc 9h nên sẽ gửi bé lúc 8.30. Bẫy: 7.30 là giờ trung tâm mở cửa, 9.00 là giờ chị đi làm.",
+          "evidence": "I need to get to work in the city by 9:00 so I'll drop her off at 8:30.",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "note_completion",
+          "prompt": "Question 5",
+          "answer": [
+            "red"
+          ],
+          "explanation": "Bé chững chạc, đã viết được tên và đọc chút ít nên được xếp vào nhóm ĐỎ (4-5 tuổi). Bẫy: nhóm xanh.",
+          "evidence": "Well, I'll put her in the red group and we can always change her to the green one if there are any problems.",
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "note_completion",
+          "prompt": "Question 6",
+          "answer": [
+            "lunch"
+          ],
+          "explanation": "Bé về sớm nên không cần bữa tối, ăn sáng ở nhà → chỉ cần BỮA TRƯA.",
+          "evidence": "Yes, she'll only need lunch.",
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "note_completion",
+          "prompt": "Question 7",
+          "answer": [
+            "glasses"
+          ],
+          "explanation": "Bé không bị hen hay vấn đề thính giác nhưng phải đeo KÍNH (glasses).",
+          "evidence": "But she does need to wear glasses.",
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "note_completion",
+          "prompt": "Question 8",
+          "answer": [
+            "Ball",
+            "BALL"
+          ],
+          "explanation": "Người liên hệ khẩn cấp: em gái Jenny BALL, đánh vần B-A-double L.",
+          "evidence": "Jenny Ball. That's B-A-double L.",
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "note_completion",
+          "prompt": "Question 9",
+          "answer": [
+            "aunt"
+          ],
+          "explanation": "Jenny là chị/em gái của mẹ → là DÌ (aunt) của bé.",
+          "evidence": "So she is the child's aunt?",
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "note_completion",
+          "prompt": "Question 10",
+          "answer": [
+            "month"
+          ],
+          "explanation": "Trả theo tháng được giảm giá nên Carol chọn trả mỗi THÁNG (month). Bẫy: term.",
+          "evidence": "You can choose to pay at the end of each term or we do offer a slightly discounted rate if you pay every month.",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 2,
+      "title": "Listening Part 2 – Dolphin Conservation Trust",
+      "instructions": "You will hear a radio interview with Alice, who works for the Dolphin Conservation Trust. Answer questions 11-20.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test3_part2-Jio7rJIuOI0Z0JJqkNokhFY10mevq8",
+      "transcript": "Narrator: Section 2. You will hear a woman called Alice Bussell talking on the radio about the Dolphin Conservation Trust, an organisation which tries to protect dolphins. First, you have some time to look at questions 11 to 15. Now listen carefully and answer questions 11 to 15.\nInterviewer: Today we're pleased to have on the show Alice Bussell from the Dolphin Conservation Trust. Tell us about the Trust, Alice.\nAlice: Well, obviously its purpose is to protect dolphins in seas all around the world. It tries to raise people's awareness of the problems these marine creatures are suffering because of pollution and other threats. It started ten years ago and it's one of the fastest growing animal charities in the country - although it's still fairly small compared with the big players in animal protection. We are particularly proud of the work we do in education - last year we visited a huge number of schools in different parts of the country, going round to talk to children and young people aged from five to eighteen. In fact, about thirty-five per cent of our members are children. The charity uses its money to support campaigns - for example, for changes in fishing policy and so forth. It hopes soon to be able to employ its first full-time biologist - with dolphin expertise - to monitor populations. Of course, many people give their services on a voluntary basis and we now have volunteers working in observation, office work and other things. I should also tell you about the award we won from the Charity Commission last year - for our work in education. Although it's not meant an enormous amount of money for us, it has made our activities even more widely publicised and understood. In the long term it may not bring in extra members but we're hoping it'll have this effect.\nInterviewer: Is it possible to see dolphins in UK waters?\nAlice: Yes. In several locations. And we have a big project in the east part of Scotland. This has long been a haven for dolphins because it has very little shipping. However, that may be about to change soon because oil companies want to increase exploration there. We're campaigning against this because, although there'll be little pollution from oil, exploration creates a lot of underwater noise. It means the dolphins can't rest and socialise. This is how I became interested in dolphin conservation in the first place. I had never seen one and I hadn't been particularly interested in them at school. Then I came across this story about a family of dolphins who had to leave their home in the Moray Firth because of the oil companies and about a child who campaigned to save them. I couldn't put the book down - I was hooked.\nNarrator: Before you hear the rest of the talk, you have some time to look at questions 16 to 20. Now listen and answer questions 16 to 20.\nInterviewer: I'm sure our listeners will want to find out what they can do to help. You mentioned the 'Adopt a Dolphin' scheme. Can you tell us about that?\nAlice: Of course! People can choose one of our dolphins to sponsor. They receive a picture of it and news updates. I'd like to tell you about four which are currently being adopted by our members: Moondancer, Echo, Kiwi and Samson. Unfortunately, Echo is being rather elusive this year and hasn't yet been sighted by our observers but we remain optimistic that he'll be out there soon. All the others have been out in force - Samson and Moondancer are often photographed together but it is Kiwi who's our real 'character' as she seems to love coming up close for the cameras and we've captured her on film hundreds of times. They all have their own personalities - Moondancer is very elegant and curves out and into the water very smoothly, whereas Samson has a lot of energy - he's always leaping out of the water with great vigour. You'd probably expect him to be the youngest - he's not quite - that's Kiwi - but Samson's the latest of our dolphins to be chosen for the scheme. Kiwi makes a lot of noise so we can often pick her out straightaway. Echo and Moondancer are noisy too, but Moondancer's easy to find because she has a particularly large fin on her back, which makes her easy to identify. So, yes, they're all very different...\nInterviewer: Well, they sound a fascinating group ...\nNarrator: That is the end of section two. You now have half a minute to check your answers. Now turn to section 3.",
+      "metadata": {
+        "groupInstructions": {
+          "11": "Choose TWO letters, A-E.\nWhich TWO things does Alice say about the Dolphin Conservation Trust?",
+          "13": "Choose the correct letter, A, B or C.",
+          "16": "Which dolphin does Alice make each of the following comments about?\nWrite the correct letter, A, B, C or D, next to questions 16-20.\n:::box\nA Moondancer\nB Echo\nC Kiwi\nD Samson\n:::"
+        },
+        "groupTitles": {
+          "16": "Comments"
+        }
+      },
+      "questions": [
+        {
+          "order": 11,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A Children make up most of the membership.",
+            "B It's the country's largest conservation organisation.",
+            "C It helps finance campaigns for changes in fishing practices.",
+            "D It employs several dolphin experts full-time.",
+            "E Volunteers help in various ways."
+          ],
+          "answer": [
+            "C It helps finance campaigns for changes in fishing practices.",
+            "E Volunteers help in various ways."
+          ],
+          "explanation": "Hai đáp án đúng của cụm 11-12 là C và E. C: quỹ dùng tiền hỗ trợ các chiến dịch thay đổi chính sách đánh bắt cá. Bẫy A: trẻ em chỉ chiếm khoảng 35% hội viên; D: mới HY VỌNG thuê nhà sinh học toàn thời gian đầu tiên.",
+          "evidence": "The charity uses its money to support campaigns - for example, for changes in fishing policy and so forth.",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "multiple_choice",
+          "prompt": "",
+          "options": [
+            "A Children make up most of the membership.",
+            "B It's the country's largest conservation organisation.",
+            "C It helps finance campaigns for changes in fishing practices.",
+            "D It employs several dolphin experts full-time.",
+            "E Volunteers help in various ways."
+          ],
+          "answer": [
+            "C It helps finance campaigns for changes in fishing practices.",
+            "E Volunteers help in various ways."
+          ],
+          "explanation": "Hai đáp án đúng của cụm 11-12 là C và E. E: nhiều người làm TÌNH NGUYỆN ở nhiều mảng: quan sát, văn phòng... Bẫy B: quỹ còn khá nhỏ so với các tổ chức lớn.",
+          "evidence": "we now have volunteers working in observation, office work and other things",
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "multiple_choice",
+          "prompt": "Why is Alice so pleased the Trust has won the Charity Commission award?",
+          "options": [
+            "A It has brought in extra money.",
+            "B It made the work of the trust better known.",
+            "C It has attracted more members."
+          ],
+          "answer": [
+            "B It made the work of the trust better known."
+          ],
+          "explanation": "Giải thưởng không mang lại nhiều tiền nhưng khiến hoạt động của quỹ được BIẾT ĐẾN rộng rãi hơn. Bẫy C: có thể không thu hút thêm hội viên.",
+          "evidence": "Although it's not meant an enormous amount of money for us, it has made our activities even more widely publicised and understood.",
+          "points": 1
+        },
+        {
+          "order": 14,
+          "questionType": "multiple_choice",
+          "prompt": "Alice says oil exploration causes problems to dolphins because of",
+          "options": [
+            "A noise.",
+            "B oil leaks.",
+            "C movement of ships."
+          ],
+          "answer": [
+            "A noise."
+          ],
+          "explanation": "Ít ô nhiễm dầu nhưng việc thăm dò tạo nhiều TIẾNG ỒN dưới nước. Bẫy B: oil leaks; C: vùng này ít tàu thuyền.",
+          "evidence": "We're campaigning against this because, although there'll be little pollution from oil, exploration creates a lot of underwater noise.",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "multiple_choice",
+          "prompt": "Alice became interested in dolphins when",
+          "options": [
+            "A she saw one swimming near her home.",
+            "B she heard a speaker at her school.",
+            "C she read a book about them."
+          ],
+          "answer": [
+            "C she read a book about them."
+          ],
+          "explanation": "Alice chưa từng thấy cá heo và không thích chúng ở trường; chị bắt đầu quan tâm khi đọc một CUỐN SÁCH về gia đình cá heo phải rời vùng Moray Firth.",
+          "evidence": "I couldn't put the book down - I was hooked.",
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "It has not been seen this year.",
+          "options": [
+            "A Moondancer",
+            "B Echo",
+            "C Kiwi",
+            "D Samson"
+          ],
+          "answer": [
+            "B Echo"
+          ],
+          "explanation": "Echo năm nay chưa được người quan sát nhìn thấy. → B.",
+          "evidence": "Echo is being rather elusive this year and hasn't yet been sighted by our observers",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "It is photographed more than the others.",
+          "options": [
+            "A Moondancer",
+            "B Echo",
+            "C Kiwi",
+            "D Samson"
+          ],
+          "answer": [
+            "C Kiwi"
+          ],
+          "explanation": "Kiwi thích lại gần máy ảnh, được chụp hàng trăm lần. Bẫy: Samson và Moondancer thường được chụp chung nhưng không nhiều bằng. → C.",
+          "evidence": "All the others have been out in force - Samson and Moondancer are often photographed together but it is Kiwi who's our real 'character' as she seems to love coming up close for the cameras and we've captured her on film hundreds of times.",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "matching",
+          "prompt": "It is always very energetic.",
+          "options": [
+            "A Moondancer",
+            "B Echo",
+            "C Kiwi",
+            "D Samson"
+          ],
+          "answer": [
+            "D Samson"
+          ],
+          "explanation": "Samson rất NĂNG ĐỘNG, luôn nhảy khỏi mặt nước đầy sức sống. → D.",
+          "evidence": "They all have their own personalities - Moondancer is very elegant and curves out and into the water very smoothly, whereas Samson has a lot of energy - he's always leaping out of the water with great vigour.",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "matching",
+          "prompt": "It is the newest one in the scheme.",
+          "options": [
+            "A Moondancer",
+            "B Echo",
+            "C Kiwi",
+            "D Samson"
+          ],
+          "answer": [
+            "D Samson"
+          ],
+          "explanation": "Samson không phải trẻ nhất (Kiwi trẻ nhất) nhưng là con MỚI NHẤT được chọn vào chương trình. → D.",
+          "evidence": "You'd probably expect him to be the youngest - he's not quite - that's Kiwi - but Samson's the latest of our dolphins to be chosen for the scheme.",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "matching",
+          "prompt": "It has an unusual shape.",
+          "options": [
+            "A Moondancer",
+            "B Echo",
+            "C Kiwi",
+            "D Samson"
+          ],
+          "answer": [
+            "A Moondancer"
+          ],
+          "explanation": "Moondancer có vây lưng đặc biệt lớn → hình dáng khác thường. → A.",
+          "evidence": "Moondancer's easy to find because she has a particularly large fin on her back",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 3,
+      "title": "Listening Part 3 – Theatre Studies course",
+      "instructions": "You will hear two Theatre Studies students, Rob and Mia, talking about their course. Answer questions 21-30.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test3_part3-feeGb7dwpOvFOurDRPCbUaK0eV8maF",
+      "transcript": "Narrator: Section 3. You will hear a student called Rob, who is in the first year of a theatre studies course, talking to another student called Mia, who's in the fourth year of the same course. First, you have some time to look at questions 21 to 25. Now listen carefully and answer questions 21 to 25.\nMia: Hi, Rob. How's the course going?\nRob: Oh, hi, Mia. Yeah, great. I can't believe the first term's nearly over.\nMia: I saw your group's performance last night at the student theatre. It was good.\nRob: Really? Yeah ... but now we have to write a report on the whole thing, an in-depth analysis. I don't know where to start. Like, I have to write about the role I played, the doctor, how I developed the character.\nMia: Well, what was your starting point?\nRob: Er .. my grandfather was a doctor before he retired, and I just based it on him.\nMia: OK, but how? Did you talk to him about it?\nRob: He must have all sorts of stories, but he never says much about his work, even now. He has a sort of authority though.\nMia: So how did you manage to capture that?\nRob: I'd ... I'd visualise what he must have been like in the past, when he was sitting in his consulting room listening to his patients.\nMia: OK, so that's what you explain in your report.\nRob: Right.\nMia: Then there's the issue of atmosphere - so in the first scene we needed to know how boring life was in the doctor's village in the 1950s, so when the curtain went up on the first scene in the waiting room, there was that long silence before anyone spoke. And then people kept saying the same thing over and over, like 'Cold, isn't it?'\nRob: Yes, and everyone wore grey and brown, and just sat in a row.\nMia: Yes, all those details of the production.\nRob: And I have to analyse how I functioned in the group - what I found out about myself. I know I was so frustrated at times, when we couldn't agree.\nMia: Yes. So did one person emerge as the leader?\nRob: Sophia did. That was OK - she helped us work out exactly what to do for the production. And that made me feel better, I suppose.\nMia: When you understood what needed doing?\nRob: Yes. And Sophia did some research, too. That was useful in developing our approach.\nMia: Like what?\nRob: Well, she found these articles from the 1950s about how relationships between children and their parents, or between the public and people like bank managers or the police were shifting.\nMia: Interesting. And did you have any practical problems to overcome?\nRob: Well, in the final rehearsal everything was going fine until the last scene - that's where the doctor's first patient appears on stage on his own.\nMia: The one in the wheelchair?\nRob: Yes, and he had this really long speech, with the stage all dark except for one spotlight - and then that stuck somehow so it was shining on the wrong side of the stage ... but anyway we got that fixed, thank goodness.\nMia: Yes, it was fine on the night.\nNarrator: Now listen and answer questions 26 to 30.\nRob: But while you're here, Mia, I wanted to ask you about the year abroad option. Would you recommend doing that?\nMia: Yes, definitely. It's a fantastic chance to study in another country for a year.\nRob: I think I'd like to do it, but it looks very competitive - there's only a limited number of places.\nMia: Yes, so next year when you are in the second year of the course, you need to work really hard in all your theatre studies modules. Only students with good marks get places - you have to prove that you know your subject really well.\nRob: Right. So how did you choose where to go?\nMia: Well, I decided I wanted a programme that would fit in with what I wanted to do after I graduate, so I looked for a university with emphasis on acting rather than directing for example. It depends on you. Then about six months before you go, you have to email the scheme coordinator with your top three choices. I had a friend who missed the deadline and didn't get her first choice, so you do need to get a move on at that stage. You'll find that certain places are very popular with everyone.\nRob: And don't you have to write a personal statement at that stage?\nMia: Yes.\nRob: Right. I'll get some of the final year students to give me some tips ... maybe see if I can read what they wrote.\nMia: I think that's a very good idea. I don't mind showing you what I did. And while you're abroad don't make the mistake I made. I got so involved I forgot all about making arrangements for when I came back here for the final year. Make sure you stay in touch so they know your choices for the optional modules. You don't want to miss out doing your preferred specialisms.\nRob: Right.\nNarrator: That is the end of section three. You now have half a minute to check your answers. Now turn to section 4.",
+      "metadata": {
+        "groupInstructions": {
+          "21": "Choose the correct letter, A, B or C.",
+          "26": "What action is needed for the following stages in doing the 'year abroad' option?\nChoose FIVE answers from the box and write the correct letter, A-G, next to questions 26-30.\n:::box\nA be on time\nB get a letter of recommendation\nC plan for the final year\nD make sure the institution's focus is relevant\nE show ability in Theatre Studies\nF make travel arrangements and bookings\nG ask for help\n:::"
+        },
+        "groupTitles": {
+          "21": "Theatre Studies Course",
+          "26": "Stages in doing the 'year abroad' option"
+        }
+      },
+      "questions": [
+        {
+          "order": 21,
+          "questionType": "multiple_choice",
+          "prompt": "What helped Rob to prepare to play the character of a doctor?",
+          "options": [
+            "A the stories his grandfather told him",
+            "B the times when he watched his grandfather working",
+            "C the way he imagined his grandfather at work"
+          ],
+          "answer": [
+            "C the way he imagined his grandfather at work"
+          ],
+          "explanation": "Ông nội ít kể về công việc; Rob HÌNH DUNG ông khi xưa ngồi khám bệnh. Bẫy A: ông không kể chuyện; B: không nói Rob từng xem ông làm việc.",
+          "evidence": "I'd visualise what he must have been like in the past, when he was sitting in his consulting room listening to his patients.",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "multiple_choice",
+          "prompt": "In the play's first scene, the boredom of village life was suggested by",
+          "options": [
+            "A repetition of words and phrases.",
+            "B scenery painted in dull colours.",
+            "C long pauses within conversations."
+          ],
+          "answer": [
+            "A repetition of words and phrases."
+          ],
+          "explanation": "Sự buồn tẻ được gợi ra bằng việc mọi người cứ LẶP ĐI LẶP LẠI một câu như \"Cold, isn't it?\". Bẫy: im lặng lâu chỉ ở đầu cảnh, trang phục xám nâu là của diễn viên chứ không phải phông cảnh.",
+          "evidence": "And then people kept saying the same thing over and over, like 'Cold, isn't it?'",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "multiple_choice",
+          "prompt": "What has Rob learned about himself through working in a group?",
+          "options": [
+            "A He likes to have clear guidelines.",
+            "B He copes well with stress.",
+            "C He thinks he is a good leader."
+          ],
+          "answer": [
+            "A He likes to have clear guidelines."
+          ],
+          "explanation": "Sophia giúp nhóm xác định chính xác phải làm gì và điều đó khiến Rob thấy dễ chịu hơn → Rob thích có HƯỚNG DẪN RÕ RÀNG.",
+          "evidence": "she helped us work out exactly what to do for the production. And that made me feel better, I suppose.",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "multiple_choice",
+          "prompt": "To support the production, research material was used which described",
+          "options": [
+            "A political developments.",
+            "B changing social attitudes.",
+            "C economic transformations."
+          ],
+          "answer": [
+            "B changing social attitudes."
+          ],
+          "explanation": "Tài liệu Sophia tìm nói về quan hệ giữa con cái - cha mẹ, công chúng - nhân viên ngân hàng, cảnh sát đang thay đổi → THÁI ĐỘ XÃ HỘI thay đổi.",
+          "evidence": "about how relationships between children and their parents, or between the public and people like bank managers or the police were shifting",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "multiple_choice",
+          "prompt": "What problem did the students overcome in the final rehearsal?",
+          "options": [
+            "A one person forgetting their words",
+            "B an equipment failure",
+            "C the injury of one character"
+          ],
+          "answer": [
+            "B an equipment failure"
+          ],
+          "explanation": "Đèn chiếu bị kẹt chiếu sai phía sân khấu → SỰ CỐ THIẾT BỊ. Bẫy C: diễn viên ngồi xe lăn là do vai diễn.",
+          "evidence": "and then that stuck somehow so it was shining on the wrong side of the stage",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "matching",
+          "prompt": "in the second year of the course",
+          "options": [
+            "A be on time",
+            "B get a letter of recommendation",
+            "C plan for the final year",
+            "D make sure the institution's focus is relevant",
+            "E show ability in Theatre Studies",
+            "F make travel arrangements and bookings",
+            "G ask for help"
+          ],
+          "answer": [
+            "E show ability in Theatre Studies"
+          ],
+          "explanation": "Năm hai phải học thật tốt các môn sân khấu, chỉ ai điểm cao mới được chọn → THỂ HIỆN NĂNG LỰC môn Theatre Studies. → E.",
+          "evidence": "Yes, so next year when you are in the second year of the course, you need to work really hard in all your theatre studies modules.",
+          "points": 1
+        },
+        {
+          "order": 27,
+          "questionType": "matching",
+          "prompt": "when first choosing where to go",
+          "options": [
+            "A be on time",
+            "B get a letter of recommendation",
+            "C plan for the final year",
+            "D make sure the institution's focus is relevant",
+            "E show ability in Theatre Studies",
+            "F make travel arrangements and bookings",
+            "G ask for help"
+          ],
+          "answer": [
+            "D make sure the institution's focus is relevant"
+          ],
+          "explanation": "Khi chọn nơi đến, Mia tìm trường có chương trình hợp với định hướng sau tốt nghiệp (chú trọng diễn xuất) → đảm bảo TRỌNG TÂM của trường phù hợp. → D.",
+          "evidence": "so I looked for a university with emphasis on acting rather than directing",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "matching",
+          "prompt": "when sending in your choices",
+          "options": [
+            "A be on time",
+            "B get a letter of recommendation",
+            "C plan for the final year",
+            "D make sure the institution's focus is relevant",
+            "E show ability in Theatre Studies",
+            "F make travel arrangements and bookings",
+            "G ask for help"
+          ],
+          "answer": [
+            "A be on time"
+          ],
+          "explanation": "Khi gửi nguyện vọng: bạn của Mia trễ hạn nên không được trường mong muốn → phải ĐÚNG HẠN. → A.",
+          "evidence": "I had a friend who missed the deadline and didn't get her first choice",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "matching",
+          "prompt": "when writing your personal statement",
+          "options": [
+            "A be on time",
+            "B get a letter of recommendation",
+            "C plan for the final year",
+            "D make sure the institution's focus is relevant",
+            "E show ability in Theatre Studies",
+            "F make travel arrangements and bookings",
+            "G ask for help"
+          ],
+          "answer": [
+            "G ask for help"
+          ],
+          "explanation": "Viết bài luận cá nhân: Rob sẽ nhờ các anh chị năm cuối cho lời khuyên → NHỜ GIÚP ĐỠ. Bẫy B: không ai nhắc thư giới thiệu. → G.",
+          "evidence": "I'll get some of the final year students to give me some tips ...",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "matching",
+          "prompt": "when doing the year abroad",
+          "options": [
+            "A be on time",
+            "B get a letter of recommendation",
+            "C plan for the final year",
+            "D make sure the institution's focus is relevant",
+            "E show ability in Theatre Studies",
+            "F make travel arrangements and bookings",
+            "G ask for help"
+          ],
+          "answer": [
+            "C plan for the final year"
+          ],
+          "explanation": "Khi đang ở nước ngoài: đừng quên sắp xếp cho NĂM CUỐI khi quay về (chọn môn tự chọn). → C.",
+          "evidence": "I forgot all about making arrangements for when I came back here for the final year",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "listening_part",
+      "unitNumber": 4,
+      "title": "Listening Part 4 – Self-regulatory focus theory and leadership",
+      "instructions": "You will hear a lecture about 'self-regulatory focus theory' and how it relates to leadership. Answer questions 31-40.",
+      "content": "Listen to the recording and answer the questions below.",
+      "defaultTimeLimitMinutes": 10,
+      "audioUrl": "https://yr2odb5jaalgrfbg.public.blob.vercel-storage.com/cam10_test3_part4-UrvJ2ojGIUQYT11PT1rAbvGuyNvVmd",
+      "transcript": "Narrator: Section 4. You will hear part of a lecture about leadership introducing a theory called self-regulatory focus theory. First you have some time to look at questions 31 to 40. Now listen carefully and answer questions 31 to 40.\nToday, I want to talk about self-regulatory focus theory and how the actions of leaders can affect the way followers approach different situations. Self-regulatory focus theory is a theory developed by Tori Higgins. He says that a person's focus at any given time is to either approach pleasure or avoid pain. These are two basic motivations that each and every one of us has, and they cause us to have different kinds of goals. Promotion goals in different life situations emphasise achievement. Prevention goals are oriented towards the avoidance of punishment.\nIn a specific situation, our thoughts might focus more on promotion goals or more on prevention goals. The theory suggests that two factors affect which goals we are focusing on. First, there is a chronic factor. This factor is connected to a person's personality and says that each person has a basic tendency to either focus more on promotion goals or focus more on prevention goals as part of his or her personality. Second, there is a situational factor which means that the context we are in can make us more likely to focus on one set of goals or the other. For example, we are more likely to be thinking about pleasure and to have promotion goals when we are spending time with a friend. In contrast, if we are working on an important project for our boss, we are more likely to try to avoid making mistakes and therefore have more prevention goals in our mind. Research has shown that the goals we are focusing on at a given time affect the way we think. For example, when focusing on promotion goals, people consider their ideal self, their aspirations and gains. They don't think about what they can lose, so they think in a happier mode. They feel more inspired to change.\nWhen people are focusing on prevention goals, they think about their \"ought\" self. What are they supposed to be? What are people expecting from them? They consider their obligations to others. As a result, they experience more anxiety and try to avoid situations where they could lose.\nNow that I have talked about the two focuses and how they affect people, I want to look at the idea that the way leaders behave, or their style of leading, can affect the focus that followers adopt in a specific situation. In talking about leadership, we often mention transformational leaders and transactional leaders. Transformational leaders, when interacting with their followers, focus on their development. In their words and actions transformational leaders highlight change. Their speech is passionate and conveys a definitive vision. All of these things can encourage followers to think about what could be. In other words, they inspire a promotion focus in their followers.\nIn contrast, transactional leaders focus on developing clear structures that tell their followers exactly what is expected of them. While they do explain the rewards people will get for following orders, they emphasise more how a follower will be punished or that a follower won't get rewarded if his or her behaviour doesn't change. In short, they emphasise the consequences of making a mistake. This emphasis will clearly lead followers to focus on avoiding punishment and problems. This is clearly a prevention focus.\nIn conclusion, it is important to understand that one focus is not necessarily better than the other one. For a designer who works in a field where a lot of innovation is needed, a promotion focus is probably better. In contrast, a prevention focus which causes people to work more cautiously and produce higher quality work might be very appropriate for a job like a surgeon, for example. The main point of the research, though, is that the actions of leaders can greatly influence whether people approach a situation with more of a promotion focus or more of a prevention focus.\nNarrator: That is the end of section four. You now have half a minute to check your answers. That is the end of the listening test. In the IELTS test you would now have 10 minutes to transfer your answers to the answer sheet.",
+      "metadata": {
+        "groupInstructions": {
+          "31": "Complete the notes below. Write ONE WORD ONLY for each answer."
+        },
+        "noteBody": "# 'Self-regulatory focus theory' and leadership\n## Self-regulatory focus theory\nPeople's focus is to approach pleasure or avoid pain\nPromotion goals focus on [[31]]\nPrevention goals emphasise avoiding punishment\n## Factors that affect people's focus\nThe Chronic Factor\n• comes from one's [[32]]\nThe [[33]] Factor\n• we are more likely to focus on promotion goals when with a [[34]]\n• we are more likely to focus on prevention goals with our boss\n## How people's focus affects them\nPromotion Focus: People think about an ideal version of themselves, their [[35]] and their gains.\nPrevention Focus: People think about their 'ought' self and their obligations\n## Leaders\nLeadership behaviour and [[36]] affects people's focus\nTransformational Leaders:\n• pay special attention to the [[37]] of their followers\n• passionately communicate a clear [[38]]\n• inspire promotion focus in followers\nTransactional Leaders:\n• create [[39]] to make expectations clear\n• emphasise the results of a mistake\n• inspire prevention focus in followers\n## Conclusion\nPromotion Focus is good for jobs requiring [[40]]\nPrevention Focus is good for work such as a surgeon\nLeaders' actions affect which focus people use"
+      },
+      "questions": [
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Question 31",
+          "answer": [
+            "achievement",
+            "achievements"
+          ],
+          "explanation": "Mục tiêu thăng tiến (promotion goals) nhấn mạnh THÀNH TỰU (achievement).",
+          "evidence": "Promotion goals in different life situations emphasise achievement.",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "note_completion",
+          "prompt": "Question 32",
+          "answer": [
+            "personality",
+            "character"
+          ],
+          "explanation": "Yếu tố lâu dài (chronic factor) gắn với TÍNH CÁCH (personality) của mỗi người.",
+          "evidence": "This factor is connected to a person's personality and says that each person has a basic tendency to either focus more on promotion goals or focus more on prevention goals as part of his or her personality.",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "note_completion",
+          "prompt": "Question 33",
+          "answer": [
+            "Situational",
+            "situational"
+          ],
+          "explanation": "Yếu tố thứ hai là yếu tố TÌNH HUỐNG (situational factor): bối cảnh ảnh hưởng tới mục tiêu.",
+          "evidence": "Second, there is a situational factor which means that the context we are in can make us more likely to focus on one set of goals or the other.",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "note_completion",
+          "prompt": "Question 34",
+          "answer": [
+            "friend"
+          ],
+          "explanation": "Ta dễ nghĩ tới niềm vui và mục tiêu thăng tiến khi ở cùng một người BẠN (friend). Bẫy: boss đi với mục tiêu phòng ngừa.",
+          "evidence": "For example, we are more likely to be thinking about pleasure and to have promotion goals when we are spending time with a friend.",
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "note_completion",
+          "prompt": "Question 35",
+          "answer": [
+            "aspirations",
+            "ambitions"
+          ],
+          "explanation": "Khi tập trung vào mục tiêu thăng tiến, người ta nghĩ về hình mẫu lý tưởng, KHÁT VỌNG (aspirations) và lợi ích.",
+          "evidence": "For example, when focusing on promotion goals, people consider their ideal self, their aspirations and gains.",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "note_completion",
+          "prompt": "Question 36",
+          "answer": [
+            "style"
+          ],
+          "explanation": "Cách nhà lãnh đạo hành xử, hay PHONG CÁCH (style) lãnh đạo, ảnh hưởng tới sự tập trung của người theo.",
+          "evidence": "Now that I have talked about the two focuses and how they affect people, I want to look at the idea that the way leaders behave, or their style of leading, can affect the focus that followers adopt in a specific situation.",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "note_completion",
+          "prompt": "Question 37",
+          "answer": [
+            "development"
+          ],
+          "explanation": "Lãnh đạo chuyển đổi tập trung vào SỰ PHÁT TRIỂN (development) của người theo mình.",
+          "evidence": "Transformational leaders, when interacting with their followers, focus on their development.",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "note_completion",
+          "prompt": "Question 38",
+          "answer": [
+            "vision"
+          ],
+          "explanation": "Lời nói của họ đầy nhiệt huyết và truyền tải một TẦM NHÌN (vision) rõ ràng.",
+          "evidence": "Their speech is passionate and conveys a definitive vision.",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "note_completion",
+          "prompt": "Question 39",
+          "answer": [
+            "structures"
+          ],
+          "explanation": "Lãnh đạo giao dịch xây dựng các CẤU TRÚC rõ ràng (clear structures) để người theo biết chính xác điều được kỳ vọng.",
+          "evidence": "In contrast, transactional leaders focus on developing clear structures that tell their followers exactly what is expected of them.",
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "note_completion",
+          "prompt": "Question 40",
+          "answer": [
+            "innovation",
+            "innovations"
+          ],
+          "explanation": "Với nhà thiết kế làm trong lĩnh vực cần nhiều ĐỔI MỚI (innovation), tập trung thăng tiến có lẽ tốt hơn.",
+          "evidence": "For a designer who works in a field where a lot of innovation is needed, a promotion focus is probably better.",
+          "points": 1
+        }
+      ]
+    }
+  ]
+}

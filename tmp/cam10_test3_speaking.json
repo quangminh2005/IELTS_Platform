@@ -1,0 +1,112 @@
+{
+  "title": "Cambridge IELTS 10 – Test 3 (Speaking)",
+  "skill": "speaking",
+  "category": "book",
+  "bookName": "Cambridge IELTS 10",
+  "sourceLabel": "Cambridge IELTS 10 (Academic) – Test 3",
+  "description": "Speaking Test 3: Part 1 (Travel, 4 câu), Part 2 (cue card: a child that you know), Part 3 (Relationships between parents and children / Children's free-time activities, 6 câu). Mỗi câu ghi âm riêng. Giáo viên nghe và chấm tay theo tiêu chí IELTS Speaking.",
+  "units": [
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 1,
+      "title": "Speaking Part 1 – Travel",
+      "instructions": "Part 1 — Introduction and interview. Answer the questions below. Record a separate answer for each question, speaking for about 20–30 seconds on each. Give reasons and examples.",
+      "content": "Travel\n\nThe examiner asks you about yourself and familiar topics.\n\n1. Do you enjoy travelling? [Why/Why not?]\n2. Have you done much travelling? [Why/Why not?]\n3. Do you think it's better to travel alone or with other people? [Why?]\n4. Where would you like to travel in the future? [Why?]",
+      "metadata": {
+        "taskTag": "PART 1"
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "speaking_task",
+          "prompt": "Do you enjoy travelling? [Why/Why not?]",
+          "points": 9
+        },
+        {
+          "order": 2,
+          "questionType": "speaking_task",
+          "prompt": "Have you done much travelling? [Why/Why not?]",
+          "points": 9
+        },
+        {
+          "order": 3,
+          "questionType": "speaking_task",
+          "prompt": "Do you think it's better to travel alone or with other people? [Why?]",
+          "points": 9
+        },
+        {
+          "order": 4,
+          "questionType": "speaking_task",
+          "prompt": "Where would you like to travel in the future? [Why?]",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 2,
+      "title": "Speaking Part 2 – Describe a child that you know",
+      "instructions": "Individual long turn. You have one minute to prepare and make notes, then talk about the topic for one to two minutes.",
+      "content": "Part 2 — Individual long turn (3–4 minutes)\n\nDescribe a child that you know.\n\nYou should say:\n· who this child is and how often you see him or her\n· how old this child is\n· what he or she is like\n\nand explain what you feel about this child.\n\nYou will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.",
+      "metadata": {
+        "taskTag": "PART 2"
+      },
+      "questions": [
+        {
+          "order": 5,
+          "questionType": "speaking_task",
+          "prompt": "Record your answer: talk about the topic on the card for one to two minutes.",
+          "points": 9
+        }
+      ]
+    },
+    {
+      "unitType": "speaking_part",
+      "unitNumber": 3,
+      "title": "Speaking Part 3 – Relationships between parents and children & Children's free-time activities",
+      "instructions": "Part 3 — Two-way discussion. Answer the questions below. Record a separate answer for each question, speaking for about 30–60 seconds on each. Give reasons and examples.",
+      "content": "Part 3 — Two-way discussion (4–5 minutes)\n\nRelationships between parents and children\n1. How much time do children spend with their parents in your country? Do you think that is enough?\n2. How important do you think spending time together is for the relationships between parents and children? Why?\n3. Have relationships between parents and children changed in recent years? Why do you think that is?\n\nChildren's free-time activities\n4. What are the most popular free-time activities with children today?\n5. Do you think the free-time activities children do today are good for their health? Why is that?\n6. How do you think children's activities will change in the future? Will this be a positive change?",
+      "metadata": {
+        "taskTag": "PART 3"
+      },
+      "questions": [
+        {
+          "order": 6,
+          "questionType": "speaking_task",
+          "prompt": "How much time do children spend with their parents in your country? Do you think that is enough?",
+          "points": 9
+        },
+        {
+          "order": 7,
+          "questionType": "speaking_task",
+          "prompt": "How important do you think spending time together is for the relationships between parents and children? Why?",
+          "points": 9
+        },
+        {
+          "order": 8,
+          "questionType": "speaking_task",
+          "prompt": "Have relationships between parents and children changed in recent years? Why do you think that is?",
+          "points": 9
+        },
+        {
+          "order": 9,
+          "questionType": "speaking_task",
+          "prompt": "What are the most popular free-time activities with children today?",
+          "points": 9
+        },
+        {
+          "order": 10,
+          "questionType": "speaking_task",
+          "prompt": "Do you think the free-time activities children do today are good for their health? Why is that?",
+          "points": 9
+        },
+        {
+          "order": 11,
+          "questionType": "speaking_task",
+          "prompt": "How do you think children's activities will change in the future? Will this be a positive change?",
+          "points": 9
+        }
+      ]
+    }
+  ]
+}

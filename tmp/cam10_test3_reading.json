@@ -1,0 +1,714 @@
+{
+  "title": "Cambridge IELTS 10 – Test 3 (Reading)",
+  "skill": "reading",
+  "category": "book",
+  "bookName": "Cambridge IELTS 10",
+  "sourceLabel": "Cambridge IELTS 10 (Academic) – Test 3",
+  "description": "Reading Test 3: 3 bài đọc, 40 câu, có giải thích + dẫn chứng từng câu. Đáp án theo sách Cambridge IELTS 10.",
+  "units": [
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 1,
+      "title": "Passage 1 – The Context, Meaning and Scope of Tourism",
+      "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.",
+      "content": "A Travel has existed since the beginning of time, when primitive man set out, often traversing great distances in search of game, which provided the food and clothing necessary for his survival. Throughout the course of history, people have travelled for purposes of trade, religious conviction, economic gain, war, migration and other equally compelling motivations. In the Roman era, wealthy aristocrats and high government officials also travelled for pleasure. Seaside resorts located at Pompeii and Herculaneum afforded citizens the opportunity to escape to their vacation villas in order to avoid the summer heat of Rome. Travel, except during the Dark Ages, has continued to grow and, throughout recorded history, has played a vital role in the development of civilisations and their economies.\n\nB Tourism in the mass form as we know it today is a distinctly twentieth-century phenomenon. Historians suggest that the advent of mass tourism began in England during the industrial revolution with the rise of the middle class and the availability of relatively inexpensive transportation. The creation of the commercial airline industry following the Second World War and the subsequent development of the jet aircraft in the 1950s signalled the rapid growth and expansion of international travel. This growth led to the development of a major new industry: tourism. In turn, international tourism became the concern of a number of world governments since it not only provided new employment opportunities but also produced a means of earning foreign exchange.\n\nC Tourism today has grown significantly in both economic and social importance. In most industrialised countries over the past few years the fastest growth has been seen in the area of services. One of the largest segments of the service industry, although largely unrecognised as an entity in some of these countries, is travel and tourism. According to the World Travel and Tourism Council (1992), 'Travel and tourism is the largest industry in the world on virtually any economic measure including value-added capital investment, employment and tax contributions'. In 1992, the industry's gross output was estimated to be $3.5 trillion, over 12 per cent of all consumer spending. The travel and tourism industry is the world's largest employer with almost 130 million jobs, or almost 7 per cent of all employees. This industry is the world's leading industrial contributor, producing over 6 per cent of the world's gross national product and accounting for capital investment in excess of $422 billion in direct, indirect and personal taxes each year. Thus, tourism has a profound impact both on the world economy and, because of the educative effect of travel and the effects on employment, on society itself.\n\nD However, the major problems of the travel and tourism industry that have hidden, or obscured, its economic impact are the diversity and fragmentation of the industry itself. The travel industry includes: hotels, motels and other types of accommodation; restaurants and other food services; transportation services and facilities; amusements, attractions and other leisure facilities; gift shops and a large number of other enterprises. Since many of these businesses also serve local residents, the impact of spending by visitors can easily be overlooked or underestimated. In addition, Meis (1992) points out that the tourism industry involves concepts that have remained amorphous to both analysts and decision makers. Moreover, in all nations this problem has made it difficult for the industry to develop any type of reliable or credible tourism information base in order to estimate the contribution it makes to regional, national and global economies. However, the nature of this very diversity makes travel and tourism ideal vehicles for economic development in a wide variety of countries, regions or communities.\n\nE Once the exclusive province of the wealthy, travel and tourism have become an institutionalised way of life for most of the population. In fact, McIntosh and Goeldner (1990) suggest that tourism has become the largest commodity in international trade for many nations and, for a significant number of other countries, it ranks second or third. For example, tourism is the major source of income in Bermuda, Greece, Italy, Spain, Switzerland and most Caribbean countries. In addition, Hawkins and Ritchie, quoting from data published by the American Express Company, suggest that the travel and tourism industry is the number one ranked employer in the Bahamas, Brazil, Canada, France, (the former) West Germany, Hong Kong, Italy, Jamaica, Japan, Singapore, the United Kingdom and the United States. However, because of problems of definition, which directly affect statistical measurement, it is not possible with any degree of certainty to provide precise, valid or reliable data about the extent of world-wide tourism participation or its economic impact. In many cases, similar difficulties arise when attempts are made to measure domestic tourism.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "1": "Reading Passage 1 has five paragraphs, A-E.\nChoose the correct heading for paragraphs B-E from the list of headings below.\nWrite the correct number, i-vii, in boxes 1-4 on your answer sheet.\n\nList of Headings\n:::box\ni Economic and social significance of tourism\nii The development of mass tourism\niii Travel for the wealthy\niv Earning foreign exchange through tourism\nv Difficulty in recognising the economic effects of tourism\nvi The contribution of air travel to tourism\nvii The world impact of tourism\nviii The history of travel\n:::\nExample: Paragraph A - viii",
+          "5": "Do the following statements agree with the information given in Reading Passage 1?\nIn boxes 5-10 on your answer sheet, write\n:::box\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n:::",
+          "11": "Complete the sentences below.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.\nWrite your answers in boxes 11-13 on your answer sheet."
+        },
+        "noteBody": "• In Greece, tourism is the most important [[11]].\n• The travel and tourism industry in Jamaica is the major [[12]].\n• The problems associated with measuring international tourism are often reflected in the measurement of [[13]]."
+      },
+      "questions": [
+        {
+          "order": 1,
+          "questionType": "matching",
+          "prompt": "Paragraph B",
+          "options": [
+            "i Economic and social significance of tourism",
+            "ii The development of mass tourism",
+            "iii Travel for the wealthy",
+            "iv Earning foreign exchange through tourism",
+            "v Difficulty in recognising the economic effects of tourism",
+            "vi The contribution of air travel to tourism",
+            "vii The world impact of tourism",
+            "viii The history of travel"
+          ],
+          "answer": [
+            "ii The development of mass tourism"
+          ],
+          "explanation": "Đoạn B: du lịch ĐẠI CHÚNG là hiện tượng của thế kỷ 20 - bắt đầu từ cách mạng công nghiệp, rồi máy bay phản lực thúc đẩy tăng trưởng. Bẫy vi/iv: hàng không và ngoại tệ chỉ là chi tiết trong đoạn. → ii.",
+          "evidence": "Tourism in the mass form as we know it today is a distinctly twentieth-century phenomenon.",
+          "points": 1
+        },
+        {
+          "order": 2,
+          "questionType": "matching",
+          "prompt": "Paragraph C",
+          "options": [
+            "i Economic and social significance of tourism",
+            "ii The development of mass tourism",
+            "iii Travel for the wealthy",
+            "iv Earning foreign exchange through tourism",
+            "v Difficulty in recognising the economic effects of tourism",
+            "vi The contribution of air travel to tourism",
+            "vii The world impact of tourism",
+            "viii The history of travel"
+          ],
+          "answer": [
+            "i Economic and social significance of tourism"
+          ],
+          "explanation": "Đoạn C mở đầu: du lịch ngày nay tăng mạnh cả về tầm quan trọng KINH TẾ lẫn XÃ HỘI, rồi dẫn số liệu và kết luận về tác động tới kinh tế và xã hội. → i.",
+          "evidence": "Tourism today has grown significantly in both economic and social importance.",
+          "points": 1
+        },
+        {
+          "order": 3,
+          "questionType": "matching",
+          "prompt": "Paragraph D",
+          "options": [
+            "i Economic and social significance of tourism",
+            "ii The development of mass tourism",
+            "iii Travel for the wealthy",
+            "iv Earning foreign exchange through tourism",
+            "v Difficulty in recognising the economic effects of tourism",
+            "vi The contribution of air travel to tourism",
+            "vii The world impact of tourism",
+            "viii The history of travel"
+          ],
+          "answer": [
+            "v Difficulty in recognising the economic effects of tourism"
+          ],
+          "explanation": "Đoạn D: sự đa dạng và phân mảnh của ngành đã che khuất tác động kinh tế, khó ước tính đóng góp → KHÓ NHẬN RA tác động kinh tế. → v.",
+          "evidence": "the major problems of the travel and tourism industry that have hidden, or obscured, its economic impact are the diversity and fragmentation of the industry itself",
+          "points": 1
+        },
+        {
+          "order": 4,
+          "questionType": "matching",
+          "prompt": "Paragraph E",
+          "options": [
+            "i Economic and social significance of tourism",
+            "ii The development of mass tourism",
+            "iii Travel for the wealthy",
+            "iv Earning foreign exchange through tourism",
+            "v Difficulty in recognising the economic effects of tourism",
+            "vi The contribution of air travel to tourism",
+            "vii The world impact of tourism",
+            "viii The history of travel"
+          ],
+          "answer": [
+            "vii The world impact of tourism"
+          ],
+          "explanation": "Đoạn E đưa ví dụ du lịch là nguồn thu, nhà tuyển dụng số một ở rất nhiều nước trên THẾ GIỚI → tác động toàn cầu. Bẫy iii: \"province of the wealthy\" chỉ là ý mở đầu. → vii.",
+          "evidence": "tourism has become the largest commodity in international trade for many nations",
+          "points": 1
+        },
+        {
+          "order": 5,
+          "questionType": "true_false_not_given",
+          "prompt": "The largest employment figures in the world are found in the travel and tourism industry.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "TRUE"
+          ],
+          "explanation": "Du lịch là ngành tuyển dụng LỚN NHẤT THẾ GIỚI với gần 130 triệu việc làm. → TRUE.",
+          "evidence": "The travel and tourism industry is the world's largest employer with almost 130 million jobs",
+          "points": 1
+        },
+        {
+          "order": 6,
+          "questionType": "true_false_not_given",
+          "prompt": "Tourism contributes over six per cent of the Australian gross national product.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Con số \"hơn 6%\" là đóng góp vào GNP của THẾ GIỚI; bài không nhắc tới Úc. → NOT GIVEN.",
+          "evidence": "producing over 6 per cent of the world's gross national product",
+          "points": 1
+        },
+        {
+          "order": 7,
+          "questionType": "true_false_not_given",
+          "prompt": "Tourism has a social impact because it promotes recreation.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Bài nói tác động xã hội đến từ hiệu quả GIÁO DỤC của du lịch và từ việc làm, không nói gì về giải trí (recreation). → NOT GIVEN.",
+          "evidence": "because of the educative effect of travel and the effects on employment, on society itself",
+          "points": 1
+        },
+        {
+          "order": 8,
+          "questionType": "true_false_not_given",
+          "prompt": "Two main features of the travel and tourism industry make its economic significance difficult to ascertain.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "TRUE"
+          ],
+          "explanation": "Hai đặc điểm SỰ ĐA DẠNG và SỰ PHÂN MẢNH của ngành đã che khuất tác động kinh tế của nó. → TRUE.",
+          "evidence": "the major problems of the travel and tourism industry that have hidden, or obscured, its economic impact are the diversity and fragmentation of the industry itself",
+          "points": 1
+        },
+        {
+          "order": 9,
+          "questionType": "true_false_not_given",
+          "prompt": "Visitor spending is always greater than the spending of residents in tourist areas.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Bài chỉ nói chi tiêu của du khách dễ bị bỏ sót vì doanh nghiệp cũng phục vụ cư dân địa phương; không so sánh ai chi nhiều hơn. → NOT GIVEN.",
+          "evidence": "the impact of spending by visitors can easily be overlooked or underestimated",
+          "points": 1
+        },
+        {
+          "order": 10,
+          "questionType": "true_false_not_given",
+          "prompt": "It is easy to show statistically how tourism affects individual economies.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "FALSE"
+          ],
+          "explanation": "Ngược lại: vì vấn đề định nghĩa nên KHÔNG THỂ đưa ra số liệu chính xác về tác động kinh tế của du lịch. → FALSE.",
+          "evidence": "it is not possible with any degree of certainty to provide precise, valid or reliable data",
+          "points": 1
+        },
+        {
+          "order": 11,
+          "questionType": "note_completion",
+          "prompt": "Question 11",
+          "answer": [
+            "source of income",
+            "industry"
+          ],
+          "explanation": "Du lịch là NGUỒN THU NHẬP chính ở Bermuda, Hy Lạp, Ý... → source of income (sách chấp nhận cả \"industry\").",
+          "evidence": "For example, tourism is the major source of income in Bermuda, Greece, Italy, Spain, Switzerland and most Caribbean countries.",
+          "points": 1
+        },
+        {
+          "order": 12,
+          "questionType": "note_completion",
+          "prompt": "Question 12",
+          "answer": [
+            "employer"
+          ],
+          "explanation": "Du lịch là NHÀ TUYỂN DỤNG (employer) số một ở nhiều nước, trong đó có Jamaica. → employer.",
+          "evidence": "the travel and tourism industry is the number one ranked employer",
+          "points": 1
+        },
+        {
+          "order": 13,
+          "questionType": "note_completion",
+          "prompt": "Question 13",
+          "answer": [
+            "domestic tourism"
+          ],
+          "explanation": "Khó khăn tương tự cũng xảy ra khi đo lường DU LỊCH NỘI ĐỊA. → domestic tourism.",
+          "evidence": "similar difficulties arise when attempts are made to measure domestic tourism",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 2,
+      "title": "Passage 2 – Autumn leaves",
+      "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.",
+      "content": "Canadian writer Jay Ingram investigates the mystery of why leaves turn red in the fall\n\nA One of the most captivating natural events of the year in many areas throughout North America is the turning of the leaves in the fall. The colours are magnificent, but the question of exactly why some trees turn yellow or orange, and others red or purple, is something which has long puzzled scientists.\n\nB Summer leaves are green because they are full of chlorophyll, the molecule that captures sunlight and converts that energy into new building materials for the tree. As fall approaches in the northern hemisphere, the amount of solar energy available declines considerably. For many trees - evergreen conifers being an exception - the best strategy is to abandon photosynthesis* until the spring. So rather than maintaining the now redundant leaves throughout the winter, the tree saves its precious resources and discards them. But before letting its leaves go, the tree dismantles their chlorophyll molecules and ships their valuable nitrogen back into the twigs. As chlorophyll is depleted, other colours that have been dominated by it throughout the summer begin to be revealed. This unmasking explains the autumn colours of yellow and orange, but not the brilliant reds and purples of trees such as the maple or sumac.\n\nC The source of the red is widely known: it is created by anthocyanins, water-soluble plant pigments reflecting the red to blue range of the visible spectrum. They belong to a class of sugar-based chemical compounds also known as flavonoids. What's puzzling is that anthocyanins are actually newly minted, made in the leaves at the same time as the tree is preparing to drop them. But it is hard to make sense of the manufacture of anthocyanins - why should a tree bother making new chemicals in its leaves when it's already scrambling to withdraw and preserve the ones already there?\n\nD Some theories about anthocyanins have argued that they might act as a chemical defence against attacks by insects or fungi, or that they might attract fruit-eating birds or increase a leaf's tolerance to freezing. However there are problems with each of these theories, including the fact that leaves are red for such a relatively short period that the expense of energy needed to manufacture the anthocyanins would outweigh any anti-fungal or anti-herbivore activity achieved.\n\nE It has also been proposed that trees may produce vivid red colours to convince herbivorous insects that they are healthy and robust and would be easily able to mount chemical defences against infestation. If insects paid attention to such advertisements, they might be prompted to lay their eggs on a duller, and presumably less resistant host. The flaw in this theory lies in the lack of proof to support it. No one has as yet ascertained whether more robust trees sport the brightest leaves, or whether insects make choices according to colour intensity.\n\nF Perhaps the most plausible suggestion as to why leaves would go to the trouble of making anthocyanins when they're busy packing up for the winter is the theory known as the 'light screen' hypothesis. It sounds paradoxical, because the idea behind this hypothesis is that the red pigment is made in autumn leaves to protect chlorophyll, the light-absorbing chemical, from too much light. Why does chlorophyll need protection when it is the natural world's supreme light absorber? Why protect chlorophyll at a time when the tree is breaking it down to salvage as much of it as possible?\n\nG Chlorophyll, although exquisitely evolved to capture the energy of sunlight, can sometimes be overwhelmed by it, especially in situations of drought, low temperatures, or nutrient deficiency. Moreover, the problem of oversensitivity to light is even more acute in the fall, when the leaf is busy preparing for winter by dismantling its internal machinery. The energy absorbed by the chlorophyll molecules of the unstable autumn leaf is not immediately channelled into useful products and processes, as it would be in an intact summer leaf. The weakened fall leaf then becomes vulnerable to the highly destructive effects of the oxygen created by the excited chlorophyll molecules.\n\nH Even if you had never suspected that this is what was going on when leaves turn red, there are clues out there. One is straightforward: on many trees, the leaves that are the reddest are those on the side of the tree which gets most sun. Not only that, but the red is brighter on the upper side of the leaf. It has also been recognised for decades that the best conditions for intense red colours are dry, sunny days and cool nights, conditions that nicely match those that make leaves susceptible to excess light. And finally, trees such as maples usually get much redder the more north you travel in the northern hemisphere. It's colder there, they're more stressed, their chlorophyll is more sensitive and it needs more sunblock.\n\nI What is still not fully understood, however, is why some trees resort to producing red pigments while others don't bother, and simply reveal their orange or yellow hues. Do these trees have other means at their disposal to prevent overexposure to light in autumn? Their story, though not as spectacular to the eye, will surely turn out to be as subtle and as complex.\n\n* photosynthesis: the production of new material from sunlight, water and carbon dioxide",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "groupInstructions": {
+          "14": "Reading Passage 2 has nine paragraphs, A-I.\nWhich paragraph contains the following information?\nWrite the correct letter, A-I, in boxes 14-18 on your answer sheet.\nNB You may use any letter more than once.",
+          "19": "Complete the notes below.\nChoose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 19-22 on your answer sheet.",
+          "23": "Do the following statements agree with the information given in Reading Passage 2?\nIn boxes 23-25 on your answer sheet, write\n:::box\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n:::",
+          "26": "Choose the correct letter A, B, C or D.\nWrite the correct letter in box 26 on your answer sheet."
+        },
+        "noteBody": "# Why believe the 'light screen' hypothesis?\n• The most vividly coloured red leaves are found on the side of the tree facing the [[19]].\n• The [[20]] surfaces of leaves contain the most red pigment.\n• Red leaves are most abundant when daytime weather conditions are [[21]] and sunny.\n• The intensity of the red colour of leaves increases as you go further [[22]]."
+      },
+      "questions": [
+        {
+          "order": 14,
+          "questionType": "matching",
+          "prompt": "a description of the substance responsible for the red colouration of leaves",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "answer": [
+            "C"
+          ],
+          "explanation": "Đoạn C mô tả chất tạo màu đỏ: ANTHOCYANIN - sắc tố tan trong nước, thuộc nhóm flavonoid. → C.",
+          "evidence": "The source of the red is widely known: it is created by anthocyanins",
+          "points": 1
+        },
+        {
+          "order": 15,
+          "questionType": "matching",
+          "prompt": "the reason why trees drop their leaves in autumn",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "answer": [
+            "B"
+          ],
+          "explanation": "Đoạn B: mùa thu năng lượng mặt trời giảm, cây ngừng quang hợp nên bỏ lá để tiết kiệm tài nguyên → lý do cây rụng lá. → B.",
+          "evidence": "So rather than maintaining the now redundant leaves throughout the winter, the tree saves its precious resources and discards them.",
+          "points": 1
+        },
+        {
+          "order": 16,
+          "questionType": "matching",
+          "prompt": "some evidence to confirm a theory about the purpose of the red leaves",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "answer": [
+            "H"
+          ],
+          "explanation": "Đoạn H đưa ra các \"manh mối\" (lá đỏ nhất ở phía nhiều nắng, mặt trên lá đỏ hơn...) để XÁC NHẬN giả thuyết \"màn chắn sáng\". → H.",
+          "evidence": "H Even if you had never suspected that this is what was going on when leaves turn red, there are clues out there.",
+          "points": 1
+        },
+        {
+          "order": 17,
+          "questionType": "matching",
+          "prompt": "an explanation of the function of chlorophyll",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "answer": [
+            "B"
+          ],
+          "explanation": "Đoạn B giải thích chức năng của diệp lục: hấp thụ ánh sáng và biến năng lượng thành vật liệu cho cây. → B.",
+          "evidence": "the molecule that captures sunlight and converts that energy into new building materials for the tree",
+          "points": 1
+        },
+        {
+          "order": 18,
+          "questionType": "matching",
+          "prompt": "a suggestion that the red colouration in leaves could serve as a warning signal",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I"
+          ],
+          "answer": [
+            "E"
+          ],
+          "explanation": "Đoạn E: màu đỏ rực có thể nhằm \"thông báo\" cho côn trùng rằng cây khoẻ, có thể tự vệ → tín hiệu CẢNH BÁO. → E.",
+          "evidence": "trees may produce vivid red colours to convince herbivorous insects that they are healthy and robust",
+          "points": 1
+        },
+        {
+          "order": 19,
+          "questionType": "note_completion",
+          "prompt": "Question 19",
+          "answer": [
+            "sun",
+            "sunlight"
+          ],
+          "explanation": "Lá đỏ nhất ở phía cây nhận nhiều NẮNG nhất. → sun / sunlight.",
+          "evidence": "the leaves that are the reddest are those on the side of the tree which gets most sun",
+          "points": 1
+        },
+        {
+          "order": 20,
+          "questionType": "note_completion",
+          "prompt": "Question 20",
+          "answer": [
+            "upper"
+          ],
+          "explanation": "Màu đỏ đậm hơn ở mặt TRÊN của lá. → upper.",
+          "evidence": "Not only that, but the red is brighter on the upper side of the leaf.",
+          "points": 1
+        },
+        {
+          "order": 21,
+          "questionType": "note_completion",
+          "prompt": "Question 21",
+          "answer": [
+            "dry"
+          ],
+          "explanation": "Điều kiện tốt nhất cho màu đỏ là ngày KHÔ, nắng và đêm mát. → dry.",
+          "evidence": "the best conditions for intense red colours are dry, sunny days and cool nights",
+          "points": 1
+        },
+        {
+          "order": 22,
+          "questionType": "note_completion",
+          "prompt": "Question 22",
+          "answer": [
+            "north"
+          ],
+          "explanation": "Cây phong càng đỏ khi càng đi lên phía BẮC bán cầu bắc. → north.",
+          "evidence": "trees such as maples usually get much redder the more north you travel",
+          "points": 1
+        },
+        {
+          "order": 23,
+          "questionType": "true_false_not_given",
+          "prompt": "It is likely that the red pigments help to protect the leaf from freezing temperatures.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "FALSE"
+          ],
+          "explanation": "Đoạn D có giả thuyết anthocyanin tăng khả năng chịu lạnh, nhưng tác giả nói ngay rằng mọi giả thuyết đó đều có vấn đề → không phải \"có khả năng\". → FALSE.",
+          "evidence": "increase a leaf's tolerance to freezing. However there are problems with each of these theories",
+          "points": 1
+        },
+        {
+          "order": 24,
+          "questionType": "true_false_not_given",
+          "prompt": "The 'light screen' hypothesis would initially seem to contradict what is known about chlorophyll.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "TRUE"
+          ],
+          "explanation": "Giả thuyết nghe có vẻ NGHỊCH LÝ vì diệp lục vốn là chất hấp thụ ánh sáng giỏi nhất, sao lại cần bảo vệ khỏi ánh sáng. → TRUE.",
+          "evidence": "It sounds paradoxical, because the idea behind this hypothesis is that the red pigment is made in autumn leaves to protect chlorophyll",
+          "points": 1
+        },
+        {
+          "order": 25,
+          "questionType": "true_false_not_given",
+          "prompt": "Leaves which turn colours other than red are more likely to be damaged by sunlight.",
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Đoạn I chỉ đặt câu hỏi cây lá vàng/cam có cách nào khác chống ánh sáng không; bài không nói chúng dễ bị hại hơn. → NOT GIVEN.",
+          "evidence": "Do these trees have other means at their disposal to prevent overexposure to light in autumn?",
+          "points": 1
+        },
+        {
+          "order": 26,
+          "questionType": "multiple_choice",
+          "prompt": "For which of the following questions does the writer offer an explanation?",
+          "options": [
+            "A why conifers remain green in winter",
+            "B how leaves turn orange and yellow in autumn",
+            "C how herbivorous insects choose which trees to lay their eggs in",
+            "D why anthocyanins are restricted to certain trees"
+          ],
+          "answer": [
+            "B how leaves turn orange and yellow in autumn"
+          ],
+          "explanation": "Tác giả giải thích lá chuyển VÀNG, CAM là do diệp lục bị phân huỷ làm lộ ra các màu vốn bị che lấp. Các câu hỏi A, C, D đều không được giải thích. → B.",
+          "evidence": "This unmasking explains the autumn colours of yellow and orange",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "unitType": "reading_passage",
+      "unitNumber": 3,
+      "title": "Passage 3 – Beyond the blue horizon",
+      "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.",
+      "content": "Ancient voyagers who settled the far-flung islands of the Pacific Ocean\n\nAn important archaeological discovery on the island of Éfaté in the Pacific archipelago of Vanuatu has revealed traces of an ancient seafaring people, the distant ancestors of today's Polynesians. The site came to light only by chance. An agricultural worker, digging in the grounds of a derelict plantation, scraped open a grave - the first of dozens in a burial ground some 3,000 years old. It is the oldest cemetery ever found in the Pacific islands, and it harbors the remains of an ancient people archaeologists call the Lapita.\n\nThey were daring blue-water adventurers who used basic canoes to rove across the ocean. But they were not just explorers. They were also pioneers who carried with them everything they would need to build new lives - their livestock, taro seedlings and stone tools. Within the span of several centuries, the Lapita stretched the boundaries of their world from the jungle-clad volcanoes of Papua New Guinea to the loneliest coral outliers of Tonga.\n\nThe Lapita left precious few clues about themselves, but Éfaté expands the volume of data available to researchers dramatically. The remains of 62 individuals have been uncovered so far, and archaeologists were also thrilled to find six complete Lapita pots. Other items included a Lapita burial urn with modeled birds arranged on the rim as though peering down at the human remains sealed inside. 'It's an important discovery,' says Matthew Spriggs, professor of archaeology at the Australian National University and head of the international team digging up the site, 'for it conclusively identifies the remains as Lapita.'\n\nDNA teased from these human remains may help answer one of the most puzzling questions in Pacific anthropology: did all Pacific islanders spring from one source or many? Was there only one outward migration from a single point in Asia, or several from different points? 'This represents the best opportunity we've had yet,' says Spriggs, 'to find out who the Lapita actually were, where they came from, and who their closest descendants are today.'\n\nThere is one stubborn question for which archaeology has yet to provide any answers: how did the Lapita accomplish the ancient equivalent of a moon landing, many times over? No-one has found one of their canoes or any rigging, which could reveal how the canoes were sailed. Nor do the oral histories and traditions of later Polynesians offer any insights, for they turn into myths long before they reach as far back in time as the Lapita.\n\n'All we can say for certain is that the Lapita had canoes that were capable of ocean voyages, and they had the ability to sail them,' says Geoff Irwin, a professor of archaeology at the University of Auckland. Those sailing skills, he says, were developed and passed down over thousands of years by earlier mariners who worked their way through the archipelagoes of the western Pacific, making short crossings to nearby islands. The real adventure didn't begin, however, until their Lapita descendants sailed out of sight of land, with empty horizons on every side. This must have been as difficult for them as landing on the moon is for us today. Certainly it distinguished them from their ancestors, but what gave them the courage to launch out on such risky voyages?\n\nThe Lapita's thrust into the Pacific was eastward, against the prevailing trade winds, Irwin notes. Those nagging headwinds, he argues, may have been the key to their success. 'They could sail out for days into the unknown and assess the area, secure in the knowledge that if they didn't find anything, they could turn about and catch a swift ride back on the trade winds. This is what would have made the whole thing work.' Once out there, skilled seafarers would have detected abundant leads to follow to land: seabirds, coconuts and twigs carried out to sea by the tides, and the afternoon pile-up of clouds on the horizon which often indicates an island in the distance.\n\nFor returning explorers, successful or not, the geography of their own archipelagoes would have provided a safety net. Without this to go by, overshooting their home ports, getting lost and sailing off into eternity would have been all too easy. Vanuatu, for example, stretches more than 500 miles in a northwest-southeast trend, its scores of intervisible islands forming a backstop for mariners riding the trade winds home.\n\nAll this presupposes one essential detail, says Atholl Anderson, professor of prehistory at the Australian National University: the Lapita had mastered the advanced art of sailing against the wind. 'And there's no proof they could do any such thing,' Anderson says. 'There has been this assumption they did, and people have built canoes to re-create those early voyages based on that assumption. But nobody has any idea what their canoes looked like or how they were rigged.'\n\nRather than give all the credit to human skill, Anderson invokes the winds of chance. El Niño, the same climate disruption that affects the Pacific today, may have helped scatter the Lapita, Anderson suggests. He points out that climate data obtained from slow-growing corals around the Pacific indicate a series of unusually frequent El Niños around the time of the Lapita expansion. By reversing the regular east-to-west flow of the trade winds for weeks at a time, these 'super El Niños' might have taken the Lapita on long unplanned voyages.\n\nHowever they did it, the Lapita spread themselves a third of the way across the Pacific, then called it quits for reasons known only to them. Ahead lay the vast emptiness of the central Pacific and perhaps they were too thinly stretched to venture farther. They probably never numbered more than a few thousand in total, and in their rapid migration eastward they encountered hundreds of islands - more than 300 in Fiji alone.",
+      "defaultTimeLimitMinutes": 20,
+      "metadata": {
+        "images": [
+          "data:image/jpeg;base64,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"
+        ],
+        "groupInstructions": {
+          "27": "Complete the summary using the list of words and phrases, A-J, below.\nWrite the correct letter, A-J, in boxes 27-31 on your answer sheet.\n:::box\nA proof\nB plantation\nC harbour\nD bones\nE data\nF archaeological discovery\nG burial urn\nH source\nI animals\nJ maps\n:::",
+          "32": "Choose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 32-35 on your answer sheet.",
+          "36": "Do the following statements agree with the views of the writer in Reading Passage 3?\nIn boxes 36-40 on your answer sheet, write\n:::box\nYES if the statement agrees with the views of the writer\nNO if the statement contradicts the views of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this\n:::"
+        },
+        "noteBody": "# The Éfaté burial site\nA 3,000-year-old burial ground of a seafaring people called the Lapita has been found on an abandoned [[27]] on the Pacific island of Éfaté. The cemetery, which is a significant [[28]], was uncovered accidentally by an agricultural worker.\n\nThe Lapita explored and colonised many Pacific islands over several centuries. They took many things with them on their voyages including [[29]] and tools.\n\nThe burial ground increases the amount of information about the Lapita available to scientists. A team of researchers, led by Matthew Spriggs from the Australian National University, are helping with the excavation of the site. Spriggs believes the [[30]] which was found at the site is very important since it confirms that the [[31]] found inside are Lapita."
+      },
+      "questions": [
+        {
+          "order": 27,
+          "questionType": "note_completion",
+          "prompt": "Question 27",
+          "answer": [
+            "B",
+            "B plantation",
+            "plantation"
+          ],
+          "explanation": "Người làm nông tìm thấy mộ khi đào ở một ĐỒN ĐIỀN bỏ hoang (derelict plantation). → B.",
+          "evidence": "An agricultural worker, digging in the grounds of a derelict plantation, scraped open a grave - the first of dozens in a burial ground some 3,000 years old.",
+          "points": 1
+        },
+        {
+          "order": 28,
+          "questionType": "note_completion",
+          "prompt": "Question 28",
+          "answer": [
+            "F",
+            "F archaeological discovery",
+            "archaeological discovery"
+          ],
+          "explanation": "Bài mở đầu: \"An important archaeological discovery\" - một PHÁT HIỆN KHẢO CỔ quan trọng. → F.",
+          "evidence": "An important archaeological discovery on the island of Éfaté in the Pacific archipelago of Vanuatu has revealed traces of an ancient seafaring people, the distant ancestors of today's Polynesians.",
+          "points": 1
+        },
+        {
+          "order": 29,
+          "questionType": "note_completion",
+          "prompt": "Question 29",
+          "answer": [
+            "I",
+            "I animals",
+            "animals"
+          ],
+          "explanation": "Họ mang theo gia súc (livestock = ĐỘNG VẬT), cây giống khoai môn và công cụ đá. → I.",
+          "evidence": "They were also pioneers who carried with them everything they would need to build new lives - their livestock, taro seedlings and stone tools.",
+          "points": 1
+        },
+        {
+          "order": 30,
+          "questionType": "note_completion",
+          "prompt": "Question 30",
+          "answer": [
+            "G",
+            "G burial urn",
+            "burial urn"
+          ],
+          "explanation": "Spriggs nói đó là phát hiện quan trọng (nói về chiếc BÌNH CHÔN CẤT có tượng chim trên miệng). → G.",
+          "evidence": "Other items included a Lapita burial urn with modeled birds arranged on the rim as though peering down at the human remains sealed inside.",
+          "points": 1
+        },
+        {
+          "order": 31,
+          "questionType": "note_completion",
+          "prompt": "Question 31",
+          "answer": [
+            "D",
+            "D bones",
+            "bones"
+          ],
+          "explanation": "Bình chôn cất chứng minh HÀI CỐT (human remains = bones) bên trong là của người Lapita. → D.",
+          "evidence": "It's an important discovery,' says Matthew Spriggs, professor of archaeology at the Australian National University and head of the international team digging up the site, 'for it conclusively identifies the remains as Lapita.'",
+          "points": 1
+        },
+        {
+          "order": 32,
+          "questionType": "multiple_choice",
+          "prompt": "According to the writer, there are difficulties explaining how the Lapita accomplished their journeys because",
+          "options": [
+            "A the canoes that have been discovered offer relatively few clues.",
+            "B archaeologists have shown limited interest in this area of research.",
+            "C little information relating to this period can be relied upon for accuracy.",
+            "D technological advances have altered the way such achievements are viewed."
+          ],
+          "answer": [
+            "C little information relating to this period can be relied upon for accuracy."
+          ],
+          "explanation": "Không tìm thấy thuyền hay dây buồm, còn truyện kể truyền miệng đã biến thành THẦN THOẠI → ít thông tin đáng tin cậy về thời kỳ đó. Bẫy A: chưa hề tìm thấy chiếc thuyền nào. → C.",
+          "evidence": "No-one has found one of their canoes or any rigging, which could reveal how the canoes were sailed. / Nor do the oral histories and traditions of later Polynesians offer any insights, for they turn into myths long before they reach as far back in time as the Lapita.",
+          "points": 1
+        },
+        {
+          "order": 33,
+          "questionType": "multiple_choice",
+          "prompt": "According to the sixth paragraph, what was extraordinary about the Lapita?",
+          "options": [
+            "A They sailed beyond the point where land was visible.",
+            "B Their cultural heritage discouraged the expression of fear.",
+            "C They were able to build canoes that withstood ocean voyages.",
+            "D Their navigational skills were passed on from one generation to the next."
+          ],
+          "answer": [
+            "A They sailed beyond the point where land was visible."
+          ],
+          "explanation": "Đoạn 6: cuộc phiêu lưu thật sự chỉ bắt đầu khi họ đi KHUẤT TẦM NHÌN ĐẤT LIỀN - điều làm họ khác tổ tiên. Bẫy D: truyền kỹ năng là chuyện của các thế hệ trước. → A.",
+          "evidence": "The real adventure didn't begin, however, until their Lapita descendants sailed out of sight of land, with empty horizons on every side.",
+          "points": 1
+        },
+        {
+          "order": 34,
+          "questionType": "multiple_choice",
+          "prompt": "What does 'This' refer to in the seventh paragraph?",
+          "options": [
+            "A the Lapita's seafaring talent",
+            "B the Lapita's ability to detect signs of land",
+            "C the Lapita's extensive knowledge of the region",
+            "D the Lapita's belief they would be able to return home"
+          ],
+          "answer": [
+            "D the Lapita's belief they would be able to return home"
+          ],
+          "explanation": "\"This\" chỉ việc họ yên tâm rằng nếu không tìm thấy gì thì có thể quay về nhờ gió mậu dịch → NIỀM TIN sẽ trở về được nhà. → D.",
+          "evidence": "secure in the knowledge that if they didn't find anything, they could turn about and catch a swift ride back on the trade winds",
+          "points": 1
+        },
+        {
+          "order": 35,
+          "questionType": "multiple_choice",
+          "prompt": "According to the eighth paragraph, how was the geography of the region significant?",
+          "options": [
+            "A It played an important role in Lapita culture.",
+            "B It meant there were relatively few storms at sea.",
+            "C It provided a navigational aid for the Lapita.",
+            "D It made a large number of islands habitable."
+          ],
+          "answer": [
+            "C It provided a navigational aid for the Lapita."
+          ],
+          "explanation": "Địa hình quần đảo là \"lưới an toàn\": các đảo nhìn thấy nhau tạo thành điểm tựa cho thuỷ thủ trở về → hỗ trợ ĐỊNH HƯỚNG. → C.",
+          "evidence": "the geography of their own archipelagoes would have provided a safety net / its scores of intervisible islands forming a backstop for mariners riding the trade winds home.",
+          "points": 1
+        },
+        {
+          "order": 36,
+          "questionType": "true_false_not_given",
+          "prompt": "It is now clear that the Lapita could sail into a prevailing wind.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NO"
+          ],
+          "explanation": "Anderson: KHÔNG CÓ BẰNG CHỨNG người Lapita đi ngược gió được, đó chỉ là giả định. → NO.",
+          "evidence": "And there's no proof they could do any such thing,' Anderson says.",
+          "points": 1
+        },
+        {
+          "order": 37,
+          "questionType": "true_false_not_given",
+          "prompt": "Extreme climate conditions may have played a role in Lapita migration.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "YES"
+          ],
+          "explanation": "El Niño (thời tiết cực đoan) có thể đã giúp phân tán người Lapita trên những chuyến đi ngoài dự tính. → YES.",
+          "evidence": "El Niño, the same climate disruption that affects the Pacific today, may have helped scatter the Lapita, Anderson suggests.",
+          "points": 1
+        },
+        {
+          "order": 38,
+          "questionType": "true_false_not_given",
+          "prompt": "The Lapita learnt to predict the duration of El Niños.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Bài nói El Niño có thể đẩy họ đi những chuyến không định trước, không hề nói họ biết dự đoán thời gian của El Niño. → NOT GIVEN.",
+          "points": 1
+        },
+        {
+          "order": 39,
+          "questionType": "true_false_not_given",
+          "prompt": "It remains unclear why the Lapita halted their expansion across the Pacific.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "YES"
+          ],
+          "explanation": "Họ dừng lại \"vì những lý do chỉ họ mới biết\" → đến nay vẫn chưa rõ. → YES.",
+          "evidence": "However they did it, the Lapita spread themselves a third of the way across the Pacific, then called it quits for reasons known only to them.",
+          "points": 1
+        },
+        {
+          "order": 40,
+          "questionType": "true_false_not_given",
+          "prompt": "It is likely that the majority of Lapita settled on Fiji.",
+          "options": [
+            "YES",
+            "NO",
+            "NOT GIVEN"
+          ],
+          "answer": [
+            "NOT GIVEN"
+          ],
+          "explanation": "Bài chỉ nói riêng Fiji có hơn 300 đảo; không nói phần lớn người Lapita định cư ở Fiji. → NOT GIVEN.",
+          "evidence": "They probably never numbered more than a few thousand in total, and in their rapid migration eastward they encountered hundreds of islands - more than 300 in Fiji alone.",
+          "points": 1
+        }
+      ]
+    }
+  ]
+}

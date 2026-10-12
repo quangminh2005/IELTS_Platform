@@ -7,6 +7,12 @@ import type { RankedClassStudent } from "@/lib/class-ranking";
 
 const medals = ["🥇", "🥈", "🥉"];
 
+// "Tự luyện a/b tuần" — chỉ khi em có chỉ tiêu và đã có tuần được xét.
+function practiceLabel(student: RankedClassStudent): string | null {
+  if (student.practiceGoal <= 0 || student.practiceWeeksConsidered === 0) return null;
+  return `Tự luyện ${student.practiceWeeksMet}/${student.practiceWeeksConsidered} tuần`;
+}
+
 // Hạng nhất avatar to hơn hẳn (80px) so với hạng nhì/ba (64px) — sự chênh lệch
 // kích thước này là một phần cách bục "đọc" được, nên giữ field size riêng cho
 // từng hạng và truyền vào StudentAvatar thay vì dùng chung một size.
@@ -86,6 +92,20 @@ export function ClassRankingBoard({
   profileLinkTarget?: "teacher" | "classmate";
 }) {
   function StudentName({ student, className = "" }: { student: RankedClassStudent; className?: string }) {
+    return (
+      <>
+        <StudentNameText student={student} className={className} />
+        {student.practiceMetThisWeek ? (
+          <span title="Đã đạt chỉ tiêu tự luyện tuần này" aria-label="Đạt chỉ tiêu tự luyện tuần này">
+            {" "}
+            🎯
+          </span>
+        ) : null}
+      </>
+    );
+  }
+
+  function StudentNameText({ student, className = "" }: { student: RankedClassStudent; className?: string }) {
     if (profileLinkTarget === "teacher") {
       return (
         <Link
@@ -189,6 +209,12 @@ export function ClassRankingBoard({
                   {rankedStudent.submittedCount} bài · {daysAgoLabel(rankedStudent.daysSinceLastActivity)}
                   <br />
                   Hoàn thành {Math.round(rankedStudent.completionRate)}%
+                  {practiceLabel(rankedStudent) ? (
+                    <>
+                      <br />
+                      {practiceLabel(rankedStudent)}
+                    </>
+                  ) : null}
                   {rankedStudent.lateCount > 0 ? (
                     <>
                       <br />
@@ -270,6 +296,7 @@ export function ClassRankingBoard({
                             </span>
                           ) : null}
                         </span>
+                        {practiceLabel(rankedStudent) ? <span>{practiceLabel(rankedStudent)}</span> : null}
                         <span>
                           Làm gần nhất: {daysAgoLabel(rankedStudent.daysSinceLastActivity)}
                         </span>
@@ -293,6 +320,14 @@ export function ClassRankingBoard({
                         title="Bài nộp trễ chỉ được nửa suất trong Tỉ lệ hoàn thành."
                       >
                         {rankedStudent.lateCount} bài trễ
+                      </span>
+                    ) : null}
+                    {practiceLabel(rankedStudent) ? (
+                      <span
+                        className="block text-[11px] font-medium text-muted-foreground"
+                        title="Số tuần đạt chỉ tiêu tự luyện / số tuần được xét (4 tuần gần nhất) — chiếm 10% điểm."
+                      >
+                        {practiceLabel(rankedStudent)}
                       </span>
                     ) : null}
                   </p>

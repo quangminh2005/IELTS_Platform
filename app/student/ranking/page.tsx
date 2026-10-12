@@ -30,7 +30,7 @@ export const dynamic = "force-dynamic";
 const DESCRIPTIONS = {
   xp: "XP cộng từ mọi lần nộp bài và ôn thẻ trong tháng — bảng làm mới vài phút một lần.",
   streak: "Số ngày học liên tiếp tính tới hôm nay. Hôm nay chưa học vẫn chưa mất chuỗi.",
-  class: "Điểm xếp hạng kết hợp điểm trung bình, mức độ hoàn thành và hoạt động gần đây — chỉ trong lớp."
+  class: "Điểm xếp hạng kết hợp điểm trung bình, mức độ hoàn thành, chỉ tiêu tự luyện tuần và hoạt động gần đây — chỉ trong lớp."
 } as const;
 
 function NoClass() {

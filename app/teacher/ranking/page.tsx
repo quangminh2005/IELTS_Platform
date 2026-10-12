@@ -262,7 +262,7 @@ export default async function TeacherRankingPage({ searchParams }: TeacherRankin
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
             Đây là bảng xếp hạng mà học viên lớp{" "}
             <span className="font-medium text-foreground">{selectedClass.name}</span> đang nhìn thấy.
-            Điểm xếp hạng kết hợp điểm trung bình, mức độ hoàn thành và hoạt động gần đây.
+            Điểm xếp hạng kết hợp điểm trung bình (60%), mức độ hoàn thành (20%), chỉ tiêu tự luyện tuần (10%) và hoạt động gần đây (10%).
           </p>
           <div className="mt-4">
             <RankingTabs active="class" />

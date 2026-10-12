@@ -8,6 +8,7 @@
 
 import { bugCategoryLabel } from "@/lib/bug-report";
 import { namesSentence, type SocialNotificationGroup } from "@/lib/social";
+import { weekLabel } from "@/lib/practice-goal";
 import { vietnamDateKey } from "@/lib/vocab-day";
 
 export const NOTIFICATION_LIMIT = 30;
@@ -24,7 +25,10 @@ export type StudentNotificationType =
   | "follow_new"
   | "reaction_new"
   | "feed_heart"
-  | "feed_comment";
+  | "feed_comment"
+  | "practice_reminder"
+  | "practice_goal_met"
+  | "practice_missed";
 
 export type StudentNotification = {
   // "review:<attemptId>" | "assignment:<recipientId>" — đủ để làm key React và để
@@ -89,6 +93,22 @@ export type PrizeNotificationSource = {
   note: string | null;
   createdAt: Date;
 };
+
+// Chỉ tiêu tự luyện tuần (lib/practice-goal.ts): nhắc khi tuần sắp hết mà chưa đạt.
+export type PracticeReminderSource = { weekKey: string; remaining: number; createdAt: Date };
+
+// Dòng sổ Xu thưởng/trừ chỉ tiêu tự luyện. key = "practice-goal:<thứ Hai>" | "practice-miss:<thứ Hai>".
+export type PracticeLedgerSource = {
+  key: string;
+  kind: "practice_goal" | "practice_miss";
+  amount: number;
+  createdAt: Date;
+};
+
+// Chuông nhắc chỉ tiêu hiện từ thứ Sáu 12:00 giờ VN của tuần chưa đạt.
+export function practiceReminderAt(weekKey: string): Date {
+  return new Date(Date.parse(`${weekKey}T12:00:00+07:00`) + 4 * 24 * 60 * 60 * 1000);
+}
 
 // Bảng tin (Mạng xã hội Đợt 3): người khác thả tim / bình luận hoạt động của mình.
 export type FeedHeartNotificationSource = { userId: string; name: string; createdAt: Date };
@@ -155,7 +175,9 @@ export function buildStudentNotifications(
   // Tham số thứ 8 tuỳ chọn: theo dõi + cảm xúc, đã gộp theo ngày (lib/social.ts).
   social: SocialNotificationGroup[] = [],
   // Tham số thứ 9 tuỳ chọn: tim + bình luận bảng tin của người khác vào hoạt động của mình.
-  feed: { hearts?: FeedHeartNotificationSource[]; comments?: FeedCommentNotificationSource[] } = {}
+  feed: { hearts?: FeedHeartNotificationSource[]; comments?: FeedCommentNotificationSource[] } = {},
+  // Tham số thứ 10 tuỳ chọn: chỉ tiêu tự luyện tuần.
+  practice: { reminder?: PracticeReminderSource | null; ledger?: PracticeLedgerSource[] } = {}
 ): StudentNotification[] {
   const items: StudentNotification[] = [
     ...reviews.map((item) => ({
@@ -250,7 +272,39 @@ export function buildStudentNotifications(
       href: `/student/feed?focus=${encodeURIComponent(item.eventKey)}`,
       createdAt: item.createdAt,
       unread: isUnread(item.createdAt, readAt)
-    }))
+    })),
+    ...(practice.reminder
+      ? [
+          {
+            id: `practice_reminder:${practice.reminder.weekKey}`,
+            type: "practice_reminder" as const,
+            title: `Còn ${practice.reminder.remaining} phần tự luyện để đạt chỉ tiêu tuần — hạn Chủ nhật`,
+            detail: null,
+            href: "/student/practice",
+            createdAt: practice.reminder.createdAt,
+            unread: isUnread(practice.reminder.createdAt, readAt)
+          }
+        ]
+      : []),
+    ...(practice.ledger ?? []).map((item) => {
+      const week = weekLabel(item.key.slice(item.key.indexOf(":") + 1));
+      const title =
+        item.kind === "practice_goal"
+          ? `Em đạt chỉ tiêu tự luyện tuần ${week}, +${item.amount} Xu`
+          : item.amount === 0
+            ? `Tuần ${week} em chưa đạt chỉ tiêu tự luyện (hết Xu để trừ)`
+            : `Tuần ${week} em chưa đạt chỉ tiêu tự luyện, −${Math.abs(item.amount)} Xu`;
+
+      return {
+        id: item.key,
+        type: item.kind === "practice_goal" ? ("practice_goal_met" as const) : ("practice_missed" as const),
+        title,
+        detail: null,
+        href: "/student/practice",
+        createdAt: item.createdAt,
+        unread: isUnread(item.createdAt, readAt)
+      };
+    })
   ];
 
   items.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());

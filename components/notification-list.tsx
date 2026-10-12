@@ -26,7 +26,10 @@ const LABELS: Record<StudentNotificationType, string> = {
   follow_new: "Theo dõi",
   reaction_new: "Cảm xúc",
   feed_heart: "Bảng tin",
-  feed_comment: "Bình luận"
+  feed_comment: "Bình luận",
+  practice_reminder: "Nhắc tự luyện",
+  practice_goal_met: "Chỉ tiêu tự luyện",
+  practice_missed: "Chỉ tiêu tự luyện"
 };
 
 export function NotificationRow({

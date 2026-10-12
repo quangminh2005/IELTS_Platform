@@ -7,8 +7,12 @@ import {
   type BugResolvedNotificationSource,
   type PrizeNotificationSource,
   type RewardNotificationSource,
-  type StudentNotification
+  type StudentNotification,
+  practiceReminderAt,
+  type PracticeLedgerSource,
+  type PracticeReminderSource
 } from "@/lib/notifications";
+import { getPracticeGoalStatus } from "@/lib/practice-goal-data";
 import { buildScheduleNotificationSources } from "@/lib/class-schedule";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
@@ -250,6 +254,36 @@ export async function getStudentNotifications(
     }
   }
 
+  // Chỉ tiêu tự luyện tuần: nhắc từ thứ Sáu nếu chưa đạt + dòng sổ Xu thưởng/trừ.
+  let practiceSources: { reminder?: PracticeReminderSource | null; ledger?: PracticeLedgerSource[] } = {};
+  try {
+    const [goalStatus, practiceLedger] = await Promise.all([
+      getPracticeGoalStatus(studentId),
+      prisma.coinTransaction.findMany({
+        where: { studentId, kind: { in: ["practice_goal", "practice_miss"] } },
+        orderBy: { createdAt: "desc" },
+        take: NOTIFICATION_LIMIT,
+        select: { key: true, kind: true, amount: true, createdAt: true }
+      })
+    ]);
+    const week = goalStatus.current;
+    const reminderAt = week ? practiceReminderAt(week.weekKey) : null;
+    practiceSources = {
+      reminder:
+        week && reminderAt && goalStatus.goal > 0 && !week.met && reminderAt.getTime() <= Date.now()
+          ? { weekKey: week.weekKey, remaining: goalStatus.goal - week.done, createdAt: reminderAt }
+          : null,
+      ledger: practiceLedger.map((row) => ({
+        key: row.key,
+        kind: row.kind === "practice_goal" ? ("practice_goal" as const) : ("practice_miss" as const),
+        amount: row.amount,
+        createdAt: row.createdAt
+      }))
+    };
+  } catch (error) {
+    console.error("[thong-bao] Không đọc được chỉ tiêu tự luyện:", error);
+  }
+
   const items = buildStudentNotifications(
     reviews.map((review) => ({
       attemptId: review.attemptId,
@@ -268,7 +302,8 @@ export async function getStudentNotifications(
     rewardSources,
     prizeSources,
     socialGroups,
-    { hearts: feedHearts, comments: feedComments }
+    { hearts: feedHearts, comments: feedComments },
+    practiceSources
   );
 
   return { items, unreadCount: countUnread(items) };

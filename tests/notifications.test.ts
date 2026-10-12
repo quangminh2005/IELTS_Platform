@@ -5,6 +5,7 @@ import {
   countUnread,
   formatRelativeTime,
   NOTIFICATION_LIMIT,
+  practiceReminderAt,
 } from "../lib/notifications";
 
 describe("nguồn thông báo lọc đúng bài tự luyện", () => {
@@ -329,5 +330,34 @@ describe("tim + bình luận bảng tin trong chuông (Mạng xã hội Đợt 3
     const feed = readFileSync("lib/notifications-feed.ts", "utf8");
     expect(feed).toMatch(/prisma\.feedHeart\.findMany[\s\S]*?prisma\.feedComment\.findMany[\s\S]*?catch \(error\)/);
     expect(feed.match(/not: student\.userId/g)?.length ?? 0).toBe(2);
+  });
+});
+
+describe("chuông chỉ tiêu tự luyện", () => {
+  it("nhắc, báo thưởng và báo trừ Xu — mới nhất trước, đều dẫn tới /student/practice", () => {
+    const items = buildStudentNotifications([], [], null, [], {}, [], [], [], {}, {
+      reminder: { weekKey: "2026-10-12", remaining: 1, createdAt: new Date("2026-10-16T05:00:00Z") },
+      ledger: [
+        { key: "practice-goal:2026-10-05", kind: "practice_goal", amount: 30, createdAt: new Date("2026-10-10T05:00:00Z") },
+        { key: "practice-miss:2026-09-28", kind: "practice_miss", amount: -12, createdAt: new Date("2026-10-06T05:00:00Z") }
+      ]
+    });
+
+    expect(items.map((item) => item.type)).toEqual(["practice_reminder", "practice_goal_met", "practice_missed"]);
+    expect(items[0].title).toBe("Còn 1 phần tự luyện để đạt chỉ tiêu tuần — hạn Chủ nhật");
+    expect(items[1].title).toBe("Em đạt chỉ tiêu tự luyện tuần 5/10–11/10, +30 Xu");
+    expect(items[2].title).toBe("Tuần 28/9–4/10 em chưa đạt chỉ tiêu tự luyện, −12 Xu");
+    expect(items.every((item) => item.href === "/student/practice")).toBe(true);
+  });
+
+  it("số dư đã hết (trừ 0 Xu) vẫn báo, không ghi −0", () => {
+    const items = buildStudentNotifications([], [], null, [], {}, [], [], [], {}, {
+      ledger: [{ key: "practice-miss:2026-10-12", kind: "practice_miss", amount: 0, createdAt: new Date("2026-10-19T05:00:00Z") }]
+    });
+    expect(items[0].title).toBe("Tuần 12/10–18/10 em chưa đạt chỉ tiêu tự luyện (hết Xu để trừ)");
+  });
+
+  it("practiceReminderAt = thứ Sáu 12:00 giờ VN", () => {
+    expect(practiceReminderAt("2026-10-12").toISOString()).toBe("2026-10-16T05:00:00.000Z");
   });
 });

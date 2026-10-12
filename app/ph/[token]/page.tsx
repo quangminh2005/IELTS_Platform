@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import { ParentPracticeGoal } from "@/components/parent-practice-goal";
 import { ProgressLineChart } from "@/components/progress-line-chart";
 import { StudentAvatar } from "@/components/student-avatar";
 import { formatBand } from "@/lib/band-score";
@@ -15,6 +16,7 @@ import {
   loadParentReportItems,
   loadParentStatsData
 } from "@/lib/parent-report-query";
+import { getPracticeGoalStatus } from "@/lib/practice-goal-data";
 import { buildProgressSeries, questionTypeStatsBySkill } from "@/lib/question-stats";
 import { distinctSkills, SKILL_LABELS } from "@/lib/skills";
 
@@ -97,9 +99,11 @@ export default async function ParentReportPage({ params }: ParentPageProps) {
     notFound();
   }
 
-  const [items, stats] = await Promise.all([
+  const [items, stats, practiceGoal] = await Promise.all([
     loadParentReportItems(student.id),
-    loadParentStatsData(student.id)
+    loadParentStatsData(student.id),
+    // Chỉ tiêu tự luyện tuần — lỗi thì ẩn khối, không làm hỏng cả báo cáo.
+    getPracticeGoalStatus(student.id).catch(() => null)
   ]);
 
   const summary = buildParentSummary(items, new Date(), "month");
@@ -154,6 +158,8 @@ export default async function ParentReportPage({ params }: ParentPageProps) {
           value={summary.averageBand === null ? "—" : formatBand(summary.averageBand)}
         />
       </section>
+
+      <ParentPracticeGoal status={practiceGoal} />
 
       {series.listening.length > 0 || series.reading.length > 0 ? (
         <section className="overflow-hidden rounded-xl border border-border bg-card shadow-card">

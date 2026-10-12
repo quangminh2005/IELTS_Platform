@@ -10,6 +10,11 @@ import {
   type PracticeMaterialItem
 } from "@/lib/practice-library";
 import { prisma } from "@/lib/prisma";
+import {
+  getPracticeGoalStatus,
+  syncPracticeGoal,
+  type PracticeGoalStatus
+} from "@/lib/practice-goal-data";
 
 type StudentPracticePageProps = {
   searchParams?: {
@@ -36,6 +41,15 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
 
   if (!student) {
     redirect("/waiting");
+  }
+
+  // Chỉ tiêu tự luyện tuần: ghi Xu còn thiếu rồi đọc tiến độ. Lỗi thì ẩn dòng tiến độ.
+  let practiceGoal: PracticeGoalStatus | null = null;
+  try {
+    await syncPracticeGoal(student.id);
+    practiceGoal = await getPracticeGoalStatus(student.id);
+  } catch (error) {
+    console.error("[chi-tieu-tu-luyen] trang tự luyện", error);
   }
 
   // select (KHÔNG include): content/transcript/metadataJson của unit rất nặng.
@@ -158,6 +172,18 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
           kết quả và giải thích ngay sau khi nộp.
         </p>
       </header>
+      {practiceGoal && practiceGoal.goal > 0 && practiceGoal.current ? (
+        <p className="rounded-lg border border-border bg-card px-4 py-2 text-sm">
+          🎯 Tuần này:{" "}
+          <strong className="tabular-nums">
+            {practiceGoal.current.done}/{practiceGoal.goal}
+          </strong>{" "}
+          phần
+          {practiceGoal.current.met
+            ? " — đã đạt chỉ tiêu ✓"
+            : " — mỗi phần làm ít nhất 3 phút và trả lời từ một nửa số câu"}
+        </p>
+      ) : null}
       {/* key=practiceNonce: ép NoticeToast mount lại mỗi lần có thông báo mới, kể
           cả khi hai lần lỗi liên tiếp trùng y nội dung — nếu không, effect bên
           trong so theo message/status không thấy gì đổi nên toast lần hai sẽ

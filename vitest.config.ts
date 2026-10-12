@@ -8,6 +8,11 @@ export default defineConfig({
     // đỏ bộ test của nhánh này.
     exclude: [...configDefaults.exclude, "**/.claude/**"],
   },
+  // tsconfig để jsx: "preserve" cho Next; test dựng component (vd thẻ chỉ tiêu tự luyện)
+  // cần Vite tự dịch JSX theo runtime tự động của React.
+  oxc: {
+    jsx: { runtime: "automatic" },
+  },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL(".", import.meta.url)),

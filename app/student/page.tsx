@@ -35,6 +35,8 @@ import { MonthlyRecapPanel } from "@/components/monthly-recap-panel";
 import { HomeLeaderboardCard } from "@/components/leaderboard/home-leaderboard-card";
 import { getHomeLeaderboard } from "@/lib/leaderboard-data";
 import { FeatureBanner } from "@/components/feature-banner";
+import { PracticeGoalCard } from "@/components/practice-goal-card";
+import { getPracticeGoalStatus, syncPracticeGoal } from "@/lib/practice-goal-data";
 import { FEATURE_ANNOUNCEMENTS, activeAnnouncements } from "@/lib/feature-announcements";
 
 const STATUS_LABELS: Record<string, string> = {
@@ -78,10 +80,28 @@ export default async function StudentDashboardPage() {
     redirect("/waiting");
   }
 
+  // Chỉ tiêu tự luyện: ghi thưởng/trừ Xu còn thiếu của các tuần đã qua TRƯỚC khi đọc
+  // số Xu. Lỗi không làm hỏng trang chủ (cron trưa sẽ bù).
+  try {
+    await syncPracticeGoal(student.id);
+  } catch (error) {
+    console.error("[chi-tieu-tu-luyen] trang chủ", error);
+  }
+
   // Các truy vấn dưới đây không phụ thuộc nhau — chạy song song để trang chỉ tốn
   // một lượt đi/về database thay vì nhiều lượt nối tiếp.
-  const [recipients, lifetimeXp, dayStreak, wordOfDay, vocabSidebar, schedule, vocabToday, recapPopup, homeBoard] =
-    await Promise.all([
+  const [
+    recipients,
+    lifetimeXp,
+    dayStreak,
+    wordOfDay,
+    vocabSidebar,
+    schedule,
+    vocabToday,
+    recapPopup,
+    homeBoard,
+    practiceGoal
+  ] = await Promise.all([
     prisma.assignmentRecipient.findMany({
       // Trang chủ chỉ liệt kê bài được giao; bài tự luyện nằm ở /student/practice.
       where: { studentId: student.id, assignment: excludePracticeAssignment },
@@ -121,7 +141,9 @@ export default async function StudentDashboardPage() {
     // Tổng kết tháng trước — chỉ có trong 7 ngày đầu tháng, lỗi thì trả null.
     getStudentRecapPopup(student.id),
     // Bảng xếp hạng thu nhỏ — lỗi thì trả null, không làm hỏng trang chủ.
-    getHomeLeaderboard(student.id)
+    getHomeLeaderboard(student.id),
+    // Thẻ "Tự luyện tuần này" — lỗi thì ẩn thẻ.
+    getPracticeGoalStatus(student.id).catch(() => null)
   ]);
 
   const pendingCount = recipients.filter(
@@ -313,6 +335,8 @@ export default async function StudentDashboardPage() {
               )}
             </div>
           </section>
+
+          {practiceGoal ? <PracticeGoalCard status={practiceGoal} /> : null}
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <StreakBadge

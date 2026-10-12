@@ -25,6 +25,10 @@ import {
 import { countsForStats, excludePracticeAssignment, onlyPracticeAssignment } from "@/lib/practice";
 import { groupPracticeAttempts } from "@/lib/practice-progress";
 import { StudentPracticeHistory } from "@/components/student-practice-history";
+import { PracticeGoalInput } from "@/components/practice-goal-input";
+import { PracticeGoalWeeks } from "@/components/practice-goal-weeks";
+import { getPracticeGoalStatus } from "@/lib/practice-goal-data";
+import { PRACTICE_GOAL_PENALTY, PRACTICE_GOAL_REWARD } from "@/lib/practice-goal";
 import { ActivityHeatmap } from "@/components/activity-heatmap";
 import { getActivityHeatmap } from "@/lib/activity-heatmap-data";
 
@@ -176,7 +180,7 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
   const heatmap = await getActivityHeatmap(student.id);
 
   // Xu & đồ trang trí (chỉ xem). coins/equipped* đã có sẵn nhờ include ở trên.
-  const [walletItems, walletTransactions] = await Promise.all([
+  const [walletItems, walletTransactions, goalStatus] = await Promise.all([
     prisma.studentItem.findMany({
       where: { studentId: student.id },
       orderBy: { createdAt: "asc" },
@@ -187,7 +191,9 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
       orderBy: { createdAt: "desc" },
       take: 20,
       select: { id: true, amount: true, note: true, createdAt: true }
-    })
+    }),
+    // Chỉ tiêu tự luyện tuần (lib/practice-goal.ts).
+    getPracticeGoalStatus(student.id)
   ]);
 
   // Khối "Tự luyện": các đề học viên tự chọn luyện thêm. Đây là truy vấn riêng vì
@@ -413,6 +419,24 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
           </div>
         </section>
       ) : null}
+
+      <section className="flex flex-col gap-3 rounded-xl border border-border bg-card px-5 py-4 shadow-card sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h3 className="text-base font-semibold">🎯 Chỉ tiêu tự luyện</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {goalStatus.goal === 0
+              ? "Đang miễn chỉ tiêu."
+              : `Tuần này ${goalStatus.current?.done ?? 0}/${goalStatus.goal} phần · đạt +${PRACTICE_GOAL_REWARD} Xu, không đạt −${PRACTICE_GOAL_PENALTY} Xu`}
+          </p>
+        </div>
+        <div className="flex items-center gap-4">
+          <PracticeGoalWeeks weeks={goalStatus.weeks} />
+          <label className="flex items-center gap-2 text-sm">
+            Phần/tuần
+            <PracticeGoalInput key={goalStatus.goal} studentId={student.id} goal={goalStatus.goal} />
+          </label>
+        </div>
+      </section>
 
       <StudentPracticeHistory groups={practiceGroups} bandsByAttempt={practiceBands} />
 

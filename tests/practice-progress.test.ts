@@ -166,6 +166,29 @@ describe("buildPracticeStudentRows", () => {
     expect(rows.map((row) => row.id)).toEqual(["hs3", "hs2", "hs1"]);
   });
 
+  it("'cần nhắc': em chưa đạt chỉ tiêu tuần này lên trước em đã đạt", () => {
+    const goals = new Map([
+      ["hs1", { goal: 2, done: 1, met: false }],
+      ["hs2", { goal: 1, done: 1, met: true }],
+      ["hs3", { goal: 1, done: 0, met: false }]
+    ]);
+    const rows = buildPracticeStudentRows(students, attempts, { sort: "attention", now, goals });
+
+    expect(rows.map((row) => row.id)).toEqual(["hs3", "hs1", "hs2"]);
+    expect(rows[1].goal).toEqual({ goal: 2, done: 1, met: false });
+  });
+
+  it("em được miễn chỉ tiêu (goal 0) không bị đẩy lên vì chưa đạt", () => {
+    const goals = new Map([
+      // hs2 lâu chưa luyện hơn nhưng được miễn → hs1 (chưa đạt) lên trước.
+      ["hs1", { goal: 1, done: 0, met: false }],
+      ["hs2", { goal: 0, done: 0, met: true }]
+    ]);
+    const rows = buildPracticeStudentRows(students.slice(0, 2), attempts, { sort: "attention", now, goals });
+
+    expect(rows.map((row) => row.id)).toEqual(["hs1", "hs2"]);
+  });
+
   it("sắp theo số lượt và theo điểm trung bình", () => {
     expect(
       buildPracticeStudentRows(students, attempts, { sort: "rounds", now }).map((row) => row.id)

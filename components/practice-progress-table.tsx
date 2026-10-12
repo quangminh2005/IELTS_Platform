@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PracticeGoalInput } from "@/components/practice-goal-input";
 import { StudentAvatar } from "@/components/student-avatar";
 import { formatDuration } from "@/lib/format-duration";
 import { daysAgoLabel } from "@/lib/student-score";
@@ -27,8 +28,26 @@ type PracticeProgressTableProps = {
 // Cột "Số lượt" phải đủ rộng cho chip "Chưa luyện" nằm gọn một dòng. Các cột phụ
 // giữ hẹp hết mức đọc được: khung nội dung của trang giáo viên chỉ rộng ~730px nên
 // cột phụ ăn thêm bao nhiêu là cột TÊN HỌC VIÊN mất bấy nhiêu (tên dài bị cắt cụt).
+// Từ khi có cột Chỉ tiêu + Tuần này, "Số đề" và "Thời gian" chỉ hiện từ xl.
 const COLUMN_CLASS =
-  "grid grid-cols-[minmax(0,1fr)_6.5rem] gap-3 md:grid-cols-[minmax(0,1fr)_6.5rem_3.5rem_6rem_7rem_4.5rem]";
+  "grid grid-cols-[minmax(0,1fr)_6.5rem] gap-3 md:grid-cols-[minmax(0,1fr)_6.5rem_4rem_4.5rem_6rem_4.5rem] xl:grid-cols-[minmax(0,1fr)_6.5rem_4rem_4.5rem_3.5rem_6rem_7rem_4.5rem]";
+
+// "1/1 ✓" xanh khi đạt, "0/2" đỏ khi chưa; goal 0 = "Miễn".
+function WeekGoal({ goal }: { goal: PracticeStudentRow<PracticeTableStudent>["goal"] }) {
+  if (!goal) return <span>—</span>;
+  if (goal.goal === 0) return <span className="text-muted-foreground">Miễn</span>;
+
+  return (
+    <span
+      className={`font-semibold ${
+        goal.met ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
+      }`}
+    >
+      {goal.done}/{goal.goal}
+      {goal.met ? " ✓" : ""}
+    </span>
+  );
+}
 
 function percentLabel(value: number | null): string {
   return value === null ? "—" : `${Math.round(value)}%`;
@@ -78,7 +97,11 @@ export function PracticeProgressTable({ rows, sort, range, classId }: PracticePr
       >
         <SortLink label="Học viên" sort="name" current={sort} range={range} classId={classId} />
         <SortLink label="Số lượt" sort="rounds" current={sort} range={range} classId={classId} />
-        <span className="hidden md:block">Số đề</span>
+        <span className="hidden md:block" title="Số phần tự luyện mỗi tuần — 0 là miễn">
+          Chỉ tiêu
+        </span>
+        <span className="hidden md:block">Tuần này</span>
+        <span className="hidden xl:block">Số đề</span>
         <SortLink
           label="Gần nhất"
           sort="attention"
@@ -87,7 +110,7 @@ export function PracticeProgressTable({ rows, sort, range, classId }: PracticePr
           classId={classId}
           className="hidden md:block"
         />
-        <span className="hidden md:block">Thời gian</span>
+        <span className="hidden xl:block">Thời gian</span>
         <SortLink
           label="Điểm TB"
           sort="score"
@@ -122,7 +145,13 @@ export function PracticeProgressTable({ rows, sort, range, classId }: PracticePr
                     {row.displayName}
                   </Link>
                   {/* Trên điện thoại các cột phụ gộp xuống dưới tên thay vì cuộn ngang. */}
-                  <p className="mt-1 grid gap-1 text-sm text-muted-foreground md:hidden">
+                  <div className="mt-1 grid gap-1 text-sm text-muted-foreground md:hidden">
+                    {row.goal ? (
+                      <span className="flex items-center gap-2">
+                        Chỉ tiêu: <PracticeGoalInput key={row.goal.goal} studentId={row.id} goal={row.goal.goal} />
+                        <WeekGoal goal={row.goal} />
+                      </span>
+                    ) : null}
                     <span>Số đề: {row.practice.materialCount}</span>
                     <span>Gần nhất: {daysAgoLabel(row.practice.daysSinceLastPractice)}</span>
                     <span>
@@ -132,7 +161,7 @@ export function PracticeProgressTable({ rows, sort, range, classId }: PracticePr
                         : "—"}
                     </span>
                     <span>Điểm TB: {percentLabel(row.practice.averagePercent)}</span>
-                  </p>
+                  </div>
                 </div>
               </div>
 
@@ -155,13 +184,19 @@ export function PracticeProgressTable({ rows, sort, range, classId }: PracticePr
                 )}
               </p>
 
+              <div className="hidden md:block">
+                {row.goal ? <PracticeGoalInput key={row.goal.goal} studentId={row.id} goal={row.goal.goal} /> : "—"}
+              </div>
               <p className="hidden text-sm tabular-nums md:block">
+                <WeekGoal goal={row.goal} />
+              </p>
+              <p className="hidden text-sm tabular-nums xl:block">
                 {chuaLuyen ? "—" : row.practice.materialCount}
               </p>
               <p className="hidden text-sm tabular-nums md:block">
                 {daysAgoLabel(row.practice.daysSinceLastPractice)}
               </p>
-              <p className="hidden text-sm tabular-nums md:block">
+              <p className="hidden text-sm tabular-nums xl:block">
                 {row.practice.totalSeconds > 0 ? formatDuration(row.practice.totalSeconds) : "—"}
               </p>
               <p className="hidden text-sm font-semibold tabular-nums md:block">

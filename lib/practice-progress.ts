@@ -147,15 +147,25 @@ export function summarizePracticeByStudent(
 
 export type PracticeStudentIdentity = { id: string; displayName: string };
 
+// Chỉ tiêu tự luyện tuần này của một em (lib/practice-goal-data.ts). goal 0 = miễn.
+export type PracticeGoalSummary = { goal: number; done: number; met: boolean };
+
 export type PracticeStudentRow<T extends PracticeStudentIdentity> = T & {
   practice: PracticeStudentSummary;
+  goal?: PracticeGoalSummary;
 };
+
+// Em có chỉ tiêu mà tuần này chưa đạt — cần nhắc trước mọi em khác.
+function behindGoal(row: { goal?: PracticeGoalSummary }): boolean {
+  return row.goal !== undefined && row.goal.goal > 0 && !row.goal.met;
+}
 
 function byName(a: PracticeStudentIdentity, b: PracticeStudentIdentity): number {
   return a.displayName.localeCompare(b.displayName, "vi");
 }
 
-// Thứ tự các cách sắp xếp. "attention" (mặc định) đẩy em CẦN NHẮC lên đầu: chưa
+// Thứ tự các cách sắp xếp. "attention" (mặc định) đẩy em CẦN NHẮC lên đầu: trước hết em
+// chưa đạt chỉ tiêu tự luyện tuần này, rồi em chưa
 // luyện lần nào trước, rồi đến em lâu chưa luyện nhất — đúng việc giáo viên mở
 // trang này ra để làm.
 function comparatorFor<T extends PracticeStudentIdentity>(
@@ -184,6 +194,9 @@ function comparatorFor<T extends PracticeStudentIdentity>(
   }
 
   return (a, b) => {
+    const behind = Number(behindGoal(b)) - Number(behindGoal(a));
+    if (behind !== 0) return behind;
+
     const left = a.practice.daysSinceLastPractice;
     const right = b.practice.daysSinceLastPractice;
 
@@ -201,13 +214,14 @@ function comparatorFor<T extends PracticeStudentIdentity>(
 export function buildPracticeStudentRows<T extends PracticeStudentIdentity>(
   students: T[],
   attempts: PracticeAttemptRow[],
-  options: { sort: PracticeSort; now: Date }
+  options: { sort: PracticeSort; now: Date; goals?: Map<string, PracticeGoalSummary> }
 ): PracticeStudentRow<T>[] {
   const summaries = summarizePracticeByStudent(attempts, options.now);
 
-  const rows = students.map((student) => ({
+  const rows: PracticeStudentRow<T>[] = students.map((student) => ({
     ...student,
-    practice: summaries.get(student.id) ?? EMPTY_SUMMARY
+    practice: summaries.get(student.id) ?? EMPTY_SUMMARY,
+    goal: options.goals?.get(student.id)
   }));
 
   return rows.sort(comparatorFor<T>(options.sort));

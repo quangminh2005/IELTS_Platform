@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { AiSettingsCard } from "@/components/ai-grading/ai-settings-card";
+import { ActionForm, ActionSubmitButton } from "@/components/action-form";
 import { PracticeProgressTable } from "@/components/practice-progress-table";
 import { isAiGradingEnabled } from "@/lib/ai-grading/openai";
 import { effectiveDailyLimit, vnMonthStart } from "@/lib/ai-grading/quota";
 import { VocabProgressTable } from "@/components/vocab-progress-table";
 import { formatDuration } from "@/lib/format-duration";
+import { setClassPracticeGoal } from "@/lib/actions/practice-goal";
 import { onlyPracticeAssignment } from "@/lib/practice";
+import { DEFAULT_PRACTICE_GOAL, MAX_PRACTICE_GOAL } from "@/lib/practice-goal";
+import { getPracticeGoalStatuses } from "@/lib/practice-goal-data";
 import {
   buildPracticeStudentRows,
   parsePracticeRange,
@@ -65,9 +69,28 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
       displayName: true,
       avatarUrl: true,
       avatarPreset: true,
+      practiceWeeklyGoal: true,
       user: { select: { image: true } }
     }
   });
+
+  // Chỉ tiêu tự luyện tuần NÀY của từng em (không phụ thuộc bộ lọc khoảng thời gian).
+  const goalStatuses = await getPracticeGoalStatuses(students, now);
+  const goals = new Map(
+    students.map((student) => {
+      const status = goalStatuses.get(student.id);
+      return [
+        student.id,
+        {
+          goal: student.practiceWeeklyGoal,
+          done: status?.current?.done ?? 0,
+          met: status?.current?.met ?? student.practiceWeeklyGoal === 0
+        }
+      ];
+    })
+  );
+  const goalStudents = students.filter((student) => student.practiceWeeklyGoal > 0);
+  const goalMetCount = goalStudents.filter((student) => goals.get(student.id)?.met).length;
 
   // Lượt tự luyện ĐÃ NỘP của đúng nhóm học viên đang xem. Không kéo answers —
   // bảng này chỉ cần thời gian, điểm % và khoá phạm vi.
@@ -120,7 +143,7 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
       elapsedSeconds: attempt.elapsedSeconds,
       scorePercent: attempt.scorePercent
     })),
-    { sort, now }
+    { sort, now, goals }
   );
 
   const totals = practiceTotals(rows);
@@ -312,6 +335,41 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
             <p className="mt-1 text-sm text-muted-foreground">{card.note}</p>
           </div>
         ))}
+      </section>
+
+      <section className="flex flex-col gap-3 rounded-xl border border-border bg-card px-5 py-4 shadow-card sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm font-semibold">
+            🎯 Chỉ tiêu tự luyện tuần này: {goalMetCount}/{goalStudents.length} em đã đạt
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Mỗi phần phải làm ít nhất 3 phút và trả lời từ một nửa số câu (Viết ≥ 50 từ). Đạt
+            +30 Xu, hết tuần chưa đạt −30 Xu và mất điểm Tự luyện trong xếp hạng lớp. Đặt 0 để
+            miễn.
+          </p>
+        </div>
+        {selectedClassId ? (
+          <ActionForm action={setClassPracticeGoal} className="flex shrink-0 items-center gap-2">
+            <input type="hidden" name="classId" value={selectedClassId} />
+            <label className="text-sm font-medium" htmlFor="class-practice-goal">
+              Đặt cho cả lớp
+            </label>
+            <input
+              id="class-practice-goal"
+              name="goal"
+              type="number"
+              inputMode="numeric"
+              min={0}
+              max={MAX_PRACTICE_GOAL}
+              defaultValue={DEFAULT_PRACTICE_GOAL}
+              required
+              className="w-14 rounded-md border border-border bg-background px-2 py-1 text-center text-sm tabular-nums"
+            />
+            <ActionSubmitButton className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground shadow-card transition hover:bg-primary/90">
+              Áp dụng
+            </ActionSubmitButton>
+          </ActionForm>
+        ) : null}
       </section>
 
       <PracticeProgressTable rows={rows} sort={sort} range={range} classId={selectedClassId} />

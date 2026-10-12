@@ -93,7 +93,7 @@ describe("studentRankingScore - độ mới của hoạt động", () => {
 describe("studentRankingScore", () => {
   const now = new Date("2026-07-08T10:00:00+07:00");
 
-  it("gộp điểm TB + hoàn thành + hoạt động gần đây (0.7/0.2/0.1)", () => {
+  it("gộp điểm TB + hoàn thành + tự luyện + hoạt động gần đây (0.6/0.2/0.1/0.1)", () => {
     const s = studentRankingScore({
       scorePercents: [80, 100], // TB = 90
       completions: [
@@ -108,16 +108,32 @@ describe("studentRankingScore", () => {
     expect(s.averageScorePercent).toBe(90);
     expect(s.completionRate).toBe(50);
     expect(s.recentActivityPercent).toBe(100);
-    // 90*0.7 + 50*0.2 + 100*0.1 = 63 + 10 + 10 = 83
-    expect(s.rankingScore).toBe(83);
+    // Không truyền tự luyện → coi như đạt (100).
+    // 90*0.6 + 50*0.2 + 100*0.1 + 100*0.1 = 54 + 10 + 10 + 10 = 84
+    expect(s.rankingScore).toBe(84);
   });
 
-  it("không có dữ liệu → tất cả 0", () => {
+  it("thành phần Tự luyện 10%", () => {
+    const s = studentRankingScore({
+      scorePercents: [90],
+      completions: [],
+      attemptTimes: [],
+      practiceGoalPercent: 0,
+      now
+    });
+    // 0.6×90 + 0 + 0 + 0 = 54
+    expect(s.rankingScore).toBe(54);
+    expect(s.practiceGoalPercent).toBe(0);
+  });
+
+  it("không có dữ liệu bài làm → các phần bài làm bằng 0", () => {
     const s = studentRankingScore({ scorePercents: [], completions: [], attemptTimes: [], now });
     expect(s.averageScorePercent).toBe(0);
     expect(s.completionRate).toBe(0);
     expect(s.recentActivityPercent).toBe(0);
-    expect(s.rankingScore).toBe(0);
+    // Thiếu dữ liệu chỉ tiêu tự luyện = coi như đạt → còn 10 điểm phần Tự luyện.
+    expect(s.practiceGoalPercent).toBe(100);
+    expect(s.rankingScore).toBe(10);
   });
 
   it("bài nộp trễ chỉ được nửa suất trong tỉ lệ hoàn thành", () => {

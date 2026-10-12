@@ -39,7 +39,8 @@ function doneRecipient(daysAgo: number) {
 }
 
 // Học viên chỉ có 1 lần làm bài cũ (ngoài 14 ngày) -> recentActivityPercent = 0,
-// completionRate = 100, nên rankingScore = scorePercent * 0.7 + 20.
+// completionRate = 100, không đặt chỉ tiêu tự luyện (Tự luyện = 100), nên
+// rankingScore = scorePercent * 0.6 + 20 + 10.
 function classmate(id: string, displayName: string, scorePercent: number): ClassmateRow {
   return {
     id,
@@ -92,10 +93,33 @@ describe("rankClassmates", () => {
     );
 
     expect(ranked.map((student) => student.displayName)).toEqual(["Bảo", "Cường", "An"]);
-    // 90*0.7 + 100*0.2 + 0*0.1 = 63 + 20 = 83
-    expect(ranked[0].rankingScore).toBe(83);
+    // 90*0.6 + 100*0.2 + 100*0.1 + 0*0.1 = 54 + 20 + 10 = 84
+    expect(ranked[0].rankingScore).toBe(84);
     expect(ranked[0].completionRate).toBe(100);
     expect(ranked[0].recentActivityPercent).toBe(0);
+  });
+
+  it("em trượt chỉ tiêu tự luyện tuần trước tụt dưới em đạt", () => {
+    const after = new Date("2026-10-21T10:00:00+07:00");
+    const part = {
+      skill: "reading",
+      submittedAt: new Date("2026-10-14T20:00:00+07:00"),
+      seconds: 600,
+      questionCount: 13,
+      answeredCount: 13,
+      isEssay: false,
+      writingWords: 0
+    };
+    const lazy = { ...classmate("a", "An", 80), practiceGoal: 1, practiceParts: [] };
+    const busy = { ...classmate("b", "Bình", 80), practiceGoal: 1, practiceParts: [part] };
+    const ranked = rankClassmates([lazy, busy], after);
+
+    expect(ranked.map((s) => s.id)).toEqual(["b", "a"]);
+    expect(ranked[1].practiceGoalPercent).toBe(0);
+    expect(ranked[0].practiceGoalPercent).toBe(100);
+    expect(ranked[0].practiceWeeksMet).toBe(1);
+    expect(ranked[0].practiceWeeksConsidered).toBe(1);
+    expect(ranked[0].rankingScore - ranked[1].rankingScore).toBe(10);
   });
 
   it("hoà điểm thì xếp theo tên", () => {

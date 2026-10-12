@@ -12,6 +12,7 @@ export type CompletionInput = {
 export type StudentScore = {
   averageScorePercent: number;
   completionRate: number;
+  practiceGoalPercent: number;
   recentActivityPercent: number;
   rankingScore: number;
   // Số ngày kể từ lần làm bài gần nhất (mở bài hoặc nộp bài). Chưa từng làm -> null.
@@ -122,6 +123,8 @@ export function studentRankingScore(input: {
   scorePercents: number[];
   completions: CompletionInput[];
   attemptTimes: Array<{ startedAt: Date; submittedAt: Date | null }>;
+  // Thành phần chỉ tiêu tự luyện (lib/practice-goal.ts).
+  practiceGoalPercent?: number;
   now?: Date;
 }): StudentScore {
   const now = input.now ?? new Date();
@@ -129,15 +132,19 @@ export function studentRankingScore(input: {
   const completionRate = completionRateOf(input.completions);
   const daysSinceLastActivity = daysSinceLastActivityOf(input.attemptTimes, now);
   const recentActivityPercent = recentActivityPercentOf(daysSinceLastActivity);
+  // Thiếu dữ liệu chỉ tiêu (chỗ gọi cũ) = coi như đạt, không phạt oan.
+  const practiceGoalPercent = input.practiceGoalPercent ?? 100;
   const rankingScore = calculateRankingScore({
     averageScorePercent,
     completionRate,
+    practiceGoalPercent,
     recentActivityPercent,
   });
 
   return {
     averageScorePercent,
     completionRate,
+    practiceGoalPercent,
     recentActivityPercent,
     rankingScore,
     daysSinceLastActivity

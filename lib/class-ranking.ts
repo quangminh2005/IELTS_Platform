@@ -5,6 +5,12 @@ import { attemptBandFromCounts, averageBand, type SkillCount } from "@/lib/band-
 import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
 import { isSubmissionLate } from "@/lib/late-submission";
 import {
+  practiceGoalPercent,
+  practiceWeeks,
+  recentWeeks,
+  type PracticePart
+} from "@/lib/practice-goal";
+import {
   countsForStats,
   excludePracticeAssignment,
   onlyPracticeAssignment
@@ -25,6 +31,13 @@ export type RankedClassStudent = {
   averageBandValue: number | null;
   completionRate: number;
   recentActivityPercent: number;
+  // Chỉ tiêu tự luyện/tuần của em (0 = miễn) và thành phần Tự luyện của điểm.
+  practiceGoal: number;
+  practiceGoalPercent: number;
+  // Số tuần đạt / số tuần được xét trong 4 tuần gần nhất — để bảng giải thích con số.
+  practiceWeeksMet: number;
+  practiceWeeksConsidered: number;
+  practiceMetThisWeek: boolean;
   rankingScore: number;
   // Đã nộp ít nhất một bài chưa. Chưa nộp -> không có dữ liệu để xếp hạng, luôn
   // đứng cuối và được tách thành nhóm riêng ở bảng.
@@ -50,6 +63,10 @@ export type ClassmateRow = {
   avatarPreset: string | null;
   userImage: string | null;
   equippedFrame?: string | null;
+  // Chỉ tiêu tự luyện/tuần (StudentProfile.practiceWeeklyGoal). Thiếu = 0 → Tự luyện 100%.
+  practiceGoal?: number;
+  // Các phần tự luyện đã nộp từ PRACTICE_GOAL_START (lib/practice-goal-data.ts).
+  practiceParts?: PracticePart[];
   attempts: Array<{
     scorePercent: number | null;
     startedAt: Date;
@@ -99,8 +116,12 @@ function scoreAt(row: ClassmateRow, now: Date, asOf: Date | null) {
     )
     .filter((scorePercent): scorePercent is number => scorePercent !== null);
 
+  const goal = row.practiceGoal ?? 0;
+  const weeks = practiceWeeks(row.practiceParts ?? [], goal, cutoff);
+
   const score = studentRankingScore({
     scorePercents,
+    practiceGoalPercent: practiceGoalPercent(weeks, goal),
     completions: recipients.map((recipient) => ({
       // Hiện tại thì dùng đúng trạng thái đang lưu; còn ảnh chụp tuần trước phải
       // dựng lại từ mốc nộp, vì trạng thái không lưu lịch sử.
@@ -132,7 +153,7 @@ function scoreAt(row: ClassmateRow, now: Date, asOf: Date | null) {
       isSubmissionLate(recipient.submittedAt, recipient.deadline)
   ).length;
 
-  return { score, submittedCount: submitted.length, lateCount };
+  return { score, submittedCount: submitted.length, lateCount, weeks };
 }
 
 // Thứ hạng (1-based) của từng học viên tại một mốc. Học viên chưa nộp bài nào
@@ -175,7 +196,9 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
 
   return rows
     .map((row) => {
-      const { score, submittedCount, lateCount } = scoreAt(row, today, null);
+      const { score, submittedCount, lateCount, weeks } = scoreAt(row, today, null);
+      const practiceGoal = row.practiceGoal ?? 0;
+      const considered = recentWeeks(weeks).filter((week) => week.ended || week.met);
       // Band trung bình: gộp band của từng lần làm (band giáo viên chấm hoặc
       // band tự động bài đủ 40 câu). Không có band nào -> null (hiển thị % thay thế).
       const attemptBands = row.attempts
@@ -194,6 +217,11 @@ export function rankClassmates(rows: ClassmateRow[], now?: Date): RankedClassStu
         averageBandValue: averageBand(attemptBands),
         completionRate: score.completionRate,
         recentActivityPercent: score.recentActivityPercent,
+        practiceGoal,
+        practiceGoalPercent: score.practiceGoalPercent,
+        practiceWeeksMet: considered.filter((week) => week.met).length,
+        practiceWeeksConsidered: considered.length,
+        practiceMetThisWeek: practiceGoal > 0 && (weeks[0]?.met ?? false),
         rankingScore: score.rankingScore,
         hasSubmitted: submittedCount > 0,
         submittedCount,

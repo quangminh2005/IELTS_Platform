@@ -71,6 +71,19 @@ export type FeatureAnnouncement = {
 export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
   // ---- Học viên ----
   {
+    id: "student-practice-goal",
+    audience: "student",
+    title: ["Chỉ tiêu tự luyện", "Đạt tuần +30 Xu"],
+    description:
+      "Mỗi tuần làm đủ số phần tự luyện thầy giao để nhận +30 Xu — không đạt sẽ bị trừ Xu và tụt điểm lớp.",
+    cta: "Luyện ngay",
+    href: "/student/practice",
+    mascot: "fox",
+    pose: "cheer",
+    theme: "forest",
+    shippedAt: "2026-10-12"
+  },
+  {
     id: "student-vocab-example-vi",
     audience: "student",
     title: ["Câu ví dụ", "Có dịch tiếng Việt"],
@@ -150,6 +163,19 @@ export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
   },
 
   // ---- Thầy ----
+  {
+    id: "teacher-practice-goal",
+    audience: "teacher",
+    title: ["Chỉ tiêu tự luyện", "Đặt riêng từng em"],
+    description:
+      "Đặt số phần tự luyện mỗi tuần cho từng học viên hoặc cả lớp; em không đạt bị trừ Xu và tụt điểm xếp hạng.",
+    cta: "Đặt chỉ tiêu",
+    href: "/teacher/practice",
+    mascot: "owl",
+    pose: "read",
+    theme: "forest",
+    shippedAt: "2026-10-12"
+  },
   {
     id: "teacher-feed",
     audience: "teacher",

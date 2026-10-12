@@ -17,6 +17,7 @@ import { planDraftWrite } from "@/lib/draft-answers";
 import { prisma } from "@/lib/prisma";
 import { LEADERBOARD_CACHE_TAG } from "@/lib/leaderboard";
 import { syncWallet } from "@/lib/wallet";
+import { syncPracticeGoal } from "@/lib/practice-goal-data";
 
 const highlightSchema = z.object({
   attemptId: z.string().trim().min(1),
@@ -482,6 +483,13 @@ export async function submitSkill(formData: FormData) {
     await syncWallet(student.id, { attemptId: attempt.id });
   } catch (error) {
     console.error("[wallet] không cộng được Xu sau khi nộp", error);
+  }
+
+  // Chỉ tiêu tự luyện tuần: đạt thì +30 Xu ngay. Lỗi không chặn nộp bài.
+  try {
+    await syncPracticeGoal(student.id);
+  } catch (error) {
+    console.error("[chi-tieu-tu-luyen] không đồng bộ được sau khi nộp", error);
   }
 
   // Bảng xếp hạng (Học Bá tháng + Chuỗi) cache 5 phút — nộp bài thì làm mới ngay.

@@ -10,6 +10,7 @@ import {
   groupRemindersByStudent,
   type ReminderCandidate,
 } from "@/lib/reminders";
+import { syncAllPracticeGoals } from "@/lib/practice-goal-data";
 import { grantMonthlyPrizes } from "@/lib/wallet";
 
 export const runtime = "nodejs";
@@ -76,9 +77,22 @@ export async function GET(request: Request): Promise<NextResponse> {
     console.error("[cron/reminders] Không cộng được thưởng Học Bá:", error);
   }
 
+  // Chỉ tiêu tự luyện: trừ Xu tuần đã qua mà chưa đạt (cả em không mở web). Idempotent.
+  let practiceGoalRows = 0;
+  try {
+    practiceGoalRows = await syncAllPracticeGoals();
+  } catch (error) {
+    console.error("[cron/reminders] Không đồng bộ được chỉ tiêu tự luyện:", error);
+  }
+
   if (!isEmailConfigured()) {
     console.warn("[cron/reminders] Bỏ qua: chưa cấu hình GMAIL_USER / GMAIL_APP_PASSWORD.");
-    return NextResponse.json({ skipped: "email_not_configured", sessionsCreated, prizesGranted });
+    return NextResponse.json({
+      skipped: "email_not_configured",
+      sessionsCreated,
+      prizesGranted,
+      practiceGoalRows
+    });
   }
 
   const now = new Date();
@@ -151,5 +165,6 @@ export async function GET(request: Request): Promise<NextResponse> {
     failed: results.length - sent,
     sessionsCreated,
     prizesGranted,
+    practiceGoalRows,
   });
 }

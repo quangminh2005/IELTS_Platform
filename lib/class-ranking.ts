@@ -10,6 +10,7 @@ import {
   recentWeeks,
   type PracticePart
 } from "@/lib/practice-goal";
+import { loadPracticeParts } from "@/lib/practice-goal-data";
 import {
   countsForStats,
   excludePracticeAssignment,
@@ -349,6 +350,9 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
     classmates.flatMap((classmate) => classmate.student.attempts.map((attempt) => attempt.id))
   );
 
+  // Phần tự luyện đã nộp từ mốc áp dụng chỉ tiêu (lib/practice-goal.ts).
+  const practiceParts = await loadPracticeParts(classmates.map((classmate) => classmate.student.id));
+
   const ranked = rankClassmates(
     classmates.map((classmate) => ({
       id: classmate.student.id,
@@ -357,6 +361,8 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
       avatarPreset: classmate.student.avatarPreset,
       userImage: classmate.student.user?.image ?? null,
       equippedFrame: classmate.student.equippedFrame,
+      practiceGoal: classmate.student.practiceWeeklyGoal,
+      practiceParts: practiceParts.get(classmate.student.id) ?? [],
       attempts: classmate.student.attempts.map((attempt) => ({
         scorePercent: attempt.scorePercent,
         startedAt: attempt.startedAt,

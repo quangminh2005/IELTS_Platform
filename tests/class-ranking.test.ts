@@ -122,6 +122,15 @@ describe("rankClassmates", () => {
     expect(ranked[0].rankingScore - ranked[1].rankingScore).toBe(10);
   });
 
+  it("em mới vào / vừa bật lại chỉ tiêu: tuần trước tuần bắt đầu không tính trượt", () => {
+    const after = new Date("2026-10-21T10:00:00+07:00");
+    const fresh = { ...classmate("a", "An", 80), practiceGoal: 1, practiceParts: [], practiceGoalFirstWeek: "2026-10-19" };
+    const [ranked] = rankClassmates([fresh], after);
+
+    expect(ranked.practiceGoalPercent).toBe(100);
+    expect(ranked.practiceWeeksConsidered).toBe(0);
+  });
+
   it("hoà điểm thì xếp theo tên", () => {
     const ranked = rankClassmates([classmate("y", "Yến", 80), classmate("a", "An", 80)], now);
 

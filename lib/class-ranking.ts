@@ -5,6 +5,7 @@ import { attemptBandFromCounts, averageBand, type SkillCount } from "@/lib/band-
 import { rankingScorePercent, studentRankingScore } from "@/lib/student-score";
 import { isSubmissionLate } from "@/lib/late-submission";
 import {
+  practiceGoalFirstWeek,
   practiceGoalPercent,
   practiceWeeks,
   recentWeeks,
@@ -68,6 +69,8 @@ export type ClassmateRow = {
   practiceGoal?: number;
   // Các phần tự luyện đã nộp từ PRACTICE_GOAL_START (lib/practice-goal-data.ts).
   practiceParts?: PracticePart[];
+  // Tuần đầu tính chỉ tiêu của em (practiceGoalFirstWeek). Thiếu = PRACTICE_GOAL_START.
+  practiceGoalFirstWeek?: string;
   attempts: Array<{
     scorePercent: number | null;
     startedAt: Date;
@@ -118,7 +121,7 @@ function scoreAt(row: ClassmateRow, now: Date, asOf: Date | null) {
     .filter((scorePercent): scorePercent is number => scorePercent !== null);
 
   const goal = row.practiceGoal ?? 0;
-  const weeks = practiceWeeks(row.practiceParts ?? [], goal, cutoff);
+  const weeks = practiceWeeks(row.practiceParts ?? [], goal, cutoff, row.practiceGoalFirstWeek);
 
   const score = studentRankingScore({
     scorePercents,
@@ -363,6 +366,9 @@ export async function getClassRanking(classId: string): Promise<RankedClassStude
       equippedFrame: classmate.student.equippedFrame,
       practiceGoal: classmate.student.practiceWeeklyGoal,
       practiceParts: practiceParts.get(classmate.student.id) ?? [],
+      practiceGoalFirstWeek: practiceGoalFirstWeek(
+        classmate.student.practiceGoalSince ?? classmate.student.createdAt
+      ),
       attempts: classmate.student.attempts.map((attempt) => ({
         scorePercent: attempt.scorePercent,
         startedAt: attempt.startedAt,

@@ -12,6 +12,10 @@ describe("chỉ tiêu tự luyện — schema", () => {
   it("ensure-db thêm cột cho prod", () => {
     expect(ensureDb).toContain('"practiceWeeklyGoal" INTEGER NOT NULL DEFAULT 1');
   });
+  it("có mốc practiceGoalSince (bật lại chỉ tiêu sau khi miễn) + ensure-db", () => {
+    expect(schema).toMatch(/practiceGoalSince\s+DateTime\?/);
+    expect(ensureDb).toContain('"practiceGoalSince" TIMESTAMP(3)');
+  });
   it("comment CoinKind liệt kê kind mới", () => {
     expect(schema).toMatch(/enum CoinKind.*practice_goal \| practice_miss/);
   });

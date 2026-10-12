@@ -7,6 +7,7 @@ import {
   countWords,
   missAmount,
   planPracticeGoalLedger,
+  practiceGoalFirstWeek,
   practiceGoalPercent,
   practiceWeeks,
   weekLabel,
@@ -132,15 +133,32 @@ export type PracticeGoalStatus = {
   percent: number; // thành phần Tự luyện của điểm xếp hạng
 };
 
+// Học viên cần cho việc tính chỉ tiêu: chỉ tiêu hiện tại + mốc bắt đầu tính (lib/practice-goal.ts
+// practiceGoalFirstWeek: tuần sau lúc bật lại chỉ tiêu, hoặc sau lúc em được tạo).
+export type PracticeGoalStudent = {
+  id: string;
+  practiceWeeklyGoal: number;
+  practiceGoalSince: Date | null;
+  createdAt: Date;
+};
+
+const goalStudentSelect = {
+  id: true,
+  practiceWeeklyGoal: true,
+  practiceGoalSince: true,
+  createdAt: true
+} as const;
+
 export async function getPracticeGoalStatuses(
-  students: Array<{ id: string; practiceWeeklyGoal: number }>,
+  students: PracticeGoalStudent[],
   now = new Date()
 ): Promise<Map<string, PracticeGoalStatus>> {
   const parts = await loadPracticeParts(students.map((student) => student.id));
   return new Map(
     students.map((student) => {
       const goal = student.practiceWeeklyGoal;
-      const weeks = practiceWeeks(parts.get(student.id) ?? [], goal, now);
+      const firstWeek = practiceGoalFirstWeek(student.practiceGoalSince ?? student.createdAt);
+      const weeks = practiceWeeks(parts.get(student.id) ?? [], goal, now, firstWeek);
       return [student.id, { goal, weeks, current: weeks[0] ?? null, percent: practiceGoalPercent(weeks, goal) }];
     })
   );
@@ -149,21 +167,21 @@ export async function getPracticeGoalStatuses(
 export async function getPracticeGoalStatus(studentId: string, now = new Date()): Promise<PracticeGoalStatus> {
   const student = await prisma.studentProfile.findUniqueOrThrow({
     where: { id: studentId },
-    select: { id: true, practiceWeeklyGoal: true }
+    select: goalStudentSelect
   });
   const statuses = await getPracticeGoalStatuses([student], now);
   return statuses.get(studentId)!;
 }
 
-// Ghi thưởng/trừ còn thiếu. Idempotent: khoá dòng + kiểm key trong transaction.
-export async function syncPracticeGoal(studentId: string, now = new Date()): Promise<number> {
-  const status = await getPracticeGoalStatus(studentId, now);
-  if (status.goal <= 0 || status.weeks.length === 0) return 0;
+const LEDGER_KINDS = ["practice_goal", "practice_miss"];
 
+// Ghi các bước còn thiếu cho MỘT em, dưới khoá dòng: đọc lại key trong khoá (lần gọi
+// song song chờ khoá rồi thấy key đã ghi → không ghi trùng), trừ Xu theo số dư lúc đó.
+async function applyPracticeGoalLedger(studentId: string, status: PracticeGoalStatus): Promise<number> {
   return prisma.$transaction(async (tx) => {
     await lockStudent(tx, studentId);
     const existing = await tx.coinTransaction.findMany({
-      where: { studentId, kind: { in: ["practice_goal", "practice_miss"] } },
+      where: { studentId, kind: { in: LEDGER_KINDS } },
       select: { key: true }
     });
     const steps = planPracticeGoalLedger(status.weeks, status.goal, new Set(existing.map((row) => row.key)));
@@ -191,16 +209,55 @@ export async function syncPracticeGoal(studentId: string, now = new Date()): Pro
   });
 }
 
-// Cron trưa: mọi học viên có chỉ tiêu ≥ 1. Lỗi một em không chặn các em khác.
+// Ghi thưởng/trừ còn thiếu của một em. Idempotent. Xem trước KHÔNG khoá — đa số lần gọi
+// (mở trang chủ, nộp bài) chẳng có gì để ghi nên khỏi mở transaction.
+export async function syncPracticeGoal(studentId: string, now = new Date()): Promise<number> {
+  const status = await getPracticeGoalStatus(studentId, now);
+  if (status.goal <= 0 || status.weeks.length === 0) return 0;
+
+  const existing = await prisma.coinTransaction.findMany({
+    where: { studentId, kind: { in: LEDGER_KINDS } },
+    select: { key: true }
+  });
+  if (planPracticeGoalLedger(status.weeks, status.goal, new Set(existing.map((row) => row.key))).length === 0) {
+    return 0;
+  }
+  return applyPracticeGoalLedger(studentId, status);
+}
+
+// Cron trưa: mọi em còn trong lớp (thầy thấy được ở /teacher/practice để miễn) có chỉ tiêu
+// ≥ 1. Đọc trạng thái + sổ của cả nhóm MỘT lần; chỉ em có bước cần ghi mới mở transaction.
+// Lỗi một em không chặn các em khác.
 export async function syncAllPracticeGoals(now = new Date()): Promise<number> {
   const students = await prisma.studentProfile.findMany({
-    where: { practiceWeeklyGoal: { gt: 0 } },
-    select: { id: true }
+    where: { practiceWeeklyGoal: { gt: 0 }, classes: { some: {} } },
+    select: goalStudentSelect
   });
+  if (students.length === 0) return 0;
+
+  const [statuses, ledger] = await Promise.all([
+    getPracticeGoalStatuses(students, now),
+    prisma.coinTransaction.findMany({
+      where: { studentId: { in: students.map((student) => student.id) }, kind: { in: LEDGER_KINDS } },
+      select: { studentId: true, key: true }
+    })
+  ]);
+  const keysByStudent = new Map<string, Set<string>>();
+  for (const row of ledger) {
+    const keys = keysByStudent.get(row.studentId) ?? new Set<string>();
+    keys.add(row.key);
+    keysByStudent.set(row.studentId, keys);
+  }
+
   let written = 0;
   for (const student of students) {
+    const status = statuses.get(student.id);
+    if (!status) continue;
+    const steps = planPracticeGoalLedger(status.weeks, status.goal, keysByStudent.get(student.id) ?? new Set());
+    if (steps.length === 0) continue;
+
     try {
-      written += await syncPracticeGoal(student.id, now);
+      written += await applyPracticeGoalLedger(student.id, status);
     } catch (error) {
       console.error("[chi-tieu-tu-luyen] không ghi được sổ Xu", student.id, error);
     }

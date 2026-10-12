@@ -70,6 +70,8 @@ export default async function TeacherPracticePage({ searchParams }: TeacherPract
       avatarUrl: true,
       avatarPreset: true,
       practiceWeeklyGoal: true,
+      practiceGoalSince: true,
+      createdAt: true,
       user: { select: { image: true } }
     }
   });

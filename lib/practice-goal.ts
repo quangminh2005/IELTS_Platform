@@ -77,13 +77,28 @@ export type WeekStatus = {
   rejected: { too_short: number; too_few_answers: number };
 };
 
-// Mọi tuần từ PRACTICE_GOAL_START tới tuần chứa `now`, MỚI NHẤT TRƯỚC.
-export function practiceWeeks(parts: PracticePart[], goal: number, now: Date): WeekStatus[] {
+// Tuần đầu tiên tính chỉ tiêu của MỘT em: tuần SAU mốc `since` (lúc em được tạo, hoặc lúc
+// thầy bật lại chỉ tiêu sau khi miễn), không sớm hơn PRACTICE_GOAL_START. Nhờ vậy tuần em
+// được miễn hay chưa vào lớp không bị trừ Xu / tính trượt về sau. null = từ mốc áp dụng.
+export function practiceGoalFirstWeek(since: Date | null): string {
+  if (!since) return PRACTICE_GOAL_START;
+  const next = shiftDateKey(vnWeekKey(since), 7);
+  return next > PRACTICE_GOAL_START ? next : PRACTICE_GOAL_START;
+}
+
+// Mọi tuần từ `firstWeek` (mặc định PRACTICE_GOAL_START) tới tuần chứa `now`, MỚI NHẤT TRƯỚC.
+export function practiceWeeks(
+  parts: PracticePart[],
+  goal: number,
+  now: Date,
+  firstWeek: string = PRACTICE_GOAL_START
+): WeekStatus[] {
   const current = vnWeekKey(now);
-  if (current < PRACTICE_GOAL_START) return [];
+  const start = firstWeek > PRACTICE_GOAL_START ? firstWeek : PRACTICE_GOAL_START;
+  if (current < start) return [];
 
   const byWeek = new Map<string, WeekStatus>();
-  for (let key = PRACTICE_GOAL_START; key <= current; key = shiftDateKey(key, 7)) {
+  for (let key = start; key <= current; key = shiftDateKey(key, 7)) {
     byWeek.set(key, {
       weekKey: key,
       done: 0,

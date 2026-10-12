@@ -12,4 +12,8 @@ describe("actions chỉ tiêu tự luyện", () => {
   it("chỉ sửa học viên thuộc lớp của thầy", () => {
     expect(source).toMatch(/classes:\s*\{\s*some:\s*\{\s*class:\s*\{\s*(id:[^,]+,\s*)?teacherId/);
   });
+  it("miễn (0) rồi bật lại thì ghi mốc practiceGoalSince — cả từng em lẫn cả lớp", () => {
+    expect(source.match(/practiceGoalSince: new Date\(\)/g)?.length).toBeGreaterThanOrEqual(2);
+    expect(source.match(/practiceWeeklyGoal === 0/g)?.length).toBe(2);
+  });
 });

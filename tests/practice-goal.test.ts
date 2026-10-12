@@ -4,6 +4,7 @@ import {
   judgePart,
   missAmount,
   planPracticeGoalLedger,
+  practiceGoalFirstWeek,
   practiceGoalPercent,
   practiceWeeks,
   recentWeeks,
@@ -167,5 +168,21 @@ describe("missAmount", () => {
     expect(missAmount(12)).toBe(-12);
     expect(missAmount(0)).toBe(0);
     expect(missAmount(-5)).toBe(0);
+  });
+});
+
+describe("tuần bắt đầu tính riêng từng em (miễn rồi bật lại / em mới)", () => {
+  it("practiceGoalFirstWeek: tuần SAU mốc bắt đầu, không sớm hơn mốc áp dụng", () => {
+    expect(practiceGoalFirstWeek(null)).toBe("2026-10-12");
+    expect(practiceGoalFirstWeek(vn("2026-09-01T10:00:00"))).toBe("2026-10-12");
+    expect(practiceGoalFirstWeek(vn("2026-10-28T10:00:00"))).toBe("2026-11-02");
+  });
+
+  it("tuần trước tuần bắt đầu không tồn tại → không bị trừ, không tính vào xếp hạng", () => {
+    const now = vn("2026-11-04T10:00:00");
+    const weeks = practiceWeeks([], 1, now, "2026-11-02");
+    expect(weeks.map((w) => w.weekKey)).toEqual(["2026-11-02"]);
+    expect(planPracticeGoalLedger(weeks, 1, new Set())).toEqual([]);
+    expect(practiceGoalPercent(weeks, 1)).toBe(100);
   });
 });

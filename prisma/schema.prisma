@@ -125,6 +125,9 @@ model StudentProfile {
   // Chỉ tiêu tự luyện mỗi tuần (số PHẦN kỹ năng làm thật) — lib/practice-goal.ts.
   // 0 = miễn: không thưởng/trừ Xu, thành phần Tự luyện của điểm xếp hạng luôn 100.
   practiceWeeklyGoal  Int                   @default(1)
+  // Lúc thầy bật lại chỉ tiêu sau khi miễn (0 → ≥1). Tuần đầu tính chỉ tiêu = tuần SAU
+  // mốc này (hoặc sau createdAt nếu null) — tuần đã miễn / chưa vào lớp không bị trừ.
+  practiceGoalSince   DateTime?
   user                User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
   classes             ClassStudent[]
   recipients          AssignmentRecipient[]

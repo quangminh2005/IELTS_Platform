@@ -38,6 +38,17 @@ function resolveAppUrl(): string {
   return "http://localhost:3000";
 }
 
+// Chỉ tiêu tự luyện: trừ Xu tuần đã qua mà chưa đạt (cả em không mở web). Idempotent.
+// Chạy SAU mail nhắc bài — việc cũ, quan trọng hơn — để chậm cũng không làm trễ mail.
+async function syncPracticeGoalsSafely(): Promise<number> {
+  try {
+    return await syncAllPracticeGoals();
+  } catch (error) {
+    console.error("[cron/reminders] Không đồng bộ được chỉ tiêu tự luyện:", error);
+    return 0;
+  }
+}
+
 export async function GET(request: Request): Promise<NextResponse> {
   const secret = process.env.CRON_SECRET;
 
@@ -77,16 +88,9 @@ export async function GET(request: Request): Promise<NextResponse> {
     console.error("[cron/reminders] Không cộng được thưởng Học Bá:", error);
   }
 
-  // Chỉ tiêu tự luyện: trừ Xu tuần đã qua mà chưa đạt (cả em không mở web). Idempotent.
-  let practiceGoalRows = 0;
-  try {
-    practiceGoalRows = await syncAllPracticeGoals();
-  } catch (error) {
-    console.error("[cron/reminders] Không đồng bộ được chỉ tiêu tự luyện:", error);
-  }
-
   if (!isEmailConfigured()) {
     console.warn("[cron/reminders] Bỏ qua: chưa cấu hình GMAIL_USER / GMAIL_APP_PASSWORD.");
+    const practiceGoalRows = await syncPracticeGoalsSafely();
     return NextResponse.json({
       skipped: "email_not_configured",
       sessionsCreated,
@@ -157,6 +161,8 @@ export async function GET(request: Request): Promise<NextResponse> {
       console.error("[cron/reminders] Gửi mail thất bại:", result.reason);
     }
   }
+
+  const practiceGoalRows = await syncPracticeGoalsSafely();
 
   return NextResponse.json({
     checked: candidates.length,

@@ -11,7 +11,10 @@ export type CoinKind =
   | "streak_restore"
   | "reward_redeem"
   | "reward_refund"
-  | "monthly_prize";
+  | "monthly_prize"
+  // Chỉ tiêu tự luyện tuần (lib/practice-goal.ts) — không tính XP.
+  | "practice_goal"
+  | "practice_miss";
 
 // Một phần (AssignableUnit) trong một lượt làm LƯỢT ĐẦU (attemptRound = 1).
 export type CoinUnitRow = {

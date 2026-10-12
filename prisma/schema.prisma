@@ -24,7 +24,7 @@ datasource db {
 // enum DeckCardSource (VocabDeckCard.source): bank | student | teacher
 // enum SpeakingPrepScope (Assignment.speakingPrepScope, null = per_question): per_question | shared
 // enum MaterialCategory (Material.category): book | homework
-// enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund | monthly_prize
+// enum CoinKind (CoinTransaction.kind): earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund | monthly_prize | practice_goal | practice_miss
 // enum RewardLimitPeriod (Reward.limitPeriod): month | ever
 // enum RedemptionStatus (RewardRedemption.status): pending | delivered | rejected | cancelled
 // enum ItemSource (StudentItem.source): purchase | achievement | streak (tư thế linh vật mở bằng chuỗi ngày)
@@ -122,6 +122,9 @@ model StudentProfile {
   // Tài khoản thử của thầy: không hiện trên mọi bảng xếp hạng (Học Bá, Chuỗi, Điểm
   // lớp, Tổng kết tháng) và không được xét thưởng Xu tháng. Thầy bật ở trang học viên.
   hiddenFromBoards    Boolean               @default(false)
+  // Chỉ tiêu tự luyện mỗi tuần (số PHẦN kỹ năng làm thật) — lib/practice-goal.ts.
+  // 0 = miễn: không thưởng/trừ Xu, thành phần Tự luyện của điểm xếp hạng luôn 100.
+  practiceWeeklyGoal  Int                   @default(1)
   user                User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
   classes             ClassStudent[]
   recipients          AssignmentRecipient[]
@@ -728,7 +731,7 @@ model BugReport {
 model CoinTransaction {
   id        String   @id @default(cuid())
   studentId String
-  // earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund | monthly_prize — xem comment đầu schema
+  // earn_unit | earn_vocab | purchase | streak_restore | reward_redeem | reward_refund | monthly_prize | practice_goal | practice_miss — xem comment đầu schema
   kind      String
   key       String
   amount    Int

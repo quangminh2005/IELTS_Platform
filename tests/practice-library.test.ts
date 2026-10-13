@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   countByQuestionGroup,
+  materialCoverText,
   parseQuestionGroupParam,
+  partLabelOf,
+  partNumberOf,
+  sortBooks,
+  summarizeUnitProgress,
+  unitCardText,
   practiceProgressLabel,
   questionGroupsOf,
   summarizePracticeAttempts,
@@ -151,5 +157,78 @@ describe("lọc theo dạng câu", () => {
       { key: "true_false", label: "True/False/Not Given", count: 1 },
       { key: "completion", label: "Điền từ", count: 2 }
     ]);
+  });
+});
+
+describe("bộ lọc kiểu chin: Part / bộ sách / bìa thẻ", () => {
+  it("đọc số Part từ đủ kiểu tên unit", () => {
+    expect(partNumberOf("Listening Section 1 – Reporting a stolen briefcase")).toBe(1);
+    expect(partNumberOf("Listening Part 4 – The spirit bear")).toBe(4);
+    expect(partNumberOf("Passage 3 – The psychology of innovation")).toBe(3);
+    expect(partNumberOf("Part Two – Clubs for students")).toBe(2);
+    expect(partNumberOf("Writing Task 2 – Long school holidays")).toBe(2);
+    expect(partNumberOf("Unit 12  Acid Rain!")).toBeNull();
+  });
+
+  it("nhãn Part theo kỹ năng", () => {
+    expect(partLabelOf("listening", 1)).toBe("Part 1");
+    expect(partLabelOf("reading", 2)).toBe("Passage 2");
+    expect(partLabelOf("writing", 1)).toBe("Task 1");
+  });
+
+  it("tách nhãn + chủ đề trên thẻ", () => {
+    expect(unitCardText("listening", "Listening Part 1 – Self-drive tours in the USA")).toEqual({
+      badge: "Part 1",
+      topic: "Self-drive tours in the USA"
+    });
+    expect(unitCardText("listening", "Unit 3  Growing Roses")).toEqual({
+      badge: "Unit 3",
+      topic: "Growing Roses"
+    });
+    expect(unitCardText("reading", "Bài đọc tự soạn")).toEqual({ badge: null, topic: "Bài đọc tự soạn" });
+  });
+
+  it("chữ trên bìa thẻ full test", () => {
+    expect(materialCoverText("Cambridge IELTS 10 – Test 1 (Listening)")).toEqual({
+      kicker: "Cambridge IELTS",
+      big: "10",
+      sub: "Test 1"
+    });
+    expect(materialCoverText("Listening Practice Through Dictation 3")).toEqual({
+      kicker: "Listening Practice Through Dictation",
+      big: "3",
+      sub: ""
+    });
+    expect(materialCoverText("Đề tự luyện")).toEqual({ kicker: "Đề tự luyện", big: null, sub: "" });
+  });
+
+  it("tab bộ sách: bộ đề IELTS trước, số lớn trước", () => {
+    expect(
+      sortBooks([
+        { name: "Listening Practice Through Dictation", ieltsFormat: false },
+        { name: "Cambridge IELTS 1", ieltsFormat: true },
+        { name: "Cambridge IELTS 20", ieltsFormat: true },
+        { name: "Cambridge IELTS 10", ieltsFormat: true }
+      ])
+    ).toEqual([
+      "Cambridge IELTS 20",
+      "Cambridge IELTS 10",
+      "Cambridge IELTS 1",
+      "Listening Practice Through Dictation"
+    ]);
+  });
+
+  it("tiến độ từng Part: luyện cả đề cũng tính cho mọi Part", () => {
+    const progress = summarizeUnitProgress(
+      [
+        { practiceScopeKey: "s1:m1:all", correctByUnit: { u1: 7, u2: 4 } },
+        { practiceScopeKey: "s1:m1:u1", correctByUnit: { u1: 9 } },
+        { practiceScopeKey: null, correctByUnit: { u1: 10 } }
+      ],
+      new Map([["m1", ["u1", "u2", "u3"]]])
+    );
+    expect(progress.get("u1")).toEqual({ rounds: 2, bestCorrect: 9 });
+    expect(progress.get("u2")).toEqual({ rounds: 1, bestCorrect: 4 });
+    expect(progress.get("u3")).toEqual({ rounds: 1, bestCorrect: 0 });
   });
 });

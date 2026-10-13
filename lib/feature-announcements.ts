@@ -73,10 +73,10 @@ export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
   {
     id: "student-practice-by-type",
     audience: "student",
-    title: ["Luyện theo dạng câu", "Đúng chỗ còn yếu"],
+    title: ["Tự luyện từng Part", "Lọc như thi thật"],
     description:
-      "Thư viện Tự luyện giờ lọc được theo dạng câu như True/False/Not Given hay Điền từ — trang Tiến bộ chỉ thẳng dạng em cần luyện.",
-    cta: "Chọn dạng",
+      "Thư viện Tự luyện giờ chia thẻ từng Part: lọc theo bộ sách, Part, dạng câu, chưa làm/đã làm — hoặc chọn luyện cả full test.",
+    cta: "Vào thư viện",
     href: "/student/practice",
     mascot: "owl",
     pose: "read",

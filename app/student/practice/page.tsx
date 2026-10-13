@@ -2,13 +2,16 @@ import { redirect } from "next/navigation";
 import { NoticeToast } from "@/components/notice-toast";
 import { PracticeLibrary } from "@/components/practice-library";
 import { auth } from "@/lib/auth";
-import { onlyPracticeRecipient, practiceScopeKey } from "@/lib/practice";
+import { onlyPracticeRecipient, parsePracticeScopeKey, practiceScopeKey } from "@/lib/practice";
+import { bandScore } from "@/lib/band-score";
 import {
   parseQuestionGroupParam,
+  partNumberOf,
   practiceProgressLabel,
   questionGroupsOf,
   summarizePracticeAttempts,
   summarizeUnfinishedPractice,
+  summarizeUnitProgress,
   type PracticeMaterialItem
 } from "@/lib/practice-library";
 import { prisma } from "@/lib/prisma";
@@ -25,6 +28,8 @@ type StudentPracticePageProps = {
     practiceNonce?: string;
     // Nhóm dạng câu lọc sẵn (link "Luyện dạng này" từ trang Tiến bộ).
     type?: string;
+    // Kỹ năng mở sẵn (tab Nghe/Đọc/Viết/Nói), kiểu ?module= của chin.
+    skill?: string;
   };
 };
 
@@ -66,6 +71,7 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
         title: true,
         skill: true,
         sourceLabel: true,
+        bookName: true,
         practiceLockAudio: true,
         units: {
           orderBy: [{ unitNumber: "asc" }, { createdAt: "asc" }],
@@ -86,7 +92,9 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
         assignmentRecipient: onlyPracticeRecipient
       },
       select: {
+        id: true,
         score: true,
+        submittedAt: true,
         assignmentRecipient: {
           select: { assignment: { select: { practiceScopeKey: true } } }
         }
@@ -116,6 +124,42 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
       where: { assignableUnit: { material: { practiceOpen: true } } }
     })
   ]);
+
+  // Số câu đúng theo (lượt, phần) — để thẻ Part in "Đã làm 7/10" kể cả khi học viên
+  // luyện cả đề. groupBy chỉ trả con số, không kéo nội dung câu trả lời.
+  const correctRows =
+    attempts.length > 0
+      ? await prisma.answer.groupBy({
+          by: ["attemptId", "assignableUnitId"],
+          where: { attemptId: { in: attempts.map((attempt) => attempt.id) }, isCorrect: true },
+          _count: { _all: true }
+        })
+      : [];
+  const correctByAttempt = new Map<string, Record<string, number>>();
+  for (const row of correctRows) {
+    const byUnit = correctByAttempt.get(row.attemptId) ?? {};
+    byUnit[row.assignableUnitId] = row._count._all;
+    correctByAttempt.set(row.attemptId, byUnit);
+  }
+
+  const unitProgress = summarizeUnitProgress(
+    attempts.map((attempt) => ({
+      practiceScopeKey: attempt.assignmentRecipient.assignment.practiceScopeKey,
+      correctByUnit: correctByAttempt.get(attempt.id) ?? {}
+    })),
+    new Map(materials.map((material) => [material.id, material.units.map((unit) => unit.id)]))
+  );
+
+  // Ngày nộp gần nhất theo đề (dòng "Lần gần nhất" trên thẻ full test).
+  const lastByMaterial = new Map<string, Date>();
+  for (const attempt of attempts) {
+    const scope = parsePracticeScopeKey(attempt.assignmentRecipient.assignment.practiceScopeKey);
+    if (!scope || !attempt.submittedAt) continue;
+    const previous = lastByMaterial.get(scope.materialId);
+    if (!previous || attempt.submittedAt > previous) {
+      lastByMaterial.set(scope.materialId, attempt.submittedAt);
+    }
+  }
 
   const typesByUnit = new Map<string, string[]>();
   for (const row of unitTypes) {
@@ -155,11 +199,18 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
       const unitHasAudio = (unit: (typeof material.units)[number]) =>
         unit.skill === "listening" && Boolean(unit.audioUrl);
 
+      const bestCorrect = progress?.bestCorrect ?? null;
+
       return {
         id: material.id,
         title: material.title,
         skill: material.skill,
         sourceLabel: material.sourceLabel,
+        book: material.bookName?.trim() || material.sourceLabel?.trim() || "Đề khác",
+        rounds: progress?.rounds ?? 0,
+        bestCorrect,
+        band: bestCorrect === null ? null : bandScore(material.skill, bestCorrect, questionCount),
+        lastPracticedAt: lastByMaterial.get(material.id)?.toISOString() ?? null,
         unitCount: material.units.length,
         questionCount,
         progressLabel: practiceProgressLabel(
@@ -173,14 +224,23 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
         questionGroups: questionGroupsOf(
           material.units.flatMap((unit) => typesByUnit.get(unit.id) ?? [])
         ),
-        units: material.units.map((unit) => ({
-          id: unit.id,
-          title: unit.title,
-          questionCount: unit._count.questions,
-          hasAudio: unitHasAudio(unit),
-          resume: unfinishedByScope.get(practiceScopeKey(student.id, material.id, unit.id)) ?? null,
-          questionGroups: questionGroupsOf(typesByUnit.get(unit.id) ?? [])
-        }))
+        units: material.units.map((unit) => {
+          const groups = questionGroupsOf(typesByUnit.get(unit.id) ?? []);
+          const done = unitProgress.get(unit.id);
+          return {
+            id: unit.id,
+            title: unit.title,
+            questionCount: unit._count.questions,
+            hasAudio: unitHasAudio(unit),
+            resume:
+              unfinishedByScope.get(practiceScopeKey(student.id, material.id, unit.id)) ?? null,
+            questionGroups: groups,
+            partNumber: partNumberOf(unit.title),
+            rounds: done?.rounds ?? 0,
+            // Phần chấm tay (Viết/Nói) không có nhóm dạng câu tự chấm -> không in điểm.
+            bestCorrect: done && groups.length > 0 ? done.bestCorrect : null
+          };
+        })
       };
     });
 
@@ -213,6 +273,7 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
       <PracticeLibrary
         items={items}
         initialGroup={parseQuestionGroupParam(searchParams?.type)}
+        initialSkill={searchParams?.skill}
         noticeMessage={practiceMessage}
         noticeNonce={practiceNonce}
       />

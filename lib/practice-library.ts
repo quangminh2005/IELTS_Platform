@@ -121,6 +121,12 @@ export type PracticeUnitItem = {
   resume: PracticeResumeState | null;
   // Các nhóm dạng câu có trong phần (thứ tự theo QUESTION_GROUPS) — để lọc theo dạng.
   questionGroups: QuestionGroupKey[];
+  // Số thứ tự Part/Passage/Task đọc từ tên (null = unit không theo khuôn đề IELTS).
+  partNumber: number | null;
+  // Số lượt đã nộp có phủ phần này (luyện lẻ + luyện cả đề) và số câu đúng cao nhất.
+  rounds: number;
+  // null = phần chấm tay (Viết/Nói) — không in "x/y" trên thẻ.
+  bestCorrect: number | null;
 };
 
 export type PracticeMaterialItem = {
@@ -141,6 +147,14 @@ export type PracticeMaterialItem = {
   units: PracticeUnitItem[];
   // Hợp các nhóm dạng câu của mọi phần.
   questionGroups: QuestionGroupKey[];
+  // Kệ sách (Material.bookName, thiếu thì sourceLabel) — tab bộ sách kiểu chin.
+  book: string;
+  // Tiến độ cả đề cho thẻ full test.
+  rounds: number;
+  bestCorrect: number | null;
+  band: number | null;
+  // Ngày nộp gần nhất (ISO) của mọi lượt thuộc đề, null = chưa luyện.
+  lastPracticedAt: string | null;
 };
 
 // ===== Lọc thư viện theo dạng câu =====
@@ -173,4 +187,136 @@ export function countByQuestionGroup(
     label: group.label,
     count: items.filter((item) => item.questionGroups.includes(group.key)).length
   })).filter((row) => row.count > 0);
+}
+
+// ===== Bộ lọc kiểu chin.edu.vn: bộ sách / Part / full test =====
+
+// Tên gọi một "phần" theo kỹ năng — giống đề thi thật: Nghe có Part, Đọc có
+// Passage, Viết có Task, Nói có Part.
+const PART_WORD: Record<string, string> = {
+  listening: "Part",
+  reading: "Passage",
+  writing: "Task",
+  speaking: "Part"
+};
+
+const WORD_NUMBERS: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+
+// Đọc số thứ tự phần từ tên unit: "Listening Section 1 – …", "Listening Part 2 – …",
+// "Passage 3 – …", "Part One – …" (GT), "Writing Task 1 – …", "Speaking Part 3 – …".
+// Unit không theo khuôn đề IELTS (vd "Unit 12  Acid Rain!" của LPTD) -> null, chỉ
+// hiện ở "Tất cả part".
+export function partNumberOf(unitTitle: string): number | null {
+  const match = /\b(?:part|section|passage|task)\s+(\d+|one|two|three|four|five)\b/i.exec(unitTitle);
+  if (!match) return null;
+  const raw = match[1].toLowerCase();
+  const value = WORD_NUMBERS[raw] ?? Number(raw);
+  return Number.isFinite(value) && value > 0 ? value : null;
+}
+
+export function partLabelOf(skill: string, partNumber: number): string {
+  return `${PART_WORD[skill] ?? "Part"} ${partNumber}`;
+}
+
+// Nhãn ngắn trên thẻ + tên chủ đề của unit. "Listening Part 1 – Self-drive tours"
+// -> { badge: "Part 1", topic: "Self-drive tours" }; "Unit 3  Growing Roses" ->
+// { badge: "Unit 3", topic: "Growing Roses" }; tên lạ thì giữ nguyên làm chủ đề.
+export function unitCardText(
+  skill: string,
+  unitTitle: string
+): { badge: string | null; topic: string } {
+  const title = unitTitle.trim();
+  const partNumber = partNumberOf(title);
+  const dash = title.search(/\s[–—-]\s/);
+
+  if (partNumber !== null) {
+    const topic = dash >= 0 ? title.slice(dash + 3).trim() : title;
+    return { badge: partLabelOf(skill, partNumber), topic: topic || title };
+  }
+
+  const unit = /^(unit\s+\d+)\s*[:.–—-]?\s*(.*)$/i.exec(title);
+  if (unit) {
+    return { badge: unit[1].replace(/\s+/g, " "), topic: unit[2].trim() || title };
+  }
+
+  return { badge: null, topic: title };
+}
+
+// Bỏ đuôi "(Listening)" / "(Reading)"... trên tên đề — kỹ năng đã nằm ở tab.
+export function shortMaterialTitle(title: string): string {
+  return title.replace(/\s*\((listening|reading|writing|speaking)\)\s*$/i, "").trim();
+}
+
+// Chữ in trên bìa thẻ full test, kiểu chin: "CAMBRIDGE IELTS" / "10" / "TEST 1".
+// "Cambridge IELTS 10 – Test 1 (Listening)" -> kicker "Cambridge IELTS", big "10",
+// sub "Test 1"; "Listening Practice Through Dictation 3" -> big "3", sub "".
+// Không có số nào -> big null (thẻ chỉ in tên).
+export function materialCoverText(title: string): {
+  kicker: string;
+  big: string | null;
+  sub: string;
+} {
+  const short = shortMaterialTitle(title);
+  const withRest = /^(.*?)\s*(\d+)\s*[–—-]\s*(.+)$/.exec(short);
+  if (withRest && withRest[1]) {
+    return { kicker: withRest[1].trim(), big: withRest[2], sub: withRest[3].trim() };
+  }
+  const trailing = /^(.*?)\s+(\d+)$/.exec(short);
+  if (trailing) {
+    return { kicker: trailing[1].trim(), big: trailing[2], sub: "" };
+  }
+  return { kicker: short, big: null, sub: "" };
+}
+
+// Một lượt tự luyện đã nộp kèm số câu đúng của từng phần trong lượt đó.
+export type PracticeAttemptDetail = {
+  practiceScopeKey: string | null;
+  correctByUnit: Record<string, number>;
+};
+
+export type PracticeUnitProgress = { rounds: number; bestCorrect: number };
+
+// Tiến độ từng PHẦN (thẻ Part kiểu chin "Đã làm 7/10"): lượt luyện lẻ phần đó và
+// lượt luyện cả đề đều tính — làm full test xong thì 4 thẻ Part cũng thành "Đã
+// làm". bestCorrect = số câu đúng cao nhất của phần đó qua các lượt.
+export function summarizeUnitProgress(
+  attempts: PracticeAttemptDetail[],
+  unitIdsByMaterial: Map<string, string[]>
+): Map<string, PracticeUnitProgress> {
+  const summary = new Map<string, PracticeUnitProgress>();
+
+  for (const attempt of attempts) {
+    const scope = parsePracticeScopeKey(attempt.practiceScopeKey);
+    if (scope === null) continue;
+
+    const covered = scope.unitId ? [scope.unitId] : unitIdsByMaterial.get(scope.materialId) ?? [];
+    for (const unitId of covered) {
+      const correct = attempt.correctByUnit[unitId] ?? 0;
+      const current = summary.get(unitId);
+      summary.set(unitId, {
+        rounds: (current?.rounds ?? 0) + 1,
+        bestCorrect: Math.max(current?.bestCorrect ?? 0, correct)
+      });
+    }
+  }
+
+  return summary;
+}
+
+// Sắp tab bộ sách: bộ đề IELTS (có Part/Passage) lên trước, trong đó số lớn trước
+// (Cambridge 20 trước Cambridge 10, như chin để sách mới nhất lên đầu); sách bổ trợ
+// (LPTD...) xuống sau.
+const bookCollator = new Intl.Collator("vi", { numeric: true, sensitivity: "base" });
+
+export function sortBooks(books: Array<{ name: string; ieltsFormat: boolean }>): string[] {
+  return [...books]
+    .sort((a, b) => {
+      if (a.ieltsFormat !== b.ieltsFormat) return a.ieltsFormat ? -1 : 1;
+      return bookCollator.compare(b.name, a.name);
+    })
+    .map((book) => book.name);
+}
+
+export function compareTitles(a: string, b: string): number {
+  return bookCollator.compare(a, b);
 }

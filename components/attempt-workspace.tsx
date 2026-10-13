@@ -3314,6 +3314,11 @@ export function AttemptWorkspace({
             if (next.questionType !== regularQuestions[startIndex].questionType) {
               break;
             }
+            // Câu mở đầu một nhóm hướng dẫn riêng (vd mỗi câu chọn tranh A–D có ảnh
+            // riêng) thì không gộp vào lưới chung — giữ khung hướng dẫn + ảnh của nó.
+            if (groupKeys.includes(next.order)) {
+              break;
+            }
             const nextOptions = parseQuestionOptions(next.optionsJson);
             const sameOptions =
               nextOptions.length === options.length &&

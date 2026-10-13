@@ -1,4 +1,9 @@
 import { parsePracticeScopeKey } from "@/lib/practice";
+import {
+  QUESTION_GROUPS,
+  groupForQuestionType,
+  type QuestionGroupKey
+} from "@/lib/question-stats";
 
 // Nhãn tiến độ tự luyện hiện trên mỗi thẻ đề. Tách khỏi UI để test được.
 export function practiceProgressLabel(
@@ -114,6 +119,8 @@ export type PracticeUnitItem = {
   hasAudio: boolean;
   // null = chưa có lượt nào đang dở ở phần này.
   resume: PracticeResumeState | null;
+  // Các nhóm dạng câu có trong phần (thứ tự theo QUESTION_GROUPS) — để lọc theo dạng.
+  questionGroups: QuestionGroupKey[];
 };
 
 export type PracticeMaterialItem = {
@@ -132,4 +139,38 @@ export type PracticeMaterialItem = {
   // Lượt đang dở của phạm vi CẢ ĐỀ (phạm vi từng phần nằm ở units[].resume).
   resume: PracticeResumeState | null;
   units: PracticeUnitItem[];
+  // Hợp các nhóm dạng câu của mọi phần.
+  questionGroups: QuestionGroupKey[];
 };
+
+// ===== Lọc thư viện theo dạng câu =====
+
+// Đổi danh sách questionType (có thể lặp, có thể là dạng chấm tay) thành các nhóm
+// dạng câu, bỏ trùng, xếp theo thứ tự QUESTION_GROUPS. writing_task/speaking_task
+// không có nhóm nên tự rơi ra.
+export function questionGroupsOf(questionTypes: Iterable<string>): QuestionGroupKey[] {
+  const found = new Set<QuestionGroupKey>();
+  for (const type of questionTypes) {
+    const group = groupForQuestionType(type);
+    if (group) found.add(group);
+  }
+  return QUESTION_GROUPS.map((group) => group.key).filter((key) => found.has(key));
+}
+
+// Đọc ?type= trên URL (link "Luyện dạng này" ở trang Tiến bộ). Giá trị lạ -> null.
+export function parseQuestionGroupParam(value: string | undefined | null): QuestionGroupKey | null {
+  if (!value) return null;
+  return QUESTION_GROUPS.some((group) => group.key === value) ? (value as QuestionGroupKey) : null;
+}
+
+// Đếm số đề có từng nhóm dạng câu — số hiện trên chip lọc. Chỉ trả các nhóm có ít
+// nhất một đề, giữ thứ tự QUESTION_GROUPS.
+export function countByQuestionGroup(
+  items: Array<Pick<PracticeMaterialItem, "questionGroups">>
+): Array<{ key: QuestionGroupKey; label: string; count: number }> {
+  return QUESTION_GROUPS.map((group) => ({
+    key: group.key,
+    label: group.label,
+    count: items.filter((item) => item.questionGroups.includes(group.key)).length
+  })).filter((row) => row.count > 0);
+}

@@ -4,7 +4,9 @@ import { PracticeLibrary } from "@/components/practice-library";
 import { auth } from "@/lib/auth";
 import { onlyPracticeRecipient, practiceScopeKey } from "@/lib/practice";
 import {
+  parseQuestionGroupParam,
   practiceProgressLabel,
+  questionGroupsOf,
   summarizePracticeAttempts,
   summarizeUnfinishedPractice,
   type PracticeMaterialItem
@@ -21,6 +23,8 @@ type StudentPracticePageProps = {
     practiceMessage?: string;
     practiceStatus?: string;
     practiceNonce?: string;
+    // Nhóm dạng câu lọc sẵn (link "Luyện dạng này" từ trang Tiến bộ).
+    type?: string;
   };
 };
 
@@ -53,7 +57,7 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
   }
 
   // select (KHÔNG include): content/transcript/metadataJson của unit rất nặng.
-  const [materials, attempts, unfinishedAttempts] = await Promise.all([
+  const [materials, attempts, unfinishedAttempts, unitTypes] = await Promise.all([
     prisma.material.findMany({
       where: { practiceOpen: true },
       orderBy: [{ skill: "asc" }, { title: "asc" }],
@@ -104,8 +108,21 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
           }
         }
       }
+    }),
+    // Dạng câu của từng phần — groupBy chỉ trả cặp (phần, dạng), không kéo nội dung
+    // câu hỏi (vài đề LPTD có hàng nghìn câu).
+    prisma.question.groupBy({
+      by: ["assignableUnitId", "questionType"],
+      where: { assignableUnit: { material: { practiceOpen: true } } }
     })
   ]);
+
+  const typesByUnit = new Map<string, string[]>();
+  for (const row of unitTypes) {
+    const list = typesByUnit.get(row.assignableUnitId) ?? [];
+    list.push(row.questionType);
+    typesByUnit.set(row.assignableUnitId, list);
+  }
 
   // Gộp số lượt và điểm cao nhất theo từng đề (chỉ lượt luyện CẢ ĐỀ mới tính vào
   // điểm cao nhất — xem summarizePracticeAttempts).
@@ -153,12 +170,16 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
         hasAudio: material.units.some(unitHasAudio),
         lockAudioForced: material.practiceLockAudio,
         resume: unfinishedByScope.get(practiceScopeKey(student.id, material.id, null)) ?? null,
+        questionGroups: questionGroupsOf(
+          material.units.flatMap((unit) => typesByUnit.get(unit.id) ?? [])
+        ),
         units: material.units.map((unit) => ({
           id: unit.id,
           title: unit.title,
           questionCount: unit._count.questions,
           hasAudio: unitHasAudio(unit),
-          resume: unfinishedByScope.get(practiceScopeKey(student.id, material.id, unit.id)) ?? null
+          resume: unfinishedByScope.get(practiceScopeKey(student.id, material.id, unit.id)) ?? null,
+          questionGroups: questionGroupsOf(typesByUnit.get(unit.id) ?? [])
         }))
       };
     });
@@ -189,7 +210,12 @@ export default async function StudentPracticePage({ searchParams }: StudentPract
           trong so theo message/status không thấy gì đổi nên toast lần hai sẽ
           không hiện lại. */}
       <NoticeToast key={practiceNonce} message={practiceMessage} status={practiceStatus} />
-      <PracticeLibrary items={items} noticeMessage={practiceMessage} noticeNonce={practiceNonce} />
+      <PracticeLibrary
+        items={items}
+        initialGroup={parseQuestionGroupParam(searchParams?.type)}
+        noticeMessage={practiceMessage}
+        noticeNonce={practiceNonce}
+      />
     </div>
   );
 }

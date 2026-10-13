@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
+  countByQuestionGroup,
+  parseQuestionGroupParam,
   practiceProgressLabel,
+  questionGroupsOf,
   summarizePracticeAttempts,
   summarizeUnfinishedPractice
 } from "@/lib/practice-library";
@@ -112,5 +115,41 @@ describe("summarizePracticeAttempts", () => {
     ]);
 
     expect(summary.get("material1")).toEqual({ rounds: 3, bestCorrect: 18 });
+  });
+});
+
+// Lọc thư viện tự luyện theo dạng câu (kiểu youpass.vn).
+describe("lọc theo dạng câu", () => {
+  it("gộp questionType thành nhóm, bỏ trùng, giữ thứ tự hiển thị, bỏ dạng chấm tay", () => {
+    expect(
+      questionGroupsOf([
+        "note_completion",
+        "true_false_not_given",
+        "writing_task",
+        "gap_fill",
+        "multiple_choice",
+        "drag_drop_matching"
+      ])
+    ).toEqual(["multiple_choice", "true_false", "matching", "completion"]);
+    expect(questionGroupsOf(["speaking_task"])).toEqual([]);
+  });
+
+  it("chỉ nhận ?type= hợp lệ", () => {
+    expect(parseQuestionGroupParam("true_false")).toBe("true_false");
+    expect(parseQuestionGroupParam("true_false_not_given")).toBeNull();
+    expect(parseQuestionGroupParam(undefined)).toBeNull();
+  });
+
+  it("đếm số đề mỗi dạng, bỏ dạng không có đề", () => {
+    expect(
+      countByQuestionGroup([
+        { questionGroups: ["true_false", "completion"] },
+        { questionGroups: ["completion"] },
+        { questionGroups: [] }
+      ])
+    ).toEqual([
+      { key: "true_false", label: "True/False/Not Given", count: 1 },
+      { key: "completion", label: "Điền từ", count: 2 }
+    ]);
   });
 });

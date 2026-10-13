@@ -4,7 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import { createPortal, useFormStatus } from "react-dom";
 import { startPractice } from "@/lib/actions/practice";
 import { XP_HIDDEN_AUDIO_FACTOR } from "@/lib/monthly-xp";
-import type { PracticeMaterialItem, PracticeResumeState } from "@/lib/practice-library";
+import {
+  countByQuestionGroup,
+  type PracticeMaterialItem,
+  type PracticeResumeState
+} from "@/lib/practice-library";
+import { QUESTION_GROUPS, type QuestionGroupKey } from "@/lib/question-stats";
 import { SKILL_LABELS } from "@/lib/skills";
 
 // "+50%" — đọc thẳng hệ số trong lib/monthly-xp.ts để nhãn không lệch cách cộng thật.
@@ -33,6 +38,10 @@ const chipClass =
 const activeChipClass =
   "rounded-full border border-primary bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary";
 
+const GROUP_LABELS = Object.fromEntries(
+  QUESTION_GROUPS.map((group) => [group.key, group.label])
+) as Record<QuestionGroupKey, string>;
+
 type PracticeTarget = {
   materialId: string;
   unitId: string | null;
@@ -46,15 +55,19 @@ type PracticeTarget = {
 
 export function PracticeLibrary({
   items,
+  initialGroup = null,
   noticeMessage,
   noticeNonce
 }: {
   items: PracticeMaterialItem[];
+  // Lọc sẵn theo dạng câu khi mở từ link "Luyện dạng này" (?type=).
+  initialGroup?: QuestionGroupKey | null;
   noticeMessage?: string;
   noticeNonce?: string;
 }) {
   const [search, setSearch] = useState("");
   const [skill, setSkill] = useState("all");
+  const [group, setGroup] = useState<QuestionGroupKey | null>(initialGroup);
   const [target, setTarget] = useState<PracticeTarget | null>(null);
 
   // startPractice gặp lỗi (đề vừa bị gỡ khỏi thư viện, đề chưa có phần nào...)
@@ -73,7 +86,9 @@ export function PracticeLibrary({
     }
   }, [noticeMessage, noticeNonce]);
 
-  const visible = useMemo(() => {
+  // Lọc theo kỹ năng + ô tìm trước, rồi mới đếm số đề từng dạng câu trên phần còn
+  // lại — số trên chip dạng câu luôn khớp với số thẻ hiện ra khi bấm chip đó.
+  const bySkillAndSearch = useMemo(() => {
     const query = search.trim().toLowerCase();
 
     return items.filter((item) => {
@@ -82,6 +97,19 @@ export function PracticeLibrary({
       return `${item.title} ${item.sourceLabel ?? ""}`.toLowerCase().includes(query);
     });
   }, [items, search, skill]);
+
+  const groupChips = useMemo(() => {
+    const chips = countByQuestionGroup(bySkillAndSearch);
+    // Dạng đang chọn mà hết đề (vừa đổi kỹ năng) vẫn giữ chip để còn chỗ bấm bỏ chọn.
+    if (group && !chips.some((chip) => chip.key === group)) {
+      chips.push({ key: group, label: GROUP_LABELS[group], count: 0 });
+    }
+    return chips;
+  }, [bySkillAndSearch, group]);
+
+  const visible = group
+    ? bySkillAndSearch.filter((item) => item.questionGroups.includes(group))
+    : bySkillAndSearch;
 
   return (
     <div className="space-y-4">
@@ -107,9 +135,40 @@ export function PracticeLibrary({
         </div>
       </div>
 
+      {/* Lọc theo dạng câu (kiểu youpass.vn) — chỉ hiện các dạng có trong các đề
+          đang lọc. Bấm lại chip đang chọn để bỏ lọc. */}
+      {groupChips.length > 0 ? (
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Dạng câu
+          </span>
+          <button
+            type="button"
+            onClick={() => setGroup(null)}
+            className={group === null ? activeChipClass : chipClass}
+          >
+            Mọi dạng
+          </button>
+          {groupChips.map((chip) => (
+            <button
+              key={chip.key}
+              type="button"
+              aria-pressed={group === chip.key}
+              onClick={() => setGroup(group === chip.key ? null : chip.key)}
+              className={group === chip.key ? activeChipClass : chipClass}
+            >
+              {chip.label}{" "}
+              <span className="text-xs font-normal tabular-nums opacity-70">{chip.count}</span>
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       {visible.length === 0 ? (
         <p className="rounded-lg border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
-          Chưa có đề nào trong thư viện tự luyện. Hãy nhắc giáo viên mở thêm đề nhé.
+          {items.length === 0
+            ? "Chưa có đề nào trong thư viện tự luyện. Hãy nhắc giáo viên mở thêm đề nhé."
+            : "Không có đề nào khớp bộ lọc. Thử bỏ bớt điều kiện lọc nhé."}
         </p>
       ) : (
         // items-start: hai thẻ cùng hàng grid mặc định bị kéo giãn cao bằng nhau —
@@ -123,6 +182,22 @@ export function PracticeLibrary({
                 {item.sourceLabel ? `${item.sourceLabel} · ` : ""}
                 {item.unitCount} phần · {item.questionCount} câu
               </p>
+              {item.questionGroups.length > 0 ? (
+                <div className="mt-1.5 flex flex-wrap gap-1">
+                  {item.questionGroups.map((key) => (
+                    <span
+                      key={key}
+                      className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${
+                        key === group
+                          ? "bg-primary/15 text-primary"
+                          : "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {GROUP_LABELS[key]}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
               <div className="mt-1 flex flex-wrap items-center gap-2">
                 {/* "Chưa luyện" (chưa nộp lần nào) đứng cạnh chip "Đang làm dở" đọc
                     như mâu thuẫn — khi đang dở thì chip đã nói đủ, giấu nhãn đi. */}
@@ -147,9 +222,14 @@ export function PracticeLibrary({
                   thể peer-checked mới ăn — nên <ul> nằm trong luôn hàng nút và dùng
                   w-full để tự xuống dòng riêng. */}
               <div className="mt-3 flex flex-wrap items-center gap-2">
+                {/* Đang lọc theo dạng câu thì mở sẵn danh sách phần để học viên chọn
+                    đúng phần có dạng đó. key đổi theo bộ lọc -> ô mount lại, nhận
+                    defaultChecked mới (ô vẫn là uncontrolled, xem chú thích trên). */}
                 <input
+                  key={group ?? "all"}
                   type="checkbox"
                   id={`practice-units-${item.id}`}
+                  defaultChecked={group !== null && item.units.length > 1}
                   className="peer sr-only"
                 />
                 <PracticeStartButton
@@ -199,12 +279,22 @@ export function PracticeLibrary({
 
                 <ul className="hidden w-full space-y-1.5 border-t border-border pt-3 peer-checked:block">
                   {item.units.map((unit) => (
-                    <li key={unit.id} className="flex items-center justify-between gap-2">
+                    <li
+                      key={unit.id}
+                      className={`flex items-center justify-between gap-2 ${
+                        group && !unit.questionGroups.includes(group) ? "opacity-50" : ""
+                      }`}
+                    >
                       <span className="text-sm">
                         {unit.title}{" "}
                         <span className="text-xs text-muted-foreground">
                           ({unit.questionCount} câu)
                         </span>
+                        {group && unit.questionGroups.includes(group) ? (
+                          <span className="ml-1.5 whitespace-nowrap rounded bg-primary/15 px-1.5 py-0.5 text-[11px] font-medium text-primary">
+                            có {GROUP_LABELS[group]}
+                          </span>
+                        ) : null}
                       </span>
                       <span className="flex shrink-0 items-center gap-1.5">
                         <PracticeStartButton

@@ -71,6 +71,19 @@ export type FeatureAnnouncement = {
 export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
   // ---- Học viên ----
   {
+    id: "student-practice-by-type",
+    audience: "student",
+    title: ["Luyện theo dạng câu", "Đúng chỗ còn yếu"],
+    description:
+      "Thư viện Tự luyện giờ lọc được theo dạng câu như True/False/Not Given hay Điền từ — trang Tiến bộ chỉ thẳng dạng em cần luyện.",
+    cta: "Chọn dạng",
+    href: "/student/practice",
+    mascot: "owl",
+    pose: "read",
+    theme: "dusk",
+    shippedAt: "2026-10-13"
+  },
+  {
     id: "student-practice-goal",
     audience: "student",
     title: ["Chỉ tiêu tự luyện", "Đạt tuần +30 Xu"],

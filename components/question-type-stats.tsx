@@ -2,6 +2,7 @@
 
 // Khối "Tỷ lệ đúng theo dạng câu": 3 tab Tất cả/Nghe/Đọc, mỗi nhóm dạng câu
 // một thanh ngang. Nhóm yếu nhất (đủ dữ liệu) tô vàng kèm lời nhắn.
+import Link from "next/link";
 import { useState } from "react";
 import {
   LOW_DATA_THRESHOLD,
@@ -18,10 +19,13 @@ const TABS: Array<{ key: SkillFilter; label: string }> = [
 
 export function QuestionTypeStats({
   stats,
-  subject = "Bạn"
+  subject = "Bạn",
+  linkToPractice = false
 }: {
   stats: TypeStatsBySkill;
   subject?: string;
+  // Trang của học viên: thêm nút mở Tự luyện lọc sẵn đúng dạng yếu nhất.
+  linkToPractice?: boolean;
 }) {
   const [filter, setFilter] = useState<SkillFilter>("all");
   const rows = stats[filter];
@@ -90,6 +94,17 @@ export function QuestionTypeStats({
           {weakest ? (
             <p className="text-sm font-medium text-amber-600 dark:text-amber-300">
               {subject} đang yếu nhất ở dạng {weakest.label} — nên luyện thêm.
+              {linkToPractice ? (
+                <>
+                  {" "}
+                  <Link
+                    href={`/student/practice?type=${weakest.key}`}
+                    className="whitespace-nowrap underline underline-offset-2"
+                  >
+                    Luyện dạng này →
+                  </Link>
+                </>
+              ) : null}
             </p>
           ) : null}
         </div>

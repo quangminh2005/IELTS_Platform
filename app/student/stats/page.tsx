@@ -140,7 +140,7 @@ export default async function StudentStatsPage() {
         <div className="border-b border-border px-5 py-4">
           <h3 className="text-base font-semibold">Tỷ lệ đúng theo dạng câu</h3>
         </div>
-        <QuestionTypeStats stats={stats} />
+        <QuestionTypeStats stats={stats} linkToPractice />
       </section>
     </div>
   );

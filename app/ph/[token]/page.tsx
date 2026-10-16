@@ -5,6 +5,7 @@ import { ParentPracticeGoal } from "@/components/parent-practice-goal";
 import { ProgressLineChart } from "@/components/progress-line-chart";
 import { StudentAvatar } from "@/components/student-avatar";
 import { formatBand } from "@/lib/band-score";
+import { examCountdown } from "@/lib/exam-countdown";
 import {
   buildParentSummary,
   isItemLate,
@@ -107,6 +108,7 @@ export default async function ParentReportPage({ params }: ParentPageProps) {
   ]);
 
   const summary = buildParentSummary(items, new Date(), "month");
+  const examView = examCountdown(student.examDate, new Date());
   const series = buildProgressSeries(stats.series);
   const groups = questionTypeStatsBySkill(stats.answers);
   const { strengths, weaknesses } = pickStrengthsAndWeaknesses(groups.all);
@@ -131,6 +133,9 @@ export default async function ParentReportPage({ params }: ParentPageProps) {
               {student.className ? `Lớp ${student.className}` : "Chưa xếp lớp"}
               {student.targetBand !== null
                 ? ` · Mục tiêu band ${formatBand(student.targetBand)}`
+                : ""}
+              {examView && (examView.state === "upcoming" || examView.state === "soon")
+                ? ` · Thi IELTS ngày ${examView.dateText} (còn ${examView.days} ngày)`
                 : ""}
             </p>
           </div>

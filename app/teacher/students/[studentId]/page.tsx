@@ -14,6 +14,7 @@ import { StudentWalletSummary } from "@/components/student-wallet-summary";
 import { BoardVisibilityToggle } from "@/components/board-visibility-toggle";
 import { resolveAppUrl } from "@/lib/app-url";
 import { bandsBySkill, formatBand, SKILL_SHORT_LABELS } from "@/lib/band-score";
+import { examCountdown, examDateInputValue } from "@/lib/exam-countdown";
 import { durationExceedsLimit, formatDuration } from "@/lib/format-duration";
 import { prisma } from "@/lib/prisma";
 import { ProgressLineChart } from "@/components/progress-line-chart";
@@ -265,6 +266,7 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
     ? `${resolveAppUrl()}/ph/${student.parentToken}`
     : null;
 
+  const examView = examCountdown(student.examDate, new Date());
   const progressSeries = buildProgressSeries(submittedAttempts);
   const typeStats = questionTypeStatsBySkill(
     submittedAttempts.flatMap((attempt) => attempt.answers)
@@ -316,6 +318,18 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                 ? "Học viên đã đăng nhập bằng Google — không đổi được email."
                 : "Học viên chưa đăng nhập lần nào — còn đổi được email."}
             </p>
+            {examView ? (
+              <p className="mt-1 text-sm font-medium">
+                <span aria-hidden="true">📅 </span>
+                Thi IELTS ngày {examView.dateText}
+                {examView.state === "upcoming" || examView.state === "soon"
+                  ? ` — còn ${examView.days} ngày`
+                  : examView.state === "today"
+                    ? " — hôm nay"
+                    : " — đã thi"}
+                {student.targetBand !== null ? ` · mục tiêu ${formatBand(student.targetBand)}` : ""}
+              </p>
+            ) : null}
           </div>
         </div>
 
@@ -334,7 +348,8 @@ export default async function TeacherStudentPage({ params }: StudentPageProps) {
                 avatarPreset: student.avatarPreset,
                 userImage: student.user?.image ?? null,
                 coverColor: student.coverColor,
-                targetBand: student.targetBand
+                targetBand: student.targetBand,
+                examDate: examDateInputValue(student.examDate)
               }}
               extraFields={
                 <>

@@ -8,6 +8,7 @@ import { LEADERBOARD_CACHE_TAG } from "@/lib/leaderboard";
 import { requireStudent } from "@/lib/actions/attempts";
 import { requireTeacher } from "@/lib/actions/classes";
 import { prisma } from "@/lib/prisma";
+import { parseExamDateInput } from "@/lib/exam-countdown";
 import { CUSTOM_COVER_KEY, isAllowedCoverUrl } from "@/lib/profile-cover";
 import { resolveItem } from "@/lib/shop-catalog";
 import {
@@ -133,6 +134,17 @@ function readDecorationPatch(formData: FormData): Partial<Decoration> {
   }
 
   return patch;
+}
+
+// Ngày thi IELTS — học viên và giáo viên cùng đi qua hàm này. Gate bằng
+// formData.has(...) ở CẢ HAI phía (khác readDecoration): tab cũ còn chạy bản form
+// trước (Skew Protection) hay form giáo viên không chạm ô này thì giữ nguyên, không
+// xoá mất ngày thi đã đặt. Ô rỗng -> null = học viên chủ động xoá ngày thi.
+function readExamDatePatch(formData: FormData): { examDate?: Date | null } {
+  if (!formData.has("examDate")) {
+    return {};
+  }
+  return { examDate: parseExamDateInput(String(formData.get("examDate") ?? ""), new Date()) };
 }
 
 // LƯU Ý: đây là chốt PHỤ (advisory) — kiểm-rồi-ghi (check-then-write), không có
@@ -311,13 +323,14 @@ export async function updateMyProfile(formData: FormData): Promise<ActionResult>
   try {
     const data = readDecoration(formData);
     const extras = await readSelfExtras(formData, student);
+    const exam = readExamDatePatch(formData);
 
     await assertAvatarUrlNotTaken(data.avatarUrl, student.id);
     await assertCoverUrlNotTaken(extras.coverImageUrl, student.id);
 
     await prisma.studentProfile.update({
       where: { id: student.id },
-      data: { ...data, ...extras }
+      data: { ...data, ...extras, ...exam }
     });
 
     // Xoá ảnh cũ SAU KHI ghi DB thành công — xem chú thích trên deleteOldAvatar().
@@ -357,6 +370,7 @@ export async function updateStudentProfile(formData: FormData): Promise<ActionRe
     // readDecorationPatch(). Form giáo viên có thể chỉ gửi tên/email, không gửi đủ
     // 5 trường trang trí như form học viên.
     const decoration = readDecorationPatch(formData);
+    const exam = readExamDatePatch(formData);
 
     // Chốt chặn quyền: lọc NGAY TRONG where, không lấy ra rồi mới đối chiếu.
     const student = await prisma.studentProfile.findFirst({
@@ -397,7 +411,8 @@ export async function updateStudentProfile(formData: FormData): Promise<ActionRe
       data: {
         displayName: fields.data.displayName,
         email: fields.data.email,
-        ...decoration
+        ...decoration,
+        ...exam
       }
     });
 

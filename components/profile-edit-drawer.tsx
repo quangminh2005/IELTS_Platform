@@ -38,6 +38,8 @@ export type ProfileDraft = {
   equippedBackground: string | null;
   equippedFrame: string | null;
   targetBand: string;
+  // "YYYY-MM-DD" từ <input type="date">, "" = chưa đặt ngày thi.
+  examDate: string;
 };
 
 type UploadKind = "avatar" | "cover";
@@ -49,7 +51,8 @@ export function ProfileEditDrawer({
   onClose,
   userImage,
   ownedBackgroundKeys,
-  ownedFrameKeys
+  ownedFrameKeys,
+  focusExamDate = false
 }: {
   action: ServerAction;
   draft: ProfileDraft;
@@ -58,6 +61,8 @@ export function ProfileEditDrawer({
   userImage: string | null;
   ownedBackgroundKeys: string[];
   ownedFrameKeys: string[];
+  // Mở từ thẻ "Đặt ngày thi" ở trang chủ: cuộn thẳng tới ô ngày thi.
+  focusExamDate?: boolean;
 }) {
   const [mounted, setMounted] = useState(false);
   const [uploading, setUploading] = useState<UploadKind | null>(null);
@@ -65,6 +70,7 @@ export function ProfileEditDrawer({
   const avatarInputId = useId();
   const coverInputId = useId();
   const titleId = useId();
+  const examSectionRef = useRef<HTMLDivElement>(null);
 
   // Đếm "lượt quyết định" riêng cho avatar và ảnh nền — cùng cách ProfileEditor:
   // kết quả tải chậm chỉ áp dụng nếu học viên chưa đổi ý sau đó.
@@ -85,6 +91,12 @@ export function ProfileEditDrawer({
       window.removeEventListener("keydown", onKey);
     };
   }, [onClose]);
+
+  useEffect(() => {
+    if (mounted && focusExamDate) {
+      examSectionRef.current?.scrollIntoView({ block: "center" });
+    }
+  }, [mounted, focusExamDate]);
 
   // Cập nhật kiểu hàm: nhiều thao tác liền nhau (hoặc ảnh tải xong đúng lúc học
   // viên đang bấm) luôn chồng lên bản nháp MỚI NHẤT, không đè mất nhau.
@@ -190,6 +202,7 @@ export function ProfileEditDrawer({
           <input type="hidden" name="equippedBackground" value={draft.equippedBackground ?? ""} />
           <input type="hidden" name="equippedFrame" value={draft.equippedFrame ?? ""} />
           <input type="hidden" name="targetBand" value={draft.targetBand} />
+          <input type="hidden" name="examDate" value={draft.examDate} />
 
           <header className="flex items-center justify-between gap-3 border-b border-border px-5 py-4">
             <h2 id={titleId} className="text-lg font-bold">
@@ -427,6 +440,32 @@ export function ProfileEditDrawer({
                 className="w-32 rounded-lg border border-border bg-card px-3 py-2 text-sm"
               />
             </Section>
+
+            <div ref={examSectionRef}>
+              <Section title="Ngày thi IELTS">
+                <div className="flex flex-wrap items-center gap-2">
+                  <input
+                    type="date"
+                    value={draft.examDate}
+                    onChange={(event) => patch({ examDate: event.target.value })}
+                    aria-label="Ngày thi IELTS"
+                    className="min-h-[2.5rem] rounded-lg border border-border bg-card px-3 py-2 text-sm"
+                  />
+                  {draft.examDate ? (
+                    <button
+                      type="button"
+                      onClick={() => patch({ examDate: "" })}
+                      className="rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted-foreground transition hover:bg-muted"
+                    >
+                      Xoá
+                    </button>
+                  ) : null}
+                </div>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Trang chủ sẽ đếm ngược tới ngày này. Chưa có lịch thi thì cứ để trống.
+                </p>
+              </Section>
+            </div>
           </div>
 
           <footer className="flex items-center justify-end gap-2 border-t border-border bg-card px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">

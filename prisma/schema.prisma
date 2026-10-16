@@ -85,6 +85,9 @@ model StudentProfile {
   email               String                @unique
   displayName         String
   targetBand          Float?
+  // Ngày thi IELTS (mốc 0h giờ VN; chỉ ngày là có nghĩa) — học viên tự đặt ở Hồ sơ,
+  // thầy sửa được ở trang học viên. Null = chưa đặt. Đếm ngược: lib/exam-countdown.ts.
+  examDate            DateTime?
   // Giới thiệu ngắn học viên tự viết, tối đa 280 ký tự. Văn bản thuần — chỗ hiển
   // thị KHÔNG được dùng dangerouslySetInnerHTML.
   bio                 String?

@@ -36,7 +36,7 @@ const BIO_LIMIT = 280;
 //   phiên chỉnh sửa này ("touched") — chỉ mở form ra xem KHÔNG tính là chạm.
 type ProfileEditorMode = "self" | "teacherPatch";
 
-type DecorationField = "bio" | "avatarUrl" | "avatarPreset" | "coverColor" | "targetBand";
+type DecorationField = "bio" | "avatarUrl" | "avatarPreset" | "coverColor" | "targetBand" | "examDate";
 
 export function ProfileEditor({
   action,
@@ -54,6 +54,8 @@ export function ProfileEditor({
     userImage: string | null;
     coverColor: string | null;
     targetBand: number | null;
+    // "YYYY-MM-DD" (examDateInputValue), "" = chưa đặt.
+    examDate: string;
   };
   extraFields?: React.ReactNode;
   mode?: ProfileEditorMode;
@@ -66,6 +68,7 @@ export function ProfileEditor({
   const [targetBand, setTargetBand] = useState(
     initial.targetBand != null ? String(initial.targetBand) : ""
   );
+  const [examDate, setExamDate] = useState(initial.examDate);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
@@ -163,6 +166,7 @@ export function ProfileEditor({
       {shouldPost("targetBand") ? (
         <input type="hidden" name="targetBand" value={targetBand} />
       ) : null}
+      {shouldPost("examDate") ? <input type="hidden" name="examDate" value={examDate} /> : null}
 
       <div className="flex items-center gap-4">
         <StudentAvatar
@@ -299,6 +303,21 @@ export function ProfileEditor({
             touch("targetBand");
           }}
           className="w-32 rounded-lg border border-border bg-card px-3 py-2 text-sm"
+        />
+      </label>
+
+      <label className="block space-y-1">
+        <span className="text-sm font-semibold">Ngày thi IELTS</span>
+        {/* Như ô mục tiêu band: gửi qua hidden input "examDate" phía trên. Xoá
+            trắng ô (nút Clear của trình duyệt) = bỏ ngày thi. */}
+        <input
+          type="date"
+          value={examDate}
+          onChange={(event) => {
+            setExamDate(event.target.value);
+            touch("examDate");
+          }}
+          className="block rounded-lg border border-border bg-card px-3 py-2 text-sm"
         />
       </label>
 

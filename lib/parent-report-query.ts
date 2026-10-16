@@ -13,6 +13,7 @@ export type ParentStudent = {
   id: string;
   displayName: string;
   targetBand: number | null;
+  examDate: Date | null;
   className: string | null;
   avatarUrl: string | null;
   avatarPreset: string | null;
@@ -30,6 +31,7 @@ export async function findStudentByParentToken(token: string): Promise<ParentStu
       id: true,
       displayName: true,
       targetBand: true,
+      examDate: true,
       avatarUrl: true,
       avatarPreset: true,
       user: { select: { image: true } },
@@ -50,6 +52,7 @@ export async function findStudentByParentToken(token: string): Promise<ParentStu
     id: student.id,
     displayName: student.displayName,
     targetBand: student.targetBand,
+    examDate: student.examDate,
     className: student.classes[0]?.class.name ?? null,
     avatarUrl: student.avatarUrl,
     avatarPreset: student.avatarPreset,

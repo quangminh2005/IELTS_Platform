@@ -357,6 +357,8 @@ const statements = [
   // Chỉ tiêu tự luyện mỗi tuần (lib/practice-goal.ts, 12/10/2026).
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "practiceWeeklyGoal" INTEGER NOT NULL DEFAULT 1;',
   'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "practiceGoalSince" TIMESTAMP(3);',
+  // Ngày thi IELTS + đếm ngược ở trang chủ học viên (16/10/2026)
+  'ALTER TABLE "StudentProfile" ADD COLUMN IF NOT EXISTS "examDate" TIMESTAMP(3);',
   `CREATE TABLE IF NOT EXISTS "CoinTransaction" (
     "id" TEXT NOT NULL,
     "studentId" TEXT NOT NULL,

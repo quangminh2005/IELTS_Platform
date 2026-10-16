@@ -38,6 +38,8 @@ import { FeatureBanner } from "@/components/feature-banner";
 import { PracticeGoalCard } from "@/components/practice-goal-card";
 import { getPracticeGoalStatus, syncPracticeGoal } from "@/lib/practice-goal-data";
 import { FEATURE_ANNOUNCEMENTS, activeAnnouncements } from "@/lib/feature-announcements";
+import { ExamCountdownCard } from "@/components/exam-countdown-card";
+import { examCountdown } from "@/lib/exam-countdown";
 
 const STATUS_LABELS: Record<string, string> = {
   reviewed: "Đã chấm",
@@ -73,7 +75,7 @@ export default async function StudentDashboardPage() {
 
   const student = await prisma.studentProfile.findUnique({
     where: { userId: session.user.id },
-    select: { id: true, displayName: true, equippedMascot: true }
+    select: { id: true, displayName: true, equippedMascot: true, examDate: true, targetBand: true }
   });
 
   if (!student) {
@@ -185,18 +187,21 @@ export default async function StudentDashboardPage() {
         </MonthlyRecapDialog>
       ) : null}
 
-      <header>
-        <p className="text-sm font-semibold text-primary">Trang học viên</p>
-        <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-          Chào {student.displayName} 👋
-        </h2>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          {recipients.length > 0
-            ? `Bạn có ${recipients.length} bài được giao${
-                pendingCount > 0 ? `, trong đó ${pendingCount} bài chưa hoàn thành.` : "."
-              }`
-            : "Hiện chưa có bài tập nào được giao. Hãy quay lại sau nhé."}
-        </p>
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-primary">Trang học viên</p>
+          <h2 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
+            Chào {student.displayName} 👋
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+            {recipients.length > 0
+              ? `Bạn có ${recipients.length} bài được giao${
+                  pendingCount > 0 ? `, trong đó ${pendingCount} bài chưa hoàn thành.` : "."
+                }`
+              : "Hiện chưa có bài tập nào được giao. Hãy quay lại sau nhé."}
+          </p>
+        </div>
+        <ExamCountdownCard view={examCountdown(student.examDate, now)} targetBand={student.targetBand} />
       </header>
 
       {/* Màn hình rộng (≥1700px) chia 2 cột kiểu chin.edu.vn thay vì kéo giãn một

@@ -13,17 +13,25 @@ export function MyProfileHero({
   saved,
   userImage,
   ownedBackgroundKeys,
-  ownedFrameKeys
+  ownedFrameKeys,
+  openExamDate = false
 }: {
   action: ServerAction;
   saved: ProfileDraft;
   userImage: string | null;
   ownedBackgroundKeys: string[];
   ownedFrameKeys: string[];
+  // ?edit=exam (thẻ "Đặt ngày thi" ở trang chủ): mở sẵn bảng, cuộn tới ô ngày thi.
+  openExamDate?: boolean;
 }) {
-  const [draft, setDraft] = useState<ProfileDraft | null>(null);
+  const [draft, setDraft] = useState<ProfileDraft | null>(openExamDate ? saved : null);
   const shown = draft ?? saved;
-  const close = useCallback(() => setDraft(null), []);
+  // Chỉ cuộn tới ô ngày thi ở lần mở đầu tiên; mở lại bằng bút chì thì như thường.
+  const [focusExam, setFocusExam] = useState(openExamDate);
+  const close = useCallback(() => {
+    setDraft(null);
+    setFocusExam(false);
+  }, []);
 
   return (
     <>
@@ -60,6 +68,7 @@ export function MyProfileHero({
           userImage={userImage}
           ownedBackgroundKeys={ownedBackgroundKeys}
           ownedFrameKeys={ownedFrameKeys}
+          focusExamDate={focusExam}
         />
       ) : null}
     </>

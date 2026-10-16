@@ -71,6 +71,19 @@ export type FeatureAnnouncement = {
 export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
   // ---- Học viên ----
   {
+    id: "student-exam-countdown",
+    audience: "student",
+    title: ["Đếm ngược", "Tới ngày thi IELTS"],
+    description:
+      "Đặt ngày thi trong Hồ sơ là trang chủ đếm ngược từng ngày, kèm mục tiêu band để em giữ nhịp ôn luyện.",
+    cta: "Đặt ngày thi",
+    href: "/student/profile?edit=exam",
+    mascot: "cat",
+    pose: "cheer",
+    theme: "ocean",
+    shippedAt: "2026-10-16"
+  },
+  {
     id: "student-ai-improved-writing",
     audience: "student",
     title: ["Bản nâng cấp", "Bài Writing của em"],

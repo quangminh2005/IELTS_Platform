@@ -15,6 +15,7 @@ import { countsForStats } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 import { resolveItem } from "@/lib/shop-catalog";
 import { DEFAULT_COVER_KEY } from "@/lib/student-avatar";
+import { examCountdown, examDateInputValue } from "@/lib/exam-countdown";
 import { VN_OFFSET_MS } from "@/lib/streak";
 import { getDayStreak, loadActivityDays } from "@/lib/day-streak-data";
 import { getLifetimeXp } from "@/lib/xp-rank-data";
@@ -68,7 +69,7 @@ function shiftMonth(year: number, month: number, delta: number) {
 export default async function StudentProfilePage({
   searchParams
 }: {
-  searchParams?: { month?: string };
+  searchParams?: { month?: string; edit?: string };
 }) {
   const session = await auth();
 
@@ -90,6 +91,7 @@ export default async function StudentProfilePage({
       equippedFrame: true,
       equippedMascot: true,
       targetBand: true,
+      examDate: true,
       createdAt: true,
       user: { select: { image: true } }
     }
@@ -181,6 +183,7 @@ export default async function StudentProfilePage({
     ? null
     : `/student/profile?month=${formatMonthParam(nextMonth.year, nextMonth.month)}`;
 
+  const examView = examCountdown(student.examDate, new Date());
   const joined = new Intl.DateTimeFormat("vi-VN", {
     day: "numeric",
     month: "numeric",
@@ -210,6 +213,7 @@ export default async function StudentProfilePage({
             userImage={student.user?.image ?? null}
             ownedBackgroundKeys={ownedOf("background")}
             ownedFrameKeys={ownedOf("frame")}
+            openExamDate={searchParams?.edit === "exam"}
             saved={{
               displayName: student.displayName,
               bio: student.bio ?? "",
@@ -219,7 +223,8 @@ export default async function StudentProfilePage({
               coverImageUrl: student.coverImageUrl,
               equippedBackground: student.equippedBackground,
               equippedFrame: student.equippedFrame,
-              targetBand: student.targetBand !== null ? String(student.targetBand) : ""
+              targetBand: student.targetBand !== null ? String(student.targetBand) : "",
+              examDate: examDateInputValue(student.examDate)
             }}
           />
           <div className="px-5 pb-5 pt-4 text-center">
@@ -237,6 +242,19 @@ export default async function StudentProfilePage({
                 <>
                   <span aria-hidden="true">·</span>
                   <span>Mục tiêu {formatBand(student.targetBand)}</span>
+                </>
+              ) : null}
+              {examView ? (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>
+                    Thi ngày {examView.dateText}
+                    {examView.state === "upcoming" || examView.state === "soon"
+                      ? ` (còn ${examView.days} ngày)`
+                      : examView.state === "today"
+                        ? " (hôm nay!)"
+                        : ""}
+                  </span>
                 </>
               ) : null}
             </div>

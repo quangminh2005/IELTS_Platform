@@ -3,6 +3,7 @@ import { requireTeacherPage } from "@/lib/teacher-page";
 import { notFound } from "next/navigation";
 import { AnnotatedAnswer } from "@/components/annotated-answer";
 import { AiErrorList } from "@/components/ai-grading/ai-error-list";
+import { AiImprovedEssay } from "@/components/ai-grading/ai-improved-essay";
 import { TeacherAiPanel } from "@/components/ai-grading/teacher-ai-panel";
 import { isAiGradingEnabled } from "@/lib/ai-grading/openai";
 import { aiSuggestionForReview } from "@/lib/ai-grading/review-fill";
@@ -362,6 +363,11 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
       aiErrorsByAnswer.set(error.answerId, [...(aiErrorsByAnswer.get(error.answerId) ?? []), error]);
     }
   }
+  const aiImprovedByAnswer = new Map(
+    (aiResult?.skill === "writing" ? aiResult.tasks : [])
+      .flatMap((task) => task.improved ?? [])
+      .map((item) => [item.answerId, item.text])
+  );
 
   return (
     <div className="space-y-6">
@@ -591,6 +597,20 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                                   text={answer.value}
                                   errors={aiErrorsByAnswer.get(answer.id)!}
                                 />
+                              ) : null}
+                              {aiDone && aiImprovedByAnswer.has(answer.id) ? (
+                                <details className="mt-3 rounded-md border border-violet-400/40 bg-violet-500/5 p-3">
+                                  <summary className="cursor-pointer text-xs font-semibold text-violet-700 dark:text-violet-300">
+                                    ✨ Bản nâng cấp của AI (bấm để xem)
+                                  </summary>
+                                  <div className="mt-3">
+                                    <AiImprovedEssay
+                                      original={answer.value}
+                                      improved={aiImprovedByAnswer.get(answer.id)!}
+                                      audience="teacher"
+                                    />
+                                  </div>
+                                </details>
                               ) : null}
                             </>
                           )

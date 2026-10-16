@@ -4,7 +4,7 @@ import { AI_ERROR_CATEGORIES, type AiSkill } from "@/lib/ai-grading/types";
 // Khuôn JSON model PHẢI trả về (OpenAI Structured Outputs, strict). Strict mode đòi
 // mọi thuộc tính đều "required" và additionalProperties: false ở mọi tầng.
 export function modelOutputJsonSchema(skill: AiSkill): Record<string, unknown> {
-  return {
+  const schema = {
     type: "object",
     additionalProperties: false,
     required: ["criteria", "summary", "errors"],
@@ -38,6 +38,26 @@ export function modelOutputJsonSchema(skill: AiSkill): Record<string, unknown> {
           }
         }
       }
-    }
+    } as Record<string, unknown>
   };
+
+  // Writing: thêm "bản nâng cấp" mỗi bài — đặt SAU cùng để model chấm điểm và tìm
+  // lỗi xong rồi mới viết lại (viết lại trước dễ kéo điểm theo bản đã sửa).
+  if (skill === "writing") {
+    schema.required = [...schema.required, "improved"];
+    schema.properties.improved = {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["answer_ref", "text"],
+        properties: {
+          answer_ref: { type: "string" },
+          text: { type: "string" }
+        }
+      }
+    };
+  }
+
+  return schema;
 }

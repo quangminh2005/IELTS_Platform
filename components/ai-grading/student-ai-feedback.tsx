@@ -1,4 +1,4 @@
-import { AiHighlightedEssay } from "@/components/ai-grading/ai-highlighted-essay";
+import { AiEssayTabs } from "@/components/ai-grading/ai-essay-tabs";
 import { AiRequestButton } from "@/components/ai-grading/ai-request-button";
 import { AiScoreCard } from "@/components/ai-grading/ai-score-card";
 import { requestStudentAiReview } from "@/lib/actions/ai-grading";
@@ -53,6 +53,9 @@ export function StudentAiFeedback({
   if (!result && (!enabled || limit === 0)) return null;
 
   const allErrors = result ? result.tasks.flatMap((task) => task.errors) : [];
+  const improvedByAnswer = new Map(
+    (result?.tasks ?? []).flatMap((task) => task.improved ?? []).map((item) => [item.answerId, item.text])
+  );
 
   const body = result ? (
     <div className="space-y-5">
@@ -61,9 +64,10 @@ export function StudentAiFeedback({
         ? essays.map((essay) => (
             <div key={essay.answerId} className="space-y-2">
               <p className="text-sm font-semibold">{essay.label}</p>
-              <AiHighlightedEssay
+              <AiEssayTabs
                 text={essay.text}
                 errors={allErrors.filter((error) => error.answerId === essay.answerId)}
+                improved={improvedByAnswer.get(essay.answerId) ?? null}
               />
             </div>
           ))

@@ -2,18 +2,53 @@
 
 import { useMemo, useRef, useState } from "react";
 import { buildHighlightSegments, locateQuotes } from "@/lib/ai-grading/locate";
-import { AI_ERROR_CATEGORY_LABELS, type AiError } from "@/lib/ai-grading/types";
+import {
+  AI_ERROR_CATEGORY_LABELS,
+  AI_ERROR_CRITERION,
+  type AiError
+} from "@/lib/ai-grading/types";
+
+// Chip lọc lỗi theo tiêu chí band (kiểu youpass.vn). Task Achievement không có lỗi câu
+// chữ nên không có chip.
+const CRITERION_FILTERS = [
+  { key: "coherence", label: "Mạch lạc (CC)" },
+  { key: "lexicalResource", label: "Từ vựng (LR)" },
+  { key: "grammar", label: "Ngữ pháp (GRA)" }
+] as const;
+type CriterionFilter = (typeof CRITERION_FILTERS)[number]["key"] | "all";
+
+const chipClass =
+  "rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground hover:border-primary";
+const activeChipClass =
+  "rounded-full border border-primary bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary";
 
 // Bài viết của học viên có tô màu lỗi AI tìm thấy + danh sách lỗi bên dưới. Chạm một
 // lỗi (trong bài hay trong danh sách) thì đoạn đó sáng lên — dùng được trên điện thoại
 // vì không dựa vào hover.
-export function AiHighlightedEssay({ text, errors }: { text: string; errors: AiError[] }) {
+export function AiHighlightedEssay({ text, errors: allErrors }: { text: string; errors: AiError[] }) {
   const [active, setActive] = useState<number | null>(null);
+  const [filter, setFilter] = useState<CriterionFilter>("all");
   const marks = useRef<Record<number, HTMLElement | null>>({});
+  const errors = useMemo(
+    () =>
+      filter === "all"
+        ? allErrors
+        : allErrors.filter((error) => AI_ERROR_CRITERION[error.category] === filter),
+    [allErrors, filter]
+  );
   const segments = useMemo(
     () => buildHighlightSegments(text, locateQuotes(text, errors.map((error) => error.quote))),
     [text, errors]
   );
+  const counts = CRITERION_FILTERS.map((criterion) => ({
+    ...criterion,
+    count: allErrors.filter((error) => AI_ERROR_CRITERION[error.category] === criterion.key).length
+  }));
+
+  function choose(next: CriterionFilter) {
+    setFilter(next);
+    setActive(null);
+  }
 
   function focus(index: number) {
     setActive(index);
@@ -22,6 +57,28 @@ export function AiHighlightedEssay({ text, errors }: { text: string; errors: AiE
 
   return (
     <div className="space-y-3">
+      {allErrors.length > 0 ? (
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            type="button"
+            onClick={() => choose("all")}
+            className={filter === "all" ? activeChipClass : chipClass}
+          >
+            Tất cả <span className="tabular-nums opacity-70">{allErrors.length}</span>
+          </button>
+          {counts.map((criterion) => (
+            <button
+              key={criterion.key}
+              type="button"
+              disabled={criterion.count === 0}
+              onClick={() => choose(filter === criterion.key ? "all" : criterion.key)}
+              className={`${filter === criterion.key ? activeChipClass : chipClass} disabled:cursor-default disabled:opacity-50`}
+            >
+              {criterion.label} <span className="tabular-nums opacity-70">{criterion.count}</span>
+            </button>
+          ))}
+        </div>
+      ) : null}
       <p className="whitespace-pre-wrap break-words rounded-md border border-border bg-background p-4 text-sm leading-7">
         {segments.map((segment, position) => {
           const index = segment.index;

@@ -74,6 +74,14 @@ export function buildSystemPrompt(skill: AiSkill, taskNumber: 1 | 2): string {
   if (skill === "writing") {
     rules.push(
       "Apply the minimum word count stated with the task: under-length responses must be penalised exactly as the descriptors say. The word count is computed by software; trust it.",
+      "",
+      'Finally, in "improved", give one upgraded version of EACH response (same "answer_ref"), written AFTER you have graded it and listed its errors. The upgraded version is a model for the student to compare with their own work, so:',
+      "- keep the student's ideas, arguments, examples, paragraph order and paragraph breaks; do not add new ideas, except a missing overview or conclusion that Task Achievement needs;",
+      "- fix every error you listed and any other error;",
+      "- raise vocabulary, collocations and sentence structures to about one band above your assessment of the response (at least band 7), but keep the language natural and not over-complicated;",
+      "- keep roughly the same length (it must still meet the minimum word count);",
+      "- write plain English text only, with blank lines between paragraphs: no comments, markers or explanations.",
+      "Your bands must describe the student's original response, never the upgraded version.",
       ""
     );
   } else {

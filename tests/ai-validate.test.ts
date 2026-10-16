@@ -173,3 +173,64 @@ describe("toAiReviewView", () => {
     expect(view.errorMessage).toContain("gián đoạn");
   });
 });
+
+describe("bản nâng cấp (Writing)", () => {
+  it("khớp theo ref, bỏ bản trùng bài gốc / ref lạ / trùng lặp", () => {
+    const twoAnswers: GradingTaskInput = {
+      ...task,
+      answers: [
+        task.answers[0],
+        { answerId: "ans2", ref: "A2", questionPrompt: null, text: "It is fine." }
+      ]
+    };
+    const result = validateTaskOutput(
+      {
+        ...good(),
+        improved: [
+          { answer_ref: "A1", text: "Many people believe that technology is useful." },
+          { answer_ref: "A1", text: "bản thứ hai của A1 phải bị bỏ" },
+          { answer_ref: "A2", text: "  It is   fine. " },
+          { answer_ref: "A9", text: "ref lạ" }
+        ]
+      },
+      twoAnswers,
+      "writing",
+      0
+    );
+    expect(result.improved).toEqual([
+      { answerId: "ans1", text: "Many people believe that technology is useful." }
+    ]);
+  });
+
+  it("model quên trường improved thì lượt chấm vẫn hợp lệ", () => {
+    expect(validateTaskOutput(good(), task, "writing", 0).improved).toEqual([]);
+  });
+
+  it("Speaking không có bản nâng cấp", () => {
+    const speaking = validateTaskOutput(
+      {
+        criteria: [
+          { key: "fluency", band: 6, reason: "x" },
+          { key: "lexicalResource", band: 6, reason: "x" },
+          { key: "grammar", band: 6, reason: "x" }
+        ],
+        summary: "x",
+        errors: [],
+        improved: [{ answer_ref: "A1", text: "y" }]
+      },
+      { ...task, unitId: "", taskNumber: null },
+      "speaking",
+      0
+    );
+    expect(speaking.improved).toBeUndefined();
+  });
+
+  it("khuôn JSON: Writing bắt buộc improved (đặt cuối), Speaking không có", () => {
+    const writing = modelOutputJsonSchema("writing") as { required: string[]; properties: Record<string, unknown> };
+    const speaking = modelOutputJsonSchema("speaking") as { required: string[]; properties: Record<string, unknown> };
+    expect(writing.required).toEqual(["criteria", "summary", "errors", "improved"]);
+    expect(Object.keys(writing.properties).at(-1)).toBe("improved");
+    expect(speaking.required).not.toContain("improved");
+    expect(speaking.properties.improved).toBeUndefined();
+  });
+});

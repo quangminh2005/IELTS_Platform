@@ -23,6 +23,17 @@ export const AI_ERROR_CATEGORY_LABELS: Record<AiErrorCategory, string> = {
   coherence: "Mạch lạc"
 };
 
+// Loại lỗi → tiêu chí band mà nó kéo điểm xuống (để lọc lỗi theo tiêu chí như
+// youpass.vn). Chính tả tính vào Lexical Resource, dấu câu vào Grammatical Range —
+// đúng như band descriptors. Task Achievement không có lỗi câu chữ nên không có loại nào.
+export const AI_ERROR_CRITERION: Record<AiErrorCategory, "coherence" | "lexicalResource" | "grammar"> = {
+  grammar: "grammar",
+  punctuation: "grammar",
+  vocabulary: "lexicalResource",
+  spelling: "lexicalResource",
+  coherence: "coherence"
+};
+
 export type AiCriterionScore = {
   key: string;
   // null = AI không chấm tiêu chí này (Pronunciation của Speaking).
@@ -41,6 +52,13 @@ export type AiError = {
   category: AiErrorCategory;
 };
 
+// "Bản nâng cấp" của một bài viết: giữ ý và bố cục của học viên, sửa hết lỗi, nâng
+// từ vựng/ngữ pháp lên khoảng một band (ý tưởng từ youpass.vn).
+export type AiImprovedText = {
+  answerId: string;
+  text: string;
+};
+
 export type AiGradedTask = {
   // Writing: id của AssignableUnit; Speaking: "" (một bộ tiêu chí cho cả bài, khớp ReviewForm).
   unitId: string;
@@ -49,6 +67,8 @@ export type AiGradedTask = {
   criteria: AiCriterionScore[];
   summary: string;
   errors: AiError[];
+  // Chỉ Writing, từ 16/10/2026 — lượt chấm cũ không có trường này.
+  improved?: AiImprovedText[];
 };
 
 export type AiGradingResult = {
@@ -100,6 +120,8 @@ export type ModelTaskOutput = {
     explanation: string;
     category: string;
   }[];
+  // Chỉ có trong khuôn Writing.
+  improved?: { answer_ref: string; text: string }[];
 };
 
 export type ModelUsage = {

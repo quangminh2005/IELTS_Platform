@@ -118,7 +118,8 @@ async function fakeResult(input: ModelInput, skill: AiSkill): Promise<ModelCallR
     .join("\n");
   const firstResponse = /<response ref="(A\d+)">\n([\s\S]*?)\n<\/response>/.exec(text);
   const ref = firstResponse?.[1] ?? "A1";
-  const realQuote = (firstResponse?.[2] ?? "").split(/\s+/).filter(Boolean).slice(0, 3).join(" ");
+  const original = firstResponse?.[2] ?? "";
+  const realQuote = original.split(/\s+/).filter(Boolean).slice(0, 3).join(" ");
 
   const keys =
     skill === "speaking"
@@ -154,7 +155,19 @@ async function fakeResult(input: ModelInput, skill: AiSkill): Promise<ModelCallR
           explanation: "Lỗi bịa — phải bị lọc.",
           category: "vocabulary"
         }
-      ]
+      ],
+      ...(skill === "writing"
+        ? {
+            improved: original
+              ? [
+                  {
+                    answer_ref: ref,
+                    text: `${original.replace(realQuote, "(Bản nâng cấp giả)")}\n\nIn conclusion, this upgraded sentence was added by fake mode.`
+                  }
+                ]
+              : []
+          }
+        : {})
     }
   };
 }

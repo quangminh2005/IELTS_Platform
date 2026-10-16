@@ -8,6 +8,7 @@ import {
   type AiErrorCategory,
   type AiGradedTask,
   type AiGradingResult,
+  type AiImprovedText,
   type AiSkill,
   type GradingTaskInput
 } from "@/lib/ai-grading/types";
@@ -20,6 +21,8 @@ const MAX_REASON = 600;
 const MAX_SUMMARY = 1500;
 const MAX_FIELD = 400;
 const MAX_ERRORS = 40;
+// Bản nâng cấp dài hơn mức này là model lan man — cắt bớt cho khỏi vỡ giao diện.
+const MAX_IMPROVED = 8000;
 
 // Học viên không thấy mã nội bộ A1, A2… — model lỡ nhắc thì đổi thành chữ dễ hiểu.
 function humanizeRefs(text: string): string {
@@ -51,7 +54,7 @@ export function validateTaskOutput(
     throw new AiOutputError("AI trả về dữ liệu không đúng khuôn.");
   }
 
-  const output = raw as { criteria?: unknown; summary?: unknown; errors?: unknown };
+  const output = raw as { criteria?: unknown; summary?: unknown; errors?: unknown; improved?: unknown };
   if (!Array.isArray(output.criteria)) {
     throw new AiOutputError("AI trả về thiếu phần chấm tiêu chí.");
   }
@@ -113,7 +116,7 @@ export function validateTaskOutput(
     });
   }
 
-  return {
+  const graded: AiGradedTask = {
     unitId: task.unitId,
     label: task.label,
     taskNumber: task.taskNumber,
@@ -121,6 +124,36 @@ export function validateTaskOutput(
     summary: humanizeRefs(clip(output.summary, MAX_SUMMARY)),
     errors
   };
+
+  if (skill === "writing") {
+    graded.improved = validateImproved(output.improved, task);
+  }
+
+  return graded;
+}
+
+// Bản nâng cấp: mỗi bài làm tối đa một bản, khớp theo ref; bỏ bản rỗng hoặc y hệt
+// bài gốc. Thiếu/hỏng thì chỉ mất phần này, KHÔNG làm hỏng cả lượt chấm.
+function validateImproved(raw: unknown, task: GradingTaskInput): AiImprovedText[] {
+  if (!Array.isArray(raw)) return [];
+  const answersByRef = new Map(task.answers.map((answer) => [answer.ref, answer]));
+  const seen = new Set<string>();
+  const improved: AiImprovedText[] = [];
+
+  for (const item of raw as Record<string, unknown>[]) {
+    const answer =
+      answersByRef.get(String(item?.answer_ref ?? "")) ??
+      (task.answers.length === 1 ? task.answers[0] : undefined);
+    if (!answer || seen.has(answer.answerId)) continue;
+
+    const text = clip(item?.text, MAX_IMPROVED).replace(/\r\n/g, "\n");
+    if (!text || text.replace(/\s+/g, " ") === answer.text.trim().replace(/\s+/g, " ")) continue;
+
+    seen.add(answer.answerId);
+    improved.push({ answerId: answer.answerId, text });
+  }
+
+  return improved;
 }
 
 // Band một phần = trung bình các tiêu chí AI chấm được, làm tròn 0,5.

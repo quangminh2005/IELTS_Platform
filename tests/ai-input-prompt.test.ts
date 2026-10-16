@@ -104,6 +104,14 @@ describe("prompt", () => {
     expect(buildSystemPrompt("speaking", 2)).toContain("removes hesitations");
   });
 
+  it("Writing dặn viết bản nâng cấp giữ ý học viên, chấm điểm theo bài GỐC; Speaking không", () => {
+    const writing = buildSystemPrompt("writing", 2);
+    expect(writing).toContain('in "improved"');
+    expect(writing).toContain("keep the student's ideas");
+    expect(writing).toContain("never the upgraded version");
+    expect(buildSystemPrompt("speaking", 2)).not.toContain('"improved"');
+  });
+
   it("Speaking không đưa bảng Pronunciation", () => {
     const system = buildSystemPrompt("speaking", 2);
     expect(system).toContain("- Fluency");

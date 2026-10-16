@@ -71,6 +71,19 @@ export type FeatureAnnouncement = {
 export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
   // ---- Học viên ----
   {
+    id: "student-ai-improved-writing",
+    audience: "student",
+    title: ["Bản nâng cấp", "Bài Writing của em"],
+    description:
+      "Nhờ AI chấm bài Writing tự luyện là có thêm bản viết lại tốt hơn đặt cạnh bài của em, kèm lọc lỗi theo từng tiêu chí.",
+    cta: "Luyện Writing",
+    href: "/student/practice",
+    mascot: "fox",
+    pose: "read",
+    theme: "ember",
+    shippedAt: "2026-10-16"
+  },
+  {
     id: "student-practice-by-type",
     audience: "student",
     title: ["Tự luyện từng Part", "Lọc như thi thật"],

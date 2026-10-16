@@ -8,6 +8,7 @@ import { requireTeacher } from "@/lib/actions/classes";
 import { runAiGrading } from "@/lib/ai-grading/grade-attempt";
 import { isAiGradingEnabled } from "@/lib/ai-grading/openai";
 import { effectiveDailyLimit, MAX_AI_DAILY_LIMIT, vnDayStart } from "@/lib/ai-grading/quota";
+import { AI_REVIEW_VIEW_SELECT, improvedTextFor, toAiReviewView } from "@/lib/ai-grading/views";
 import { onlyPracticeRecipient } from "@/lib/practice";
 import { prisma } from "@/lib/prisma";
 
@@ -48,6 +49,50 @@ export async function requestTeacherAiReview(attemptId: string): Promise<AiActio
   return result.ok
     ? { ok: true, message: "AI đã chấm xong bản nháp." }
     : { ok: false, message: result.message };
+}
+
+// Thầy bấm "Gửi cho học viên" / "Thu hồi" bản nâng cấp AI của một bài viết. Gửi =
+// chép bản nâng cấp của lượt AI xong GẦN NHẤT vào Answer.aiImprovedText (bản chụp),
+// học viên thấy ngay ở trang Kết quả.
+export async function shareAiImprovedText(answerId: string, share: boolean): Promise<AiActionResult> {
+  const teacher = await requireTeacher();
+
+  const answer = await prisma.answer.findFirst({
+    where: {
+      id: String(answerId),
+      isCorrect: null,
+      assignableUnit: { skill: "writing" },
+      attempt: {
+        status: { in: ["submitted", "reviewed"] },
+        assignmentRecipient: { assignment: { teacherId: teacher.id } }
+      }
+    },
+    select: { id: true, attemptId: true }
+  });
+
+  if (!answer) {
+    return { ok: false, message: "Không tìm thấy bài viết này." };
+  }
+
+  let text: string | null = null;
+  if (share) {
+    const row = await prisma.aiReview.findFirst({
+      where: { attemptId: answer.attemptId, status: "done" },
+      orderBy: { createdAt: "desc" },
+      select: AI_REVIEW_VIEW_SELECT
+    });
+    text = row ? improvedTextFor(toAiReviewView(row, new Date()).result, answer.id) : null;
+    if (!text) {
+      return { ok: false, message: "Lượt AI chấm gần nhất không có bản nâng cấp cho bài này." };
+    }
+  }
+
+  await prisma.answer.update({ where: { id: answer.id }, data: { aiImprovedText: text } });
+
+  revalidatePath(`/teacher/review/${answer.attemptId}`);
+  revalidatePath(`/student/results/${answer.attemptId}`);
+
+  return { ok: true, message: share ? "Đã gửi bản nâng cấp cho học viên." : "Đã thu hồi bản nâng cấp." };
 }
 
 // Học viên bấm "Nhờ AI chấm" ở trang Kết quả — CHỈ bài tự luyện, mỗi bài một lần,

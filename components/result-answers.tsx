@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { AiImprovedEssay } from "@/components/ai-grading/ai-improved-essay";
 import { AnnotatedAnswer, type Annotation } from "@/components/annotated-answer";
 import { AudioPlayer, type AudioPlayerControls } from "@/components/audio-player";
 import {
@@ -31,6 +32,8 @@ export type PartAnswer = {
   questionEvidence: string | null;
   evidenceSnapshot: string | null;
   explanationSnapshot: string | null;
+  // Bản nâng cấp AI thầy gửi (bài Viết) — null = chưa gửi.
+  aiImprovedText: string | null;
   annotations: Annotation[];
 };
 
@@ -239,6 +242,16 @@ function AnswerCard({
           </div>
         ) : null}
       </dl>
+      {answer.aiImprovedText && answer.value && !isAudioUrl(answer.value) ? (
+        <details className="mt-4 rounded-lg border border-violet-400/40 bg-violet-500/5 p-4">
+          <summary className="cursor-pointer text-sm font-semibold text-violet-700 dark:text-violet-300">
+            ✨ Bản nâng cấp thầy gửi (bấm để xem)
+          </summary>
+          <div className="mt-3">
+            <AiImprovedEssay original={answer.value} improved={answer.aiImprovedText} />
+          </div>
+        </details>
+      ) : null}
       {answer.explanationSnapshot ? (
         <div className="mt-4 rounded-lg border border-border bg-muted/60 p-5">
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">

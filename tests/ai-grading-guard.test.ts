@@ -48,9 +48,10 @@ describe("AI chấm — server action", () => {
   const source = read("lib/actions/ai-grading.ts");
   const chunks = source.split("export async function ").slice(1);
 
-  it("có đủ 3 action", () => {
+  it("có đủ 4 action", () => {
     expect(chunks.map((chunk) => chunk.slice(0, chunk.indexOf("(")))).toEqual([
       "requestTeacherAiReview",
+      "shareAiImprovedText",
       "requestStudentAiReview",
       "updateAiDailyLimit"
     ]);
@@ -63,6 +64,16 @@ describe("AI chấm — server action", () => {
       expect(firstAwait).toMatch(/await require(Teacher|Student)\(\)/);
     }
   );
+
+  it("gửi bản nâng cấp chỉ trên bài của chính thầy, ghi bản chụp vào Answer", () => {
+    const share = chunks.find((chunk) => chunk.startsWith("shareAiImprovedText"))!;
+    expect(share).toContain("assignment: { teacherId: teacher.id }");
+    expect(share).toContain("aiImprovedText");
+    expect(read("prisma/schema.prisma")).toMatch(/aiImprovedText\s+String\?/);
+    expect(read("scripts/ensure-db.mjs")).toContain(
+      'ALTER TABLE "Answer" ADD COLUMN IF NOT EXISTS "aiImprovedText" TEXT;'
+    );
+  });
 
   it("học viên chỉ được nhờ AI chấm bài tự luyện", () => {
     const student = chunks.find((chunk) => chunk.startsWith("requestStudentAiReview"))!;

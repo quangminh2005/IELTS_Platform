@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatAiUsageLine, toAiUsageView } from "@/lib/ai-grading/views";
+import { formatAiUsageLine, improvedTextFor, toAiUsageView } from "@/lib/ai-grading/views";
 
 describe("dòng model / token / chi phí cho thầy", () => {
   const row = {
@@ -30,5 +30,31 @@ describe("dòng model / token / chi phí cho thầy", () => {
 
   it("lượt cũ / lỗi không có số token → null", () => {
     expect(toAiUsageView({ ...row, inputTokens: null, outputTokens: null })).toBeNull();
+  });
+});
+
+describe("improvedTextFor — bản nâng cấp để thầy gửi học viên", () => {
+  const result = {
+    version: 1 as const,
+    skill: "writing" as const,
+    tasks: [
+      { unitId: "u1", label: "T1", taskNumber: 1 as const, criteria: [], summary: "", errors: [] },
+      {
+        unitId: "u2",
+        label: "T2",
+        taskNumber: 2 as const,
+        criteria: [],
+        summary: "",
+        errors: [],
+        improved: [{ answerId: "a2", text: "Better essay." }]
+      }
+    ]
+  };
+
+  it("tìm đúng bài, lượt cũ/Speaking/không có thì null", () => {
+    expect(improvedTextFor(result, "a2")).toBe("Better essay.");
+    expect(improvedTextFor(result, "a1")).toBeNull();
+    expect(improvedTextFor({ ...result, skill: "speaking" }, "a2")).toBeNull();
+    expect(improvedTextFor(null, "a2")).toBeNull();
   });
 });

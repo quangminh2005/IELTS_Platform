@@ -4,6 +4,16 @@ import { isStalePending } from "@/lib/ai-grading/quota";
 import type { AiGradingResult, AiRequester, AiReviewStatus } from "@/lib/ai-grading/types";
 import { parseAiGradingResult } from "@/lib/ai-grading/validate";
 
+// Bản nâng cấp của MỘT bài viết trong kết quả AI (null = lượt này không có).
+export function improvedTextFor(result: AiGradingResult | null, answerId: string): string | null {
+  if (result?.skill !== "writing") return null;
+  for (const task of result.tasks) {
+    const found = task.improved?.find((item) => item.answerId === answerId);
+    if (found) return found.text;
+  }
+  return null;
+}
+
 export const AI_REVIEW_VIEW_SELECT = {
   id: true,
   status: true,

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AnnotatedAnswer } from "@/components/annotated-answer";
 import { AiErrorList } from "@/components/ai-grading/ai-error-list";
 import { AiImprovedEssay } from "@/components/ai-grading/ai-improved-essay";
+import { AiImprovedShare } from "@/components/ai-grading/ai-improved-share";
 import { TeacherAiPanel } from "@/components/ai-grading/teacher-ai-panel";
 import { isAiGradingEnabled } from "@/lib/ai-grading/openai";
 import { aiSuggestionForReview } from "@/lib/ai-grading/review-fill";
@@ -602,8 +603,26 @@ export default async function ReviewDetailPage({ params }: DetailPageProps) {
                                 <details className="mt-3 rounded-md border border-violet-400/40 bg-violet-500/5 p-3">
                                   <summary className="cursor-pointer text-xs font-semibold text-violet-700 dark:text-violet-300">
                                     ✨ Bản nâng cấp của AI (bấm để xem)
+                                    {answer.aiImprovedText !== null ? (
+                                      <span className="ml-2 font-normal text-emerald-700 dark:text-emerald-300">
+                                        · đã gửi học viên
+                                      </span>
+                                    ) : null}
                                   </summary>
-                                  <div className="mt-3">
+                                  <div className="mt-3 space-y-3">
+                                    {/* Học viên tự nhờ AI (bài tự luyện) thì đã thấy
+                                        bản nâng cấp ở trang Kết quả — không cần gửi. */}
+                                    {aiDone.requestedBy === "student" ? (
+                                      <p className="text-xs text-muted-foreground">
+                                        Học viên tự nhờ AI chấm bài này nên đã thấy bản nâng cấp.
+                                      </p>
+                                    ) : (
+                                      <AiImprovedShare
+                                        answerId={answer.id}
+                                        sharedText={answer.aiImprovedText}
+                                        currentText={aiImprovedByAnswer.get(answer.id)!}
+                                      />
+                                    )}
                                     <AiImprovedEssay
                                       original={answer.value}
                                       improved={aiImprovedByAnswer.get(answer.id)!}

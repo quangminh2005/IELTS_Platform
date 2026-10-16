@@ -26,8 +26,8 @@ if (process.argv[2] === "undo") {
   ].join("\n");
   const a = await p.assignment.create({
     data: {
-      teacherId: q.assignableUnit.material.teacherId, title: `E2E AI nâng cấp — ${q.assignableUnit.title}`, mode: "practice",
-      practiceScopeKey: `${student.id}:${q.assignableUnit.materialId}:${q.assignableUnitId}`,
+      teacherId: q.assignableUnit.material.teacherId, title: `E2E AI nâng cấp — ${q.assignableUnit.title}`, mode: process.argv[2] === "homework" ? "homework" : "practice",
+      practiceScopeKey: process.argv[2] === "homework" ? null : `${student.id}:${q.assignableUnit.materialId}:${q.assignableUnitId}`,
       units: { create: [{ assignableUnitId: q.assignableUnitId, order: 1 }] },
       recipients: { create: [{ studentId: student.id, status: "submitted" }] }
     },

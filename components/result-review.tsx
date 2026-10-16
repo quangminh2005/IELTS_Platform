@@ -22,6 +22,8 @@ type Answer = {
   correctAnswerSnapshot: string | null;
   explanationSnapshot: string | null;
   evidenceSnapshot: string | null;
+  // Bản nâng cấp AI thầy gửi (chỉ bài Viết). Bỏ trống ở nơi không truyền.
+  aiImprovedText?: string | null;
   annotations: Annotation[];
   question: {
     order: number;
@@ -172,6 +174,7 @@ export function ResultReview({ attempt, skillTimes, sourceStickyTopClass }: Resu
       questionEvidence: answer.question?.answerEvidence ?? null,
       evidenceSnapshot: answer.evidenceSnapshot,
       explanationSnapshot: answer.explanationSnapshot,
+      aiImprovedText: answer.aiImprovedText ?? null,
       annotations: answer.annotations
     });
     const corrects = answer.correctAnswerSnapshot

@@ -9,7 +9,7 @@ type Theme = "light" | "dark";
 
 const storageKey = "ielts-platform-theme";
 
-function getCurrentTheme(): Theme {
+export function getCurrentTheme(): Theme {
   if (typeof document !== "undefined") {
     const attr = document.documentElement.dataset.theme;
     if (attr === "light" || attr === "dark") {
@@ -28,7 +28,7 @@ function getCurrentTheme(): Theme {
   return "light";
 }
 
-function applyTheme(theme: Theme) {
+export function applyTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
   document.documentElement.style.colorScheme = theme;
   window.localStorage.setItem(storageKey, theme);

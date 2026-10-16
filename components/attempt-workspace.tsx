@@ -50,6 +50,15 @@ import { type InitialSpeakingPlan, SpeakingPlanBox } from "@/components/speaking
 import { LockedListeningAudio, type LockedTrack } from "@/components/locked-audio-player";
 import { SoundCheck } from "@/components/sound-check";
 import { AnimatedThemeToggle } from "@/components/ui/animated-theme-toggle";
+import { ReadingSettings } from "@/components/reading-settings";
+import {
+  DEFAULT_FONT_SCALE,
+  FONT_SCALE_STORAGE_KEY,
+  READING_TONE_STORAGE_KEY,
+  parseReadingTone,
+  snapFontScale,
+  type ReadingTone
+} from "@/lib/reading-settings";
 import {
   combineCompositeParts,
   countBlankParts,
@@ -2307,8 +2316,10 @@ export function AttemptWorkspace({
   const [previewResult, setPreviewResult] = useState<PreviewResult | null>(null);
   // Số giây còn lại của kỹ năng đang mở (null = không giới hạn / chưa mở kỹ năng).
   const [remaining, setRemaining] = useState<number | null>(null);
-  // Cỡ chữ vùng nội dung (đề + câu hỏi) cho học sinh tự chỉnh; lưu localStorage.
-  const [fontScale, setFontScale] = useState(1.1);
+  // Cỡ chữ vùng nội dung (đề + câu hỏi) + màu nền dịu mắt, học viên tự chỉnh ở nút
+  // "Aa" (components/reading-settings.tsx); lưu localStorage.
+  const [fontScale, setFontScale] = useState(DEFAULT_FONT_SCALE);
+  const [readingTone, setReadingTone] = useState<ReadingTone>("default");
   // Render the full-screen test room through a portal so it escapes any
   // transformed ancestor (the app shell's fade-in wrapper) that would otherwise
   // trap `position: fixed` and collapse the layout.
@@ -2316,9 +2327,11 @@ export function AttemptWorkspace({
 
   useEffect(() => {
     setMounted(true);
-    const saved = Number(window.localStorage.getItem("attemptFontScale"));
-    if (saved >= 0.9 && saved <= 1.6) {
-      setFontScale(saved);
+    try {
+      setFontScale(snapFontScale(window.localStorage.getItem(FONT_SCALE_STORAGE_KEY)));
+      setReadingTone(parseReadingTone(window.localStorage.getItem(READING_TONE_STORAGE_KEY)));
+    } catch {
+      // localStorage bị chặn (riêng tư/iOS) -> giữ mặc định.
     }
     // Khôi phục bước đang làm dở của từng phần (chế độ làm từng bước).
     const restored: Record<string, number> = {};
@@ -2337,12 +2350,22 @@ export function AttemptWorkspace({
     }
   }, [assignment.units, stepStorageKey]);
 
-  const adjustFontScale = useCallback((delta: number) => {
-    setFontScale((previous) => {
-      const next = Math.min(1.6, Math.max(0.9, Math.round((previous + delta) * 100) / 100));
-      window.localStorage.setItem("attemptFontScale", String(next));
-      return next;
-    });
+  const changeFontScale = useCallback((next: number) => {
+    setFontScale(next);
+    try {
+      window.localStorage.setItem(FONT_SCALE_STORAGE_KEY, String(next));
+    } catch {
+      // chỉ giữ trong state
+    }
+  }, []);
+
+  const changeReadingTone = useCallback((next: ReadingTone) => {
+    setReadingTone(next);
+    try {
+      window.localStorage.setItem(READING_TONE_STORAGE_KEY, next);
+    } catch {
+      // chỉ giữ trong state
+    }
   }, []);
 
   const goToPart = useCallback((partIndex: number) => {
@@ -3006,6 +3029,7 @@ export function AttemptWorkspace({
           event.preventDefault();
         }
       }}
+      data-reading-tone={readingTone}
       className="fixed inset-0 z-50 flex flex-col bg-background"
     >
       <input type="hidden" name="attemptId" value={attempt.id} />
@@ -3074,32 +3098,12 @@ export function AttemptWorkspace({
         </div>
         <div className="flex shrink-0 items-center gap-2">
           {!previewMode ? <BugReportInlineTrigger /> : null}
-          <div className="flex items-center overflow-hidden rounded-lg border border-border" title="Cỡ chữ">
-            <button
-              type="button"
-              onClick={() => adjustFontScale(-0.1)}
-              disabled={fontScale <= 0.9}
-              aria-label="Giảm cỡ chữ"
-              className="px-2.5 py-2 text-xs font-bold text-foreground hover:bg-muted disabled:opacity-40"
-            >
-              A−
-            </button>
-            <span className="hidden border-x border-border px-2 py-2 text-[11px] font-semibold tabular-nums text-muted-foreground sm:inline">
-              {Math.round(fontScale * 100)}%
-            </span>
-            <button
-              type="button"
-              onClick={() => adjustFontScale(0.1)}
-              disabled={fontScale >= 1.6}
-              aria-label="Tăng cỡ chữ"
-              className="px-2.5 py-2 text-sm font-bold text-foreground hover:bg-muted disabled:opacity-40"
-            >
-              A+
-            </button>
-          </div>
-          {/* Sáng/tối ẩn ở màn hẹp: đổi được từ Tổng quan, không đáng một ô 36px
-              trong header đang thiếu chỗ. */}
-          <AnimatedThemeToggle className="hidden sm:inline-flex" />
+          <ReadingSettings
+            fontScale={fontScale}
+            onFontScale={changeFontScale}
+            tone={readingTone}
+            onTone={changeReadingTone}
+          />
           {audioLocked && activeSkill === "listening" && soundCheckDone && lockedTracks.length > 0 ? (
             <LockedListeningAudio
               tracks={lockedTracks}

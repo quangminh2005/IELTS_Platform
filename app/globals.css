@@ -57,6 +57,36 @@ html[data-theme="dark"] {
   --body-gradient: linear-gradient(180deg, hsl(222 47% 10%), hsl(224 45% 7%));
 }
 
+/*
+  Nền dịu mắt ở màn làm bài (nút "Aa" — components/reading-settings.tsx). Đè các
+  token màu NGAY TRÊN khung phòng thi (data-reading-tone), nên mọi lớp bg-card,
+  bg-background, border-border bên trong tự đổi theo. Chỉ áp ở chế độ sáng: các lớp
+  dark:text-* là màu cho nền tối, đặt lên nền kem/xanh nhạt sẽ chìm.
+*/
+html:not([data-theme="dark"]) [data-reading-tone="sepia"] {
+  --background: 40 42% 92%;
+  --card: 42 58% 96%;
+  --muted: 42 58% 96%;
+  --secondary: 40 34% 88%;
+  --secondary-foreground: 30 28% 16%;
+  --border: 38 24% 76%;
+  --input: 38 24% 76%;
+  --foreground: 30 28% 16%;
+  --muted-foreground: 32 16% 38%;
+}
+
+html:not([data-theme="dark"]) [data-reading-tone="green"] {
+  --background: 100 24% 91%;
+  --card: 96 32% 96%;
+  --muted: 96 32% 96%;
+  --secondary: 100 20% 87%;
+  --secondary-foreground: 150 22% 14%;
+  --border: 100 14% 75%;
+  --input: 100 14% 75%;
+  --foreground: 150 22% 14%;
+  --muted-foreground: 140 10% 35%;
+}
+
 * {
   box-sizing: border-box;
 }

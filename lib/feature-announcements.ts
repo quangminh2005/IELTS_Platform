@@ -71,6 +71,19 @@ export type FeatureAnnouncement = {
 export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
   // ---- Học viên ----
   {
+    id: "student-reading-settings",
+    audience: "student",
+    title: ["Cỡ chữ & nền", "Dịu mắt khi làm bài"],
+    description:
+      "Bấm nút Aa trên thanh màn làm bài để chọn cỡ chữ Nhỏ → Rất lớn và nền Giấy kem, Xanh dịu hoặc Tối cho đỡ mỏi mắt.",
+    cta: "Luyện thử",
+    href: "/student/practice",
+    mascot: "owl",
+    pose: "sleep",
+    theme: "forest",
+    shippedAt: "2026-10-16"
+  },
+  {
     id: "student-exam-countdown",
     audience: "student",
     title: ["Đếm ngược", "Tới ngày thi IELTS"],

@@ -71,6 +71,19 @@ export type FeatureAnnouncement = {
 export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
   // ---- Học viên ----
   {
+    id: "student-vocab-match-type",
+    audience: "student",
+    title: ["Ôn từ vựng", "Nối nghĩa & tự gõ"],
+    description:
+      "Buổi ôn Sổ từ có thêm màn nối từ với nghĩa, gõ từ tiếng Anh theo nghĩa và gõ nghĩa tiếng Việt — đỡ nhàm hơn chỉ chọn đáp án.",
+    cta: "Ôn thẻ ngay",
+    href: "/student/vocab",
+    mascot: "dragon",
+    pose: "cheer",
+    theme: "plum",
+    shippedAt: "2026-10-17"
+  },
+  {
     id: "student-reading-settings",
     audience: "student",
     title: ["Cỡ chữ & nền", "Dịu mắt khi làm bài"],

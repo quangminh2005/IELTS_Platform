@@ -1,4 +1,10 @@
-import { buildQuestion, type QuizKind, type QuizQuestion, type QuizWord } from "@/lib/vocab-quiz";
+import {
+  buildQuestion,
+  normalizeVietnamese,
+  type QuizKind,
+  type QuizQuestion,
+  type QuizWord
+} from "@/lib/vocab-quiz";
 import { shiftDateKey } from "@/lib/vocab-streak";
 
 /*
@@ -41,13 +47,42 @@ export function nextSchedule(input: {
   return { box, dueDate: shiftDateKey(input.today, BOX_INTERVAL_DAYS[box]) };
 }
 
-// Hộp thấp hỏi nghĩa (dễ nhất), lên cao đổi sang chọn từ rồi gõ từ vào câu.
-export function questionKindForBox(box: number): QuizKind {
-  if (box <= 1) {
-    return "meaning";
+// Các dạng câu được dùng cho mỗi mức hộp — dạng đầu tiên là dạng mặc định (và là
+// dạng rơi về khi không dựng được dạng nối). Từ mới/hay quên: nhận ra nghĩa; đã
+// quen: chọn/gõ từ, gõ nghĩa; gần thuộc: tự gõ hoàn toàn.
+export function questionKindsForBox(box: number): readonly QuizKind[] {
+  if (box <= 0) {
+    return ["meaning"];
   }
 
-  return box <= 3 ? "reverse" : "cloze";
+  if (box === 1) {
+    return ["meaning", "match"];
+  }
+
+  return box <= 3 ? ["reverse", "spell", "translate", "match"] : ["cloze", "spell", "translate"];
+}
+
+// `roll` xáo dạng câu trong cùng mức hộp để buổi ôn đỡ nhàm (bỏ qua = dạng mặc định).
+export function questionKindForBox(box: number, roll = 0): QuizKind {
+  const kinds = questionKindsForBox(box);
+
+  return kinds[Math.abs(roll) % kinds.length];
+}
+
+// Mỗi màn nối gom bấy nhiêu từ (ít hơn MIN thì không đáng nối, đổi về dạng mặc định).
+export const MATCH_GROUP_SIZE = 4;
+export const MIN_MATCH_GROUP = 3;
+export const MAX_MATCH_GROUP = 5;
+
+// Băm chuỗi ra số nguyên không âm — xáo dạng câu ổn định theo seed + thẻ.
+function hashRoll(text: string): number {
+  let hash = 0;
+
+  for (let index = 0; index < text.length; index += 1) {
+    hash = (hash * 31 + text.charCodeAt(index)) | 0;
+  }
+
+  return Math.abs(hash);
 }
 
 export function cardState(box: number): CardState {
@@ -112,8 +147,91 @@ export type SessionItem = {
   // Hộp 0 → hiện thẻ giới thiệu trước khi hỏi.
   isNew: boolean;
   box: number;
+  // Dạng nối: các thẻ cùng mã nhóm đứng liền nhau và hiện chung một màn nối.
+  matchGroup: string | null;
   question: QuizQuestion;
 };
+
+type PlannedItem = {
+  key: string;
+  cardId: string | null;
+  wordId: string | null;
+  box: number;
+  word: QuizWord;
+  kind: QuizKind;
+  matchGroup: string | null;
+};
+
+// Gom các thẻ dạng nối thành nhóm MATCH_GROUP_SIZE thẻ theo thứ tự buổi ôn. Hai
+// từ trùng nghĩa không nối chung được (không biết nối cái nào); nhóm cuối quá ít
+// thẻ thì nhập vào nhóm trước nếu còn chỗ, không thì đổi về dạng mặc định.
+function groupMatchItems(items: PlannedItem[]): PlannedItem[] {
+  const groups: PlannedItem[][] = [];
+  let current: PlannedItem[] = [];
+  const fallback = (item: PlannedItem) => {
+    item.kind = questionKindForBox(item.box);
+  };
+
+  for (const item of items) {
+    if (item.kind !== "match") {
+      continue;
+    }
+
+    const meaning = normalizeVietnamese(item.word.meaningVi);
+
+    if (current.some((other) => normalizeVietnamese(other.word.meaningVi) === meaning)) {
+      fallback(item);
+      continue;
+    }
+
+    current.push(item);
+
+    if (current.length === MATCH_GROUP_SIZE) {
+      groups.push(current);
+      current = [];
+    }
+  }
+
+  if (current.length >= MIN_MATCH_GROUP) {
+    groups.push(current);
+  } else if (current.length > 0) {
+    const last = groups[groups.length - 1];
+    const fits =
+      last &&
+      last.length + current.length <= MAX_MATCH_GROUP &&
+      current.every((item) =>
+        last.every(
+          (other) =>
+            normalizeVietnamese(other.word.meaningVi) !== normalizeVietnamese(item.word.meaningVi)
+        )
+      );
+
+    if (fits) {
+      last.push(...current);
+    } else {
+      current.forEach(fallback);
+    }
+  }
+
+  for (const group of groups) {
+    for (const item of group) {
+      item.matchGroup = group[0].key;
+    }
+  }
+
+  // Cả nhóm dồn về chỗ của thẻ đầu nhóm.
+  const ordered: PlannedItem[] = [];
+
+  for (const item of items) {
+    if (item.matchGroup === null) {
+      ordered.push(item);
+    } else if (item.matchGroup === item.key) {
+      ordered.push(...items.filter((other) => other.matchGroup === item.key));
+    }
+  }
+
+  return ordered;
+}
 
 export function buildReviewSession(input: {
   due: DueCard[];
@@ -147,15 +265,24 @@ export function buildReviewSession(input: {
       word: item.word
     }));
 
-  return [...dueItems, ...freshItems].map((item, index) => ({
+  const planned = groupMatchItems(
+    [...dueItems, ...freshItems].map((item) => ({
+      ...item,
+      kind: questionKindForBox(item.box, hashRoll(`${input.seed}:${item.key}`)),
+      matchGroup: null
+    }))
+  );
+
+  return planned.map((item, index) => ({
     key: item.key,
     cardId: item.cardId,
     wordId: item.wordId,
     isNew: item.box === 0,
     box: item.box,
+    matchGroup: item.matchGroup,
     question: buildQuestion({
       word: { ...item.word, id: item.key },
-      kind: questionKindForBox(item.box),
+      kind: item.kind,
       pool: input.pool,
       seed: input.seed,
       index

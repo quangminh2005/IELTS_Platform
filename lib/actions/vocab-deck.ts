@@ -27,7 +27,10 @@ const answerSchema = z
     cardId: z.string().min(1).nullable().optional(),
     wordId: z.string().min(1).nullable().optional(),
     kind: z.enum(QUIZ_KINDS as [QuizKind, ...QuizKind[]]),
-    chosen: z.string().trim().min(1).max(200)
+    chosen: z.string().trim().min(1).max(200),
+    // Dạng gõ nghĩa Việt: nghĩa có nhiều cách nói, máy chấm sai thì học viên được
+    // tự bấm "Em đúng mà". Dạng khác bỏ qua cờ này.
+    selfMarked: z.boolean().optional()
   })
   .refine((value) => Boolean(value.cardId) !== Boolean(value.wordId), {
     message: "Cần đúng một trong hai: cardId hoặc wordId."
@@ -44,6 +47,7 @@ export async function answerVocabCard(input: {
   wordId?: string | null;
   kind: QuizKind;
   chosen: string;
+  selfMarked?: boolean;
 }): Promise<AnswerCardResult> {
   try {
     const student = await requireStudent();
@@ -94,7 +98,9 @@ export async function answerVocabCard(input: {
       throw new Error("Từ này đã bị ẩn.");
     }
 
-    const correct = checkVocabAnswer(parsed.kind, content, parsed.chosen);
+    const correct =
+      (parsed.kind === "translate" && parsed.selfMarked === true) ||
+      checkVocabAnswer(parsed.kind, content, parsed.chosen);
 
     // Chỉ lần trả lời đầu tiên trong ngày mới đổi lịch.
     if (card?.lastReviewedAt && vietnamDateKey(card.lastReviewedAt) === today) {

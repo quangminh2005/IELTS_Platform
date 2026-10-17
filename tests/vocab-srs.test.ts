@@ -7,8 +7,11 @@ import {
   newCardAllowance,
   nextSchedule,
   normalizeWordKey,
+  MAX_MATCH_GROUP,
+  MIN_MATCH_GROUP,
   pickNewWords,
   questionKindForBox,
+  questionKindsForBox,
   SESSION_SIZE,
   type DueCard,
   type FreshWord
@@ -77,7 +80,18 @@ describe("nextSchedule", () => {
 });
 
 describe("questionKindForBox / cardState / legacyBox", () => {
-  it("dạng câu khó dần theo hộp", () => {
+  it("mỗi mức hộp có bộ dạng câu riêng, khó dần", () => {
+    expect(questionKindsForBox(0)).toEqual(["meaning"]);
+    expect(questionKindsForBox(1)).toEqual(["meaning", "match"]);
+    expect(questionKindsForBox(2)).toEqual(["reverse", "spell", "translate", "match"]);
+    expect(questionKindsForBox(3)).toEqual(questionKindsForBox(2));
+    expect(questionKindsForBox(4)).toEqual(["cloze", "spell", "translate"]);
+    expect(questionKindsForBox(6)).toEqual(questionKindsForBox(4));
+    expect(questionKindForBox(2, 1)).toBe("spell");
+    expect(questionKindForBox(4, 5)).toBe("translate");
+  });
+
+  it("dạng mặc định khó dần theo hộp", () => {
     expect(questionKindForBox(0)).toBe("meaning");
     expect(questionKindForBox(1)).toBe("meaning");
     expect(questionKindForBox(2)).toBe("reverse");
@@ -172,7 +186,9 @@ describe("buildReviewSession", () => {
       size: SESSION_SIZE
     });
 
-    expect(item.question.kind).toBe("reverse");
+    // Một thẻ lẻ không nối được → một trong các dạng còn lại của hộp 2.
+    expect(["reverse", "spell", "translate"]).toContain(item.question.kind);
+    expect(item.matchGroup).toBeNull();
     expect(item.question.wordId).toBe("c9");
     expect(item.isNew).toBe(false);
   });
@@ -200,5 +216,67 @@ describe("buildReviewSession", () => {
     });
 
     expect(items.map((item) => item.key)).toEqual(["c1", "c2", "new:w4"]);
+  });
+});
+
+describe("buildReviewSession — xáo dạng câu và gom màn nối", () => {
+  const meanings = [
+    "chính sách", "nghiên cứu", "tác động", "khu vực", "tài nguyên", "chiến lược",
+    "chế độ", "công nghệ", "đi cùng", "thẩm quyền", "kinh tế", "môi trường"
+  ];
+  const big: QuizWord[] = meanings.map((meaningVi, index) =>
+    word(`b${index}`, `word${index}`, meaningVi, `We used word${index} today.`)
+  );
+  const dueBig = big.map((base, index) => due(`k${index}`, 2, "2026-10-17", base));
+
+  it("qua nhiều seed, hộp 2 gặp đủ các dạng chọn từ / gõ từ / gõ nghĩa / nối", () => {
+    const kinds = new Set<string>();
+
+    for (let seed = 0; seed < 30; seed += 1) {
+      for (const item of buildReviewSession({ due: dueBig, fresh: [], pool: big, seed, size: 20 })) {
+        kinds.add(item.question.kind);
+      }
+    }
+
+    expect([...kinds].sort()).toEqual(["match", "reverse", "spell", "translate"]);
+  });
+
+  it("thẻ nối đứng liền nhau theo nhóm 3–5 thẻ, không trùng nghĩa, không lẻ loi", () => {
+    for (let seed = 0; seed < 50; seed += 1) {
+      const items = buildReviewSession({ due: dueBig, fresh: [], pool: big, seed, size: 20 });
+      const groups = new Map<string, number[]>();
+
+      items.forEach((item, index) => {
+        if (item.question.kind === "match") {
+          expect(item.matchGroup).not.toBeNull();
+          groups.set(item.matchGroup!, [...(groups.get(item.matchGroup!) ?? []), index]);
+        } else {
+          expect(item.matchGroup).toBeNull();
+        }
+      });
+
+      for (const [groupId, positions] of groups) {
+        expect(positions.length).toBeGreaterThanOrEqual(MIN_MATCH_GROUP);
+        expect(positions.length).toBeLessThanOrEqual(MAX_MATCH_GROUP);
+        expect(positions[positions.length - 1] - positions[0]).toBe(positions.length - 1);
+        expect(items[positions[0]].key).toBe(groupId);
+        const groupMeanings = positions.map((index) => items[index].question.meaningVi);
+        expect(new Set(groupMeanings).size).toBe(groupMeanings.length);
+      }
+
+      // Không mất / nhân đôi thẻ khi dồn nhóm.
+      expect(items.map((item) => item.key).sort()).toEqual(dueBig.map((card) => card.cardId).sort());
+    }
+  });
+
+  it("thẻ mới (hộp 0) không bao giờ bị đưa vào màn nối", () => {
+    const freshBig = big.map((base) => fresh(base));
+
+    for (let seed = 0; seed < 20; seed += 1) {
+      for (const item of buildReviewSession({ due: [], fresh: freshBig, pool: big, seed, size: 20 })) {
+        expect(item.question.kind).toBe("meaning");
+        expect(item.matchGroup).toBeNull();
+      }
+    }
   });
 });

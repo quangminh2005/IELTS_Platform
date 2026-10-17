@@ -3,6 +3,9 @@ import {
   buildQuestion,
   checkVocabAnswer,
   maskWordInSentence,
+  meaningVariants,
+  normalizeVietnamese,
+  spellingHint,
   type QuizKind,
   type QuizWord
 } from "../lib/vocab-quiz";
@@ -131,5 +134,66 @@ describe("checkVocabAnswer", () => {
     expect(checkVocabAnswer("cloze", word, " Strategy ")).toBe(true);
     expect(checkVocabAnswer("cloze", word, "stratagy")).toBe(false);
     expect(checkVocabAnswer("cloze", word, "")).toBe(false);
+  });
+});
+
+describe("dạng nối / gõ từ / gõ nghĩa", () => {
+  it("câu nối hỏi bằng từ và vẫn mang 4 lựa chọn nghĩa để hỏi lại", () => {
+    const question = ask(pool[0], "match");
+    expect(question.kind).toBe("match");
+    expect(question.prompt).toBe("policy");
+    expect(question.options).toHaveLength(4);
+    expect(question.options[question.correctIndex]).toBe("chính sách");
+  });
+
+  it("gõ từ: đề là nghĩa Việt, không có lựa chọn", () => {
+    const question = ask(pool[1], "spell");
+    expect(question.kind).toBe("spell");
+    expect(question.prompt).toBe("nghiên cứu");
+    expect(question.options).toEqual([]);
+    expect(question.correctIndex).toBe(-1);
+  });
+
+  it("gõ nghĩa: đề là từ Anh, không có lựa chọn", () => {
+    const question = ask(pool[1], "translate");
+    expect(question.kind).toBe("translate");
+    expect(question.prompt).toBe("research");
+    expect(question.options).toEqual([]);
+  });
+
+  it("chấm nối như chọn nghĩa, gõ từ chỉ nhận đúng từ gốc", () => {
+    const word = pool[5];
+    expect(checkVocabAnswer("match", word, "chiến lược")).toBe(true);
+    expect(checkVocabAnswer("match", word, "chính sách")).toBe(false);
+    expect(checkVocabAnswer("spell", word, " Strategy ")).toBe(true);
+    expect(checkVocabAnswer("spell", word, "strategies")).toBe(false);
+  });
+
+  it("gõ nghĩa nhận từng nghĩa con, không dấu, có/không phần trong ngoặc", () => {
+    const word = w("x", "regime", "chế độ, thể chế; (sự) cai trị", "The regime fell.");
+    expect(checkVocabAnswer("translate", word, "chế độ")).toBe(true);
+    expect(checkVocabAnswer("translate", word, "the che")).toBe(true);
+    expect(checkVocabAnswer("translate", word, "Sự cai trị")).toBe(true);
+    expect(checkVocabAnswer("translate", word, "cai tri")).toBe(true);
+    expect(checkVocabAnswer("translate", word, "chế độ, thể chế; (sự) cai trị")).toBe(true);
+    expect(checkVocabAnswer("translate", word, "công nghệ")).toBe(false);
+    expect(checkVocabAnswer("translate", word, "  ")).toBe(false);
+  });
+
+  it("tách nghĩa theo dấu phẩy, chấm phẩy, gạch chéo và chữ \"hoặc\"", () => {
+    expect(meaningVariants("đi cùng / kèm theo hoặc hộ tống")).toEqual(
+      expect.arrayContaining(["đi cùng", "kèm theo", "hộ tống"])
+    );
+  });
+
+  it("chuẩn hoá tiếng Việt bỏ dấu, đ → d, gộp khoảng trắng", () => {
+    expect(normalizeVietnamese("  Đi   CÙNG. ")).toBe("di cung");
+    expect(normalizeVietnamese("cơ quan có thẩm quyền")).toBe("co quan co tham quyen");
+  });
+
+  it("gợi ý gõ từ giữ chữ đầu mỗi từ", () => {
+    expect(spellingHint("regime")).toBe("r _ _ _ _ _");
+    expect(spellingHint("take part")).toBe("t _ _ _   p _ _ _");
+    expect(spellingHint("well-being")).toBe("w _ _ _ - _ _ _ _ _");
   });
 });

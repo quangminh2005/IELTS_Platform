@@ -12,7 +12,8 @@ import {
   type MaterialMeta,
   type PracticeFilter,
   type SortKey,
-  type StatusFilter
+  type StatusFilter,
+  type StudentModeFilter
 } from "@/lib/materials-filter";
 
 export type MaterialBrowserItem = {
@@ -51,6 +52,11 @@ const practiceOptions: { value: PracticeFilter; label: string }[] = [
   { value: "open", label: "Đang mở tự luyện" }
 ];
 
+const studentModeOptions: { value: StudentModeFilter; label: string }[] = [
+  { value: "fresh", label: "Em này CHƯA làm" },
+  { value: "touched", label: "Em này đã làm / đang được giao" }
+];
+
 const sortOptions: { value: SortKey; label: string }[] = [
   { value: "title", label: "Tên đề A→Z" },
   { value: "newest", label: "Mới nhất" },
@@ -68,10 +74,13 @@ function filtersForTab(tab: MaterialCategory): MaterialFilters {
 
 export function MaterialsBrowser({
   items,
-  initialTab
+  initialTab,
+  students = []
 }: {
   items: MaterialBrowserItem[];
   initialTab: MaterialCategory;
+  // Học viên trong các lớp của thầy — cho ô lọc "đề em này chưa làm".
+  students?: { id: string; name: string }[];
 }) {
   const [tab, setTab] = useState<MaterialCategory>(initialTab);
   const [filters, setFilters] = useState<MaterialFilters>(() => filtersForTab(initialTab));
@@ -138,6 +147,7 @@ export function MaterialsBrowser({
     filters.skill !== "all" ||
     filters.status !== "all" ||
     filters.practice !== "all" ||
+    (filters.student ?? "all") !== "all" ||
     filters.sort !== tabDefaults.sort;
 
   const update = (patch: Partial<MaterialFilters>) =>
@@ -151,7 +161,12 @@ export function MaterialsBrowser({
   const switchTab = (next: MaterialCategory) => {
     if (next === tab) return;
     setTab(next);
-    setFilters(filtersForTab(next));
+    // Giữ nguyên học viên đang lọc khi đổi tab — thầy thường đang tìm bài cho đúng em đó.
+    setFilters((prev) => ({
+      ...filtersForTab(next),
+      student: prev.student,
+      studentMode: prev.studentMode
+    }));
     setOpenShelf(null);
     // Ghi tab lên URL để tải lại trang vẫn ở đúng tab. Không dùng router để
     // khỏi chạy lại server component (trang này nặng).
@@ -252,6 +267,39 @@ export function MaterialsBrowser({
               </option>
             ))}
           </select>
+
+          {students.length > 0 ? (
+            <select
+              value={filters.student ?? "all"}
+              onChange={(event) => update({ student: event.target.value })}
+              className={controlClass}
+              aria-label="Lọc theo học viên"
+            >
+              <option value="all">Mọi học viên</option>
+              {students.map((student) => (
+                <option key={student.id} value={student.id}>
+                  {student.name}
+                </option>
+              ))}
+            </select>
+          ) : null}
+
+          {(filters.student ?? "all") !== "all" ? (
+            <select
+              value={filters.studentMode ?? "fresh"}
+              onChange={(event) =>
+                update({ studentMode: event.target.value as StudentModeFilter })
+              }
+              className={controlClass}
+              aria-label="Đề học viên đã làm hay chưa"
+            >
+              {studentModeOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          ) : null}
 
           <select
             value={filters.sort}

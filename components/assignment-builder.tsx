@@ -11,6 +11,7 @@ import { UnitSearchFilter } from "@/components/unit-search-filter";
 import { AssignmentWizard } from "@/components/assignment-wizard";
 import { ResetOnToken } from "@/components/reset-on-token";
 import type { SessionPick } from "@/lib/class-schedule";
+import type { UnitHistory } from "@/lib/unit-history";
 
 type AssignmentBuilderProps = {
   materials: UnitPickerMaterial[];
@@ -21,6 +22,8 @@ type AssignmentBuilderProps = {
   resetToken: string;
   // Buổi học sắp tới của từng lớp -> chip hạn nộp "Trước buổi học tới".
   sessionPicks?: SessionPick[];
+  // Ai đã làm / đang được giao phần nào — cảnh báo giao trùng.
+  unitHistory?: UnitHistory;
 };
 
 const fieldClass =
@@ -34,7 +37,8 @@ export function AssignmentBuilder({
   students,
   classOptions,
   resetToken,
-  sessionPicks = []
+  sessionPicks = [],
+  unitHistory
 }: AssignmentBuilderProps) {
   const hasUnits = materials.some((material) => material.units.length > 0);
   const canCreate = hasUnits && students.length > 0;
@@ -60,6 +64,7 @@ export function AssignmentBuilder({
         disabledReason={disabledReason}
         unitTitles={unitTitles}
         unitSkills={unitSkills}
+        unitHistory={unitHistory}
         unitStep={
           <UnitSearchFilter>
             <UnitPicker materials={materials} wide />

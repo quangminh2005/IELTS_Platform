@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useUnitHistory } from "@/components/unit-history-context";
 import { matchesSearch, toggleClassChip } from "@/lib/assignment-wizard";
+import { overlapLabel, studentOverlap, type OverlapCount } from "@/lib/unit-history";
 
 export type StudentPickerStudent = {
   id: string;
@@ -39,6 +41,25 @@ export function StudentPicker({
   // Neo trên phần tử gốc để bắn sự kiện "change" nổi bọt lên <form> cha.
   const rootRef = useRef<HTMLDivElement>(null);
   const mounted = useRef(false);
+
+  // Chỉ có trong form Tạo bài giao: học viên nào đã làm / đang được giao phần
+  // vừa tick ở bước 1 — để thầy khỏi giao trùng.
+  const unitHistory = useUnitHistory();
+  const overlaps = useMemo(() => {
+    const map = new Map<string, OverlapCount>();
+    if (!unitHistory || unitHistory.selectedUnitIds.length === 0) {
+      return map;
+    }
+    for (const student of students) {
+      const overlap = studentOverlap(unitHistory.history, student.id, unitHistory.selectedUnitIds);
+      if (overlap.done > 0 || overlap.assigned > 0) {
+        map.set(student.id, overlap);
+      }
+    }
+    return map;
+  }, [unitHistory, students]);
+  const selectedUnitCount = unitHistory?.selectedUnitIds.length ?? 0;
+  const overlappingSelected = Array.from(overlaps.keys()).filter((id) => selected.has(id));
 
   // Chip lớp và "Chọn tất cả"/"Bỏ chọn tất cả" đổi tick bằng React state
   // (setSelected) nên trình duyệt KHÔNG tự bắn sự kiện "change" như khi người
@@ -99,6 +120,14 @@ export function StudentPicker({
       return;
     }
     setSelected(new Set(students.map((s) => s.id)));
+  }
+
+  function unselectOverlapping() {
+    setSelected((current) => {
+      const next = new Set(current);
+      overlaps.forEach((_, id) => next.delete(id));
+      return next;
+    });
   }
 
   function selectClass(classId: string) {
@@ -224,6 +253,21 @@ export function StudentPicker({
         </div>
       )}
 
+      {overlappingSelected.length > 0 ? (
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-amber-400/60 bg-amber-400/10 px-3 py-2 text-sm text-amber-800 dark:text-amber-200">
+          <span>
+            ⚠ {overlappingSelected.length} học viên đang chọn đã làm hoặc đang được giao phần này rồi.
+          </span>
+          <button
+            type="button"
+            onClick={unselectOverlapping}
+            className="rounded-md border border-amber-500/60 bg-background px-2.5 py-1 text-xs font-semibold transition hover:border-amber-600"
+          >
+            Bỏ chọn các em này
+          </button>
+        </div>
+      ) : null}
+
       <div
         className={
           wide
@@ -256,11 +300,30 @@ export function StudentPicker({
                   {student.email}
                   {student.classNames.length > 0 ? ` | ${student.classNames.join(", ")}` : ""}
                 </span>
+                <OverlapBadge overlap={overlaps.get(student.id)} total={selectedUnitCount} />
               </span>
             </label>
           );
         })}
       </div>
     </div>
+  );
+}
+
+function OverlapBadge({ overlap, total }: { overlap: OverlapCount | undefined; total: number }) {
+  const label = overlap ? overlapLabel(overlap, total) : null;
+  if (!overlap || !label) {
+    return null;
+  }
+  return (
+    <span
+      className={`mt-1.5 inline-block rounded-full border px-2 py-0.5 text-xs font-semibold ${
+        overlap.done > 0
+          ? "border-red-400/60 bg-red-500/10 text-red-700 dark:text-red-300"
+          : "border-amber-400/60 bg-amber-400/10 text-amber-800 dark:text-amber-200"
+      }`}
+    >
+      {label}
+    </span>
   );
 }

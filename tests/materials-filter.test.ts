@@ -276,3 +276,26 @@ describe("sort title theo số Test, bất kể kiểu gạch / cách đặt tê
     expect(out.map((m) => m.id)).toEqual(["d1", "d4"]);
   });
 });
+
+describe("lọc theo học viên (tránh giao trùng)", () => {
+  const items = [
+    meta({ id: "lam-roi", studentStatus: { s1: "done" } }),
+    meta({ id: "dang-giao", studentStatus: { s1: "assigned", s2: "done" } }),
+    meta({ id: "chua-ai" })
+  ];
+  const base: MaterialFilters = { ...defaultMaterialFilters, student: "s1" };
+
+  it("mặc định chỉ hiện đề em đó chưa làm & chưa được giao", () => {
+    expect(filterMaterials(items, base).map((m) => m.id)).toEqual(["chua-ai"]);
+  });
+
+  it("touched hiện đề em đã làm hoặc đang được giao", () => {
+    expect(
+      filterMaterials(items, { ...base, studentMode: "touched" }).map((m) => m.id)
+    ).toEqual(["lam-roi", "dang-giao"]);
+  });
+
+  it("student = all thì không lọc", () => {
+    expect(filterMaterials(items, { ...base, student: "all" })).toHaveLength(3);
+  });
+});

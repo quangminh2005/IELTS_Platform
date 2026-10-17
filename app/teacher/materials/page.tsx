@@ -22,6 +22,8 @@ import {
 } from "@/lib/materials-filter";
 import { UNNAMED_SHELF } from "@/lib/material-category";
 import { prisma } from "@/lib/prisma";
+import { materialStudentStatus, type UnitStudentStatus } from "@/lib/unit-history";
+import { loadUnitHistory } from "@/lib/unit-history-query";
 
 // Query nhẹ: trang danh sách chỉ cần đủ dữ liệu để vẽ thẻ + tính cờ trạng thái.
 // Không nạp content/transcript/metadata hay các bản ghi câu hỏi — những thứ đó chỉ
@@ -141,6 +143,53 @@ function StatusTags({ status }: { status: MaterialStatusFlags }) {
   );
 }
 
+// "Ai đã làm đề này" — gập sẵn, bấm mở ra danh sách tên. Để thầy khỏi giao trùng.
+function StudentHistoryTag({
+  statusByStudent,
+  studentNames
+}: {
+  statusByStudent: Record<string, UnitStudentStatus>;
+  studentNames: Map<string, string>;
+}) {
+  const nameOf = (id: string) => studentNames.get(id) ?? "Học viên đã rời lớp";
+  const byName = (a: string, b: string) => nameOf(a).localeCompare(nameOf(b), "vi");
+  const ids = Object.keys(statusByStudent);
+  const done = ids.filter((id) => statusByStudent[id] === "done").sort(byName);
+  const assigned = ids.filter((id) => statusByStudent[id] === "assigned").sort(byName);
+  if (done.length === 0 && assigned.length === 0) {
+    return (
+      <p className="mt-2 text-xs text-muted-foreground">Chưa học viên nào làm hay được giao đề này.</p>
+    );
+  }
+  const summary = [
+    done.length > 0 ? `${done.length} học viên đã làm` : null,
+    assigned.length > 0 ? `${assigned.length} đang được giao` : null
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  return (
+    <details className="mt-2 text-sm">
+      <summary className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-sky-500/40 bg-sky-500/10 px-2.5 py-0.5 text-xs font-semibold text-sky-700 dark:text-sky-300">
+        <span aria-hidden="true">✓</span> {summary}
+      </summary>
+      <div className="mt-2 space-y-1.5 text-xs leading-5">
+        {done.length > 0 ? (
+          <p>
+            <span className="font-semibold">Đã làm:</span>{" "}
+            <span className="text-muted-foreground">{done.map(nameOf).join(", ")}</span>
+          </p>
+        ) : null}
+        {assigned.length > 0 ? (
+          <p>
+            <span className="font-semibold">Đang được giao (chưa nộp):</span>{" "}
+            <span className="text-muted-foreground">{assigned.map(nameOf).join(", ")}</span>
+          </p>
+        ) : null}
+      </div>
+    </details>
+  );
+}
+
 type TeacherMaterialsPageProps = {
   searchParams?: {
     materialsMessage?: string;
@@ -155,7 +204,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
   const materialsStatus = searchParams?.materialsStatus === "success" ? "success" : "error";
   const initialTab = searchParams?.tab === "homework" ? "homework" : "book";
   // Hai truy vấn chỉ cần teacher.id, không phụ thuộc nhau -> chạy song song.
-  const [materials, assignmentUnits] = await Promise.all([
+  const [materials, assignmentUnits, unitHistory, students] = await Promise.all([
     prisma.material.findMany({
       where: { teacherId: teacher.id },
       orderBy: { createdAt: "desc" },
@@ -168,8 +217,16 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
         assignableUnit: { select: { materialId: true } },
         assignment: { select: { createdAt: true } }
       }
+    }),
+    // Ai đã làm / đang được giao phần nào — thẻ "N học viên đã làm" + lọc theo học viên.
+    loadUnitHistory(teacher.id),
+    prisma.studentProfile.findMany({
+      where: { classes: { some: { class: { teacherId: teacher.id } } } },
+      orderBy: { displayName: "asc" },
+      select: { id: true, displayName: true }
     })
   ]);
+  const studentNames = new Map(students.map((student) => [student.id, student.displayName]));
 
   const totalUnits = materials.reduce((sum, material) => sum + material._count.units, 0);
   const totalQuestions = materials.reduce(
@@ -242,6 +299,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
         {materials.length > 0 ? (
           <MaterialsBrowser
             initialTab={initialTab}
+            students={students.map((student) => ({ id: student.id, name: student.displayName }))}
             items={materials.map((material): MaterialBrowserItem => {
               const materialQuestions = material.units.reduce(
                 (sum, unit) => sum + unit._count.questions,
@@ -255,6 +313,10 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                   hasAudio: Boolean(unit.audioUrl),
                   questionCount: unit._count.questions
                 }))
+              );
+              const studentStatus = materialStudentStatus(
+                unitHistory,
+                material.units.map((unit) => unit.id)
               );
               const meta = {
                 id: material.id,
@@ -272,7 +334,8 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                 lastAssignedAtMs: lastAssignedByMaterial.get(material.id) ?? null,
                 status,
                 searchText: `${material.title} ${material.sourceLabel ?? ""}`.toLowerCase(),
-                practiceOpen: material.practiceOpen
+                practiceOpen: material.practiceOpen,
+                studentStatus
               };
               return {
                 meta,
@@ -300,6 +363,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         .filter(Boolean)
                         .join(" · ")}
                     </p>
+                    <StudentHistoryTag statusByStudent={studentStatus} studentNames={studentNames} />
                     {material.description ? (
                       <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
                         {material.description}

@@ -229,6 +229,19 @@ export const FEATURE_ANNOUNCEMENTS: FeatureAnnouncement[] = [
 
   // ---- Thầy ----
   {
+    id: "teacher-unit-history",
+    audience: "teacher",
+    title: ["Tránh giao trùng", "Biết em nào làm rồi"],
+    description:
+      "Kho Tài liệu ghi rõ học viên nào đã làm từng đề, lọc được đề một em chưa làm; lúc giao bài sẽ cảnh báo em đã làm phần đó.",
+    cta: "Xem kho tài liệu",
+    href: "/teacher/materials",
+    mascot: "fox",
+    pose: "wave",
+    theme: "ocean",
+    shippedAt: "2026-10-17"
+  },
+  {
     id: "teacher-practice-goal",
     audience: "teacher",
     title: ["Chỉ tiêu tự luyện", "Đặt riêng từng em"],

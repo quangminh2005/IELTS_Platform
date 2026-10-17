@@ -2,6 +2,7 @@
 // Tách khỏi UI để unit-test dễ dàng (xem tests/materials-filter.test.ts).
 
 import { UNNAMED_SHELF, type MaterialCategory } from "./material-category";
+import type { UnitStudentStatus } from "./unit-history";
 
 export type SortKey = "newest" | "title" | "questions" | "parts" | "assigned";
 
@@ -43,9 +44,16 @@ export type MaterialMeta = {
   practiceOpen: boolean;
   // Sách/bộ đề hay bài tập hàng tuần. Với sách, `series` là tên kệ sách.
   category: MaterialCategory;
+  // Học viên đã làm / đang được giao ít nhất một phần của tài liệu (lib/unit-history.ts).
+  // Thiếu = chưa ai đụng tới.
+  studentStatus?: Record<string, UnitStudentStatus>;
 };
 
 export type PracticeFilter = "all" | "open";
+
+// Lọc theo một học viên: "fresh" = em chưa làm & chưa được giao phần nào (để giao
+// mới không trùng), "touched" = em đã làm hoặc đang được giao.
+export type StudentModeFilter = "fresh" | "touched";
 
 export type MaterialFilters = {
   search: string;
@@ -55,6 +63,8 @@ export type MaterialFilters = {
   practice: PracticeFilter; // "all" hoặc "open"
   category: "all" | MaterialCategory;
   sort: SortKey;
+  student?: string; // "all"/thiếu hoặc id học viên
+  studentMode?: StudentModeFilter;
 };
 
 export const defaultMaterialFilters: MaterialFilters = {
@@ -146,6 +156,10 @@ export function filterMaterials(
     if (filters.series !== "all" && meta.series !== filters.series) return false;
     if (filters.practice === "open" && !meta.practiceOpen) return false;
     if (!matchesStatus(meta, filters.status)) return false;
+    if (filters.student && filters.student !== "all") {
+      const touched = Boolean(meta.studentStatus?.[filters.student]);
+      if ((filters.studentMode ?? "fresh") === "fresh" ? touched : !touched) return false;
+    }
     return true;
   });
 }

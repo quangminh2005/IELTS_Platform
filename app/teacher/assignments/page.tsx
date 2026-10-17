@@ -7,6 +7,8 @@ import { buildSessionPicks, type SessionPick } from "@/lib/class-schedule";
 import { prisma } from "@/lib/prisma";
 import { excludePracticeAssignment } from "@/lib/practice";
 import { assignmentPrepSeconds } from "@/lib/speaking-plan";
+import type { UnitHistory } from "@/lib/unit-history";
+import { loadUnitHistory } from "@/lib/unit-history-query";
 
 // Cây chọn phần chỉ cần vài field ngắn. KHÔNG dùng include (lấy cả content,
 // transcript, transcriptTimingJson, metadataJson) — riêng phần đó đã ~5MB và bị
@@ -152,6 +154,15 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
       })
     ]);
 
+  // Ai đã làm / đang được giao phần nào -> cảnh báo giao trùng trong form. Lỗi thì
+  // chỉ mất cảnh báo, không chặn giao bài.
+  let unitHistory: UnitHistory = {};
+  try {
+    unitHistory = await loadUnitHistory(teacher.id);
+  } catch (error) {
+    console.error("[giao-bai] Không đọc được lịch sử làm bài:", error);
+  }
+
   const students = flattenStudents(classes);
   const classOptions = classes.map((classItem) => ({ id: classItem.id, name: classItem.name }));
 
@@ -225,6 +236,7 @@ export default async function TeacherAssignmentsPage({ searchParams }: TeacherAs
               students={students}
               classOptions={classOptions}
               sessionPicks={sessionPicks}
+              unitHistory={unitHistory}
             />
           }
         />

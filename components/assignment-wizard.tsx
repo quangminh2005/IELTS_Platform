@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { UnitHistoryContext } from "@/components/unit-history-context";
 import { createAssignment } from "@/lib/actions/assignments";
 import {
   WIZARD_STEPS,
@@ -12,6 +13,7 @@ import {
   type WizardCounts,
   type WizardStep
 } from "@/lib/assignment-wizard";
+import { studentOverlap, type UnitHistory } from "@/lib/unit-history";
 
 type AssignmentWizardProps = {
   unitStep: ReactNode;
@@ -24,6 +26,8 @@ type AssignmentWizardProps = {
   unitTitles: Record<string, string>;
   // id phần -> kỹ năng, để chỉ hiện "Ẩn thanh audio" khi có phần Listening.
   unitSkills: Record<string, string>;
+  // Ai đã làm / đang được giao phần nào — cảnh báo giao trùng. Thiếu = không cảnh báo.
+  unitHistory?: UnitHistory;
 };
 
 const EMPTY_COUNTS: WizardCounts = { units: 0, students: 0 };
@@ -39,12 +43,14 @@ export function AssignmentWizard({
   canCreate,
   disabledReason,
   unitTitles,
-  unitSkills
+  unitSkills,
+  unitHistory
 }: AssignmentWizardProps) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<WizardStep>(1);
   const [counts, setCounts] = useState<WizardCounts>(EMPTY_COUNTS);
   const [selectedUnitIds, setSelectedUnitIds] = useState<string[]>([]);
+  const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
   const [titleFilled, setTitleFilled] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -81,10 +87,14 @@ export function AssignmentWizard({
       const units = Array.from(
         form.querySelectorAll<HTMLInputElement>('input[name="unitIds"]:checked')
       );
+      const studentInputs = Array.from(
+        form.querySelectorAll<HTMLInputElement>('input[name="studentIds"]:checked')
+      );
       setSelectedUnitIds(units.map((input) => input.value));
+      setSelectedStudentIds(studentInputs.map((input) => input.value));
       setCounts({
         units: units.length,
-        students: form.querySelectorAll('input[name="studentIds"]:checked').length
+        students: studentInputs.length
       });
     };
     const recountTitle = () => {
@@ -142,6 +152,7 @@ export function AssignmentWizard({
     setStep(1);
     setCounts(EMPTY_COUNTS);
     setSelectedUnitIds([]);
+    setSelectedStudentIds([]);
     triggerRef.current?.focus();
   }, [counts]);
 
@@ -205,6 +216,19 @@ export function AssignmentWizard({
     );
     input?.click();
   }
+
+  // Memo theo selectedUnitIds để StudentPicker không tính lại trùng lặp mỗi lần gõ.
+  const historyValue = useMemo(
+    () => (unitHistory ? { history: unitHistory, selectedUnitIds } : null),
+    [unitHistory, selectedUnitIds]
+  );
+  // Số học viên đang chọn bị trùng — nhắc lại ở bước 3 trước khi bấm Giao bài.
+  const overlapStudentCount = unitHistory
+    ? selectedStudentIds.filter((studentId) => {
+        const overlap = studentOverlap(unitHistory, studentId, selectedUnitIds);
+        return overlap.done > 0 || overlap.assigned > 0;
+      }).length
+    : 0;
 
   const blocker = stepBlocker(step, counts);
   const reachable = maxReachableStep(counts);
@@ -323,6 +347,7 @@ export function AssignmentWizard({
                 </ol>
               </div>
 
+              <UnitHistoryContext.Provider value={historyValue}>
               <div className="min-h-0 flex-1 overflow-y-auto bg-muted/30 px-5 py-4">
                 <div data-wizard-step="1" className={step === 1 ? "" : "hidden"}>
                   {selectedUnitIds.length > 0 ? (
@@ -365,11 +390,18 @@ export function AssignmentWizard({
                         <p className="mt-2 text-xs text-muted-foreground">
                           Cho {counts.students} học viên
                         </p>
+                        {overlapStudentCount > 0 ? (
+                          <p className="mt-2 text-xs font-semibold text-amber-700 dark:text-amber-300">
+                            ⚠ {overlapStudentCount} em đã làm hoặc đang được giao phần này — quay
+                            lại bước 2 nếu muốn bỏ chọn.
+                          </p>
+                        ) : null}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              </UnitHistoryContext.Provider>
 
               <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-3">
                 <span className="text-xs text-muted-foreground">{summaryLabel(counts)}</span>

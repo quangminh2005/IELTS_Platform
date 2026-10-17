@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useUnitHistory } from "@/components/unit-history-context";
+import { unitStudentCounts } from "@/lib/unit-history";
 
 export type UnitPickerTestUnit = {
   id: string;
@@ -39,6 +41,8 @@ export function UnitPickerTest({
   const [open, setOpen] = useState(initial.size > 0);
   const rootRef = useRef<HTMLDetailsElement>(null);
   const mounted = useRef(false);
+  // Chỉ có trong form Tạo bài giao: đếm học viên đã làm từng phần.
+  const unitHistory = useUnitHistory();
 
   // Nút "Chọn tất cả" đổi tick bằng React state nên trình duyệt KHÔNG bắn sự
   // kiện "change" — ô "Thời gian mỗi kỹ năng" (nghe form change) sẽ không cập
@@ -127,10 +131,27 @@ export function UnitPickerTest({
                 Phần {unit.unitNumber} · {formatLabel(unit.unitType)}
                 {unit.defaultTimeLimitMinutes ? ` · ${unit.defaultTimeLimitMinutes} phút` : ""}
               </span>
+              {unitHistory ? <UnitDoneNote counts={unitStudentCounts(unitHistory.history, unit.id)} /> : null}
             </span>
           </label>
         ))}
       </div>
     </details>
+  );
+}
+
+function UnitDoneNote({ counts }: { counts: { done: number; assigned: number } }) {
+  if (counts.done === 0 && counts.assigned === 0) {
+    return null;
+  }
+  return (
+    <span className="mt-1 block text-xs font-medium text-sky-700 dark:text-sky-300">
+      {[
+        counts.done > 0 ? `${counts.done} HS đã làm` : null,
+        counts.assigned > 0 ? `${counts.assigned} HS đang được giao` : null
+      ]
+        .filter(Boolean)
+        .join(" · ")}
+    </span>
   );
 }

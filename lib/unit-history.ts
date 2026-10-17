@@ -105,3 +105,25 @@ export function overlapLabel(overlap: OverlapCount, total: number): string | nul
   }
   return null;
 }
+
+export type StudentUnitDetail = {
+  // Nhãn các phần đã làm / đang được giao, theo đúng thứ tự `units` truyền vào.
+  done: string[];
+  assigned: string[];
+};
+
+// Chi tiết từng học viên với MỘT tài liệu: em đã làm những phần nào, đang được giao
+// những phần nào. Học viên chưa đụng phần nào thì không có trong kết quả.
+export function materialStudentDetail(
+  history: UnitHistory,
+  units: { id: string; label: string }[]
+): Record<string, StudentUnitDetail> {
+  const result: Record<string, StudentUnitDetail> = {};
+  for (const unit of units) {
+    for (const [studentId, status] of Object.entries(history[unit.id] ?? {})) {
+      const detail = (result[studentId] ??= { done: [], assigned: [] });
+      detail[status].push(unit.label);
+    }
+  }
+  return result;
+}

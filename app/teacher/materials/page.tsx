@@ -22,7 +22,11 @@ import {
 } from "@/lib/materials-filter";
 import { UNNAMED_SHELF } from "@/lib/material-category";
 import { prisma } from "@/lib/prisma";
-import { materialStudentStatus, type UnitStudentStatus } from "@/lib/unit-history";
+import {
+  materialStudentDetail,
+  materialStudentStatus,
+  type StudentUnitDetail
+} from "@/lib/unit-history";
 import { loadUnitHistory } from "@/lib/unit-history-query";
 
 // Query nhẹ: trang danh sách chỉ cần đủ dữ liệu để vẽ thẻ + tính cờ trạng thái.
@@ -43,6 +47,7 @@ const materialSelect = {
     orderBy: [{ unitNumber: "asc" }, { createdAt: "desc" }],
     select: {
       id: true,
+      unitNumber: true,
       audioUrl: true,
       _count: {
         select: {
@@ -143,48 +148,128 @@ function StatusTags({ status }: { status: MaterialStatusFlags }) {
   );
 }
 
-// "Ai đã làm đề này" — gập sẵn, bấm mở ra danh sách tên. Để thầy khỏi giao trùng.
+type StudentInfo = { name: string; classes: { id: string; name: string }[] };
+
+const NO_CLASS = "Không còn trong lớp nào";
+
+// "Phần 1, 3" — hoặc "Cả đề" khi đủ mọi phần của tài liệu.
+function formatParts(numbers: string[], unitCount: number) {
+  if (numbers.length === 0) return "—";
+  if (unitCount > 1 && numbers.length === unitCount) return `Cả đề (${unitCount} phần)`;
+  return `Phần ${numbers.join(", ")}`;
+}
+
+// "Ai đã làm đề này" — gập sẵn; mở ra là bảng chia theo lớp: từng em đã làm phần
+// nào, đang được giao phần nào. Để thầy khỏi giao trùng.
 function StudentHistoryTag({
-  statusByStudent,
-  studentNames
+  detailByStudent,
+  students,
+  unitCount
 }: {
-  statusByStudent: Record<string, UnitStudentStatus>;
-  studentNames: Map<string, string>;
+  detailByStudent: Record<string, StudentUnitDetail>;
+  students: Map<string, StudentInfo>;
+  unitCount: number;
 }) {
-  const nameOf = (id: string) => studentNames.get(id) ?? "Học viên đã rời lớp";
-  const byName = (a: string, b: string) => nameOf(a).localeCompare(nameOf(b), "vi");
-  const ids = Object.keys(statusByStudent);
-  const done = ids.filter((id) => statusByStudent[id] === "done").sort(byName);
-  const assigned = ids.filter((id) => statusByStudent[id] === "assigned").sort(byName);
-  if (done.length === 0 && assigned.length === 0) {
+  const ids = Object.keys(detailByStudent);
+  if (ids.length === 0) {
     return (
       <p className="mt-2 text-xs text-muted-foreground">Chưa học viên nào làm hay được giao đề này.</p>
     );
   }
+  const doneCount = ids.filter((id) => detailByStudent[id].done.length > 0).length;
+  const assignedOnlyCount = ids.length - doneCount;
   const summary = [
-    done.length > 0 ? `${done.length} học viên đã làm` : null,
-    assigned.length > 0 ? `${assigned.length} đang được giao` : null
+    doneCount > 0 ? `${doneCount} học viên đã làm` : null,
+    assignedOnlyCount > 0 ? `${assignedOnlyCount} đang được giao` : null
   ]
     .filter(Boolean)
     .join(" · ");
+
+  // Gom theo lớp. Em học nhiều lớp thì hiện ở mọi lớp của em.
+  const groups = new Map<string, string[]>();
+  for (const id of ids) {
+    const classes = students.get(id)?.classes ?? [];
+    const classNames = classes.length > 0 ? classes.map((item) => item.name) : [NO_CLASS];
+    for (const className of classNames) {
+      const list = groups.get(className) ?? [];
+      list.push(id);
+      groups.set(className, list);
+    }
+  }
+  const nameOf = (id: string) => students.get(id)?.name ?? "Học viên đã bị xoá";
+  const sortedGroups = Array.from(groups.entries()).sort(([a], [b]) => {
+    if (a === NO_CLASS) return 1;
+    if (b === NO_CLASS) return -1;
+    return a.localeCompare(b, "vi", { numeric: true });
+  });
+
   return (
     <details className="mt-2 text-sm">
       <summary className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-sky-500/40 bg-sky-500/10 px-2.5 py-0.5 text-xs font-semibold text-sky-700 dark:text-sky-300">
         <span aria-hidden="true">✓</span> {summary}
+        <span className="font-normal">· xem chi tiết</span>
       </summary>
-      <div className="mt-2 space-y-1.5 text-xs leading-5">
-        {done.length > 0 ? (
-          <p>
-            <span className="font-semibold">Đã làm:</span>{" "}
-            <span className="text-muted-foreground">{done.map(nameOf).join(", ")}</span>
-          </p>
-        ) : null}
-        {assigned.length > 0 ? (
-          <p>
-            <span className="font-semibold">Đang được giao (chưa nộp):</span>{" "}
-            <span className="text-muted-foreground">{assigned.map(nameOf).join(", ")}</span>
-          </p>
-        ) : null}
+      <div className="mt-2 space-y-3">
+        {sortedGroups.map(([className, studentIds]) => (
+          <div key={className} className="overflow-x-auto rounded-lg border border-border">
+            <p className="border-b border-border bg-muted/60 px-3 py-1.5 text-xs font-semibold">
+              {className}
+              <span className="ml-1 font-normal text-muted-foreground">· {studentIds.length} em</span>
+            </p>
+            <table className="w-full min-w-[22rem] text-left text-xs">
+              <thead className="text-muted-foreground">
+                <tr>
+                  <th className="px-3 py-1.5 font-medium">Học viên</th>
+                  <th className="px-3 py-1.5 font-medium">Đã làm</th>
+                  <th className="px-3 py-1.5 font-medium">Đang được giao (chưa nộp)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {studentIds
+                  .slice()
+                  .sort((a, b) => nameOf(a).localeCompare(nameOf(b), "vi"))
+                  .map((studentId) => {
+                    const detail = detailByStudent[studentId];
+                    return (
+                      <tr key={studentId} className="border-t border-border">
+                        <td className="px-3 py-1.5 font-medium">
+                          {/* Trang học viên chỉ mở được với em còn trong lớp của thầy. */}
+                          {className === NO_CLASS ? (
+                            nameOf(studentId)
+                          ) : (
+                            <Link
+                              href={`/teacher/students/${studentId}`}
+                              className="hover:text-primary hover:underline"
+                            >
+                              {nameOf(studentId)}
+                            </Link>
+                          )}
+                        </td>
+                        <td
+                          className={`px-3 py-1.5 ${
+                            detail.done.length > 0
+                              ? "font-semibold text-emerald-700 dark:text-emerald-300"
+                              : "text-muted-foreground"
+                          }`}
+                        >
+                          {formatParts(detail.done, unitCount)}
+                        </td>
+                        <td
+                          className={`px-3 py-1.5 ${
+                            detail.assigned.length > 0
+                              ? "font-semibold text-amber-700 dark:text-amber-300"
+                              : "text-muted-foreground"
+                          }`}
+                        >
+                          {formatParts(detail.assigned, unitCount)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
+        ))}
       </div>
     </details>
   );
@@ -220,13 +305,34 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
     }),
     // Ai đã làm / đang được giao phần nào — thẻ "N học viên đã làm" + lọc theo học viên.
     loadUnitHistory(teacher.id),
+    // Học viên đang trong lớp của thầy + em đã rời lớp nhưng từng nhận bài của thầy
+    // (để bảng chi tiết vẫn có tên).
     prisma.studentProfile.findMany({
-      where: { classes: { some: { class: { teacherId: teacher.id } } } },
+      where: {
+        OR: [
+          { classes: { some: { class: { teacherId: teacher.id } } } },
+          { recipients: { some: { assignment: { teacherId: teacher.id } } } }
+        ]
+      },
       orderBy: { displayName: "asc" },
-      select: { id: true, displayName: true }
+      select: {
+        id: true,
+        displayName: true,
+        classes: {
+          where: { class: { teacherId: teacher.id } },
+          select: { class: { select: { id: true, name: true } } }
+        }
+      }
     })
   ]);
-  const studentNames = new Map(students.map((student) => [student.id, student.displayName]));
+  const studentInfo = new Map<string, StudentInfo>(
+    students.map((student) => [
+      student.id,
+      { name: student.displayName, classes: student.classes.map((link) => link.class) }
+    ])
+  );
+  // Ô lọc theo học viên chỉ cần các em còn trong lớp.
+  const classStudents = students.filter((student) => student.classes.length > 0);
 
   const totalUnits = materials.reduce((sum, material) => sum + material._count.units, 0);
   const totalQuestions = materials.reduce(
@@ -299,7 +405,7 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
         {materials.length > 0 ? (
           <MaterialsBrowser
             initialTab={initialTab}
-            students={students.map((student) => ({ id: student.id, name: student.displayName }))}
+            students={classStudents.map((student) => ({ id: student.id, name: student.displayName }))}
             items={materials.map((material): MaterialBrowserItem => {
               const materialQuestions = material.units.reduce(
                 (sum, unit) => sum + unit._count.questions,
@@ -317,6 +423,10 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
               const studentStatus = materialStudentStatus(
                 unitHistory,
                 material.units.map((unit) => unit.id)
+              );
+              const studentDetail = materialStudentDetail(
+                unitHistory,
+                material.units.map((unit) => ({ id: unit.id, label: String(unit.unitNumber) }))
               );
               const meta = {
                 id: material.id,
@@ -363,7 +473,11 @@ export default async function TeacherMaterialsPage({ searchParams }: TeacherMate
                         .filter(Boolean)
                         .join(" · ")}
                     </p>
-                    <StudentHistoryTag statusByStudent={studentStatus} studentNames={studentNames} />
+                    <StudentHistoryTag
+                      detailByStudent={studentDetail}
+                      students={studentInfo}
+                      unitCount={material._count.units}
+                    />
                     {material.description ? (
                       <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
                         {material.description}

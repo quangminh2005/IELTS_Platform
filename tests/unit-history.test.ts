@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildUnitHistory,
+  materialStudentDetail,
   materialStudentStatus,
   overlapLabel,
   studentOverlap,
@@ -89,5 +90,24 @@ describe("đếm trùng", () => {
     expect(overlapLabel({ done: 1, assigned: 0 }, 1)).toBe("Đã làm phần này");
     expect(overlapLabel({ done: 0, assigned: 1 }, 3)).toBe("Đang được giao 1/3 phần");
     expect(overlapLabel({ done: 0, assigned: 0 }, 3)).toBeNull();
+  });
+});
+
+describe("materialStudentDetail", () => {
+  it("liệt kê phần đã làm / đang giao của từng em theo thứ tự phần", () => {
+    const history = buildUnitHistory([
+      row({ studentId: "a", recipientStatus: "submitted", units: [{ id: "u2", skill: "reading" }, { id: "u1", skill: "reading" }] }),
+      row({ studentId: "a", units: [{ id: "u3", skill: "reading" }] }),
+      row({ studentId: "b", units: [{ id: "u1", skill: "reading" }] })
+    ]);
+    const detail = materialStudentDetail(history, [
+      { id: "u1", label: "Phần 1" },
+      { id: "u2", label: "Phần 2" },
+      { id: "u3", label: "Phần 3" }
+    ]);
+    expect(detail).toEqual({
+      a: { done: ["Phần 1", "Phần 2"], assigned: ["Phần 3"] },
+      b: { done: [], assigned: ["Phần 1"] }
+    });
   });
 });
